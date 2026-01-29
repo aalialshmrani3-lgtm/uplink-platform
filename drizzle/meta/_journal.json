@@ -36,6 +36,20 @@
       "when": 1769706552767,
       "tag": "0004_magical_tusk",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1769708415711,
+      "tag": "0005_familiar_zombie",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1769708525318,
+      "tag": "0006_heavy_mister_sinister",
+      "breakpoints": true
     }
   ]
 }

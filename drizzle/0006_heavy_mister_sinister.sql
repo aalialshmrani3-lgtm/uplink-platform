@@ -1,0 +1,1 @@
+ALTER TABLE `pipeline_ideas` ADD `projectId` int;

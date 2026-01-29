@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { invokeLLM } from "./_core/llm";
+import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { nanoid } from "nanoid";
 import crypto from "crypto";
@@ -757,6 +758,17 @@ Respond in JSON format:
           tags: input.tags ? JSON.stringify(input.tags) : undefined,
         });
         await db.addGamificationPoints(ctx.user.id, 10, 'idea_submitted');
+        
+        // Send notification to owner
+        try {
+          await notifyOwner({
+            title: "فكرة جديدة في Innovation Pipeline",
+            content: `تم إضافة فكرة جديدة: ${input.title}\nبواسطة: ${ctx.user.name}`
+          });
+        } catch (e) {
+          console.error('Failed to send notification:', e);
+        }
+        
         return { id };
       }),
 
@@ -782,9 +794,41 @@ Respond in JSON format:
         aiScore: z.string().optional(),
         aiAnalysis: z.string().optional(),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ ctx, input }) => {
         const { id, ...data } = input;
         await db.updatePipelineIdea(id, data);
+        
+        // Auto-create project when idea is approved
+        if (input.status === "approved") {
+          const idea = await db.getPipelineIdeaById(id);
+          if (idea && !idea.projectId) {
+            const projectId = await db.createProject({
+              userId: idea.userId,
+              title: idea.title,
+              titleEn: idea.titleEn,
+              description: idea.description || "",
+              descriptionEn: idea.descriptionEn,
+              stage: "idea",
+              status: "draft",
+              pipelineIdeaId: id,
+              tags: idea.tags ? JSON.parse(idea.tags) : []
+            });
+            
+            // Link project back to idea
+            await db.updatePipelineIdea(id, { projectId });
+            
+            // Notify owner
+            try {
+              await notifyOwner({
+                title: "فكرة معتمدة تم تحويلها إلى مشروع",
+                content: `تم تحويل الفكرة "${idea.title}" إلى مشروع في نظام إدارة المشاريع.`
+              });
+            } catch (e) {
+              console.error('Failed to send notification:', e);
+            }
+          }
+        }
+        
         return { success: true };
       }),
 

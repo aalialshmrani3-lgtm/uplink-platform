@@ -26,6 +26,7 @@ import {
   Compass, Map, Route, Milestone, Target as TargetIcon, Crosshair, Focus, Scan, Radar
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { trpc } from "@/lib/trpc";
 
 // ==================== TYPES ====================
 type IdeaStatus = "active" | "parked" | "killed" | "clustered" | "testing" | "approved" | "implemented";
@@ -827,6 +828,19 @@ export default function InnovationPipeline() {
   const [showNewIdeaDialog, setShowNewIdeaDialog] = useState(false);
   const [newIdea, setNewIdea] = useState({ title: "", description: "", tags: "" });
 
+  // API Integration
+  const { data: pipelineStats } = trpc.pipeline.getStats.useQuery();
+  const createIdeaMutation = trpc.pipeline.createIdea.useMutation({
+    onSuccess: () => {
+      toast.success("تم إضافة الفكرة بنجاح! +10 نقاط");
+      setShowNewIdeaDialog(false);
+      setNewIdea({ title: "", description: "", tags: "" });
+    },
+    onError: () => {
+      toast.error("فشل في إضافة الفكرة");
+    }
+  });
+
   // Stats
   const totalIdeas = ideas.length;
   const activeIdeas = ideas.filter(i => i.status === "active" || i.status === "testing").length;
@@ -853,26 +867,15 @@ export default function InnovationPipeline() {
       toast.error("يرجى ملء جميع الحقول المطلوبة");
       return;
     }
-    const idea: Idea = {
-      id: `idea-${Date.now()}`,
+    
+    // Use API to create idea
+    createIdeaMutation.mutate({
       title: newIdea.title,
       description: newIdea.description,
-      challengeId: selectedChallenge,
-      status: "active",
-      score: 50,
-      aiScore: Math.floor(Math.random() * 30) + 50,
-      votes: { up: 0, down: 0 },
-      author: "أنت",
-      createdAt: new Date().toISOString().split("T")[0],
-      tags: newIdea.tags.split(",").map(t => t.trim()).filter(Boolean),
-      comments: 0,
-      views: 0,
-      bookmarks: 0
-    };
-    setIdeas(prev => [idea, ...prev]);
-    setNewIdea({ title: "", description: "", tags: "" });
-    setShowNewIdeaDialog(false);
-    toast.success("تم إضافة الفكرة بنجاح! +10 نقاط");
+      challengeId: parseInt(selectedChallenge),
+      tags: newIdea.tags,
+      status: "active"
+    });
   };
 
   const handleExperimentComplete = (expId: string, result: "success" | "failure" | "inconclusive") => {
