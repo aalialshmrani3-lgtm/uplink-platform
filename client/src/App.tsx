@@ -36,6 +36,7 @@ const Integrations = lazy(() => import("./pages/Integrations"));
 const ROICalculator = lazy(() => import("./pages/ROICalculator"));
 const HelpCenter = lazy(() => import("./pages/HelpCenter"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
+const ThreeEngines = lazy(() => import("./pages/ThreeEngines"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -221,6 +222,7 @@ function Router() {
         <Route path="/roi-calculator" component={ROICalculator} />
         <Route path="/help" component={HelpCenter} />
         <Route path="/case-studies" component={CaseStudies} />
+        <Route path="/three-engines" component={ThreeEngines} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

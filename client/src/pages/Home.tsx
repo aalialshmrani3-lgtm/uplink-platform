@@ -110,15 +110,17 @@ export default function Home() {
             <span className="text-xl font-bold text-gradient-cyan">UPLINK 5.0</span>
           </div>
           
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#engines" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المحركات</a>
-            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المميزات</a>
-            <a href="#partners" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الشركاء</a>
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/why-uplink" className="text-muted-foreground hover:text-foreground transition-colors text-sm">لماذا UPLINK</Link>
+            <Link href="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors text-sm">دراسات الحالة</Link>
+            <Link href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors text-sm">التكاملات</Link>
+            <Link href="/testimonials" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الشهادات</Link>
+            <Link href="/roi-calculator" className="text-muted-foreground hover:text-foreground transition-colors text-sm">حاسبة ROI</Link>
             <Link href="/pipeline" className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1">
               <Layers className="w-4 h-4" />
               Pipeline
             </Link>
-            <Link href="/academy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الأكاديمية</Link>
+            <Link href="/help" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المساعدة</Link>
           </div>
           
           <div className="flex items-center gap-3">
