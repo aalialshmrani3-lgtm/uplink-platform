@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import { lazy, Suspense, useState, useEffect } from "react";
 
@@ -26,6 +27,8 @@ const Messages = lazy(() => import("./pages/Messages"));
 const Whiteboard = lazy(() => import("./pages/Whiteboard"));
 const Notifications = lazy(() => import("./pages/Notifications"));
 const Calendar = lazy(() => import("./pages/Calendar"));
+const Recommendations = lazy(() => import("./pages/Recommendations"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -202,6 +205,8 @@ function Router() {
         <Route path="/whiteboard" component={Whiteboard} />
         <Route path="/notifications" component={Notifications} />
         <Route path="/calendar" component={Calendar} />
+        <Route path="/recommendations" component={Recommendations} />
+        <Route path="/admin" component={Admin} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
@@ -231,6 +236,7 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
+        <LanguageProvider>
         <TooltipProvider>
           {showSplash && !hasSeenSplash && (
             <SplashScreen onComplete={handleSplashComplete} />
@@ -238,6 +244,7 @@ function App() {
           <Toaster />
           <Router />
         </TooltipProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

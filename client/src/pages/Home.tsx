@@ -12,6 +12,7 @@ import {
   MessageSquare, PenTool, Target, Layers, CheckCircle2
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 // Animated Counter Component
 function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
@@ -117,6 +118,7 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             {user ? (
               <Link href="/dashboard">
                 <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
