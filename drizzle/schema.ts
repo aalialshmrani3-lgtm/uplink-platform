@@ -415,3 +415,217 @@ export const analytics = mysqlTable("analytics", {
 
 export type Analytics = typeof analytics.$inferSelect;
 export type InsertAnalytics = typeof analytics.$inferInsert;
+
+
+// ============================================
+// INNOVATION PIPELINE SYSTEM
+// ============================================
+
+// Strategic Initiatives
+export const pipelineInitiatives = mysqlTable("pipeline_initiatives", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  title: varchar("title", { length: 500 }).notNull(),
+  titleEn: varchar("titleEn", { length: 500 }),
+  description: text("description"),
+  descriptionEn: text("descriptionEn"),
+  businessStrategy: text("businessStrategy"),
+  innovationStrategy: text("innovationStrategy"),
+  priority: mysqlEnum("priority", ["low", "medium", "high", "critical"]).default("medium"),
+  status: mysqlEnum("status", ["draft", "active", "paused", "completed", "cancelled"]).default("draft"),
+  budget: decimal("budget", { precision: 15, scale: 2 }),
+  budgetSpent: decimal("budgetSpent", { precision: 15, scale: 2 }).default("0"),
+  startDate: timestamp("startDate"),
+  endDate: timestamp("endDate"),
+  owner: int("owner"),
+  team: json("team"),
+  kpis: json("kpis"),
+  tags: json("tags"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineInitiative = typeof pipelineInitiatives.$inferSelect;
+export type InsertPipelineInitiative = typeof pipelineInitiatives.$inferInsert;
+
+// Pipeline Challenges (linked to initiatives)
+export const pipelineChallenges = mysqlTable("pipeline_challenges", {
+  id: int("id").autoincrement().primaryKey(),
+  initiativeId: int("initiativeId").notNull(),
+  userId: int("userId").notNull(),
+  title: varchar("title", { length: 500 }).notNull(),
+  titleEn: varchar("titleEn", { length: 500 }),
+  description: text("description"),
+  descriptionEn: text("descriptionEn"),
+  problemStatement: text("problemStatement"),
+  desiredOutcome: text("desiredOutcome"),
+  constraints: json("constraints"),
+  status: mysqlEnum("status", ["open", "ideation", "evaluation", "closed"]).default("open"),
+  priority: mysqlEnum("priority", ["low", "medium", "high", "critical"]).default("medium"),
+  deadline: timestamp("deadline"),
+  ideasCount: int("ideasCount").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineChallenge = typeof pipelineChallenges.$inferSelect;
+export type InsertPipelineChallenge = typeof pipelineChallenges.$inferInsert;
+
+// Pipeline Ideas
+export const pipelineIdeas = mysqlTable("pipeline_ideas", {
+  id: int("id").autoincrement().primaryKey(),
+  challengeId: int("challengeId").notNull(),
+  userId: int("userId").notNull(),
+  clusterId: int("clusterId"),
+  title: varchar("title", { length: 500 }).notNull(),
+  titleEn: varchar("titleEn", { length: 500 }),
+  description: text("description"),
+  descriptionEn: text("descriptionEn"),
+  solution: text("solution"),
+  expectedImpact: text("expectedImpact"),
+  estimatedCost: decimal("estimatedCost", { precision: 15, scale: 2 }),
+  estimatedROI: decimal("estimatedROI", { precision: 5, scale: 2 }),
+  implementationTime: varchar("implementationTime", { length: 100 }),
+  status: mysqlEnum("status", ["submitted", "under_review", "approved", "parked", "killed", "in_experiment"]).default("submitted"),
+  votes: int("votes").default(0),
+  aiScore: decimal("aiScore", { precision: 5, scale: 2 }),
+  aiAnalysis: text("aiAnalysis"),
+  riskLevel: mysqlEnum("riskLevel", ["low", "medium", "high"]).default("medium"),
+  innovationLevel: mysqlEnum("innovationLevel", ["incremental", "adjacent", "transformational"]).default("incremental"),
+  tags: json("tags"),
+  attachments: json("attachments"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineIdea = typeof pipelineIdeas.$inferSelect;
+export type InsertPipelineIdea = typeof pipelineIdeas.$inferInsert;
+
+// Idea Clusters
+export const pipelineClusters = mysqlTable("pipeline_clusters", {
+  id: int("id").autoincrement().primaryKey(),
+  initiativeId: int("initiativeId").notNull(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 200 }).notNull(),
+  nameEn: varchar("nameEn", { length: 200 }),
+  description: text("description"),
+  theme: varchar("theme", { length: 200 }),
+  color: varchar("color", { length: 20 }),
+  status: mysqlEnum("status", ["active", "parked", "killed", "merged"]).default("active"),
+  ideasCount: int("ideasCount").default(0),
+  avgScore: decimal("avgScore", { precision: 5, scale: 2 }),
+  priority: mysqlEnum("priority", ["low", "medium", "high"]).default("medium"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineCluster = typeof pipelineClusters.$inferSelect;
+export type InsertPipelineCluster = typeof pipelineClusters.$inferInsert;
+
+// Hypotheses
+export const pipelineHypotheses = mysqlTable("pipeline_hypotheses", {
+  id: int("id").autoincrement().primaryKey(),
+  ideaId: int("ideaId").notNull(),
+  userId: int("userId").notNull(),
+  statement: text("statement").notNull(),
+  statementEn: text("statementEn"),
+  type: mysqlEnum("type", ["desirability", "feasibility", "viability"]).default("desirability"),
+  assumption: text("assumption"),
+  riskLevel: mysqlEnum("riskLevel", ["low", "medium", "high", "critical"]).default("medium"),
+  status: mysqlEnum("status", ["untested", "testing", "validated", "invalidated", "refined"]).default("untested"),
+  validationMethod: text("validationMethod"),
+  successCriteria: text("successCriteria"),
+  evidence: text("evidence"),
+  confidence: int("confidence").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineHypothesis = typeof pipelineHypotheses.$inferSelect;
+export type InsertPipelineHypothesis = typeof pipelineHypotheses.$inferInsert;
+
+// Experiments (RATs - Riskiest Assumptions Tests)
+export const pipelineExperiments = mysqlTable("pipeline_experiments", {
+  id: int("id").autoincrement().primaryKey(),
+  hypothesisId: int("hypothesisId").notNull(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 300 }).notNull(),
+  nameEn: varchar("nameEn", { length: 300 }),
+  description: text("description"),
+  experimentType: mysqlEnum("experimentType", ["survey", "interview", "prototype", "mvp", "ab_test", "landing_page", "concierge", "wizard_of_oz"]).default("prototype"),
+  status: mysqlEnum("status", ["planned", "in_progress", "completed", "cancelled"]).default("planned"),
+  startDate: timestamp("startDate"),
+  endDate: timestamp("endDate"),
+  budget: decimal("budget", { precision: 10, scale: 2 }),
+  sampleSize: int("sampleSize"),
+  methodology: text("methodology"),
+  metrics: json("metrics"),
+  results: text("results"),
+  learnings: text("learnings"),
+  outcome: mysqlEnum("outcome", ["pending", "supports", "rejects", "inconclusive"]).default("pending"),
+  nextSteps: text("nextSteps"),
+  attachments: json("attachments"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineExperiment = typeof pipelineExperiments.$inferSelect;
+export type InsertPipelineExperiment = typeof pipelineExperiments.$inferInsert;
+
+// Idea Votes
+export const pipelineVotes = mysqlTable("pipeline_votes", {
+  id: int("id").autoincrement().primaryKey(),
+  ideaId: int("ideaId").notNull(),
+  userId: int("userId").notNull(),
+  voteType: mysqlEnum("voteType", ["upvote", "downvote"]).default("upvote"),
+  comment: text("comment"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PipelineVote = typeof pipelineVotes.$inferSelect;
+export type InsertPipelineVote = typeof pipelineVotes.$inferInsert;
+
+// Trend Scouting
+export const pipelineTrends = mysqlTable("pipeline_trends", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 300 }).notNull(),
+  nameEn: varchar("nameEn", { length: 300 }),
+  description: text("description"),
+  category: varchar("category", { length: 100 }),
+  maturityLevel: mysqlEnum("maturityLevel", ["emerging", "growing", "mature", "declining"]).default("emerging"),
+  relevanceScore: int("relevanceScore").default(50),
+  impactScore: int("impactScore").default(50),
+  timeToMainstream: varchar("timeToMainstream", { length: 100 }),
+  sources: json("sources"),
+  relatedInitiatives: json("relatedInitiatives"),
+  tags: json("tags"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineTrend = typeof pipelineTrends.$inferSelect;
+export type InsertPipelineTrend = typeof pipelineTrends.$inferInsert;
+
+// Gamification - User Points & Badges
+export const pipelineGamification = mysqlTable("pipeline_gamification", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  totalPoints: int("totalPoints").default(0),
+  level: int("level").default(1),
+  ideasSubmitted: int("ideasSubmitted").default(0),
+  ideasApproved: int("ideasApproved").default(0),
+  experimentsRun: int("experimentsRun").default(0),
+  hypothesesValidated: int("hypothesesValidated").default(0),
+  votesGiven: int("votesGiven").default(0),
+  commentsGiven: int("commentsGiven").default(0),
+  badges: json("badges"),
+  achievements: json("achievements"),
+  streak: int("streak").default(0),
+  lastActivityAt: timestamp("lastActivityAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PipelineGamification = typeof pipelineGamification.$inferSelect;
+export type InsertPipelineGamification = typeof pipelineGamification.$inferInsert;

@@ -1,0 +1,181 @@
+CREATE TABLE `pipeline_challenges` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`initiativeId` int NOT NULL,
+	`userId` int NOT NULL,
+	`title` varchar(500) NOT NULL,
+	`titleEn` varchar(500),
+	`description` text,
+	`descriptionEn` text,
+	`problemStatement` text,
+	`desiredOutcome` text,
+	`constraints` json,
+	`status` enum('open','ideation','evaluation','closed') DEFAULT 'open',
+	`priority` enum('low','medium','high','critical') DEFAULT 'medium',
+	`deadline` timestamp,
+	`ideasCount` int DEFAULT 0,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_challenges_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_clusters` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`initiativeId` int NOT NULL,
+	`userId` int NOT NULL,
+	`name` varchar(200) NOT NULL,
+	`nameEn` varchar(200),
+	`description` text,
+	`theme` varchar(200),
+	`color` varchar(20),
+	`status` enum('active','parked','killed','merged') DEFAULT 'active',
+	`ideasCount` int DEFAULT 0,
+	`avgScore` decimal(5,2),
+	`priority` enum('low','medium','high') DEFAULT 'medium',
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_clusters_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_experiments` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`hypothesisId` int NOT NULL,
+	`userId` int NOT NULL,
+	`name` varchar(300) NOT NULL,
+	`nameEn` varchar(300),
+	`description` text,
+	`experimentType` enum('survey','interview','prototype','mvp','ab_test','landing_page','concierge','wizard_of_oz') DEFAULT 'prototype',
+	`status` enum('planned','in_progress','completed','cancelled') DEFAULT 'planned',
+	`startDate` timestamp,
+	`endDate` timestamp,
+	`budget` decimal(10,2),
+	`sampleSize` int,
+	`methodology` text,
+	`metrics` json,
+	`results` text,
+	`learnings` text,
+	`outcome` enum('pending','supports','rejects','inconclusive') DEFAULT 'pending',
+	`nextSteps` text,
+	`attachments` json,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_experiments_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_gamification` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`userId` int NOT NULL,
+	`totalPoints` int DEFAULT 0,
+	`level` int DEFAULT 1,
+	`ideasSubmitted` int DEFAULT 0,
+	`ideasApproved` int DEFAULT 0,
+	`experimentsRun` int DEFAULT 0,
+	`hypothesesValidated` int DEFAULT 0,
+	`votesGiven` int DEFAULT 0,
+	`commentsGiven` int DEFAULT 0,
+	`badges` json,
+	`achievements` json,
+	`streak` int DEFAULT 0,
+	`lastActivityAt` timestamp,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_gamification_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_hypotheses` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`ideaId` int NOT NULL,
+	`userId` int NOT NULL,
+	`statement` text NOT NULL,
+	`statementEn` text,
+	`type` enum('desirability','feasibility','viability') DEFAULT 'desirability',
+	`assumption` text,
+	`riskLevel` enum('low','medium','high','critical') DEFAULT 'medium',
+	`status` enum('untested','testing','validated','invalidated','refined') DEFAULT 'untested',
+	`validationMethod` text,
+	`successCriteria` text,
+	`evidence` text,
+	`confidence` int DEFAULT 0,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_hypotheses_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_ideas` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`challengeId` int NOT NULL,
+	`userId` int NOT NULL,
+	`clusterId` int,
+	`title` varchar(500) NOT NULL,
+	`titleEn` varchar(500),
+	`description` text,
+	`descriptionEn` text,
+	`solution` text,
+	`expectedImpact` text,
+	`estimatedCost` decimal(15,2),
+	`estimatedROI` decimal(5,2),
+	`implementationTime` varchar(100),
+	`status` enum('submitted','under_review','approved','parked','killed','in_experiment') DEFAULT 'submitted',
+	`votes` int DEFAULT 0,
+	`aiScore` decimal(5,2),
+	`aiAnalysis` text,
+	`riskLevel` enum('low','medium','high') DEFAULT 'medium',
+	`innovationLevel` enum('incremental','adjacent','transformational') DEFAULT 'incremental',
+	`tags` json,
+	`attachments` json,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_ideas_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_initiatives` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`userId` int NOT NULL,
+	`title` varchar(500) NOT NULL,
+	`titleEn` varchar(500),
+	`description` text,
+	`descriptionEn` text,
+	`businessStrategy` text,
+	`innovationStrategy` text,
+	`priority` enum('low','medium','high','critical') DEFAULT 'medium',
+	`status` enum('draft','active','paused','completed','cancelled') DEFAULT 'draft',
+	`budget` decimal(15,2),
+	`budgetSpent` decimal(15,2) DEFAULT '0',
+	`startDate` timestamp,
+	`endDate` timestamp,
+	`owner` int,
+	`team` json,
+	`kpis` json,
+	`tags` json,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_initiatives_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_trends` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`userId` int NOT NULL,
+	`name` varchar(300) NOT NULL,
+	`nameEn` varchar(300),
+	`description` text,
+	`category` varchar(100),
+	`maturityLevel` enum('emerging','growing','mature','declining') DEFAULT 'emerging',
+	`relevanceScore` int DEFAULT 50,
+	`impactScore` int DEFAULT 50,
+	`timeToMainstream` varchar(100),
+	`sources` json,
+	`relatedInitiatives` json,
+	`tags` json,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `pipeline_trends_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pipeline_votes` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`ideaId` int NOT NULL,
+	`userId` int NOT NULL,
+	`voteType` enum('upvote','downvote') DEFAULT 'upvote',
+	`comment` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `pipeline_votes_id` PRIMARY KEY(`id`)
+);

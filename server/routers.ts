@@ -637,6 +637,385 @@ Respond in JSON format:
       return db.getDashboardStats();
     }),
   }),
+
+  // ============================================
+  // INNOVATION PIPELINE
+  // ============================================
+  pipeline: router({
+    // Initiatives
+    createInitiative: protectedProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        titleEn: z.string().optional(),
+        description: z.string().optional(),
+        descriptionEn: z.string().optional(),
+        businessStrategy: z.string().optional(),
+        innovationStrategy: z.string().optional(),
+        priority: z.enum(["low", "medium", "high", "critical"]).optional(),
+        budget: z.string().optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+        tags: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const id = await db.createPipelineInitiative({
+          ...input,
+          userId: ctx.user.id,
+          startDate: input.startDate ? new Date(input.startDate) : undefined,
+          endDate: input.endDate ? new Date(input.endDate) : undefined,
+          tags: input.tags ? JSON.stringify(input.tags) : undefined,
+        });
+        return { id };
+      }),
+
+    getInitiatives: protectedProcedure.query(async ({ ctx }) => {
+      return db.getPipelineInitiatives(ctx.user.id);
+    }),
+
+    getAllInitiatives: publicProcedure.query(async () => {
+      return db.getPipelineInitiatives();
+    }),
+
+    getInitiativeById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return db.getPipelineInitiativeById(input.id);
+      }),
+
+    updateInitiative: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        businessStrategy: z.string().optional(),
+        innovationStrategy: z.string().optional(),
+        priority: z.enum(["low", "medium", "high", "critical"]).optional(),
+        status: z.enum(["draft", "active", "paused", "completed", "cancelled"]).optional(),
+        budget: z.string().optional(),
+        budgetSpent: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updatePipelineInitiative(id, data);
+        return { success: true };
+      }),
+
+    deleteInitiative: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deletePipelineInitiative(input.id);
+        return { success: true };
+      }),
+
+    // Challenges
+    createChallenge: protectedProcedure
+      .input(z.object({
+        initiativeId: z.number(),
+        title: z.string().min(1),
+        titleEn: z.string().optional(),
+        description: z.string().optional(),
+        problemStatement: z.string().optional(),
+        desiredOutcome: z.string().optional(),
+        priority: z.enum(["low", "medium", "high", "critical"]).optional(),
+        deadline: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const id = await db.createPipelineChallenge({
+          ...input,
+          userId: ctx.user.id,
+          deadline: input.deadline ? new Date(input.deadline) : undefined,
+        });
+        return { id };
+      }),
+
+    getChallengesByInitiative: publicProcedure
+      .input(z.object({ initiativeId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getPipelineChallengesByInitiative(input.initiativeId);
+      }),
+
+    // Ideas
+    createIdea: protectedProcedure
+      .input(z.object({
+        challengeId: z.number(),
+        title: z.string().min(1),
+        titleEn: z.string().optional(),
+        description: z.string().optional(),
+        solution: z.string().optional(),
+        expectedImpact: z.string().optional(),
+        estimatedCost: z.string().optional(),
+        estimatedROI: z.string().optional(),
+        implementationTime: z.string().optional(),
+        riskLevel: z.enum(["low", "medium", "high"]).optional(),
+        innovationLevel: z.enum(["incremental", "adjacent", "transformational"]).optional(),
+        tags: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const id = await db.createPipelineIdea({
+          ...input,
+          userId: ctx.user.id,
+          tags: input.tags ? JSON.stringify(input.tags) : undefined,
+        });
+        await db.addGamificationPoints(ctx.user.id, 10, 'idea_submitted');
+        return { id };
+      }),
+
+    getIdeasByChallenge: publicProcedure
+      .input(z.object({ challengeId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getPipelineIdeasByChallenge(input.challengeId);
+      }),
+
+    getIdeaById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return db.getPipelineIdeaById(input.id);
+      }),
+
+    updateIdea: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        status: z.enum(["submitted", "under_review", "approved", "parked", "killed", "in_experiment"]).optional(),
+        clusterId: z.number().optional(),
+        aiScore: z.string().optional(),
+        aiAnalysis: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updatePipelineIdea(id, data);
+        return { success: true };
+      }),
+
+    voteIdea: protectedProcedure
+      .input(z.object({
+        ideaId: z.number(),
+        voteType: z.enum(["upvote", "downvote"]),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const votes = await db.voteOnIdea(input.ideaId, ctx.user.id, input.voteType);
+        await db.addGamificationPoints(ctx.user.id, 1, 'vote_given');
+        return { votes };
+      }),
+
+    // Clusters
+    createCluster: protectedProcedure
+      .input(z.object({
+        initiativeId: z.number(),
+        name: z.string().min(1),
+        nameEn: z.string().optional(),
+        description: z.string().optional(),
+        theme: z.string().optional(),
+        color: z.string().optional(),
+        priority: z.enum(["low", "medium", "high"]).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const id = await db.createPipelineCluster({
+          ...input,
+          userId: ctx.user.id,
+        });
+        return { id };
+      }),
+
+    getClustersByInitiative: publicProcedure
+      .input(z.object({ initiativeId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getPipelineClustersByInitiative(input.initiativeId);
+      }),
+
+    assignIdeaToCluster: protectedProcedure
+      .input(z.object({
+        ideaId: z.number(),
+        clusterId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        await db.assignIdeaToCluster(input.ideaId, input.clusterId);
+        return { success: true };
+      }),
+
+    // Hypotheses
+    createHypothesis: protectedProcedure
+      .input(z.object({
+        ideaId: z.number(),
+        statement: z.string().min(1),
+        statementEn: z.string().optional(),
+        type: z.enum(["desirability", "feasibility", "viability"]).optional(),
+        assumption: z.string().optional(),
+        riskLevel: z.enum(["low", "medium", "high", "critical"]).optional(),
+        validationMethod: z.string().optional(),
+        successCriteria: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const id = await db.createPipelineHypothesis({
+          ...input,
+          userId: ctx.user.id,
+        });
+        return { id };
+      }),
+
+    getHypothesesByIdea: publicProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getPipelineHypothesesByIdea(input.ideaId);
+      }),
+
+    updateHypothesis: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(["untested", "testing", "validated", "invalidated", "refined"]).optional(),
+        evidence: z.string().optional(),
+        confidence: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { id, ...data } = input;
+        await db.updatePipelineHypothesis(id, data);
+        if (input.status === 'validated') {
+          await db.addGamificationPoints(ctx.user.id, 25, 'hypothesis_validated');
+        }
+        return { success: true };
+      }),
+
+    // Experiments
+    createExperiment: protectedProcedure
+      .input(z.object({
+        hypothesisId: z.number(),
+        name: z.string().min(1),
+        nameEn: z.string().optional(),
+        description: z.string().optional(),
+        experimentType: z.enum(["survey", "interview", "prototype", "mvp", "ab_test", "landing_page", "concierge", "wizard_of_oz"]).optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+        budget: z.string().optional(),
+        sampleSize: z.number().optional(),
+        methodology: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const id = await db.createPipelineExperiment({
+          ...input,
+          userId: ctx.user.id,
+          startDate: input.startDate ? new Date(input.startDate) : undefined,
+          endDate: input.endDate ? new Date(input.endDate) : undefined,
+        });
+        await db.addGamificationPoints(ctx.user.id, 15, 'experiment_run');
+        return { id };
+      }),
+
+    getExperimentsByHypothesis: publicProcedure
+      .input(z.object({ hypothesisId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getPipelineExperimentsByHypothesis(input.hypothesisId);
+      }),
+
+    updateExperiment: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(["planned", "in_progress", "completed", "cancelled"]).optional(),
+        results: z.string().optional(),
+        learnings: z.string().optional(),
+        outcome: z.enum(["pending", "supports", "rejects", "inconclusive"]).optional(),
+        nextSteps: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updatePipelineExperiment(id, data);
+        return { success: true };
+      }),
+
+    // Trends
+    createTrend: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        nameEn: z.string().optional(),
+        description: z.string().optional(),
+        category: z.string().optional(),
+        maturityLevel: z.enum(["emerging", "growing", "mature", "declining"]).optional(),
+        relevanceScore: z.number().optional(),
+        impactScore: z.number().optional(),
+        timeToMainstream: z.string().optional(),
+        tags: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const id = await db.createPipelineTrend({
+          ...input,
+          userId: ctx.user.id,
+          tags: input.tags ? JSON.stringify(input.tags) : undefined,
+        });
+        return { id };
+      }),
+
+    getTrends: publicProcedure.query(async () => {
+      return db.getPipelineTrends();
+    }),
+
+    // Gamification
+    getMyGamification: protectedProcedure.query(async ({ ctx }) => {
+      return db.getOrCreateGamification(ctx.user.id);
+    }),
+
+    getLeaderboard: publicProcedure
+      .input(z.object({ limit: z.number().optional() }).optional())
+      .query(async ({ input }) => {
+        return db.getLeaderboard(input?.limit || 10);
+      }),
+
+    // Stats
+    getStats: protectedProcedure.query(async ({ ctx }) => {
+      return db.getPipelineStats(ctx.user.id);
+    }),
+
+    getAllStats: publicProcedure.query(async () => {
+      return db.getPipelineStats();
+    }),
+
+    // AI Analysis for Ideas
+    analyzeIdea: protectedProcedure
+      .input(z.object({
+        ideaId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        const idea = await db.getPipelineIdeaById(input.ideaId);
+        if (!idea) throw new Error("Idea not found");
+
+        const prompt = `Analyze this innovation idea and provide a score (0-100) and detailed analysis:
+
+Title: ${idea.title}
+Description: ${idea.description || 'N/A'}
+Solution: ${idea.solution || 'N/A'}
+Expected Impact: ${idea.expectedImpact || 'N/A'}
+Estimated Cost: ${idea.estimatedCost || 'N/A'}
+Risk Level: ${idea.riskLevel || 'N/A'}
+Innovation Level: ${idea.innovationLevel || 'N/A'}
+
+Provide response in JSON format:
+{
+  "score": <number 0-100>,
+  "analysis": "<detailed analysis in Arabic>",
+  "strengths": ["<strength1>", "<strength2>"],
+  "weaknesses": ["<weakness1>", "<weakness2>"],
+  "recommendations": ["<recommendation1>", "<recommendation2>"]
+}`;
+
+        const response = await invokeLLM({
+          messages: [
+            { role: "system", content: "You are an innovation expert. Analyze ideas and provide structured feedback in Arabic." },
+            { role: "user", content: prompt }
+          ],
+          response_format: { type: "json_object" }
+        });
+
+        const rawContent = response.choices[0]?.message?.content || '{}';
+        const content = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent);
+        const result = JSON.parse(content);
+
+        await db.updatePipelineIdea(input.ideaId, {
+          aiScore: String(result.score || 0),
+          aiAnalysis: result.analysis || '',
+        });
+
+        return result;
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

@@ -29,6 +29,13 @@
       "when": 1769700786116,
       "tag": "0003_furry_power_man",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1769706552767,
+      "tag": "0004_magical_tusk",
+      "breakpoints": true
     }
   ]
 }

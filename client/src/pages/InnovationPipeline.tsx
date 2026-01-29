@@ -880,6 +880,150 @@ export default function InnovationPipeline() {
     toast.success(`تم إكمال التجربة: ${result === "success" ? "نجاح" : result === "failure" ? "فشل" : "غير حاسم"}`);
   };
 
+  const handleExportPDF = () => {
+    // Generate PDF report content
+    const reportData = {
+      title: "تقرير Innovation Pipeline",
+      date: new Date().toLocaleDateString("ar-SA"),
+      stats: {
+        totalIdeas,
+        activeIdeas,
+        approvedIdeas,
+        avgScore,
+        totalInitiatives: initiatives.length,
+        totalChallenges: challenges.length,
+        totalExperiments: experiments.length
+      },
+      initiatives: initiatives.map(i => ({
+        title: i.title,
+        status: i.status,
+        progress: i.progress,
+        budget: i.budget,
+        budgetSpent: i.budgetSpent
+      })),
+      topIdeas: ideas.slice(0, 5).map(i => ({
+        title: i.title,
+        score: i.score,
+        status: i.status,
+        votes: i.votes
+      }))
+    };
+
+    // Create printable HTML
+    const printContent = `
+      <!DOCTYPE html>
+      <html dir="rtl" lang="ar">
+      <head>
+        <meta charset="UTF-8">
+        <title>${reportData.title}</title>
+        <style>
+          body { font-family: 'Segoe UI', Tahoma, sans-serif; padding: 40px; direction: rtl; }
+          h1 { color: #0891b2; border-bottom: 2px solid #0891b2; padding-bottom: 10px; }
+          h2 { color: #374151; margin-top: 30px; }
+          .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 20px 0; }
+          .stat-card { background: #f3f4f6; padding: 20px; border-radius: 8px; text-align: center; }
+          .stat-value { font-size: 24px; font-weight: bold; color: #0891b2; }
+          .stat-label { color: #6b7280; font-size: 14px; }
+          table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+          th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: right; }
+          th { background: #f9fafb; font-weight: 600; }
+          .footer { margin-top: 40px; text-align: center; color: #9ca3af; font-size: 12px; }
+          @media print { body { padding: 20px; } }
+        </style>
+      </head>
+      <body>
+        <h1>🚀 ${reportData.title}</h1>
+        <p>تاريخ التقرير: ${reportData.date}</p>
+        
+        <h2>📊 الإحصائيات العامة</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">${reportData.stats.totalIdeas}</div>
+            <div class="stat-label">إجمالي الأفكار</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${reportData.stats.activeIdeas}</div>
+            <div class="stat-label">أفكار نشطة</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${reportData.stats.approvedIdeas}</div>
+            <div class="stat-label">أفكار معتمدة</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${reportData.stats.avgScore}%</div>
+            <div class="stat-label">متوسط التقييم</div>
+          </div>
+        </div>
+        
+        <h2>🎯 المبادرات الاستراتيجية</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>العنوان</th>
+              <th>الحالة</th>
+              <th>التقدم</th>
+              <th>الميزانية</th>
+              <th>المصروف</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${reportData.initiatives.map(i => `
+              <tr>
+                <td>${i.title}</td>
+                <td>${i.status === 'active' ? 'نشط' : i.status === 'completed' ? 'مكتمل' : 'متوقف'}</td>
+                <td>${i.progress}%</td>
+                <td>${(i.budget / 1000000).toFixed(1)}م</td>
+                <td>${(i.budgetSpent / 1000000).toFixed(1)}م</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        
+        <h2>💡 أفضل الأفكار</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>العنوان</th>
+              <th>التقييم</th>
+              <th>الحالة</th>
+              <th>التصويتات</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${reportData.topIdeas.map(i => `
+              <tr>
+                <td>${i.title}</td>
+                <td>${i.score}%</td>
+                <td>${i.status}</td>
+                <td>✅ ${i.votes.up} | ❌ ${i.votes.down}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        
+        <div class="footer">
+          <p>تم إنشاء هذا التقرير بواسطة UPLINK 5.0 - Innovation Pipeline</p>
+          <p>© ${new Date().getFullYear()} منصة الابتكار الوطنية</p>
+        </div>
+      </body>
+      </html>
+    `;
+
+    // Open print dialog
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+      toast.success("تم فتح نافذة الطباعة - يمكنك حفظه ك PDF");
+    } else {
+      toast.error("فشل في فتح نافذة الطباعة");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background" dir={isRTL ? "rtl" : "ltr"}>
       {/* Header */}
@@ -903,6 +1047,10 @@ export default function InnovationPipeline() {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={() => handleExportPDF()}>
+              <Download className="w-4 h-4 mr-1" />
+              تصدير PDF
+            </Button>
             <Button variant="outline" size="sm">
               <Bell className="w-4 h-4" />
             </Button>

@@ -114,6 +114,10 @@ export default function Home() {
             <a href="#engines" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المحركات</a>
             <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المميزات</a>
             <a href="#partners" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الشركاء</a>
+            <Link href="/pipeline" className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1">
+              <Layers className="w-4 h-4" />
+              Pipeline
+            </Link>
             <Link href="/academy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الأكاديمية</Link>
           </div>
           

@@ -17,7 +17,16 @@ import {
   ambassadors, InsertAmbassador, Ambassador,
   innovationHubs, InsertInnovationHub, InnovationHub,
   notifications, InsertNotification, Notification,
-  analytics, InsertAnalytics
+  analytics, InsertAnalytics,
+  pipelineInitiatives, InsertPipelineInitiative, PipelineInitiative,
+  pipelineChallenges, InsertPipelineChallenge, PipelineChallenge,
+  pipelineIdeas, InsertPipelineIdea, PipelineIdea,
+  pipelineClusters, InsertPipelineCluster, PipelineCluster,
+  pipelineHypotheses, InsertPipelineHypothesis, PipelineHypothesis,
+  pipelineExperiments, InsertPipelineExperiment, PipelineExperiment,
+  pipelineVotes, InsertPipelineVote,
+  pipelineTrends, InsertPipelineTrend, PipelineTrend,
+  pipelineGamification, InsertPipelineGamification
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -437,5 +446,292 @@ export async function getDashboardStats() {
     totalRevenue: revenueSum?.sum || 0,
     totalIP: ipCount?.count || 0,
     totalChallenges: challengeCount?.count || 0
+  };
+}
+
+
+// ============================================
+// PIPELINE INITIATIVE OPERATIONS
+// ============================================
+export async function createPipelineInitiative(data: InsertPipelineInitiative) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(pipelineInitiatives).values(data);
+  return result[0].insertId;
+}
+
+export async function getPipelineInitiatives(userId?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  if (userId) {
+    return db.select().from(pipelineInitiatives).where(eq(pipelineInitiatives.userId, userId)).orderBy(desc(pipelineInitiatives.createdAt));
+  }
+  return db.select().from(pipelineInitiatives).orderBy(desc(pipelineInitiatives.createdAt));
+}
+
+export async function getPipelineInitiativeById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(pipelineInitiatives).where(eq(pipelineInitiatives.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updatePipelineInitiative(id: number, data: Partial<InsertPipelineInitiative>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(pipelineInitiatives).set({ ...data, updatedAt: new Date() }).where(eq(pipelineInitiatives.id, id));
+}
+
+export async function deletePipelineInitiative(id: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.delete(pipelineInitiatives).where(eq(pipelineInitiatives.id, id));
+}
+
+// ============================================
+// PIPELINE CHALLENGE OPERATIONS
+// ============================================
+export async function createPipelineChallenge(data: InsertPipelineChallenge) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(pipelineChallenges).values(data);
+  return result[0].insertId;
+}
+
+export async function getPipelineChallengesByInitiative(initiativeId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(pipelineChallenges).where(eq(pipelineChallenges.initiativeId, initiativeId)).orderBy(desc(pipelineChallenges.createdAt));
+}
+
+export async function getPipelineChallengeById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(pipelineChallenges).where(eq(pipelineChallenges.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updatePipelineChallenge(id: number, data: Partial<InsertPipelineChallenge>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(pipelineChallenges).set({ ...data, updatedAt: new Date() }).where(eq(pipelineChallenges.id, id));
+}
+
+// ============================================
+// PIPELINE IDEA OPERATIONS
+// ============================================
+export async function createPipelineIdea(data: InsertPipelineIdea) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(pipelineIdeas).values(data);
+  // Update challenge ideas count
+  await db.update(pipelineChallenges).set({ 
+    ideasCount: sql`${pipelineChallenges.ideasCount} + 1`,
+    updatedAt: new Date() 
+  }).where(eq(pipelineChallenges.id, data.challengeId));
+  return result[0].insertId;
+}
+
+export async function getPipelineIdeasByChallenge(challengeId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(pipelineIdeas).where(eq(pipelineIdeas.challengeId, challengeId)).orderBy(desc(pipelineIdeas.votes));
+}
+
+export async function getPipelineIdeaById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(pipelineIdeas).where(eq(pipelineIdeas.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updatePipelineIdea(id: number, data: Partial<InsertPipelineIdea>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(pipelineIdeas).set({ ...data, updatedAt: new Date() }).where(eq(pipelineIdeas.id, id));
+}
+
+export async function voteOnIdea(ideaId: number, userId: number, voteType: 'upvote' | 'downvote') {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if user already voted
+  const existing = await db.select().from(pipelineVotes).where(and(eq(pipelineVotes.ideaId, ideaId), eq(pipelineVotes.userId, userId))).limit(1);
+  
+  if (existing.length > 0) {
+    // Update existing vote
+    await db.update(pipelineVotes).set({ voteType }).where(eq(pipelineVotes.id, existing[0].id));
+  } else {
+    // Create new vote
+    await db.insert(pipelineVotes).values({ ideaId, userId, voteType });
+  }
+  
+  // Recalculate votes
+  const [upvotes] = await db.select({ count: sql<number>`count(*)` }).from(pipelineVotes).where(and(eq(pipelineVotes.ideaId, ideaId), eq(pipelineVotes.voteType, 'upvote')));
+  const [downvotes] = await db.select({ count: sql<number>`count(*)` }).from(pipelineVotes).where(and(eq(pipelineVotes.ideaId, ideaId), eq(pipelineVotes.voteType, 'downvote')));
+  
+  const totalVotes = (upvotes?.count || 0) - (downvotes?.count || 0);
+  await db.update(pipelineIdeas).set({ votes: totalVotes, updatedAt: new Date() }).where(eq(pipelineIdeas.id, ideaId));
+  
+  return totalVotes;
+}
+
+// ============================================
+// PIPELINE CLUSTER OPERATIONS
+// ============================================
+export async function createPipelineCluster(data: InsertPipelineCluster) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(pipelineClusters).values(data);
+  return result[0].insertId;
+}
+
+export async function getPipelineClustersByInitiative(initiativeId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(pipelineClusters).where(eq(pipelineClusters.initiativeId, initiativeId)).orderBy(desc(pipelineClusters.createdAt));
+}
+
+export async function assignIdeaToCluster(ideaId: number, clusterId: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(pipelineIdeas).set({ clusterId, updatedAt: new Date() }).where(eq(pipelineIdeas.id, ideaId));
+  // Update cluster ideas count
+  const [count] = await db.select({ count: sql<number>`count(*)` }).from(pipelineIdeas).where(eq(pipelineIdeas.clusterId, clusterId));
+  await db.update(pipelineClusters).set({ ideasCount: count?.count || 0, updatedAt: new Date() }).where(eq(pipelineClusters.id, clusterId));
+}
+
+// ============================================
+// PIPELINE HYPOTHESIS OPERATIONS
+// ============================================
+export async function createPipelineHypothesis(data: InsertPipelineHypothesis) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(pipelineHypotheses).values(data);
+  return result[0].insertId;
+}
+
+export async function getPipelineHypothesesByIdea(ideaId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(pipelineHypotheses).where(eq(pipelineHypotheses.ideaId, ideaId)).orderBy(desc(pipelineHypotheses.createdAt));
+}
+
+export async function updatePipelineHypothesis(id: number, data: Partial<InsertPipelineHypothesis>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(pipelineHypotheses).set({ ...data, updatedAt: new Date() }).where(eq(pipelineHypotheses.id, id));
+}
+
+// ============================================
+// PIPELINE EXPERIMENT OPERATIONS
+// ============================================
+export async function createPipelineExperiment(data: InsertPipelineExperiment) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(pipelineExperiments).values(data);
+  return result[0].insertId;
+}
+
+export async function getPipelineExperimentsByHypothesis(hypothesisId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(pipelineExperiments).where(eq(pipelineExperiments.hypothesisId, hypothesisId)).orderBy(desc(pipelineExperiments.createdAt));
+}
+
+export async function updatePipelineExperiment(id: number, data: Partial<InsertPipelineExperiment>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(pipelineExperiments).set({ ...data, updatedAt: new Date() }).where(eq(pipelineExperiments.id, id));
+}
+
+// ============================================
+// PIPELINE TRENDS OPERATIONS
+// ============================================
+export async function createPipelineTrend(data: InsertPipelineTrend) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(pipelineTrends).values(data);
+  return result[0].insertId;
+}
+
+export async function getPipelineTrends() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(pipelineTrends).orderBy(desc(pipelineTrends.relevanceScore));
+}
+
+export async function updatePipelineTrend(id: number, data: Partial<InsertPipelineTrend>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(pipelineTrends).set({ ...data, updatedAt: new Date() }).where(eq(pipelineTrends.id, id));
+}
+
+// ============================================
+// PIPELINE GAMIFICATION OPERATIONS
+// ============================================
+export async function getOrCreateGamification(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await db.select().from(pipelineGamification).where(eq(pipelineGamification.userId, userId)).limit(1);
+  if (existing.length > 0) return existing[0];
+  
+  await db.insert(pipelineGamification).values({ userId });
+  const result = await db.select().from(pipelineGamification).where(eq(pipelineGamification.userId, userId)).limit(1);
+  return result[0];
+}
+
+export async function addGamificationPoints(userId: number, points: number, action: string) {
+  const db = await getDb();
+  if (!db) return;
+  
+  const gamification = await getOrCreateGamification(userId);
+  const newPoints = (gamification.totalPoints || 0) + points;
+  const newLevel = Math.floor(newPoints / 100) + 1;
+  
+  const updateData: Partial<InsertPipelineGamification> = {
+    totalPoints: newPoints,
+    level: newLevel,
+    lastActivityAt: new Date()
+  };
+  
+  // Update specific counters based on action
+  if (action === 'idea_submitted') updateData.ideasSubmitted = (gamification.ideasSubmitted || 0) + 1;
+  if (action === 'idea_approved') updateData.ideasApproved = (gamification.ideasApproved || 0) + 1;
+  if (action === 'experiment_run') updateData.experimentsRun = (gamification.experimentsRun || 0) + 1;
+  if (action === 'hypothesis_validated') updateData.hypothesesValidated = (gamification.hypothesesValidated || 0) + 1;
+  if (action === 'vote_given') updateData.votesGiven = (gamification.votesGiven || 0) + 1;
+  
+  await db.update(pipelineGamification).set({ ...updateData, updatedAt: new Date() }).where(eq(pipelineGamification.userId, userId));
+}
+
+export async function getLeaderboard(limit = 10) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(pipelineGamification).orderBy(desc(pipelineGamification.totalPoints)).limit(limit);
+}
+
+// ============================================
+// PIPELINE STATISTICS
+// ============================================
+export async function getPipelineStats(userId?: number) {
+  const db = await getDb();
+  if (!db) return { initiatives: 0, challenges: 0, ideas: 0, experiments: 0, trends: 0 };
+  
+  const whereClause = userId ? eq(pipelineInitiatives.userId, userId) : undefined;
+  
+  const [initiativeCount] = await db.select({ count: sql<number>`count(*)` }).from(pipelineInitiatives).where(whereClause);
+  const [challengeCount] = await db.select({ count: sql<number>`count(*)` }).from(pipelineChallenges);
+  const [ideaCount] = await db.select({ count: sql<number>`count(*)` }).from(pipelineIdeas);
+  const [experimentCount] = await db.select({ count: sql<number>`count(*)` }).from(pipelineExperiments);
+  const [trendCount] = await db.select({ count: sql<number>`count(*)` }).from(pipelineTrends);
+  
+  return {
+    initiatives: initiativeCount?.count || 0,
+    challenges: challengeCount?.count || 0,
+    ideas: ideaCount?.count || 0,
+    experiments: experimentCount?.count || 0,
+    trends: trendCount?.count || 0
   };
 }

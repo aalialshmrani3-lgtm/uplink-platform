@@ -166,3 +166,11 @@
 - [x] Gamification والتحفيز (نظام نقاط وشارات)
 - [x] تحسين تجربة المستخدم والتصميم
 - [ ] ربط Pipeline بقاعدة البيانات (يتطلب تطوير إضافي)
+
+
+## Phase 8: Follow-up Improvements
+- [x] إضافة رابط Pipeline في القائمة الرئيسية (Header/Navigation)
+- [x] إنشاء جداول قاعدة البيانات لـ Pipeline (initiatives, challenges, ideas, clusters, hypotheses, experiments)
+- [x] إنشاء API endpoints لـ Pipeline (CRUD operations)
+- [x] ربط صفحة Pipeline بقاعدة البيانات (البنية التحتية جاهزة)
+- [x] إضافة تصدير تقارير PDF للـ Pipeline
