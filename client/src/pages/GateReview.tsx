@@ -185,8 +185,8 @@ export default function GateReview() {
   const stats = {
     total: innovations.length,
     active: innovations.filter((i) => i.status === "active").length,
-    parked: innovations.filter((i) => i.status === "parked").length,
-    killed: innovations.filter((i) => i.status === "killed").length,
+    parked: innovations.filter((i) => i.recommendation === "park").length,
+    killed: innovations.filter((i) => i.recommendation === "kill").length,
     totalResources: innovations.reduce((sum, i) => sum + i.resourcesConsumed, 0),
   };
 

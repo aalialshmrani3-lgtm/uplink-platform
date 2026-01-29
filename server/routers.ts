@@ -811,7 +811,7 @@ Respond in JSON format:
               stage: "idea",
               status: "draft",
               pipelineIdeaId: id,
-              tags: idea.tags ? JSON.parse(idea.tags) : []
+              tags: idea.tags ? (typeof idea.tags === 'string' ? JSON.parse(idea.tags) : idea.tags) : []
             });
             
             // Link project back to idea

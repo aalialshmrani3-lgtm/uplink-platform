@@ -873,8 +873,7 @@ export default function InnovationPipeline() {
       title: newIdea.title,
       description: newIdea.description,
       challengeId: parseInt(selectedChallenge),
-      tags: newIdea.tags,
-      status: "active"
+      tags: newIdea.tags.split(',').map(t => t.trim()).filter(t => t.length > 0)
     });
   };
 
