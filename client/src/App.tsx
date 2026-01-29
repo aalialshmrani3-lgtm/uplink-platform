@@ -237,13 +237,13 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <LanguageProvider>
-        <TooltipProvider>
+          <TooltipProvider>
           {showSplash && !hasSeenSplash && (
             <SplashScreen onComplete={handleSplashComplete} />
           )}
           <Toaster />
           <Router />
-        </TooltipProvider>
+          </TooltipProvider>
         </LanguageProvider>
       </ThemeProvider>
     </ErrorBoundary>

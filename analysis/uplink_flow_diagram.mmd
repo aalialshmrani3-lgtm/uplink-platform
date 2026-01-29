@@ -1,0 +1,165 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#00d4ff', 'primaryTextColor': '#fff', 'primaryBorderColor': '#00d4ff', 'lineColor': '#666', 'secondaryColor': '#1a1a2e', 'tertiaryColor': '#16213e'}}}%%
+
+flowchart TB
+    subgraph ENTRY["🌐 نقطة الدخول - Entry Point"]
+        direction LR
+        A1[("👤 مبتكر<br/>Innovator")]
+        A2[("🏢 مستثمر<br/>Investor")]
+        A3[("🏛️ جهة/شركة<br/>Organization")]
+        A4[("👨‍🏫 مرشد<br/>Mentor")]
+    end
+
+    subgraph REGISTER["📝 التسجيل والتحقق - Registration"]
+        B1["تسجيل حساب جديد<br/>New Account"]
+        B2["تسجيل دخول OAuth<br/>Manus OAuth"]
+        B3["إكمال الملف الشخصي<br/>Complete Profile"]
+        B4{"تحديد نوع المستخدم<br/>User Type"}
+    end
+
+    subgraph UPLINK1["🔐 UPLINK1 - الملكية الفكرية"]
+        direction TB
+        C1["تسجيل ابتكار جديد<br/>New Innovation"]
+        C2["رفع الوثائق<br/>Upload Documents"]
+        C3["تقييم AI ثلاثي<br/>AI Triple Assessment"]
+        C4{"نوع التقييم<br/>Assessment Type"}
+        C5["تقييم ابتكاري<br/>Innovation Score"]
+        C6["تقييم تجاري<br/>Commercial Score"]
+        C7["تقييم إرشادي<br/>Mentorship Score"]
+        C8["توثيق Blockchain<br/>Blockchain Record"]
+        C9["تكامل SAIP/WIPO<br/>IP Integration"]
+    end
+
+    subgraph UPLINK2["🎯 UPLINK2 - التحديات والمطابقة"]
+        direction TB
+        D1{"نوع الفعالية<br/>Event Type"}
+        D2["فعالية تجارية<br/>Business Event"]
+        D3["فعالية مجانية<br/>Free Event"]
+        D4["هاكاثون/مسابقة<br/>Hackathon"]
+        D5["ورشة عمل/دورة<br/>Workshop"]
+        D6["ربط المجتمعات<br/>Community Match"]
+        D7["جلب الرعاة<br/>Sponsor Match"]
+        D8["نشر للمجتمع<br/>Publish to Community"]
+    end
+
+    subgraph UPLINK3["📜 UPLINK3 - السوق والعقود"]
+        direction TB
+        E1["سوق الابتكارات<br/>Innovation Market"]
+        E2["عرض المشاريع<br/>Project Listing"]
+        E3["طلبات الاستثمار<br/>Investment Requests"]
+        E4["العقود الذكية<br/>Smart Contracts"]
+        E5["نظام Escrow<br/>Escrow System"]
+        E6["توقيع رقمي<br/>Digital Signature"]
+        E7["تحويل الأموال<br/>Fund Transfer"]
+    end
+
+    subgraph SUPPORT["🛠️ الأنظمة الداعمة"]
+        direction TB
+        F1["الأكاديمية<br/>Academy"]
+        F2["التحليلات<br/>Analytics"]
+        F3["الرسائل<br/>Messages"]
+        F4["الإشعارات<br/>Notifications"]
+        F5["التقويم<br/>Calendar"]
+        F6["اللوحة البيضاء<br/>Whiteboard"]
+        F7["التوصيات AI<br/>AI Recommendations"]
+    end
+
+    subgraph ADMIN["⚙️ الإدارة"]
+        direction LR
+        G1["لوحة المشرفين<br/>Admin Panel"]
+        G2["إدارة المستخدمين<br/>User Management"]
+        G3["إدارة المشاريع<br/>Project Management"]
+        G4["الموافقات<br/>Approvals"]
+    end
+
+    subgraph OUTPUT["📊 المخرجات"]
+        direction LR
+        H1[("✅ مشروع ممول<br/>Funded Project")]
+        H2[("📄 ملكية فكرية<br/>IP Registered")]
+        H3[("🤝 شراكة<br/>Partnership")]
+        H4[("🎓 تدريب<br/>Training")]
+    end
+
+    %% Connections - Entry to Register
+    A1 --> B1
+    A2 --> B1
+    A3 --> B1
+    A4 --> B1
+    B1 --> B2
+    B2 --> B3
+    B3 --> B4
+
+    %% User Type Routing
+    B4 -->|"مبتكر"| C1
+    B4 -->|"جهة/شركة"| D1
+    B4 -->|"مستثمر"| E1
+    B4 -->|"مرشد"| F1
+
+    %% UPLINK1 Flow
+    C1 --> C2
+    C2 --> C3
+    C3 --> C4
+    C4 --> C5
+    C4 --> C6
+    C4 --> C7
+    C5 --> C8
+    C6 --> C8
+    C7 --> C8
+    C8 --> C9
+    C9 --> E2
+
+    %% UPLINK2 Flow
+    D1 -->|"تجاري"| D2
+    D1 -->|"مجاني"| D3
+    D2 --> D4
+    D3 --> D5
+    D4 --> D6
+    D5 --> D8
+    D6 --> D7
+    D7 --> E4
+
+    %% UPLINK3 Flow
+    E1 --> E2
+    E2 --> E3
+    E3 --> E4
+    E4 --> E5
+    E5 --> E6
+    E6 --> E7
+
+    %% Support Systems
+    C3 -.-> F7
+    E2 -.-> F2
+    E4 -.-> F3
+    D6 -.-> F4
+    D7 -.-> F5
+
+    %% Admin Oversight
+    G1 --> G2
+    G1 --> G3
+    G1 --> G4
+    G4 -.-> C9
+    G4 -.-> E4
+
+    %% Outputs
+    E7 --> H1
+    C9 --> H2
+    E4 --> H3
+    F1 --> H4
+
+    %% Styling
+    classDef entry fill:#00d4ff,stroke:#00d4ff,color:#000
+    classDef register fill:#4ade80,stroke:#4ade80,color:#000
+    classDef uplink1 fill:#f59e0b,stroke:#f59e0b,color:#000
+    classDef uplink2 fill:#8b5cf6,stroke:#8b5cf6,color:#000
+    classDef uplink3 fill:#ec4899,stroke:#ec4899,color:#000
+    classDef support fill:#06b6d4,stroke:#06b6d4,color:#000
+    classDef admin fill:#ef4444,stroke:#ef4444,color:#fff
+    classDef output fill:#22c55e,stroke:#22c55e,color:#000
+
+    class A1,A2,A3,A4 entry
+    class B1,B2,B3,B4 register
+    class C1,C2,C3,C4,C5,C6,C7,C8,C9 uplink1
+    class D1,D2,D3,D4,D5,D6,D7,D8 uplink2
+    class E1,E2,E3,E4,E5,E6,E7 uplink3
+    class F1,F2,F3,F4,F5,F6,F7 support
+    class G1,G2,G3,G4 admin
+    class H1,H2,H3,H4 output
