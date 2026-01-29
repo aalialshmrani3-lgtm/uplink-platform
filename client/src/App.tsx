@@ -30,6 +30,12 @@ const Calendar = lazy(() => import("./pages/Calendar"));
 const Recommendations = lazy(() => import("./pages/Recommendations"));
 const Admin = lazy(() => import("./pages/Admin"));
 const InnovationPipeline = lazy(() => import("./pages/InnovationPipeline"));
+const WhyUplink = lazy(() => import("./pages/WhyUplink"));
+const Testimonials = lazy(() => import("./pages/Testimonials"));
+const Integrations = lazy(() => import("./pages/Integrations"));
+const ROICalculator = lazy(() => import("./pages/ROICalculator"));
+const HelpCenter = lazy(() => import("./pages/HelpCenter"));
+const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -209,6 +215,12 @@ function Router() {
         <Route path="/recommendations" component={Recommendations} />
         <Route path="/admin" component={Admin} />
         <Route path="/pipeline" component={InnovationPipeline} />
+        <Route path="/why-uplink" component={WhyUplink} />
+        <Route path="/testimonials" component={Testimonials} />
+        <Route path="/integrations" component={Integrations} />
+        <Route path="/roi-calculator" component={ROICalculator} />
+        <Route path="/help" component={HelpCenter} />
+        <Route path="/case-studies" component={CaseStudies} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
