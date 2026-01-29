@@ -47,6 +47,7 @@ const HypothesisManagement = lazy(() => import("./pages/HypothesisManagement"));
 const RATTesting = lazy(() => import("./pages/RATTesting"));
 const GateReview = lazy(() => import("./pages/GateReview"));
 const LearningKnowledgeBase = lazy(() => import("./pages/LearningKnowledgeBase"));
+const AIInsightsDashboard = lazy(() => import("./pages/AIInsightsDashboard"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -243,6 +244,7 @@ function Router() {
         <Route path="/rat-testing" component={RATTesting} />
         <Route path="/gate-review" component={GateReview} />
         <Route path="/learning-knowledge" component={LearningKnowledgeBase} />
+        <Route path="/ai-insights" component={AIInsightsDashboard} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
