@@ -120,6 +120,10 @@ export default function Home() {
               <Layers className="w-4 h-4" />
               Pipeline
             </Link>
+            <Link href="/ai-insights" className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1">
+              <Brain className="w-4 h-4" />
+              AI Insights
+            </Link>
             <Link href="/help" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المساعدة</Link>
           </div>
           
