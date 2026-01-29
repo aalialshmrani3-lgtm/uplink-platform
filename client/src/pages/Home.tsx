@@ -403,10 +403,22 @@ export default function Home() {
                   </Button>
                 </a>
               )}
-              <Link href="/academy">
-                <Button size="lg" variant="outline" className="text-lg px-10 h-14">
-                  <GraduationCap className="w-5 h-5 ml-2" />
-                  تعلم في الأكاديمية
+                 <Link href="/three-engines">
+                <Button size="lg" variant="outline" className="text-lg">
+                  <Zap className="ml-2" size={20} />
+                  المحركات الثلاثة
+                </Button>
+              </Link>
+              <Link href="/beta-programs">
+                <Button size="lg" variant="outline" className="text-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+                  <Rocket className="ml-2" size={20} />
+                  البرامج التجريبية
+                </Button>
+              </Link>
+              <Link href="/unified-dashboard">
+                <Button size="lg" variant="outline" className="text-lg">
+                  <BarChart3 className="ml-2" size={20} />
+                  لوحة التحكم الموحدة
                 </Button>
               </Link>
             </div>

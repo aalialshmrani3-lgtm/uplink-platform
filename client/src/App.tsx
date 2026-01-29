@@ -40,6 +40,8 @@ const ThreeEngines = lazy(() => import("./pages/ThreeEngines"));
 const PredictiveInnovation = lazy(() => import("./pages/PredictiveInnovation"));
 const GlobalInnovationNetworks = lazy(() => import("./pages/GlobalInnovationNetworks"));
 const SustainabilityAIEthics = lazy(() => import("./pages/SustainabilityAIEthics"));
+const BetaPrograms = lazy(() => import("./pages/BetaPrograms"));
+const UnifiedDashboard = lazy(() => import("./pages/UnifiedDashboard"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -229,6 +231,8 @@ function Router() {
         <Route path="/predictive-innovation" component={PredictiveInnovation} />
         <Route path="/global-networks" component={GlobalInnovationNetworks} />
         <Route path="/sustainability-ai-ethics" component={SustainabilityAIEthics} />
+        <Route path="/beta-programs" component={BetaPrograms} />
+        <Route path="/unified-dashboard" component={UnifiedDashboard} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
