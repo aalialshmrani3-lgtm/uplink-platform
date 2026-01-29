@@ -386,3 +386,21 @@
   - [x] API endpoints لحفظ نتائج الأفكار (نجاح/فشل)
   - [x] واجهة للمشرفين لتصنيف الأفكار (admin only)
   - [x] تصدير بيانات التدريب لإعادة تدريب النموذج (getTrainingData)
+
+## Phase 19: Advanced ML Features & Admin Tools
+- [x] إنشاء واجهة Admin Dashboard لتصنيف الأفكار
+  - [x] صفحة IdeaClassification.tsx
+  - [x] عرض الأفكار المعلقة (pending)
+  - [x] نموذج تصنيف سريع (نجاح/فشل + ملاحظات)
+  - [x] إحصائيات التصنيف
+- [x] تنفيذ نظام إعادة تدريب تلقائي
+  - [x] Script Python لإعادة التدريب (retrain_model.py)
+  - [x] API endpoint لتشغيل إعادة التدريب (retrainModel)
+  - [x] زر يدوي في واجهة Admin (يظهر عند 10+ فكرة مصنفة)
+  - [x] حفظ نسخ النماذج التاريخية (models_history/)
+- [x] إضافة تحليلات أداء النموذج
+  - [x] صفحة ModelPerformance.tsx
+  - [x] مقاييس الدقة (Accuracy, Precision, Recall, F1)
+  - [x] مقارنة التنبؤات vs النتائج الفعلية
+  - [x] Confusion Matrix (مصفوفة الارتباك)
+  - [x] Feature Importance (أهمية الميزات)

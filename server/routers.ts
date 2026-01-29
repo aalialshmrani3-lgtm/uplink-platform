@@ -1161,6 +1161,44 @@ Provide response in JSON format:
       const dbOutcomes = await import("./db_idea_outcomes");
       return await dbOutcomes.getTrainingData();
     }),
+
+    // Trigger model retraining (admin only)
+    retrainModel: protectedProcedure.mutation(async ({ ctx }) => {
+      if (ctx.user.role !== "admin") {
+        throw new Error("Unauthorized: Admin only");
+      }
+
+      const { spawn } = await import("child_process");
+      const path = await import("path");
+
+      return new Promise((resolve, reject) => {
+        const scriptPath = path.join(process.cwd(), "ai-services/prediction/retrain_model.py");
+        const pythonProcess = spawn("python3", [scriptPath], {
+          env: { ...process.env, API_BASE_URL: `http://localhost:${process.env.PORT || 3000}` },
+        });
+
+        let output = "";
+        let errorOutput = "";
+
+        pythonProcess.stdout.on("data", (data) => {
+          output += data.toString();
+          console.log(`[Retrain] ${data.toString()}`);
+        });
+
+        pythonProcess.stderr.on("data", (data) => {
+          errorOutput += data.toString();
+          console.error(`[Retrain Error] ${data.toString()}`);
+        });
+
+        pythonProcess.on("close", (code) => {
+          if (code === 0) {
+            resolve({ success: true, output });
+          } else {
+            reject(new Error(`Retraining failed with code ${code}: ${errorOutput}`));
+          }
+        });
+      });
+    }),
   }),
 });
 
