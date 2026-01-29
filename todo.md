@@ -404,3 +404,26 @@
   - [x] مقارنة التنبؤات vs النتائج الفعلية
   - [x] Confusion Matrix (مصفوفة الارتباك)
   - [x] Feature Importance (أهمية الميزات)
+
+
+## Phase 20: Data Export, A/B Testing & Public API
+- [x] نظام تصدير البيانات
+  - [x] صفحة DataExport.tsx
+  - [x] تصدير CSV
+  - [x] تصدير JSON
+  - [x] تصدير Excel (.xls)
+  - [x] فلترة البيانات قبل التصدير
+- [x] A/B Testing للنماذج
+  - [x] تدريب نماذج متعددة (XGBoost, Random Forest, Neural Network)
+  - [x] مقارنة الأداء (Accuracy, Precision, Recall, F1 Score, CV)
+  - [x] اختيار النموذج الأفضل تلقائيًا (بناءً على F1 Score)
+  - [x] حفظ نتائج المقارنة (ab_testing_results/)
+  - [x] صفحة ABTesting.tsx للمشرفين
+- [x] API عامة للتنبؤ
+  - [x] Public prediction endpoint (/api/public/v1/predict)
+  - [x] API key management system (database + helpers)
+  - [x] Rate limiting (1000 requests/hour default)
+  - [x] Usage tracking (api_usage table)
+  - [x] API documentation page (APIManagement.tsx)
+  - [x] API key authentication middleware
+  - [x] tRPC endpoints (create, list, revoke, usage)

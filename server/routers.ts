@@ -1162,6 +1162,44 @@ Provide response in JSON format:
       return await dbOutcomes.getTrainingData();
     }),
 
+    // Run A/B testing (admin only)
+    runABTesting: protectedProcedure.mutation(async ({ ctx }) => {
+      if (ctx.user.role !== "admin") {
+        throw new Error("Unauthorized: Admin only");
+      }
+
+      const { spawn } = await import("child_process");
+      const path = await import("path");
+
+      return new Promise((resolve, reject) => {
+        const scriptPath = path.join(process.cwd(), "ai-services/prediction/ab_testing.py");
+        const pythonProcess = spawn("python3", [scriptPath], {
+          env: { ...process.env, API_BASE_URL: `http://localhost:${process.env.PORT || 3000}` },
+        });
+
+        let output = "";
+        let errorOutput = "";
+
+        pythonProcess.stdout.on("data", (data) => {
+          output += data.toString();
+          console.log(`[A/B Testing] ${data.toString()}`);
+        });
+
+        pythonProcess.stderr.on("data", (data) => {
+          errorOutput += data.toString();
+          console.error(`[A/B Testing Error] ${data.toString()}`);
+        });
+
+        pythonProcess.on("close", (code) => {
+          if (code === 0) {
+            resolve({ success: true, output });
+          } else {
+            reject(new Error(`A/B Testing failed with code ${code}: ${errorOutput}`));
+          }
+        });
+      });
+    }),
+
     // Trigger model retraining (admin only)
     retrainModel: protectedProcedure.mutation(async ({ ctx }) => {
       if (ctx.user.role !== "admin") {
@@ -1199,6 +1237,53 @@ Provide response in JSON format:
         });
       });
     }),
+  }),
+
+  // ============================================
+  // API KEY MANAGEMENT
+  // ============================================
+  apiKeys: router({
+    // Create new API key
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string().min(1).max(255),
+          rateLimit: z.number().optional(),
+          expiresAt: z.date().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const dbApiKeys = await import("./db_api_keys");
+        return await dbApiKeys.createApiKey({
+          userId: ctx.user.id,
+          name: input.name,
+          rateLimit: input.rateLimit,
+          expiresAt: input.expiresAt,
+        });
+      }),
+
+    // Get user's API keys
+    list: protectedProcedure.query(async ({ ctx }) => {
+      const dbApiKeys = await import("./db_api_keys");
+      return await dbApiKeys.getUserApiKeys(ctx.user.id);
+    }),
+
+    // Revoke API key
+    revoke: protectedProcedure
+      .input(z.object({ keyId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const dbApiKeys = await import("./db_api_keys");
+        await dbApiKeys.revokeApiKey(input.keyId, ctx.user.id);
+        return { success: true };
+      }),
+
+    // Get API key usage stats
+    usage: protectedProcedure
+      .input(z.object({ keyId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const dbApiKeys = await import("./db_api_keys");
+        return await dbApiKeys.getApiKeyUsageStats(input.keyId);
+      }),
   }),
 });
 

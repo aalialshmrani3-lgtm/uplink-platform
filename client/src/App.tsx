@@ -50,6 +50,9 @@ const LearningKnowledgeBase = lazy(() => import("./pages/LearningKnowledgeBase")
 const AIInsightsDashboard = lazy(() => import("./pages/AIInsightsDashboard"));
 const IdeaClassification = lazy(() => import("./pages/IdeaClassification"));
 const ModelPerformance = lazy(() => import("./pages/ModelPerformance"));
+const DataExport = lazy(() => import("./pages/DataExport"));
+const ABTesting = lazy(() => import("./pages/ABTesting"));
+const APIManagement = lazy(() => import("./pages/APIManagement"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -249,6 +252,9 @@ function Router() {
         <Route path="/ai-insights" component={AIInsightsDashboard} />
         <Route path="/admin/idea-classification" component={IdeaClassification} />
         <Route path="/admin/model-performance" component={ModelPerformance} />
+        <Route path="/admin/data-export" component={DataExport} />
+        <Route path="/admin/ab-testing" component={ABTesting} />
+        <Route path="/api-management" component={APIManagement} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
