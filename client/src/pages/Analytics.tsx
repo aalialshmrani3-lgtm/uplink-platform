@@ -178,7 +178,30 @@ export default function Analytics() {
               <RefreshCw className="w-4 h-4" />
             </Button>
             
-            <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
+            <Button 
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white"
+              onClick={() => {
+                // إنشاء محتوى التقرير
+                const reportContent = `
+                  UPLINK 5.0 - تقرير التحليلات
+                  ============================
+                  
+                  إجمالي المشاريع: 380 (+24%)
+                  إجمالي التمويل: 60.6M دولار (+18%)
+                  المستثمرين النشطين: 226 (+32%)
+                  براءات الاختراع: 145 (+15%)
+                  
+                  تاريخ التقرير: ${new Date().toLocaleDateString('ar-SA')}
+                `;
+                const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `UPLINK_Analytics_Report_${new Date().toISOString().split('T')[0]}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+              }}
+            >
               <Download className="w-4 h-4 ml-2" />
               تصدير التقرير
             </Button>
@@ -204,7 +227,7 @@ export default function Analytics() {
             change="+18%"
             changeType="up"
             icon={DollarSign}
-            description="ريال سعودي"
+            description="دولار أمريكي"
             gradient="bg-gradient-to-br from-emerald-500 to-teal-600"
           />
           <StatCard

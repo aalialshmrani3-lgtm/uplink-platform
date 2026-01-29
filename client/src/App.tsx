@@ -24,6 +24,8 @@ const Contracts = lazy(() => import("./pages/Contracts"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const Messages = lazy(() => import("./pages/Messages"));
 const Whiteboard = lazy(() => import("./pages/Whiteboard"));
+const Notifications = lazy(() => import("./pages/Notifications"));
+const Calendar = lazy(() => import("./pages/Calendar"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -123,7 +125,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
         <span className="text-white/80 text-2xl mr-2">5.0</span>
       </h1>
       
-      <p className="relative z-10 text-white/50 text-lg mb-12">منصة الابتكار الوطنية</p>
+      <p className="relative z-10 text-white/50 text-lg mb-12">Global Innovation Platform</p>
 
       {/* Progress Bar */}
       <div className="relative z-10 w-64">
@@ -198,6 +200,8 @@ function Router() {
         <Route path="/analytics" component={Analytics} />
         <Route path="/messages" component={Messages} />
         <Route path="/whiteboard" component={Whiteboard} />
+        <Route path="/notifications" component={Notifications} />
+        <Route path="/calendar" component={Calendar} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

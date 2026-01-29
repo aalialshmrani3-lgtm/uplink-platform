@@ -12,7 +12,7 @@ import {
   Paperclip, Smile, Image as ImageIcon, File, Star, Archive,
   Trash2, ChevronLeft, Shield, Lock, CheckCheck, Check,
   Users, Building2, Lightbulb, Bell, Settings, Filter,
-  Plus, Circle
+  Plus, Circle, Calendar
 } from 'lucide-react';
 import { useAuth } from '@/_core/hooks/useAuth';
 
@@ -324,6 +324,11 @@ export default function Messages() {
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Video className="w-4 h-4" />
                 </Button>
+                <Link href="/calendar">
+                  <Button variant="ghost" size="icon" className="rounded-full" title="جدولة اجتماع">
+                    <Calendar className="w-4 h-4" />
+                  </Button>
+                </Link>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <MoreVertical className="w-4 h-4" />
                 </Button>

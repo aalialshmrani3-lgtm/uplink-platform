@@ -144,7 +144,7 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
               </span>
-              <span className="text-sm text-muted-foreground">منظومة الابتكار الوطنية تحت مظلة HUMAIN</span>
+              <span className="text-sm text-muted-foreground">منظومة الابتكار العالمية - Global Innovation Ecosystem</span>
             </div>
             
             {/* Heading */}
@@ -156,7 +156,7 @@ export default function Home() {
             
             {/* Description */}
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-              منصة UPLINK 5.0 تربط المبتكرين السعوديين بالمستثمرين والشركات والجهات الحكومية
+              منصة UPLINK 5.0 تربط المبتكرين حول العالم بالمستثمرين والشركات والمؤسسات
               من خلال ثلاثة محركات متكاملة: توليد الملكية الفكرية، التحديات والمطابقة، والسوق المفتوح
             </p>
             
@@ -191,7 +191,7 @@ export default function Home() {
                 { value: 500, suffix: '+', label: 'ابتكار مسجل', icon: Lightbulb },
                 { value: 150, suffix: '+', label: 'مستثمر نشط', icon: Building2 },
                 { value: 50, suffix: '+', label: 'شراكة استراتيجية', icon: Handshake },
-                { value: 60, suffix: 'M+', label: 'ريال استثمارات', icon: TrendingUp },
+                { value: 60, suffix: 'M+', label: 'دولار استثمارات', icon: TrendingUp },
               ].map((stat, i) => (
                 <div key={i} className="p-4 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30">
                   <stat.icon className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
@@ -282,7 +282,7 @@ export default function Home() {
               لماذا UPLINK 5.0؟
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              مميزات فريدة تجعل منصتنا الخيار الأول للمبتكرين السعوديين
+              مميزات فريدة تجعل منصتنا الخيار الأول للمبتكرين حول العالم
             </p>
           </div>
 
@@ -351,12 +351,12 @@ export default function Home() {
               شركاء النجاح
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              نفخر بشراكاتنا مع أبرز المؤسسات الحكومية والخاصة في المملكة
+              نفخر بشراكاتنا مع أبرز المؤسسات والشركات العالمية
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            {['HUMAIN', 'SAIP', 'MCIT', 'Monsha\'at', 'KAUST', 'SDAIA'].map((partner, i) => (
+            {['WIPO', 'USPTO', 'EPO', 'Y Combinator', 'Techstars', 'Google'].map((partner, i) => (
               <div 
                 key={i} 
                 className="p-6 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30 flex items-center justify-center hover:border-cyan-500/30 transition-colors"
@@ -377,7 +377,7 @@ export default function Home() {
               ابدأ رحلة الابتكار اليوم
             </h2>
             <p className="text-lg text-muted-foreground mb-10">
-              انضم إلى مجتمع المبتكرين السعوديين واحصل على الدعم الكامل لتحويل فكرتك إلى واقع
+              انضم إلى مجتمع المبتكرين العالمي واحصل على الدعم الكامل لتحويل فكرتك إلى واقع
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {user ? (
@@ -418,7 +418,7 @@ export default function Home() {
                 <span className="text-xl font-bold text-gradient-cyan">UPLINK 5.0</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                منصة الابتكار الوطنية تحت مظلة HUMAIN
+                منصة الابتكار العالمية - Global Innovation Platform
               </p>
             </div>
             
@@ -452,7 +452,7 @@ export default function Home() {
           
           <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2025 UPLINK 5.0 - جميع الحقوق محفوظة
+              © 2026 UPLINK 5.0 - جميع الحقوق محفوظة
             </p>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <a href="#" className="hover:text-foreground transition-colors">سياسة الخصوصية</a>
