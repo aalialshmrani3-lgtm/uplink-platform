@@ -42,6 +42,11 @@ const GlobalInnovationNetworks = lazy(() => import("./pages/GlobalInnovationNetw
 const SustainabilityAIEthics = lazy(() => import("./pages/SustainabilityAIEthics"));
 const BetaPrograms = lazy(() => import("./pages/BetaPrograms"));
 const UnifiedDashboard = lazy(() => import("./pages/UnifiedDashboard"));
+const ChallengeLibrary = lazy(() => import("./pages/ChallengeLibrary"));
+const HypothesisManagement = lazy(() => import("./pages/HypothesisManagement"));
+const RATTesting = lazy(() => import("./pages/RATTesting"));
+const GateReview = lazy(() => import("./pages/GateReview"));
+const LearningKnowledgeBase = lazy(() => import("./pages/LearningKnowledgeBase"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -233,6 +238,11 @@ function Router() {
         <Route path="/sustainability-ai-ethics" component={SustainabilityAIEthics} />
         <Route path="/beta-programs" component={BetaPrograms} />
         <Route path="/unified-dashboard" component={UnifiedDashboard} />
+        <Route path="/challenge-library" component={ChallengeLibrary} />
+        <Route path="/hypothesis-management" component={HypothesisManagement} />
+        <Route path="/rat-testing" component={RATTesting} />
+        <Route path="/gate-review" component={GateReview} />
+        <Route path="/learning-knowledge" component={LearningKnowledgeBase} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

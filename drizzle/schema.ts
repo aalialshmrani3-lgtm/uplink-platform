@@ -631,3 +631,146 @@ export const pipelineGamification = mysqlTable("pipeline_gamification", {
 
 export type PipelineGamification = typeof pipelineGamification.$inferSelect;
 export type InsertPipelineGamification = typeof pipelineGamification.$inferInsert;
+
+// ============================================
+// INNOVATION 360 INTEGRATION
+// ============================================
+
+// Strategic Challenges
+export const strategicChallenges = mysqlTable("strategic_challenges", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  title: varchar("title", { length: 500 }).notNull(),
+  titleEn: varchar("titleEn", { length: 500 }),
+  description: text("description").notNull(),
+  descriptionEn: text("descriptionEn"),
+  businessImpact: text("businessImpact"),
+  stakeholders: json("stakeholders"),
+  constraints: text("constraints"),
+  successCriteria: text("successCriteria"),
+  priority: mysqlEnum("priority", ["high", "medium", "low"]).default("medium"),
+  status: mysqlEnum("status", ["active", "in_progress", "solved", "archived"]).default("active"),
+  linkedInnovations: json("linkedInnovations"),
+  tags: json("tags"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type StrategicChallenge = typeof strategicChallenges.$inferSelect;
+export type InsertStrategicChallenge = typeof strategicChallenges.$inferInsert;
+
+// Innovation Hypotheses (Enhanced)
+export const innovationHypotheses = mysqlTable("innovation_hypotheses", {
+  id: int("id").autoincrement().primaryKey(),
+  innovationId: int("innovationId").notNull(),
+  userId: int("userId").notNull(),
+  statement: text("statement").notNull(),
+  statementEn: text("statementEn"),
+  assumption: text("assumption"),
+  metric: varchar("metric", { length: 255 }),
+  successCriterion: text("successCriterion"),
+  testMethod: text("testMethod"),
+  riskLevel: mysqlEnum("riskLevel", ["high", "medium", "low"]).default("medium"),
+  uncertaintyLevel: mysqlEnum("uncertaintyLevel", ["high", "medium", "low"]).default("medium"),
+  impactIfWrong: mysqlEnum("impactIfWrong", ["critical", "major", "minor"]).default("major"),
+  ratScore: decimal("ratScore", { precision: 5, scale: 2 }),
+  status: mysqlEnum("status", ["pending", "testing", "validated", "invalidated"]).default("pending"),
+  testResult: text("testResult"),
+  evidence: text("evidence"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type InnovationHypothesis = typeof innovationHypotheses.$inferSelect;
+export type InsertInnovationHypothesis = typeof innovationHypotheses.$inferInsert;
+
+// RAT Tests (Riskiest Assumptions Tests)
+export const ratTests = mysqlTable("rat_tests", {
+  id: int("id").autoincrement().primaryKey(),
+  hypothesisId: int("hypothesisId").notNull(),
+  userId: int("userId").notNull(),
+  testName: varchar("testName", { length: 255 }).notNull(),
+  testDescription: text("testDescription"),
+  plannedDate: timestamp("plannedDate"),
+  completedDate: timestamp("completedDate"),
+  result: text("result"),
+  status: mysqlEnum("status", ["planned", "in_progress", "completed"]).default("planned"),
+  budget: decimal("budget", { precision: 10, scale: 2 }),
+  resources: json("resources"),
+  learnings: text("learnings"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RATTest = typeof ratTests.$inferSelect;
+export type InsertRATTest = typeof ratTests.$inferInsert;
+
+// Gate Decisions (Park/Kill)
+export const gateDecisions = mysqlTable("gate_decisions", {
+  id: int("id").autoincrement().primaryKey(),
+  innovationId: int("innovationId").notNull(),
+  stage: varchar("stage", { length: 100 }).notNull(),
+  decisionType: mysqlEnum("decisionType", ["continue", "park", "kill"]).notNull(),
+  rationale: text("rationale").notNull(),
+  decisionDate: timestamp("decisionDate").defaultNow().notNull(),
+  deciderId: int("deciderId").notNull(),
+  validationResults: json("validationResults"),
+  remainingRATs: json("remainingRATs"),
+  resourcesConsumed: decimal("resourcesConsumed", { precision: 15, scale: 2 }),
+  keyLearnings: text("keyLearnings"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type GateDecision = typeof gateDecisions.$inferSelect;
+export type InsertGateDecision = typeof gateDecisions.$inferInsert;
+
+// Learning Logs
+export const learningLogs = mysqlTable("learning_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  innovationId: int("innovationId").notNull(),
+  userId: int("userId").notNull(),
+  stage: varchar("stage", { length: 100 }),
+  lessonLearned: text("lessonLearned").notNull(),
+  lessonLearnedEn: text("lessonLearnedEn"),
+  impact: mysqlEnum("impact", ["high", "medium", "low"]).default("medium"),
+  recommendation: text("recommendation"),
+  tags: json("tags"),
+  category: varchar("category", { length: 100 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type LearningLog = typeof learningLogs.$inferSelect;
+export type InsertLearningLog = typeof learningLogs.$inferInsert;
+
+// Knowledge Base
+export const knowledgeBaseItems = mysqlTable("knowledge_base_items", {
+  id: int("id").autoincrement().primaryKey(),
+  sourceType: mysqlEnum("sourceType", ["learning", "decision", "experiment", "retrospective"]).notNull(),
+  sourceId: int("sourceId"),
+  content: text("content").notNull(),
+  contentEn: text("contentEn"),
+  category: varchar("category", { length: 100 }),
+  tags: json("tags"),
+  rating: decimal("rating", { precision: 3, scale: 2 }),
+  viewCount: int("viewCount").default(0),
+  helpfulCount: int("helpfulCount").default(0),
+  notHelpfulCount: int("notHelpfulCount").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type KnowledgeBaseItem = typeof knowledgeBaseItems.$inferSelect;
+export type InsertKnowledgeBaseItem = typeof knowledgeBaseItems.$inferInsert;
+
+// Knowledge Ratings
+export const knowledgeRatings = mysqlTable("knowledge_ratings", {
+  id: int("id").autoincrement().primaryKey(),
+  itemId: int("itemId").notNull(),
+  userId: int("userId").notNull(),
+  isHelpful: boolean("isHelpful").notNull(),
+  comment: text("comment"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type KnowledgeRating = typeof knowledgeRatings.$inferSelect;
+export type InsertKnowledgeRating = typeof knowledgeRatings.$inferInsert;
