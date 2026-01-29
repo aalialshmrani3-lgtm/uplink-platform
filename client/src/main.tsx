@@ -1,8 +1,22 @@
+// CRITICAL: Import React FIRST and expose globally BEFORE any other imports
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
+
+// Expose React globally IMMEDIATELY
+const win = window as any;
+win.React = React;
+win.ReactDOM = ReactDOM;
+
+// Lock React to prevent external scripts from overwriting
+if (typeof win.__lockReact === 'function') {
+  win.__lockReact();
+}
+
+// Now import everything else AFTER React is globally available
 import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
-import { createRoot } from "react-dom/client";
 import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
@@ -52,7 +66,7 @@ const trpcClient = trpc.createClient({
   ],
 });
 
-createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
     <QueryClientProvider client={queryClient}>
       <App />

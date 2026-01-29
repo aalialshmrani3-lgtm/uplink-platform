@@ -29,6 +29,7 @@ const Notifications = lazy(() => import("./pages/Notifications"));
 const Calendar = lazy(() => import("./pages/Calendar"));
 const Recommendations = lazy(() => import("./pages/Recommendations"));
 const Admin = lazy(() => import("./pages/Admin"));
+const InnovationPipeline = lazy(() => import("./pages/InnovationPipeline"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -207,6 +208,7 @@ function Router() {
         <Route path="/calendar" component={Calendar} />
         <Route path="/recommendations" component={Recommendations} />
         <Route path="/admin" component={Admin} />
+        <Route path="/pipeline" component={InnovationPipeline} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
