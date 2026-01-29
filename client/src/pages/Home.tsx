@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
+import { NotificationCenter } from "@/components/NotificationCenter";
 import { 
   Rocket, Shield, Brain, Users, Globe, Award, 
   ChevronRight, Lightbulb, Building2, Handshake,
@@ -128,6 +129,7 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-3">
+            {user && <NotificationCenter />}
             <LanguageSwitcher />
             {user ? (
               <Link href="/dashboard">

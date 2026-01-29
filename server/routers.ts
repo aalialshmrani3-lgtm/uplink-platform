@@ -1060,6 +1060,108 @@ Provide response in JSON format:
         return result;
       }),
   }),
+
+  // ============================================
+  // IDEA OUTCOMES (Real Data Collection)
+  // ============================================
+  ideaOutcomes: router({
+    // Submit new idea outcome
+    submit: protectedProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        description: z.string().min(1),
+        category: z.string().optional(),
+        budget: z.number().optional(),
+        teamSize: z.number().optional(),
+        timelineMonths: z.number().optional(),
+        marketDemand: z.number().min(0).max(1).optional(),
+        technicalFeasibility: z.number().min(0).max(1).optional(),
+        competitiveAdvantage: z.number().min(0).max(1).optional(),
+        userEngagement: z.number().min(0).max(1).optional(),
+        tagsCount: z.number().optional(),
+        hypothesisValidationRate: z.number().min(0).max(1).optional(),
+        ratCompletionRate: z.number().min(0).max(1).optional(),
+        predictedSuccessRate: z.number().optional(),
+        predictionModel: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const dbOutcomes = await import("./db_idea_outcomes");
+        const outcome = await dbOutcomes.createIdeaOutcome({
+          userId: ctx.user.id,
+          title: input.title,
+          description: input.description,
+          category: input.category,
+          budget: input.budget?.toString(),
+          teamSize: input.teamSize,
+          timelineMonths: input.timelineMonths,
+          marketDemand: input.marketDemand?.toString(),
+          technicalFeasibility: input.technicalFeasibility?.toString(),
+          competitiveAdvantage: input.competitiveAdvantage?.toString(),
+          userEngagement: input.userEngagement?.toString(),
+          tagsCount: input.tagsCount,
+          hypothesisValidationRate: input.hypothesisValidationRate?.toString(),
+          ratCompletionRate: input.ratCompletionRate?.toString(),
+          predictedSuccessRate: input.predictedSuccessRate?.toString(),
+          predictionModel: input.predictionModel,
+          outcome: "pending",
+        });
+        return outcome;
+      }),
+
+    // Get user's idea outcomes
+    getMyOutcomes: protectedProcedure.query(async ({ ctx }) => {
+      const dbOutcomes = await import("./db_idea_outcomes");
+      return await dbOutcomes.getIdeaOutcomesByUserId(ctx.user.id);
+    }),
+
+    // Get pending outcomes (admin only)
+    getPending: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== "admin") {
+        throw new Error("Unauthorized: Admin only");
+      }
+      const dbOutcomes = await import("./db_idea_outcomes");
+      return await dbOutcomes.getPendingIdeaOutcomes();
+    }),
+
+    // Classify outcome (admin only)
+    classify: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        outcome: z.enum(["success", "failure"]),
+        outcomeNotes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== "admin") {
+          throw new Error("Unauthorized: Admin only");
+        }
+        const dbOutcomes = await import("./db_idea_outcomes");
+        return await dbOutcomes.updateIdeaOutcome(input.id, {
+          outcome: input.outcome,
+          outcomeDate: new Date(),
+          outcomeNotes: input.outcomeNotes,
+          classifiedBy: ctx.user.id,
+          classifiedAt: new Date(),
+        });
+      }),
+
+    // Get statistics
+    getStats: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== "admin") {
+        throw new Error("Unauthorized: Admin only");
+      }
+      const dbOutcomes = await import("./db_idea_outcomes");
+      return await dbOutcomes.getIdeaOutcomesStats();
+    }),
+
+    // Get training data (admin only)
+    getTrainingData: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== "admin") {
+        throw new Error("Unauthorized: Admin only");
+      }
+      const dbOutcomes = await import("./db_idea_outcomes");
+      return await dbOutcomes.getTrainingData();
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

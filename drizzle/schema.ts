@@ -774,3 +774,47 @@ export const knowledgeRatings = mysqlTable("knowledge_ratings", {
 
 export type KnowledgeRating = typeof knowledgeRatings.$inferSelect;
 export type InsertKnowledgeRating = typeof knowledgeRatings.$inferInsert;
+
+// ============================================
+// IDEA OUTCOMES (Real Data Collection for ML)
+// ============================================
+export const ideaOutcomes = mysqlTable("idea_outcomes", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  
+  // Idea details
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description").notNull(),
+  category: varchar("category", { length: 100 }),
+  
+  // Features used for ML prediction (matching training data)
+  budget: decimal("budget", { precision: 15, scale: 2 }),
+  teamSize: int("teamSize"),
+  timelineMonths: int("timelineMonths"),
+  marketDemand: decimal("marketDemand", { precision: 5, scale: 2 }), // 0-1 scale
+  technicalFeasibility: decimal("technicalFeasibility", { precision: 5, scale: 2 }), // 0-1 scale
+  competitiveAdvantage: decimal("competitiveAdvantage", { precision: 5, scale: 2 }), // 0-1 scale
+  userEngagement: decimal("userEngagement", { precision: 5, scale: 2 }), // 0-1 scale
+  tagsCount: int("tagsCount"),
+  hypothesisValidationRate: decimal("hypothesisValidationRate", { precision: 5, scale: 2 }), // 0-1 scale
+  ratCompletionRate: decimal("ratCompletionRate", { precision: 5, scale: 2 }), // 0-1 scale
+  
+  // Outcome (ground truth for training)
+  outcome: mysqlEnum("outcome", ["success", "failure", "pending"]).default("pending").notNull(),
+  outcomeDate: timestamp("outcomeDate"),
+  outcomeNotes: text("outcomeNotes"),
+  
+  // Metadata
+  classifiedBy: int("classifiedBy"), // Admin/reviewer who classified the outcome
+  classifiedAt: timestamp("classifiedAt"),
+  
+  // AI prediction at submission time (for comparison)
+  predictedSuccessRate: decimal("predictedSuccessRate", { precision: 5, scale: 2 }),
+  predictionModel: varchar("predictionModel", { length: 100 }),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type IdeaOutcome = typeof ideaOutcomes.$inferSelect;
+export type InsertIdeaOutcome = typeof ideaOutcomes.$inferInsert;
