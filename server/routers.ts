@@ -143,6 +143,7 @@ export const appRouter = router({
           contribution: z.string().optional(),
         })).optional(),
         applicantType: z.enum(["individual", "company", "university", "government"]).optional(),
+        organizationIds: z.array(z.number()).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const blockchainHash = crypto.createHash('sha256')
@@ -158,6 +159,13 @@ export const appRouter = router({
           blockchainTimestamp: new Date(),
           status: "draft",
         });
+
+        // Link organizations if provided
+        if (input.organizationIds && input.organizationIds.length > 0) {
+          const { linkIdeaToOrganizations } = await import('./db_organizations');
+          await linkIdeaToOrganizations(ipId, input.organizationIds);
+        }
+
         return { id: ipId, blockchainHash };
       }),
 
@@ -168,7 +176,18 @@ export const appRouter = router({
       }),
 
     getMyRegistrations: protectedProcedure.query(async ({ ctx }) => {
-      return db.getIPRegistrationsByUserId(ctx.user.id);
+      const registrations = await db.getIPRegistrationsByUserId(ctx.user.id);
+      
+      // Get organizations for each registration
+      const { getIdeaOrganizations } = await import('./db_organizations');
+      const registrationsWithOrgs = await Promise.all(
+        registrations.map(async (reg) => {
+          const organizations = await getIdeaOrganizations(reg.id);
+          return { ...reg, organizations };
+        })
+      );
+      
+      return registrationsWithOrgs;
     }),
 
     submit: protectedProcedure

@@ -8,10 +8,21 @@ import {
   XCircle, AlertCircle, ExternalLink, Copy
 } from "lucide-react";
 import { toast } from "sonner";
+import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function IPList() {
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const { data: ipList, isLoading } = trpc.ip.getMyRegistrations.useQuery(undefined, { enabled: !!user });
+  const { data: organizations = [] } = trpc.organizations.getAll.useQuery();
+  
+  const [orgFilter, setOrgFilter] = useState<string>('all');
+  
+  // Filter IP list by organization
+  const filteredIpList = ipList?.filter(ip => {
+    if (orgFilter === 'all') return true;
+    return ip.organizations?.some((org: any) => org.id.toString() === orgFilter);
+  }) || [];
 
   if (loading || !user) {
     return (
@@ -96,13 +107,30 @@ export default function IPList() {
           <p className="text-slate-400">إدارة وتتبع تسجيلات الملكية الفكرية الخاصة بك</p>
         </div>
 
+        {/* Organization Filter */}
+        <div className="mb-6">
+          <Select value={orgFilter} onValueChange={setOrgFilter}>
+            <SelectTrigger className="w-[300px] bg-slate-800 border-slate-700 text-white">
+              <SelectValue placeholder="تصفية حسب الجهة" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">جميع الجهات</SelectItem>
+              {organizations.map((org: any) => (
+                <SelectItem key={org.id} value={org.id.toString()}>
+                  {org.nameAr}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
-        ) : ipList && ipList.length > 0 ? (
+        ) : filteredIpList && filteredIpList.length > 0 ? (
           <div className="space-y-4">
-            {ipList.map((ip) => (
+            {filteredIpList.map((ip) => (
               <Card key={ip.id} className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-all">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
@@ -138,6 +166,25 @@ export default function IPList() {
                             >
                               <Copy className="w-3 h-3" />
                             </button>
+                          </div>
+                        )}
+                        {/* Organizations Badges */}
+                        {ip.organizations && ip.organizations.length > 0 && (
+                          <div className="flex items-center gap-2 mt-3 flex-wrap">
+                            <span className="text-xs text-slate-500">الجهات المشاركة:</span>
+                            {ip.organizations.map((org: any) => (
+                              <span
+                                key={org.id}
+                                className={`text-xs px-2 py-1 rounded-full ${
+                                  org.type === 'government' ? 'bg-blue-500/20 text-blue-400' :
+                                  org.type === 'academic' ? 'bg-purple-500/20 text-purple-400' :
+                                  org.type === 'private' ? 'bg-emerald-500/20 text-emerald-400' :
+                                  'bg-orange-500/20 text-orange-400'
+                                }`}
+                              >
+                                {org.nameAr}
+                              </span>
+                            ))}
                           </div>
                         )}
                       </div>
