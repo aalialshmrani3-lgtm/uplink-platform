@@ -861,3 +861,68 @@ export const ideaOutcomes = mysqlTable("idea_outcomes", {
 
 export type IdeaOutcome = typeof ideaOutcomes.$inferSelect;
 export type InsertIdeaOutcome = typeof ideaOutcomes.$inferInsert;
+
+// ============================================
+// RBAC (Role-Based Access Control)
+// ============================================
+
+export const roles = mysqlTable("roles", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull().unique(),
+  displayName: varchar("displayName", { length: 200 }).notNull(),
+  description: text("description"),
+  isSystem: boolean("isSystem").default(false), // System roles cannot be deleted
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Role = typeof roles.$inferSelect;
+export type InsertRole = typeof roles.$inferInsert;
+
+export const permissions = mysqlTable("permissions", {
+  id: int("id").autoincrement().primaryKey(),
+  resource: varchar("resource", { length: 100 }).notNull(), // e.g., "ideas", "projects", "users"
+  action: varchar("action", { length: 50 }).notNull(), // e.g., "read", "create", "update", "delete"
+  displayName: varchar("displayName", { length: 200 }).notNull(),
+  description: text("description"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Permission = typeof permissions.$inferSelect;
+export type InsertPermission = typeof permissions.$inferInsert;
+
+export const rolePermissions = mysqlTable("role_permissions", {
+  id: int("id").autoincrement().primaryKey(),
+  roleId: int("roleId").notNull(),
+  permissionId: int("permissionId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type RolePermission = typeof rolePermissions.$inferSelect;
+export type InsertRolePermission = typeof rolePermissions.$inferInsert;
+
+export const userRoles = mysqlTable("user_roles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  roleId: int("roleId").notNull(),
+  assignedBy: int("assignedBy"), // User ID who assigned this role
+  assignedAt: timestamp("assignedAt").defaultNow().notNull(),
+  expiresAt: timestamp("expiresAt"), // Optional: for temporary role assignments
+});
+
+export type UserRole = typeof userRoles.$inferSelect;
+export type InsertUserRole = typeof userRoles.$inferInsert;
+
+// Data visibility controls
+export const dataVisibilityRules = mysqlTable("data_visibility_rules", {
+  id: int("id").autoincrement().primaryKey(),
+  roleId: int("roleId").notNull(),
+  resourceType: varchar("resourceType", { length: 100 }).notNull(), // "ideas", "projects", etc.
+  visibilityScope: mysqlEnum("visibilityScope", ["all", "own", "department", "team", "custom"]).notNull(),
+  customFilter: json("customFilter"), // For complex visibility rules
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type DataVisibilityRule = typeof dataVisibilityRules.$inferSelect;
+export type InsertDataVisibilityRule = typeof dataVisibilityRules.$inferInsert;

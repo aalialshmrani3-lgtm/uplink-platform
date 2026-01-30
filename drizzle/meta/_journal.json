@@ -71,6 +71,13 @@
       "when": 1769771294971,
       "tag": "0009_slimy_daredevil",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1769774542251,
+      "tag": "0010_organic_cloak",
+      "breakpoints": true
     }
   ]
 }
