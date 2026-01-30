@@ -1,0 +1,98 @@
+{
+  "common": {
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Afficher",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "import": "Importer",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Succès",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "close": "Fermer",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "nav": {
+    "home": "Accueil",
+    "ideas": "Idées",
+    "projects": "Projets",
+    "analytics": "Analytique",
+    "admin": "Administration",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "login": "Connexion"
+  },
+  "home": {
+    "title": "UPLINK 5.0 - Plateforme Nationale d'Innovation",
+    "subtitle": "Plateforme d'Intelligence d'Innovation Propulsée par l'IA",
+    "description": "Transformez votre processus d'innovation grâce à l'IA prédictive, la collaboration en temps réel et une gestion complète du portefeuille de projets",
+    "getStarted": "Démarrer",
+    "learnMore": "En savoir plus"
+  },
+  "ideas": {
+    "title": "Idées",
+    "submitIdea": "Soumettre une idée",
+    "myIdeas": "Mes idées",
+    "allIdeas": "Toutes les idées",
+    "ideaTitle": "Titre de l'idée",
+    "ideaDescription": "Description de l'idée",
+    "category": "Catégorie",
+    "status": "Statut",
+    "submittedBy": "Soumise par",
+    "submittedAt": "Soumise le",
+    "successProbability": "Probabilité de succès",
+    "aiInsights": "Insights de l'IA"
+  },
+  "projects": {
+    "title": "Projets",
+    "createProject": "Créer un projet",
+    "myProjects": "Mes projets",
+    "allProjects": "Tous les projets",
+    "projectName": "Nom du projet",
+    "projectDescription": "Description du projet",
+    "status": "Statut",
+    "budget": "Budget",
+    "timeline": "Chronologie",
+    "team": "Équipe",
+    "milestones": "Jalons"
+  },
+  "admin": {
+    "title": "Tableau de bord administrateur",
+    "users": "Utilisateurs",
+    "ideaClassification": "Classification des idées",
+    "modelPerformance": "Performance du modèle",
+    "dataExport": "Exportation de données",
+    "abTesting": "Tests A/B",
+    "apiManagement": "Gestion des API",
+    "webhookManagement": "Gestion des webhooks",
+    "modelHistory": "Historique du modèle",
+    "statistics": "Statistiques"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "register": "S'inscrire",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "rememberMe": "Se souvenir de moi"
+  },
+  "errors": {
+    "network": "Erreur réseau. Veuillez vérifier votre connexion.",
+    "unauthorized": "Accès non autorisé. Veuillez vous connecter.",
+    "forbidden": "Vous n'êtes pas autorisé à accéder à cette ressource.",
+    "notFound": "Ressource introuvable.",
+    "serverError": "Erreur serveur. Veuillez réessayer plus tard.",
+    "validationError": "Veuillez vérifier votre saisie et réessayer."
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "common": {
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "import": "Importar",
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "success": "Éxito",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "close": "Cerrar",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "nav": {
+    "home": "Inicio",
+    "ideas": "Ideas",
+    "projects": "Proyectos",
+    "analytics": "Analíticas",
+    "admin": "Administración",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión"
+  },
+  "home": {
+    "title": "UPLINK 5.0 - Plataforma Nacional de Innovación",
+    "subtitle": "Plataforma de Inteligencia de Innovación impulsada por IA",
+    "description": "Transforme su proceso de innovación con IA predictiva, colaboración en tiempo real y gestión integral de la cartera de proyectos",
+    "getStarted": "Comenzar",
+    "learnMore": "Saber más"
+  },
+  "ideas": {
+    "title": "Ideas",
+    "submitIdea": "Enviar idea",
+    "myIdeas": "Mis ideas",
+    "allIdeas": "Todas las ideas",
+    "ideaTitle": "Título de la idea",
+    "ideaDescription": "Descripción de la idea",
+    "category": "Categoría",
+    "status": "Estado",
+    "submittedBy": "Enviado por",
+    "submittedAt": "Fecha de envío",
+    "successProbability": "Probabilidad de éxito",
+    "aiInsights": "Análisis de IA"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "createProject": "Crear proyecto",
+    "myProjects": "Mis proyectos",
+    "allProjects": "Todos los proyectos",
+    "projectName": "Nombre del proyecto",
+    "projectDescription": "Descripción del proyecto",
+    "status": "Estado",
+    "budget": "Presupuesto",
+    "timeline": "Cronograma",
+    "team": "Equipo",
+    "milestones": "Hitos"
+  },
+  "admin": {
+    "title": "Panel de administración",
+    "users": "Usuarios",
+    "ideaClassification": "Clasificación de ideas",
+    "modelPerformance": "Rendimiento del modelo",
+    "dataExport": "Exportación de datos",
+    "abTesting": "Pruebas A/B",
+    "apiManagement": "Gestión de API",
+    "webhookManagement": "Gestión de Webhooks",
+    "modelHistory": "Historial del modelo",
+    "statistics": "Estadísticas"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "register": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "rememberMe": "Recordarme"
+  },
+  "errors": {
+    "network": "Error de red. Por favor, revise su conexión.",
+    "unauthorized": "No autorizado. Por favor, inicie sesión.",
+    "forbidden": "No tiene permiso para acceder a este recurso.",
+    "notFound": "Recurso no encontrado.",
+    "serverError": "Error del servidor. Por favor, inténtelo de nuevo más tarde.",
+    "validationError": "Por favor, revise su entrada e inténtelo de nuevo."
+  }
+}

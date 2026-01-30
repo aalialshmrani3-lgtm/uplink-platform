@@ -1,0 +1,98 @@
+{
+  "common": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "nav": {
+    "home": "Home",
+    "ideas": "Ideas",
+    "projects": "Projects",
+    "analytics": "Analytics",
+    "admin": "Admin",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "home": {
+    "title": "UPLINK 5.0 - National Innovation Platform",
+    "subtitle": "AI-Powered Innovation Intelligence Platform",
+    "description": "Transform your innovation process with predictive AI, real-time collaboration, and comprehensive project portfolio management",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "ideas": {
+    "title": "Ideas",
+    "submitIdea": "Submit Idea",
+    "myIdeas": "My Ideas",
+    "allIdeas": "All Ideas",
+    "ideaTitle": "Idea Title",
+    "ideaDescription": "Idea Description",
+    "category": "Category",
+    "status": "Status",
+    "submittedBy": "Submitted By",
+    "submittedAt": "Submitted At",
+    "successProbability": "Success Probability",
+    "aiInsights": "AI Insights"
+  },
+  "projects": {
+    "title": "Projects",
+    "createProject": "Create Project",
+    "myProjects": "My Projects",
+    "allProjects": "All Projects",
+    "projectName": "Project Name",
+    "projectDescription": "Project Description",
+    "status": "Status",
+    "budget": "Budget",
+    "timeline": "Timeline",
+    "team": "Team",
+    "milestones": "Milestones"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "users": "Users",
+    "ideaClassification": "Idea Classification",
+    "modelPerformance": "Model Performance",
+    "dataExport": "Data Export",
+    "abTesting": "A/B Testing",
+    "apiManagement": "API Management",
+    "webhookManagement": "Webhook Management",
+    "modelHistory": "Model History",
+    "statistics": "Statistics"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember Me"
+  },
+  "errors": {
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "Unauthorized. Please login.",
+    "forbidden": "You don't have permission to access this resource.",
+    "notFound": "Resource not found.",
+    "serverError": "Server error. Please try again later.",
+    "validationError": "Please check your input and try again."
+  }
+}

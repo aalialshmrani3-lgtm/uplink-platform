@@ -1,0 +1,98 @@
+{
+  "common": {
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "search": "بحث",
+    "filter": "تصفية",
+    "export": "تصدير",
+    "import": "استيراد",
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ",
+    "success": "نجاح",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "close": "إغلاق",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "ideas": "الأفكار",
+    "projects": "المشاريع",
+    "analytics": "التحليلات",
+    "admin": "الإدارة",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول"
+  },
+  "home": {
+    "title": "UPLINK 5.0 - المنصة الوطنية للابتكار",
+    "subtitle": "منصة ذكاء الابتكار المدعومة بالذكاء الاصطناعي",
+    "description": "حوّل عملية الابتكار لديك بفضل الذكاء الاصطناعي التنبؤي، والتعاون في الوقت الفعلي، والإدارة الشاملة لمحفظة المشاريع",
+    "getStarted": "ابدأ الآن",
+    "learnMore": "معرفة المزيد"
+  },
+  "ideas": {
+    "title": "الأفكار",
+    "submitIdea": "إرسال فكرة",
+    "myIdeas": "أفكاري",
+    "allIdeas": "جميع الأفكار",
+    "ideaTitle": "عنوان الفكرة",
+    "ideaDescription": "وصف الفكرة",
+    "category": "الفئة",
+    "status": "الحالة",
+    "submittedBy": "مقدمة من",
+    "submittedAt": "تاريخ التقديم",
+    "successProbability": "احتمالية النجاح",
+    "aiInsights": "رؤى الذكاء الاصطناعي"
+  },
+  "projects": {
+    "title": "المشاريع",
+    "createProject": "إنشاء مشروع",
+    "myProjects": "مشاريعي",
+    "allProjects": "جميع المشاريع",
+    "projectName": "اسم المشروع",
+    "projectDescription": "وصف المشروع",
+    "status": "الحالة",
+    "budget": "الميزانية",
+    "timeline": "الجدول الزمني",
+    "team": "الفريق",
+    "milestones": "المراحل الرئيسية"
+  },
+  "admin": {
+    "title": "لوحة تحكم الإدارة",
+    "users": "المستخدمون",
+    "ideaClassification": "تصنيف الأفكار",
+    "modelPerformance": "أداء النموذج",
+    "dataExport": "تصدير البيانات",
+    "abTesting": "اختبارات A/B",
+    "apiManagement": "إدارة واجهات برمجة التطبيقات (API)",
+    "webhookManagement": "إدارة الـ Webhook",
+    "modelHistory": "سجل النماذج",
+    "statistics": "الإحصائيات"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "register": "تسجيل",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "rememberMe": "تذكرني"
+  },
+  "errors": {
+    "network": "خطأ في الشبكة. يرجى التحقق من اتصالك.",
+    "unauthorized": "غير مصرح. يرجى تسجيل الدخول.",
+    "forbidden": "ليس لديك إذن للوصول إلى هذا المورد.",
+    "notFound": "المورد غير موجود.",
+    "serverError": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
+    "validationError": "يرجى التحقق من مدخلاتك والمحاولة مرة أخرى."
+  }
+}
