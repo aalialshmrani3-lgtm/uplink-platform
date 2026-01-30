@@ -78,6 +78,13 @@
       "when": 1769774542251,
       "tag": "0010_organic_cloak",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1769775164770,
+      "tag": "0011_goofy_squirrel_girl",
+      "breakpoints": true
     }
   ]
 }

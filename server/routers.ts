@@ -1546,6 +1546,133 @@ Provide response in JSON format:
       }
     }),
   }),
+
+  // ============================================
+  // RBAC (Role-Based Access Control)
+  // ============================================
+  rbac: router({
+    // Roles
+    getAllRoles: protectedProcedure.query(async () => {
+      const { getAllRoles } = await import('./db_rbac');
+      return await getAllRoles();
+    }),
+
+    createRole: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        displayName: z.string(),
+        description: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { createRole } = await import('./db_rbac');
+        return await createRole({ ...input, isSystem: false });
+      }),
+
+    updateRole: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        displayName: z.string().optional(),
+        description: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { updateRole } = await import('./db_rbac');
+        const { id, ...updates } = input;
+        await updateRole(id, updates);
+        return { success: true };
+      }),
+
+    deleteRole: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const { deleteRole } = await import('./db_rbac');
+        await deleteRole(input.id);
+        return { success: true };
+      }),
+
+    // Permissions
+    getAllPermissions: protectedProcedure.query(async () => {
+      const { getAllPermissions } = await import('./db_rbac');
+      return await getAllPermissions();
+    }),
+
+    getPermissionsForRole: protectedProcedure
+      .input(z.object({ roleId: z.number() }))
+      .query(async ({ input }) => {
+        const { getPermissionsForRole } = await import('./db_rbac');
+        return await getPermissionsForRole(input.roleId);
+      }),
+
+    assignPermissionToRole: protectedProcedure
+      .input(z.object({
+        roleId: z.number(),
+        permissionId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        const { assignPermissionToRole } = await import('./db_rbac');
+        await assignPermissionToRole(input.roleId, input.permissionId);
+        return { success: true };
+      }),
+
+    removePermissionFromRole: protectedProcedure
+      .input(z.object({
+        roleId: z.number(),
+        permissionId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        const { removePermissionFromRole } = await import('./db_rbac');
+        await removePermissionFromRole(input.roleId, input.permissionId);
+        return { success: true };
+      }),
+
+    // User Roles
+    getUserRoles: protectedProcedure
+      .input(z.object({ userId: z.number() }))
+      .query(async ({ input }) => {
+        const { getUserRoles } = await import('./db_rbac');
+        return await getUserRoles(input.userId);
+      }),
+
+    getUserPermissions: protectedProcedure
+      .input(z.object({ userId: z.number() }))
+      .query(async ({ input }) => {
+        const { getUserPermissions } = await import('./db_rbac');
+        return await getUserPermissions(input.userId);
+      }),
+
+    assignRoleToUser: protectedProcedure
+      .input(z.object({
+        userId: z.number(),
+        roleId: z.number(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { assignRoleToUser } = await import('./db_rbac');
+        await assignRoleToUser(input.userId, input.roleId, ctx.user.id);
+        return { success: true };
+      }),
+
+    removeRoleFromUser: protectedProcedure
+      .input(z.object({
+        userId: z.number(),
+        roleId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        const { removeRoleFromUser } = await import('./db_rbac');
+        await removeRoleFromUser(input.userId, input.roleId);
+        return { success: true };
+      }),
+
+    // Check permissions
+    hasPermission: protectedProcedure
+      .input(z.object({
+        userId: z.number(),
+        resource: z.string(),
+        action: z.string(),
+      }))
+      .query(async ({ input }) => {
+        const { hasPermission } = await import('./db_rbac');
+        return await hasPermission(input.userId, input.resource, input.action);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

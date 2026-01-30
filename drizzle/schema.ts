@@ -926,3 +926,24 @@ export const dataVisibilityRules = mysqlTable("data_visibility_rules", {
 
 export type DataVisibilityRule = typeof dataVisibilityRules.$inferSelect;
 export type InsertDataVisibilityRule = typeof dataVisibilityRules.$inferInsert;
+
+// ============================================
+// AUDIT LOGGING
+// ============================================
+
+export const auditLogs = mysqlTable("audit_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId"), // null for system actions
+  action: varchar("action", { length: 100 }).notNull(), // e.g., "create", "update", "delete"
+  resource: varchar("resource", { length: 100 }).notNull(), // e.g., "ideas", "users", "roles"
+  resourceId: varchar("resourceId", { length: 100 }), // ID of the affected resource
+  details: json("details"), // Additional context (old values, new values, etc.)
+  ipAddress: varchar("ipAddress", { length: 45 }),
+  userAgent: text("userAgent"),
+  status: mysqlEnum("status", ["success", "failure"]).default("success"),
+  errorMessage: text("errorMessage"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AuditLog = typeof auditLogs.$inferSelect;
+export type InsertAuditLog = typeof auditLogs.$inferInsert;
