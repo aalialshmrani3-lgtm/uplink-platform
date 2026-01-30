@@ -1673,6 +1673,86 @@ Provide response in JSON format:
         return await hasPermission(input.userId, input.resource, input.action);
       }),
   }),
+
+  // ============================================
+  // AUDIT LOGGING
+  // ============================================
+  audit: router({
+    getAllLogs: protectedProcedure
+      .input(z.object({
+        limit: z.number().optional(),
+        offset: z.number().optional(),
+        userId: z.number().optional(),
+        resource: z.string().optional(),
+        action: z.string().optional(),
+        status: z.enum(['success', 'failure']).optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { getAllAuditLogs } = await import('./db_audit');
+        const { startDate, endDate, ...rest } = input;
+        return await getAllAuditLogs({
+          ...rest,
+          startDate: startDate ? new Date(startDate) : undefined,
+          endDate: endDate ? new Date(endDate) : undefined,
+        });
+      }),
+
+    getLogById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const { getAuditLogById } = await import('./db_audit');
+        return await getAuditLogById(input.id);
+      }),
+
+    getLogsCount: protectedProcedure
+      .input(z.object({
+        userId: z.number().optional(),
+        resource: z.string().optional(),
+        action: z.string().optional(),
+        status: z.enum(['success', 'failure']).optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { getAuditLogsCount } = await import('./db_audit');
+        const { startDate, endDate, ...rest } = input;
+        return await getAuditLogsCount({
+          ...rest,
+          startDate: startDate ? new Date(startDate) : undefined,
+          endDate: endDate ? new Date(endDate) : undefined,
+        });
+      }),
+
+    getLogsByResource: protectedProcedure.query(async () => {
+      const { getAuditLogsByResource } = await import('./db_audit');
+      return await getAuditLogsByResource();
+    }),
+
+    getLogsByAction: protectedProcedure.query(async () => {
+      const { getAuditLogsByAction } = await import('./db_audit');
+      return await getAuditLogsByAction();
+    }),
+
+    getRecentLogsForUser: protectedProcedure
+      .input(z.object({
+        userId: z.number(),
+        limit: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { getRecentAuditLogsForUser } = await import('./db_audit');
+        return await getRecentAuditLogsForUser(input.userId, input.limit);
+      }),
+
+    deleteOldLogs: protectedProcedure
+      .input(z.object({ daysToKeep: z.number().default(90) }))
+      .mutation(async ({ input }) => {
+        const { deleteOldAuditLogs } = await import('./db_audit');
+        const deleted = await deleteOldAuditLogs(input.daysToKeep);
+        return { deleted };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
