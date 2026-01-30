@@ -21,6 +21,7 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import { InnovationFunnelChart } from '@/components/charts/InnovationFunnelChart';
 import { MLPerformanceChart } from '@/components/charts/MLPerformanceChart';
 import { EngagementMetricsChart } from '@/components/charts/EngagementMetricsChart';
+import { ChartFilters, ChartFilterState } from '@/components/ChartFilters';
 
 interface DashboardStats {
   totalIdeas: number;
@@ -40,6 +41,13 @@ interface DashboardStats {
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [chartFilters, setChartFilters] = useState<ChartFilterState>({
+    startDate: '',
+    endDate: '',
+    department: '',
+    project: '',
+    status: '',
+  });
   const { isConnected } = useWebSocket();
 
   // Fetch initial stats
@@ -232,6 +240,13 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Chart Filters */}
+      <ChartFilters
+        onFilterChange={setChartFilters}
+        onSaveView={() => alert('Save View functionality coming soon!')}
+        onShareView={() => alert('Share View functionality coming soon!')}
+      />
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
