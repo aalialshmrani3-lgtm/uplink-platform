@@ -37,11 +37,7 @@ export default function IPRegister() {
     keywordInput: "",
     applicantType: "" as "individual" | "company" | "university" | "government" | "",
     inventors: [{ name: "", email: "", contribution: "" }],
-    organizationIds: [] as number[],
   });
-
-  // Fetch organizations for selector
-  const { data: organizations = [] } = trpc.organizations.getAll.useQuery({ isActive: true });
 
   const createIPMutation = trpc.ip.create.useMutation({
     onSuccess: (data) => {
@@ -113,7 +109,6 @@ export default function IPRegister() {
       inventors: formData.inventors.filter(i => i.name).length > 0 
         ? formData.inventors.filter(i => i.name) 
         : undefined,
-      organizationIds: formData.organizationIds.length > 0 ? formData.organizationIds : undefined,
     });
   };
 
@@ -358,52 +353,6 @@ export default function IPRegister() {
                   <Users className="w-4 h-4 ml-2" />
                   إضافة مخترع آخر
                 </Button>
-
-                {/* Organizations Selector */}
-                <Card className="bg-slate-900/50 border-slate-700 mt-6">
-                  <CardHeader>
-                    <CardTitle className="text-white">الجهات المشاركة</CardTitle>
-                    <CardDescription className="text-slate-400">
-                      اختر الجهات المشاركة في هذه الملكية الفكرية (اختياري)
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {organizations.map((org) => (
-                        <label key={org.id} className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 hover:bg-slate-800 cursor-pointer transition-colors">
-                          <input
-                            type="checkbox"
-                            checked={formData.organizationIds.includes(org.id)}
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setFormData({
-                                  ...formData,
-                                  organizationIds: [...formData.organizationIds, org.id],
-                                });
-                              } else {
-                                setFormData({
-                                  ...formData,
-                                  organizationIds: formData.organizationIds.filter(id => id !== org.id),
-                                });
-                              }
-                            }}
-                            className="w-4 h-4 rounded border-slate-600 text-cyan-500 focus:ring-cyan-500"
-                          />
-                          <div className="flex-1">
-                            <div className="text-white font-medium">{org.nameAr}</div>
-                            <div className="text-slate-400 text-sm">{org.nameEn}</div>
-                          </div>
-                          <div className="text-xs px-2 py-1 rounded-full bg-slate-700 text-slate-300">
-                            {org.type === 'government' && 'حكومية'}
-                            {org.type === 'academic' && 'أكاديمية'}
-                            {org.type === 'private' && 'قطاع خاص'}
-                            {org.type === 'supporting' && 'داعمة'}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
             )}
 
