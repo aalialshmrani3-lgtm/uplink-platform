@@ -23,7 +23,18 @@ export default defineConfig({
     dedupe: ["react", "react-dom"],
   },
   optimizeDeps: {
-    include: ["react", "react-dom"],
+    include: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "wouter",
+      "@trpc/client",
+      "@trpc/react-query",
+      "@tanstack/react-query",
+      "framer-motion",
+      "recharts",
+      "lucide-react",
+    ],
   },
   envDir: path.resolve(__dirname),
   root: path.resolve(__dirname, "client"),
@@ -31,6 +42,36 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // Group core React dependencies
+            if (id.includes('react') || id.includes('react-dom') || id.includes('wouter')) {
+              return 'react-vendor';
+            }
+            // Group tRPC and React Query
+            if (id.includes('@trpc') || id.includes('@tanstack/react-query')) {
+              return 'trpc-vendor';
+            }
+            // Group UI libraries
+            if (id.includes('framer-motion') || id.includes('lucide-react')) {
+              return 'ui-vendor';
+            }
+            // Group charting libraries
+            if (id.includes('recharts') || id.includes('chart.js')) {
+              return 'chart-vendor';
+            }
+            // All other node_modules
+            return 'vendor';
+          }
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+      },
+    },
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     host: true,
