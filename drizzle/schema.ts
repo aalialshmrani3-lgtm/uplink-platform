@@ -947,3 +947,22 @@ export const auditLogs = mysqlTable("audit_logs", {
 
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type InsertAuditLog = typeof auditLogs.$inferInsert;
+
+// ============================================
+// SAVED DASHBOARD VIEWS
+// ============================================
+export const savedViews = mysqlTable("saved_views", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  viewType: varchar("viewType", { length: 50 }).notNull(), // 'admin_dashboard', 'analytics', etc.
+  filters: json("filters").notNull(), // Stores filter configuration
+  isPublic: boolean("isPublic").default(false),
+  sharedWith: json("sharedWith"), // Array of user IDs
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SavedView = typeof savedViews.$inferSelect;
+export type InsertSavedView = typeof savedViews.$inferInsert;

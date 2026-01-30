@@ -1753,6 +1753,75 @@ Provide response in JSON format:
         return { deleted };
       }),
   }),
+
+  savedViews: router({
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        description: z.string().optional(),
+        viewType: z.string(),
+        filters: z.any(),
+        isPublic: z.boolean().default(false),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { createSavedView } = await import('./db_saved_views');
+        return await createSavedView({
+          userId: ctx.user.id,
+          ...input,
+        });
+      }),
+
+    list: protectedProcedure
+      .input(z.object({ viewType: z.string().optional() }))
+      .query(async ({ ctx, input }) => {
+        const { getUserSavedViews } = await import('./db_saved_views');
+        return await getUserSavedViews(ctx.user.id, input.viewType);
+      }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const { getSavedViewById } = await import('./db_saved_views');
+        return await getSavedViewById(input.id, ctx.user.id);
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().optional(),
+        description: z.string().optional(),
+        filters: z.any().optional(),
+        isPublic: z.boolean().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { id, ...data } = input;
+        const { updateSavedView } = await import('./db_saved_views');
+        const success = await updateSavedView(id, ctx.user.id, data);
+        if (!success) throw new TRPCError({ code: 'NOT_FOUND' });
+        return { success };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const { deleteSavedView } = await import('./db_saved_views');
+        const success = await deleteSavedView(input.id, ctx.user.id);
+        if (!success) throw new TRPCError({ code: 'NOT_FOUND' });
+        return { success };
+      }),
+
+    share: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        userIds: z.array(z.number()),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { shareView } = await import('./db_saved_views');
+        const success = await shareView(input.id, ctx.user.id, input.userIds);
+        if (!success) throw new TRPCError({ code: 'NOT_FOUND' });
+        return { success };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

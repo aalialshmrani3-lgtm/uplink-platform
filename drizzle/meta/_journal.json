@@ -85,6 +85,13 @@
       "when": 1769775164770,
       "tag": "0011_goofy_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1769777044259,
+      "tag": "0012_woozy_chat",
+      "breakpoints": true
     }
   ]
 }
