@@ -186,7 +186,67 @@ Content-Type: application/json
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">3. فحص الاستخدام</h3>
+              <h3 className="font-semibold mb-2">3. التنبؤ الجماعي (Batch Prediction)</h3>
+              <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                <pre className="text-sm">
+{`POST https://your-domain.com/api/public/v1/batch-predict
+Authorization: Bearer uplink_your_api_key
+Content-Type: application/json
+
+{
+  "ideas": [
+    {
+      "budget": 50000,
+      "team_size": 5,
+      "timeline_months": 12,
+      "market_demand": 0.8,
+      "technical_feasibility": 0.7
+    },
+    {
+      "budget": 100000,
+      "team_size": 10,
+      "timeline_months": 18,
+      "market_demand": 0.9,
+      "technical_feasibility": 0.85
+    }
+  ]
+}
+
+// Response:
+{
+  "success": true,
+  "total": 2,
+  "successful": 2,
+  "failed": 0,
+  "processing_time_ms": 450,
+  "predictions": [
+    {
+      "index": 0,
+      "success": true,
+      "prediction": {
+        "success_rate": 0.87,
+        "confidence": 0.92
+      }
+    },
+    {
+      "index": 1,
+      "success": true,
+      "prediction": {
+        "success_rate": 0.93,
+        "confidence": 0.95
+      }
+    }
+  ]
+}`}
+                </pre>
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">
+                💡 الحد الأقصى: 100 فكرة في الطلب الواحد
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-2">4. فحص الاستخدام</h3>
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`GET https://your-domain.com/api/public/v1/usage

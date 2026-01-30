@@ -1285,6 +1285,194 @@ Provide response in JSON format:
         return await dbApiKeys.getApiKeyUsageStats(input.keyId);
       }),
   }),
+
+  // ============================================
+  // WEBHOOKS
+  // ============================================
+  webhooks: router({
+    // Create webhook
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string().min(1).max(255),
+          url: z.string().url(),
+          events: z.array(z.string()),
+          secret: z.string().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const dbWebhooks = await import("./db_webhooks");
+        return await dbWebhooks.createWebhook({
+          userId: ctx.user.id,
+          name: input.name,
+          url: input.url,
+          events: input.events,
+          secret: input.secret,
+        });
+      }),
+
+    // List user's webhooks
+    list: protectedProcedure.query(async ({ ctx }) => {
+      const dbWebhooks = await import("./db_webhooks");
+      return await dbWebhooks.getUserWebhooks(ctx.user.id);
+    }),
+
+    // Update webhook
+    update: protectedProcedure
+      .input(
+        z.object({
+          webhookId: z.number(),
+          name: z.string().optional(),
+          url: z.string().url().optional(),
+          events: z.array(z.string()).optional(),
+          isActive: z.boolean().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const dbWebhooks = await import("./db_webhooks");
+        await dbWebhooks.updateWebhook(input.webhookId, ctx.user.id, {
+          name: input.name,
+          url: input.url,
+          events: input.events,
+          isActive: input.isActive,
+        });
+        return { success: true };
+      }),
+
+    // Delete webhook
+    delete: protectedProcedure
+      .input(z.object({ webhookId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const dbWebhooks = await import("./db_webhooks");
+        await dbWebhooks.deleteWebhook(input.webhookId, ctx.user.id);
+        return { success: true };
+      }),
+
+    // Get webhook logs
+    logs: protectedProcedure
+      .input(z.object({ webhookId: z.number(), limit: z.number().optional() }))
+      .query(async ({ ctx, input }) => {
+        const dbWebhooks = await import("./db_webhooks");
+        return await dbWebhooks.getWebhookLogs(input.webhookId, input.limit);
+      }),
+
+    // Get webhook stats
+    stats: protectedProcedure
+      .input(z.object({ webhookId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const dbWebhooks = await import("./db_webhooks");
+        return await dbWebhooks.getWebhookStats(input.webhookId);
+      }),
+
+    // Test webhook (send test event)
+    test: protectedProcedure
+      .input(z.object({ webhookId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const dbWebhooks = await import("./db_webhooks");
+        const webhookService = await import("./webhook_service");
+        
+        // Get webhook
+        const webhooks = await dbWebhooks.getUserWebhooks(ctx.user.id);
+        const webhook = webhooks.find((w: any) => w.id === input.webhookId);
+        
+        if (!webhook) {
+          throw new Error("Webhook not found");
+        }
+        
+        // Trigger test event
+        await webhookService.triggerWebhooks("test.ping", {
+          message: "This is a test webhook",
+          timestamp: new Date().toISOString(),
+        });
+        
+        return { success: true };
+      }),
+  }),
+
+  // ============================================
+  // MODEL VERSIONING
+  // ============================================
+  modelVersioning: router({
+    // List all model versions
+    list: protectedProcedure.query(async () => {
+      const { spawn } = await import("child_process");
+      const { promisify } = await import("util");
+      const execPromise = promisify(require("child_process").exec);
+      
+      try {
+        const { stdout } = await execPromise(
+          "cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py list"
+        );
+        return JSON.parse(stdout);
+      } catch (error: any) {
+        console.error("Error listing model versions:", error);
+        return [];
+      }
+    }),
+
+    // Activate a specific version (rollback)
+    activate: protectedProcedure
+      .input(z.object({ versionId: z.string() }))
+      .mutation(async ({ input }) => {
+        const { promisify } = await import("util");
+        const execPromise = promisify(require("child_process").exec);
+        
+        try {
+          await execPromise(
+            `cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py activate ${input.versionId}`
+          );
+          
+          // Restart prediction service to use new model
+          try {
+            await execPromise("pkill -f 'prediction/main.py'");
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            execPromise(
+              "cd /home/ubuntu/uplink-platform/ai-services/prediction && nohup python3 main.py > /tmp/prediction_service_v2.log 2>&1 &"
+            );
+          } catch (e) {
+            console.log("Prediction service restart initiated");
+          }
+          
+          return { success: true, message: "Model version activated successfully" };
+        } catch (error: any) {
+          throw new Error(`Failed to activate version: ${error.message}`);
+        }
+      }),
+
+    // Delete a version
+    delete: protectedProcedure
+      .input(z.object({ versionId: z.string() }))
+      .mutation(async ({ input }) => {
+        const { promisify } = await import("util");
+        const execPromise = promisify(require("child_process").exec);
+        
+        try {
+          await execPromise(
+            `cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py delete ${input.versionId}`
+          );
+          return { success: true, message: "Model version deleted successfully" };
+        } catch (error: any) {
+          throw new Error(`Failed to delete version: ${error.message}`);
+        }
+      }),
+
+    // Compare two versions
+    compare: protectedProcedure
+      .input(z.object({ versionId1: z.string(), versionId2: z.string() }))
+      .query(async ({ input }) => {
+        const { promisify } = await import("util");
+        const execPromise = promisify(require("child_process").exec);
+        
+        try {
+          const { stdout } = await execPromise(
+            `cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py compare ${input.versionId1} ${input.versionId2}`
+          );
+          return JSON.parse(stdout);
+        } catch (error: any) {
+          throw new Error(`Failed to compare versions: ${error.message}`);
+        }
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

@@ -305,6 +305,49 @@ export const apiUsage = mysqlTable("api_usage", {
 export type ApiUsage = typeof apiUsage.$inferSelect;
 export type InsertApiUsage = typeof apiUsage.$inferInsert;
 
+export const webhooks = mysqlTable("webhooks", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  url: text("url").notNull(),
+  secret: varchar("secret", { length: 64 }), // Optional HMAC secret for verification
+  
+  // Events to listen to
+  events: json("events"), // Array of event types: ["idea.created", "idea.status_changed", "rat.alert"]
+  
+  // Status
+  isActive: boolean("isActive").default(true).notNull(),
+  
+  // Stats
+  totalCalls: int("totalCalls").default(0).notNull(),
+  successfulCalls: int("successfulCalls").default(0).notNull(),
+  failedCalls: int("failedCalls").default(0).notNull(),
+  lastTriggeredAt: timestamp("lastTriggeredAt"),
+  lastError: text("lastError"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Webhook = typeof webhooks.$inferSelect;
+export type InsertWebhook = typeof webhooks.$inferInsert;
+
+export const webhookLogs = mysqlTable("webhook_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  webhookId: int("webhookId").notNull(),
+  event: varchar("event", { length: 100 }).notNull(),
+  payload: json("payload"),
+  statusCode: int("statusCode"),
+  responseTime: int("responseTime"),
+  success: boolean("success").notNull(),
+  errorMessage: text("errorMessage"),
+  retryCount: int("retryCount").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type WebhookLog = typeof webhookLogs.$inferSelect;
+export type InsertWebhookLog = typeof webhookLogs.$inferInsert;
+
 // ============================================
 // CHALLENGES & MATCHING (UPLINK2)
 // ============================================

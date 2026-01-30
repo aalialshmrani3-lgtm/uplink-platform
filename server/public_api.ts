@@ -199,6 +199,95 @@ router.post('/predict', async (req: Request, res: Response) => {
 });
 
 /**
+ * POST /api/public/v1/batch-predict
+ * Batch predict multiple ideas at once
+ */
+router.post('/batch-predict', async (req: Request, res: Response) => {
+  try {
+    const { ideas } = req.body;
+    
+    // Validate input
+    if (!Array.isArray(ideas) || ideas.length === 0) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'ideas must be a non-empty array',
+      });
+    }
+    
+    if (ideas.length > 100) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'Maximum 100 ideas per batch',
+      });
+    }
+    
+    // Process all ideas in parallel
+    const startTime = Date.now();
+    const predictions = await Promise.all(
+      ideas.map(async (idea: any, index: number) => {
+        try {
+          // Call internal prediction service
+          const predictionResponse = await axios.post('http://localhost:8002/predict', {
+            budget: idea.budget,
+            team_size: idea.team_size,
+            timeline_months: idea.timeline_months,
+            market_demand: idea.market_demand,
+            technical_feasibility: idea.technical_feasibility,
+            competitive_advantage: idea.competitive_advantage || 0.5,
+            user_engagement: idea.user_engagement || 0.5,
+            tags_count: idea.tags_count || 3,
+            hypothesis_validation_rate: idea.hypothesis_validation_rate || 0.5,
+            rat_completion_rate: idea.rat_completion_rate || 0.5,
+            title_length: idea.title_length || 50,
+            description_length: idea.description_length || 200,
+          });
+          
+          return {
+            index,
+            success: true,
+            prediction: {
+              success_rate: predictionResponse.data.success_rate,
+              confidence: predictionResponse.data.confidence,
+              model_version: predictionResponse.data.model_version,
+            },
+          };
+        } catch (error: any) {
+          return {
+            index,
+            success: false,
+            error: error.message || 'Prediction failed',
+          };
+        }
+      })
+    );
+    
+    const processingTime = Date.now() - startTime;
+    
+    // Aggregate results
+    const successful = predictions.filter(p => p.success).length;
+    const failed = predictions.filter(p => !p.success).length;
+    
+    res.json({
+      success: true,
+      total: ideas.length,
+      successful,
+      failed,
+      processing_time_ms: processingTime,
+      predictions,
+      timestamp: new Date().toISOString(),
+    });
+    
+  } catch (error: any) {
+    console.error('[Public API] Batch prediction error:', error);
+    
+    res.status(500).json({
+      error: 'Internal Server Error',
+      message: 'Failed to process batch prediction',
+    });
+  }
+});
+
+/**
  * GET /api/public/v1/usage
  * Get API key usage statistics
  */

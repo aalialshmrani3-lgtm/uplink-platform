@@ -64,6 +64,13 @@
       "when": 1769720396560,
       "tag": "0008_chemical_doctor_spectrum",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1769771294971,
+      "tag": "0009_slimy_daredevil",
+      "breakpoints": true
     }
   ]
 }

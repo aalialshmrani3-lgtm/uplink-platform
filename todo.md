@@ -427,3 +427,28 @@
   - [x] API documentation page (APIManagement.tsx)
   - [x] API key authentication middleware
   - [x] tRPC endpoints (create, list, revoke, usage)
+
+
+## Phase 21: Webhooks, Batch Prediction & Model Versioning
+- [x] نظام Webhooks للإشعارات
+  - [x] جدول webhooks و webhook_logs في database
+  - [x] تسجيل webhook URLs مع HMAC signature
+  - [x] إرسال إشعارات للأحداث (webhook_service.ts)
+  - [x] Webhook logs وإعادة المحاولة (3 محاولات بـ exponential backoff)
+  - [x] صفحة Webhook Management (/webhook-management)
+  - [x] tRPC endpoints (create, list, update, delete, logs, stats, test)
+- [x] Batch Prediction API
+  - [x] POST /api/public/v1/batch-predict endpoint
+  - [x] معالجة متوازية للأفكار (Promise.all)
+  - [x] Results aggregation (successful/failed counts)
+  - [x] Processing time tracking
+  - [x] تحديث API documentation في APIManagement.tsx
+  - [x] الحد الأقصى: 100 فكرة في الطلب الواحد
+- [x] Model Versioning UI
+  - [x] صفحة Model History (/admin/model-history)
+  - [x] عرض جميع النماذج المدربة مع metadata
+  - [x] مقارنة بين إصدارات النماذج (side-by-side)
+  - [x] Rollback لنموذج سابق (activate version)
+  - [x] Model metadata (accuracy, precision, recall, f1_score, samples, timestamp)
+  - [x] Python script (model_versioning.py) لإدارة الإصدارات
+  - [x] tRPC endpoints (list, activate, delete, compare)
