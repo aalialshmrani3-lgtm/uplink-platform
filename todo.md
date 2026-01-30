@@ -467,3 +467,28 @@
   - [ ] قوالب التقارير (يومية/أسبوعية/شهرية)
   - [ ] جدولة التقارير (cron jobs)
   - [ ] إعدادات المشرفين للاشتراك/إلغاء الاشتراك
+
+
+## Phase 23: Organizations/Entities Management System (Saudi Local Focus)
+- [ ] إنشاء نظام إدارة الجهات (Organizations)
+  - [ ] جدول organizations في database
+  - [ ] تصنيفات الجهات (حكومي، أكاديمي، خاص، داعم)
+  - [ ] حقل محلي/عالمي (scope: local/global)
+  - [ ] Database helpers (db_organizations.ts)
+  - [ ] tRPC endpoints (create, list, update, delete)
+- [ ] إضافة الجهات المحلية السعودية من الصورة
+  - [ ] Seed script للجهات الحكومية (أزرق): وزارات ومؤسسات
+  - [ ] Seed script للجامعات والمراكز البحثية (بنفسجي)
+  - [ ] Seed script للقطاع الخاص (برتقالي)
+  - [ ] Seed script للجهات الداعمة (أحمر)
+- [ ] ربط الأفكار والمشاريع بالجهات
+  - [ ] جدول idea_organizations (many-to-many)
+  - [ ] جدول project_organizations (many-to-many)
+  - [ ] تحديث idea/project forms لإضافة الجهات المشاركة
+  - [ ] فلترة الأفكار/المشاريع حسب الجهة
+- [ ] واجهة إدارة الجهات
+  - [ ] صفحة OrganizationManagement.tsx
+  - [ ] عرض الجهات حسب النوع (Grid/List view)
+  - [ ] إضافة/تعديل/حذف الجهات
+  - [ ] فلترة (محلي/عالمي، نوع الجهة)
+  - [ ] بحث متقدم

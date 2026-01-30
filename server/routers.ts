@@ -1797,7 +1797,7 @@ Provide response in JSON format:
         const { id, ...data } = input;
         const { updateSavedView } = await import('./db_saved_views');
         const success = await updateSavedView(id, ctx.user.id, data);
-        if (!success) throw new TRPCError({ code: 'NOT_FOUND' });
+        if (!success) throw new Error('View not found or access denied');
         return { success };
       }),
 
@@ -1806,7 +1806,7 @@ Provide response in JSON format:
       .mutation(async ({ ctx, input }) => {
         const { deleteSavedView } = await import('./db_saved_views');
         const success = await deleteSavedView(input.id, ctx.user.id);
-        if (!success) throw new TRPCError({ code: 'NOT_FOUND' });
+        if (!success) throw new Error('View not found or access denied');
         return { success };
       }),
 
@@ -1818,8 +1818,190 @@ Provide response in JSON format:
       .mutation(async ({ ctx, input }) => {
         const { shareView } = await import('./db_saved_views');
         const success = await shareView(input.id, ctx.user.id, input.userIds);
-        if (!success) throw new TRPCError({ code: 'NOT_FOUND' });
+        if (!success) throw new Error('View not found or access denied');
         return { success };
+      }),
+  }),
+
+  // ============================================
+  // ORGANIZATIONS MANAGEMENT
+  // ============================================
+  organizations: router({
+    // Get all organizations with optional filtering
+    getAll: publicProcedure
+      .input(z.object({
+        type: z.enum(['government', 'academic', 'private', 'supporting']).optional(),
+        scope: z.enum(['local', 'global']).optional(),
+        country: z.string().optional(),
+        isActive: z.boolean().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        const { getAllOrganizations } = await import('./db_organizations');
+        return await getAllOrganizations(input || undefined);
+      }),
+
+    // Get all organizations with statistics
+    getAllWithStats: publicProcedure
+      .query(async () => {
+        const { getAllOrganizationsWithStats } = await import('./db_organizations');
+        return await getAllOrganizationsWithStats();
+      }),
+
+    // Get organization by ID
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const { getOrganizationById } = await import('./db_organizations');
+        return await getOrganizationById(input.id);
+      }),
+
+    // Get organization statistics
+    getStats: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const { getOrganizationStats } = await import('./db_organizations');
+        return await getOrganizationStats(input.id);
+      }),
+
+    // Create new organization (admin only)
+    create: protectedProcedure
+      .input(z.object({
+        nameAr: z.string().min(1),
+        nameEn: z.string().min(1),
+        type: z.enum(['government', 'academic', 'private', 'supporting']),
+        scope: z.enum(['local', 'global']),
+        country: z.string().min(1),
+        logo: z.string().optional(),
+        description: z.string().optional(),
+        website: z.string().optional(),
+        contactEmail: z.string().email().optional(),
+        contactPhone: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Check admin permission
+        const { hasPermission } = await import('./db_rbac');
+        const canManage = await hasPermission(ctx.user.id, 'organizations', 'manage');
+        if (!canManage) throw new Error('Permission denied');
+
+        const { createOrganization } = await import('./db_organizations');
+        const org = await createOrganization(input);
+
+        // Audit log
+        const { createAuditLog } = await import('./db_audit');
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'create',
+          resource: 'organization',
+          resourceId: org?.id.toString(),
+          details: JSON.stringify({ name: input.nameAr }),
+          status: 'success',
+        });
+
+        return org;
+      }),
+
+    // Update organization (admin only)
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        nameAr: z.string().optional(),
+        nameEn: z.string().optional(),
+        type: z.enum(['government', 'academic', 'private', 'supporting']).optional(),
+        scope: z.enum(['local', 'global']).optional(),
+        country: z.string().optional(),
+        logo: z.string().optional(),
+        description: z.string().optional(),
+        website: z.string().optional(),
+        contactEmail: z.string().email().optional(),
+        contactPhone: z.string().optional(),
+        isActive: z.boolean().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Check admin permission
+        const { hasPermission } = await import('./db_rbac');
+        const canManage = await hasPermission(ctx.user.id, 'organizations', 'manage');
+        if (!canManage) throw new Error('Permission denied');
+
+        const { id, ...data } = input;
+        const { updateOrganization } = await import('./db_organizations');
+        const org = await updateOrganization(id, data);
+
+        // Audit log
+        const { createAuditLog } = await import('./db_audit');
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'update',
+          resource: 'organization',
+          resourceId: id.toString(),
+          details: JSON.stringify(data),
+          status: 'success',
+        });
+
+        return org;
+      }),
+
+    // Delete organization (admin only, soft delete)
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        // Check admin permission
+        const { hasPermission } = await import('./db_rbac');
+        const canManage = await hasPermission(ctx.user.id, 'organizations', 'manage');
+        if (!canManage) throw new Error('Permission denied');
+
+        const { deleteOrganization } = await import('./db_organizations');
+        const success = await deleteOrganization(input.id);
+
+        // Audit log
+        const { createAuditLog } = await import('./db_audit');
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'delete',
+          resource: 'organization',
+          resourceId: input.id.toString(),
+          details: null,
+          status: 'success',
+        });
+
+        return { success };
+      }),
+
+    // Link idea to organizations
+    linkIdeaToOrganizations: protectedProcedure
+      .input(z.object({
+        ideaId: z.number(),
+        organizationIds: z.array(z.number()),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { linkIdeaToOrganizations } = await import('./db_organizations');
+        return await linkIdeaToOrganizations(input.ideaId, input.organizationIds);
+      }),
+
+    // Get organizations linked to an idea
+    getIdeaOrganizations: publicProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .query(async ({ input }) => {
+        const { getIdeaOrganizations } = await import('./db_organizations');
+        return await getIdeaOrganizations(input.ideaId);
+      }),
+
+    // Link project to organizations
+    linkProjectToOrganizations: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        organizationIds: z.array(z.number()),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { linkProjectToOrganizations } = await import('./db_organizations');
+        return await linkProjectToOrganizations(input.projectId, input.organizationIds);
+      }),
+
+    // Get organizations linked to a project
+    getProjectOrganizations: publicProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ input }) => {
+        const { getProjectOrganizations } = await import('./db_organizations');
+        return await getProjectOrganizations(input.projectId);
       }),
   }),
 });

@@ -966,3 +966,51 @@ export const savedViews = mysqlTable("saved_views", {
 
 export type SavedView = typeof savedViews.$inferSelect;
 export type InsertSavedView = typeof savedViews.$inferInsert;
+
+
+// ============================================
+// ORGANIZATIONS/ENTITIES MANAGEMENT
+// ============================================
+export const organizations = mysqlTable("organizations", {
+  id: int("id").autoincrement().primaryKey(),
+  nameAr: varchar("nameAr", { length: 500 }).notNull(),
+  nameEn: varchar("nameEn", { length: 500 }),
+  type: mysqlEnum("type", ["government", "academic", "private", "supporting"]).notNull(),
+  scope: mysqlEnum("scope", ["local", "global"]).default("local").notNull(),
+  description: text("description"),
+  website: text("website"),
+  logo: text("logo"),
+  contactEmail: varchar("contactEmail", { length: 320 }),
+  contactPhone: varchar("contactPhone", { length: 20 }),
+  address: text("address"),
+  country: varchar("country", { length: 100 }).default("Saudi Arabia"),
+  city: varchar("city", { length: 100 }),
+  isActive: boolean("isActive").default(true),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Organization = typeof organizations.$inferSelect;
+export type InsertOrganization = typeof organizations.$inferInsert;
+
+// ============================================
+// IDEA-ORGANIZATION RELATIONSHIPS
+// ============================================
+export const ideaOrganizations = mysqlTable("idea_organizations", {
+  id: int("id").autoincrement().primaryKey(),
+  ideaId: int("ideaId").notNull(),
+  organizationId: int("organizationId").notNull(),
+  role: varchar("role", { length: 100 }), // e.g., "sponsor", "partner", "implementer"
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+// ============================================
+// PROJECT-ORGANIZATION RELATIONSHIPS
+// ============================================
+export const projectOrganizations = mysqlTable("project_organizations", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("projectId").notNull(),
+  organizationId: int("organizationId").notNull(),
+  role: varchar("role", { length: 100 }), // e.g., "sponsor", "partner", "implementer"
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
