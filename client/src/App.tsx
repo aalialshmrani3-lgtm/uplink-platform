@@ -55,6 +55,7 @@ const ABTesting = lazy(() => import("./pages/ABTesting"));
 const APIManagement = lazy(() => import("./pages/APIManagement"));
 const WebhookManagement = lazy(() => import("./pages/WebhookManagement"));
 const ModelHistory = lazy(() => import("./pages/ModelHistory"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -259,6 +260,7 @@ function Router() {
         <Route path="/api-management" component={APIManagement} />
         <Route path="/webhook-management" component={WebhookManagement} />
         <Route path="/admin/model-history" component={ModelHistory} />
+        <Route path="/admin/dashboard" component={AdminDashboard} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

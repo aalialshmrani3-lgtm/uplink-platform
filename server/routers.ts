@@ -1473,6 +1473,79 @@ Provide response in JSON format:
         }
       }),
   }),
+
+  // ============================================
+  // ANALYTICS & DASHBOARD
+  // ============================================
+  analytics: router({
+    // Admin dashboard statistics
+    adminDashboard: protectedProcedure.query(async ({ ctx }) => {
+      // Only allow admins
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Unauthorized');
+      }
+      
+      try {
+        // Get counts from database
+        const allUsers = await db.getAllUsers();
+        const allProjects = await db.getAllProjects();
+        
+        const dbWebhooks = await import('./db_webhooks');
+        const dbOutcomes = await import('./db_idea_outcomes');
+        
+        // Calculate success rate from idea_outcomes
+        const outcomes = await dbOutcomes.getTrainingData();
+        const successfulIdeas = outcomes.filter((o: any) => o.actual_outcome === 'success').length;
+        const successRate = outcomes.length > 0 ? successfulIdeas / outcomes.length : 0;
+        
+        // API calls (mock for now - would need to query api_usage table)
+        const apiCalls = 0;
+        
+        // Webhook calls (sum from webhooks table)
+        const webhooks = await dbWebhooks.getUserWebhooks(ctx.user.id);
+        const webhookCalls = webhooks.reduce((sum: number, w: any) => sum + (w.totalCalls || 0), 0);
+        
+        // Pending evaluations (outcomes without classification)
+        const pendingEvaluations = outcomes.filter((o: any) => o.actual_outcome === 'pending').length;
+        
+        // Active users (users who logged in last 24h - mock for now)
+        const activeUsers = Math.floor(allUsers.length * 0.3);
+        
+        return {
+          totalIdeas: outcomes.length,
+          totalProjects: allProjects.length,
+          totalUsers: allUsers.length,
+          activeUsers,
+          successRate,
+          apiCalls,
+          webhookCalls,
+          pendingEvaluations,
+          recentGrowth: {
+            ideas: 12, // Mock - would calculate from timestamps
+            users: 8,
+            projects: 15,
+          },
+        };
+      } catch (error: any) {
+        console.error('Error fetching admin dashboard stats:', error);
+        return {
+          totalIdeas: 0,
+          totalProjects: 0,
+          totalUsers: 0,
+          activeUsers: 0,
+          successRate: 0,
+          apiCalls: 0,
+          webhookCalls: 0,
+          pendingEvaluations: 0,
+          recentGrowth: {
+            ideas: 0,
+            users: 0,
+            projects: 0,
+          },
+        };
+      }
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
