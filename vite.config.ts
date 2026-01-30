@@ -44,34 +44,15 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            // Group core React dependencies
-            if (id.includes('react') || id.includes('react-dom') || id.includes('wouter')) {
-              return 'react-vendor';
-            }
-            // Group tRPC and React Query
-            if (id.includes('@trpc') || id.includes('@tanstack/react-query')) {
-              return 'trpc-vendor';
-            }
-            // Group UI libraries
-            if (id.includes('framer-motion') || id.includes('lucide-react')) {
-              return 'ui-vendor';
-            }
-            // Group charting libraries
-            if (id.includes('recharts') || id.includes('chart.js')) {
-              return 'chart-vendor';
-            }
-            // All other node_modules
-            return 'vendor';
-          }
-        },
+        // Disable code splitting - single bundle to avoid module loading issues
+        manualChunks: undefined,
+        inlineDynamicImports: true,
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 5000, // Increase limit for single bundle
   },
   server: {
     host: true,

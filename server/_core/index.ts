@@ -61,8 +61,10 @@ async function startServer() {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
 
-  // Initialize WebSocket server
-  initWebSocketServer(server);
+  // Initialize WebSocket server (only in development)
+  if (process.env.NODE_ENV === "development") {
+    initWebSocketServer(server);
+  }
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
