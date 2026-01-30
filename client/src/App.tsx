@@ -60,6 +60,7 @@ const RoleManagement = lazy(() => import("./pages/RoleManagement"));
 const AuditLogs = lazy(() => import("./pages/AuditLogs"));
 const SystemHealth = lazy(() => import("./pages/SystemHealth"));
 const OrganizationsManagement = lazy(() => import("./pages/admin/OrganizationsManagement"));
+const OrganizationsDashboard = lazy(() => import("./pages/OrganizationsDashboard"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -269,6 +270,7 @@ function Router() {
         <Route path="/admin/audit-logs" component={AuditLogs} />
         <Route path="/admin/system-health" component={SystemHealth} />
         <Route path="/admin/organizations" component={OrganizationsManagement} />
+        <Route path="/organizations/dashboard" component={OrganizationsDashboard} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
