@@ -229,7 +229,7 @@ def get_text_features(title: str, description: str, use_embeddings: bool = True,
         # Pad with zeros to match embedding_dim
         features = [float(len(title)), float(len(description))]
         features.extend([0.0] * (embedding_dim - 2))  # Pad with zeros
-        return featuresen(description)]
+        return features
 
 if __name__ == "__main__":
     # Test embeddings service

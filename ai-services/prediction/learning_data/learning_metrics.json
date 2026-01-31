@@ -1,0 +1,30 @@
+{
+  "last_updated": "2026-01-31T18:14:32.251975",
+  "total_records": 1,
+  "recommendation_effectiveness": {
+    "total_recommendations": 1,
+    "implementation_rates": {
+      "implemented": 1,
+      "partially_implemented": 0,
+      "rejected": 0,
+      "deferred": 0
+    },
+    "implementation_percentage": 100.0,
+    "success_rates": {
+      "success": 1,
+      "failure": 0,
+      "mixed": 0,
+      "pending": 0
+    },
+    "success_percentage": 100.0,
+    "average_impact_score": 0.8,
+    "recommendation_type": "all"
+  },
+  "prediction_accuracy": {
+    "total_predictions": 1,
+    "correct_predictions": 0,
+    "accuracy_percentage": 0.0,
+    "mean_absolute_error": 0.65,
+    "model_performance": "يحتاج تحسين"
+  }
+}

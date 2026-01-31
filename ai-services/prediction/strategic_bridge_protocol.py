@@ -37,6 +37,26 @@ class StrategicAnalysisResult:
     # معلومات إضافية
     generated_at: str
     version: str
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """تحويل النتيجة إلى قاموس"""
+        return {
+            'project_id': self.project_id,
+            'project_title': self.project_title,
+            'ceo_insights': self.ceo_insights,
+            'actionable_roadmap': self.actionable_roadmap,
+            'investor_readiness': self.investor_readiness,
+            'strategic_dashboard': self.strategic_dashboard,
+            'executive_summary': self.executive_summary,
+            'key_recommendations': self.key_recommendations,
+            'generated_at': self.generated_at,
+            'version': self.version,
+            # إضافة الحقول المطلوبة للمحاكاة
+            'ici_score': self.strategic_dashboard.get('ici_score', 0),
+            'irl_score': self.investor_readiness.get('irl_score', 0),
+            'success_probability': self.strategic_dashboard.get('success_probability', 0),
+            'dimensions': self.strategic_dashboard.get('dimensions', {})
+        }
 
 
 class StrategicBridgeProtocol:
