@@ -1,0 +1,2495 @@
+{
+  "statistics": {
+    "total": 50,
+    "success": 10,
+    "failure": 40,
+    "risk_levels": {
+      "critical": 29,
+      "high": 10,
+      "medium": 1,
+      "low": 10
+    },
+    "investor_appeal": {
+      "very_low": 29,
+      "low": 10,
+      "medium": 1,
+      "high": 8,
+      "very_high": 2
+    },
+    "avg_insights_per_project": 3.36
+  },
+  "results": [
+    {
+      "project_id": 1,
+      "project_name": "منصة تجارة إلكترونية بتقدير خاطئ للتكاليف",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 23.291800000000002,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (23%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (32%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.32
+          },
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (188,060 ريال) أقل بنسبة 76% من المتوسط المطلوب لمشاريع التقنية المالية والمدفوعات الرقمية الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 188060
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (27%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.27
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 23.291800000000002,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 2,
+      "project_name": "تطبيق صحي رقمي بتكاليف تشغيلية مرتفعة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 34.20137,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 3 مجالات رئيسية. احتمالية النجاح (34%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (543,379 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: متوسط",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 543379
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (16%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.16
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (28/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 216% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 28
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (2%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.02
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 34.20137,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 3,
+      "project_name": "منصة تعليمية باستقالة المؤسس التقني",
+      "sector": "التعليم الإلكتروني والتدريب المهني",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 19.19792,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (19%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (9%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.09
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (188,264 ريال) أقل بنسبة 76% من المتوسط المطلوب لمشاريع التعليم الإلكتروني والتدريب المهني الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 188264
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (20/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 240% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 20
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (7%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.07
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 19.19792,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 4,
+      "project_name": "متجر إلكتروني عام بدون تخصص",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 11.24839,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (11%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (8%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.08
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (61,613 ريال) أقل بنسبة 92% من المتوسط المطلوب لمشاريع التقنية المالية والمدفوعات الرقمية الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 61613
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (17/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 249% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 17
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (5%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.05
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 11.24839,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 5,
+      "project_name": "تطبيق توصيل طعام تقليدي بدون ميزات فريدة",
+      "sector": "اللوجستيات والنقل الذكي",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 14.6044,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (15%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (2 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 4 أعضاء | خطر التأخير: مرتفع",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 2
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (16%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.16
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (88,480 ريال) أقل بنسبة 89% من المتوسط المطلوب لمشاريع اللوجستيات والنقل الذكي الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 88480
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (21%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.21
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 14.6044,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 6,
+      "project_name": "تطبيق شبكات اجتماعية محلي بدون قيمة مضافة",
+      "sector": "الذكاء الاصطناعي والتقنيات المتقدمة",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 19.854779999999998,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (20%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (11%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.11
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (246,826 ريال) أقل بنسبة 69% من المتوسط المطلوب لمشاريع الذكاء الاصطناعي والتقنيات المتقدمة الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 246826
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (15/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 255% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 15
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (0%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.0
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 19.854779999999998,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 7,
+      "project_name": "متجر إلكتروني عام بدون تخصص",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 13.54785,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (14%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (2%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.02
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (121,595 ريال) أقل بنسبة 85% من المتوسط المطلوب لمشاريع التقنية المالية والمدفوعات الرقمية الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 121595
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (16%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.16
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 13.54785,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 8,
+      "project_name": "مزارع عمودية ذكية في المدن الكبرى",
+      "sector": "الزراعة الذكية والأمن الغذائي",
+      "organization": "PIF",
+      "actual_outcome": "success",
+      "predicted_success_prob": 71.47014059985942,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (71%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 71.47014059985942,
+        "investor_appeal": "high"
+      }
+    },
+    {
+      "project_id": 9,
+      "project_name": "منصة تدريب مهني عن بُعد في مجالات محددة",
+      "sector": "التعليم الإلكتروني والتدريب المهني",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 53.61413,
+      "ceo_insights": {
+        "executive_summary": "المشروع على المسار الصحيح مع وجود 0 تحديات تتطلب الانتباه. احتمالية النجاح (54%) مقبولة لكن يمكن تحسينها.",
+        "critical_insights": [
+          {
+            "category": "market_validation",
+            "severity": "medium",
+            "title": "تحقق جزئي من الفرضيات يتطلب المزيد",
+            "description": "معدل التحقق من الفرضيات (52%) يشير إلى بداية جيدة لكن يجب إجراء المزيد من الاختبارات السوقية قبل الإطلاق الكامل.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 88%",
+            "shap_contribution": -0.22,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.52
+          },
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (430,471 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 9 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: متوسط",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 430471
+          },
+          {
+            "category": "market_strategy",
+            "severity": "medium",
+            "title": "طلب سوقي متوسط يتطلب استراتيجية تسويق قوية",
+            "description": "مؤشر الطلب السوقي (50/100) متوسط. يجب تطوير استراتيجية تسويق مبتكرة لزيادة الوعي بالمنتج.",
+            "business_impact": "زيادة متوقعة في CAC: 150% | خطر تشبع السوق: متوسط",
+            "shap_contribution": -0.16,
+            "feature_name": "market_demand",
+            "feature_value": 50
+          }
+        ],
+        "risk_level": "medium",
+        "success_probability": 53.61413,
+        "investor_appeal": "medium"
+      }
+    },
+    {
+      "project_id": 10,
+      "project_name": "منصة تعليمية باستقالة المؤسس التقني",
+      "sector": "التعليم الإلكتروني والتدريب المهني",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 26.96254,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (27%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (33%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.33
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (220,418 ريال) أقل بنسبة 72% من المتوسط المطلوب لمشاريع التعليم الإلكتروني والتدريب المهني الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 9 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 220418
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (21%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.21
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 26.96254,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 11,
+      "project_name": "تطبيق صحي رقمي بتكاليف تشغيلية مرتفعة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 46.30764,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 2 مجالات رئيسية. احتمالية النجاح (46%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "market_validation",
+            "severity": "medium",
+            "title": "تحقق جزئي من الفرضيات يتطلب المزيد",
+            "description": "معدل التحقق من الفرضيات (38%) يشير إلى بداية جيدة لكن يجب إجراء المزيد من الاختبارات السوقية قبل الإطلاق الكامل.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.22,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.38
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (27%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.27
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (15/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 255% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 15
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 46.30764,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 12,
+      "project_name": "منصة حجز مواعيد طبية بمشاكل تقنية مستمرة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 24.42547,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (24%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (28%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.28
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (145,849 ريال) أقل بنسبة 82% من المتوسط المطلوب لمشاريع الصحة الرقمية والتطبيب عن بُعد الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 9 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 145849
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (23/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 231% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 23
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (24%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.24
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 24.42547,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 13,
+      "project_name": "تطبيق توصيل طعام تقليدي بدون ميزات فريدة",
+      "sector": "اللوجستيات والنقل الذكي",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 14.890509999999999,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (15%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (4%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.04
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (128,017 ريال) أقل بنسبة 84% من المتوسط المطلوب لمشاريع اللوجستيات والنقل الذكي الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 128017
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (15/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 255% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 15
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (0%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.0
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 14.890509999999999,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 14,
+      "project_name": "منصة تعليمية باستقالة المؤسس التقني",
+      "sector": "التعليم الإلكتروني والتدريب المهني",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 37.77336,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 2 مجالات رئيسية. احتمالية النجاح (38%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (33%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.33
+          },
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (424,112 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 9 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: متوسط",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 424112
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (28/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 216% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 28
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (29%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.29
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 37.77336,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 15,
+      "project_name": "تطبيق صحي رقمي بتكاليف تشغيلية مرتفعة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 29.132939999999998,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 2 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (29%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (31%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.31
+          },
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (431,098 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: متوسط",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 431098
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (22%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.22
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 29.132939999999998,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 16,
+      "project_name": "نظام تحلية مياه بالطاقة الشمسية للمجتمعات الريفية",
+      "sector": "الطاقة المتجددة والمستدامة",
+      "organization": "KAUST",
+      "actual_outcome": "success",
+      "predicted_success_prob": 74.34608475502115,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (74%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 74.34608475502115,
+        "investor_appeal": "high"
+      }
+    },
+    {
+      "project_id": 17,
+      "project_name": "تطبيق دفع رقمي بمشاكل أمنية متكررة",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 20.94711,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (21%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (333,237 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 9 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 333237
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (21%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.21
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (9%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.09
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 20.94711,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 18,
+      "project_name": "منصة لوجستية بفريق غير متجانس",
+      "sector": "اللوجستيات والنقل الذكي",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 21.87895,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (22%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (23%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.23
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (225,965 ريال) أقل بنسبة 72% من المتوسط المطلوب لمشاريع اللوجستيات والنقل الذكي الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 225965
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (15/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 255% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 15
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (17%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.17
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 21.87895,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 19,
+      "project_name": "منصة حجز مواعيد طبية بمشاكل تقنية مستمرة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 20.34162,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (20%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (5%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.05
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (263,054 ريال) أقل بنسبة 67% من المتوسط المطلوب لمشاريع الصحة الرقمية والتطبيب عن بُعد الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 263054
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (23/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 231% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 23
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (20%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.2
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 20.34162,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 20,
+      "project_name": "تطبيق شبكات اجتماعية محلي بدون قيمة مضافة",
+      "sector": "الذكاء الاصطناعي والتقنيات المتقدمة",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 23.07811,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (23%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (390,937 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 9 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 390937
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (1%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.01
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (16/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 252% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 16
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (7%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.07
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 23.07811,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 21,
+      "project_name": "تطبيق صحي رقمي بتكاليف تشغيلية مرتفعة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 35.96217,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 2 مجالات رئيسية. احتمالية النجاح (36%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (533,739 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: متوسط",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 533739
+          },
+          {
+            "category": "market_strategy",
+            "severity": "medium",
+            "title": "طلب سوقي متوسط يتطلب استراتيجية تسويق قوية",
+            "description": "مؤشر الطلب السوقي (37/100) متوسط. يجب تطوير استراتيجية تسويق مبتكرة لزيادة الوعي بالمنتج.",
+            "business_impact": "زيادة متوقعة في CAC: 189% | خطر تشبع السوق: متوسط",
+            "shap_contribution": -0.16,
+            "feature_name": "market_demand",
+            "feature_value": 37
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (2%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.02
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (20%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.2
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 35.96217,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 22,
+      "project_name": "تطبيق شبكات اجتماعية محلي بدون قيمة مضافة",
+      "sector": "الذكاء الاصطناعي والتقنيات المتقدمة",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 20.438670000000002,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (20%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (20%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.2
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (181,289 ريال) أقل بنسبة 77% من المتوسط المطلوب لمشاريع الذكاء الاصطناعي والتقنيات المتقدمة الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 181289
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (26%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.26
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 20.438670000000002,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 23,
+      "project_name": "مزارع عمودية ذكية في المدن الكبرى",
+      "sector": "الزراعة الذكية والأمن الغذائي",
+      "organization": "PIF",
+      "actual_outcome": "success",
+      "predicted_success_prob": 84.60557777852429,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (85%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 84.60557777852429,
+        "investor_appeal": "high"
+      }
+    },
+    {
+      "project_id": 24,
+      "project_name": "نظام دفع رقمي متكامل للمتاجر الصغيرة",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "PIF",
+      "actual_outcome": "success",
+      "predicted_success_prob": 75.52470667938526,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (76%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 75.52470667938526,
+        "investor_appeal": "high"
+      }
+    },
+    {
+      "project_id": 25,
+      "project_name": "تطبيق سياحي بنقص خبرة في القطاع",
+      "sector": "السياحة والترفيه",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 22.02416,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (22%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (36%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 83%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.36
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (267,472 ريال) أقل بنسبة 67% من المتوسط المطلوب لمشاريع السياحة والترفيه الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 267472
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (12/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 264% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 12
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (0%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.0
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 22.02416,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 26,
+      "project_name": "تطبيق شبكات اجتماعية محلي بدون قيمة مضافة",
+      "sector": "الذكاء الاصطناعي والتقنيات المتقدمة",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 22.89652,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (23%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (15%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.15
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (249,884 ريال) أقل بنسبة 69% من المتوسط المطلوب لمشاريع الذكاء الاصطناعي والتقنيات المتقدمة الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 249884
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (11/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 267% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 11
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (19%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.19
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 22.89652,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 27,
+      "project_name": "منصة لوجستية بفريق غير متجانس",
+      "sector": "اللوجستيات والنقل الذكي",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 20.891939999999998,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (21%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (396,398 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 396398
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (5%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.05
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (10%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.1
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 20.891939999999998,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 28,
+      "project_name": "تطبيق دفع رقمي بمشاكل أمنية متكررة",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 22.496940000000002,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (22%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (374,898 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 374898
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (0%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.0
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (15%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.15
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 22.496940000000002,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 29,
+      "project_name": "منصة إدارة ذكية للمجمعات السكنية",
+      "sector": "البناء والعقارات الذكية",
+      "organization": "روشن",
+      "actual_outcome": "success",
+      "predicted_success_prob": 91.48229532201952,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (91%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 91.48229532201952,
+        "investor_appeal": "very_high"
+      }
+    },
+    {
+      "project_id": 30,
+      "project_name": "نظام إدارة مخزون للمطاعم الصغيرة",
+      "sector": "الذكاء الاصطناعي والتقنيات المتقدمة",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 27.411939999999998,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 1 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (27%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (32%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.32
+          },
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "market_validation",
+            "severity": "medium",
+            "title": "تحقق جزئي من الفرضيات يتطلب المزيد",
+            "description": "معدل التحقق من الفرضيات (33%) يشير إلى بداية جيدة لكن يجب إجراء المزيد من الاختبارات السوقية قبل الإطلاق الكامل.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.22,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.33
+          },
+          {
+            "category": "market_strategy",
+            "severity": "medium",
+            "title": "طلب سوقي متوسط يتطلب استراتيجية تسويق قوية",
+            "description": "مؤشر الطلب السوقي (33/100) متوسط. يجب تطوير استراتيجية تسويق مبتكرة لزيادة الوعي بالمنتج.",
+            "business_impact": "زيادة متوقعة في CAC: 201% | خطر تشبع السوق: متوسط",
+            "shap_contribution": -0.16,
+            "feature_name": "market_demand",
+            "feature_value": 33
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (160,398 ريال) أقل بنسبة 80% من المتوسط المطلوب لمشاريع الذكاء الاصطناعي والتقنيات المتقدمة الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 160398
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 27.411939999999998,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 31,
+      "project_name": "منصة حجز فنادق محلية بدون شراكات قوية",
+      "sector": "السياحة والترفيه",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 19.73475,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (20%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (14%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.14
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (217,825 ريال) أقل بنسبة 73% من المتوسط المطلوب لمشاريع السياحة والترفيه الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 217825
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (21/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 237% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 21
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (13%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.13
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 19.73475,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 32,
+      "project_name": "منصة حجز فنادق محلية بدون شراكات قوية",
+      "sector": "السياحة والترفيه",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 22.84387,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (23%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (373,129 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 373129
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (10%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.1
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (16/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 252% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 16
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (13%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.13
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 22.84387,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 33,
+      "project_name": "متجر إلكتروني عام بدون تخصص",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 21.170740000000002,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (21%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (21%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.21
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (132,358 ريال) أقل بنسبة 83% من المتوسط المطلوب لمشاريع التقنية المالية والمدفوعات الرقمية الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 132358
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (15/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 255% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 15
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (15%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.15
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 21.170740000000002,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 34,
+      "project_name": "منصة إدارة ذكية للمجمعات السكنية",
+      "sector": "البناء والعقارات الذكية",
+      "organization": "روشن",
+      "actual_outcome": "success",
+      "predicted_success_prob": 84.81378711599052,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (85%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 84.81378711599052,
+        "investor_appeal": "high"
+      }
+    },
+    {
+      "project_id": 35,
+      "project_name": "منصة تجارة إلكترونية بتقدير خاطئ للتكاليف",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 19.879759999999997,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (20%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (320,992 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 320992
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (0%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.0
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (20/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 240% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 20
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (17%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.17
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 19.879759999999997,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 36,
+      "project_name": "منصة تدريب مهني عن بُعد في مجالات محددة",
+      "sector": "التعليم الإلكتروني والتدريب المهني",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 41.05415000000001,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 1 مجالات رئيسية. احتمالية النجاح (41%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (48%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 82% | احتمالية فشل التنفيذ: 72%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.48
+          },
+          {
+            "category": "market_validation",
+            "severity": "medium",
+            "title": "تحقق جزئي من الفرضيات يتطلب المزيد",
+            "description": "معدل التحقق من الفرضيات (37%) يشير إلى بداية جيدة لكن يجب إجراء المزيد من الاختبارات السوقية قبل الإطلاق الكامل.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.22,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.37
+          },
+          {
+            "category": "market_strategy",
+            "severity": "medium",
+            "title": "طلب سوقي متوسط يتطلب استراتيجية تسويق قوية",
+            "description": "مؤشر الطلب السوقي (52/100) متوسط. يجب تطوير استراتيجية تسويق مبتكرة لزيادة الوعي بالمنتج.",
+            "business_impact": "زيادة متوقعة في CAC: 144% | خطر تشبع السوق: متوسط",
+            "shap_contribution": -0.16,
+            "feature_name": "market_demand",
+            "feature_value": 52
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (246,805 ريال) أقل بنسبة 69% من المتوسط المطلوب لمشاريع التعليم الإلكتروني والتدريب المهني الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 246805
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 41.05415000000001,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 37,
+      "project_name": "منصة توظيف متخصصة في القطاع الصحي",
+      "sector": "الذكاء الاصطناعي والتقنيات المتقدمة",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 37.61209,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 2 مجالات رئيسية. احتمالية النجاح (38%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "market_strategy",
+            "severity": "medium",
+            "title": "طلب سوقي متوسط يتطلب استراتيجية تسويق قوية",
+            "description": "مؤشر الطلب السوقي (38/100) متوسط. يجب تطوير استراتيجية تسويق مبتكرة لزيادة الوعي بالمنتج.",
+            "business_impact": "زيادة متوقعة في CAC: 186% | خطر تشبع السوق: متوسط",
+            "shap_contribution": -0.16,
+            "feature_name": "market_demand",
+            "feature_value": 38
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (225,403 ريال) أقل بنسبة 72% من المتوسط المطلوب لمشاريع الذكاء الاصطناعي والتقنيات المتقدمة الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 9 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 225403
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (27%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.27
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 37.61209,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 38,
+      "project_name": "منصة تدريب مهني عن بُعد في مجالات محددة",
+      "sector": "التعليم الإلكتروني والتدريب المهني",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "success",
+      "predicted_success_prob": 91.16153715719476,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (91%) عالية.",
+        "critical_insights": [
+          {
+            "category": "financial_optimization",
+            "severity": "low",
+            "title": "ميزانية مقبولة مع فرص للتحسين",
+            "description": "الميزانية الحالية (185,878 ريال) قريبة من المتوسط لقطاع التعليم الإلكتروني والتدريب المهني. يُنصح بتأمين تمويل إضافي لتسريع النمو.",
+            "business_impact": "احتمالية الفشل: 65% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.15,
+            "feature_name": "budget",
+            "feature_value": 185878
+          }
+        ],
+        "risk_level": "low",
+        "success_probability": 91.16153715719476,
+        "investor_appeal": "very_high"
+      }
+    },
+    {
+      "project_id": 39,
+      "project_name": "تطبيق صحي رقمي بتكاليف تشغيلية مرتفعة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 43.503299999999996,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 1 مجالات رئيسية. احتمالية النجاح (44%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "market_validation",
+            "severity": "medium",
+            "title": "تحقق جزئي من الفرضيات يتطلب المزيد",
+            "description": "معدل التحقق من الفرضيات (37%) يشير إلى بداية جيدة لكن يجب إجراء المزيد من الاختبارات السوقية قبل الإطلاق الكامل.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.22,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.37
+          },
+          {
+            "category": "market_strategy",
+            "severity": "medium",
+            "title": "طلب سوقي متوسط يتطلب استراتيجية تسويق قوية",
+            "description": "مؤشر الطلب السوقي (34/100) متوسط. يجب تطوير استراتيجية تسويق مبتكرة لزيادة الوعي بالمنتج.",
+            "business_impact": "زيادة متوقعة في CAC: 198% | خطر تشبع السوق: متوسط",
+            "shap_contribution": -0.16,
+            "feature_name": "market_demand",
+            "feature_value": 34
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (4%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.04
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 43.503299999999996,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 40,
+      "project_name": "منصة حجز مواعيد طبية بمشاكل تقنية مستمرة",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 25.63626,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (26%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (33%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.33
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (204,542 ريال) أقل بنسبة 74% من المتوسط المطلوب لمشاريع الصحة الرقمية والتطبيب عن بُعد الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 204542
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (11/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 267% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 11
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (17%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.17
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 25.63626,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 41,
+      "project_name": "منصة تجارة إلكترونية بدون الاستماع للعملاء",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 40.122910000000005,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 2 مجالات رئيسية. احتمالية النجاح (40%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (37%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 82%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.37
+          },
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (534,097 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: متوسط",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 534097
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (18/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 246% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 18
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (16%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.16
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 40.122910000000005,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 42,
+      "project_name": "منصة حجز فنادق محلية بدون شراكات قوية",
+      "sector": "السياحة والترفيه",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 28.23576,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (28%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (38%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 81%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.38
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (276,192 ريال) أقل بنسبة 65% من المتوسط المطلوب لمشاريع السياحة والترفيه الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 276192
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (14/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 258% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 14
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (9%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.09
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 28.23576,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 43,
+      "project_name": "تطبيق حجز صالونات تجميل",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "success",
+      "predicted_success_prob": 84.19272645695264,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (84%) عالية.",
+        "critical_insights": [
+          {
+            "category": "financial_optimization",
+            "severity": "low",
+            "title": "ميزانية مقبولة مع فرص للتحسين",
+            "description": "الميزانية الحالية (83,618 ريال) قريبة من المتوسط لقطاع الصحة الرقمية والتطبيب عن بُعد. يُنصح بتأمين تمويل إضافي لتسريع النمو.",
+            "business_impact": "احتمالية الفشل: 65% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.15,
+            "feature_name": "budget",
+            "feature_value": 83618
+          }
+        ],
+        "risk_level": "low",
+        "success_probability": 84.19272645695264,
+        "investor_appeal": "high"
+      }
+    },
+    {
+      "project_id": 44,
+      "project_name": "منصة لوجستية بفريق غير متجانس",
+      "sector": "اللوجستيات والنقل الذكي",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 30.10079,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 3 مجالات رئيسية. احتمالية النجاح (30%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (561,693 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: متوسط",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 561693
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (0%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.0
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (7%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.07
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 30.10079,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 45,
+      "project_name": "منصة تعليم إلكتروني بميزانية تسويق ضعيفة",
+      "sector": "التعليم الإلكتروني والتدريب المهني",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 33.48309,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات متوسطة إلى عالية في 2 مجالات رئيسية. احتمالية النجاح (33%) تتطلب تحسينات جوهرية قبل الإطلاق.",
+        "critical_insights": [
+          {
+            "category": "execution_planning",
+            "severity": "low",
+            "title": "تخطيط RAT جيد مع فرص للتحسين",
+            "description": "معدل إكمال RAT (45%) جيد. يُنصح بمراجعة دورية للافتراضات.",
+            "business_impact": "خطر تجاوز الميزانية: 85% | احتمالية فشل التنفيذ: 74%",
+            "shap_contribution": -0.2,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.45
+          },
+          {
+            "category": "market_validation",
+            "severity": "medium",
+            "title": "تحقق جزئي من الفرضيات يتطلب المزيد",
+            "description": "معدل التحقق من الفرضيات (41%) يشير إلى بداية جيدة لكن يجب إجراء المزيد من الاختبارات السوقية قبل الإطلاق الكامل.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.22,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.41
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (261,103 ريال) أقل بنسبة 67% من المتوسط المطلوب لمشاريع التعليم الإلكتروني والتدريب المهني الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 9 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 261103
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (16/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 252% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 16
+          }
+        ],
+        "risk_level": "high",
+        "success_probability": 33.48309,
+        "investor_appeal": "low"
+      }
+    },
+    {
+      "project_id": 46,
+      "project_name": "تطبيق لياقة بدنية بدون التحقق من الفرضيات",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 13.48787,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 4 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (13%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (0%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.0
+          },
+          {
+            "category": "financial_risk",
+            "severity": "high",
+            "title": "فجوة تمويلية حرجة تهدد مرحلة التوسع",
+            "description": "الميزانية الحالية (202,929 ريال) أقل بنسبة 75% من المتوسط المطلوب لمشاريع الصحة الرقمية والتطبيب عن بُعد الناجحة في السوق السعودي. هذه الفجوة ستؤدي إلى نفاد رأس المال خلال 10 أشهر من الإطلاق.",
+            "business_impact": "احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.35,
+            "feature_name": "budget",
+            "feature_value": 202929
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (16/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 252% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 16
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (8%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.08
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 13.48787,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 47,
+      "project_name": "تطبيق واقع معزز لتصميم وتخصيص الوحدات السكنية",
+      "sector": "البناء والعقارات الذكية",
+      "organization": "روشن",
+      "actual_outcome": "success",
+      "predicted_success_prob": 70.25355702918114,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (70%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 70.25355702918114,
+        "investor_appeal": "high"
+      }
+    },
+    {
+      "project_id": 48,
+      "project_name": "تطبيق صحي بعدم الالتزام بحماية البيانات",
+      "sector": "الصحة الرقمية والتطبيب عن بُعد",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 25.69694,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 3 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (26%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (369,898 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 369898
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (0%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.0
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (19/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 243% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 19
+          },
+          {
+            "category": "market_validation",
+            "severity": "critical",
+            "title": "غياب التحقق من صحة الفرضيات السوقية",
+            "description": "معدل التحقق من الفرضيات (23%) يشير إلى عدم اختبار السوق بشكل كافٍ. المشروع يعتمد على افتراضات غير مُثبتة حول احتياجات العملاء.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.42,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.23
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 25.69694,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 49,
+      "project_name": "منصة تجارة إلكترونية بتقدير خاطئ للتكاليف",
+      "sector": "التقنية المالية والمدفوعات الرقمية",
+      "organization": "شركة ناشئة",
+      "actual_outcome": "failure",
+      "predicted_success_prob": 22.77333,
+      "ceo_insights": {
+        "executive_summary": "يواجه المشروع تحديات حرجة في 2 مجالات رئيسية تهدد استمراريته بشكل كبير. احتمالية النجاح الحالية (23%) منخفضة جداً وتتطلب تدخلاً فورياً.",
+        "critical_insights": [
+          {
+            "category": "team_planning",
+            "severity": "low",
+            "title": "حجم فريق مقبول مع فرص للتوسع",
+            "description": "حجم الفريق الحالي (3 أعضاء) مقبول. يُنصح بالتوظيف التدريجي حسب النمو.",
+            "business_impact": "نقص في الفريق: 3 أعضاء | خطر التأخير: متوسط",
+            "shap_contribution": -0.15,
+            "feature_name": "team_size",
+            "feature_value": 3
+          },
+          {
+            "category": "market_validation",
+            "severity": "medium",
+            "title": "تحقق جزئي من الفرضيات يتطلب المزيد",
+            "description": "معدل التحقق من الفرضيات (30%) يشير إلى بداية جيدة لكن يجب إجراء المزيد من الاختبارات السوقية قبل الإطلاق الكامل.",
+            "business_impact": "احتمالية بناء منتج لا يحتاجه السوق: 95%",
+            "shap_contribution": -0.22,
+            "feature_name": "hypothesis_validation_rate",
+            "feature_value": 0.3
+          },
+          {
+            "category": "financial_planning",
+            "severity": "medium",
+            "title": "ميزانية محدودة تتطلب إدارة دقيقة",
+            "description": "الميزانية الحالية (359,111 ريال) كافية للإطلاق الأولي لكنها تتطلب إدارة صارمة للتدفقات النقدية وتأمين جولة تمويلية خلال 10 أشهر.",
+            "business_impact": "احتمالية الفشل: 68% | خطر نفاد السيولة: مرتفع جداً",
+            "shap_contribution": -0.18,
+            "feature_name": "budget",
+            "feature_value": 359111
+          },
+          {
+            "category": "execution_risk",
+            "severity": "high",
+            "title": "ضعف في منهجية RAT يهدد التخطيط المالي",
+            "description": "معدل إكمال RAT (0%) يشير إلى تخطيط مالي ضعيف وعدم تحديد الافتراضات الأكثر خطورة. هذا يزيد من احتمالية الإنفاق غير المدروس.",
+            "business_impact": "خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%",
+            "shap_contribution": -0.38,
+            "feature_name": "rat_completion_rate",
+            "feature_value": 0.0
+          },
+          {
+            "category": "market_risk",
+            "severity": "high",
+            "title": "طلب سوقي ضعيف يهدد النمو المستدام",
+            "description": "مؤشر الطلب السوقي (10/100) يشير إلى سوق مشبع أو ضعف في تحديد الجمهور المستهدف. هذا يزيد من تكاليف اكتساب العملاء (CAC) بنسبة تصل إلى 300%.",
+            "business_impact": "زيادة متوقعة في CAC: 270% | خطر تشبع السوق: مرتفع",
+            "shap_contribution": -0.28,
+            "feature_name": "market_demand",
+            "feature_value": 10
+          }
+        ],
+        "risk_level": "critical",
+        "success_probability": 22.77333,
+        "investor_appeal": "very_low"
+      }
+    },
+    {
+      "project_id": 50,
+      "project_name": "نظام تحلية مياه بالطاقة الشمسية للمجتمعات الريفية",
+      "sector": "الطاقة المتجددة والمستدامة",
+      "organization": "KAUST",
+      "actual_outcome": "success",
+      "predicted_success_prob": 75.17220339742013,
+      "ceo_insights": {
+        "executive_summary": "المشروع في وضع جيد مع 0 نقاط تحسين محتملة. احتمالية النجاح (75%) عالية.",
+        "critical_insights": [],
+        "risk_level": "low",
+        "success_probability": 75.17220339742013,
+        "investor_appeal": "high"
+      }
+    }
+  ]
+}
