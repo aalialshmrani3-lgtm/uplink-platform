@@ -3,7 +3,7 @@ Success Prediction Microservice for UPLINK 5.0
 Uses XGBoost for idea success prediction with trained model
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
@@ -11,6 +11,8 @@ import logging
 import numpy as np
 import pickle
 import os
+from embeddings_service import get_text_features, TRANSFORMERS_AVAILABLE
+from jwt_auth import get_auth_user_or_service, require_admin_dependency
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -86,7 +88,10 @@ class IdeaInsightsResponse(BaseModel):
 
 # Helper functions
 def extract_features(idea: IdeaInput) -> np.ndarray:
-    """Extract features from idea input (same as training)"""
+    """Extract features from idea input using AraBERT embeddings"""
+    # Get semantic text features (replaces title_length/description_length)
+    text_features = get_text_features(idea.title, idea.description, use_embeddings=TRANSFORMERS_AVAILABLE)
+    
     features = [
         idea.budget / 100000,  # Normalize budget
         idea.team_size,
@@ -98,8 +103,8 @@ def extract_features(idea: IdeaInput) -> np.ndarray:
         len(idea.keywords),  # tags_count
         idea.hypothesis_validation_rate,
         idea.rat_completion_rate,
-        len(idea.title),  # Title length
-        len(idea.description),  # Description length
+        text_features[0],  # Semantic feature 1 (or title_length if fallback)
+        text_features[1],  # Semantic feature 2 (or description_length if fallback)
     ]
     return np.array(features).reshape(1, -1)
 
@@ -159,7 +164,10 @@ async def root():
     }
 
 @app.post("/predict", response_model=SuccessPredictionResponse)
-async def predict_success(idea: IdeaInput):
+async def predict_success(
+    idea: IdeaInput,
+    current_user: dict = Depends(get_auth_user_or_service)
+):
     """
     Predict success probability for a new idea using trained XGBoost model
     
@@ -186,7 +194,7 @@ async def predict_success(idea: IdeaInput):
         feature_names = [
             'budget', 'team_size', 'timeline', 'market_demand', 'tech_feasibility',
             'competitive_advantage', 'user_engagement', 'tags_count',
-            'hypothesis_rate', 'rat_rate', 'title_length', 'description_length'
+            'hypothesis_rate', 'rat_rate', 'semantic_feature_1', 'semantic_feature_2'
         ]
         
         importance = prediction_model.feature_importances_
@@ -219,7 +227,10 @@ async def predict_success(idea: IdeaInput):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/insights/{idea_id}", response_model=IdeaInsightsResponse)
-async def get_idea_insights(idea_id: int):
+async def get_idea_insights(
+    idea_id: int,
+    current_user: dict = Depends(get_auth_user_or_service)
+):
     """
     Get comprehensive insights for an existing idea
     
@@ -270,7 +281,10 @@ async def get_idea_insights(idea_id: int):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/retrain")
-async def retrain_model(training_data: Optional[Dict] = None):
+async def retrain_model(
+    training_data: Optional[Dict] = None,
+    current_user: dict = require_admin_dependency()
+):
     """
     Retrain the model with new data
     

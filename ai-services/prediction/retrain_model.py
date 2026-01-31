@@ -17,6 +17,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import xgboost as xgb
+from embeddings_service import get_text_features, TRANSFORMERS_AVAILABLE
 
 # Configuration
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:3000")
@@ -52,13 +53,18 @@ def fetch_training_data():
         return None
 
 def prepare_data(training_data):
-    """Prepare features and labels from training data"""
-    print("🔧 Preparing training data...")
+    """Prepare features and labels from training data using AraBERT embeddings"""
+    print("🔧 Preparing training data with AraBERT embeddings...")
     
     features = []
     labels = []
     
     for sample in training_data:
+        # Get semantic text features (replaces title_length/description_length)
+        title = sample.get('title', '')
+        description = sample.get('description', '')
+        text_features = get_text_features(title, description, use_embeddings=TRANSFORMERS_AVAILABLE)
+        
         feature_vector = [
             sample.get('budget', 0),
             sample.get('team_size', 0),
@@ -70,8 +76,8 @@ def prepare_data(training_data):
             sample.get('tags_count', 0),
             sample.get('hypothesis_validation_rate', 0),
             sample.get('rat_completion_rate', 0),
-            sample.get('title_length', 0),
-            sample.get('description_length', 0),
+            text_features[0],  # Semantic feature 1 (or title_length if fallback)
+            text_features[1],  # Semantic feature 2 (or description_length if fallback)
         ]
         features.append(feature_vector)
         labels.append(sample.get('success', 0))
@@ -79,7 +85,8 @@ def prepare_data(training_data):
     X = np.array(features)
     y = np.array(labels)
     
-    print(f"✅ Prepared {len(X)} samples with {X.shape[1]} features")
+    embedding_type = "AraBERT embeddings" if TRANSFORMERS_AVAILABLE else "text length (fallback)"
+    print(f"✅ Prepared {len(X)} samples with {X.shape[1]} features ({embedding_type})")
     print(f"   Success: {sum(y)} ({sum(y)/len(y)*100:.1f}%)")
     print(f"   Failure: {len(y)-sum(y)} ({(len(y)-sum(y))/len(y)*100:.1f}%)")
     
@@ -162,8 +169,9 @@ def save_model(model, metrics, training_data_count):
             'budget', 'team_size', 'timeline_months', 'market_demand',
             'technical_feasibility', 'competitive_advantage', 'user_engagement',
             'tags_count', 'hypothesis_validation_rate', 'rat_completion_rate',
-            'title_length', 'description_length'
-        ]
+            'semantic_feature_1', 'semantic_feature_2'
+        ],
+        'embeddings_type': 'AraBERT' if TRANSFORMERS_AVAILABLE else 'text_length_fallback'
     }
     
     # Update current metrics
