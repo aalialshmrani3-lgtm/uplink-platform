@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, TrendingUp, AlertTriangle, CheckCircle2, Target, Lightbulb } from 'lucide-react';
+import { Loader2, TrendingUp, AlertTriangle, CheckCircle2, Target, Lightbulb, FileDown } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { toast } from 'sonner';
 
@@ -30,6 +30,10 @@ export default function AIStrategicAdvisor() {
   const [whatIfScenarios, setWhatIfScenarios] = useState<any[]>([]);
   const [isSimulating, setIsSimulating] = useState(false);
   const [generalFeedback, setGeneralFeedback] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
+
+  const exportPdfMutation = trpc.ai.exportPdf.useMutation();
+  const exportExcelMutation = trpc.ai.exportExcel.useMutation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -177,6 +181,56 @@ export default function AIStrategicAdvisor() {
   };
 
   const feedbackMutation = trpc.ai.submitFeedback.useMutation();
+
+  const handleExportPdf = async () => {
+    if (!analysis?.analysis_id) {
+      toast.error('لا يوجد تحليل لتصديره');
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      const result = await exportPdfMutation.mutateAsync({
+        analysisId: analysis.analysis_id
+      });
+      
+      if (result.success) {
+        toast.success('تم تصدير التقرير إلى PDF بنجاح!');
+        // Download file
+        window.open(result.filePath, '_blank');
+      }
+    } catch (error) {
+      console.error('PDF export error:', error);
+      toast.error('فشل تصدير التقرير. يرجى المحاولة مرة أخرى.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleExportExcel = async () => {
+    if (!analysis?.analysis_id) {
+      toast.error('لا يوجد تحليل لتصديره');
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      const result = await exportExcelMutation.mutateAsync({
+        analysisId: analysis.analysis_id
+      });
+      
+      if (result.success) {
+        toast.success('تم تصدير التقرير إلى Excel بنجاح!');
+        // Download file
+        window.open(result.filePath, '_blank');
+      }
+    } catch (error) {
+      console.error('Excel export error:', error);
+      toast.error('فشل تصدير التقرير. يرجى المحاولة مرة أخرى.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const handleFeedback = async (feedback: any) => {
     try {
@@ -381,6 +435,36 @@ export default function AIStrategicAdvisor() {
               <div className="text-left">
                 <div className="text-5xl font-bold text-primary">{analysis.ici_score}</div>
                 <div className="text-sm text-muted-foreground">من 100</div>
+              </div>
+              
+              {/* Export Buttons */}
+              <div className="flex gap-2 justify-end mt-4">
+                <Button
+                  onClick={handleExportPdf}
+                  disabled={isExporting}
+                  variant="outline"
+                  size="sm"
+                >
+                  {isExporting ? (
+                    <Loader2 className="h-4 w-4 animate-spin ml-2" />
+                  ) : (
+                    <FileDown className="h-4 w-4 ml-2" />
+                  )}
+                  تصدير PDF
+                </Button>
+                <Button
+                  onClick={handleExportExcel}
+                  disabled={isExporting}
+                  variant="outline"
+                  size="sm"
+                >
+                  {isExporting ? (
+                    <Loader2 className="h-4 w-4 animate-spin ml-2" />
+                  ) : (
+                    <FileDown className="h-4 w-4 ml-2" />
+                  )}
+                  تصدير Excel
+                </Button>
               </div>
             </div>
             

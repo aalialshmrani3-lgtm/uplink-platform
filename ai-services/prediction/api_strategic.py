@@ -108,6 +108,79 @@ async def submit_feedback(request: dict):
         print(f"Feedback error: {e}")
         return {"success": True, "message": "Feedback recorded locally"}
 
+@app.post("/export/pdf")
+async def export_pdf(request: dict):
+    """Export strategic analysis to PDF"""
+    try:
+        from pdf_export import export_to_pdf
+        
+        analysis_id = request.get('analysis_id')
+        
+        # TODO: Fetch analysis data from database using analysis_id
+        # For now, use sample data
+        sample_data = {
+            'project_title': 'Strategic Analysis Report',
+            'ici_score': 65.5,
+            'irl_score': 58.2,
+            'success_probability': 0.72,
+            'risk_level': 'MEDIUM',
+            'investor_appeal': 'HIGH',
+            'executive_summary': 'This project shows promising potential.',
+            'ceo_insights': [],
+            'roadmap': {'steps': []},
+            'investment': {},
+            'critical_path': []
+        }
+        
+        # Generate PDF
+        output_path = f"/tmp/strategic_analysis_{analysis_id}.pdf"
+        export_to_pdf(sample_data, output_path)
+        
+        return {"success": True, "file_path": output_path}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/export/excel")
+async def export_excel(request: dict):
+    """Export strategic analysis to Excel"""
+    try:
+        from excel_export import export_to_excel
+        
+        analysis_id = request.get('analysis_id')
+        
+        # TODO: Fetch analysis data from database using analysis_id
+        # For now, use sample data
+        sample_data = {
+            'project_title': 'Strategic Analysis Report',
+            'ici_score': 65.5,
+            'irl_score': 58.2,
+            'success_probability': 0.72,
+            'risk_level': 'MEDIUM',
+            'investor_appeal': 'HIGH',
+            'executive_summary': 'This project shows promising potential.',
+            'dimensions': {
+                'success_probability': 72.0,
+                'market_fit': 68.5,
+                'execution_readiness': 65.0,
+                'investor_readiness': 58.2,
+                'financial_sustainability': 52.0
+            },
+            'ceo_insights': [],
+            'roadmap': {'steps': []},
+            'investment': {'recommended_investors': []},
+            'critical_path': []
+        }
+        
+        # Generate Excel
+        output_path = f"/tmp/strategic_analysis_{analysis_id}.xlsx"
+        export_to_excel(sample_data, output_path)
+        
+        return {"success": True, "file_path": output_path}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""

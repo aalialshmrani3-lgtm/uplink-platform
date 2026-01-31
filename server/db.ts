@@ -26,7 +26,11 @@ import {
   pipelineExperiments, InsertPipelineExperiment, PipelineExperiment,
   pipelineVotes, InsertPipelineVote,
   pipelineTrends, InsertPipelineTrend, PipelineTrend,
-  pipelineGamification, InsertPipelineGamification
+  pipelineGamification, InsertPipelineGamification,
+  strategicAnalyses, InsertStrategicAnalysis, StrategicAnalysis,
+  userFeedback, InsertUserFeedback, UserFeedback,
+  whatIfScenarios, InsertWhatIfScenario, WhatIfScenario,
+  predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -733,5 +737,133 @@ export async function getPipelineStats(userId?: number) {
     ideas: ideaCount?.count || 0,
     experiments: experimentCount?.count || 0,
     trends: trendCount?.count || 0
+  };
+}
+
+
+// ============================================
+// STRATEGIC ANALYSIS & FEEDBACK OPERATIONS
+// ============================================
+export async function createStrategicAnalysis(data: InsertStrategicAnalysis) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(strategicAnalyses).values(data);
+  return result[0].insertId;
+}
+
+export async function getStrategicAnalysisByUserId(userId: number, limit = 50) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(strategicAnalyses).where(eq(strategicAnalyses.userId, userId)).orderBy(desc(strategicAnalyses.createdAt)).limit(limit);
+}
+
+export async function getStrategicAnalysisById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(strategicAnalyses).where(eq(strategicAnalyses.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createUserFeedback(data: InsertUserFeedback) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(userFeedback).values(data);
+  return result[0].insertId;
+}
+
+export async function getUserFeedbackByAnalysisId(analysisId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(userFeedback).where(eq(userFeedback.analysisId, analysisId)).orderBy(desc(userFeedback.createdAt));
+}
+
+export async function getAllUserFeedback(limit = 100) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(userFeedback).orderBy(desc(userFeedback.createdAt)).limit(limit);
+}
+
+export async function createWhatIfScenario(data: InsertWhatIfScenario) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(whatIfScenarios).values(data);
+  return result[0].insertId;
+}
+
+export async function getWhatIfScenariosByAnalysisId(analysisId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(whatIfScenarios).where(eq(whatIfScenarios.analysisId, analysisId)).orderBy(desc(whatIfScenarios.createdAt));
+}
+
+export async function createPredictionAccuracy(data: InsertPredictionAccuracy) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(predictionAccuracy).values(data);
+  return result[0].insertId;
+}
+
+export async function updatePredictionAccuracy(id: number, data: Partial<InsertPredictionAccuracy>) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(predictionAccuracy).set({ ...data, updatedAt: new Date() }).where(eq(predictionAccuracy.id, id));
+}
+
+export async function getPredictionAccuracyStats() {
+  const db = await getDb();
+  if (!db) return { total: 0, correct: 0, accuracy: 0 };
+  
+  const results = await db.select().from(predictionAccuracy).where(eq(predictionAccuracy.correct, true));
+  const total = results.length;
+  const correct = results.filter(r => r.correct).length;
+  
+  return {
+    total,
+    correct,
+    accuracy: total > 0 ? correct / total : 0
+  };
+}
+
+// Analytics aggregation functions
+export async function getFeedbackStats() {
+  const db = await getDb();
+  if (!db) return { total: 0, byType: {}, byRating: {} };
+  
+  const allFeedback = await db.select().from(userFeedback);
+  const byType: Record<string, number> = {};
+  const byRating: Record<string, number> = {};
+  
+  allFeedback.forEach(f => {
+    byType[f.feedbackType] = (byType[f.feedbackType] || 0) + 1;
+    if (f.rating) {
+      byRating[f.rating] = (byRating[f.rating] || 0) + 1;
+    }
+  });
+  
+  return {
+    total: allFeedback.length,
+    byType,
+    byRating
+  };
+}
+
+export async function getAnalysisStats() {
+  const db = await getDb();
+  if (!db) return { total: 0, avgIci: 0, avgIrl: 0, avgSuccessProbability: 0 };
+  
+  const allAnalyses = await db.select().from(strategicAnalyses);
+  const total = allAnalyses.length;
+  
+  if (total === 0) return { total: 0, avgIci: 0, avgIrl: 0, avgSuccessProbability: 0 };
+  
+  const avgIci = allAnalyses.reduce((sum, a) => sum + (Number(a.iciScore) || 0), 0) / total;
+  const avgIrl = allAnalyses.reduce((sum, a) => sum + (Number(a.irlScore) || 0), 0) / total;
+  const avgSuccessProbability = allAnalyses.reduce((sum, a) => sum + (Number(a.successProbability) || 0), 0) / total;
+  
+  return {
+    total,
+    avgIci,
+    avgIrl,
+    avgSuccessProbability
   };
 }

@@ -1014,3 +1014,116 @@ export const projectOrganizations = mysqlTable("project_organizations", {
   role: varchar("role", { length: 100 }), // e.g., "sponsor", "partner", "implementer"
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
+
+// ============================================
+// AI STRATEGIC ANALYSIS & FEEDBACK
+// ============================================
+export const strategicAnalyses = mysqlTable("strategic_analyses", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  projectTitle: varchar("projectTitle", { length: 500 }).notNull(),
+  projectDescription: text("projectDescription").notNull(),
+  
+  // Input Features
+  budget: decimal("budget", { precision: 15, scale: 2 }),
+  teamSize: int("teamSize"),
+  timelineMonths: int("timelineMonths"),
+  marketDemand: int("marketDemand"),
+  technicalFeasibility: int("technicalFeasibility"),
+  userEngagement: int("userEngagement"),
+  hypothesisValidationRate: decimal("hypothesisValidationRate", { precision: 5, scale: 2 }),
+  ratCompletionRate: decimal("ratCompletionRate", { precision: 5, scale: 2 }),
+  userCount: int("userCount"),
+  revenueGrowth: decimal("revenueGrowth", { precision: 5, scale: 2 }),
+  
+  // Analysis Results
+  iciScore: decimal("iciScore", { precision: 5, scale: 2 }),
+  irlScore: decimal("irlScore", { precision: 5, scale: 2 }),
+  successProbability: decimal("successProbability", { precision: 5, scale: 4 }),
+  riskLevel: mysqlEnum("riskLevel", ["CRITICAL", "HIGH", "MEDIUM", "LOW"]),
+  investorAppeal: mysqlEnum("investorAppeal", ["VERY_LOW", "LOW", "MEDIUM", "HIGH", "VERY_HIGH"]),
+  
+  // Full Analysis JSON
+  ceoInsights: json("ceoInsights"),
+  roadmap: json("roadmap"),
+  investment: json("investment"),
+  criticalPath: json("criticalPath"),
+  dashboard: json("dashboard"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type StrategicAnalysis = typeof strategicAnalyses.$inferSelect;
+export type InsertStrategicAnalysis = typeof strategicAnalyses.$inferInsert;
+
+export const userFeedback = mysqlTable("user_feedback", {
+  id: int("id").autoincrement().primaryKey(),
+  analysisId: int("analysisId"),
+  userId: int("userId"),
+  projectId: varchar("projectId", { length: 500 }),
+  
+  // Feedback Details
+  feedbackType: mysqlEnum("feedbackType", ["ceo_insight", "roadmap", "investment", "general", "whatif"]).notNull(),
+  itemId: int("itemId"),
+  rating: varchar("rating", { length: 50 }),
+  comment: text("comment"),
+  
+  // Context
+  userRole: varchar("userRole", { length: 50 }),
+  sessionId: varchar("sessionId", { length: 100 }),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type UserFeedback = typeof userFeedback.$inferSelect;
+export type InsertUserFeedback = typeof userFeedback.$inferInsert;
+
+export const whatIfScenarios = mysqlTable("whatif_scenarios", {
+  id: int("id").autoincrement().primaryKey(),
+  analysisId: int("analysisId").notNull(),
+  userId: int("userId"),
+  
+  // Scenario Details
+  scenarioName: varchar("scenarioName", { length: 200 }),
+  modifications: json("modifications"),
+  
+  // Results
+  baselineIci: decimal("baselineIci", { precision: 5, scale: 2 }),
+  modifiedIci: decimal("modifiedIci", { precision: 5, scale: 2 }),
+  baselineIrl: decimal("baselineIrl", { precision: 5, scale: 2 }),
+  modifiedIrl: decimal("modifiedIrl", { precision: 5, scale: 2 }),
+  baselineSuccessProbability: decimal("baselineSuccessProbability", { precision: 5, scale: 4 }),
+  modifiedSuccessProbability: decimal("modifiedSuccessProbability", { precision: 5, scale: 4 }),
+  
+  // Impact Analysis
+  impact: json("impact"),
+  recommendation: text("recommendation"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type WhatIfScenario = typeof whatIfScenarios.$inferSelect;
+export type InsertWhatIfScenario = typeof whatIfScenarios.$inferInsert;
+
+export const predictionAccuracy = mysqlTable("prediction_accuracy", {
+  id: int("id").autoincrement().primaryKey(),
+  analysisId: int("analysisId").notNull(),
+  
+  // Prediction
+  predictedOutcome: mysqlEnum("predictedOutcome", ["success", "failure"]).notNull(),
+  predictedProbability: decimal("predictedProbability", { precision: 5, scale: 4 }),
+  
+  // Actual Outcome (filled later)
+  actualOutcome: mysqlEnum("actualOutcome", ["success", "failure", "unknown"]).default("unknown"),
+  actualOutcomeDate: timestamp("actualOutcomeDate"),
+  
+  // Accuracy Metrics
+  correct: boolean("correct"),
+  errorMargin: decimal("errorMargin", { precision: 5, scale: 4 }),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PredictionAccuracy = typeof predictionAccuracy.$inferSelect;
+export type InsertPredictionAccuracy = typeof predictionAccuracy.$inferInsert;

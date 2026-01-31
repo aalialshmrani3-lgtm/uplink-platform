@@ -2024,7 +2024,7 @@ Provide response in JSON format:
         user_count: z.string(),
         revenue_growth: z.string(),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ ctx, input }) => {
         try {
           // Call Strategic Analysis API
           const response = await fetch('http://localhost:8001/analyze', {
@@ -2038,6 +2038,38 @@ Provide response in JSON format:
           }
           
           const result = await response.json();
+          
+          // Save analysis to database
+          try {
+            await db.createStrategicAnalysis({
+              userId: ctx.user.id,
+              projectTitle: input.title,
+              projectDescription: input.description,
+              budget: input.budget,
+              teamSize: parseInt(input.team_size),
+              timelineMonths: parseInt(input.timeline_months),
+              marketDemand: parseInt(input.market_demand),
+              technicalFeasibility: parseInt(input.technical_feasibility),
+              userEngagement: parseInt(input.user_engagement),
+              hypothesisValidationRate: input.hypothesis_validation_rate,
+              ratCompletionRate: input.rat_completion_rate,
+              userCount: parseInt(input.user_count),
+              revenueGrowth: input.revenue_growth,
+              iciScore: result.ici_score,
+              irlScore: result.irl_score,
+              successProbability: result.success_probability,
+              riskLevel: result.risk_level,
+              investorAppeal: result.investor_appeal,
+              ceoInsights: result.ceo_insights,
+              roadmap: result.roadmap,
+              investment: result.investment,
+              criticalPath: result.critical_path,
+              dashboard: result.dashboard
+            });
+          } catch (dbError) {
+            console.error('Failed to save analysis to database:', dbError);
+          }
+          
           return result;
           
         } catch (error) {
@@ -2105,15 +2137,15 @@ Provide response in JSON format:
         }
       }),
 
-    submitFeedback: publicProcedure
+    submitFeedback: protectedProcedure
       .input(z.object({
         project_id: z.string(),
         type: z.string(),
-        item_id: z.number(),
+        item_id: z.number().optional(),
         rating: z.string(),
-        comment: z.string()
+        comment: z.string().optional()
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ ctx, input }) => {
         try {
           // Call Feedback API
           const response = await fetch('http://localhost:8001/feedback', {
@@ -2127,12 +2159,115 @@ Provide response in JSON format:
           }
           
           const result = await response.json();
+          
+          // Save feedback to database
+          try {
+            await db.createUserFeedback({
+              userId: ctx.user.id,
+              projectId: input.project_id,
+              feedbackType: input.type as any,
+              itemId: input.item_id,
+              rating: input.rating,
+              comment: input.comment || null,
+              userRole: ctx.user.role
+            });
+          } catch (dbError) {
+            console.error('Failed to save feedback to database:', dbError);
+          }
+          
           return result;
           
         } catch (error) {
           console.error('Feedback submission error:', error);
-          // Return success even if API fails (store locally)
+          
+          // Save feedback to database even if API fails
+          try {
+            await db.createUserFeedback({
+              userId: ctx.user.id,
+              projectId: input.project_id,
+              feedbackType: input.type as any,
+              itemId: input.item_id,
+              rating: input.rating,
+              comment: input.comment || null,
+              userRole: ctx.user.role
+            });
+          } catch (dbError) {
+            console.error('Failed to save feedback to database:', dbError);
+          }
+          
           return { success: true, message: 'Feedback recorded' };
+        }
+      }),
+
+    getAnalytics: protectedProcedure.query(async () => {
+      try {
+        const [feedbackStats, analysisStats, predictionAccuracy] = await Promise.all([
+          db.getFeedbackStats(),
+          db.getAnalysisStats(),
+          db.getPredictionAccuracyStats()
+        ]);
+
+        return {
+          feedbackStats,
+          analysisStats,
+          predictionAccuracy
+        };
+      } catch (error) {
+        console.error('Analytics error:', error);
+        // Return empty stats as fallback
+        return {
+          feedbackStats: { total: 0, byType: {}, byRating: {} },
+          analysisStats: { total: 0, avgIci: 0, avgIrl: 0, avgSuccessProbability: 0 },
+          predictionAccuracy: { total: 0, correct: 0, accuracy: 0 }
+        };
+      }
+    }),
+
+    exportPdf: protectedProcedure
+      .input(z.object({
+        analysisId: z.number()
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const response = await fetch('http://localhost:8001/export/pdf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ analysis_id: input.analysisId })
+          });
+
+          if (!response.ok) {
+            throw new Error('PDF export failed');
+          }
+
+          const data = await response.json();
+          return { success: true, filePath: data.file_path };
+        } catch (error) {
+          console.error('PDF export error:', error);
+          throw new Error('Failed to export PDF');
+        }
+      }),
+
+    exportExcel: protectedProcedure
+      .input(z.object({
+        analysisId: z.number()
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const response = await fetch('http://localhost:8001/export/excel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ analysis_id: input.analysisId })
+          });
+
+          if (!response.ok) {
+            throw new Error('Excel export failed');
+          }
+
+          const data = await response.json();
+          return { success: true, filePath: data.file_path };
+        } catch (error) {
+          console.error('Excel export error:', error);
+          throw new Error('Failed to export Excel');
         }
       }),
   }),
