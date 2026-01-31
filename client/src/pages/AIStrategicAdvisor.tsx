@@ -26,6 +26,10 @@ export default function AIStrategicAdvisor() {
 
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showWhatIf, setShowWhatIf] = useState(false);
+  const [whatIfScenarios, setWhatIfScenarios] = useState<any[]>([]);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [generalFeedback, setGeneralFeedback] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -33,6 +37,7 @@ export default function AIStrategicAdvisor() {
   };
 
   const analyzeMutation = trpc.ai.analyzeStrategic.useMutation();
+  const whatIfMutation = trpc.ai.simulateWhatIf.useMutation();
 
   const handleAnalyze = async () => {
     // Validation
@@ -168,6 +173,51 @@ export default function AIStrategicAdvisor() {
       toast.warning('فشل الاتصال بالخادم - استخدام بيانات تجريبية');
     } finally {
       setIsAnalyzing(false);
+    }
+  };
+
+  const feedbackMutation = trpc.ai.submitFeedback.useMutation();
+
+  const handleFeedback = async (feedback: any) => {
+    try {
+      await feedbackMutation.mutateAsync({
+        project_id: formData.title,
+        ...feedback
+      });
+      
+      toast.success('شكراً لملاحظاتك! ستساعدنا في تحسين النظام.');
+      
+      if (feedback.type === 'general') {
+        setGeneralFeedback('');
+      }
+    } catch (error) {
+      console.error('Feedback submission error:', error);
+      toast.error('فشل إرسال الملاحظات. يرجى المحاولة مرة أخرى.');
+    }
+  };
+
+  const handleWhatIfScenario = async (modifications: any) => {
+    if (!analysis) {
+      toast.error('يرجى تحليل المشروع أولاً');
+      return;
+    }
+
+    setIsSimulating(true);
+
+    try {
+      // Call What-If Simulator endpoint
+      const result = await whatIfMutation.mutateAsync({
+        baseline_features: formData,
+        modifications: modifications
+      });
+
+      setWhatIfScenarios(prev => [result, ...prev]);
+      toast.success(`تم محاكاة سيناريو: ${modifications.name}`);
+    } catch (error) {
+      console.error('What-If simulation error:', error);
+      toast.error('فشلت المحاكاة. يرجى المحاولة مرة أخرى.');
+    } finally {
+      setIsSimulating(false);
     }
   };
 
@@ -491,6 +541,292 @@ export default function AIStrategicAdvisor() {
                   </div>
                 </div>
               ))}
+            </div>
+          </Card>
+
+          {/* What-If Simulator */}
+          <Card className="p-6 mt-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-semibold text-right">محاكي "ماذا لو؟"</h2>
+              <Button
+                onClick={() => setShowWhatIf(!showWhatIf)}
+                variant="outline"
+              >
+                {showWhatIf ? 'إخفاء' : 'عرض'} المحاكي
+              </Button>
+            </div>
+
+            {showWhatIf && (
+              <div className="space-y-4">
+                <p className="text-muted-foreground text-right">
+                  جرّب سيناريوهات مختلفة وانظر تأثيرها على ICI و IRL
+                </p>
+
+                {/* Predefined Scenarios */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Button
+                    onClick={() => handleWhatIfScenario({
+                      name: 'زيادة الميزانية 50%',
+                      budget: '+50%'
+                    })}
+                    variant="outline"
+                    className="h-auto p-4 flex flex-col items-end"
+                    disabled={isSimulating}
+                  >
+                    <span className="font-semibold">زيادة الميزانية 50%</span>
+                    <span className="text-sm text-muted-foreground">ماذا لو حصلت على تمويل إضافي؟</span>
+                  </Button>
+
+                  <Button
+                    onClick={() => handleWhatIfScenario({
+                      name: 'توظيف 3 أعضاء جدد',
+                      team_size: '+3'
+                    })}
+                    variant="outline"
+                    className="h-auto p-4 flex flex-col items-end"
+                    disabled={isSimulating}
+                  >
+                    <span className="font-semibold">توظيف 3 أعضاء جدد</span>
+                    <span className="text-sm text-muted-foreground">ماذا لو قمت بتوسيع الفريق؟</span>
+                  </Button>
+
+                  <Button
+                    onClick={() => handleWhatIfScenario({
+                      name: 'تحسين التحقق من الفرضيات',
+                      hypothesis_validation_rate: '+0.3'
+                    })}
+                    variant="outline"
+                    className="h-auto p-4 flex flex-col items-end"
+                    disabled={isSimulating}
+                  >
+                    <span className="font-semibold">تحسين التحقق من الفرضيات</span>
+                    <span className="text-sm text-muted-foreground">ماذا لو قمت باختبار أفضل؟</span>
+                  </Button>
+
+                  <Button
+                    onClick={() => handleWhatIfScenario({
+                      name: 'سيناريو شامل',
+                      budget: '+50%',
+                      team_size: '+2',
+                      hypothesis_validation_rate: '+0.3',
+                      rat_completion_rate: '+0.3'
+                    })}
+                    variant="outline"
+                    className="h-auto p-4 flex flex-col items-end"
+                    disabled={isSimulating}
+                  >
+                    <span className="font-semibold">سيناريو شامل</span>
+                    <span className="text-sm text-muted-foreground">تحسينات متعددة</span>
+                  </Button>
+                </div>
+
+                {/* Scenario Results */}
+                {whatIfScenarios.length > 0 && (
+                  <div className="mt-6 space-y-4">
+                    <h3 className="text-lg font-semibold text-right">نتائج المحاكاة</h3>
+                    {whatIfScenarios.map((scenario, index) => (
+                      <div
+                        key={index}
+                        className={`p-4 rounded-lg border ${
+                          scenario.impact.impact_level.includes('POSITIVE')
+                            ? 'bg-green-50 border-green-200'
+                            : scenario.impact.impact_level === 'NEGLIGIBLE'
+                            ? 'bg-gray-50 border-gray-200'
+                            : 'bg-red-50 border-red-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            {scenario.impact.impact_level.includes('POSITIVE') ? (
+                              <TrendingUp className="h-5 w-5 text-green-600" />
+                            ) : scenario.impact.impact_level === 'NEGLIGIBLE' ? (
+                              <AlertTriangle className="h-5 w-5 text-gray-600" />
+                            ) : (
+                              <AlertTriangle className="h-5 w-5 text-red-600" />
+                            )}
+                            <span className="text-sm text-muted-foreground">
+                              {scenario.impact.impact_level}
+                            </span>
+                          </div>
+                          <h4 className="font-semibold">{scenario.scenario_name}</h4>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div className="text-right">
+                            <div className="text-muted-foreground">ICI</div>
+                            <div className="font-semibold">
+                              {scenario.baseline.ici_score.toFixed(1)} →{' '}
+                              {scenario.modified.ici_score.toFixed(1)}
+                              <span
+                                className={`mr-2 ${
+                                  scenario.impact.ici_improvement >= 0
+                                    ? 'text-green-600'
+                                    : 'text-red-600'
+                                }`}
+                              >
+                                ({scenario.impact.ici_improvement >= 0 ? '+' : ''}
+                                {scenario.impact.ici_improvement.toFixed(1)})
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="text-right">
+                            <div className="text-muted-foreground">IRL</div>
+                            <div className="font-semibold">
+                              {scenario.baseline.irl_score.toFixed(1)} →{' '}
+                              {scenario.modified.irl_score.toFixed(1)}
+                              <span
+                                className={`mr-2 ${
+                                  scenario.impact.irl_improvement >= 0
+                                    ? 'text-green-600'
+                                    : 'text-red-600'
+                                }`}
+                              >
+                                ({scenario.impact.irl_improvement >= 0 ? '+' : ''}
+                                {scenario.impact.irl_improvement.toFixed(1)})
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="text-right">
+                            <div className="text-muted-foreground">احتمالية النجاح</div>
+                            <div className="font-semibold">
+                              {(scenario.baseline.success_probability * 100).toFixed(1)}% →{' '}
+                              {(scenario.modified.success_probability * 100).toFixed(1)}%
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-3 p-3 bg-white rounded text-right">
+                          <p className="text-sm font-medium">{scenario.impact.recommendation}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {isSimulating && (
+                  <div className="flex items-center justify-center p-8">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="mr-3">جارٍ محاكاة السيناريو...</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </Card>
+
+          {/* Feedback System */}
+          <Card className="p-6 mt-6">
+            <h2 className="text-2xl font-semibold mb-4 text-right">نظام الملاحظات</h2>
+            <p className="text-muted-foreground text-right mb-4">
+              ساعدنا في تحسين النظام من خلال مشاركة ملاحظاتك حول التوصيات
+            </p>
+
+            <div className="space-y-4">
+              {/* Feedback on CEO Insights */}
+              {analysis?.ceo_insights && analysis.ceo_insights.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-right">قيّم الرؤى الاستراتيجية</h3>
+                  {analysis.ceo_insights.slice(0, 3).map((insight: any, index: number) => (
+                    <div key={index} className="p-4 border rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleFeedback({
+                              type: 'ceo_insight',
+                              item_id: index,
+                              rating: 'helpful',
+                              comment: ''
+                            })}
+                            className="text-green-600 hover:bg-green-50"
+                          >
+                            ✅ مفيدة
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleFeedback({
+                              type: 'ceo_insight',
+                              item_id: index,
+                              rating: 'not_helpful',
+                              comment: ''
+                            })}
+                            className="text-red-600 hover:bg-red-50"
+                          >
+                            ❌ غير مفيدة
+                          </Button>
+                        </div>
+                        <p className="text-sm font-medium text-right">{insight.title}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Feedback on Roadmap */}
+              {analysis?.roadmap && (
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-right">قيّم خارطة الطريق</h3>
+                  <div className="p-4 border rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleFeedback({
+                            type: 'roadmap',
+                            item_id: 0,
+                            rating: 'actionable',
+                            comment: ''
+                          })}
+                          className="text-green-600 hover:bg-green-50"
+                        >
+                          ✅ قابلة للتنفيذ
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleFeedback({
+                            type: 'roadmap',
+                            item_id: 0,
+                            rating: 'not_actionable',
+                            comment: ''
+                          })}
+                          className="text-red-600 hover:bg-red-50"
+                        >
+                          ❌ غير قابلة للتنفيذ
+                        </Button>
+                      </div>
+                      <p className="text-sm font-medium text-right">خارطة الطريق العملية</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* General Feedback */}
+              <div className="space-y-3">
+                <h3 className="font-semibold text-right">ملاحظات عامة</h3>
+                <Textarea
+                  placeholder="شاركنا ملاحظاتك لتحسين النظام..."
+                  className="text-right min-h-[100px]"
+                  value={generalFeedback}
+                  onChange={(e) => setGeneralFeedback(e.target.value)}
+                />
+                <Button
+                  onClick={() => handleFeedback({
+                    type: 'general',
+                    item_id: 0,
+                    rating: 'feedback',
+                    comment: generalFeedback
+                  })}
+                  disabled={!generalFeedback.trim()}
+                  className="w-full"
+                >
+                  إرسال الملاحظات
+                </Button>
+              </div>
             </div>
           </Card>
         </div>

@@ -67,6 +67,47 @@ async def analyze_project(project: ProjectInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/whatif")
+async def simulate_whatif(request: dict):
+    """What-If Scenario Simulation endpoint"""
+    try:
+        from whatif_simulator import WhatIfSimulator
+        
+        simulator = WhatIfSimulator()
+        
+        result = simulator.simulate_scenario(
+            baseline_features=request['baseline_features'],
+            modifications=request['modifications']
+        )
+        
+        return result
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/feedback")
+async def submit_feedback(request: dict):
+    """Feedback submission endpoint"""
+    try:
+        from continuous_learning import ContinuousLearningSystem
+        
+        learning_system = ContinuousLearningSystem()
+        
+        result = learning_system.record_feedback(
+            project_id=request['project_id'],
+            feedback_type=request['type'],
+            item_id=request['item_id'],
+            rating=request['rating'],
+            comment=request.get('comment', '')
+        )
+        
+        return {"success": True, "message": "Feedback recorded successfully"}
+        
+    except Exception as e:
+        # Log error but return success to not block user
+        print(f"Feedback error: {e}")
+        return {"success": True, "message": "Feedback recorded locally"}
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""

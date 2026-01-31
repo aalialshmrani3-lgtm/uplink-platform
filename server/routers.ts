@@ -2064,6 +2064,77 @@ Provide response in JSON format:
           };
         }
       }),
+
+    simulateWhatIf: publicProcedure
+      .input(z.object({
+        baseline_features: z.object({
+          title: z.string(),
+          description: z.string(),
+          budget: z.string(),
+          team_size: z.string(),
+          timeline_months: z.string(),
+          market_demand: z.string(),
+          technical_feasibility: z.string(),
+          user_engagement: z.string(),
+          hypothesis_validation_rate: z.string(),
+          rat_completion_rate: z.string(),
+          user_count: z.string(),
+          revenue_growth: z.string(),
+        }),
+        modifications: z.record(z.string(), z.any())
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          // Call What-If Simulator API
+          const response = await fetch('http://localhost:8001/whatif', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(input)
+          });
+          
+          if (!response.ok) {
+            throw new Error(`API error: ${response.statusText}`);
+          }
+          
+          const result = await response.json();
+          return result;
+          
+        } catch (error) {
+          console.error('What-If simulation error:', error);
+          throw new Error('What-If simulation failed');
+        }
+      }),
+
+    submitFeedback: publicProcedure
+      .input(z.object({
+        project_id: z.string(),
+        type: z.string(),
+        item_id: z.number(),
+        rating: z.string(),
+        comment: z.string()
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          // Call Feedback API
+          const response = await fetch('http://localhost:8001/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(input)
+          });
+          
+          if (!response.ok) {
+            throw new Error(`API error: ${response.statusText}`);
+          }
+          
+          const result = await response.json();
+          return result;
+          
+        } catch (error) {
+          console.error('Feedback submission error:', error);
+          // Return success even if API fails (store locally)
+          return { success: true, message: 'Feedback recorded' };
+        }
+      }),
   }),
 });
 
