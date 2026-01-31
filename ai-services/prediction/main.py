@@ -13,6 +13,7 @@ import pickle
 import os
 from embeddings_service import get_text_features, TRANSFORMERS_AVAILABLE
 from jwt_auth import get_auth_user_or_service, require_admin_dependency
+from shap_explainer import create_explainer, SHAP_AVAILABLE
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -34,20 +35,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global model (loaded once at startup)
+# Global model and explainer (loaded once at startup)
 prediction_model = None
+shap_explainer = None
 MODEL_PATH = "/home/ubuntu/uplink-platform/ai-services/prediction/success_model.pkl"
 
 @app.on_event("startup")
 async def load_model():
-    """Load the trained XGBoost model on startup"""
-    global prediction_model
+    """Load the trained XGBoost model and SHAP explainer on startup"""
+    global prediction_model, shap_explainer
     try:
         if os.path.exists(MODEL_PATH):
             logger.info(f"Loading trained XGBoost model from {MODEL_PATH}...")
             with open(MODEL_PATH, 'rb') as f:
                 prediction_model = pickle.load(f)
-            logger.info("✅ Trained model loaded successfully (Accuracy: 100%)")
+            logger.info("✅ Trained model loaded successfully")
+            
+            # Initialize SHAP explainer
+            if SHAP_AVAILABLE:
+                logger.info("📊 Initializing SHAP explainer...")
+                shap_explainer = create_explainer(prediction_model)
+                logger.info("✅ SHAP explainer initialized")
+            else:
+                logger.warning("⚠️ SHAP not available - explanations will be limited")
         else:
             logger.warning(f"⚠️ No trained model found at {MODEL_PATH}")
             logger.info("Run 'python3 train_model.py' to train the model first")
@@ -88,10 +98,11 @@ class IdeaInsightsResponse(BaseModel):
 
 # Helper functions
 def extract_features(idea: IdeaInput) -> np.ndarray:
-    """Extract features from idea input using AraBERT embeddings"""
-    # Get semantic text features (replaces title_length/description_length)
-    text_features = get_text_features(idea.title, idea.description, use_embeddings=TRANSFORMERS_AVAILABLE)
+    """Extract features from idea input using AraBERT embeddings (32 dimensions)"""
+    # Get semantic text features (32 dimensions, replaces title_length/description_length)
+    text_features = get_text_features(idea.title, idea.description, use_embeddings=TRANSFORMERS_AVAILABLE, embedding_dim=32)
     
+    # Traditional features (10)
     features = [
         idea.budget / 100000,  # Normalize budget
         idea.team_size,
@@ -103,9 +114,10 @@ def extract_features(idea: IdeaInput) -> np.ndarray:
         len(idea.keywords),  # tags_count
         idea.hypothesis_validation_rate,
         idea.rat_completion_rate,
-        text_features[0],  # Semantic feature 1 (or title_length if fallback)
-        text_features[1],  # Semantic feature 2 (or description_length if fallback)
     ]
+    # Add all 32 semantic features
+    features.extend(text_features)
+    
     return np.array(features).reshape(1, -1)
 
 def calculate_risk_level(probability: float) -> str:
@@ -224,6 +236,43 @@ async def predict_success(
         )
     except Exception as e:
         logger.error(f"Error predicting success: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/explain")
+async def explain_prediction(
+    idea: IdeaInput,
+    language: str = "ar",
+    current_user: dict = Depends(get_auth_user_or_service)
+):
+    """
+    Explain prediction using SHAP values
+    
+    Args:
+        idea: IdeaInput containing idea details
+        language: Language for explanation ("ar" or "en")
+        
+    Returns:
+        Detailed explanation of why the model made this prediction
+    """
+    if prediction_model is None:
+        raise HTTPException(status_code=503, detail="Model not loaded. Please train the model first.")
+    
+    if shap_explainer is None:
+        raise HTTPException(status_code=503, detail="SHAP explainer not available. Install shap: pip install shap")
+    
+    try:
+        # Extract features
+        features = extract_features(idea)
+        
+        # Get SHAP explanation
+        explanation = shap_explainer.explain_prediction(features[0], language=language)
+        
+        logger.info(f"Generated SHAP explanation for idea '{idea.title}' (language: {language})")
+        
+        return explanation
+    
+    except Exception as e:
+        logger.error(f"Error generating explanation: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/insights/{idea_id}", response_model=IdeaInsightsResponse)

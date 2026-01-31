@@ -18,6 +18,7 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import xgboost as xgb
 from embeddings_service import get_text_features, TRANSFORMERS_AVAILABLE
+from database_connector import DatabaseConnector, convert_outcomes_to_dataframe
 
 # Configuration
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:3000")
@@ -25,7 +26,11 @@ MODEL_DIR = Path(__file__).parent
 MODELS_HISTORY_DIR = MODEL_DIR / "models_history"
 MODELS_HISTORY_DIR.mkdir(exist_ok=True)
 
-def fetch_training_data():
+# Database configuration
+DB_TYPE = os.getenv("DB_TYPE", "postgresql")  # or "mongodb"
+USE_DATABASE = os.getenv("USE_DATABASE", "false").lower() == "true"
+
+def fetch_training_data_from_api():
     """Fetch classified idea outcomes from the API"""
     print("📥 Fetching training data from API...")
     
@@ -45,26 +50,93 @@ def fetch_training_data():
             print(f"⚠️ Insufficient data: {len(training_data) if training_data else 0} samples (minimum 10 required)")
             return None
             
-        print(f"✅ Fetched {len(training_data)} training samples")
+        print(f"✅ Fetched {len(training_data)} training samples from API")
         return training_data
         
     except Exception as e:
-        print(f"❌ Error fetching training data: {e}")
+        print(f"❌ Error fetching training data from API: {e}")
         return None
 
+def fetch_training_data_from_database():
+    """Fetch classified idea outcomes directly from database"""
+    print(f"📥 Fetching training data from {DB_TYPE.upper()} database...")
+    
+    try:
+        with DatabaseConnector(db_type=DB_TYPE) as db:
+            # Get statistics first
+            stats = db.get_statistics()
+            print(f"   Database statistics:")
+            print(f"   - Total records: {stats['total_records']}")
+            print(f"   - Success rate: {stats['success_rate']:.2%}")
+            print(f"   - Avg success score: {stats['avg_success_score']:.2f}")
+            
+            # Fetch all training data
+            outcomes = db.fetch_training_data()
+            
+            if not outcomes or len(outcomes) < 10:
+                print(f"⚠️ Insufficient data: {len(outcomes) if outcomes else 0} samples (minimum 10 required)")
+                return None
+            
+            # Convert to dictionary format (same as API response)
+            training_data = []
+            for outcome in outcomes:
+                training_data.append({
+                    'idea_id': outcome.idea_id,
+                    'title': outcome.title,
+                    'description': outcome.description,
+                    'budget': outcome.budget,
+                    'team_size': outcome.team_size,
+                    'timeline_months': outcome.timeline_months,
+                    'market_demand': outcome.market_demand,
+                    'technical_feasibility': outcome.technical_feasibility,
+                    'competitive_advantage': outcome.competitive_advantage,
+                    'user_engagement': outcome.user_engagement,
+                    'tags_count': outcome.tags_count,
+                    'hypothesis_validation_rate': outcome.hypothesis_validation_rate,
+                    'rat_completion_rate': outcome.rat_completion_rate,
+                    'success': outcome.success,
+                    'success_score': outcome.success_score,
+                    'sector': outcome.sector,
+                    'organization_name': outcome.organization_name
+                })
+            
+            print(f"✅ Fetched {len(training_data)} training samples from database")
+            return training_data
+    
+    except Exception as e:
+        print(f"❌ Error fetching training data from database: {e}")
+        print(f"   Falling back to API...")
+        return None
+
+def fetch_training_data():
+    """Fetch training data from database or API"""
+    if USE_DATABASE:
+        # Try database first
+        training_data = fetch_training_data_from_database()
+        if training_data:
+            return training_data
+        
+        # Fallback to API
+        print("⚠️ Database fetch failed, trying API...")
+        return fetch_training_data_from_api()
+    else:
+        # Use API by default
+        return fetch_training_data_from_api()
+
 def prepare_data(training_data):
-    """Prepare features and labels from training data using AraBERT embeddings"""
-    print("🔧 Preparing training data with AraBERT embeddings...")
+    """Prepare features and labels from training data using AraBERT embeddings (32 dimensions)"""
+    print("🔧 Preparing training data with AraBERT embeddings (32 dimensions)...")
     
     features = []
     labels = []
     
     for sample in training_data:
-        # Get semantic text features (replaces title_length/description_length)
+        # Get semantic text features (32 dimensions, replaces title_length/description_length)
         title = sample.get('title', '')
         description = sample.get('description', '')
-        text_features = get_text_features(title, description, use_embeddings=TRANSFORMERS_AVAILABLE)
+        text_features = get_text_features(title, description, use_embeddings=TRANSFORMERS_AVAILABLE, embedding_dim=32)
         
+        # Combine traditional features + 32 semantic features
         feature_vector = [
             sample.get('budget', 0),
             sample.get('team_size', 0),
@@ -76,17 +148,21 @@ def prepare_data(training_data):
             sample.get('tags_count', 0),
             sample.get('hypothesis_validation_rate', 0),
             sample.get('rat_completion_rate', 0),
-            text_features[0],  # Semantic feature 1 (or title_length if fallback)
-            text_features[1],  # Semantic feature 2 (or description_length if fallback)
         ]
+        # Add all 32 semantic features
+        feature_vector.extend(text_features)
+        
         features.append(feature_vector)
         labels.append(sample.get('success', 0))
     
     X = np.array(features)
     y = np.array(labels)
     
-    embedding_type = "AraBERT embeddings" if TRANSFORMERS_AVAILABLE else "text length (fallback)"
-    print(f"✅ Prepared {len(X)} samples with {X.shape[1]} features ({embedding_type})")
+    embedding_type = "AraBERT embeddings (32D)" if TRANSFORMERS_AVAILABLE else "text length (fallback)"
+    print(f"✅ Prepared {len(X)} samples with {X.shape[1]} features")
+    print(f"   - Traditional features: 10")
+    print(f"   - Semantic features: 32 ({embedding_type})")
+    print(f"   - Total: {X.shape[1]} features")
     print(f"   Success: {sum(y)} ({sum(y)/len(y)*100:.1f}%)")
     print(f"   Failure: {len(y)-sum(y)} ({(len(y)-sum(y))/len(y)*100:.1f}%)")
     
@@ -256,6 +332,9 @@ def main():
     """Main retraining workflow"""
     print("=" * 80)
     print("🔄 UPLINK 5.0 - Automatic Model Retraining")
+    print("=" * 80)
+    print(f"   Data Source: {'Database (' + DB_TYPE.upper() + ')' if USE_DATABASE else 'API'}")
+    print(f"   Embeddings: {'AraBERT' if TRANSFORMERS_AVAILABLE else 'Text Length (fallback)'}")
     print("=" * 80)
     print()
     
