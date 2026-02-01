@@ -65,6 +65,9 @@ const OrganizationsManagement = lazy(() => import("./pages/admin/OrganizationsMa
 const OrganizationsDashboard = lazy(() => import("./pages/OrganizationsDashboard"));
 const AIStrategicAdvisor = lazy(() => import("./pages/AIStrategicAdvisor"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
+const AdminUsers = lazy(() => import("./pages/AdminUsers"));
+const AdminProjects = lazy(() => import("./pages/AdminProjects"));
+const AdminMonitoring = lazy(() => import("./pages/AdminMonitoring"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -277,6 +280,9 @@ function Router() {
         <Route path="/organizations/dashboard" component={OrganizationsDashboard} />
         <Route path="/ai-strategic-advisor" component={AIStrategicAdvisor} />
         <Route path="/analytics-dashboard" component={AnalyticsDashboard} />
+        <Route path="/admin/users" component={AdminUsers} />
+        <Route path="/admin/projects" component={AdminProjects} />
+        <Route path="/admin/monitoring" component={AdminMonitoring} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

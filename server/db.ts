@@ -30,7 +30,10 @@ import {
   strategicAnalyses, InsertStrategicAnalysis, StrategicAnalysis,
   userFeedback, InsertUserFeedback, UserFeedback,
   whatIfScenarios, InsertWhatIfScenario, WhatIfScenario,
-  predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy
+  predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy,
+  adminLogs, InsertAdminLog, AdminLog,
+  systemMetrics, InsertSystemMetric, SystemMetric,
+  organizations
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -929,4 +932,165 @@ export async function deleteNotification(notificationId: number, userId: number)
     ));
   
   return true;
+}
+
+
+// ============================================
+// ADMIN DASHBOARD
+// ============================================
+
+// Admin Logs
+export async function createAdminLog(data: InsertAdminLog) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  await db.insert(adminLogs).values(data);
+  return data;
+}
+
+export async function getAdminLogs(limit: number = 100) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select()
+    .from(adminLogs)
+    .orderBy(desc(adminLogs.createdAt))
+    .limit(limit);
+}
+
+// Users Management
+export async function getAllUsersForAdmin() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(users).orderBy(desc(users.createdAt));
+}
+
+export async function updateUserStatus(userId: number, isActive: boolean) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  // Note: We don't have isActive field yet, but we can use this for future
+  // For now, we'll just return the user
+  const user = await db.select().from(users).where(eq(users.id, userId));
+  return user[0] || null;
+}
+
+export async function updateUserRole(userId: number, role: string) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  await db.update(users)
+    .set({ role: role as any })
+    .where(eq(users.id, userId));
+  
+  const user = await db.select().from(users).where(eq(users.id, userId));
+  return user[0] || null;
+}
+
+export async function deleteUser(userId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  await db.delete(users).where(eq(users.id, userId));
+  return true;
+}
+
+// Projects Management
+export async function getAllProjectsForAdmin() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(projects).orderBy(desc(projects.createdAt));
+}
+
+export async function deleteProject(projectId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  await db.delete(projects).where(eq(projects.id, projectId));
+  return true;
+}
+
+// Strategic Analyses Management
+export async function getAllAnalysesForAdmin() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(strategicAnalyses).orderBy(desc(strategicAnalyses.createdAt));
+}
+
+export async function deleteAnalysis(analysisId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  await db.delete(strategicAnalyses).where(eq(strategicAnalyses.id, analysisId));
+  return true;
+}
+
+// System Metrics
+export async function createSystemMetric(data: InsertSystemMetric) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  await db.insert(systemMetrics).values(data);
+  return data;
+}
+
+export async function getSystemMetrics(metricType?: string, limit: number = 1000) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  if (metricType) {
+    return await db.select()
+      .from(systemMetrics)
+      .where(eq(systemMetrics.metricType, metricType as any))
+      .orderBy(desc(systemMetrics.createdAt))
+      .limit(limit);
+  }
+  
+  return await db.select()
+    .from(systemMetrics)
+    .orderBy(desc(systemMetrics.createdAt))
+    .limit(limit);
+}
+
+// Dashboard Statistics
+export async function getAdminDashboardStats() {
+  const db = await getDb();
+  if (!db) return {
+    totalUsers: 0,
+    totalProjects: 0,
+    totalAnalyses: 0,
+    totalIPs: 0,
+    totalOrganizations: 0,
+    recentUsers: 0,
+    recentProjects: 0,
+    recentAnalyses: 0
+  };
+  
+  const allUsers = await db.select().from(users);
+  const allProjects = await db.select().from(projects);
+  const allAnalyses = await db.select().from(strategicAnalyses);
+  const allIPs = await db.select().from(ipRegistrations);
+  const allOrgs = await db.select().from(organizations);
+  
+  // Recent (last 7 days)
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  
+  const recentUsers = allUsers.filter(u => new Date(u.createdAt) > sevenDaysAgo).length;
+  const recentProjects = allProjects.filter(p => new Date(p.createdAt) > sevenDaysAgo).length;
+  const recentAnalyses = allAnalyses.filter(a => new Date(a.createdAt) > sevenDaysAgo).length;
+  
+  return {
+    totalUsers: allUsers.length,
+    totalProjects: allProjects.length,
+    totalAnalyses: allAnalyses.length,
+    totalIPs: allIPs.length,
+    totalOrganizations: allOrgs.length,
+    recentUsers,
+    recentProjects,
+    recentAnalyses
+  };
 }

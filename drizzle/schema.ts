@@ -1127,3 +1127,53 @@ export const predictionAccuracy = mysqlTable("prediction_accuracy", {
 
 export type PredictionAccuracy = typeof predictionAccuracy.$inferSelect;
 export type InsertPredictionAccuracy = typeof predictionAccuracy.$inferInsert;
+
+
+// ============================================
+// ADMIN DASHBOARD
+// ============================================
+export const adminLogs = mysqlTable("admin_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  adminId: int("adminId").notNull(),
+  adminName: varchar("adminName", { length: 200 }),
+  
+  // Action Details
+  action: mysqlEnum("action", ["create", "update", "delete", "activate", "deactivate", "export", "view"]).notNull(),
+  targetType: mysqlEnum("targetType", ["user", "project", "ip", "organization", "analysis", "system"]).notNull(),
+  targetId: int("targetId"),
+  targetName: varchar("targetName", { length: 500 }),
+  
+  // Context
+  details: json("details"),
+  ipAddress: varchar("ipAddress", { length: 50 }),
+  userAgent: text("userAgent"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AdminLog = typeof adminLogs.$inferSelect;
+export type InsertAdminLog = typeof adminLogs.$inferInsert;
+
+export const systemMetrics = mysqlTable("system_metrics", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Metric Details
+  metricType: mysqlEnum("metricType", ["api_call", "error", "performance", "user_activity", "database"]).notNull(),
+  metricName: varchar("metricName", { length: 200 }).notNull(),
+  metricValue: decimal("metricValue", { precision: 10, scale: 2 }),
+  
+  // Context
+  endpoint: varchar("endpoint", { length: 500 }),
+  method: varchar("method", { length: 10 }),
+  statusCode: int("statusCode"),
+  responseTime: int("responseTime"), // milliseconds
+  errorMessage: text("errorMessage"),
+  
+  // Additional Data
+  metadata: json("metadata"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type SystemMetric = typeof systemMetrics.$inferSelect;
+export type InsertSystemMetric = typeof systemMetrics.$inferInsert;

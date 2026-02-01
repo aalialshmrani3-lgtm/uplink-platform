@@ -2,11 +2,12 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { TRPCError } from '@trpc/server';
 import { z } from "zod";
 import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
-import { getNotificationsByUserId, getUnreadNotificationsCount, markNotificationAsRead, markAllNotificationsAsRead, deleteNotification } from "./db";
+import { getNotificationsByUserId, getUnreadNotificationsCount, markNotificationAsRead, markAllNotificationsAsRead, deleteNotification, getAllUsersForAdmin, updateUserRole, deleteUser, getAllProjectsForAdmin, deleteProject, getAllAnalysesForAdmin, deleteAnalysis, getAdminDashboardStats, createAdminLog, getAdminLogs, getSystemMetrics } from "./db";
 import { nanoid } from "nanoid";
 import crypto from "crypto";
 
@@ -2411,6 +2412,194 @@ Provide response in JSON format:
       .mutation(async ({ input, ctx }) => {
         const success = await deleteNotification(input.notificationId, ctx.user.id);
         return { success };
+      }),
+  }),
+
+  // Admin Dashboard
+  admin: router({
+    // Users Management
+    getAllUsers: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .query(async () => {
+        return await getAllUsersForAdmin();
+      }),
+
+    updateUserRole: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .input(z.object({ userId: z.number(), role: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        const updated = await updateUserRole(input.userId, input.role);
+        
+        // Log admin action
+        await createAdminLog({
+          adminId: ctx.user.id,
+          adminName: ctx.user.name || 'Unknown',
+          action: 'update',
+          targetType: 'user',
+          targetId: input.userId,
+          targetName: updated?.name || 'Unknown',
+          details: { newRole: input.role },
+          ipAddress: '',
+          userAgent: ''
+        });
+        
+        return { success: true, user: updated };
+      }),
+
+    deleteUser: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const success = await deleteUser(input.userId);
+        
+        // Log admin action
+        await createAdminLog({
+          adminId: ctx.user.id,
+          adminName: ctx.user.name || 'Unknown',
+          action: 'delete',
+          targetType: 'user',
+          targetId: input.userId,
+          targetName: 'Deleted User',
+          details: {},
+          ipAddress: '',
+          userAgent: ''
+        });
+        
+        return { success };
+      }),
+
+    // Projects Management
+    getAllProjects: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .query(async () => {
+        return await getAllProjectsForAdmin();
+      }),
+
+    deleteProject: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .input(z.object({ projectId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const success = await deleteProject(input.projectId);
+        
+        // Log admin action
+        await createAdminLog({
+          adminId: ctx.user.id,
+          adminName: ctx.user.name || 'Unknown',
+          action: 'delete',
+          targetType: 'project',
+          targetId: input.projectId,
+          targetName: 'Deleted Project',
+          details: {},
+          ipAddress: '',
+          userAgent: ''
+        });
+        
+        return { success };
+      }),
+
+    // Analyses Management
+    getAllAnalyses: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .query(async () => {
+        return await getAllAnalysesForAdmin();
+      }),
+
+    deleteAnalysis: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .input(z.object({ analysisId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const success = await deleteAnalysis(input.analysisId);
+        
+        // Log admin action
+        await createAdminLog({
+          adminId: ctx.user.id,
+          adminName: ctx.user.name || 'Unknown',
+          action: 'delete',
+          targetType: 'analysis',
+          targetId: input.analysisId,
+          targetName: 'Deleted Analysis',
+          details: {},
+          ipAddress: '',
+          userAgent: ''
+        });
+        
+        return { success };
+      }),
+
+    // Dashboard Statistics
+    getDashboardStats: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .query(async () => {
+        return await getAdminDashboardStats();
+      }),
+
+    // Admin Logs
+    getAdminLogs: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .input(z.object({ limit: z.number().optional() }))
+      .query(async ({ input }) => {
+        return await getAdminLogs(input.limit);
+      }),
+
+    // System Metrics
+    getSystemMetrics: protectedProcedure
+      .use(({ ctx, next }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+        }
+        return next({ ctx });
+      })
+      .input(z.object({ 
+        metricType: z.string().optional(),
+        limit: z.number().optional() 
+      }))
+      .query(async ({ input }) => {
+        return await getSystemMetrics(input.metricType, input.limit);
       }),
   }),
 });
