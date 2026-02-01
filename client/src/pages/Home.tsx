@@ -370,7 +370,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            {['WIPO', 'USPTO', 'EPO', 'Y Combinator', 'Techstars', 'Google'].map((partner, i) => (
+            {['KAUST', 'أرامكو السعودية', 'وزارة الاتصالات', 'STC', 'SABIC', 'NEOM', 'Monsha\'at', 'RDEA'].map((partner, i) => (
               <div 
                 key={i} 
                 className="p-6 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30 flex items-center justify-center hover:border-cyan-500/30 transition-colors"

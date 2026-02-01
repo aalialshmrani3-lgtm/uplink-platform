@@ -9,10 +9,6 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
 export default function AnalyticsDashboard() {
   const analyticsQuery = trpc.ai.getAnalytics.useQuery();
-  const advancedAnalyticsQuery = trpc.ai.getAdvancedAnalytics.useQuery({
-    cohortPeriod: 'monthly',
-    forecastPeriods: 3
-  });
   
   const analytics = analyticsQuery.data;
   const isLoading = analyticsQuery.isLoading;
@@ -137,10 +133,9 @@ export default function AnalyticsDashboard() {
       {/* Detailed Analytics */}
       <Tabs defaultValue="feedback" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="feedback">الملاحظات</TabsTrigger>
-          <TabsTrigger value="analysis">التحليلات</TabsTrigger>
-          <TabsTrigger value="predictions">التنبؤات</TabsTrigger>
-          <TabsTrigger value="advanced">تحليلات متقدمة</TabsTrigger>
+          <TabsTrigger value="feedback">اتجاهات الملاحظات</TabsTrigger>
+          <TabsTrigger value="analysis">إحصائيات التحليلات</TabsTrigger>
+          <TabsTrigger value="predictions">دقة التنبؤات</TabsTrigger>
         </TabsList>
 
         <TabsContent value="feedback" className="space-y-4">
@@ -348,211 +343,6 @@ export default function AnalyticsDashboard() {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="advanced" className="space-y-4">
-          {advancedAnalyticsQuery.isLoading ? (
-            <Card>
-              <CardContent className="py-8">
-                <div className="flex items-center justify-center">
-                  <Activity className="h-8 w-8 animate-spin text-primary" />
-                  <span className="mr-2">جارٍ تحميل التحليلات المتقدمة...</span>
-                </div>
-              </CardContent>
-            </Card>
-          ) : advancedAnalyticsQuery.data ? (
-            <>
-              {/* Cohort Analysis */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>تحليل المجموعات (Cohort Analysis)</CardTitle>
-                  <CardDescription>تتبع مجموعات المشاريع عبر الزمن</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {advancedAnalyticsQuery.data.cohort_analysis?.cohorts?.length > 0 ? (
-                    <>
-                      <div className="grid gap-4 md:grid-cols-3 mb-6">
-                        <div className="text-center p-4 border rounded-lg">
-                          <div className="text-3xl font-bold">
-                            {advancedAnalyticsQuery.data.cohort_analysis.summary.overall_success_rate?.toFixed(1)}%
-                          </div>
-                          <p className="text-sm text-muted-foreground">معدل النجاح الإجمالي</p>
-                        </div>
-                        <div className="text-center p-4 border rounded-lg">
-                          <div className="text-3xl font-bold">
-                            {advancedAnalyticsQuery.data.cohort_analysis.summary.avg_ici_score?.toFixed(1)}
-                          </div>
-                          <p className="text-sm text-muted-foreground">متوسط ICI</p>
-                        </div>
-                        <div className="text-center p-4 border rounded-lg">
-                          <div className="text-3xl font-bold flex items-center justify-center">
-                            {advancedAnalyticsQuery.data.cohort_analysis.summary.trend_ar}
-                            {advancedAnalyticsQuery.data.cohort_analysis.summary.trend === 'improving' && (
-                              <TrendingUp className="h-6 w-6 text-green-600 mr-2" />
-                            )}
-                            {advancedAnalyticsQuery.data.cohort_analysis.summary.trend === 'declining' && (
-                              <TrendingDown className="h-6 w-6 text-red-600 mr-2" />
-                            )}
-                          </div>
-                          <p className="text-sm text-muted-foreground">الاتجاه العام</p>
-                        </div>
-                      </div>
-
-                      <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={advancedAnalyticsQuery.data.cohort_analysis.cohorts}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="cohort" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Line type="monotone" dataKey="success_rate" stroke="#8884d8" name="معدل النجاح %" />
-                          <Line type="monotone" dataKey="avg_ici_score" stroke="#82ca9d" name="متوسط ICI" />
-                        </LineChart>
-                      </ResponsiveContainer>
-
-                      {advancedAnalyticsQuery.data.cohort_analysis.recommendations?.length > 0 && (
-                        <div className="mt-6 space-y-2">
-                          <h4 className="font-semibold">التوصيات:</h4>
-                          {advancedAnalyticsQuery.data.cohort_analysis.recommendations.map((rec: any, idx: number) => (
-                            <div key={idx} className="p-3 border-r-4 border-blue-500 bg-blue-50 rounded">
-                              <p className="font-medium">{rec.title_ar}</p>
-                              <p className="text-sm text-muted-foreground">{rec.description_ar}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <p className="text-center text-muted-foreground">لا توجد بيانات كافية لتحليل المجموعات</p>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Funnel Analysis */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>تحليل القمع (Funnel Analysis)</CardTitle>
-                  <CardDescription>تصور مراحل نجاح/فشل المشاريع</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {advancedAnalyticsQuery.data.funnel_analysis?.funnel_stages?.length > 0 ? (
-                    <>
-                      <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={advancedAnalyticsQuery.data.funnel_analysis.funnel_stages}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="stage_name_ar" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Bar dataKey="count" fill="#8884d8" name="عدد المشاريع" />
-                          <Bar dataKey="conversion_rate" fill="#82ca9d" name="معدل التحويل %" />
-                        </BarChart>
-                      </ResponsiveContainer>
-
-                      {advancedAnalyticsQuery.data.funnel_analysis.max_drop_off && (
-                        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded">
-                          <h4 className="font-semibold text-red-800">أكبر نقطة تسرب:</h4>
-                          <p className="text-sm">
-                            من {advancedAnalyticsQuery.data.funnel_analysis.max_drop_off.from_stage} إلى {advancedAnalyticsQuery.data.funnel_analysis.max_drop_off.to_stage}
-                          </p>
-                          <p className="text-sm font-bold">
-                            نسبة التسرب: {advancedAnalyticsQuery.data.funnel_analysis.max_drop_off.drop_off_rate}%
-                          </p>
-                        </div>
-                      )}
-
-                      {advancedAnalyticsQuery.data.funnel_analysis.recommendations?.length > 0 && (
-                        <div className="mt-6 space-y-2">
-                          <h4 className="font-semibold">التوصيات:</h4>
-                          {advancedAnalyticsQuery.data.funnel_analysis.recommendations.map((rec: any, idx: number) => (
-                            <div key={idx} className="p-3 border-r-4 border-orange-500 bg-orange-50 rounded">
-                              <p className="font-medium">{rec.title_ar}</p>
-                              <p className="text-sm text-muted-foreground">{rec.description_ar}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <p className="text-center text-muted-foreground">لا توجد بيانات كافية لتحليل القمع</p>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Trend Predictions */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>توقعات الاتجاهات (Trend Predictions)</CardTitle>
-                  <CardDescription>توقع اتجاهات النجاح المستقبلية</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {advancedAnalyticsQuery.data.trend_predictions?.historical?.length > 0 ? (
-                    <>
-                      <div className="text-center mb-6">
-                        <div className="inline-flex items-center gap-2 text-2xl font-bold">
-                          {advancedAnalyticsQuery.data.trend_predictions.trend_ar}
-                          {advancedAnalyticsQuery.data.trend_predictions.trend === 'increasing' && (
-                            <TrendingUp className="h-8 w-8 text-green-600" />
-                          )}
-                          {advancedAnalyticsQuery.data.trend_predictions.trend === 'decreasing' && (
-                            <TrendingDown className="h-8 w-8 text-red-600" />
-                          )}
-                        </div>
-                        <p className="text-sm text-muted-foreground mt-2">
-                          معدل التغير: {advancedAnalyticsQuery.data.trend_predictions.slope?.toFixed(2)}% شهرياً
-                        </p>
-                      </div>
-
-                      <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={[
-                          ...advancedAnalyticsQuery.data.trend_predictions.historical.map((h: any) => ({
-                            period: h.period,
-                            actual: h.avg_success_probability,
-                            type: 'historical'
-                          })),
-                          ...advancedAnalyticsQuery.data.trend_predictions.forecast.map((f: any) => ({
-                            period: f.period,
-                            predicted: f.predicted_success_probability,
-                            lower: f.confidence_lower,
-                            upper: f.confidence_upper,
-                            type: 'forecast'
-                          }))
-                        ]}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="period" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Line type="monotone" dataKey="actual" stroke="#8884d8" name="فعلي" />
-                          <Line type="monotone" dataKey="predicted" stroke="#82ca9d" strokeDasharray="5 5" name="متوقع" />
-                        </LineChart>
-                      </ResponsiveContainer>
-
-                      {advancedAnalyticsQuery.data.trend_predictions.recommendations?.length > 0 && (
-                        <div className="mt-6 space-y-2">
-                          <h4 className="font-semibold">التوصيات:</h4>
-                          {advancedAnalyticsQuery.data.trend_predictions.recommendations.map((rec: any, idx: number) => (
-                            <div key={idx} className="p-3 border-r-4 border-purple-500 bg-purple-50 rounded">
-                              <p className="font-medium">{rec.title_ar}</p>
-                              <p className="text-sm text-muted-foreground">{rec.description_ar}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <p className="text-center text-muted-foreground">لا توجد بيانات كافية لتوقع الاتجاهات</p>
-                  )}
-                </CardContent>
-              </Card>
-            </>
-          ) : (
-            <Card>
-              <CardContent className="py-8">
-                <p className="text-center text-muted-foreground">لا توجد بيانات متاحة</p>
-              </CardContent>
-            </Card>
-          )}
         </TabsContent>
       </Tabs>
     </div>
