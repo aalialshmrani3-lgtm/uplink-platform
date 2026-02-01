@@ -6,6 +6,7 @@ import { z } from "zod";
 import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
+import { getNotificationsByUserId, getUnreadNotificationsCount, markNotificationAsRead, markAllNotificationsAsRead, deleteNotification } from "./db";
 import { nanoid } from "nanoid";
 import crypto from "crypto";
 
@@ -2344,6 +2345,72 @@ Provide response in JSON format:
           console.error('Email sending error:', error);
           throw new Error('Failed to send email');
         }
+      }),
+
+    chatWithAdvisor: protectedProcedure
+      .input(z.object({
+        message: z.string(),
+        analysisContext: z.any().optional()
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const response = await fetch('http://localhost:8001/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: input.message,
+              analysis_context: input.analysisContext
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error('Chat request failed');
+          }
+
+          const data = await response.json();
+          return { success: true, response: data.response };
+        } catch (error) {
+          console.error('Chat error:', error);
+          throw new Error('Failed to chat with advisor');
+        }
+      }),
+  }),
+
+  // Notifications
+  notifications: router({
+    getAll: protectedProcedure
+      .query(async ({ ctx }) => {
+        return await getNotificationsByUserId(ctx.user.id, false);
+      }),
+
+    getUnread: protectedProcedure
+      .query(async ({ ctx }) => {
+        return await getNotificationsByUserId(ctx.user.id, true);
+      }),
+
+    getUnreadCount: protectedProcedure
+      .query(async ({ ctx }) => {
+        return await getUnreadNotificationsCount(ctx.user.id);
+      }),
+
+    markAsRead: protectedProcedure
+      .input(z.object({ notificationId: z.number() }))
+      .mutation(async ({ input }) => {
+        await markNotificationAsRead(input.notificationId);
+        return { success: true };
+      }),
+
+    markAllAsRead: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        const count = await markAllNotificationsAsRead(ctx.user.id);
+        return { success: true, count };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ notificationId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const success = await deleteNotification(input.notificationId, ctx.user.id);
+        return { success };
       }),
   }),
 });

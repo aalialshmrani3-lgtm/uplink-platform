@@ -886,3 +886,47 @@ export async function getAllStrategicAnalyses() {
     investor_appeal: a.investorAppeal
   }));
 }
+
+// ============================================
+// NOTIFICATIONS - Additional helpers
+// ============================================
+export async function getUnreadNotificationsCount(userId: number) {
+  const db = await getDb();
+  if (!db) return 0;
+  
+  const result = await db.select()
+    .from(notifications)
+    .where(and(
+      eq(notifications.userId, userId),
+      eq(notifications.isRead, false)
+    ));
+  
+  return result.length;
+}
+
+export async function markAllNotificationsAsRead(userId: number) {
+  const db = await getDb();
+  if (!db) return 0;
+  
+  await db.update(notifications)
+    .set({ isRead: true })
+    .where(and(
+      eq(notifications.userId, userId),
+      eq(notifications.isRead, false)
+    ));
+  
+  return 1;
+}
+
+export async function deleteNotification(notificationId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  await db.delete(notifications)
+    .where(and(
+      eq(notifications.id, notificationId),
+      eq(notifications.userId, userId)
+    ));
+  
+  return true;
+}

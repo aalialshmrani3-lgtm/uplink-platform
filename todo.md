@@ -138,3 +138,16 @@
 - [x] Develop Multi-language Support - excel_export_en.py, excel_export_fr.py
 - [x] Update API endpoints to support language parameter (ar/en/fr)
 - [x] Test complete system end-to-end and deliver
+
+
+## ✅ Completed: Phase 36 - AI Chatbot & Notifications System
+- [x] Develop AI Chatbot Backend (chatbot_service.py with 10+ intents)
+- [x] Add /chat endpoint in FastAPI (api_strategic.py)
+- [x] Create chatWithAdvisor tRPC endpoint (routers.ts)
+- [x] Create StrategicAdvisorChatbot UI component (floating chat interface)
+- [x] Integrate Chatbot with AIStrategicAdvisor page (context-aware responses)
+- [x] Add notification helpers in db.ts (getUnreadCount, markAllAsRead, delete)
+- [x] Add notifications router in tRPC (6 endpoints: getAll, getUnread, markAsRead, etc.)
+- [x] Create NotificationBell UI component (real-time polling every 30s)
+- [x] Integrate NotificationBell with DashboardLayout (mobile header)
+- [x] Test complete system end-to-end and deliver

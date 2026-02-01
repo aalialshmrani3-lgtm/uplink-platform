@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2, TrendingUp, AlertTriangle, CheckCircle2, Target, Lightbulb, FileDown } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { toast } from 'sonner';
+import StrategicAdvisorChatbot from '@/components/StrategicAdvisorChatbot';
 
 export default function AIStrategicAdvisor() {
   const [formData, setFormData] = useState({
@@ -1073,6 +1074,11 @@ export default function AIStrategicAdvisor() {
             </div>
           </Card>
         </div>
+      )}
+
+      {/* Strategic Advisor Chatbot */}
+      {analysis && (
+        <StrategicAdvisorChatbot analysisContext={analysis} />
       )}
     </div>
   );

@@ -227,6 +227,29 @@ async def get_advanced_analytics(request: dict):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/chat")
+async def chat_with_advisor(request: dict):
+    """Chat with Strategic Advisor AI"""
+    try:
+        from chatbot_service import get_chatbot
+        
+        user_message = request.get('message')
+        analysis_context = request.get('analysis_context')
+        
+        if not user_message:
+            raise HTTPException(status_code=400, detail="No message provided")
+        
+        chatbot = get_chatbot()
+        response = chatbot.chat(user_message, analysis_context)
+        
+        return {
+            "success": True,
+            "response": response
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
