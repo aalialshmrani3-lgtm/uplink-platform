@@ -240,6 +240,46 @@ export default function AIStrategicAdvisor() {
     }
   };
 
+  const handleSendEmail = async () => {
+    if (!analysis?.analysis_id) {
+      toast.error('لا يوجد تحليل لإرساله');
+      return;
+    }
+
+    if (!emailData.recipients.trim()) {
+      toast.error('يرجى إدخال عنوان بريد إلكتروني واحد على الأقل');
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      const result = await sendEmailMutation.mutateAsync({
+        analysisId: analysis.analysis_id,
+        recipients: emailData.recipients,
+        cc: emailData.cc || undefined,
+        reportType: emailData.reportType as 'PDF' | 'Excel',
+        customMessage: emailData.customMessage || undefined
+      });
+      
+      if (result.success) {
+        toast.success(`تم إرسال التقرير بنجاح إلى ${result.sent_to} مستلم!`);
+        setShowEmailDialog(false);
+        // Reset email data
+        setEmailData({
+          recipients: '',
+          cc: '',
+          reportType: 'PDF',
+          customMessage: ''
+        });
+      }
+    } catch (error) {
+      console.error('Email sending error:', error);
+      toast.error('فشل إرسال البريد. يرجى التحقق من إعدادات SMTP.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const handleFeedback = async (feedback: any) => {
     try {
       await feedbackMutation.mutateAsync({
@@ -929,6 +969,106 @@ export default function AIStrategicAdvisor() {
                 >
                   إرسال الملاحظات
                 </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Email Dialog */}
+      {showEmailDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowEmailDialog(false)}>
+          <Card className="w-full max-w-2xl mx-4 p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-right">إرسال التقرير عبر البريد الإلكتروني</h2>
+                <Button variant="ghost" size="sm" onClick={() => setShowEmailDialog(false)}>
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-right block mb-2">البريد الإلكتروني للمستلمين *</Label>
+                  <Input
+                    type="text"
+                    placeholder="investor@example.com, partner@example.com"
+                    className="text-right"
+                    value={emailData.recipients}
+                    onChange={(e) => setEmailData(prev => ({ ...prev, recipients: e.target.value }))}
+                  />
+                  <p className="text-xs text-muted-foreground text-right mt-1">افصل عناوين البريد بفاصلة</p>
+                </div>
+
+                <div>
+                  <Label className="text-right block mb-2">نسخة إلى (CC)</Label>
+                  <Input
+                    type="text"
+                    placeholder="cc@example.com"
+                    className="text-right"
+                    value={emailData.cc}
+                    onChange={(e) => setEmailData(prev => ({ ...prev, cc: e.target.value }))}
+                  />
+                </div>
+
+                <div>
+                  <Label className="text-right block mb-2">نوع التقرير</Label>
+                  <div className="flex gap-4 justify-end">
+                    <Button
+                      variant={emailData.reportType === 'PDF' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setEmailData(prev => ({ ...prev, reportType: 'PDF' }))}
+                    >
+                      PDF
+                    </Button>
+                    <Button
+                      variant={emailData.reportType === 'Excel' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setEmailData(prev => ({ ...prev, reportType: 'Excel' }))}
+                    >
+                      Excel
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label className="text-right block mb-2">رسالة مخصصة (اختياري)</Label>
+                  <Textarea
+                    placeholder="أضف رسالة شخصية للمستلمين..."
+                    className="text-right min-h-[120px]"
+                    value={emailData.customMessage}
+                    onChange={(e) => setEmailData(prev => ({ ...prev, customMessage: e.target.value }))}
+                  />
+                </div>
+
+                <div className="flex gap-3 justify-end pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowEmailDialog(false)}
+                  >
+                    إلغاء
+                  </Button>
+                  <Button
+                    onClick={handleSendEmail}
+                    disabled={!emailData.recipients.trim() || isExporting}
+                  >
+                    {isExporting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin ml-2" />
+                        جارٍ الإرسال...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="h-4 w-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        إرسال
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
           </Card>

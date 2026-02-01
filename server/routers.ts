@@ -2223,6 +2223,47 @@ Provide response in JSON format:
       }
     }),
 
+    getAdvancedAnalytics: protectedProcedure
+      .input(z.object({
+        cohortPeriod: z.enum(['weekly', 'monthly', 'quarterly']).optional(),
+        segmentBy: z.string().optional(),
+        forecastPeriods: z.number().optional()
+      }))
+      .query(async ({ input }) => {
+        try {
+          // Fetch all analyses from database
+          const analyses = await db.getAllStrategicAnalyses();
+          
+          // Call FastAPI advanced analytics endpoint
+          const response = await fetch('http://localhost:8001/analytics/advanced', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              analyses_data: analyses,
+              cohort_period: input.cohortPeriod || 'monthly',
+              segment_by: input.segmentBy,
+              forecast_periods: input.forecastPeriods || 3
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error('Advanced analytics failed');
+          }
+
+          const data = await response.json();
+          return data.analytics;
+        } catch (error) {
+          console.error('Advanced analytics error:', error);
+          // Return empty analytics as fallback
+          return {
+            cohort_analysis: { cohorts: [], summary: {}, recommendations: [] },
+            funnel_analysis: { funnel_stages: [], drop_offs: [], recommendations: [] },
+            trend_predictions: { historical: [], forecast: [], recommendations: [] },
+            metadata: {}
+          };
+        }
+      }),
+
     exportPdf: protectedProcedure
       .input(z.object({
         analysisId: z.number()

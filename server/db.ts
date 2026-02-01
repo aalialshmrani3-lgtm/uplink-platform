@@ -867,3 +867,22 @@ export async function getAnalysisStats() {
     avgSuccessProbability
   };
 }
+
+export async function getAllStrategicAnalyses() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Return all strategic analyses with relevant fields for advanced analytics
+  const analyses = await db.select().from(strategicAnalyses).orderBy(desc(strategicAnalyses.createdAt));
+  
+  return analyses.map(a => ({
+    analysis_id: a.id,
+    project_title: a.projectTitle,
+    created_at: a.createdAt,
+    success_probability: Number(a.successProbability) || 0,
+    ici_score: Number(a.iciScore) || 0,
+    irl_score: Number(a.irlScore) || 0,
+    risk_level: a.riskLevel,
+    investor_appeal: a.investorAppeal
+  }));
+}

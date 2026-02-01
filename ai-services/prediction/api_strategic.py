@@ -110,9 +110,17 @@ async def submit_feedback(request: dict):
 
 @app.post("/export/pdf")
 async def export_pdf(request: dict):
-    """Export strategic analysis to PDF"""
+    """Export strategic analysis to PDF with language support (ar/en/fr)"""
     try:
-        from pdf_export import export_to_pdf
+        language = request.get('language', 'ar')  # Default to Arabic
+        
+        # Import appropriate exporter based on language
+        if language == 'en':
+            from pdf_export_en import export_to_pdf_en as export_func
+        elif language == 'fr':
+            from pdf_export_fr import export_to_pdf_fr as export_func
+        else:
+            from pdf_export import export_to_pdf as export_func
         
         analysis_id = request.get('analysis_id')
         
@@ -133,8 +141,8 @@ async def export_pdf(request: dict):
         }
         
         # Generate PDF
-        output_path = f"/tmp/strategic_analysis_{analysis_id}.pdf"
-        export_to_pdf(sample_data, output_path)
+        output_path = f"/tmp/strategic_analysis_{analysis_id}_{language}.pdf"
+        export_func(sample_data, output_path)
         
         return {"success": True, "file_path": output_path}
         
@@ -143,9 +151,17 @@ async def export_pdf(request: dict):
 
 @app.post("/export/excel")
 async def export_excel(request: dict):
-    """Export strategic analysis to Excel"""
+    """Export strategic analysis to Excel with language support (ar/en/fr)"""
     try:
-        from excel_export import export_to_excel
+        language = request.get('language', 'ar')  # Default to Arabic
+        
+        # Import appropriate exporter based on language
+        if language == 'en':
+            from excel_export_en import export_to_excel_en as export_func
+        elif language == 'fr':
+            from excel_export_fr import export_to_excel_fr as export_func
+        else:
+            from excel_export import export_to_excel as export_func
         
         analysis_id = request.get('analysis_id')
         
@@ -173,10 +189,40 @@ async def export_excel(request: dict):
         }
         
         # Generate Excel
-        output_path = f"/tmp/strategic_analysis_{analysis_id}.xlsx"
-        export_to_excel(sample_data, output_path)
+        output_path = f"/tmp/strategic_analysis_{analysis_id}_{language}.xlsx"
+        export_func(sample_data, output_path)
         
         return {"success": True, "file_path": output_path}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/analytics/advanced")
+async def get_advanced_analytics(request: dict):
+    """Get advanced analytics (Cohort, Funnel, Trends)"""
+    try:
+        from advanced_analytics import AdvancedAnalytics
+        
+        analyses_data = request.get('analyses_data', [])
+        cohort_period = request.get('cohort_period', 'monthly')
+        segment_by = request.get('segment_by')
+        forecast_periods = request.get('forecast_periods', 3)
+        
+        if not analyses_data:
+            raise HTTPException(status_code=400, detail="No analyses data provided")
+        
+        analytics = AdvancedAnalytics()
+        results = analytics.get_all_analytics(
+            analyses_data,
+            cohort_period=cohort_period,
+            segment_by=segment_by,
+            forecast_periods=forecast_periods
+        )
+        
+        return {
+            "success": True,
+            "analytics": results
+        }
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
