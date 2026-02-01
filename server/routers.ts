@@ -2270,6 +2270,40 @@ Provide response in JSON format:
           throw new Error('Failed to export Excel');
         }
       }),
+
+    sendReportEmail: protectedProcedure
+      .input(z.object({
+        analysisId: z.number(),
+        recipients: z.string(),
+        cc: z.string().optional(),
+        reportType: z.enum(['PDF', 'Excel']),
+        customMessage: z.string().optional()
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const response = await fetch('http://localhost:8001/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              analysis_id: input.analysisId,
+              recipients: input.recipients.split(',').map(e => e.trim()),
+              cc: input.cc ? input.cc.split(',').map(e => e.trim()) : [],
+              report_type: input.reportType,
+              custom_message: input.customMessage
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error('Email sending failed');
+          }
+
+          const data = await response.json();
+          return { success: true, ...data };
+        } catch (error) {
+          console.error('Email sending error:', error);
+          throw new Error('Failed to send email');
+        }
+      }),
   }),
 });
 

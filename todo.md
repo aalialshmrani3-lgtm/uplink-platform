@@ -125,3 +125,14 @@
 - [x] Develop Excel Export functionality (excel_export.py with 6 sheets + charts)
 - [x] Add Export UI buttons to AI Strategic Advisor page (PDF + Excel)
 - [x] Test complete system end-to-end and deliver (FastAPI running on port 8001)
+
+
+## Phase 35: Advanced Features - Email, Analytics & Multi-language
+- [ ] Develop Email Delivery System for reports
+- [ ] Integrate Email with Export UI (AI Strategic Advisor)
+- [ ] Develop Advanced Analytics - Cohort Analysis
+- [ ] Develop Advanced Analytics - Funnel Visualization
+- [ ] Develop Advanced Analytics - Trend Predictions
+- [ ] Update Analytics Dashboard UI with advanced analytics
+- [ ] Develop Multi-language Support (Arabic, English, French)
+- [ ] Test complete system end-to-end and deliver
