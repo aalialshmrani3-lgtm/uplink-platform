@@ -354,7 +354,7 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section id="partners" className="py-24 px-6">
+      <section id="partners" className="py-24 px-6 overflow-hidden">
         <div className="container">
           <div className="text-center mb-16">
             <Badge className="mb-4 bg-amber-500/10 text-amber-400 border-amber-500/30">
@@ -365,19 +365,74 @@ export default function Home() {
               شركاء النجاح
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              نفخر بشراكاتنا مع أبرز المؤسسات والشركات العالمية
+              نفخر بشراكاتنا مع أبرز الجهات والشركات السعودية الرائدة في الابتكار
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            {['KAUST', 'أرامكو السعودية', 'وزارة الاتصالات', 'STC', 'SABIC', 'NEOM', 'Monsha\'at', 'RDEA'].map((partner, i) => (
-              <div 
-                key={i} 
-                className="p-6 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30 flex items-center justify-center hover:border-cyan-500/30 transition-colors"
-              >
-                <span className="text-lg font-semibold text-muted-foreground">{partner}</span>
-              </div>
-            ))}
+          {/* Horizontal Scrolling Logos */}
+          <div className="relative">
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                @keyframes scroll-rtl {
+                  0% { transform: translateX(0); }
+                  100% { transform: translateX(-50%); }
+                }
+                .animate-scroll-rtl {
+                  animation: scroll-rtl 30s linear infinite;
+                }
+                .animate-scroll-rtl:hover {
+                  animation-play-state: paused;
+                }
+              `
+            }} />
+            
+            <div className="flex gap-12 animate-scroll-rtl">
+              {/* First set of logos */}
+              {[
+                { name: 'KAUST', src: '/partners/kaust.png', alt: 'جامعة الملك عبدالله للعلوم والتقنية' },
+                { name: 'أرامكو', src: '/partners/aramco.png', alt: 'أرامكو السعودية' },
+                { name: 'وزارة الاتصالات', src: '/partners/mcit.png', alt: 'وزارة الاتصالات وتقنية المعلومات' },
+                { name: 'STC', src: '/partners/stc.jpg', alt: 'الاتصالات السعودية' },
+                { name: 'SABIC', src: '/partners/sabic.png', alt: 'سابك' },
+                { name: 'NEOM', src: '/partners/neom.jpg', alt: 'نيوم' },
+                { name: 'Monsha\'at', src: '/partners/monshaat.jpg', alt: 'منشآت' },
+                { name: 'RDEA', src: '/partners/rdea.jpg', alt: 'الهيئة الملكية لمدينة الرياض' },
+              ].map((partner, i) => (
+                <div 
+                  key={`first-${i}`}
+                  className="flex-shrink-0 w-48 h-24 flex items-center justify-center p-4 rounded-xl bg-card/50 backdrop-blur-sm border border-border/30 hover:border-cyan-500/50 transition-all duration-300 hover:scale-105"
+                >
+                  <img 
+                    src={partner.src} 
+                    alt={partner.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </div>
+              ))}
+              
+              {/* Duplicate set for seamless loop */}
+              {[
+                { name: 'KAUST', src: '/partners/kaust.png', alt: 'جامعة الملك عبدالله للعلوم والتقنية' },
+                { name: 'أرامكو', src: '/partners/aramco.png', alt: 'أرامكو السعودية' },
+                { name: 'وزارة الاتصالات', src: '/partners/mcit.png', alt: 'وزارة الاتصالات وتقنية المعلومات' },
+                { name: 'STC', src: '/partners/stc.jpg', alt: 'الاتصالات السعودية' },
+                { name: 'SABIC', src: '/partners/sabic.png', alt: 'سابك' },
+                { name: 'NEOM', src: '/partners/neom.jpg', alt: 'نيوم' },
+                { name: 'Monsha\'at', src: '/partners/monshaat.jpg', alt: 'منشآت' },
+                { name: 'RDEA', src: '/partners/rdea.jpg', alt: 'الهيئة الملكية لمدينة الرياض' },
+              ].map((partner, i) => (
+                <div 
+                  key={`second-${i}`}
+                  className="flex-shrink-0 w-48 h-24 flex items-center justify-center p-4 rounded-xl bg-card/50 backdrop-blur-sm border border-border/30 hover:border-cyan-500/50 transition-all duration-300 hover:scale-105"
+                >
+                  <img 
+                    src={partner.src} 
+                    alt={partner.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
