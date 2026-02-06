@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 import SEOHead from "@/components/SEOHead";
 import ImprovedFooter from "@/components/ImprovedFooter";
 
@@ -37,6 +38,7 @@ function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; d
 
 export default function Home() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [activeEngine, setActiveEngine] = useState(0);
 
   useEffect(() => {
@@ -50,41 +52,41 @@ export default function Home() {
     {
       id: 'uplink1',
       name: 'UPLINK1',
-      title: 'توليد الملكية الفكرية',
-      description: 'تسجيل وحماية الملكية الفكرية عبر SAIP و WIPO مع توثيق البلوكتشين',
+      title: t.engines.uplink1.title,
+      description: t.engines.uplink1.description,
       icon: Shield,
       color: 'from-emerald-500 to-teal-600',
       bgColor: 'from-emerald-950/50',
       borderColor: 'border-emerald-500/30',
-      features: ['براءات الاختراع', 'العلامات التجارية', 'توثيق البلوكتشين'],
+      features: t.engines.uplink1.features,
       link: '/ip/register',
-      stats: { value: '145+', label: 'براءة مسجلة' }
+      stats: { value: '145+', label: t.home.stats.innovations }
     },
     {
       id: 'uplink2',
       name: 'UPLINK2',
-      title: 'التحديات والمطابقة',
-      description: 'تقييم AI متقدم ومطابقة ذكية مع المستثمرين والشركات المناسبة',
+      title: t.engines.uplink2.title,
+      description: t.engines.uplink2.description,
       icon: Brain,
       color: 'from-blue-500 to-indigo-600',
       bgColor: 'from-blue-950/50',
       borderColor: 'border-blue-500/30',
-      features: ['تقييم ذكاء اصطناعي', 'تحديات ومسابقات', 'مطابقة ذكية'],
+      features: t.engines.uplink2.features,
       link: '/challenges',
-      stats: { value: '50+', label: 'تحدي نشط' }
+      stats: { value: '50+', label: t.home.stats.partnerships }
     },
     {
       id: 'uplink3',
       name: 'UPLINK3',
-      title: 'السوق والتبادل',
-      description: 'سوق مفتوح للابتكارات مع عقود ذكية ونظام ضمان Escrow',
+      title: t.engines.uplink3.title,
+      description: t.engines.uplink3.description,
       icon: Globe,
       color: 'from-purple-500 to-pink-600',
       bgColor: 'from-purple-950/50',
       borderColor: 'border-purple-500/30',
-      features: ['عقود ذكية', 'نظام Escrow', 'سوق مفتوح'],
+      features: t.engines.uplink3.features,
       link: '/marketplace',
-      stats: { value: '60M+', label: 'ريال تمويل' }
+      stats: { value: '60M+', label: t.home.stats.funding }
     }
   ];
 
@@ -115,20 +117,20 @@ export default function Home() {
           </div>
           
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/why-uplink" className="text-muted-foreground hover:text-foreground transition-colors text-sm">لماذا UPLINK</Link>
-            <Link href="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors text-sm">دراسات الحالة</Link>
-            <Link href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors text-sm">التكاملات</Link>
-            <Link href="/testimonials" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الشهادات</Link>
-            <Link href="/roi-calculator" className="text-muted-foreground hover:text-foreground transition-colors text-sm">حاسبة ROI</Link>
+            <Link href="/why-uplink" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.whyUplink}</Link>
+            <Link href="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.caseStudies}</Link>
+            <Link href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.integrations}</Link>
+            <Link href="/testimonials" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.testimonials}</Link>
+            <Link href="/roi-calculator" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.roiCalculator}</Link>
             <Link href="/pipeline" className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1">
               <Layers className="w-4 h-4" />
-              Pipeline
+              {t.nav.pipeline}
             </Link>
             <Link href="/ai-insights" className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1">
               <Brain className="w-4 h-4" />
-              AI Insights
+              {t.nav.aiInsights}
             </Link>
-            <Link href="/help" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المساعدة</Link>
+            <Link href="/help" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.help}</Link>
           </div>
           
           <div className="flex items-center gap-3">
@@ -137,13 +139,13 @@ export default function Home() {
             {user ? (
               <Link href="/dashboard">
                 <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
-                  لوحة التحكم
+                  {t.common.dashboard}
                 </Button>
               </Link>
             ) : (
               <a href={getLoginUrl()}>
                 <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
-                  تسجيل الدخول
+                  {t.common.login}
                 </Button>
               </a>
             )}
@@ -161,20 +163,19 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
               </span>
-              <span className="text-sm text-muted-foreground">منظومة الابتكار العالمية - Global Innovation Ecosystem</span>
+              <span className="text-sm text-muted-foreground">{t.home.badge}</span>
             </div>
             
             {/* Heading */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">حوّل أفكارك إلى</span>
+              <span className="text-foreground">{t.home.title}</span>
               <br />
-              <span className="text-gradient-cyan">ابتكارات عالمية</span>
+              <span className="text-gradient-cyan">{t.home.titleHighlight}</span>
             </h1>
             
             {/* Description */}
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-              منصة UPLINK 5.0 تربط المبتكرين حول العالم بالمستثمرين والشركات والمؤسسات
-              من خلال ثلاثة محركات متكاملة: توليد الملكية الفكرية، التحديات والمطابقة، والسوق المفتوح
+              {t.home.description}
             </p>
             
             {/* CTA Buttons */}
@@ -183,20 +184,20 @@ export default function Home() {
                 <Link href="/projects/new">
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-8 h-14 glow">
                     <Lightbulb className="w-5 h-5 ml-2" />
-                    سجّل ابتكارك الآن
+                    {t.home.cta}
                   </Button>
                 </Link>
               ) : (
                 <a href={getLoginUrl()}>
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-8 h-14 glow">
                     <Lightbulb className="w-5 h-5 ml-2" />
-                    سجّل ابتكارك الآن
+                    {t.home.cta}
                   </Button>
                 </a>
               )}
               <a href="#engines">
                 <Button size="lg" variant="outline" className="text-lg px-8 h-14 border-border/50 bg-secondary/30">
-                  اكتشف المحركات
+                  {t.home.exploreEngines}
                   <ChevronRight className="w-5 h-5 mr-2" />
                 </Button>
               </a>
@@ -205,10 +206,10 @@ export default function Home() {
             {/* Quick Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: 500, suffix: '+', label: 'ابتكار مسجل', icon: Lightbulb },
-                { value: 150, suffix: '+', label: 'مستثمر نشط', icon: Building2 },
-                { value: 50, suffix: '+', label: 'شراكة استراتيجية', icon: Handshake },
-                { value: 60, suffix: 'M+', label: 'دولار استثمارات', icon: TrendingUp },
+                { value: 500, suffix: '+', label: t.home.stats.innovations, icon: Lightbulb },
+                { value: 150, suffix: '+', label: t.home.stats.investors, icon: Building2 },
+                { value: 50, suffix: '+', label: t.home.stats.partnerships, icon: Handshake },
+                { value: 60, suffix: 'M+', label: t.home.stats.funding, icon: TrendingUp },
               ].map((stat, i) => (
                 <div key={i} className="p-4 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30">
                   <stat.icon className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
@@ -455,14 +456,14 @@ export default function Home() {
               {user ? (
                 <Link href="/projects/new">
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-10 h-14">
-                    سجّل ابتكارك الآن
+                    {t.home.cta}
                     <ArrowUpRight className="w-5 h-5 mr-2" />
                   </Button>
                 </Link>
               ) : (
                 <a href={getLoginUrl()}>
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-10 h-14">
-                    سجّل ابتكارك الآن
+                    {t.home.cta}
                     <ArrowUpRight className="w-5 h-5 mr-2" />
                   </Button>
                 </a>

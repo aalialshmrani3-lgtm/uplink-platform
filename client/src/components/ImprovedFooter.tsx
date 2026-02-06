@@ -4,17 +4,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ImprovedFooter() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      toast.error("يرجى إدخال بريدك الإلكتروني");
+      toast.error(t.footer.newsletterError);
       return;
     }
-    toast.success("تم الاشتراك بنجاح! سنرسل لك آخر التحديثات");
+    toast.success(t.footer.newsletterSuccess);
     setEmail("");
   };
 
@@ -31,7 +33,7 @@ export default function ImprovedFooter() {
               <span className="text-xl font-bold text-gradient-cyan">UPLINK 5.0</span>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
-              منصة الابتكار العالمية - Global Innovation Platform
+              {t.footer.tagline}
             </p>
             
             {/* Social Media Links */}
@@ -72,11 +74,11 @@ export default function ImprovedFooter() {
             
             {/* Newsletter Signup */}
             <div>
-              <h4 className="font-semibold text-foreground mb-3 text-sm">اشترك في النشرة الإخبارية</h4>
+              <h4 className="font-semibold text-foreground mb-3 text-sm">{t.footer.newsletter}</h4>
               <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
                 <Input 
                   type="email" 
-                  placeholder="أدخل بريدك الإلكتروني"
+                  placeholder={t.footer.emailPlaceholder}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 bg-secondary/50 border-border/50"
@@ -90,43 +92,43 @@ export default function ImprovedFooter() {
           
           {/* Links Columns */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">المحركات</h4>
+            <h4 className="font-semibold text-foreground mb-4">{t.footer.engines}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/ip/register" className="hover:text-cyan-400 transition-colors">الملكية الفكرية</Link></li>
-              <li><Link href="/challenges" className="hover:text-cyan-400 transition-colors">التحديات</Link></li>
-              <li><Link href="/marketplace" className="hover:text-cyan-400 transition-colors">السوق</Link></li>
+              <li><Link href="/ip/register" className="hover:text-cyan-400 transition-colors">{t.footer.intellectualProperty}</Link></li>
+              <li><Link href="/challenges" className="hover:text-cyan-400 transition-colors">{t.footer.challenges}</Link></li>
+              <li><Link href="/marketplace" className="hover:text-cyan-400 transition-colors">{t.footer.marketplace}</Link></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold text-foreground mb-4">الموارد</h4>
+            <h4 className="font-semibold text-foreground mb-4">{t.footer.resources}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/academy" className="hover:text-cyan-400 transition-colors">الأكاديمية</Link></li>
-              <li><Link href="/developers" className="hover:text-cyan-400 transition-colors">المطورين</Link></li>
-              <li><Link href="/elite" className="hover:text-cyan-400 transition-colors">برنامج النخبة</Link></li>
-              <li><Link href="/blog" className="hover:text-cyan-400 transition-colors">المدونة</Link></li>
+              <li><Link href="/academy" className="hover:text-cyan-400 transition-colors">{t.footer.academy}</Link></li>
+              <li><Link href="/developers" className="hover:text-cyan-400 transition-colors">{t.footer.developers}</Link></li>
+              <li><Link href="/elite" className="hover:text-cyan-400 transition-colors">{t.footer.elite}</Link></li>
+              <li><Link href="/blog" className="hover:text-cyan-400 transition-colors">{t.footer.blog}</Link></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold text-foreground mb-4">الأدوات</h4>
+            <h4 className="font-semibold text-foreground mb-4">{t.footer.tools}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/analytics" className="hover:text-cyan-400 transition-colors">التحليلات</Link></li>
-              <li><Link href="/messages" className="hover:text-cyan-400 transition-colors">الرسائل</Link></li>
-              <li><Link href="/whiteboard" className="hover:text-cyan-400 transition-colors">لوحة الأفكار</Link></li>
-              <li><Link href="/help" className="hover:text-cyan-400 transition-colors">المساعدة</Link></li>
+              <li><Link href="/analytics" className="hover:text-cyan-400 transition-colors">{t.footer.analytics}</Link></li>
+              <li><Link href="/messages" className="hover:text-cyan-400 transition-colors">{t.footer.messages}</Link></li>
+              <li><Link href="/whiteboard" className="hover:text-cyan-400 transition-colors">{t.footer.whiteboard}</Link></li>
+              <li><Link href="/help" className="hover:text-cyan-400 transition-colors">{t.footer.help}</Link></li>
             </ul>
           </div>
         </div>
         
         <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2026 UPLINK 5.0 - جميع الحقوق محفوظة
+            {t.footer.copyright}
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <Link href="/privacy" className="hover:text-cyan-400 transition-colors">سياسة الخصوصية</Link>
-            <Link href="/terms" className="hover:text-cyan-400 transition-colors">الشروط والأحكام</Link>
-            <Link href="/contact" className="hover:text-cyan-400 transition-colors">اتصل بنا</Link>
+            <Link href="/privacy" className="hover:text-cyan-400 transition-colors">{t.footer.privacy}</Link>
+            <Link href="/terms" className="hover:text-cyan-400 transition-colors">{t.footer.terms}</Link>
+            <Link href="/contact" className="hover:text-cyan-400 transition-colors">{t.footer.contact}</Link>
           </div>
         </div>
       </div>
