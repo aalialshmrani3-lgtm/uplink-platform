@@ -72,10 +72,18 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
+    // Maximum timeout of 5 seconds - force show home page after this
+    const maxTimeout = setTimeout(() => {
+      setProgress(100);
+      setTimeout(() => setFadeOut(true), 200);
+      setTimeout(() => onComplete(), 800);
+    }, 5000);
+
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
+          clearTimeout(maxTimeout);
           setTimeout(() => setFadeOut(true), 200);
           setTimeout(() => onComplete(), 800);
           return 100;
@@ -84,7 +92,10 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
       });
     }, 30);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(maxTimeout);
+    };
   }, [onComplete]);
 
   return (
@@ -294,7 +305,17 @@ function App() {
     if (seen) {
       setShowSplash(false);
       setHasSeenSplash(true);
+      return;
     }
+
+    // HARD TIMEOUT: Force hide splash after 3 seconds no matter what
+    const forceHideTimeout = setTimeout(() => {
+      setShowSplash(false);
+      setHasSeenSplash(true);
+      sessionStorage.setItem('splash_seen', 'true');
+    }, 3000);
+
+    return () => clearTimeout(forceHideTimeout);
   }, []);
 
   const handleSplashComplete = () => {

@@ -55,7 +55,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 5000, // Increase limit for single bundle
   },
   server: {
-    host: true,
+    host: '0.0.0.0',
     allowedHosts: [
       ".manuspre.computer",
       ".manus.computer",
