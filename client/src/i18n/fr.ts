@@ -26,6 +26,7 @@ export const fr = {
     pending: 'En attente',
     approved: 'Approuvé',
     rejected: 'Rejeté',
+    comingSoon: 'Bientôt disponible',
   },
 
   // Navigation
@@ -45,6 +46,14 @@ export const fr = {
     whiteboard: 'Tableau blanc',
     contracts: 'Contrats',
     admin: 'Administration',
+    pipeline: 'Pipeline d\'innovation',
+    aiInsights: 'Insights IA',
+    whyUplink: 'Pourquoi UPLINK',
+    testimonials: 'Témoignages',
+    integrations: 'Intégrations',
+    roiCalculator: 'Calculateur ROI',
+    help: 'Aide',
+    caseStudies: 'Études de cas',
   },
 
   // Home Page
@@ -71,7 +80,7 @@ export const fr = {
     uplink1: {
       name: 'UPLINK1',
       title: 'Génération de PI',
-      description: 'Enregistrez et protégez la propriété intellectuelle via WIPO',
+      description: 'Enregistrez et protégez la propriété intellectuelle via SAIP & WIPO',
       features: ['Brevets', 'Marques', 'Documentation Blockchain'],
     },
     uplink2: {
@@ -122,7 +131,7 @@ export const fr = {
   // Partners
   partners: {
     title: 'Partenaires du succès',
-    subtitle: 'Fiers de nos partenariats avec les institutions mondiales',
+    subtitle: 'Fiers de nos partenariats avec les institutions saoudiennes',
   },
 
   // CTA
@@ -142,6 +151,19 @@ export const fr = {
     privacy: 'Politique de confidentialité',
     terms: 'Conditions générales',
     copyright: 'Tous droits réservés',
+    followUs: 'Suivez-nous',
+    newsletter: 'S\'abonner à la newsletter',
+    newsletterPlaceholder: 'Entrez votre email',
+    subscribe: 'S\'abonner',
+    company: 'Entreprise',
+    about: 'À propos',
+    careers: 'Carrières',
+    press: 'Presse',
+    blog: 'Blog',
+    support: 'Support',
+    documentation: 'Documentation',
+    community: 'Communauté',
+    contact: 'Contactez-nous',
   },
 
   // Dashboard
@@ -218,6 +240,148 @@ export const fr = {
       reject: 'Rejeter',
       review: 'Examiner',
     },
+  },
+
+  // Profile
+  profile: {
+    title: 'Profil',
+    personalInfo: 'Informations personnelles',
+    fullName: 'Nom complet',
+    email: 'Email',
+    phone: 'Numéro de téléphone',
+    bio: 'Biographie',
+    location: 'Localisation',
+    website: 'Site web',
+    socialMedia: 'Réseaux sociaux',
+    expertise: 'Expertise',
+    interests: 'Intérêts',
+    updateProfile: 'Mettre à jour le profil',
+    changePassword: 'Changer le mot de passe',
+    currentPassword: 'Mot de passe actuel',
+    newPassword: 'Nouveau mot de passe',
+    confirmPassword: 'Confirmer le mot de passe',
+  },
+
+  // Analytics
+  analytics: {
+    title: 'Analytique',
+    overview: 'Aperçu',
+    performance: 'Performance',
+    trends: 'Tendances',
+    insights: 'Insights',
+    metrics: 'Métriques',
+    reports: 'Rapports',
+    export: 'Exporter',
+    filter: 'Filtrer',
+    dateRange: 'Plage de dates',
+    customRange: 'Plage personnalisée',
+    last7Days: '7 derniers jours',
+    last30Days: '30 derniers jours',
+    last90Days: '90 derniers jours',
+    thisYear: 'Cette année',
+  },
+
+  // Messages
+  messages: {
+    title: 'Messages',
+    inbox: 'Boîte de réception',
+    sent: 'Envoyés',
+    drafts: 'Brouillons',
+    archived: 'Archivés',
+    compose: 'Composer un message',
+    to: 'À',
+    subject: 'Sujet',
+    message: 'Message',
+    send: 'Envoyer',
+    reply: 'Répondre',
+    forward: 'Transférer',
+    archive: 'Archiver',
+    markAsRead: 'Marquer comme lu',
+    markAsUnread: 'Marquer comme non lu',
+    noMessages: 'Aucun message',
+  },
+
+  // Calendar
+  calendar: {
+    title: 'Calendrier',
+    today: 'Aujourd\'hui',
+    month: 'Mois',
+    week: 'Semaine',
+    day: 'Jour',
+    agenda: 'Agenda',
+    addEvent: 'Ajouter un événement',
+    eventTitle: 'Titre de l\'événement',
+    startDate: 'Date de début',
+    endDate: 'Date de fin',
+    location: 'Localisation',
+    description: 'Description',
+    attendees: 'Participants',
+    reminder: 'Rappel',
+    noEvents: 'Aucun événement',
+  },
+
+  // Whiteboard
+  whiteboard: {
+    title: 'Tableau blanc',
+    newBoard: 'Nouveau tableau',
+    share: 'Partager',
+    export: 'Exporter',
+    tools: 'Outils',
+    pen: 'Stylo',
+    eraser: 'Gomme',
+    shapes: 'Formes',
+    text: 'Texte',
+    sticky: 'Note adhésive',
+    image: 'Image',
+    undo: 'Annuler',
+    redo: 'Refaire',
+    clear: 'Effacer',
+    collaborators: 'Collaborateurs',
+  },
+
+  // Academy
+  academy: {
+    title: 'Académie UPLINK',
+    courses: 'Cours',
+    workshops: 'Ateliers',
+    webinars: 'Webinaires',
+    resources: 'Ressources',
+    myCourses: 'Mes cours',
+    browse: 'Parcourir',
+    enroll: 'S\'inscrire',
+    continue: 'Continuer',
+    completed: 'Terminé',
+    inProgress: 'En cours',
+    notStarted: 'Non commencé',
+    certificate: 'Certificat',
+  },
+
+  // Pipeline
+  pipeline: {
+    title: 'Pipeline d\'innovation',
+    stages: 'Étapes',
+    ideation: 'Idéation',
+    validation: 'Validation',
+    development: 'Développement',
+    testing: 'Test',
+    launch: 'Lancement',
+    scale: 'Échelle',
+    moveToStage: 'Déplacer vers l\'étape',
+    addNote: 'Ajouter une note',
+    viewDetails: 'Voir les détails',
+  },
+
+  // AI Insights
+  aiInsights: {
+    title: 'Insights IA',
+    predictions: 'Prédictions',
+    recommendations: 'Recommandations',
+    trends: 'Tendances',
+    opportunities: 'Opportunités',
+    risks: 'Risques',
+    score: 'Score',
+    confidence: 'Confiance',
+    learnMore: 'En savoir plus',
   },
 
   // Language

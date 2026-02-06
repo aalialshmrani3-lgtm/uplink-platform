@@ -26,6 +26,7 @@ export const ar = {
     pending: 'قيد الانتظار',
     approved: 'موافق عليه',
     rejected: 'مرفوض',
+    comingSoon: 'قريباً',
   },
 
   // Navigation
@@ -45,6 +46,14 @@ export const ar = {
     whiteboard: 'لوحة الأفكار',
     contracts: 'العقود',
     admin: 'لوحة الإدارة',
+    pipeline: 'خط الابتكار',
+    aiInsights: 'رؤى AI',
+    whyUplink: 'لماذا UPLINK',
+    testimonials: 'الشهادات',
+    integrations: 'التكاملات',
+    roiCalculator: 'حاسبة ROI',
+    help: 'المساعدة',
+    caseStudies: 'دراسات الحالة',
   },
 
   // Home Page
@@ -71,7 +80,7 @@ export const ar = {
     uplink1: {
       name: 'UPLINK1',
       title: 'توليد الملكية الفكرية',
-      description: 'تسجيل وحماية الملكية الفكرية عبر WIPO مع توثيق البلوكتشين',
+      description: 'تسجيل وحماية الملكية الفكرية عبر SAIP و WIPO مع توثيق البلوكتشين',
       features: ['براءات الاختراع', 'العلامات التجارية', 'توثيق البلوكتشين'],
     },
     uplink2: {
@@ -122,7 +131,7 @@ export const ar = {
   // Partners
   partners: {
     title: 'شركاء النجاح',
-    subtitle: 'نفخر بشراكاتنا مع أبرز المؤسسات والشركات العالمية',
+    subtitle: 'نفخر بشراكاتنا مع أبرز المؤسسات والشركات السعودية',
   },
 
   // CTA
@@ -142,6 +151,19 @@ export const ar = {
     privacy: 'سياسة الخصوصية',
     terms: 'الشروط والأحكام',
     copyright: 'جميع الحقوق محفوظة',
+    followUs: 'تابعنا',
+    newsletter: 'اشترك في النشرة الإخبارية',
+    newsletterPlaceholder: 'أدخل بريدك الإلكتروني',
+    subscribe: 'اشترك',
+    company: 'الشركة',
+    about: 'من نحن',
+    careers: 'الوظائف',
+    press: 'الصحافة',
+    blog: 'المدونة',
+    support: 'الدعم',
+    documentation: 'التوثيق',
+    community: 'المجتمع',
+    contact: 'اتصل بنا',
   },
 
   // Dashboard
@@ -218,6 +240,148 @@ export const ar = {
       reject: 'رفض',
       review: 'مراجعة',
     },
+  },
+
+  // Profile
+  profile: {
+    title: 'الملف الشخصي',
+    personalInfo: 'المعلومات الشخصية',
+    fullName: 'الاسم الكامل',
+    email: 'البريد الإلكتروني',
+    phone: 'رقم الهاتف',
+    bio: 'نبذة عني',
+    location: 'الموقع',
+    website: 'الموقع الإلكتروني',
+    socialMedia: 'وسائل التواصل الاجتماعي',
+    expertise: 'المجالات',
+    interests: 'الاهتمامات',
+    updateProfile: 'تحديث الملف',
+    changePassword: 'تغيير كلمة المرور',
+    currentPassword: 'كلمة المرور الحالية',
+    newPassword: 'كلمة المرور الجديدة',
+    confirmPassword: 'تأكيد كلمة المرور',
+  },
+
+  // Analytics
+  analytics: {
+    title: 'التحليلات',
+    overview: 'نظرة عامة',
+    performance: 'الأداء',
+    trends: 'الاتجاهات',
+    insights: 'الرؤى',
+    metrics: 'المقاييس',
+    reports: 'التقارير',
+    export: 'تصدير',
+    filter: 'تصفية',
+    dateRange: 'نطاق التاريخ',
+    customRange: 'نطاق مخصص',
+    last7Days: 'آخر 7 أيام',
+    last30Days: 'آخر 30 يوم',
+    last90Days: 'آخر 90 يوم',
+    thisYear: 'هذا العام',
+  },
+
+  // Messages
+  messages: {
+    title: 'الرسائل',
+    inbox: 'الوارد',
+    sent: 'المرسل',
+    drafts: 'المسودات',
+    archived: 'الأرشيف',
+    compose: 'إنشاء رسالة',
+    to: 'إلى',
+    subject: 'الموضوع',
+    message: 'الرسالة',
+    send: 'إرسال',
+    reply: 'رد',
+    forward: 'إعادة توجيه',
+    archive: 'أرشفة',
+    markAsRead: 'تحديد كمقروء',
+    markAsUnread: 'تحديد كغير مقروء',
+    noMessages: 'لا توجد رسائل',
+  },
+
+  // Calendar
+  calendar: {
+    title: 'التقويم',
+    today: 'اليوم',
+    month: 'شهر',
+    week: 'أسبوع',
+    day: 'يوم',
+    agenda: 'جدول الأعمال',
+    addEvent: 'إضافة حدث',
+    eventTitle: 'عنوان الحدث',
+    startDate: 'تاريخ البدء',
+    endDate: 'تاريخ الانتهاء',
+    location: 'الموقع',
+    description: 'الوصف',
+    attendees: 'الحضور',
+    reminder: 'تذكير',
+    noEvents: 'لا توجد أحداث',
+  },
+
+  // Whiteboard
+  whiteboard: {
+    title: 'لوحة الأفكار',
+    newBoard: 'لوحة جديدة',
+    share: 'مشاركة',
+    export: 'تصدير',
+    tools: 'الأدوات',
+    pen: 'قلم',
+    eraser: 'ممحاة',
+    shapes: 'أشكال',
+    text: 'نص',
+    sticky: 'ملاحظة لاصقة',
+    image: 'صورة',
+    undo: 'تراجع',
+    redo: 'إعادة',
+    clear: 'مسح',
+    collaborators: 'المتعاونون',
+  },
+
+  // Academy
+  academy: {
+    title: 'أكاديمية UPLINK',
+    courses: 'الدورات',
+    workshops: 'ورش العمل',
+    webinars: 'الندوات',
+    resources: 'الموارد',
+    myCourses: 'دوراتي',
+    browse: 'تصفح',
+    enroll: 'تسجيل',
+    continue: 'متابعة',
+    completed: 'مكتمل',
+    inProgress: 'قيد التقدم',
+    notStarted: 'لم يبدأ',
+    certificate: 'الشهادة',
+  },
+
+  // Pipeline
+  pipeline: {
+    title: 'خط الابتكار',
+    stages: 'المراحل',
+    ideation: 'توليد الأفكار',
+    validation: 'التحقق',
+    development: 'التطوير',
+    testing: 'الاختبار',
+    launch: 'الإطلاق',
+    scale: 'التوسع',
+    moveToStage: 'نقل إلى مرحلة',
+    addNote: 'إضافة ملاحظة',
+    viewDetails: 'عرض التفاصيل',
+  },
+
+  // AI Insights
+  aiInsights: {
+    title: 'رؤى الذكاء الاصطناعي',
+    predictions: 'التوقعات',
+    recommendations: 'التوصيات',
+    trends: 'الاتجاهات',
+    opportunities: 'الفرص',
+    risks: 'المخاطر',
+    score: 'النقاط',
+    confidence: 'الثقة',
+    learnMore: 'معرفة المزيد',
   },
 
   // Language

@@ -26,6 +26,7 @@ export const es = {
     pending: 'Pendiente',
     approved: 'Aprobado',
     rejected: 'Rechazado',
+    comingSoon: 'Próximamente',
   },
 
   // Navigation
@@ -45,20 +46,28 @@ export const es = {
     whiteboard: 'Pizarra',
     contracts: 'Contratos',
     admin: 'Administración',
+    pipeline: 'Pipeline de innovación',
+    aiInsights: 'Insights IA',
+    whyUplink: 'Por qué UPLINK',
+    testimonials: 'Testimonios',
+    integrations: 'Integraciones',
+    roiCalculator: 'Calculadora ROI',
+    help: 'Ayuda',
+    caseStudies: 'Casos de estudio',
   },
 
   // Home Page
   home: {
-    badge: 'Ecosistema de Innovación Global',
+    badge: 'Ecosistema Global de Innovación',
     title: 'Transforma tus ideas en',
     titleHighlight: 'innovaciones globales',
-    description: 'UPLINK 5.0 conecta innovadores de todo el mundo con inversores, empresas e instituciones',
-    cta: 'Registra tu innovación',
+    description: 'UPLINK 5.0 conecta innovadores de todo el mundo con inversores, empresas e instituciones a través de tres motores integrados',
+    cta: 'Registra tu innovación ahora',
     exploreEngines: 'Explorar motores',
     stats: {
       innovations: 'Innovaciones registradas',
       investors: 'Inversores activos',
-      partnerships: 'Alianzas estratégicas',
+      partnerships: 'Asociaciones estratégicas',
       funding: 'USD Inversiones',
     },
   },
@@ -71,7 +80,7 @@ export const es = {
     uplink1: {
       name: 'UPLINK1',
       title: 'Generación de PI',
-      description: 'Registra y protege la propiedad intelectual vía WIPO',
+      description: 'Registra y protege la propiedad intelectual vía SAIP & WIPO',
       features: ['Patentes', 'Marcas', 'Documentación Blockchain'],
     },
     uplink2: {
@@ -111,10 +120,10 @@ export const es = {
     },
     secureMessaging: {
       title: 'Comunicación segura',
-      description: 'Sistema de mensajería cifrada',
+      description: 'Sistema de mensajería encriptada',
     },
     ideaBoard: {
-      title: 'Tablero de ideas interactivo',
+      title: 'Pizarra de ideas interactiva',
       description: 'Herramienta de colaboración visual',
     },
   },
@@ -122,19 +131,19 @@ export const es = {
   // Partners
   partners: {
     title: 'Socios del éxito',
-    subtitle: 'Orgullosos de nuestras alianzas con instituciones globales',
+    subtitle: 'Orgullosos de nuestras asociaciones con instituciones saudíes',
   },
 
   // CTA
   cta: {
     title: 'Comienza tu viaje de innovación',
     subtitle: 'Únete a la comunidad global de innovadores',
-    learnInAcademy: 'Aprende en la academia',
+    learnInAcademy: 'Aprender en la academia',
   },
 
   // Footer
   footer: {
-    description: 'Plataforma de Innovación Global',
+    description: 'Plataforma Global de Innovación',
     engines: 'Motores',
     resources: 'Recursos',
     tools: 'Herramientas',
@@ -142,6 +151,19 @@ export const es = {
     privacy: 'Política de privacidad',
     terms: 'Términos y condiciones',
     copyright: 'Todos los derechos reservados',
+    followUs: 'Síguenos',
+    newsletter: 'Suscribirse al boletín',
+    newsletterPlaceholder: 'Ingresa tu email',
+    subscribe: 'Suscribirse',
+    company: 'Empresa',
+    about: 'Acerca de',
+    careers: 'Carreras',
+    press: 'Prensa',
+    blog: 'Blog',
+    support: 'Soporte',
+    documentation: 'Documentación',
+    community: 'Comunidad',
+    contact: 'Contáctanos',
   },
 
   // Dashboard
@@ -193,7 +215,7 @@ export const es = {
     matchScore: 'Puntuación de coincidencia',
     viewProfile: 'Ver perfil',
     sendMessage: 'Enviar mensaje',
-    noRecommendations: 'Sin recomendaciones disponibles',
+    noRecommendations: 'No hay recomendaciones disponibles',
     basedOn: 'Basado en',
     sector: 'Sector',
     stage: 'Etapa',
@@ -218,6 +240,148 @@ export const es = {
       reject: 'Rechazar',
       review: 'Revisar',
     },
+  },
+
+  // Profile
+  profile: {
+    title: 'Perfil',
+    personalInfo: 'Información personal',
+    fullName: 'Nombre completo',
+    email: 'Email',
+    phone: 'Número de teléfono',
+    bio: 'Biografía',
+    location: 'Ubicación',
+    website: 'Sitio web',
+    socialMedia: 'Redes sociales',
+    expertise: 'Experiencia',
+    interests: 'Intereses',
+    updateProfile: 'Actualizar perfil',
+    changePassword: 'Cambiar contraseña',
+    currentPassword: 'Contraseña actual',
+    newPassword: 'Nueva contraseña',
+    confirmPassword: 'Confirmar contraseña',
+  },
+
+  // Analytics
+  analytics: {
+    title: 'Analítica',
+    overview: 'Resumen',
+    performance: 'Rendimiento',
+    trends: 'Tendencias',
+    insights: 'Insights',
+    metrics: 'Métricas',
+    reports: 'Informes',
+    export: 'Exportar',
+    filter: 'Filtrar',
+    dateRange: 'Rango de fechas',
+    customRange: 'Rango personalizado',
+    last7Days: 'Últimos 7 días',
+    last30Days: 'Últimos 30 días',
+    last90Days: 'Últimos 90 días',
+    thisYear: 'Este año',
+  },
+
+  // Messages
+  messages: {
+    title: 'Mensajes',
+    inbox: 'Bandeja de entrada',
+    sent: 'Enviados',
+    drafts: 'Borradores',
+    archived: 'Archivados',
+    compose: 'Redactar mensaje',
+    to: 'Para',
+    subject: 'Asunto',
+    message: 'Mensaje',
+    send: 'Enviar',
+    reply: 'Responder',
+    forward: 'Reenviar',
+    archive: 'Archivar',
+    markAsRead: 'Marcar como leído',
+    markAsUnread: 'Marcar como no leído',
+    noMessages: 'Sin mensajes',
+  },
+
+  // Calendar
+  calendar: {
+    title: 'Calendario',
+    today: 'Hoy',
+    month: 'Mes',
+    week: 'Semana',
+    day: 'Día',
+    agenda: 'Agenda',
+    addEvent: 'Agregar evento',
+    eventTitle: 'Título del evento',
+    startDate: 'Fecha de inicio',
+    endDate: 'Fecha de fin',
+    location: 'Ubicación',
+    description: 'Descripción',
+    attendees: 'Asistentes',
+    reminder: 'Recordatorio',
+    noEvents: 'Sin eventos',
+  },
+
+  // Whiteboard
+  whiteboard: {
+    title: 'Pizarra',
+    newBoard: 'Nueva pizarra',
+    share: 'Compartir',
+    export: 'Exportar',
+    tools: 'Herramientas',
+    pen: 'Lápiz',
+    eraser: 'Borrador',
+    shapes: 'Formas',
+    text: 'Texto',
+    sticky: 'Nota adhesiva',
+    image: 'Imagen',
+    undo: 'Deshacer',
+    redo: 'Rehacer',
+    clear: 'Limpiar',
+    collaborators: 'Colaboradores',
+  },
+
+  // Academy
+  academy: {
+    title: 'Academia UPLINK',
+    courses: 'Cursos',
+    workshops: 'Talleres',
+    webinars: 'Webinars',
+    resources: 'Recursos',
+    myCourses: 'Mis cursos',
+    browse: 'Explorar',
+    enroll: 'Inscribirse',
+    continue: 'Continuar',
+    completed: 'Completado',
+    inProgress: 'En progreso',
+    notStarted: 'No iniciado',
+    certificate: 'Certificado',
+  },
+
+  // Pipeline
+  pipeline: {
+    title: 'Pipeline de innovación',
+    stages: 'Etapas',
+    ideation: 'Ideación',
+    validation: 'Validación',
+    development: 'Desarrollo',
+    testing: 'Prueba',
+    launch: 'Lanzamiento',
+    scale: 'Escala',
+    moveToStage: 'Mover a etapa',
+    addNote: 'Agregar nota',
+    viewDetails: 'Ver detalles',
+  },
+
+  // AI Insights
+  aiInsights: {
+    title: 'Insights IA',
+    predictions: 'Predicciones',
+    recommendations: 'Recomendaciones',
+    trends: 'Tendencias',
+    opportunities: 'Oportunidades',
+    risks: 'Riesgos',
+    score: 'Puntuación',
+    confidence: 'Confianza',
+    learnMore: 'Aprender más',
   },
 
   // Language

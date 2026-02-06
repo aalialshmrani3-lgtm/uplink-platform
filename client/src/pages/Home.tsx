@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import SEOHead from "@/components/SEOHead";
+import ImprovedFooter from "@/components/ImprovedFooter";
 
 // Animated Counter Component
 function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
@@ -88,6 +90,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
+      <SEOHead />
       {/* Animated Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px] animate-pulse" />
@@ -488,60 +491,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border/50 bg-card/30">
-        <div className="container">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
-                  <Rocket className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-gradient-cyan">UPLINK 5.0</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                منصة الابتكار العالمية - Global Innovation Platform
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">المحركات</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/ip/register" className="hover:text-foreground transition-colors">الملكية الفكرية</Link></li>
-                <li><Link href="/challenges" className="hover:text-foreground transition-colors">التحديات</Link></li>
-                <li><Link href="/marketplace" className="hover:text-foreground transition-colors">السوق</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">الموارد</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/academy" className="hover:text-foreground transition-colors">الأكاديمية</Link></li>
-                <li><Link href="/developers" className="hover:text-foreground transition-colors">المطورين</Link></li>
-                <li><Link href="/elite" className="hover:text-foreground transition-colors">برنامج النخبة</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">الأدوات</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/analytics" className="hover:text-foreground transition-colors">التحليلات</Link></li>
-                <li><Link href="/messages" className="hover:text-foreground transition-colors">الرسائل</Link></li>
-                <li><Link href="/whiteboard" className="hover:text-foreground transition-colors">لوحة الأفكار</Link></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
-              © 2026 UPLINK 5.0 - جميع الحقوق محفوظة
-            </p>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">سياسة الخصوصية</a>
-              <a href="#" className="hover:text-foreground transition-colors">الشروط والأحكام</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <ImprovedFooter />
     </div>
   );
 }
