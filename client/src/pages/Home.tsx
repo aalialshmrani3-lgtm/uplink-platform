@@ -59,7 +59,7 @@ export default function Home() {
       bgColor: 'from-emerald-950/50',
       borderColor: 'border-emerald-500/30',
       features: t.engines.uplink1.features,
-      link: '/ip/register',
+      link: '/uplink1',
       stats: { value: '145+', label: t.home.stats.innovations }
     },
     {
@@ -72,7 +72,7 @@ export default function Home() {
       bgColor: 'from-blue-950/50',
       borderColor: 'border-blue-500/30',
       features: t.engines.uplink2.features,
-      link: '/challenges',
+      link: '/uplink2',
       stats: { value: '50+', label: t.home.stats.partnerships }
     },
     {
@@ -85,7 +85,7 @@ export default function Home() {
       bgColor: 'from-purple-950/50',
       borderColor: 'border-purple-500/30',
       features: t.engines.uplink3.features,
-      link: '/marketplace',
+      link: '/uplink3',
       stats: { value: '60M+', label: t.home.stats.funding }
     }
   ];
