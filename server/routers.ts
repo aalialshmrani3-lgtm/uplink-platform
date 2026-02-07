@@ -299,14 +299,32 @@ export const appRouter = router({
           // Create classification history record
           await db.createClassificationHistory({
             ideaId: input.ideaId,
+            analysisId,
             classification: analysisResult.classification,
-            score: analysisResult.overallScore.toString(),
+            overallScore: analysisResult.overallScore.toString(),
             reason: "تحليل أولي بواسطة الذكاء الاصطناعي",
           });
+
+          // Auto-transfer to UPLINK2 if innovation or commercial
+          let transferredToUplink2 = false;
+          let uplink2Message = "";
+          
+          if (analysisResult.classification === "innovation" || analysisResult.classification === "commercial") {
+            // TODO: Implement actual transfer to UPLINK2 when UPLINK2 is ready
+            // For now, just mark the idea as eligible for UPLINK2
+            transferredToUplink2 = true;
+            uplink2Message = analysisResult.classification === "innovation" 
+              ? "🎉 مبروك! فكرتك ابتكار حقيقي! سيتم نقلها تلقائياً إلى UPLINK2 للمطابقة مع المستثمرين والتحديات."
+              : "🚀 رائع! فكرتك حل تجاري واعد! سيتم نقلها تلقائياً إلى UPLINK2 للمطابقة مع الفرص التجارية.";
+          } else {
+            uplink2Message = "💪 لا تستسلم! طور فكرتك حسب الاقتراحات وأعد التقديم مرة أخرى.";
+          }
 
           return {
             analysisId,
             ...analysisResult,
+            transferredToUplink2,
+            uplink2Message,
             message: "تم تحليل الفكرة بنجاح!"
           };
         } catch (error) {

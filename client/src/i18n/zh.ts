@@ -79,9 +79,9 @@ export const zh = {
     description: '从想法到全球市场，我们提供您所需的一切',
     uplink1: {
       name: 'UPLINK1',
-      title: 'AI驱动的创意分析',
+      title: '提交您的创意 - AI分析',
       description: '通过SAIP和WIPO注册和保护知识产权',
-      features: ['AI分析', '多级分类', '综合评估'],
+      features: ['6标准AI分析', '3级分类', '自动转至UPLINK2'],
     },
     uplink2: {
       name: 'UPLINK2',

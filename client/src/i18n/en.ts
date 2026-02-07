@@ -79,7 +79,7 @@ export const en = {
     description: 'From idea to global market, we provide everything you need to turn your innovation into success',
     uplink1: {
       name: 'UPLINK1',
-      title: 'AI-Powered Idea Analysis',
+      title: 'Submit Your Idea - AI Analysis',
       description: 'Analyze ideas using AI and classify them into: true innovation, commercial project, or idea needing development',
       features: ['AI Analysis', 'Multi-Level Classification', 'Comprehensive Evaluation'],
     },
