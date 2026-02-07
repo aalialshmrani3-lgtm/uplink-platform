@@ -257,8 +257,8 @@ export const appRouter = router({
           const analysisResult = await analyzeIdea({
             title: idea.title,
             description: idea.description,
-            problem: idea.problem as string,
-            solution: idea.solution as string,
+            problem: idea.problem,
+            solution: idea.solution,
             targetMarket: idea.targetMarket || undefined,
             uniqueValue: idea.uniqueValue || undefined,
             category: idea.category || undefined,
@@ -301,7 +301,7 @@ export const appRouter = router({
             ideaId: input.ideaId,
             classification: analysisResult.classification,
             score: analysisResult.overallScore.toString(),
-            reason: "تحليل أولي بواسطة الذكاء الاصطناعي",
+            reason: `تحليل أولي بواسطة الذكاء الاصطناعي",
           });
 
           return {
@@ -328,15 +328,15 @@ export const appRouter = router({
         // Parse JSON fields
         return {
           ...analysis,
-          strengths: JSON.parse((analysis.strengths as string) || "[]"),
-          weaknesses: JSON.parse((analysis.weaknesses as string) || "[]"),
-          opportunities: JSON.parse((analysis.opportunities as string) || "[]"),
-          threats: JSON.parse((analysis.threats as string) || "[]"),
-          recommendations: JSON.parse((analysis.recommendations as string) || "[]"),
-          nextSteps: JSON.parse((analysis.nextSteps as string) || "[]"),
-          similarInnovations: JSON.parse((analysis.similarInnovations as string) || "[]"),
-          extractedKeywords: JSON.parse((analysis.extractedKeywords as string) || "[]"),
-          marketTrends: analysis.marketTrends ? JSON.parse(analysis.marketTrends as string) : []
+          strengths: JSON.parse(analysis.strengths || "[]"),
+          weaknesses: JSON.parse(analysis.weaknesses || "[]"),
+          opportunities: JSON.parse(analysis.opportunities || "[]"),
+          threats: JSON.parse(analysis.threats || "[]"),
+          recommendations: JSON.parse(analysis.recommendations || "[]"),
+          nextSteps: JSON.parse(analysis.nextSteps || "[]"),
+          similarInnovations: JSON.parse(analysis.similarInnovations || "[]"),
+          extractedKeywords: JSON.parse(analysis.extractedKeywords || "[]"),
+          marketTrends: analysis.marketTrends ? JSON.parse(analysis.marketTrends) : [],
         };
       }),
 

@@ -30,7 +30,8 @@ import {
   strategicAnalyses, InsertStrategicAnalysis, StrategicAnalysis,
   userFeedback, InsertUserFeedback, UserFeedback,
   whatIfScenarios, InsertWhatIfScenario, WhatIfScenario,
-  predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy
+  predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy,
+  ideas, ideaAnalysis, classificationHistory
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -866,4 +867,89 @@ export async function getAnalysisStats() {
     avgIrl,
     avgSuccessProbability
   };
+}
+
+// ============================================
+// UPLINK1: IDEAS OPERATIONS
+// ============================================
+export async function createIdea(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(ideas).values(data);
+  return result[0].insertId;
+}
+
+export async function getIdeaById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(ideas).where(eq(ideas.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getIdeasByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(ideas).where(eq(ideas.userId, userId)).orderBy(desc(ideas.submittedAt));
+}
+
+export async function updateIdea(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(ideas).set({ ...data, updatedAt: new Date() }).where(eq(ideas.id, id));
+}
+
+// ============================================
+// UPLINK1: IDEA ANALYSIS OPERATIONS
+// ============================================
+export async function createIdeaAnalysis(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(ideaAnalysis).values(data);
+  return result[0].insertId;
+}
+
+export async function getIdeaAnalysisByIdeaId(ideaId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(ideaAnalysis).where(eq(ideaAnalysis.ideaId, ideaId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getIdeaAnalysisById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(ideaAnalysis).where(eq(ideaAnalysis.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// ============================================
+// UPLINK1: CLASSIFICATION HISTORY OPERATIONS
+// ============================================
+export async function createClassificationHistory(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(classificationHistory).values(data);
+  return result[0].insertId;
+}
+
+export async function getClassificationHistoryByIdeaId(ideaId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(classificationHistory).where(eq(classificationHistory.ideaId, ideaId)).orderBy(desc(classificationHistory.createdAt));
+}
+
+// ============================================
+// UPLINK1: STATISTICS OPERATIONS
+// ============================================
+export async function getClassificationStats() {
+  const db = await getDb();
+  if (!db) return { total: 0, innovation: 0, commercial: 0, weak: 0 };
+  
+  const allAnalyses = await db.select().from(ideaAnalysis);
+  const total = allAnalyses.length;
+  const innovation = allAnalyses.filter(a => a.classification === "innovation").length;
+  const commercial = allAnalyses.filter(a => a.classification === "commercial").length;
+  const weak = allAnalyses.filter(a => a.classification === "weak").length;
+  
+  return { total, innovation, commercial, weak };
 }

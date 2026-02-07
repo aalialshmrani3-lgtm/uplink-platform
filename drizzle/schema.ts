@@ -1127,3 +1127,169 @@ export const predictionAccuracy = mysqlTable("prediction_accuracy", {
 
 export type PredictionAccuracy = typeof predictionAccuracy.$inferSelect;
 export type InsertPredictionAccuracy = typeof predictionAccuracy.$inferInsert;
+
+// ============================================
+// UPLINK1: AI-POWERED IDEA ANALYSIS ENGINE
+// ============================================
+
+// Ideas submitted for AI analysis
+export const ideas = mysqlTable("ideas", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  
+  // Idea Details
+  title: varchar("title", { length: 500 }).notNull(),
+  titleEn: varchar("titleEn", { length: 500 }),
+  description: text("description").notNull(),
+  descriptionEn: text("descriptionEn"),
+  problem: text("problem"), // What problem does it solve?
+  solution: text("solution"), // How does it solve it?
+  targetMarket: text("targetMarket"),
+  uniqueValue: text("uniqueValue"), // What makes it unique?
+  
+  // Metadata
+  category: varchar("category", { length: 100 }),
+  subCategory: varchar("subCategory", { length: 100 }),
+  keywords: json("keywords"),
+  documents: json("documents"),
+  images: json("images"),
+  
+  // Status
+  status: mysqlEnum("status", [
+    "draft",           // User is still editing
+    "submitted",       // Submitted for AI analysis
+    "analyzing",       // AI is analyzing
+    "analyzed",        // Analysis complete
+    "revision_needed", // Needs revision (weak idea)
+    "approved",        // Approved as innovation
+    "commercial"       // Classified as commercial project
+  ]).default("draft"),
+  
+  // Analysis Reference
+  analysisId: int("analysisId"),
+  
+  // Timestamps
+  submittedAt: timestamp("submittedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Idea = typeof ideas.$inferSelect;
+export type InsertIdea = typeof ideas.$inferInsert;
+
+// AI Analysis Results
+export const ideaAnalysis = mysqlTable("idea_analysis", {
+  id: int("id").autoincrement().primaryKey(),
+  ideaId: int("ideaId").notNull().unique(),
+  
+  // Overall Results
+  overallScore: decimal("overallScore", { precision: 5, scale: 2 }).notNull(), // 0-100
+  classification: mysqlEnum("classification", [
+    "innovation",  // True Innovation (80-100)
+    "commercial",  // Commercial Project (50-79)
+    "weak"         // Weak Idea (0-49)
+  ]).notNull(),
+  
+  // 6 Evaluation Criteria Scores (0-100 each)
+  noveltyScore: decimal("noveltyScore", { precision: 5, scale: 2 }).notNull(),           // Weight: 25%
+  impactScore: decimal("impactScore", { precision: 5, scale: 2 }).notNull(),             // Weight: 20%
+  feasibilityScore: decimal("feasibilityScore", { precision: 5, scale: 2 }).notNull(),   // Weight: 20%
+  commercialScore: decimal("commercialScore", { precision: 5, scale: 2 }).notNull(),     // Weight: 15%
+  scalabilityScore: decimal("scalabilityScore", { precision: 5, scale: 2 }).notNull(),   // Weight: 10%
+  sustainabilityScore: decimal("sustainabilityScore", { precision: 5, scale: 2 }).notNull(), // Weight: 10%
+  
+  // Detailed Analysis
+  aiAnalysis: text("aiAnalysis"), // Full AI analysis text
+  strengths: json("strengths"),   // Array of strengths
+  weaknesses: json("weaknesses"), // Array of weaknesses
+  opportunities: json("opportunities"), // Array of opportunities
+  threats: json("threats"),       // Array of threats
+  
+  // Recommendations
+  recommendations: json("recommendations"), // Array of recommendations
+  nextSteps: json("nextSteps"),             // Array of next steps
+  similarInnovations: json("similarInnovations"), // Array of similar innovations found
+  
+  // NLP Analysis
+  extractedKeywords: json("extractedKeywords"),
+  sentimentScore: decimal("sentimentScore", { precision: 5, scale: 2 }), // -1 to 1
+  complexityLevel: mysqlEnum("complexityLevel", ["low", "medium", "high", "very_high"]),
+  
+  // Market Analysis
+  marketSize: varchar("marketSize", { length: 100 }),
+  competitionLevel: mysqlEnum("competitionLevel", ["low", "medium", "high", "very_high"]),
+  marketTrends: json("marketTrends"),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "completed", "failed"]).default("pending"),
+  processingTime: int("processingTime"), // in seconds
+  
+  // Timestamps
+  analyzedAt: timestamp("analyzedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type IdeaAnalysis = typeof ideaAnalysis.$inferSelect;
+export type InsertIdeaAnalysis = typeof ideaAnalysis.$inferInsert;
+
+// Evaluation Criteria with Weights
+export const evaluationCriteria = mysqlTable("evaluation_criteria", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Criterion Details
+  name: varchar("name", { length: 100 }).notNull().unique(),
+  nameEn: varchar("nameEn", { length: 100 }),
+  description: text("description"),
+  descriptionEn: text("descriptionEn"),
+  
+  // Weight (0-100, total should be 100)
+  weight: decimal("weight", { precision: 5, scale: 2 }).notNull(),
+  
+  // Evaluation Guidelines
+  guidelines: json("guidelines"), // Array of evaluation guidelines
+  examples: json("examples"),     // Array of examples
+  
+  // Status
+  isActive: boolean("isActive").default(true),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type EvaluationCriterion = typeof evaluationCriteria.$inferSelect;
+export type InsertEvaluationCriterion = typeof evaluationCriteria.$inferInsert;
+
+// Classification History & Feedback
+export const classificationHistory = mysqlTable("classification_history", {
+  id: int("id").autoincrement().primaryKey(),
+  ideaId: int("ideaId").notNull(),
+  analysisId: int("analysisId").notNull(),
+  
+  // Classification
+  classification: mysqlEnum("classification", ["innovation", "commercial", "weak"]).notNull(),
+  overallScore: decimal("overallScore", { precision: 5, scale: 2 }).notNull(),
+  
+  // User Feedback
+  userFeedback: mysqlEnum("userFeedback", ["accepted", "appealed", "revised", "abandoned"]),
+  feedbackNotes: text("feedbackNotes"),
+  appealReason: text("appealReason"),
+  
+  // Appeal Status
+  appealStatus: mysqlEnum("appealStatus", ["none", "pending", "approved", "rejected"]).default("none"),
+  appealReviewedBy: int("appealReviewedBy"),
+  appealReviewedAt: timestamp("appealReviewedAt"),
+  appealNotes: text("appealNotes"),
+  
+  // Revision Tracking
+  revisionNumber: int("revisionNumber").default(1),
+  previousClassification: mysqlEnum("previousClassification", ["innovation", "commercial", "weak"]),
+  
+  // Timestamps
+  classifiedAt: timestamp("classifiedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ClassificationHistory = typeof classificationHistory.$inferSelect;
+export type InsertClassificationHistory = typeof classificationHistory.$inferInsert;
