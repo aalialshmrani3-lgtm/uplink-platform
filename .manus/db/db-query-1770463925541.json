@@ -1,9 +1,0 @@
-{
-  "query": "-- Read from file\nSOURCE /home/ubuntu/uplink-platform/create_new_tables.sql;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute -- Read from file\nSOURCE /home/ubuntu/uplink-platform/create_new_tables.sql;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 5827
-}

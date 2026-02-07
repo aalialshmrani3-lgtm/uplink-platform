@@ -1,9 +1,0 @@
-{
-  "query": "CREATE TABLE IF NOT EXISTS sponsor_requests (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  event_id INT NOT NULL,\n  sponsor_id INT NOT NULL,\n  package_type VARCHAR(100),\n  package_value DECIMAL(12, 2),\n  benefits JSON,\n  proposal_document TEXT,\n  status ENUM('pending', 'under_review', 'accepted', 'rejected', 'contract_signed') DEFAULT 'pending',\n  reviewed_by INT,\n  review_date TIMESTAMP,\n  review_notes TEXT,\n  contract_id INT,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,\n  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,\n  FOREIGN KEY (sponsor_id) REFERENCES users(id) ON DELETE CASCADE\n);",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute CREATE TABLE IF NOT EXISTS sponsor_requests (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  event_id INT NOT NULL,\n  sponsor_id INT NOT NULL,\n  package_type VARCHAR(100),\n  package_value DECIMAL(12, 2),\n  benefits JSON,\n  proposal_document TEXT,\n  status ENUM('pending', 'under_review', 'accepted', 'rejected', 'contract_signed') DEFAULT 'pending',\n  reviewed_by INT,\n  review_date TIMESTAMP,\n  review_notes TEXT,\n  contract_id INT,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,\n  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,\n  FOREIGN KEY (sponsor_id) REFERENCES users(id) ON DELETE CASCADE\n);",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 1734
-}
