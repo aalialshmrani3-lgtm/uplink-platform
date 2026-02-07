@@ -5,6 +5,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEOHead from "@/components/SEOHead";
+import { mockHackathons, mockChallenges, mockEventStats } from "@/data/mockUPLINK2";
 
 export default function Uplink2() {
   const { user } = useAuth();

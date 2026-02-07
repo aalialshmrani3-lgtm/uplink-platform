@@ -21,6 +21,7 @@ import {
 import { getLoginUrl } from '@/const';
 import { useAuth } from '@/_core/hooks/useAuth';
 import SEOHead from '@/components/SEOHead';
+import { mockContracts, mockMarketplace, mockMarketStats } from '@/data/mockUPLINK3';
 
 export default function Uplink3() {
   const { user } = useAuth();

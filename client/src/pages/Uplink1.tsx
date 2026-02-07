@@ -18,6 +18,7 @@ import {
 import { getLoginUrl } from '@/const';
 import { useAuth } from '@/_core/hooks/useAuth';
 import SEOHead from '@/components/SEOHead';
+import { mockIdeas, mockClassificationStats } from '@/data/mockUPLINK1';
 
 export default function Uplink1() {
   const { user } = useAuth();
@@ -55,7 +56,7 @@ export default function Uplink1() {
     {
       icon: CheckCircle2,
       level: 'ابتكار حقيقي',
-      score: '80-100',
+      score: '≥70%',
       color: 'from-green-500 to-emerald-600',
       description: 'فكرة تحقق معايير الابتكار الصارمة',
       criteria: [
@@ -69,7 +70,7 @@ export default function Uplink1() {
     {
       icon: AlertCircle,
       level: 'مشروع تجاري / حل جزئي',
-      score: '50-79',
+      score: '50-70%',
       color: 'from-yellow-500 to-orange-600',
       description: 'فكرة لها قيمة تجارية لكن لا تصنف كابتكار',
       criteria: [
@@ -82,8 +83,8 @@ export default function Uplink1() {
     },
     {
       icon: XCircle,
-      level: 'فكرة ضعيفة',
-      score: '0-49',
+      level: 'تحتاج تطوير',
+      score: '<50%',
       color: 'from-red-500 to-rose-600',
       description: 'فكرة لا تحقق المعايير المطلوبة',
       criteria: [
@@ -99,33 +100,53 @@ export default function Uplink1() {
   const evaluationCriteria = [
     {
       name: 'الجدة التقنية',
-      weight: '25%',
+      weight: '15%',
       description: 'مدى أصالة الفكرة وتميزها عن الحلول الموجودة'
     },
     {
-      name: 'الأثر المتوقع',
-      weight: '25%',
-      description: 'التأثير الاقتصادي والاجتماعي والبيئي المحتمل'
+      name: 'الأثر المجتمعي',
+      weight: '15%',
+      description: 'التأثير الاجتماعي والبيئي والاقتصادي المحتمل'
     },
     {
       name: 'الجدوى التقنية',
-      weight: '20%',
+      weight: '12%',
       description: 'إمكانية التنفيذ باستخدام التقنيات المتاحة'
     },
     {
-      name: 'الجدوى التجارية',
-      weight: '15%',
+      name: 'القيمة التجارية',
+      weight: '12%',
       description: 'حجم السوق والطلب المتوقع والعائد على الاستثمار'
     },
     {
-      name: 'قابلية التطوير',
+      name: 'قابلية التوسع',
       weight: '10%',
       description: 'إمكانية توسيع الحل ليشمل أسواق وقطاعات أكبر'
     },
     {
-      name: 'الإطار الزمني',
+      name: 'الاستدامة',
+      weight: '10%',
+      description: 'قدرة الحل على الاستمرار والتطور على المدى البعيد'
+    },
+    {
+      name: 'المخاطر التقنية',
+      weight: '8%',
+      description: 'تقييم المخاطر والتحديات التقنية المحتملة'
+    },
+    {
+      name: 'سرعة التنفيذ',
+      weight: '8%',
+      description: 'الوقت المتوقع للوصول إلى السوق (Time to Market)'
+    },
+    {
+      name: 'الميزة التنافسية',
       weight: '5%',
-      description: 'الوقت المتوقع للوصول إلى السوق'
+      description: 'ما يميز الحل عن المنافسين في السوق'
+    },
+    {
+      name: 'الاستعداد التنظيمي',
+      weight: '5%',
+      description: 'جاهزية الفريق والمؤسسة لتنفيذ الفكرة'
     }
   ];
 
@@ -284,7 +305,7 @@ export default function Uplink1() {
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">معايير التقييم</h2>
-            <p className="text-xl text-gray-400">نقيّم الأفكار بناءً على 6 معايير رئيسية بأوزان مختلفة</p>
+            <p className="text-xl text-gray-400">نقيّم الأفكار بناءً على 10 معايير رئيسية محدثة بأوزان مختلفة</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">
