@@ -422,7 +422,9 @@
 - [ ] إضافة دوال قاعدة البيانات
 - [ ] كتابة unit tests
 
-### Phase 6: تحديث Frontend Pages
+### Phase 6: تحديث Frontend Pages (جارية)
+- [x] إضافة tRPC Endpoints لـ UPLINK2 & UPLINK3 (30+ endpoint)
+- [x] إضافة Database Helpers في db.ts (50+ دالة)
 - [ ] تحديث /uplink1 (عرض 6 معايير بوضوح)
 - [ ] إنشاء /uplink1/submit (نموذج إرسال الأفكار)
 - [ ] إنشاء /uplink1/analysis/:id (صفحة نتائج التحليل)

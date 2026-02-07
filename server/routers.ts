@@ -8,6 +8,12 @@ import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink1-ai-analyzer";
+import * as uplink2Challenges from "./uplink2-challenges";
+import * as uplink2Hackathons from "./uplink2-hackathons";
+import * as uplink2Matching from "./uplink2-matching";
+import * as uplink2Networking from "./uplink2-networking";
+import * as uplink3Marketplace from "./uplink3-marketplace";
+import * as uplink3Contracts from "./uplink3-contracts";
 import crypto from "crypto";
 
 export const appRouter = router({
@@ -2451,6 +2457,325 @@ Provide response in JSON format:
           console.error('Excel export error:', error);
           throw new Error('Failed to export Excel');
         }
+      }),
+  }),
+
+  // ============================================
+  // UPLINK2: CHALLENGES & MATCHING PLATFORM
+  // ============================================
+  uplink2: router({
+    // Challenges Module
+    createChallenge: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        description: z.string(),
+        category: z.string(),
+        difficulty: z.enum(["beginner", "intermediate", "advanced", "expert"]),
+        prize: z.number(),
+        deadline: z.date(),
+        requirements: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Challenges.createChallenge({
+          ...input,
+          organizationId: ctx.user.id,
+        });
+      }),
+
+    getChallenges: publicProcedure
+      .input(z.object({
+        status: z.enum(["draft", "active", "closed", "completed"]).optional(),
+        category: z.string().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return uplink2Challenges.getChallenges(input || {});
+      }),
+
+    getChallengeDetails: publicProcedure
+      .input(z.object({ challengeId: z.number() }))
+      .query(async ({ input }) => {
+        return uplink2Challenges.getChallengeDetails(input.challengeId);
+      }),
+
+    submitToChallenge: protectedProcedure
+      .input(z.object({
+        challengeId: z.number(),
+        title: z.string(),
+        description: z.string(),
+        solutionUrl: z.string().optional(),
+        documents: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Challenges.submitToChallenge({
+          ...input,
+          participantId: ctx.user.id,
+        });
+      }),
+
+    // Hackathons Module
+    createHackathon: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        description: z.string(),
+        startDate: z.date(),
+        endDate: z.date(),
+        location: z.string().optional(),
+        isOnline: z.boolean(),
+        maxParticipants: z.number().optional(),
+        prizes: z.array(z.object({
+          position: z.number(),
+          amount: z.number(),
+          description: z.string(),
+        })),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Hackathons.createHackathon({
+          ...input,
+          organizerId: ctx.user.id,
+        });
+      }),
+
+    getHackathons: publicProcedure
+      .input(z.object({
+        status: z.enum(["upcoming", "ongoing", "completed", "cancelled"]).optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return uplink2Hackathons.getHackathons(input || {});
+      }),
+
+    registerForHackathon: protectedProcedure
+      .input(z.object({
+        hackathonId: z.number(),
+        teamName: z.string().optional(),
+        teamMembers: z.array(z.object({
+          name: z.string(),
+          email: z.string(),
+          role: z.string(),
+        })).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Hackathons.registerForHackathon({
+          ...input,
+          userId: ctx.user.id,
+        });
+      }),
+
+    // Matching Engine
+    createMatchingRequest: protectedProcedure
+      .input(z.object({
+        userType: z.enum(["innovator", "investor", "company", "government"]),
+        title: z.string(),
+        description: z.string(),
+        lookingFor: z.enum(["investor", "co_founder", "technical_partner", "business_partner", "mentor", "innovation", "startup", "technology"]),
+        industry: z.array(z.string()).optional(),
+        requiredSkills: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Matching.createMatchingRequest({
+          ...input,
+          userId: ctx.user.id,
+        });
+      }),
+
+    getMyMatchingRequests: protectedProcedure
+      .query(async ({ ctx }) => {
+        return uplink2Matching.getUserMatchingRequests(ctx.user.id);
+      }),
+
+    getMatchingRequestDetails: protectedProcedure
+      .input(z.object({ requestId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return uplink2Matching.getMatchingRequestDetails(input.requestId, ctx.user.id);
+      }),
+
+    contactMatch: protectedProcedure
+      .input(z.object({
+        matchId: z.number(),
+        message: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Matching.contactMatch(input.matchId, ctx.user.id, input.message);
+      }),
+
+    // Networking Platform
+    sendConnectionRequest: protectedProcedure
+      .input(z.object({
+        userBId: z.number(),
+        connectionType: z.enum(["match", "challenge", "hackathon", "direct", "referral"]),
+        message: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Networking.sendConnectionRequest({
+          userAId: ctx.user.id,
+          ...input,
+        });
+      }),
+
+    acceptConnectionRequest: protectedProcedure
+      .input(z.object({ connectionId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink2Networking.acceptConnectionRequest(input.connectionId, ctx.user.id);
+      }),
+
+    getMyConnections: protectedProcedure
+      .input(z.object({
+        status: z.enum(["pending", "accepted", "rejected", "blocked"]).optional(),
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        return uplink2Networking.getUserConnections(ctx.user.id, input || {});
+      }),
+
+    getPendingRequests: protectedProcedure
+      .query(async ({ ctx }) => {
+        return uplink2Networking.getPendingRequests(ctx.user.id);
+      }),
+
+    searchUsers: protectedProcedure
+      .input(z.object({
+        query: z.string().optional(),
+        userType: z.string().optional(),
+        industry: z.string().optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        return uplink2Networking.searchUsers(ctx.user.id, input);
+      }),
+  }),
+
+  // ============================================
+  // UPLINK3: MARKETPLACE & SMART CONTRACTS
+  // ============================================
+  uplink3: router({
+    // Marketplace Module
+    listAsset: protectedProcedure
+      .input(z.object({
+        assetType: z.enum(["license", "product", "acquisition"]),
+        title: z.string(),
+        description: z.string(),
+        price: z.number(),
+        currency: z.string().default("SAR"),
+        pricingModel: z.enum(["fixed", "negotiable", "royalty", "subscription", "revenue_share"]),
+        licenseType: z.enum(["exclusive", "non_exclusive", "sole", "sublicensable"]).optional(),
+        productCategory: z.string().optional(),
+        companyName: z.string().optional(),
+        companyValuation: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink3Marketplace.listAsset({
+          ...input,
+          ownerId: ctx.user.id,
+        });
+      }),
+
+    publishAsset: protectedProcedure
+      .input(z.object({ assetId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink3Marketplace.publishAsset(input.assetId, ctx.user.id);
+      }),
+
+    getMarketplaceAssets: publicProcedure
+      .input(z.object({
+        assetType: z.enum(["license", "product", "acquisition"]).optional(),
+        category: z.string().optional(),
+        minPrice: z.number().optional(),
+        maxPrice: z.number().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return uplink3Marketplace.getMarketplaceAssets(input || {});
+      }),
+
+    getAssetDetails: publicProcedure
+      .input(z.object({ assetId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return uplink3Marketplace.getAssetDetails(input.assetId, ctx.user?.id);
+      }),
+
+    sendAssetInquiry: protectedProcedure
+      .input(z.object({
+        assetId: z.number(),
+        message: z.string(),
+        offerPrice: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink3Marketplace.sendAssetInquiry({
+          ...input,
+          buyerId: ctx.user.id,
+        });
+      }),
+
+    getMyAssets: protectedProcedure
+      .query(async ({ ctx }) => {
+        return uplink3Marketplace.getUserMarketplaceStats(ctx.user.id);
+      }),
+
+    // Smart Contracts Module
+    createContract: protectedProcedure
+      .input(z.object({
+        transactionId: z.number(),
+        partyBId: z.number(),
+        contractType: z.enum(["license", "sale", "partnership", "service"]),
+        terms: z.string(),
+        paymentTerms: z.object({
+          totalAmount: z.number(),
+          currency: z.string(),
+          paymentSchedule: z.array(z.object({
+            milestone: z.string(),
+            amount: z.number(),
+            dueDate: z.date().optional(),
+          })),
+        }),
+        startDate: z.date(),
+        endDate: z.date().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink3Contracts.createContract({
+          ...input,
+          partyAId: ctx.user.id,
+          conditions: [],
+          deliverables: [],
+        });
+      }),
+
+    getContractDetails: protectedProcedure
+      .input(z.object({ contractId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return uplink3Contracts.getContractDetails(input.contractId, ctx.user.id);
+      }),
+
+    signContract: protectedProcedure
+      .input(z.object({
+        contractId: z.number(),
+        signature: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink3Contracts.signContract(input.contractId, ctx.user.id, input.signature);
+      }),
+
+    getMyContracts: protectedProcedure
+      .input(z.object({
+        status: z.string().optional(),
+        role: z.enum(["seller", "buyer"]).optional(),
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        return uplink3Contracts.getUserContracts(ctx.user.id, input || {});
+      }),
+
+    completeMilestone: protectedProcedure
+      .input(z.object({
+        milestoneId: z.number(),
+        proof: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink3Contracts.completeMilestone(input.milestoneId, ctx.user.id, input.proof);
+      }),
+
+    verifyMilestone: protectedProcedure
+      .input(z.object({
+        milestoneId: z.number(),
+        approved: z.boolean(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return uplink3Contracts.verifyMilestone(input.milestoneId, ctx.user.id, input.approved, input.notes);
       }),
   }),
 });

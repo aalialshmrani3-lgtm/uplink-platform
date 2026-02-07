@@ -5,7 +5,7 @@
  * It manages challenge creation, submissions, evaluation, and winner selection.
  */
 
-import { db } from "./db";
+import * as db from "./db";
 import { invokeLLM } from "./_core/llm";
 
 // ============================================

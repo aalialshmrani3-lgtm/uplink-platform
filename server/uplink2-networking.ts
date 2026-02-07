@@ -5,7 +5,7 @@
  * It handles connection requests, acceptances, messaging, and relationship management.
  */
 
-import { db } from "./db";
+import * as db from "./db";
 
 // ============================================
 // TYPES & INTERFACES

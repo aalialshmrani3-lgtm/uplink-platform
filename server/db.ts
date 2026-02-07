@@ -953,3 +953,348 @@ export async function getClassificationStats() {
   
   return { total, innovation, commercial, weak };
 }
+
+
+// ============================================
+// UPLINK2: CHALLENGES OPERATIONS
+// ============================================
+export async function createChallenge_new(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO challenges_new (organization_id, title, description, category, difficulty, prize, deadline, requirements, status) 
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [data.organizationId, data.title, data.description, data.category, data.difficulty, data.prize, data.deadline, JSON.stringify(data.requirements || []), data.status || 'draft']
+  );
+  return result[0].insertId;
+}
+
+export async function getChallenges_new(filters: any = {}) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = `SELECT * FROM challenges_new WHERE 1=1`;
+  const params: any[] = [];
+  
+  if (filters.status) {
+    query += ` AND status = ?`;
+    params.push(filters.status);
+  }
+  if (filters.category) {
+    query += ` AND category = ?`;
+    params.push(filters.category);
+  }
+  
+  query += ` ORDER BY created_at DESC`;
+  const result = await db.execute(query, params);
+  return result[0];
+}
+
+export async function getChallengeById_new(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.execute(`SELECT * FROM challenges_new WHERE id = ?`, [id]);
+  return result[0][0];
+}
+
+export async function updateChallenge_new(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  const fields = Object.keys(data).map(key => `${key} = ?`).join(', ');
+  const values = Object.values(data);
+  
+  await db.execute(`UPDATE challenges_new SET ${fields}, updated_at = NOW() WHERE id = ?`, [...values, id]);
+}
+
+// ============================================
+// UPLINK2: CHALLENGE SUBMISSIONS OPERATIONS
+// ============================================
+export async function createChallengeSubmission(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO challenge_submissions (challenge_id, participant_id, title, description, solution_url, documents, status) 
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [data.challengeId, data.participantId, data.title, data.description, data.solutionUrl, JSON.stringify(data.documents || []), 'submitted']
+  );
+  return result[0].insertId;
+}
+
+export async function getChallengeSubmissions(challengeId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const result = await db.execute(`SELECT * FROM challenge_submissions WHERE challenge_id = ? ORDER BY created_at DESC`, [challengeId]);
+  return result[0];
+}
+
+export async function updateChallengeSubmission(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  const fields = Object.keys(data).map(key => `${key} = ?`).join(', ');
+  const values = Object.values(data);
+  
+  await db.execute(`UPDATE challenge_submissions SET ${fields}, updated_at = NOW() WHERE id = ?`, [...values, id]);
+}
+
+// ============================================
+// UPLINK2: HACKATHONS OPERATIONS
+// ============================================
+export async function createHackathon(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO hackathons (organizer_id, title, description, start_date, end_date, location, is_online, max_participants, prizes, status) 
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [data.organizerId, data.title, data.description, data.startDate, data.endDate, data.location, data.isOnline, data.maxParticipants, JSON.stringify(data.prizes), 'upcoming']
+  );
+  return result[0].insertId;
+}
+
+export async function getHackathons(filters: any = {}) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = `SELECT * FROM hackathons WHERE 1=1`;
+  const params: any[] = [];
+  
+  if (filters.status) {
+    query += ` AND status = ?`;
+    params.push(filters.status);
+  }
+  
+  query += ` ORDER BY start_date DESC`;
+  const result = await db.execute(query, params);
+  return result[0];
+}
+
+export async function getHackathonById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.execute(`SELECT * FROM hackathons WHERE id = ?`, [id]);
+  return result[0][0];
+}
+
+// ============================================
+// UPLINK2: HACKATHON REGISTRATIONS OPERATIONS
+// ============================================
+export async function createHackathonRegistration(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO hackathon_registrations (hackathon_id, user_id, team_name, team_members, status) 
+     VALUES (?, ?, ?, ?, ?)`,
+    [data.hackathonId, data.userId, data.teamName, JSON.stringify(data.teamMembers || []), 'registered']
+  );
+  return result[0].insertId;
+}
+
+export async function getHackathonRegistrations(hackathonId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const result = await db.execute(`SELECT * FROM hackathon_registrations WHERE hackathon_id = ?`, [hackathonId]);
+  return result[0];
+}
+
+// ============================================
+// UPLINK2: MATCHING REQUESTS OPERATIONS
+// ============================================
+export async function createMatchingRequest(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO matching_requests (user_id, user_type, title, description, looking_for, industry, required_skills, status) 
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [data.userId, data.userType, data.title, data.description, data.lookingFor, JSON.stringify(data.industry || []), JSON.stringify(data.requiredSkills || []), 'active']
+  );
+  return result[0].insertId;
+}
+
+export async function getMatchingRequestsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const result = await db.execute(`SELECT * FROM matching_requests WHERE user_id = ? ORDER BY created_at DESC`, [userId]);
+  return result[0];
+}
+
+export async function getMatchingRequestById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.execute(`SELECT * FROM matching_requests WHERE id = ?`, [id]);
+  return result[0][0];
+}
+
+// ============================================
+// UPLINK2: MATCHING RESULTS OPERATIONS
+// ============================================
+export async function createMatchingResult(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO matching_results (request_id, matched_user_id, match_score, match_reasons, status) 
+     VALUES (?, ?, ?, ?, ?)`,
+    [data.requestId, data.matchedUserId, data.matchScore, JSON.stringify(data.matchReasons), 'pending']
+  );
+  return result[0].insertId;
+}
+
+export async function getMatchingResults(requestId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const result = await db.execute(`SELECT * FROM matching_results WHERE request_id = ? ORDER BY match_score DESC`, [requestId]);
+  return result[0];
+}
+
+// ============================================
+// UPLINK2: NETWORKING CONNECTIONS OPERATIONS
+// ============================================
+export async function createNetworkingConnection(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO networking_connections (user_a_id, user_b_id, connection_type, message, status) 
+     VALUES (?, ?, ?, ?, ?)`,
+    [data.userAId, data.userBId, data.connectionType, data.message, 'pending']
+  );
+  return result[0].insertId;
+}
+
+export async function getNetworkingConnections(userId: number, filters: any = {}) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = `SELECT * FROM networking_connections WHERE (user_a_id = ? OR user_b_id = ?)`;
+  const params: any[] = [userId, userId];
+  
+  if (filters.status) {
+    query += ` AND status = ?`;
+    params.push(filters.status);
+  }
+  
+  query += ` ORDER BY created_at DESC`;
+  const result = await db.execute(query, params);
+  return result[0];
+}
+
+export async function updateNetworkingConnection(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  const fields = Object.keys(data).map(key => `${key} = ?`).join(', ');
+  const values = Object.values(data);
+  
+  await db.execute(`UPDATE networking_connections SET ${fields}, updated_at = NOW() WHERE id = ?`, [...values, id]);
+}
+
+// ============================================
+// UPLINK3: MARKETPLACE ASSETS OPERATIONS
+// ============================================
+export async function createMarketplaceAsset(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO marketplace_assets (owner_id, asset_type, title, description, price, currency, pricing_model, license_type, product_category, company_name, company_valuation, status) 
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [data.ownerId, data.assetType, data.title, data.description, data.price, data.currency || 'SAR', data.pricingModel, data.licenseType, data.productCategory, data.companyName, data.companyValuation, 'draft']
+  );
+  return result[0].insertId;
+}
+
+export async function getMarketplaceAssets(filters: any = {}) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = `SELECT * FROM marketplace_assets WHERE status = 'active'`;
+  const params: any[] = [];
+  
+  if (filters.assetType) {
+    query += ` AND asset_type = ?`;
+    params.push(filters.assetType);
+  }
+  if (filters.category) {
+    query += ` AND product_category = ?`;
+    params.push(filters.category);
+  }
+  if (filters.minPrice) {
+    query += ` AND price >= ?`;
+    params.push(filters.minPrice);
+  }
+  if (filters.maxPrice) {
+    query += ` AND price <= ?`;
+    params.push(filters.maxPrice);
+  }
+  
+  query += ` ORDER BY created_at DESC`;
+  const result = await db.execute(query, params);
+  return result[0];
+}
+
+export async function getMarketplaceAssetById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.execute(`SELECT * FROM marketplace_assets WHERE id = ?`, [id]);
+  return result[0][0];
+}
+
+export async function updateMarketplaceAsset(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  const fields = Object.keys(data).map(key => `${key} = ?`).join(', ');
+  const values = Object.values(data);
+  
+  await db.execute(`UPDATE marketplace_assets SET ${fields}, updated_at = NOW() WHERE id = ?`, [...values, id]);
+}
+
+// ============================================
+// UPLINK3: ASSET INQUIRIES OPERATIONS
+// ============================================
+export async function createAssetInquiry(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO asset_inquiries (asset_id, buyer_id, message, offer_price, status) 
+     VALUES (?, ?, ?, ?, ?)`,
+    [data.assetId, data.buyerId, data.message, data.offerPrice, 'pending']
+  );
+  return result[0].insertId;
+}
+
+export async function getAssetInquiries(assetId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  const result = await db.execute(`SELECT * FROM asset_inquiries WHERE asset_id = ? ORDER BY created_at DESC`, [assetId]);
+  return result[0];
+}
+
+// ============================================
+// UPLINK3: ASSET TRANSACTIONS OPERATIONS
+// ============================================
+export async function createAssetTransaction(data: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.execute(
+    `INSERT INTO asset_transactions (asset_id, seller_id, buyer_id, final_price, currency, payment_method, status) 
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [data.assetId, data.sellerId, data.buyerId, data.finalPrice, data.currency || 'SAR', data.paymentMethod, 'pending']
+  );
+  return result[0].insertId;
+}
+
+export async function getAssetTransactionById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.execute(`SELECT * FROM asset_transactions WHERE id = ?`, [id]);
+  return result[0][0];
+}
+
+export async function updateAssetTransaction(id: number, data: any) {
+  const db = await getDb();
+  if (!db) return;
+  
+  const fields = Object.keys(data).map(key => `${key} = ?`).join(', ');
+  const values = Object.values(data);
+  
+  await db.execute(`UPDATE asset_transactions SET ${fields}, updated_at = NOW() WHERE id = ?`, [...values, id]);
+}

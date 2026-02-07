@@ -5,7 +5,7 @@
  * It handles contract creation, signing, execution, and dispute resolution.
  */
 
-import { db } from "./db";
+import * as db from "./db";
 
 // ============================================
 // TYPES & INTERFACES

@@ -5,7 +5,7 @@
  * It handles event creation, registration, participant management, and check-ins.
  */
 
-import { db } from "./db";
+import * as db from "./db";
 
 // ============================================
 // TYPES & INTERFACES
