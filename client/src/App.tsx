@@ -66,8 +66,11 @@ const OrganizationsDashboard = lazy(() => import("./pages/OrganizationsDashboard
 const AIStrategicAdvisor = lazy(() => import("./pages/AIStrategicAdvisor"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const Uplink1 = lazy(() => import("./pages/Uplink1"));
+const Uplink1Submit = lazy(() => import("./pages/Uplink1Submit"));
 const Uplink2 = lazy(() => import("./pages/Uplink2"));
+const Uplink2Challenges = lazy(() => import("./pages/Uplink2Challenges"));
 const Uplink3 = lazy(() => import("./pages/Uplink3"));
+const Uplink3Marketplace = lazy(() => import("./pages/Uplink3Marketplace"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -246,8 +249,11 @@ function Router() {
         <Route path="/challenges" component={Challenges} />
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/uplink1" component={Uplink1} />
+        <Route path="/uplink1/submit" component={Uplink1Submit} />
         <Route path="/uplink2" component={Uplink2} />
+        <Route path="/uplink2/challenges" component={Uplink2Challenges} />
         <Route path="/uplink3" component={Uplink3} />
+        <Route path="/uplink3/marketplace" component={Uplink3Marketplace} />
         <Route path="/academy" component={Academy} />
         <Route path="/elite" component={Elite} />
         <Route path="/developers" component={Developers} />
