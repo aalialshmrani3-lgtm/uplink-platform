@@ -42,6 +42,9 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+    minify: 'esbuild',
+    target: 'es2020',
+    sourcemap: false,
     rollupOptions: {
       output: {
         // Disable code splitting - single bundle to avoid module loading issues
