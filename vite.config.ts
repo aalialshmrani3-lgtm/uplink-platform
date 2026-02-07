@@ -56,6 +56,8 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
+    port: 3000,
+    strictPort: true,
     allowedHosts: [
       ".manuspre.computer",
       ".manus.computer",
@@ -65,6 +67,12 @@ export default defineConfig({
       "localhost",
       "127.0.0.1",
     ],
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      port: 3000,
+      clientPort: 3000,
+    },
     fs: {
       strict: true,
       deny: ["**/.*"],

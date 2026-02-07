@@ -1185,18 +1185,37 @@ export const ideaAnalysis = mysqlTable("idea_analysis", {
   // Overall Results
   overallScore: decimal("overallScore", { precision: 5, scale: 2 }).notNull(), // 0-100
   classification: mysqlEnum("classification", [
-    "innovation",  // True Innovation (80-100)
-    "commercial",  // Commercial Project (50-79)
-    "weak"         // Weak Idea (0-49)
+    "innovation",  // True Innovation (≥70)
+    "commercial",  // Commercial Project (50-70)
+    "weak"         // Weak Idea (<50)
   ]).notNull(),
   
-  // 6 Evaluation Criteria Scores (0-100 each)
-  noveltyScore: decimal("noveltyScore", { precision: 5, scale: 2 }).notNull(),           // Weight: 25%
-  impactScore: decimal("impactScore", { precision: 5, scale: 2 }).notNull(),             // Weight: 20%
-  feasibilityScore: decimal("feasibilityScore", { precision: 5, scale: 2 }).notNull(),   // Weight: 20%
-  commercialScore: decimal("commercialScore", { precision: 5, scale: 2 }).notNull(),     // Weight: 15%
-  scalabilityScore: decimal("scalabilityScore", { precision: 5, scale: 2 }).notNull(),   // Weight: 10%
-  sustainabilityScore: decimal("sustainabilityScore", { precision: 5, scale: 2 }).notNull(), // Weight: 10%
+  // 10 Evaluation Criteria Scores (0-100 each) - Enhanced from Innovation 360 best practices
+  technicalNoveltyScore: decimal("technicalNoveltyScore", { precision: 5, scale: 2 }).notNull(),     // Weight: 15%
+  socialImpactScore: decimal("socialImpactScore", { precision: 5, scale: 2 }).notNull(),             // Weight: 15%
+  technicalFeasibilityScore: decimal("technicalFeasibilityScore", { precision: 5, scale: 2 }).notNull(), // Weight: 12%
+  commercialValueScore: decimal("commercialValueScore", { precision: 5, scale: 2 }).notNull(),       // Weight: 12%
+  scalabilityScore: decimal("scalabilityScore", { precision: 5, scale: 2 }).notNull(),               // Weight: 10%
+  sustainabilityScore: decimal("sustainabilityScore", { precision: 5, scale: 2 }).notNull(),         // Weight: 10%
+  technicalRiskScore: decimal("technicalRiskScore", { precision: 5, scale: 2 }).notNull(),           // Weight: 8%
+  timeToMarketScore: decimal("timeToMarketScore", { precision: 5, scale: 2 }).notNull(),             // Weight: 8%
+  competitiveAdvantageScore: decimal("competitiveAdvantageScore", { precision: 5, scale: 2 }).notNull(), // Weight: 5%
+  organizationalReadinessScore: decimal("organizationalReadinessScore", { precision: 5, scale: 2 }).notNull(), // Weight: 5%
+  
+  // Technology Readiness Level (TRL) Assessment - 9 levels from Innovation 360
+  trlLevel: int("trlLevel"), // 1-9 (1: Basic principles, 9: Actual system proven)
+  trlDescription: text("trlDescription"),
+  
+  // Stage Gate Assessment
+  currentStageGate: mysqlEnum("currentStageGate", [
+    "ideation",        // Stage 0: Ideation
+    "scoping",         // Stage 1: Scoping
+    "business_case",   // Stage 2: Build Business Case
+    "development",     // Stage 3: Development
+    "testing",         // Stage 4: Testing & Validation
+    "launch"           // Stage 5: Launch
+  ]),
+  stageGateRecommendation: text("stageGateRecommendation"),
   
   // Detailed Analysis
   aiAnalysis: text("aiAnalysis"), // Full AI analysis text
