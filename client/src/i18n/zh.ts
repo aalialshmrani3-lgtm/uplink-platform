@@ -79,9 +79,9 @@ export const zh = {
     description: '从想法到全球市场，我们提供您所需的一切',
     uplink1: {
       name: 'UPLINK1',
-      title: '知识产权生成',
+      title: 'AI驱动的创意分析',
       description: '通过SAIP和WIPO注册和保护知识产权',
-      features: ['专利', '商标', '区块链文档'],
+      features: ['AI分析', '多级分类', '综合评估'],
     },
     uplink2: {
       name: 'UPLINK2',
@@ -93,7 +93,7 @@ export const zh = {
       name: 'UPLINK3',
       title: '市场与交换',
       description: '开放市场，智能合约和托管系统',
-      features: ['智能合约', '托管系统', '开放市场'],
+      features: ['许可证', '产品/商品', '收购'],
     },
     explore: '探索更多',
   },

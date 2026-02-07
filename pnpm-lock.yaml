@@ -188,7 +188,7 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(react@19.2.4)
       react-hook-form:
-        specifier: ^7.64.0
+        specifier: ^7.71.1
         version: 7.71.1(react@19.2.4)
       react-i18next:
         specifier: ^16.5.4
@@ -224,7 +224,7 @@ importers:
         specifier: ^8.19.0
         version: 8.19.0
       zod:
-        specifier: ^4.1.12
+        specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
       '@builder.io/vite-plugin-jsx-loc':

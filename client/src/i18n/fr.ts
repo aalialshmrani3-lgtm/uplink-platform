@@ -81,7 +81,7 @@ export const fr = {
       name: 'UPLINK1',
       title: 'Génération de PI',
       description: 'Enregistrez et protégez la propriété intellectuelle via SAIP & WIPO',
-      features: ['Brevets', 'Marques', 'Documentation Blockchain'],
+      features: ['Analyse IA', 'Classification Multi-Niveaux', 'Évaluation Complète'],
     },
     uplink2: {
       name: 'UPLINK2',
@@ -91,7 +91,7 @@ export const fr = {
     },
     uplink3: {
       name: 'UPLINK3',
-      title: 'Marché et Échange',
+      title: 'Bourse',
       description: 'Marché ouvert avec contrats intelligents et système Escrow',
       features: ['Contrats intelligents', 'Système Escrow', 'Marché ouvert'],
     },

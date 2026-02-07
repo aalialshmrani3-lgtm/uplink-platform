@@ -1,300 +1,346 @@
-import { Link } from "wouter";
-import { Shield, FileCheck, Globe, Lock, TrendingUp, CheckCircle2, ArrowRight, Sparkles, Award, Users, Clock, Zap, Brain, Rocket } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
-import { useLanguage } from "@/contexts/LanguageContext";
-import SEOHead from "@/components/SEOHead";
+import { useState } from 'react';
+import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { 
+  Brain, 
+  Sparkles, 
+  TrendingUp, 
+  CheckCircle2, 
+  XCircle, 
+  AlertCircle,
+  ArrowRight,
+  Lightbulb,
+  Database,
+  Cpu,
+  BarChart3
+} from 'lucide-react';
+import { getLoginUrl } from '@/const';
+import { useAuth } from '@/_core/hooks/useAuth';
+import SEOHead from '@/components/SEOHead';
 
 export default function Uplink1() {
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  const features = [
+  const analysisSteps = [
     {
-      icon: FileCheck,
-      title: "تسجيل براءات الاختراع",
-      description: "تسجيل وحماية براءات الاختراع عبر SAIP (الهيئة السعودية للملكية الفكرية) بسهولة وسرعة",
-      color: "from-emerald-500 to-teal-600"
+      icon: Lightbulb,
+      title: 'استقبال الفكرة',
+      description: 'يقوم المبتكر بإدخال فكرته مع جميع التفاصيل والمستندات الداعمة'
     },
     {
-      icon: Award,
-      title: "حماية العلامات التجارية",
-      description: "تسجيل وحماية العلامات التجارية والشعارات والأسماء التجارية محلياً ودولياً",
-      color: "from-blue-500 to-cyan-600"
+      icon: Brain,
+      title: 'التحليل بالذكاء الاصطناعي',
+      description: 'تحليل الفكرة باستخدام خوارزميات ML/NLP المتقدمة والبيانات التاريخية'
     },
     {
-      icon: Lock,
-      title: "توثيق البلوكتشين",
-      description: "توثيق الملكية الفكرية على البلوكتشين لضمان الحماية الدائمة وإثبات الأسبقية",
-      color: "from-purple-500 to-pink-600"
+      icon: Database,
+      title: 'المقارنة مع قاعدة البيانات',
+      description: 'مقارنة الفكرة مع الابتكارات السابقة والتحديات الحالية'
     },
     {
-      icon: Globe,
-      title: "التسجيل الدولي WIPO",
-      description: "تسجيل الملكية الفكرية دولياً عبر المنظمة العالمية للملكية الفكرية (WIPO)",
-      color: "from-orange-500 to-red-600"
+      icon: BarChart3,
+      title: 'التقييم والتصنيف',
+      description: 'تقييم الفكرة بناءً على معايير متعددة وتصنيفها إلى 3 مستويات'
+    },
+    {
+      icon: CheckCircle2,
+      title: 'النتيجة والتوجيه',
+      description: 'إصدار تقرير شامل وتوجيه الفكرة للمسار المناسب'
     }
   ];
 
-  const process = [
+  const classificationLevels = [
     {
-      step: "1",
-      title: "تقديم الطلب",
-      description: "قم بتعبئة نموذج التسجيل الإلكتروني مع تفاصيل الابتكار والمستندات المطلوبة"
+      icon: CheckCircle2,
+      level: 'ابتكار حقيقي',
+      score: '80-100',
+      color: 'from-green-500 to-emerald-600',
+      description: 'فكرة تحقق معايير الابتكار الصارمة',
+      criteria: [
+        'جدة تقنية عالية (Novelty)',
+        'أثر اقتصادي واجتماعي كبير',
+        'جدوى تقنية وتجارية مثبتة',
+        'قابلية للتطوير (Scalability)'
+      ],
+      nextStep: 'تنتقل تلقائياً إلى UPLINK 2 للمطابقة مع التحديات والمستثمرين'
     },
     {
-      step: "2",
-      title: "المراجعة الأولية",
-      description: "فريقنا المتخصص يراجع الطلب ويتحقق من اكتمال المستندات والمتطلبات"
+      icon: AlertCircle,
+      level: 'مشروع تجاري / حل جزئي',
+      score: '50-79',
+      color: 'from-yellow-500 to-orange-600',
+      description: 'فكرة لها قيمة تجارية لكن لا تصنف كابتكار',
+      criteria: [
+        'حل لمشكلة محددة',
+        'قيمة تجارية واضحة',
+        'تحسين على حلول موجودة',
+        'سوق محدد ومعروف'
+      ],
+      nextStep: 'توجيه إلى شبكة المطابقة في UPLINK 2 للربط مع المستثمرين'
     },
     {
-      step: "3",
-      title: "التوثيق على البلوكتشين",
-      description: "نقوم بتوثيق الملكية الفكرية على البلوكتشين لإثبات الأسبقية والحماية الفورية"
+      icon: XCircle,
+      level: 'فكرة ضعيفة',
+      score: '0-49',
+      color: 'from-red-500 to-rose-600',
+      description: 'فكرة لا تحقق المعايير المطلوبة',
+      criteria: [
+        'نقص في الجدة أو الأصالة',
+        'جدوى تقنية أو تجارية ضعيفة',
+        'أثر محدود أو غير واضح',
+        'تحديات تنفيذية كبيرة'
+      ],
+      nextStep: 'إرجاع للمرسل مع تقرير مفصل وتوجيهات للتحسين'
+    }
+  ];
+
+  const evaluationCriteria = [
+    {
+      name: 'الجدة التقنية',
+      weight: '25%',
+      description: 'مدى أصالة الفكرة وتميزها عن الحلول الموجودة'
     },
     {
-      step: "4",
-      title: "التسجيل الرسمي",
-      description: "نتولى عملية التسجيل الرسمي لدى SAIP أو WIPO حسب اختيارك"
+      name: 'الأثر المتوقع',
+      weight: '25%',
+      description: 'التأثير الاقتصادي والاجتماعي والبيئي المحتمل'
     },
     {
-      step: "5",
-      title: "الحصول على الشهادة",
-      description: "تحصل على شهادة التسجيل الرسمية مع الحماية القانونية الكاملة"
+      name: 'الجدوى التقنية',
+      weight: '20%',
+      description: 'إمكانية التنفيذ باستخدام التقنيات المتاحة'
+    },
+    {
+      name: 'الجدوى التجارية',
+      weight: '15%',
+      description: 'حجم السوق والطلب المتوقع والعائد على الاستثمار'
+    },
+    {
+      name: 'قابلية التطوير',
+      weight: '10%',
+      description: 'إمكانية توسيع الحل ليشمل أسواق وقطاعات أكبر'
+    },
+    {
+      name: 'الإطار الزمني',
+      weight: '5%',
+      description: 'الوقت المتوقع للوصول إلى السوق'
     }
   ];
 
   const stats = [
-    { value: "500+", label: "براءة اختراع مسجلة", icon: Award },
-    { value: "300+", label: "علامة تجارية محمية", icon: Shield },
-    { value: "50+", label: "دولة مغطاة", icon: Globe },
-    { value: "95%", label: "معدل النجاح", icon: TrendingUp }
-  ];
-
-  const benefits = [
-    {
-      title: "حماية قانونية شاملة",
-      description: "احصل على حماية قانونية كاملة لابتكارك محلياً ودولياً ضد أي انتهاك أو سرقة"
-    },
-    {
-      title: "زيادة القيمة السوقية",
-      description: "الملكية الفكرية المسجلة تزيد من قيمة مشروعك وتجذب المستثمرين والشركاء"
-    },
-    {
-      title: "ميزة تنافسية",
-      description: "احصل على ميزة تنافسية قوية في السوق من خلال حماية ابتكارك الفريد"
-    },
-    {
-      title: "إثبات الأسبقية",
-      description: "التوثيق على البلوكتشين يوفر إثباتاً دائماً لأسبقيتك في الابتكار"
-    },
-    {
-      title: "تسهيل التمويل",
-      description: "الملكية الفكرية المسجلة تسهل الحصول على التمويل والاستثمار"
-    },
-    {
-      title: "دعم متخصص",
-      description: "فريق من الخبراء القانونيين والتقنيين لمساعدتك في كل خطوة"
-    }
+    { number: '15,000+', label: 'فكرة تم تحليلها', icon: Lightbulb },
+    { number: '3,200+', label: 'ابتكار حقيقي', icon: Sparkles },
+    { number: '95%', label: 'دقة التحليل', icon: Brain },
+    { number: '< 24h', label: 'وقت التحليل', icon: TrendingUp }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950">
       <SEOHead 
-        title="UPLINK1 - محرك توليد الملكية الفكرية"
-        description="سجّل وحمِ ابتكارك عبر SAIP و WIPO مع توثيق البلوكتشين. حماية شاملة لبراءات الاختراع والعلامات التجارية."
+        title="UPLINK1 - محرك تحليل الأفكار بالذكاء الاصطناعي"
+        description="تحليل الأفكار والابتكارات باستخدام الذكاء الاصطناعي المتقدم. تصنيف ذكي إلى 3 مستويات: ابتكار حقيقي، مشروع تجاري، أو فكرة تحتاج تطوير."
       />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-        </div>
-
-        <div className="container relative z-10">
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.1),transparent_50%)]" />
+        
+        <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-8">
-              <Shield className="w-4 h-4 text-emerald-400" />
-              <span className="text-sm text-emerald-400 font-semibold">UPLINK1 - محرك توليد الملكية الفكرية</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 animate-fade-in">
+              <Brain className="w-5 h-5 text-blue-400" />
+              <span className="text-sm font-medium text-blue-300">محرك التحليل بالذكاء الاصطناعي</span>
             </div>
-
-            {/* Heading */}
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">احمِ ابتكارك</span>
-              <br />
-              <span className="text-gradient-emerald">بحماية قانونية شاملة</span>
+            
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in-up">
+              UPLINK 1
             </h1>
-
-            {/* Description */}
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-              سجّل براءات الاختراع والعلامات التجارية عبر SAIP و WIPO مع توثيق فوري على البلوكتشين. 
-              حماية شاملة لابتكارك من الفكرة إلى السوق العالمي.
+            
+            <p className="text-xl md:text-2xl text-gray-300 mb-4 animate-fade-in-up animation-delay-100">
+              تحليل الأفكار بالذكاء الاصطناعي
+            </p>
+            
+            <p className="text-lg text-gray-400 mb-8 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
+              نحلل فكرتك باستخدام خوارزميات الذكاء الاصطناعي المتقدمة والبيانات التاريخية لتحديد مستوى الابتكار وتوجيهها للمسار المناسب
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <div className="flex flex-wrap gap-4 justify-center animate-fade-in-up animation-delay-300">
               {user ? (
-                <Link href="/ip/register">
-                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-lg px-8 h-14 glow">
-                    <Sparkles className="w-5 h-5 ml-2" />
-                    سجّل ملكيتك الفكرية الآن
-                  </Button>
-                </Link>
-              ) : (
-                <a href={getLoginUrl()}>
-                  <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-lg px-8 h-14 glow">
-                    <Sparkles className="w-5 h-5 ml-2" />
-                    سجّل ملكيتك الفكرية الآن
-                  </Button>
-                </a>
-              )}
-              <Link href="/ip/browse">
-                <Button size="lg" variant="outline" className="text-lg px-8 h-14 border-emerald-500/50 hover:bg-emerald-500/10">
-                  تصفح الملكيات الفكرية المسجلة
-                  <ArrowRight className="w-5 h-5 mr-2" />
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  ابدأ تحليل فكرتك
                 </Button>
-              </Link>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {stats.map((stat, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-card/30 backdrop-blur-sm border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
-                  <stat.icon className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                  <div className="text-2xl md:text-3xl font-bold text-foreground">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
+              ) : (
+                <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <a href={getLoginUrl()}>
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    سجل دخول لتحليل فكرتك
+                  </a>
+                </Button>
+              )}
+              <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
+                شاهد مثال تحليل
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 px-6 bg-secondary/30">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              الميزات الرئيسية
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              نوفر لك حلولاً متكاملة لحماية ملكيتك الفكرية محلياً ودولياً
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, i) => (
-              <div 
-                key={i} 
-                className="group p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-emerald-500/50 transition-all duration-300 hover:scale-105"
+      {/* Stats Section */}
+      <section className="py-12 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat, index) => (
+              <Card 
+                key={index}
+                className="glass-card p-6 text-center hover:scale-105 transition-transform duration-300"
               >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-foreground">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-              </div>
+                <stat.icon className="w-8 h-8 mx-auto mb-3 text-blue-400" />
+                <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
+                <div className="text-sm text-gray-400">{stat.label}</div>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="py-24 px-6">
-        <div className="container">
+      {/* How It Works */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              كيف يعمل UPLINK1؟
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              عملية بسيطة وسريعة لتسجيل وحماية ملكيتك الفكرية في 5 خطوات
-            </p>
+            <h2 className="text-4xl font-bold text-white mb-4">كيف يعمل التحليل؟</h2>
+            <p className="text-xl text-gray-400">خمس خطوات لتحليل فكرتك بدقة عالية</p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            {process.map((item, i) => (
-              <div key={i} className="relative flex gap-6 mb-8 last:mb-0">
-                {/* Step Number */}
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                    {item.step}
-                  </div>
-                  {i < process.length - 1 && (
-                    <div className="w-0.5 h-full bg-gradient-to-b from-emerald-500 to-teal-600 mx-auto mt-2" />
-                  )}
+          <div className="grid md:grid-cols-5 gap-6">
+            {analysisSteps.map((step, index) => (
+              <Card 
+                key={index}
+                className="glass-card p-6 hover:scale-105 transition-all duration-300 relative"
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                  {index + 1}
                 </div>
-
-                {/* Content */}
-                <div className="flex-1 pb-8">
-                  <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
-                    <h3 className="text-2xl font-bold mb-2 text-foreground">{item.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              </div>
+                <step.icon className={`w-12 h-12 mb-4 transition-colors duration-300 ${hoveredCard === index ? 'text-blue-400' : 'text-gray-400'}`} />
+                <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
+                <p className="text-sm text-gray-400">{step.description}</p>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-24 px-6 bg-secondary/30">
-        <div className="container">
+      {/* Classification Levels */}
+      <section className="py-20 px-4 bg-gradient-to-b from-transparent to-slate-900/50">
+        <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              لماذا تسجل ملكيتك الفكرية معنا؟
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              فوائد متعددة تضمن حماية ابتكارك ونجاحه في السوق
-            </p>
+            <h2 className="text-4xl font-bold text-white mb-4">مستويات التصنيف</h2>
+            <p className="text-xl text-gray-400">نصنف الأفكار إلى 3 مستويات بناءً على معايير دقيقة</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {benefits.map((benefit, i) => (
-              <div 
-                key={i} 
-                className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-emerald-500/50 transition-all duration-300 hover:scale-105"
+          <div className="grid md:grid-cols-3 gap-8">
+            {classificationLevels.map((level, index) => (
+              <Card 
+                key={index}
+                className="glass-card p-8 hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-blue-500/50"
               >
-                <CheckCircle2 className="w-8 h-8 text-emerald-400 mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-foreground">{benefit.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
-              </div>
+                <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${level.color} flex items-center justify-center mb-6`}>
+                  <level.icon className="w-8 h-8 text-white" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-white mb-2">{level.level}</h3>
+                <div className="text-sm text-gray-400 mb-4">نقاط التقييم: {level.score}</div>
+                <p className="text-gray-300 mb-6">{level.description}</p>
+                
+                <div className="mb-6">
+                  <h4 className="text-sm font-semibold text-gray-400 mb-3">المعايير:</h4>
+                  <ul className="space-y-2">
+                    {level.criteria.map((criterion, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
+                        <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                        <span>{criterion}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="pt-6 border-t border-gray-700">
+                  <h4 className="text-sm font-semibold text-gray-400 mb-2">الخطوة التالية:</h4>
+                  <p className="text-sm text-gray-300">{level.nextStep}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Evaluation Criteria */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">معايير التقييم</h2>
+            <p className="text-xl text-gray-400">نقيّم الأفكار بناءً على 6 معايير رئيسية بأوزان مختلفة</p>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            {evaluationCriteria.map((criterion, index) => (
+              <Card 
+                key={index}
+                className="glass-card p-6 hover:scale-102 transition-all duration-300"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-white">{criterion.weight}</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2">{criterion.name}</h3>
+                    <p className="text-gray-400">{criterion.description}</p>
+                  </div>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center p-12 rounded-3xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/30">
-            <Zap className="w-16 h-16 text-emerald-400 mx-auto mb-6" />
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              جاهز لحماية ابتكارك؟
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <Card className="glass-card p-12 text-center">
+            <Brain className="w-16 h-16 mx-auto mb-6 text-blue-400" />
+            <h2 className="text-3xl font-bold text-white mb-4">
+              جاهز لتحليل فكرتك؟
             </h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              ابدأ الآن في تسجيل ملكيتك الفكرية واحصل على حماية قانونية شاملة محلياً ودولياً
+            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+              ابدأ الآن واحصل على تقرير تحليل شامل خلال 24 ساعة
             </p>
-            {user ? (
-              <Link href="/ip/register">
-                <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-lg px-12 h-16 glow">
-                  <Sparkles className="w-6 h-6 ml-2" />
-                  سجّل الآن مجاناً
+            <div className="flex flex-wrap gap-4 justify-center">
+              {user ? (
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  ابدأ التحليل الآن
                 </Button>
-              </Link>
-            ) : (
-              <a href={getLoginUrl()}>
-                <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-lg px-12 h-16 glow">
-                  <Sparkles className="w-6 h-6 ml-2" />
-                  سجّل الآن مجاناً
+              ) : (
+                <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <a href={getLoginUrl()}>
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    سجل دخول للبدء
+                  </a>
                 </Button>
-              </a>
-            )}
-          </div>
+              )}
+              <Button size="lg" variant="outline" asChild className="border-gray-700 hover:bg-gray-800">
+                <Link href="/">
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                  العودة للرئيسية
+                </Link>
+              </Button>
+            </div>
+          </Card>
         </div>
       </section>
     </div>
