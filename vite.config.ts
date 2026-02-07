@@ -80,5 +80,9 @@ export default defineConfig({
       strict: true,
       deny: ["**/.*"],
     },
+    watch: {
+      // Disable watching in production to avoid EMFILE errors
+      ignored: process.env.NODE_ENV === 'production' ? ['**/*'] : undefined,
+    },
   },
 });
