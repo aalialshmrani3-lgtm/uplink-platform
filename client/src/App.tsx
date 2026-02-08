@@ -73,6 +73,9 @@ const Uplink1IdeaDetail = lazy(() => import('@/pages/Uplink1IdeaDetail'));
 const Uplink2BrowseHackathons = lazy(() => import('@/pages/Uplink2BrowseHackathons'));
 const Uplink2CreateHackathon = lazy(() => import('@/pages/Uplink2CreateHackathon'));
 const Uplink2HackathonDetail = lazy(() => import('@/pages/Uplink2HackathonDetail'));
+const Uplink2BrowseEvents = lazy(() => import('@/pages/Uplink2BrowseEvents'));
+const Uplink2CreateEvent = lazy(() => import('@/pages/Uplink2CreateEvent'));
+const Uplink2EventDetail = lazy(() => import('@/pages/Uplink2EventDetail'));
 const Uplink2 = lazy(() => import("./pages/Uplink2"));
 const Uplink3 = lazy(() => import("./pages/Uplink3"));
 const UserProfile = lazy(() => import("./pages/UserProfile")); // Added for Flowchart Match
@@ -276,7 +279,9 @@ function Router() {
         <Route path="/uplink2/hackathons" component={Uplink2BrowseHackathons} />
         <Route path="/uplink2/hackathons/create" component={Uplink2CreateHackathon} />
         <Route path="/uplink2/hackathons/:id" component={Uplink2HackathonDetail} />
-        <Route path="/uplink2/events" component={Uplink2Events} /> {/* Added for Flowchart Match */}
+        <Route path="/uplink2/events" component={Uplink2BrowseEvents} />
+        <Route path="/uplink2/events/create" component={Uplink2CreateEvent} />
+        <Route path="/uplink2/events/:id" component={Uplink2EventDetail} />
         <Route path="/uplink2/matching" component={Uplink2Matching} /> {/* Added for Flowchart Match */}
         <Route path="/uplink2/submit-challenge" component={Uplink2SubmitChallenge} /> {/* Submit Challenge */}
         <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}

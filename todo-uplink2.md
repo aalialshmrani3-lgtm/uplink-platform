@@ -10,13 +10,14 @@
 - [x] Frontend - إضافة routes في App.tsx
 
 ## Phase 2: Events System
-- [ ] Backend - إنشاء server/uplink2/events.ts
-- [ ] Backend - إضافة tRPC endpoints (create, getAll, getById, register)
-- [ ] Backend - إضافة database helpers في server/db.ts
-- [ ] Frontend - إنشاء /uplink2/events (Browse Events)
-- [ ] Frontend - إنشاء /uplink2/events/create (Create Event)
-- [ ] Frontend - إنشاء /uplink2/events/:id (Event Detail)
-- [ ] Frontend - إضافة routes في App.tsx
+- [x] Backend - إنشاء server/uplink2/events.ts
+- [x] Backend - إضافة tRPC endpoints (create, getAll, getById, register, updateStatus)
+- [x] Backend - إضافة database helpers في server/db.ts
+- [x] Frontend - إنشاء /uplink2/events (Browse Events)
+- [x] Frontend - إنشاء /uplink2/events/create (Create Event)
+- [x] Frontend - إنشاء /uplink2/events/:id (Event Detail)
+- [x] Frontend - إضافة routes في App.tsx
+- [x] Build successful ✅
 
 ## Phase 3: Challenges System
 - [ ] Backend - إنشاء server/uplink2/challenges.ts

@@ -10,6 +10,7 @@ import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink1-ai-analyzer";
 import crypto from "crypto";
 import * as hackathonsService from "./uplink2/hackathons";
+import * as eventsService from "./uplink2/events";
 
 export const appRouter = router({
   system: systemRouter,
@@ -2593,26 +2594,52 @@ Provide response in JSON format:
         .input(z.object({
           title: z.string().min(3),
           description: z.string().min(10),
-          eventType: z.enum(['conference', 'workshop', 'networking', 'demo_day', 'pitch_event']),
+          type: z.enum(['hackathon', 'workshop', 'conference']),
           startDate: z.string(),
           endDate: z.string(),
           location: z.string().optional(),
-          isOnline: z.boolean().default(false),
-          maxAttendees: z.number().optional(),
+          isVirtual: z.boolean().default(false),
+          capacity: z.number().optional(),
+          budget: z.string().optional(),
+          needSponsors: z.boolean().optional(),
+          needInnovators: z.boolean().optional(),
+          sponsorshipTiers: z.any().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use event functions
-          return { success: true, id: 1 };
+          const event = await eventsService.createEvent({
+            userId: ctx.user.id,
+            title: input.title,
+            description: input.description,
+            type: input.type,
+            startDate: new Date(input.startDate),
+            endDate: new Date(input.endDate),
+            location: input.location,
+            isVirtual: input.isVirtual,
+            capacity: input.capacity,
+            budget: input.budget,
+            needSponsors: input.needSponsors,
+            needInnovators: input.needInnovators,
+            sponsorshipTiers: input.sponsorshipTiers,
+          });
+          return { success: true, event };
         }),
 
       getAll: publicProcedure
         .input(z.object({
-          status: z.enum(['upcoming', 'ongoing', 'completed']).optional(),
-          eventType: z.string().optional(),
+          type: z.enum(['hackathon', 'workshop', 'conference']).optional(),
+          status: z.enum(['draft', 'published', 'ongoing', 'completed', 'cancelled']).optional(),
+          isVirtual: z.boolean().optional(),
         }).optional())
         .query(async ({ input }) => {
-          // TODO: Import and use event functions
-          return [];
+          const events = await eventsService.getAllEvents(input || {});
+          return events;
+        }),
+
+      getById: publicProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          const event = await eventsService.getEventById(input.id);
+          return event;
         }),
 
       register: protectedProcedure
@@ -2620,10 +2647,29 @@ Provide response in JSON format:
           eventId: z.number(),
           attendeeType: z.enum(['innovator', 'investor', 'sponsor', 'speaker', 'attendee']),
           additionalInfo: z.string().optional(),
+          sponsorshipTier: z.string().optional(),
+          sponsorshipAmount: z.string().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use event functions
-          return { success: true, id: 1 };
+          const registration = await eventsService.registerForEvent({
+            eventId: input.eventId,
+            userId: ctx.user.id,
+            attendeeType: input.attendeeType,
+            additionalInfo: input.additionalInfo,
+            sponsorshipTier: input.sponsorshipTier,
+            sponsorshipAmount: input.sponsorshipAmount,
+          });
+          return { success: true, registration };
+        }),
+
+      updateStatus: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          status: z.enum(['draft', 'published', 'ongoing', 'completed', 'cancelled']),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          await eventsService.updateEventStatus(input.id, input.status);
+          return { success: true };
         }),
 
       host: protectedProcedure
