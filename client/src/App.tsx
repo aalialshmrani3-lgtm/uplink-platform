@@ -80,6 +80,9 @@ const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for 
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
 const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge")); // Submit Challenge
 const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host Event Dashboard
+const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
+const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
+const RegisterPrivateSector = lazy(() => import("./pages/register/RegisterPrivateSector")); // Register Private Sector
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -319,6 +322,9 @@ function Router() {
         <Route path="/organizations/dashboard" component={OrganizationsDashboard} />
         <Route path="/ai-strategic-advisor" component={AIStrategicAdvisor} />
         <Route path="/analytics-dashboard" component={AnalyticsDashboard} />
+        <Route path="/register/individual" component={RegisterIndividual} />
+        <Route path="/register/government" component={RegisterGovernment} />
+        <Route path="/register/private-sector" component={RegisterPrivateSector} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
