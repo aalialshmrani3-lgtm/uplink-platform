@@ -36,3 +36,13 @@
 - Blockchain Service يدعم جميع العمليات (create, activate, start/complete/reject/approve milestones)
 - UPLINK2→UPLINK3 Auto-transition يعمل مع blockchain حقيقي
 - البيانات التجريبية موجودة للاختبار (Contract Address + Private Key)
+
+
+## Phase 5: بناء واجهة Milestone Management
+- [x] إضافة tRPC endpoints (startMilestone, completeMilestone, rejectMilestone, approveMilestone)
+- [x] بناء MilestoneCard component
+- [x] إنشاء صفحة Uplink3ContractDetail مع Milestone UI
+- [x] إضافة Transaction Hash links إلى Polygonscan
+- [x] إضافة route في App.tsx
+- [x] بناء المشروع بنجاح
+- [x] حفظ checkpoint نهائي

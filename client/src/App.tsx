@@ -76,6 +76,7 @@ const Uplink2Hackathons = lazy(() => import("./pages/Uplink2Hackathons")); // Ad
 const Uplink2Events = lazy(() => import("./pages/Uplink2Events")); // Added for Flowchart Match
 const Uplink2Matching = lazy(() => import("./pages/Uplink2Matching")); // Added for Flowchart Match
 const Uplink3Contracts = lazy(() => import('./pages/Uplink3Contracts'));
+const Uplink3ContractDetail = lazy(() => import('./pages/Uplink3ContractDetail')); // Contract Detail with Milestones
 const Uplink3BlockchainContracts = lazy(() => import('./pages/Uplink3BlockchainContracts')); // Added for Flowchart Match
 const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for Flowchart Match
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
@@ -272,6 +273,7 @@ function Router() {
         <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}
         <Route path="/uplink3" component={Uplink3} />
         <Route path="/uplink3/contracts" component={Uplink3Contracts} /> {/* Added for Flowchart Match */}
+        <Route path="/uplink3/contracts/:id" component={Uplink3ContractDetail} /> {/* Contract Detail with Milestones */}
         <Route path="/uplink3/escrow" component={Uplink3Escrow} /> {/* Added for Flowchart Match */}
         {/* /admin route already exists at /admin/dashboard */}
         <Route path="/search" component={GlobalSearch} /> {/* Added for Flowchart Match */}

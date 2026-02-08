@@ -2706,6 +2706,79 @@ Provide response in JSON format:
         }),
     }),
 
+    // Milestones
+    milestones: router({
+      getContractMilestones: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          blockchainContractId: z.number(),
+        }))
+        .query(async ({ ctx, input }) => {
+          const { getContractMilestones } = await import('./uplink3-milestones');
+          return getContractMilestones(input.contractId, input.blockchainContractId);
+        }),
+
+      start: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          blockchainContractId: z.number(),
+          milestoneIndex: z.number(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { startMilestone } = await import('./uplink3-milestones');
+          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+          return startMilestone({
+            ...input,
+            privateKey: testPrivateKey,
+          });
+        }),
+
+      complete: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          blockchainContractId: z.number(),
+          milestoneIndex: z.number(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { completeMilestone } = await import('./uplink3-milestones');
+          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+          return completeMilestone({
+            ...input,
+            privateKey: testPrivateKey,
+          });
+        }),
+
+      approve: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          blockchainContractId: z.number(),
+          milestoneIndex: z.number(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { approveMilestone } = await import('./uplink3-milestones');
+          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+          return approveMilestone({
+            ...input,
+            privateKey: testPrivateKey,
+          });
+        }),
+
+      reject: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          blockchainContractId: z.number(),
+          milestoneIndex: z.number(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { rejectMilestone } = await import('./uplink3-milestones');
+          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+          return rejectMilestone({
+            ...input,
+            privateKey: testPrivateKey,
+          });
+        }),
+    }),
+
     // Escrow
     escrow: router({
       deposit: protectedProcedure
