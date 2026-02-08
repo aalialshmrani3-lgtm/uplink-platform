@@ -374,3 +374,63 @@
 - [x] إضافة loading states و error boundaries
 - [x] اختبار جميع الصفحات والروابط
 - [x] بناء production build واختبار المعاينة
+
+
+---
+
+## 🚀 Phase 49: تنفيذ أوامر التحسين الشاملة (من ملف pasted_content.txt)
+
+### Phase 1: ميزات UI في UPLINK1
+- [ ] إضافة Upload متعدد للمرفقات في submit.tsx مع Multer
+- [ ] إنشاء endpoint trpc.uplink1.uploadAttachment.useMutation
+- [x] إنشاء صفحة /user/profile مع View/Edit Profile
+- [x] إنشاء صفحة /user/settings (لغة، خصوصية، كلمة مرور)
+- [x] إضافة endpoint trpc.user.updateSettings
+- [ ] إضافة زر Logout في Navbar مع trpc.auth.logout
+
+### Phase 2: إكمال UPLINK2 Frontend & Backend
+- [x] إكمال server/uplink2-hackathons.ts (create, getAll endpoints)
+- [x] إنشاء frontend/pages/Uplink2Hackathons.tsx مع Tabs
+- [x] إكمال server/uplink2-events.ts (create, register)
+- [x] إنشاء frontend/pages/Uplink2Events.tsx
+- [x] إضافة ValidMatch middleware في matching.ts (if score >= 50)
+- [x] إنشاء frontend/pages/Uplink2Matching.tsx للمطابقات
+- [x] إضافة UPLINK2 routers في routers.ts
+- [x] إضافة routes في App.tsx
+### Phase 3: إكمال UPLINK3 Frontend & Backend
+- [x] إكمال server/uplink3-contracts.ts (create, sign, updateMilestone)
+- [x] إنشاء frontend/pages/Uplink3Contracts.tsx مع Form
+- [x] إكمال server/uplink3-escrow.ts (deposit, requestRelease, approve)
+- [x] إنشاء frontend/pages/Uplink3Escrow.tsx
+- [x] إضافة UPLINK3 routers في routers.ts
+- [x] إضافة ro### Phase 4: Data Layer إضافات
+- [x] إضافة Redis للـ Cache (pnpm add redis)
+- [x] إنشاء server/redis.ts مع cacheUserActivity
+- [x] استخدام Redis لتخزين user_activity_logs
+- [x] S3 Storage موجود في server/storage.ts (storagePut, storageGet)### Phase 5: Admin Panel
+- [x] إنشاء frontend/pages/admin/AdminDashboard.tsx محمي بـ role 'admin'
+- [x] إضافة tabs: User Management (ban, lists)
+- [x] إضافة Content Moderation (حذف أفكار/تحديات)
+- [x] إضافة Reports (إحصائيات من platform_analytics)
+- [x] إضافة admin router في routers.ts
+- [x] إضافة route /admin في App.tsx
+- [ ] إنشاء server/admin.ts مع endpoints (getUsers, banUser, moderateContent, getReports)
+
+### Phase 6: API Layer
+- [ ] إضافة REST endpoints في server/api.ts (GET /api/ideas)
+- [ ] إضافة GraphQL بـ Apollo (إذا غير موجود)
+- [ ] إضافة WebSocket بـ Socket.io للـ Notifications
+- [ ] تكامل WebSocket في Frontend للـ real-time updates
+
+### Phase 7: ميزات عامة
+- [ ] إضافة Search بار عالمي (trpc.search.global.useQuery)
+- [ ] إنشاء Messages system (جدول messages + endpoints)
+- [ ] إضافة WebSocket للدردشة
+- [ ] إضافة CAPTCHA في /register بـ reCAPTCHA
+- [ ] إضافة Notifications toast بـ shadcn (polling أو WebSocket)
+
+### Phase 8: اختبار ونشر
+- [ ] اختبار تدفق كامل (تسجيل → فكرة → تحليل → مطابقة → عقد)
+- [ ] تحديث التوثيق DuPPXLXYnxgceVkf.md بـ "مطابق للفلوتشارت"
+- [ ] رفع جميع التغييرات إلى الرابط
+- [ ] حفظ checkpoint نهائي

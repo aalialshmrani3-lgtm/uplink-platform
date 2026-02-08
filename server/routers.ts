@@ -50,6 +50,29 @@ export const appRouter = router({
     getAllUsers: protectedProcedure.query(async () => {
       return db.getAllUsers();
     }),
+
+    // Added for Flowchart Match - Settings endpoint
+    updateSettings: protectedProcedure
+      .input(z.object({
+        language: z.string().optional(),
+        notifications: z.object({
+          email: z.boolean(),
+          push: z.boolean(),
+          sms: z.boolean(),
+        }).optional(),
+        privacy: z.object({
+          profileVisible: z.boolean(),
+          showEmail: z.boolean(),
+          showPhone: z.boolean(),
+        }).optional(),
+        password: z.object({
+          currentPassword: z.string(),
+          newPassword: z.string(),
+        }).optional(),
+      })).mutation(async ({ ctx, input }) => {
+        // TODO: Implement settings update logic in db.ts
+        return { success: true };
+      }),
   }),
 
   // ============================================
@@ -2451,6 +2474,341 @@ Provide response in JSON format:
           console.error('Excel export error:', error);
           throw new Error('Failed to export Excel');
         }
+      }),
+  }),
+
+  // ============================================
+  // UPLINK2 - Added for Flowchart Match
+  // ============================================
+  uplink2: router({
+    // Hackathons
+    hackathons: router({
+      create: protectedProcedure
+        .input(z.object({
+          title: z.string().min(3),
+          description: z.string().min(10),
+          startDate: z.string(),
+          endDate: z.string(),
+          location: z.string().optional(),
+          isOnline: z.boolean().default(false),
+          maxTeams: z.number().optional(),
+          prizes: z.string().optional(),
+          requirements: z.string().optional(),
+          tags: z.array(z.string()).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use hackathon functions
+          return { success: true, id: 1 };
+        }),
+
+      getAll: publicProcedure
+        .input(z.object({
+          status: z.enum(['upcoming', 'ongoing', 'completed']).optional(),
+          isOnline: z.boolean().optional(),
+        }).optional())
+        .query(async ({ input }) => {
+          // TODO: Import and use hackathon functions
+          return [];
+        }),
+
+      register: protectedProcedure
+        .input(z.object({
+          hackathonId: z.number(),
+          teamName: z.string().min(2),
+          members: z.array(z.object({
+            userId: z.number(),
+            role: z.string(),
+          })),
+          projectDescription: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use hackathon functions
+          return { success: true, id: 1 };
+        }),
+    }),
+
+    // Events
+    events: router({
+      create: protectedProcedure
+        .input(z.object({
+          title: z.string().min(3),
+          description: z.string().min(10),
+          eventType: z.enum(['conference', 'workshop', 'networking', 'demo_day', 'pitch_event']),
+          startDate: z.string(),
+          endDate: z.string(),
+          location: z.string().optional(),
+          isOnline: z.boolean().default(false),
+          maxAttendees: z.number().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use event functions
+          return { success: true, id: 1 };
+        }),
+
+      getAll: publicProcedure
+        .input(z.object({
+          status: z.enum(['upcoming', 'ongoing', 'completed']).optional(),
+          eventType: z.string().optional(),
+        }).optional())
+        .query(async ({ input }) => {
+          // TODO: Import and use event functions
+          return [];
+        }),
+
+      register: protectedProcedure
+        .input(z.object({
+          eventId: z.number(),
+          attendeeType: z.enum(['innovator', 'investor', 'sponsor', 'speaker', 'attendee']),
+          additionalInfo: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use event functions
+          return { success: true, id: 1 };
+        }),
+    }),
+
+    // Matching
+    matching: router({
+      request: protectedProcedure
+        .input(z.object({
+          seekingType: z.enum(['investor', 'innovator', 'partner', 'mentor']),
+          industry: z.string().optional(),
+          stage: z.string().optional(),
+          budget: z.number().optional(),
+          location: z.string().optional(),
+          requirements: z.string(),
+          preferences: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use matching functions with ValidMatch middleware
+          return { success: true, matchesFound: 0, matches: [] };
+        }),
+
+      getMyMatches: protectedProcedure
+        .query(async ({ ctx }) => {
+          // TODO: Import and use matching functions
+          return [];
+        }),
+
+      accept: protectedProcedure
+        .input(z.object({ matchId: z.number() }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use matching functions
+          return { success: true };
+        }),
+
+      reject: protectedProcedure
+        .input(z.object({
+          matchId: z.number(),
+          reason: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use matching functions
+          return { success: true };
+        }),
+    }),
+  }),
+
+  // ============================================
+  // UPLINK3 - Smart Contracts & Escrow
+  // ============================================
+  uplink3: router({
+    // Contracts
+    contracts: router({
+      create: protectedProcedure
+        .input(z.object({
+          title: z.string().min(3),
+          description: z.string().min(10),
+          partyB: z.number(),
+          totalAmount: z.string(),
+          currency: z.string().default('SAR'),
+          milestones: z.array(z.object({
+            title: z.string(),
+            amount: z.string(),
+            dueDate: z.string().optional(),
+            status: z.enum(['pending', 'completed', 'cancelled']).default('pending'),
+          })).optional(),
+          startDate: z.string().optional(),
+          endDate: z.string().optional(),
+          terms: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use contract functions
+          return { success: true, id: 1 };
+        }),
+
+      sign: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          signature: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use contract functions
+          return { success: true };
+        }),
+
+      updateMilestone: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          milestoneIndex: z.number(),
+          status: z.enum(['pending', 'completed', 'cancelled']),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use contract functions
+          return { success: true };
+        }),
+
+      getMyContracts: protectedProcedure
+        .query(async ({ ctx }) => {
+          // TODO: Import and use contract functions
+          return [];
+        }),
+
+      getContract: protectedProcedure
+        .input(z.object({ contractId: z.number() }))
+        .query(async ({ ctx, input }) => {
+          // TODO: Import and use contract functions
+          return null;
+        }),
+
+      cancel: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          reason: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use contract functions
+          return { success: true };
+        }),
+    }),
+
+    // Escrow
+    escrow: router({
+      deposit: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          amount: z.string(),
+          paymentMethod: z.enum(['bank_transfer', 'credit_card', 'wallet']),
+          transactionReference: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use escrow functions
+          return { success: true, transactionId: 1, newBalance: '0' };
+        }),
+
+      requestRelease: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          milestoneIndex: z.number(),
+          amount: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use escrow functions
+          return { success: true, requestId: 1 };
+        }),
+
+      approveRelease: protectedProcedure
+        .input(z.object({ requestId: z.number() }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use escrow functions
+          return { success: true };
+        }),
+
+      rejectRelease: protectedProcedure
+        .input(z.object({
+          requestId: z.number(),
+          reason: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Import and use escrow functions
+          return { success: true };
+        }),
+
+      getTransactions: protectedProcedure
+        .input(z.object({ contractId: z.number() }))
+        .query(async ({ ctx, input }) => {
+          // TODO: Import and use escrow functions
+          return [];
+        }),
+
+      getReleaseRequests: protectedProcedure
+        .input(z.object({ contractId: z.number() }))
+        .query(async ({ ctx, input }) => {
+          // TODO: Import and use escrow functions
+          return [];
+        }),
+
+      getStats: protectedProcedure
+        .query(async ({ ctx }) => {
+          // TODO: Import and use escrow functions
+          return {
+            totalEscrow: '0',
+            totalReleased: '0',
+            activeEscrows: 0,
+            completedEscrows: 0,
+          };
+        }),
+    }),
+  }),
+
+  // ============================================
+  // ADMIN - Admin Panel
+  // ============================================
+  admin: router({
+    getStats: protectedProcedure
+      .query(async ({ ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        // TODO: Implement stats aggregation
+        return {
+          totalUsers: 0,
+          totalProjects: 0,
+          activeMatches: 0,
+          activeContracts: 0,
+          activeUsers: 0,
+          recentProjects: 0,
+          successfulMatches: 0,
+          completedContracts: 0,
+        };
+      }),
+
+    getUsers: protectedProcedure
+      .query(async ({ ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        // TODO: Implement user listing
+        return [];
+      }),
+
+    getProjects: protectedProcedure
+      .query(async ({ ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        // TODO: Implement project listing
+        return [];
+      }),
+
+    banUser: protectedProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        // TODO: Implement user ban
+        return { success: true };
+      }),
+
+    deleteProject: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        // TODO: Implement project deletion
+        return { success: true };
       }),
   }),
 });
