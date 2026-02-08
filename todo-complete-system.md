@@ -161,3 +161,81 @@
 3. Phase 3 (UPLINK2 Events + Auto-transition)
 4. Phase 4 (UPLINK3 Smart Contracts)
 5. Phase 5 (الربط الكامل + Testing)
+
+---
+
+## Phase 6: Additional Features (من الفلوتشارت)
+
+### 6.1 Search System
+- [ ] بحث عالمي (Ideas, Users, Challenges, Events)
+- [ ] Search Bar في Navbar
+- [ ] نتائج البحث مع Filters
+
+### 6.2 Messages System
+- [ ] جدول messages في database
+- [ ] صفحة Messages
+- [ ] إرسال/استقبال رسائل
+- [ ] WebSocket للدردشة الفورية
+
+### 6.3 Notifications System
+- [ ] تحسين نظام Notifications
+- [ ] إشعارات فورية (Toast)
+- [ ] WebSocket للإشعارات الفورية
+
+### 6.4 Settings Page
+- [ ] صفحة Settings
+- [ ] إعدادات اللغة
+- [ ] إعدادات الخصوصية
+- [ ] تغيير كلمة المرور
+
+### 6.5 Admin Panel
+- [ ] صفحة Admin Dashboard
+- [ ] User Management (Ban/Unban)
+- [ ] Content Moderation
+- [ ] Reports & Analytics
+
+### 6.6 Cache Layer (Redis)
+- [ ] تثبيت Redis
+- [ ] Cache للـ Analytics
+- [ ] Cache للـ Search Results
+
+### 6.7 API Layer
+- [ ] REST API endpoints
+- [ ] WebSocket (Socket.io) للإشعارات والرسائل
+- [ ] API Documentation
+
+
+---
+
+## ✅ التقدم المكتمل حتى الآن:
+
+### UPLINK 1 (جزئي):
+- [x] صفحة Register مع اختيار نوع المستخدم
+- [x] Submit Idea + AI Analysis (موجود)
+- [x] Browse Ideas (UI + Backend + Filters)
+- [x] Idea Detail Page (عرض التحليل الكامل)
+- [x] tRPC endpoints (browse, getById, getAnalysis)
+- [x] Routes في App.tsx
+
+### ما تبقى من UPLINK 1:
+- [ ] User Profile Page
+- [ ] User Settings Page
+- [ ] Search System (Global)
+- [ ] Messages System
+- [ ] Notifications System (تحسين)
+
+### UPLINK 2:
+- [ ] Events & Challenges System
+- [ ] Matching Algorithm
+- [ ] Auto-transition من UPLINK1
+
+### UPLINK 3:
+- [x] Smart Contracts (موجود)
+- [x] Milestone Management (موجود)
+- [ ] Escrow System (تحسين)
+
+### Integration:
+- [ ] Admin Panel
+- [ ] API Layer
+- [ ] Cache (Redis)
+- [ ] WebSocket (Real-time)

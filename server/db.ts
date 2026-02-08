@@ -892,6 +892,38 @@ export async function getIdeasByUserId(userId: number) {
   return db.select().from(ideas).where(eq(ideas.userId, userId)).orderBy(desc(ideas.submittedAt));
 }
 
+export async function getAllIdeas(filters?: {
+  search?: string;
+  category?: string;
+  status?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = db.select().from(ideas);
+  
+  // Apply filters
+  if (filters?.category) {
+    query = query.where(eq(ideas.category, filters.category)) as any;
+  }
+  if (filters?.status) {
+    query = query.where(eq(ideas.status, filters.status)) as any;
+  }
+  
+  // Apply ordering, limit, and offset
+  query = query.orderBy(desc(ideas.submittedAt)) as any;
+  if (filters?.limit) {
+    query = query.limit(filters.limit) as any;
+  }
+  if (filters?.offset) {
+    query = query.offset(filters.offset) as any;
+  }
+  
+  return query;
+}
+
 export async function updateIdea(id: number, data: any) {
   const db = await getDb();
   if (!db) return;

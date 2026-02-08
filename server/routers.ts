@@ -399,6 +399,29 @@ export const appRouter = router({
       .query(async () => {
         return db.getClassificationStats();
       }),
+
+    // Browse all ideas (with filters)
+    ideas: router({
+      browse: publicProcedure
+        .input(z.object({
+          search: z.string().optional(),
+          category: z.string().optional(),
+          status: z.string().optional(),
+          limit: z.number().optional(),
+          offset: z.number().optional(),
+        }))
+        .query(async ({ input }) => {
+          // Get all ideas with filters
+          const ideas = await db.getAllIdeas({
+            search: input.search,
+            category: input.category,
+            status: input.status,
+            limit: input.limit || 50,
+            offset: input.offset || 0,
+          });
+          return ideas;
+        }),
+    }),
   }),
 
   // ============================================

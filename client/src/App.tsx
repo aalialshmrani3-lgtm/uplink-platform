@@ -68,6 +68,8 @@ const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const Uplink1 = lazy(() => import("./pages/Uplink1"));
 const SubmitIdea = lazy(() => import('@/pages/SubmitIdea'));
 const MyIdeas = lazy(() => import('@/pages/MyIdeas'));
+const Uplink1BrowseIdeas = lazy(() => import('@/pages/Uplink1BrowseIdeas'));
+const Uplink1IdeaDetail = lazy(() => import('@/pages/Uplink1IdeaDetail'));
 const Uplink2 = lazy(() => import("./pages/Uplink2"));
 const Uplink3 = lazy(() => import("./pages/Uplink3"));
 const UserProfile = lazy(() => import("./pages/UserProfile")); // Added for Flowchart Match
@@ -264,6 +266,8 @@ function Router() {
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/uplink1" component={Uplink1} />
         <Route path="/uplink1/submit" component={SubmitIdea} />
+        <Route path="/uplink1/browse" component={Uplink1BrowseIdeas} />
+        <Route path="/uplink1/ideas/:id" component={Uplink1IdeaDetail} />
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/uplink2" component={Uplink2} />
         <Route path="/uplink2/hackathons" component={Uplink2Hackathons} /> {/* Added for Flowchart Match */}
