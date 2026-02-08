@@ -127,6 +127,21 @@ contract UplinkContract is Ownable, ReentrancyGuard {
     }
     
     /**
+     * @dev Start working on a milestone
+     */
+    function startMilestone(uint256 _contractId, uint256 _milestoneIndex) external {
+        Contract storage c = contracts[_contractId];
+        require(c.status == ContractStatus.ACTIVE, "Contract not active");
+        require(msg.sender == c.innovator, "Only innovator can start milestone");
+        require(_milestoneIndex < c.milestones.length, "Invalid milestone");
+        
+        Milestone storage milestone = c.milestones[_milestoneIndex];
+        require(milestone.status == MilestoneStatus.PENDING, "Milestone not pending");
+        
+        milestone.status = MilestoneStatus.IN_PROGRESS;
+    }
+    
+    /**
      * @dev Complete milestone and request fund release
      */
     function completeMilestone(uint256 _contractId, uint256 _milestoneIndex) external {
@@ -140,6 +155,21 @@ contract UplinkContract is Ownable, ReentrancyGuard {
         
         milestone.status = MilestoneStatus.COMPLETED;
         emit MilestoneCompleted(_contractId, _milestoneIndex);
+    }
+    
+    /**
+     * @dev Reject milestone completion
+     */
+    function rejectMilestone(uint256 _contractId, uint256 _milestoneIndex) external {
+        Contract storage c = contracts[_contractId];
+        require(c.status == ContractStatus.ACTIVE, "Contract not active");
+        require(msg.sender == c.investor, "Only investor can reject");
+        require(_milestoneIndex < c.milestones.length, "Invalid milestone");
+        
+        Milestone storage milestone = c.milestones[_milestoneIndex];
+        require(milestone.status == MilestoneStatus.COMPLETED, "Milestone not completed");
+        
+        milestone.status = MilestoneStatus.REJECTED;
     }
     
     /**

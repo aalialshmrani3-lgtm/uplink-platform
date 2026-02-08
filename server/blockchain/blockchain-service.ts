@@ -6,7 +6,9 @@ const UPLINK_CONTRACT_ABI = [
   "function addMilestone(uint256 _contractId, string _description, uint256 _amount, uint256 _deadline)",
   "function activateContract(uint256 _contractId)",
   "function depositFunds(uint256 _contractId) payable",
+  "function startMilestone(uint256 _contractId, uint256 _milestoneIndex)",
   "function completeMilestone(uint256 _contractId, uint256 _milestoneIndex)",
+  "function rejectMilestone(uint256 _contractId, uint256 _milestoneIndex)",
   "function approveMilestone(uint256 _contractId, uint256 _milestoneIndex)",
   "function cancelContract(uint256 _contractId)",
   "function raiseDispute(uint256 _contractId)",
@@ -176,6 +178,32 @@ export class BlockchainService {
   }
 
   /**
+   * Start milestone
+   */
+  async startMilestone(params: {
+    contractId: number;
+    milestoneIndex: number;
+    privateKey: string;
+  }): Promise<{ transactionHash: string }> {
+    try {
+      const wallet = new ethers.Wallet(params.privateKey, this.provider);
+      const contractWithSigner = this.contract.connect(wallet);
+
+      const tx = await contractWithSigner.startMilestone(
+        params.contractId,
+        params.milestoneIndex
+      );
+
+      const receipt = await tx.wait();
+
+      return { transactionHash: receipt.hash };
+    } catch (error: any) {
+      console.error('[Blockchain] Start milestone error:', error);
+      throw new Error(`Failed to start milestone: ${error.message}`);
+    }
+  }
+
+  /**
    * Complete milestone
    */
   async completeMilestone(params: {
@@ -198,6 +226,32 @@ export class BlockchainService {
     } catch (error: any) {
       console.error('[Blockchain] Complete milestone error:', error);
       throw new Error(`Failed to complete milestone: ${error.message}`);
+    }
+  }
+
+  /**
+   * Reject milestone completion
+   */
+  async rejectMilestone(params: {
+    contractId: number;
+    milestoneIndex: number;
+    privateKey: string;
+  }): Promise<{ transactionHash: string }> {
+    try {
+      const wallet = new ethers.Wallet(params.privateKey, this.provider);
+      const contractWithSigner = this.contract.connect(wallet);
+
+      const tx = await contractWithSigner.rejectMilestone(
+        params.contractId,
+        params.milestoneIndex
+      );
+
+      const receipt = await tx.wait();
+
+      return { transactionHash: receipt.hash };
+    } catch (error: any) {
+      console.error('[Blockchain] Reject milestone error:', error);
+      throw new Error(`Failed to reject milestone: ${error.message}`);
     }
   }
 
