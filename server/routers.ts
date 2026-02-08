@@ -2565,6 +2565,30 @@ Provide response in JSON format:
           // TODO: Import and use event functions
           return { success: true, id: 1 };
         }),
+
+      host: protectedProcedure
+        .input(z.object({
+          title: z.string(),
+          description: z.string(),
+          type: z.enum(['hackathon', 'workshop', 'conference']),
+          date: z.string(),
+          location: z.string(),
+          capacity: z.string(),
+          budget: z.string(),
+          needSponsors: z.boolean(),
+          needInnovators: z.boolean(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Save event to database and create matching requests
+          return { success: true, eventId: 1 };
+        }),
+
+      complete: protectedProcedure
+        .input(z.object({ eventId: z.number() }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Mark event as complete and create contracts in UPLINK3
+          return { success: true, contractsCreated: 0 };
+        }),
     }),
 
     // Matching
@@ -2740,13 +2764,37 @@ Provide response in JSON format:
 
       getStats: protectedProcedure
         .query(async ({ ctx }) => {
-          // TODO: Import and use escrow functions
+          // TODO: Implement getStats
           return {
-            totalEscrow: '0',
-            totalReleased: '0',
-            activeEscrows: 0,
-            completedEscrows: 0,
+            totalHackathons: 0,
+            totalParticipants: 0,
+            activeHackathons: 0,
+            completedHackathons: 0,
           };
+        }),
+    }),
+
+    // Challenges router
+    challenges: router({
+      submit: protectedProcedure
+        .input(z.object({
+          title: z.string(),
+          description: z.string(),
+          category: z.string(),
+          requirements: z.string(),
+          prize: z.string(),
+          deadline: z.string(),
+          targetAudience: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Save challenge to database
+          return { success: true, challengeId: 1 };
+        }),
+
+      getAll: publicProcedure
+        .query(async () => {
+          // TODO: Get all challenges from database
+          return [];
         }),
     }),
   }),

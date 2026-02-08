@@ -76,6 +76,8 @@ const Uplink2Matching = lazy(() => import("./pages/Uplink2Matching")); // Added 
 const Uplink3Contracts = lazy(() => import("./pages/Uplink3Contracts")); // Added for Flowchart Match
 const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for Flowchart Match
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
+const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge")); // Submit Challenge
+const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host Event Dashboard
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -258,6 +260,8 @@ function Router() {
         <Route path="/uplink2/hackathons" component={Uplink2Hackathons} /> {/* Added for Flowchart Match */}
         <Route path="/uplink2/events" component={Uplink2Events} /> {/* Added for Flowchart Match */}
         <Route path="/uplink2/matching" component={Uplink2Matching} /> {/* Added for Flowchart Match */}
+        <Route path="/uplink2/submit-challenge" component={Uplink2SubmitChallenge} /> {/* Submit Challenge */}
+        <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}
         <Route path="/uplink3" component={Uplink3} />
         <Route path="/uplink3/contracts" component={Uplink3Contracts} /> {/* Added for Flowchart Match */}
         <Route path="/uplink3/escrow" component={Uplink3Escrow} /> {/* Added for Flowchart Match */}
