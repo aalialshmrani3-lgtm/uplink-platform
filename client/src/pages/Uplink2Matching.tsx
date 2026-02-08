@@ -11,10 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { Users, TrendingUp, CheckCircle, XCircle, AlertCircle, Search } from 'lucide-react';
 import MatchCard from '@/components/MatchCard';
+import TagFilter from '@/components/TagFilter';
 
 export default function Uplink2Matching() {
   const { user } = useAuth();
   const [showRequestForm, setShowRequestForm] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const { data: matches, isLoading } = trpc.uplink2.matching.getMyMatches.useQuery(undefined, {
     enabled: !!user
@@ -267,7 +269,20 @@ export default function Uplink2Matching() {
 
         {/* Matches List */}
         <div>
-          <h2 className="text-2xl font-bold text-white mb-6">مطابقاتي</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-white">مطابقاتي</h2>
+          </div>
+          
+          {/* Tag Filter */}
+          <TagFilter
+            availableTags={[
+              'تقنية', 'صحة', 'تعليم', 'طاقة', 'بيئة',
+              'نقل', 'زراعة', 'تجزئة', 'تجارة', 'تصنيع',
+              'AI', 'IoT', 'Blockchain', 'ذكاء اصطناعي', 'ابتكار'
+            ]}
+            selectedTags={selectedTags}
+            onTagsChange={setSelectedTags}
+          />
           
           {isLoading ? (
             <div className="text-center py-12 text-slate-400">جاري التحميل...</div>
