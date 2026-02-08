@@ -190,9 +190,11 @@ export default function Uplink1() {
 
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in-up animation-delay-300">
               {user ? (
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  ابدأ تحليل فكرتك
+                <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Link href="/uplink1/submit">
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    ابدأ تحليل فكرتك
+                  </Link>
                 </Button>
               ) : (
                 <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
