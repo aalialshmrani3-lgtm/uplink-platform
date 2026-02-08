@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Users, TrendingUp, CheckCircle, XCircle, AlertCircle, Search } from 'lucide-react';
+import MatchCard from '@/components/MatchCard';
 
 export default function Uplink2Matching() {
   const { user } = useAuth();
@@ -133,11 +134,11 @@ export default function Uplink2Matching() {
               <CardTitle className="text-white text-lg">معايير المطابقة</CardTitle>
             </CardHeader>
             <CardContent className="text-slate-400 text-sm space-y-2">
-              <p>• توافق الصناعة (25%)</p>
-              <p>• توافق المرحلة/الخبرة (25%)</p>
-              <p>• توافق الميزانية (20%)</p>
-              <p>• توافق المتطلبات (20%)</p>
-              <p>• التوافق الجغرافي (10%)</p>
+              <p>• تشابه علامات الذكاء الاصطناعي (40%)</p>
+              <p>• توافق الصناعة (30%)</p>
+              <p>• توافق مستوى الابتكار (15%)</p>
+              <p>• توافق الجدوى (15%)</p>
+              <p className="text-cyan-400 mt-2 text-xs">✨ محسّن بالذكاء الاصطناعي</p>
             </CardContent>
           </Card>
 
@@ -272,84 +273,24 @@ export default function Uplink2Matching() {
             <div className="text-center py-12 text-slate-400">جاري التحميل...</div>
           ) : matches && matches.length > 0 ? (
             <div className="grid grid-cols-1 gap-6">
-              {matches.map((match: any) => (
-                <Card key={match.id} className="bg-slate-900/50 backdrop-blur-xl border-slate-800 hover:border-cyan-500/50 transition-all">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle className="text-white">{match.candidateName || 'مرشح'}</CardTitle>
-                        <CardDescription className="text-slate-400">
-                          {match.candidateType} • {match.industry}
-                        </CardDescription>
-                      </div>
-                      <div className="text-left">
-                        <div className={`text-3xl font-bold ${getScoreColor(match.score)}`}>
-                          {match.score}%
-                        </div>
-                        <div className={`text-sm ${getScoreColor(match.score)}`}>
-                          {getScoreLabel(match.score)}
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <p className="text-slate-500">الصناعة</p>
-                        <p className="text-white">{match.industry || 'غير محدد'}</p>
-                      </div>
-                      <div>
-                        <p className="text-slate-500">الخبرة</p>
-                        <p className="text-white">{match.experience || 'غير محدد'}</p>
-                      </div>
-                      <div>
-                        <p className="text-slate-500">الموقع</p>
-                        <p className="text-white">{match.location || 'غير محدد'}</p>
-                      </div>
-                      <div>
-                        <p className="text-slate-500">الحالة</p>
-                        <p className="text-white">{match.status === 'suggested' ? 'مقترح' : match.status}</p>
-                      </div>
-                    </div>
-
-                    {match.status === 'suggested' && (
-                      <div className="flex gap-2 pt-2">
-                        <Button
-                          onClick={() => acceptMutation.mutate({ matchId: match.id })}
-                          disabled={acceptMutation.isPending}
-                          className="flex-1 bg-green-600 hover:bg-green-700"
-                        >
-                          <CheckCircle className="w-4 h-4 mr-2" />
-                          قبول
-                        </Button>
-                        <Button
-                          onClick={() => rejectMutation.mutate({ matchId: match.id })}
-                          disabled={rejectMutation.isPending}
-                          variant="outline"
-                          className="flex-1 border-red-600 text-red-400 hover:bg-red-600/10"
-                        >
-                          <XCircle className="w-4 h-4 mr-2" />
-                          رفض
-                        </Button>
-                      </div>
-                    )}
-
-                    {match.status === 'accepted' && (
-                      <div className="flex items-center gap-2 text-green-400 bg-green-400/10 p-3 rounded-lg">
-                        <CheckCircle className="w-5 h-5" />
-                        <span>تم القبول - يمكنك التواصل الآن</span>
-                      </div>
-                    )}
-
-                    {match.status === 'rejected' && (
-                      <div className="flex items-center gap-2 text-red-400 bg-red-400/10 p-3 rounded-lg">
-                        <XCircle className="w-5 h-5" />
-                        <span>تم الرفض</span>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
+              {matches.flatMap((request: any) => 
+                request.matches?.map((match: any) => (
+                  <MatchCard
+                    key={match.matchId}
+                    match={{
+                      matchId: match.matchId,
+                      userId: match.userId,
+                      userName: match.userName,
+                      score: match.score,
+                      reasons: match.reasons || [],
+                      aiTags: match.aiTags || [],
+                      status: match.status || 'pending',
+                    }}
+                    onAccept={(matchId) => acceptMutation.mutate({ matchId })}
+                    onReject={(matchId) => rejectMutation.mutate({ matchId })}
+                  />
+                )) || []
+              )}
             </div>
           ) : (
             <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
