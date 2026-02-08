@@ -11,7 +11,8 @@ export const users = mysqlTable("users", {
   phone: varchar("phone", { length: 20 }),
   avatar: text("avatar"),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin", "innovator", "investor", "company", "government"]).default("user").notNull(),
+  role: mysqlEnum("role", ["user", "admin", "innovator", "investor", "company", "government", "private_sector"]).default("user").notNull(),
+  userType: mysqlEnum("userType", ["innovator", "investor", "company", "government", "private_sector"]),
   organizationName: text("organizationName"),
   organizationType: varchar("organizationType", { length: 100 }),
   country: varchar("country", { length: 100 }),
@@ -1312,3 +1313,247 @@ export const classificationHistory = mysqlTable("classification_history", {
 
 export type ClassificationHistory = typeof classificationHistory.$inferSelect;
 export type InsertClassificationHistory = typeof classificationHistory.$inferInsert;
+
+// ============================================
+// USER PROFILES (5 TYPES)
+// ============================================
+
+// Innovator Profile
+export const innovatorProfiles = mysqlTable("innovator_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  
+  // Skills & Expertise
+  skills: json("skills"), // Array of skills
+  expertise: json("expertise"), // Array of expertise areas
+  education: json("education"), // Array of education records
+  experience: json("experience"), // Array of work experience
+  
+  // Portfolio
+  portfolio: json("portfolio"), // Array of projects/achievements
+  certifications: json("certifications"),
+  publications: json("publications"),
+  
+  // Preferences
+  interestedIndustries: json("interestedIndustries"),
+  lookingForFunding: boolean("lookingForFunding").default(false),
+  fundingAmount: decimal("fundingAmount", { precision: 15, scale: 2 }),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type InnovatorProfile = typeof innovatorProfiles.$inferSelect;
+export type InsertInnovatorProfile = typeof innovatorProfiles.$inferInsert;
+
+// Investor Profile
+export const investorProfiles = mysqlTable("investor_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  
+  // Investment Preferences
+  investmentRange: json("investmentRange"), // {min, max, currency}
+  industries: json("industries"), // Array of interested industries
+  stagePreference: json("stagePreference"), // Array: idea, prototype, mvp, growth, scale
+  geographicFocus: json("geographicFocus"), // Array of countries/regions
+  
+  // Investment History
+  totalInvestments: int("totalInvestments").default(0),
+  successfulExits: int("successfulExits").default(0),
+  portfolio: json("portfolio"), // Array of invested projects
+  
+  // Profile
+  investorType: mysqlEnum("investorType", ["angel", "vc", "corporate", "family_office", "government"]),
+  fundSize: decimal("fundSize", { precision: 15, scale: 2 }),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type InvestorProfile = typeof investorProfiles.$inferSelect;
+export type InsertInvestorProfile = typeof investorProfiles.$inferInsert;
+
+// Company Profile
+export const companyProfiles = mysqlTable("company_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  
+  // Company Info
+  companySize: mysqlEnum("companySize", ["1-10", "11-50", "51-200", "201-500", "501-1000", "1000+"]),
+  industry: varchar("industry", { length: 200 }),
+  revenue: decimal("revenue", { precision: 15, scale: 2 }),
+  headquarters: varchar("headquarters", { length: 200 }),
+  foundedYear: int("foundedYear"),
+  
+  // Business
+  businessModel: text("businessModel"),
+  products: json("products"),
+  services: json("services"),
+  clients: json("clients"),
+  
+  // Innovation Needs
+  lookingForInnovation: boolean("lookingForInnovation").default(false),
+  innovationAreas: json("innovationAreas"),
+  budget: decimal("budget", { precision: 15, scale: 2 }),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CompanyProfile = typeof companyProfiles.$inferSelect;
+export type InsertCompanyProfile = typeof companyProfiles.$inferInsert;
+
+// Government Profile
+export const governmentProfiles = mysqlTable("government_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  
+  // Government Entity
+  department: varchar("department", { length: 200 }),
+  ministry: varchar("ministry", { length: 200 }),
+  level: mysqlEnum("level", ["federal", "state", "local"]),
+  
+  // Budget & Focus
+  annualBudget: decimal("annualBudget", { precision: 15, scale: 2 }),
+  focusAreas: json("focusAreas"), // Array of focus areas
+  priorities: json("priorities"),
+  
+  // Programs
+  programs: json("programs"), // Array of government programs
+  grants: json("grants"), // Array of available grants
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type GovernmentProfile = typeof governmentProfiles.$inferSelect;
+export type InsertGovernmentProfile = typeof governmentProfiles.$inferInsert;
+
+// Private Sector Profile
+export const privateSectorProfiles = mysqlTable("private_sector_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  
+  // Organization Info
+  sector: varchar("sector", { length: 200 }),
+  organizationType: mysqlEnum("organizationType", ["ngo", "foundation", "association", "chamber", "incubator", "accelerator"]),
+  
+  // Services & Programs
+  services: json("services"),
+  programs: json("programs"),
+  partnerships: json("partnerships"),
+  
+  // Support Offered
+  supportTypes: json("supportTypes"), // Array: funding, mentorship, networking, training
+  targetGroups: json("targetGroups"), // Array: startups, students, researchers, etc.
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PrivateSectorProfile = typeof privateSectorProfiles.$inferSelect;
+export type InsertPrivateSectorProfile = typeof privateSectorProfiles.$inferInsert;
+
+// ============================================
+// UPLINK2: EVENTS
+// ============================================
+
+// Events (Hackathons, Workshops, Conferences)
+export const events = mysqlTable("events", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(), // Event host
+  
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description").notNull(),
+  type: mysqlEnum("type", ["hackathon", "workshop", "conference"]).notNull(),
+  
+  // Location & Time
+  location: varchar("location", { length: 500 }),
+  isVirtual: boolean("isVirtual").default(false),
+  startDate: timestamp("startDate").notNull(),
+  endDate: timestamp("endDate").notNull(),
+  
+  // Capacity & Budget
+  capacity: int("capacity"),
+  budget: decimal("budget", { precision: 15, scale: 2 }),
+  
+  // Needs
+  needSponsors: boolean("needSponsors").default(false),
+  needInnovators: boolean("needInnovators").default(false),
+  sponsorshipTiers: json("sponsorshipTiers"),
+  
+  // Status
+  status: mysqlEnum("status", ["draft", "published", "ongoing", "completed", "cancelled"]).default("draft"),
+  
+  // Stats
+  registrations: int("registrations").default(0),
+  sponsors: int("sponsors").default(0),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Event = typeof events.$inferSelect;
+export type InsertEvent = typeof events.$inferInsert;
+
+// Event Registrations
+export const eventRegistrations = mysqlTable("event_registrations", {
+  id: int("id").autoincrement().primaryKey(),
+  eventId: int("eventId").notNull(),
+  userId: int("userId").notNull(),
+  
+  attendeeType: mysqlEnum("attendeeType", ["innovator", "investor", "sponsor", "speaker", "attendee"]).notNull(),
+  additionalInfo: text("additionalInfo"),
+  
+  // Sponsorship (if sponsor)
+  sponsorshipTier: varchar("sponsorshipTier", { length: 100 }),
+  sponsorshipAmount: decimal("sponsorshipAmount", { precision: 15, scale: 2 }),
+  
+  status: mysqlEnum("status", ["pending", "approved", "rejected", "attended"]).default("pending"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type EventRegistration = typeof eventRegistrations.$inferSelect;
+export type InsertEventRegistration = typeof eventRegistrations.$inferInsert;
+
+// Matching Requests
+export const matchingRequests = mysqlTable("matching_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  
+  seekingType: mysqlEnum("seekingType", ["investor", "innovator", "partner", "mentor", "sponsor"]).notNull(),
+  industry: varchar("industry", { length: 200 }),
+  stage: varchar("stage", { length: 100 }),
+  budget: decimal("budget", { precision: 15, scale: 2 }),
+  location: varchar("location", { length: 200 }),
+  requirements: text("requirements").notNull(),
+  preferences: text("preferences"),
+  
+  status: mysqlEnum("status", ["active", "matched", "closed"]).default("active"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type MatchingRequest = typeof matchingRequests.$inferSelect;
+export type InsertMatchingRequest = typeof matchingRequests.$inferInsert;
+
+// Matches
+export const matches = mysqlTable("matches", {
+  id: int("id").autoincrement().primaryKey(),
+  requestId: int("requestId").notNull(),
+  matchedUserId: int("matchedUserId").notNull(),
+  
+  score: decimal("score", { precision: 5, scale: 2 }).notNull(), // 0-100
+  reasons: json("reasons"), // Array of matching reasons
+  
+  status: mysqlEnum("status", ["pending", "accepted", "rejected", "expired"]).default("pending"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Match = typeof matches.$inferSelect;
+export type InsertMatch = typeof matches.$inferInsert;
