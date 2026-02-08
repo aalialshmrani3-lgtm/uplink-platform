@@ -75,6 +75,7 @@ const Uplink2Events = lazy(() => import("./pages/Uplink2Events")); // Added for 
 const Uplink2Matching = lazy(() => import("./pages/Uplink2Matching")); // Added for Flowchart Match
 const Uplink3Contracts = lazy(() => import("./pages/Uplink3Contracts")); // Added for Flowchart Match
 const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for Flowchart Match
+const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -261,6 +262,7 @@ function Router() {
         <Route path="/uplink3/contracts" component={Uplink3Contracts} /> {/* Added for Flowchart Match */}
         <Route path="/uplink3/escrow" component={Uplink3Escrow} /> {/* Added for Flowchart Match */}
         {/* /admin route already exists at /admin/dashboard */}
+        <Route path="/search" component={GlobalSearch} /> {/* Added for Flowchart Match */}
         <Route path="/academy" component={Academy} />
         <Route path="/elite" component={Elite} />
         <Route path="/developers" component={Developers} />

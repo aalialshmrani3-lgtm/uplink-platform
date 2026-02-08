@@ -2811,6 +2811,54 @@ Provide response in JSON format:
         return { success: true };
       }),
   }),
+
+  // ============================================
+  // SEARCH - Global Search
+  // ============================================
+  search: router({
+    global: publicProcedure
+      .input(z.object({ 
+        query: z.string(),
+        type: z.enum(['all', 'ideas', 'users', 'events', 'contracts']).default('all')
+      }))
+      .query(async ({ input }) => {
+        // TODO: Implement global search
+        return {
+          ideas: [],
+          users: [],
+          events: [],
+          contracts: []
+        };
+      }),
+  }),
+
+  // ============================================
+  // MESSAGES - Messaging System
+  // ============================================
+  messages: router({
+    getConversations: protectedProcedure
+      .query(async ({ ctx }) => {
+        // TODO: Implement getConversations
+        return [];
+      }),
+
+    getMessages: protectedProcedure
+      .input(z.object({ conversationId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        // TODO: Implement getMessages
+        return [];
+      }),
+
+    send: protectedProcedure
+      .input(z.object({
+        conversationId: z.number(),
+        content: z.string()
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // TODO: Implement send message
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
