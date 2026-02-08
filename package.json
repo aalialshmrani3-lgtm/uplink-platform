@@ -16,6 +16,7 @@
     "@aws-sdk/client-s3": "^3.693.0",
     "@aws-sdk/s3-request-presigner": "^3.693.0",
     "@hookform/resolvers": "^5.2.2",
+    "@openzeppelin/contracts": "^5.4.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -57,6 +58,7 @@
     "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.5",
     "embla-carousel-react": "^8.6.0",
+    "ethers": "6",
     "express": "^4.21.2",
     "framer-motion": "^12.23.22",
     "i18next": "^25.8.0",
@@ -86,6 +88,7 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2",
+    "web3": "^4.16.0",
     "wouter": "^3.3.5",
     "ws": "^8.19.0",
     "zod": "^4.3.6"

@@ -75,7 +75,8 @@ const UserSettings = lazy(() => import("./pages/UserSettings")); // Added for Fl
 const Uplink2Hackathons = lazy(() => import("./pages/Uplink2Hackathons")); // Added for Flowchart Match
 const Uplink2Events = lazy(() => import("./pages/Uplink2Events")); // Added for Flowchart Match
 const Uplink2Matching = lazy(() => import("./pages/Uplink2Matching")); // Added for Flowchart Match
-const Uplink3Contracts = lazy(() => import("./pages/Uplink3Contracts")); // Added for Flowchart Match
+const Uplink3Contracts = lazy(() => import('./pages/Uplink3Contracts'));
+const Uplink3BlockchainContracts = lazy(() => import('./pages/Uplink3BlockchainContracts')); // Added for Flowchart Match
 const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for Flowchart Match
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
 const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge")); // Submit Challenge
