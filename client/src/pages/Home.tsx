@@ -143,11 +143,18 @@ export default function Home() {
                 </Button>
               </Link>
             ) : (
-              <a href={getLoginUrl()}>
-                <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
-                  {t.common.login}
-                </Button>
-              </a>
+              <>
+                <Link href="/register">
+                  <Button variant="outline" className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
+                    تسجيل
+                  </Button>
+                </Link>
+                <a href={getLoginUrl()}>
+                  <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                    {t.common.login}
+                  </Button>
+                </a>
+              </>
             )}
           </div>
         </div>
