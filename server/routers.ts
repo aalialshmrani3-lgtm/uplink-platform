@@ -9,6 +9,7 @@ import * as db from "./db";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink1-ai-analyzer";
 import crypto from "crypto";
+import * as hackathonsService from "./uplink2/hackathons";
 
 export const appRouter = router({
   system: systemRouter,
@@ -2513,40 +2514,76 @@ Provide response in JSON format:
           startDate: z.string(),
           endDate: z.string(),
           location: z.string().optional(),
-          isOnline: z.boolean().default(false),
-          maxTeams: z.number().optional(),
-          prizes: z.string().optional(),
-          requirements: z.string().optional(),
-          tags: z.array(z.string()).optional(),
+          isVirtual: z.boolean().default(false),
+          capacity: z.number().optional(),
+          budget: z.string().optional(),
+          needSponsors: z.boolean().optional(),
+          needInnovators: z.boolean().optional(),
+          sponsorshipTiers: z.any().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use hackathon functions
-          return { success: true, id: 1 };
+          const hackathon = await hackathonsService.createHackathon({
+            userId: ctx.user.id,
+            title: input.title,
+            description: input.description,
+            startDate: new Date(input.startDate),
+            endDate: new Date(input.endDate),
+            location: input.location,
+            isVirtual: input.isVirtual,
+            capacity: input.capacity,
+            budget: input.budget,
+            needSponsors: input.needSponsors,
+            needInnovators: input.needInnovators,
+            sponsorshipTiers: input.sponsorshipTiers,
+          });
+          return { success: true, hackathon };
         }),
 
       getAll: publicProcedure
         .input(z.object({
-          status: z.enum(['upcoming', 'ongoing', 'completed']).optional(),
-          isOnline: z.boolean().optional(),
+          status: z.enum(['draft', 'published', 'ongoing', 'completed', 'cancelled']).optional(),
+          isVirtual: z.boolean().optional(),
         }).optional())
         .query(async ({ input }) => {
-          // TODO: Import and use hackathon functions
-          return [];
+          const hackathons = await hackathonsService.getAllHackathons(input || {});
+          return hackathons;
+        }),
+
+      getById: publicProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          const hackathon = await hackathonsService.getHackathonById(input.id);
+          return hackathon;
         }),
 
       register: protectedProcedure
         .input(z.object({
-          hackathonId: z.number(),
-          teamName: z.string().min(2),
-          members: z.array(z.object({
-            userId: z.number(),
-            role: z.string(),
-          })),
-          projectDescription: z.string().optional(),
+          eventId: z.number(),
+          attendeeType: z.enum(['innovator', 'investor', 'sponsor', 'speaker', 'attendee']),
+          additionalInfo: z.string().optional(),
+          sponsorshipTier: z.string().optional(),
+          sponsorshipAmount: z.string().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use hackathon functions
-          return { success: true, id: 1 };
+          const registration = await hackathonsService.registerForHackathon({
+            eventId: input.eventId,
+            userId: ctx.user.id,
+            attendeeType: input.attendeeType,
+            additionalInfo: input.additionalInfo,
+            sponsorshipTier: input.sponsorshipTier,
+            sponsorshipAmount: input.sponsorshipAmount,
+          });
+          return { success: true, registration };
+        }),
+
+      updateStatus: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          status: z.enum(['draft', 'published', 'ongoing', 'completed', 'cancelled']),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          await hackathonsService.updateHackathonStatus(input.id, input.status);
+          return { success: true };
         }),
     }),
 
