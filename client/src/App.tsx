@@ -70,6 +70,7 @@ const SubmitIdea = lazy(() => import('@/pages/SubmitIdea'));
 const MyIdeas = lazy(() => import('@/pages/MyIdeas'));
 const Uplink1BrowseIdeas = lazy(() => import('@/pages/Uplink1BrowseIdeas'));
 const Uplink1IdeaDetail = lazy(() => import('@/pages/Uplink1IdeaDetail'));
+const Uplink1IdeaAnalysis = lazy(() => import('@/pages/Uplink1IdeaAnalysis'));
 const Uplink2BrowseHackathons = lazy(() => import('@/pages/Uplink2BrowseHackathons'));
 const Uplink2CreateHackathon = lazy(() => import('@/pages/Uplink2CreateHackathon'));
 const Uplink2HackathonDetail = lazy(() => import('@/pages/Uplink2HackathonDetail'));
@@ -274,6 +275,7 @@ function Router() {
         <Route path="/uplink1/submit" component={SubmitIdea} />
         <Route path="/uplink1/browse" component={Uplink1BrowseIdeas} />
         <Route path="/uplink1/ideas/:id" component={Uplink1IdeaDetail} />
+        <Route path="/uplink1/ideas/:id/analysis" component={Uplink1IdeaAnalysis} />
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/uplink2" component={Uplink2} />
         <Route path="/uplink2/hackathons" component={Uplink2BrowseHackathons} />

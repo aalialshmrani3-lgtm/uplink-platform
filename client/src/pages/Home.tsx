@@ -13,6 +13,7 @@ import {
   MessageSquare, PenTool, Target, Layers, CheckCircle2
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "wouter";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEOHead from "@/components/SEOHead";
@@ -441,6 +442,99 @@ export default function Home() {
                     alt={partner.alt}
                     className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
                   />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Registration Section */}
+      <section className="py-24 px-6 relative">
+        <div className="container">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <Badge className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
+                <Users className="w-3 h-3 ml-1" />
+                سجل الآن
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+                سجل في UPLINK
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                اختر نوع حسابك وابدأ رحلتك في منظومة الابتكار العالمية
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  type: 'government',
+                  title: 'حكومة',
+                  description: 'للجهات الحكومية والهيئات الرسمية',
+                  icon: Building2,
+                  color: 'from-blue-500 to-indigo-600',
+                  borderColor: 'border-blue-500/30',
+                },
+                {
+                  type: 'company',
+                  title: 'شركة قطاع خاص',
+                  description: 'للشركات والمؤسسات الخاصة',
+                  icon: Building2,
+                  color: 'from-purple-500 to-pink-600',
+                  borderColor: 'border-purple-500/30',
+                },
+                {
+                  type: 'international',
+                  title: 'منظمة دولية',
+                  description: 'للمنظمات والهيئات الدولية',
+                  icon: Globe,
+                  color: 'from-green-500 to-emerald-600',
+                  borderColor: 'border-green-500/30',
+                },
+                {
+                  type: 'innovator',
+                  title: 'مبتكر فردي',
+                  description: 'للمبتكرين والمخترعين الأفراد',
+                  icon: Lightbulb,
+                  color: 'from-yellow-500 to-orange-600',
+                  borderColor: 'border-yellow-500/30',
+                },
+                {
+                  type: 'university',
+                  title: 'جامعة/مؤسسة بحثية',
+                  description: 'للجامعات والمراكز البحثية',
+                  icon: GraduationCap,
+                  color: 'from-cyan-500 to-blue-600',
+                  borderColor: 'border-cyan-500/30',
+                },
+                {
+                  type: 'investor',
+                  title: 'مستثمر',
+                  description: 'للمستثمرين وصناديق الاستثمار',
+                  icon: Crown,
+                  color: 'from-amber-500 to-yellow-600',
+                  borderColor: 'border-amber-500/30',
+                },
+              ].map((option) => (
+                <div key={option.type} onClick={() => window.location.href = `/register?type=${option.type}`}>
+                  <Card className={`group h-full bg-card/50 backdrop-blur-sm border ${option.borderColor} hover:border-opacity-100 transition-all duration-300 hover:scale-105 cursor-pointer`}>
+                    <CardHeader>
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${option.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                        <option.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <CardTitle className="text-foreground text-xl">{option.title}</CardTitle>
+                      <CardDescription className="text-muted-foreground">
+                        {option.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button variant="ghost" className="w-full group-hover:bg-secondary/50">
+                        سجل الآن
+                        <ChevronRight className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </div>
               ))}
             </div>

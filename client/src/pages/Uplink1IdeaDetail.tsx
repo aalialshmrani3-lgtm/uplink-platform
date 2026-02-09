@@ -145,6 +145,25 @@ export default function Uplink1IdeaDetail() {
           </Card>
         </div>
 
+        {/* Analysis Button */}
+        <Card className="mb-8 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 border-cyan-500/30">
+          <CardContent className="py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-white text-lg font-semibold mb-2">فحص الفكرة بالذكاء الاصطناعي</h3>
+                <p className="text-slate-400">احصل على تحليل شامل لفكرتك مع توصيات مخصصة</p>
+              </div>
+              <Button 
+                onClick={() => navigate(`/uplink1/ideas/${ideaId}/analysis`)}
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white"
+              >
+                <Zap className="w-4 h-4 ml-2" />
+                عرض التحليل
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* AI Analysis */}
         {analysis && (
           <div className="space-y-6">
