@@ -12,7 +12,6 @@ export const users = mysqlTable("users", {
   avatar: text("avatar"),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["user", "admin", "innovator", "investor", "company", "government", "private_sector"]).default("user").notNull(),
-  userType: mysqlEnum("userType", ["innovator", "investor", "company", "government", "private_sector"]),
   organizationName: text("organizationName"),
   organizationType: varchar("organizationType", { length: 100 }),
   country: varchar("country", { length: 100 }),
