@@ -1,0 +1,249 @@
+/**
+ * Purchase Options System for UPLINK 3
+ * 
+ * Provides three purchase options for organizations:
+ * 1. Solution Purchase (شراء الحل)
+ * 2. License Purchase (شراء التصريح/الترخيص)
+ * 3. Full Acquisition (الاستحواذ الكامل)
+ */
+
+import { getDb } from "../db";
+import { contracts, escrowTransactions } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
+import { createSmartContract } from "../blockchain/blockchain-service";
+
+export type PurchaseType = "solution" | "license" | "acquisition";
+
+interface PurchaseOption {
+  type: PurchaseType;
+  title: string;
+  titleAr: string;
+  description: string;
+  descriptionAr: string;
+  features: string[];
+  paymentStructure: "one-time" | "milestone-based" | "subscription";
+  intellectualProperty: "shared" | "licensed" | "full-transfer";
+}
+
+/**
+ * Available purchase options
+ */
+export const PURCHASE_OPTIONS: Record<PurchaseType, PurchaseOption> = {
+  solution: {
+    type: "solution",
+    title: "Solution Purchase",
+    titleAr: "شراء الحل",
+    description: "Purchase the implemented solution with usage rights",
+    descriptionAr: "شراء الحل المنفذ مع حقوق الاستخدام",
+    features: [
+      "Implemented solution delivery",
+      "Usage rights for the organization",
+      "Technical support (1 year)",
+      "Updates and maintenance (1 year)",
+      "Training and documentation"
+    ],
+    paymentStructure: "milestone-based",
+    intellectualProperty: "licensed"
+  },
+  license: {
+    type: "license",
+    title: "License Purchase",
+    titleAr: "شراء الترخيص",
+    description: "Purchase a license to use the intellectual property",
+    descriptionAr: "شراء ترخيص لاستخدام الملكية الفكرية",
+    features: [
+      "Exclusive or non-exclusive license",
+      "Usage rights within specified territory",
+      "Royalty-based or fixed-fee structure",
+      "Technical documentation",
+      "Limited support"
+    ],
+    paymentStructure: "subscription",
+    intellectualProperty: "licensed"
+  },
+  acquisition: {
+    type: "acquisition",
+    title: "Full Acquisition",
+    titleAr: "الاستحواذ الكامل",
+    description: "Full acquisition of the project and intellectual property",
+    descriptionAr: "الاستحواذ الكامل على المشروع والملكية الفكرية",
+    features: [
+      "Complete ownership transfer",
+      "All intellectual property rights",
+      "Source code and documentation",
+      "Team transfer option",
+      "Ongoing support from innovator (optional)"
+    ],
+    paymentStructure: "one-time",
+    intellectualProperty: "full-transfer"
+  }
+};
+
+/**
+ * Create a purchase contract
+ */
+export async function createPurchaseContract(data: {
+  innovatorId: number;
+  organizationId: number;
+  projectId: number;
+  purchaseType: PurchaseType;
+  totalAmount: number;
+  currency?: string;
+  milestones?: Array<{
+    title: string;
+    amount: number;
+    deadline: Date;
+  }>;
+  terms?: Record<string, any>;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  try {
+    const option = PURCHASE_OPTIONS[data.purchaseType];
+    
+    // Prepare contract terms
+    const contractTerms = {
+      purchaseType: data.purchaseType,
+      purchaseOption: option,
+      paymentStructure: option.paymentStructure,
+      intellectualProperty: option.intellectualProperty,
+      milestones: data.milestones || [],
+      customTerms: data.terms || {},
+      deliverables: option.features,
+      supportPeriod: data.purchaseType === "solution" ? "1 year" : "As per agreement",
+      confidentiality: "Standard NDA applies",
+      disputeResolution: "Arbitration in accordance with local laws"
+    };
+    
+    // Create Smart Contract on blockchain
+    let blockchainContractId = "pending_blockchain_deployment";
+    try {
+      const blockchainResult = await createSmartContract({
+        innovatorId: data.innovatorId,
+        investorId: data.organizationId,
+        ideaId: data.projectId,
+        contractType: data.purchaseType,
+        totalAmount: data.totalAmount,
+        milestones: data.milestones || []
+      });
+      blockchainContractId = blockchainResult.contractId || "pending";
+    } catch (error) {
+      console.warn("[Purchase Contract] Blockchain deployment pending:", error);
+    }
+    
+    // Create contract in database
+    const [newContract] = await db.insert(contracts).values({
+      projectId: data.projectId,
+      type: data.purchaseType === "solution" ? "service" : 
+            data.purchaseType === "license" ? "license" : "acquisition",
+      status: "draft",
+      totalAmount: data.totalAmount.toString(),
+      paidAmount: "0",
+      currency: data.currency || "USD",
+      startDate: new Date(),
+      endDate: data.milestones && data.milestones.length > 0 
+        ? data.milestones[data.milestones.length - 1].deadline 
+        : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year default
+      terms: JSON.stringify(contractTerms),
+      blockchainContractId,
+      escrowStatus: "pending"
+    }).$returningId();
+    
+    // Create escrow account
+    await db.insert(escrowTransactions).values({
+      escrowId: `ESC-${newContract.id}-${Date.now()}`,
+      amount: data.totalAmount.toString(),
+      currency: data.currency || "USD",
+      status: "pending",
+      releaseConditions: JSON.stringify({
+        type: option.paymentStructure,
+        milestones: data.milestones || [],
+        approvalRequired: true
+      })
+    });
+    
+    return {
+      success: true,
+      contractId: newContract.id,
+      blockchainContractId,
+      purchaseType: data.purchaseType,
+      totalAmount: data.totalAmount,
+      escrowCreated: true
+    };
+    
+  } catch (error) {
+    console.error("[Purchase Contract] Creation failed:", error);
+    throw error;
+  }
+}
+
+/**
+ * Process payment for a purchase contract
+ */
+export async function processPurchasePayment(data: {
+  contractId: number;
+  amount: number;
+  paymentMethod: "credit_card" | "bank_transfer" | "crypto";
+  paymentDetails?: Record<string, any>;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  try {
+    // Get contract
+    const [contract] = await db.select().from(contracts).where(eq(contracts.id, data.contractId)).limit(1);
+    if (!contract) {
+      throw new Error("Contract not found");
+    }
+    
+    // Verify payment amount
+    const totalAmount = parseFloat(contract.totalAmount);
+    const paidAmount = parseFloat(contract.paidAmount || "0");
+    const remainingAmount = totalAmount - paidAmount;
+    
+    if (data.amount > remainingAmount) {
+      throw new Error(`Payment amount exceeds remaining balance. Remaining: ${remainingAmount}`);
+    }
+    
+    // Process payment (placeholder - integrate with actual payment gateway)
+    const paymentResult = {
+      success: true,
+      transactionId: `TXN-${Date.now()}`,
+      amount: data.amount,
+      timestamp: new Date()
+    };
+    
+    // Update contract
+    const newPaidAmount = paidAmount + data.amount;
+    const newStatus = newPaidAmount >= totalAmount ? "completed" : "active";
+    
+    await db.update(contracts)
+      .set({
+        paidAmount: newPaidAmount.toString(),
+        status: newStatus,
+        updatedAt: new Date()
+      })
+      .where(eq(contracts.id, data.contractId));
+    
+    // Update escrow
+    await db.update(escrowTransactions)
+      .set({
+        status: newStatus === "completed" ? "released" : "partial",
+        updatedAt: new Date()
+      })
+      .where(eq(escrowTransactions.escrowId, `ESC-${data.contractId}-${contract.createdAt.getTime()}`));
+    
+    return {
+      success: true,
+      transactionId: paymentResult.transactionId,
+      paidAmount: newPaidAmount,
+      remainingAmount: totalAmount - newPaidAmount,
+      contractStatus: newStatus
+    };
+    
+  } catch (error) {
+    console.error("[Purchase Payment] Processing failed:", error);
+    throw error;
+  }
+}

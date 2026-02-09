@@ -94,7 +94,8 @@ const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
 const RegisterPrivateSector = lazy(() => import("./pages/register/RegisterPrivateSector")); // Register Private Sector
-const DemoFlow = lazy(() => import("./pages/DemoFlow")); // Demo Flow - User Journey
+const DemoFlow = lazy(() => import("./pages/DemoFlow"));
+const MyJourney = lazy(() => import("./pages/MyJourney")); // Demo Flow - User Journey
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -345,7 +346,8 @@ function Router() {
         <Route path="/register/individual" component={RegisterIndividual} />
         <Route path="/register/government" component={RegisterGovernment} />
         <Route path="/register/private-sector" component={RegisterPrivateSector} />
-        <Route path="/demo" component={DemoFlow} />
+          <Route path="/demo" component={DemoFlow} />
+          <Route path="/my-journey" component={MyJourney} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

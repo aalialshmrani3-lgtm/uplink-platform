@@ -1163,7 +1163,8 @@ export const ideas = mysqlTable("ideas", {
     "analyzed",        // Analysis complete
     "revision_needed", // Needs revision (weak idea)
     "approved",        // Approved as innovation
-    "commercial"       // Classified as commercial project
+    "commercial",      // Classified as commercial project
+    "transferred_to_uplink2" // Transferred to UPLINK 2
   ]).default("draft"),
   
   // Analysis Reference
@@ -1557,3 +1558,29 @@ export const matches = mysqlTable("matches", {
 
 export type Match = typeof matches.$inferSelect;
 export type InsertMatch = typeof matches.$inferInsert;
+
+// ============================================
+// IDEA TRANSITIONS (UPLINK 1 → 2 → 3)
+// ============================================
+export const ideaTransitions = mysqlTable("idea_transitions", {
+  id: int("id").autoincrement().primaryKey(),
+  ideaId: int("ideaId").notNull(),
+  userId: int("userId").notNull(),
+  
+  fromEngine: mysqlEnum("fromEngine", ["uplink1", "uplink2", "uplink3"]).notNull(),
+  toEngine: mysqlEnum("toEngine", ["uplink1", "uplink2", "uplink3"]).notNull(),
+  
+  reason: text("reason"), // Why was it transferred?
+  score: decimal("score", { precision: 5, scale: 2 }), // Analysis score if applicable
+  
+  // Metadata
+  metadata: json("metadata"), // Additional transition data
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type IdeaTransition = typeof ideaTransitions.$inferSelect;
+export type InsertIdeaTransition = typeof ideaTransitions.$inferInsert;
+
+// Note: organizations table already exists above (line 975)
+// Using existing table for UPLINK 2 matching
