@@ -545,7 +545,11 @@ Respond in JSON format:
           status: "completed",
         });
 
-        const newEngine = evalResult.classification === "guidance" ? "uplink1" : "uplink3";
+        // Correct classification logic:
+        // - "innovation" (≥70%) → UPLINK2
+        // - "commercial" (50-69%) → UPLINK2
+        // - "guidance" (<50%) → stays in UPLINK1
+        const newEngine = evalResult.classification === "guidance" ? "uplink1" : "uplink2";
         const newStatus = evalResult.classification === "guidance" ? "rejected" : "approved";
         await db.updateProject(input.projectId, { 
           evaluationId, 

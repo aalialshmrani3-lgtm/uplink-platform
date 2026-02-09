@@ -252,8 +252,8 @@ export default function ProjectDetail() {
                           {getClassificationText(evaluation.classification)}
                         </p>
                         <p className="text-slate-400 text-sm">
-                          {evaluation.classification === "innovation" && "مسار سريع إلى UPLINK3 - السوق المفتوح"}
-                          {evaluation.classification === "commercial" && "دعم حاضنات الأعمال والتطوير التجاري"}
+                          {evaluation.classification === "innovation" && "مسار سريع إلى UPLINK2 - التحديات والمطابقة"}
+                          {evaluation.classification === "commercial" && "مسار سريع إلى UPLINK2 - الفرص التجارية"}
                           {evaluation.classification === "guidance" && "برنامج إرشاد وتطوير مكثف"}
                         </p>
                       </div>

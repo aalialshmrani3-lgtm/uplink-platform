@@ -483,3 +483,20 @@
 ### Notes
 - Events, transitions, and contracts tables not yet created in database
 - Will add data for UPLINK 2 and 3 when schema is updated
+
+
+## ✅ Phase 51: Fix AI Analysis Classification Logic
+
+### Issue Identified
+- [x] AI analysis shows 73% score but classifies as UPLINK3 (should be UPLINK2)
+- [x] Classification logic not following correct thresholds:
+  - ≥70% = UPLINK2 (Innovation)
+  - 50-69% = UPLINK2 (Commercial Solution)
+  - <50% = Needs Development
+
+### Tasks
+- [x] Investigate backend analysis code
+- [x] Fix classification logic in tRPC procedures (server/routers.ts line 548-553)
+- [x] Fix frontend display text (client/src/pages/ProjectDetail.tsx line 255-256)
+- [x] Test with sample ideas
+- [x] Verify correct classification display
