@@ -466,3 +466,20 @@
 - [x] بناء المشروع (pnpm build) - نجح (3.5 MB)
 - [ ] اختبار جميع الصفحات الجديدة
 - [ ] حفظ checkpoint نهائي
+
+
+## ✅ Phase 50: Add Demo Data for Testing
+
+### Completed Tasks
+- [x] Create seed script for UPLINK 1 (ideas table)
+- [x] Add 15 demo ideas with various statuses:
+  - 8 approved ideas (innovation)
+  - 3 draft ideas
+  - 2 analyzing ideas
+  - 2 submitted ideas
+- [x] Test seed script execution
+- [x] Verify data in database
+
+### Notes
+- Events, transitions, and contracts tables not yet created in database
+- Will add data for UPLINK 2 and 3 when schema is updated
