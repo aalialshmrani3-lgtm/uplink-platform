@@ -8,7 +8,7 @@
 import { getDb } from "../db";
 import { ideas, matches, contracts, ideaTransitions } from "../../drizzle/schema";
 import { eq, and } from "drizzle-orm";
-import { createSmartContract } from "../blockchain/blockchain-service";
+// import { createSmartContract } from "../blockchain/blockchain-service"; // Will be implemented later
 
 /**
  * Transfer matched idea from UPLINK 2 to UPLINK 3
@@ -39,8 +39,8 @@ export async function transferMatchToUplink3(matchId: number) {
     // 4. Create Smart Contract
     // Note: This is a placeholder - actual blockchain deployment will be done in Phase 4
     const contractData = {
-      innovatorId: idea.userId,
-      investorId: match.matchedUserId,
+      partyA: idea.userId,
+      partyB: match.matchedUserId,
       ideaId: idea.id,
       matchId: match.id,
       contractType: "innovation", // Will be determined based on match type
@@ -66,22 +66,24 @@ export async function transferMatchToUplink3(matchId: number) {
     
     // Create blockchain contract (this will be implemented in Phase 4)
     let blockchainContractId = "pending_blockchain_deployment";
-    try {
-      const blockchainResult = await createSmartContract(contractData);
-      blockchainContractId = blockchainResult.contractId || "pending";
-    } catch (error) {
-      console.warn("[UPLINK2→3] Blockchain deployment pending:", error);
-    }
+    // TODO: Implement blockchain deployment
+    // try {
+    //   const blockchainResult = await createSmartContract(contractData);
+    //   blockchainContractId = blockchainResult.contractId || "pending";
+    // } catch (error) {
+    //   console.warn("[UPLINK2→3] Blockchain deployment pending:", error);
+    // }
     
     // 5. Create contract record in database
     const [newContract] = await db.insert(contracts).values({
-      innovatorId: idea.userId,
-      investorId: match.matchedUserId,
+      partyA: idea.userId,
+      partyB: match.matchedUserId,
       projectId: idea.id,
-      contractType: "innovation",
+      type: "investment",
+      title: `Investment Contract - ${idea.title}`,
+      description: `Smart contract for idea: ${idea.title}`,
       status: "draft",
-      totalAmount: contractData.totalAmount.toString(),
-      paidAmount: "0",
+      totalValue: contractData.totalAmount.toString(),
       currency: "USD",
       startDate: new Date(),
       endDate: contractData.milestones[contractData.milestones.length - 1].deadline,
@@ -91,8 +93,8 @@ export async function transferMatchToUplink3(matchId: number) {
         intellectualProperty: "Shared ownership based on contribution",
         confidentiality: "Standard NDA applies"
       }),
-      blockchainContractId,
-      escrowStatus: "pending"
+      blockchainHash: blockchainContractId,
+      milestones: JSON.stringify(contractData.milestones)
     }).$returningId();
     
     // 6. Update idea status

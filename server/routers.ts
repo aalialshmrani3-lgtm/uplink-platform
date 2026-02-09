@@ -402,6 +402,12 @@ export const appRouter = router({
         return db.getClassificationStats();
       }),
 
+    // Get my ideas
+    myIdeas: protectedProcedure.query(async ({ ctx }) => {
+      const ideas = await db.getUserIdeas(ctx.user.id);
+      return ideas;
+    }),
+    
     // Browse all ideas (with filters)
     ideas: router({
       browse: publicProcedure

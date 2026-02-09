@@ -985,3 +985,12 @@ export async function getClassificationStats() {
   
   return { total, innovation, commercial, weak };
 }
+
+// ============================================
+// UPLINK1: USER IDEAS OPERATIONS
+// ============================================
+export async function getUserIdeas(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(ideas).where(eq(ideas.userId, userId)).orderBy(desc(ideas.createdAt));
+}

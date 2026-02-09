@@ -1,4 +1,4 @@
-import { db } from "../db";
+import { getDb } from "../db";
 import { pipelineIdeas, events, contracts, users } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { moveToUplink2 } from "../uplink1/idea-workflow";
@@ -33,6 +33,9 @@ export async function uplink2ToUplink3(
   hostUserId: number,
   participantUserIds: number[]
 ) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
   console.log(`[Workflow] Moving event ${eventId} from UPLINK2 to UPLINK3`);
 
   // Get event details
@@ -119,18 +122,18 @@ export async function getUserWorkflowStatus(userId: number) {
   return {
     uplink1: {
       totalIdeas: ideas.length,
-      approvedIdeas: ideas.filter((i) => i.status === "approved").length,
-      movedToUplink2: ideas.filter((i) => i.stage === "challenge_matching")
+      approvedIdeas: ideas.filter((i: any) => i.status === "approved").length,
+      movedToUplink2: ideas.filter((i: any) => i.stage === "challenge_matching")
         .length,
     },
     uplink2: {
       totalEvents: userEvents.length,
-      completedEvents: userEvents.filter((e) => e.status === "completed")
+      completedEvents: userEvents.filter((e: any) => e.status === "completed")
         .length,
     },
     uplink3: {
       totalContracts: userContracts.length,
-      activeContracts: userContracts.filter((c) => c.status === "active")
+      activeContracts: userContracts.filter((c: any) => c.status === "active")
         .length,
     },
   };
