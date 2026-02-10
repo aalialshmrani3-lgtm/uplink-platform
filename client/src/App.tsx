@@ -49,6 +49,7 @@ const HypothesisManagement = lazy(() => import("./pages/HypothesisManagement"));
 const RATTesting = lazy(() => import("./pages/RATTesting"));
 const GateReview = lazy(() => import("./pages/GateReview"));
 const Uplink1Opportunities = lazy(() => import("./pages/Uplink1Opportunities"));
+const QuickAssessment = lazy(() => import("./pages/QuickAssessment"));
 const Uplink2VettingDashboard = lazy(() => import("./pages/Uplink2VettingDashboard"));
 const Uplink2Marketplace = lazy(() => import("./pages/Uplink2Marketplace"));
 const LearningKnowledgeBase = lazy(() => import("./pages/LearningKnowledgeBase"));
@@ -285,6 +286,7 @@ function Router() {
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/uplink2" component={Uplink2} />
         <Route path="/uplink1/opportunities" component={Uplink1Opportunities} />
+        <Route path="/quick-assessment" component={QuickAssessment} />
         <Route path="/uplink2/vetting" component={Uplink2VettingDashboard} />
         <Route path="/uplink2/marketplace" component={Uplink2Marketplace} />
         <Route path="/uplink2/hackathons" component={Uplink2BrowseHackathons} />
