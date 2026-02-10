@@ -3089,8 +3089,7 @@ Provide response in JSON format:
     // Challenges
     getChallenges: publicProcedure
       .query(async () => {
-        // TODO: Implement getChallenges
-        return [];
+        return db.getAllChallenges();
       }),
 
     submitChallenge: protectedProcedure
@@ -3104,8 +3103,18 @@ Provide response in JSON format:
         targetAudience: z.string(),
       }))
       .mutation(async ({ ctx, input }) => {
-        // TODO: Implement submitChallenge
-        return { success: true, id: 1 };
+        const id = await db.createChallenge({
+          title: input.title,
+          description: input.description,
+          type: 'challenge',
+          category: input.category,
+          requirements: { text: input.requirements, targetAudience: input.targetAudience },
+          prize: input.prize,
+          endDate: new Date(input.deadline),
+          organizerId: ctx.user.id,
+          status: 'open',
+        });
+        return { success: true, id };
       }),
   }),
 
@@ -3265,8 +3274,39 @@ Provide response in JSON format:
           transactionReference: z.string().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use escrow functions
-          return { success: true, transactionId: 1, newBalance: '0' };
+          // Get or create escrow account
+          let escrow = await db.getEscrowByContractId(input.contractId);
+          if (!escrow) {
+            const escrowId = await db.createEscrowAccount({
+              contractId: input.contractId,
+              totalAmount: input.amount,
+              balance: '0',
+              status: 'pending_deposit',
+            });
+            escrow = await db.getEscrowById(escrowId);
+          }
+          
+          if (!escrow) throw new Error('Failed to create escrow account');
+          
+          // Create transaction
+          await db.createEscrowTransaction({
+            escrowId: escrow.id,
+            type: 'deposit',
+            amount: input.amount,
+            status: 'completed',
+            paymentMethod: input.paymentMethod,
+            transactionReference: input.transactionReference,
+          });
+          
+          // Update balance
+          const currentBalance = parseFloat(escrow.balance || '0');
+          const newBalance = (currentBalance + parseFloat(input.amount)).toString();
+          await db.updateEscrow(escrow.id, { 
+            balance: newBalance,
+            status: 'funded'
+          });
+          
+          return { success: true, transactionId: escrow.id, newBalance };
         }),
 
       requestRelease: protectedProcedure
