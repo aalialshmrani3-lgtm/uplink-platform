@@ -91,6 +91,7 @@ const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for 
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
 const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge")); // Submit Challenge
 const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host Event Dashboard
+const Uplink2Dashboard = lazy(() => import("./pages/Uplink2Dashboard")); // UPLINK2 Main Dashboard
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
 const RegisterPrivateSector = lazy(() => import("./pages/register/RegisterPrivateSector")); // Register Private Sector
@@ -280,6 +281,7 @@ function Router() {
         <Route path="/uplink1/ideas/:id/analysis" component={Uplink1IdeaAnalysis} />
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/uplink2" component={Uplink2} />
+        <Route path="/uplink2/dashboard" component={Uplink2Dashboard} />
         <Route path="/uplink2/hackathons" component={Uplink2BrowseHackathons} />
         <Route path="/uplink2/hackathons/create" component={Uplink2CreateHackathon} />
         <Route path="/uplink2/hackathons/:id" component={Uplink2HackathonDetail} />

@@ -2575,12 +2575,20 @@ Provide response in JSON format:
 
       getAll: publicProcedure
         .input(z.object({
-          status: z.enum(['draft', 'published', 'ongoing', 'completed', 'cancelled']).optional(),
-          isVirtual: z.boolean().optional(),
+          status: z.enum(['draft', 'open', 'closed', 'judging', 'completed', 'cancelled']).optional(),
         }).optional())
         .query(async ({ input }) => {
-          const hackathons = await hackathonsService.getAllHackathons(input || {});
-          return hackathons;
+          const db = getDb();
+          const { challenges } = await import('../drizzle/schema');
+          const { eq, and } = await import('drizzle-orm');
+          
+          const conditions = [eq(challenges.type, 'hackathon')];
+          
+          if (input?.status) {
+            conditions.push(eq(challenges.status, input.status));
+          }
+          
+          return await db.select().from(challenges).where(and(...conditions));
         }),
 
       getById: publicProcedure
@@ -2751,6 +2759,37 @@ Provide response in JSON format:
         .query(async ({ ctx }) => {
           // TODO: Import and use matching functions
           return [];
+        }),
+      
+      getMatches: publicProcedure
+        .query(async () => {
+          // Return mock matching data for now
+          return [
+            {
+              id: 1,
+              investorName: 'صندوق الاستثمارات العامة',
+              industry: 'التقنية والابتكار',
+              score: 92,
+              fundingRange: '5-50 مليون ريال',
+              focus: 'الذكاء الاصطناعي والتقنيات الناشئة',
+            },
+            {
+              id: 2,
+              investorName: 'شركة STC Ventures',
+              industry: 'الاتصالات والتقنية',
+              score: 88,
+              fundingRange: '1-10 مليون ريال',
+              focus: 'التطبيقات الذكية وإنترنت الأشياء',
+            },
+            {
+              id: 3,
+              investorName: 'صندوق الابتكار الصحي',
+              industry: 'الرعاية الصحية',
+              score: 85,
+              fundingRange: '2-15 مليون ريال',
+              focus: 'التقنيات الصحية والذكاء الاصطناعي الطبي',
+            },
+          ];
         }),
 
       accept: protectedProcedure
@@ -3004,9 +3043,30 @@ Provide response in JSON format:
         }),
 
       getAll: publicProcedure
-        .query(async () => {
-          // TODO: Get all challenges from database
-          return [];
+        .input(z.object({
+          type: z.enum(['challenge', 'hackathon', 'competition', 'open_problem', 'conference']).optional(),
+          status: z.enum(['draft', 'open', 'closed', 'judging', 'completed', 'cancelled']).optional(),
+        }).optional())
+        .query(async ({ input }) => {
+          const db = getDb();
+          const { challenges } = await import('../drizzle/schema');
+          const { eq, and } = await import('drizzle-orm');
+          
+          let query = db.select().from(challenges);
+          
+          const conditions = [];
+          if (input?.type) {
+            conditions.push(eq(challenges.type, input.type));
+          }
+          if (input?.status) {
+            conditions.push(eq(challenges.status, input.status));
+          }
+          
+          if (conditions.length > 0) {
+            query = query.where(and(...conditions));
+          }
+          
+          return await query;
         }),
     }),
   }),
