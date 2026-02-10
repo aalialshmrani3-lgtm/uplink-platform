@@ -15,10 +15,12 @@ export default function RegisterInvestor() {
     name: "",
     email: "",
     phone: "",
+    firmName: "",
     bio: "",
     budget: "",
     interests: "",
-    investmentType: ""
+    investmentType: "",
+    investmentRange: ""
   });
 
   const registerMutation = trpc.auth.register.useMutation({
@@ -38,8 +40,8 @@ export default function RegisterInvestor() {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      organizationName: formData.firmName,
-      investmentRange: formData.investmentRange
+      organizationName: formData.firmName || "",
+      bio: formData.bio
     });
   };
 

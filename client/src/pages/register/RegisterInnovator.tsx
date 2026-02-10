@@ -40,11 +40,7 @@ export default function RegisterInnovator() {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      bio: formData.bio,
-      skills: formData.skills.split(",").map(s => s.trim()).join(","),
-      interests: formData.interests.split(",").map(i => i.trim()).join(","),
-      portfolio: formData.portfolio,
-      experience: formData.experience
+      bio: formData.bio
     });
   };
 
