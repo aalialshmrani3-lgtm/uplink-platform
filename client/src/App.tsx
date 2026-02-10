@@ -100,6 +100,11 @@ const Uplink2Challenges = lazy(() => import("./pages/Uplink2Challenges")); // Br
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
 const RegisterPrivateSector = lazy(() => import("./pages/register/RegisterPrivateSector")); // Register Private Sector
+const RegisterInnovator = lazy(() => import("./pages/register/RegisterInnovator")); // Register Innovator
+const RegisterInvestor = lazy(() => import("./pages/register/RegisterInvestor")); // Register Investor
+const RegisterCompany = lazy(() => import("./pages/register/RegisterCompany")); // Register Company
+const RegisterInternational = lazy(() => import("./pages/register/RegisterInternational")); // Register International
+const RegisterUniversity = lazy(() => import("./pages/register/RegisterUniversity")); // Register University
 const DemoFlow = lazy(() => import("./pages/DemoFlow"));
 const MyJourney = lazy(() => import("./pages/MyJourney")); // Demo Flow - User Journey
 
@@ -357,6 +362,11 @@ function Router() {
         <Route path="/register/individual" component={RegisterIndividual} />
         <Route path="/register/government" component={RegisterGovernment} />
         <Route path="/register/private-sector" component={RegisterPrivateSector} />
+        <Route path="/register/innovator" component={RegisterInnovator} />
+        <Route path="/register/investor" component={RegisterInvestor} />
+        <Route path="/register/company" component={RegisterCompany} />
+        <Route path="/register/international" component={RegisterInternational} />
+        <Route path="/register/university" component={RegisterUniversity} />
           <Route path="/demo" component={DemoFlow} />
           <Route path="/my-journey" component={MyJourney} />
         <Route path="/404" component={NotFound} />

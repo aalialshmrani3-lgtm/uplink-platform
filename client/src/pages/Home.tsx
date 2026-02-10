@@ -516,7 +516,7 @@ export default function Home() {
                   borderColor: 'border-amber-500/30',
                 },
               ].map((option) => (
-                <div key={option.type} onClick={() => window.location.href = `/register?type=${option.type}`}>
+                <div key={option.type} onClick={() => window.location.href = `/register/${option.type}`}>
                   <Card className={`group h-full bg-card/50 backdrop-blur-sm border ${option.borderColor} hover:border-opacity-100 transition-all duration-300 hover:scale-105 cursor-pointer`}>
                     <CardHeader>
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${option.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
