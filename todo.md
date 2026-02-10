@@ -500,3 +500,68 @@
 - [x] Fix frontend display text (client/src/pages/ProjectDetail.tsx line 255-256)
 - [x] Test with sample ideas
 - [x] Verify correct classification display
+
+
+## 🔔 Phase 52: Notification System for UPLINK1→UPLINK2 Transitions
+
+### Database Schema
+- [ ] Create notifications table in drizzle/schema.ts
+- [ ] Add fields: id, userId, projectId, type, title, message, read, createdAt
+- [ ] Push schema changes to database
+
+### Backend (tRPC Procedures)
+- [ ] Create notification.getAll procedure (get user notifications)
+- [ ] Create notification.markAsRead procedure
+- [ ] Create notification.markAllAsRead procedure
+- [ ] Create notification.getUnreadCount procedure
+- [ ] Add notification creation in evaluation.evaluate procedure
+
+### Frontend Components
+- [ ] Create NotificationBell component in header
+- [ ] Create NotificationCenter dropdown component
+- [ ] Add notification badge with unread count
+- [ ] Add notification list with read/unread states
+- [ ] Add mark as read functionality
+- [ ] Add empty state for no notifications
+
+### Integration
+- [ ] Trigger notification when project moves from UPLINK1 to UPLINK2
+- [ ] Include project details and next steps in notification
+- [ ] Test notification flow end-to-end
+
+
+## ✅ Phase 50: Add Demo Data
+- [x] Create seed-ideas-only.mjs script
+- [x] Add 15 test ideas with different statuses (approved, draft, analyzing, submitted)
+- [x] Test data display in platform
+
+## ✅ Phase 51: Fix AI Analysis Classification Logic
+- [x] Fix backend classification logic (server/routers.ts line 548-553)
+- [x] Fix frontend display text (client/src/pages/ProjectDetail.tsx)
+- [x] Test with sample ideas
+- [x] Verify correct classification display (≥70% → UPLINK2, 50-69% → UPLINK2, <50% → UPLINK1)
+
+## 🔔 Phase 52: Notification System for UPLINK1→UPLINK2 Transitions (IN PROGRESS)
+
+### Backend Tasks - COMPLETED ✅
+- [x] Notifications table schema already exists
+- [x] Created tRPC procedures:
+  - [x] notifications.list
+  - [x] notifications.markAsRead
+  - [x] notifications.markAllAsRead  
+  - [x] notifications.getUnreadCount
+- [x] Added createNotification helper in server/db.ts
+- [x] Integrated notification creation in evaluation.evaluate procedure
+  - Sends notification when project transitions from UPLINK1 to UPLINK2
+
+### Frontend Tasks - PARTIALLY COMPLETED ⚠️
+- [x] Created NotificationBell component with dropdown UI
+- [x] Integrated in DashboardLayout component
+- [ ] **BLOCKER**: App.tsx doesn't use DashboardLayout, so NotificationBell is not displayed
+- [ ] Need to integrate NotificationBell in current layout structure
+- [ ] Test end-to-end notification flow
+
+### Next Steps
+- [ ] Add NotificationBell to current layout (not DashboardLayout)
+- [ ] Test notification creation when project is approved
+- [ ] Verify notification display and mark-as-read functionality

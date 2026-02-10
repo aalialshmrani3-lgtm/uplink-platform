@@ -15,27 +15,24 @@ export default function NotificationBell() {
   const [unreadCount, setUnreadCount] = useState(0);
 
   // Get unread count
-  const { data: count } = trpc.notifications.getUnreadCount.useQuery(undefined, {
+  const { data: count } = trpc.notification.getUnreadCount.useQuery(undefined, {
     refetchInterval: 10000, // Refresh every 10 seconds
   });
 
   // Get latest notifications
-  const { data: notifications } = trpc.notifications.getMyNotifications.useQuery(
-    { limit: 5 },
-    {
-      refetchInterval: 10000,
-    }
-  );
+  const { data: notifications } = trpc.notification.getAll.useQuery(undefined, {
+    refetchInterval: 10000,
+  });
 
-  const markAsReadMutation = trpc.notifications.markAsRead.useMutation({
+  const markAsReadMutation = trpc.notification.markAsRead.useMutation({
     onSuccess: () => {
       // Refetch notifications
     },
   });
 
   useEffect(() => {
-    if (count !== undefined) {
-      setUnreadCount(count);
+    if (count?.count !== undefined) {
+      setUnreadCount(count.count);
     }
   }, [count]);
 
@@ -58,7 +55,7 @@ export default function NotificationBell() {
   }, []);
 
   const handleNotificationClick = (notificationId: number, link?: string) => {
-    markAsReadMutation.mutate({ notificationId });
+    markAsReadMutation.mutate({ id: notificationId });
     if (link) {
       navigate(link);
     }
@@ -86,7 +83,7 @@ export default function NotificationBell() {
                   key={notif.id}
                   onClick={() => handleNotificationClick(notif.id, notif.link || undefined)}
                   className={`cursor-pointer p-3 ${
-                    !notif.read ? "bg-blue-50" : ""
+                    !notif.isRead ? "bg-blue-50" : ""
                   }`}
                 >
                   <div>

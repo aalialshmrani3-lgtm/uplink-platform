@@ -557,6 +557,18 @@ Respond in JSON format:
           status: newStatus 
         });
 
+        // Create notification for successful transition to UPLINK2
+        if (newEngine === "uplink2") {
+          const project = await db.getProjectById(input.projectId);
+          await db.createNotification({
+            userId: project.userId,
+            type: "success",
+            title: "تهانينا! مشروعك انتقل إلى UPLINK2",
+            message: `مشروعك "${project.title}" حصل على تقييم ${evalResult.overallScore}% وانتقل بنجاح إلى UPLINK2 - ${evalResult.classification === "innovation" ? "التحديات والمطابقة" : "الفرص التجارية"}. يمكنك الآن المشاركة في التحديات والتواصل مع الجهات المستثمرة.`,
+            link: `/projects/${input.projectId}`,
+          });
+        }
+
         return { id: evaluationId, ...evalResult };
       }),
 
@@ -868,6 +880,17 @@ Respond in JSON format:
         await db.markNotificationAsRead(input.id);
         return { success: true };
       }),
+
+    markAllAsRead: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        await db.markAllNotificationsAsRead(ctx.user.id);
+        return { success: true };
+      }),
+
+    getUnreadCount: protectedProcedure.query(async ({ ctx }) => {
+      const unread = await db.getNotificationsByUserId(ctx.user.id, true);
+      return { count: unread.length };
+    }),
   }),
 
   // ============================================
