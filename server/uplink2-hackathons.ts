@@ -69,7 +69,7 @@ export async function registerTeam(data: TeamInput, leaderId: number) {
     throw new Error('Hackathon not found');
   }
   
-  if (hackathon.status !== 'upcoming') {
+  if (hackathon.status !== 'published' && hackathon.status !== 'ongoing') {
     throw new Error('Hackathon is not accepting registrations');
   }
   

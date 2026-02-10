@@ -11,8 +11,8 @@ import { CheckCircle2, Circle, Clock, ArrowRight } from "lucide-react";
 export default function MyJourney() {
   const { data: user } = trpc.auth.me.useQuery();
   const { data: ideas, isLoading: ideasLoading } = trpc.uplink1.myIdeas.useQuery();
-  const { data: matches, isLoading: matchesLoading } = trpc.uplink2.myMatches.useQuery();
-  const { data: contracts, isLoading: contractsLoading } = trpc.uplink3.myContracts.useQuery();
+  const { data: matches, isLoading: matchesLoading } = trpc.uplink2.matching.getMyMatches.useQuery();
+  const { data: contracts, isLoading: contractsLoading } = trpc.uplink3.contracts.getMyContracts.useQuery();
 
   if (!user) {
     return (

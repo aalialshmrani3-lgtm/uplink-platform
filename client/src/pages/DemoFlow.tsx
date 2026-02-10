@@ -3,7 +3,7 @@ import {
   UserPlus, Lightbulb, Target, Handshake, FileText,
   CheckCircle2, XCircle, AlertCircle, ArrowRight, 
   TrendingUp, Award, Rocket, Users, Building2,
-  ChevronDown, ChevronUp
+  ChevronDown, ChevronUp, Briefcase, Globe, GraduationCap
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -203,9 +203,6 @@ export default function DemoFlow() {
 
                   <Card 
                     className={`relative bg-card/50 backdrop-blur-sm border ${stage.borderColor} hover:border-opacity-100 transition-all duration-300 ${isExpanded ? 'ring-2 ring-offset-2 ring-offset-background' : ''}`}
-                    style={{ 
-                      ringColor: isExpanded ? stage.borderColor.replace('border-', '') : undefined 
-                    }}
                   >
                     <CardHeader 
                       className="cursor-pointer"

@@ -47,11 +47,11 @@ export default function Uplink2Events() {
     createMutation.mutate({
       title: formData.get('title') as string,
       description: formData.get('description') as string,
-      eventType: formData.get('eventType') as any,
+      type: formData.get('eventType') as any,
       startDate: formData.get('startDate') as string,
       endDate: formData.get('endDate') as string,
       location: formData.get('location') as string,
-      isOnline: formData.get('isOnline') === 'on',
+      isVirtual: formData.get('isOnline') === 'on',
       maxAttendees: parseInt(formData.get('maxAttendees') as string) || undefined,
     });
   };

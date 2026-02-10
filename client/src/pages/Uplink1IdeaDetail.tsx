@@ -50,7 +50,7 @@ export default function Uplink1IdeaDetail() {
     return { label: 'منخفض', color: 'bg-gray-500' };
   };
 
-  const innovationScore = parseFloat(idea.innovationScore || '0');
+  const innovationScore = parseFloat(Number(idea.analysis?.innovationScore) || 0 || '0');
   const innovationLevel = getInnovationLevelBadge(innovationScore);
 
   return (
@@ -119,7 +119,7 @@ export default function Uplink1IdeaDetail() {
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-blue-400">
-                {parseFloat(idea.marketScore || '0').toFixed(0)}%
+                {parseFloat(Number(idea.analysis?.marketScore) || 0 || '0').toFixed(0)}%
               </p>
             </CardContent>
           </Card>
@@ -129,7 +129,7 @@ export default function Uplink1IdeaDetail() {
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-purple-400">
-                {parseFloat(idea.feasibilityScore || '0').toFixed(0)}%
+                {parseFloat(Number(idea.analysis?.feasibilityScore) || 0 || '0').toFixed(0)}%
               </p>
             </CardContent>
           </Card>
@@ -139,7 +139,7 @@ export default function Uplink1IdeaDetail() {
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-cyan-400">
-                {parseFloat(idea.overallScore || '0').toFixed(0)}%
+                {parseFloat(idea.analysis?.overallScore || "0" || '0').toFixed(0)}%
               </p>
             </CardContent>
           </Card>

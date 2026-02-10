@@ -161,7 +161,7 @@ export async function getContractWithMilestones(contractId: number) {
     }
     
     // Get milestones from blockchain if contract has blockchain hash
-    let milestones = [];
+    let milestones: any[] = [];
     if (contract.blockchainHash) {
       // Extract blockchain contract ID from hash (simplified - in production, store this separately)
       // For now, we'll return empty milestones

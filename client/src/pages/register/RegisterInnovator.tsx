@@ -36,19 +36,19 @@ export default function RegisterInnovator() {
     e.preventDefault();
     
     registerMutation.mutate({
-      userType: "innovator",
+      role: "innovator",
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      profile: {
-        bio: formData.bio,
-        skills: formData.skills.split(",").map(s => s.trim()),
-        interests: formData.interests.split(",").map(i => i.trim()),
-        portfolio: formData.portfolio,
-        experience: formData.experience
-      }
+      bio: formData.bio,
+      skills: formData.skills.split(",").map(s => s.trim()).join(","),
+      interests: formData.interests.split(",").map(i => i.trim()).join(","),
+      portfolio: formData.portfolio,
+      experience: formData.experience
     });
   };
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4">

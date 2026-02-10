@@ -74,7 +74,7 @@ export function MilestoneCard({
     setLoading(true);
     try {
       await action();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Action failed:', error);
     } finally {
       setLoading(false);

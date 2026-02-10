@@ -8,10 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { trpc } from "@/lib/trpc";
-import { useNavigate } from "wouter";
+import { useLocation } from "wouter";
 
 export default function NotificationBell() {
-  const [, navigate] = useNavigate();
+  const [, setLocation] = useLocation();
   const [unreadCount, setUnreadCount] = useState(0);
 
   // Get unread count
@@ -57,7 +57,7 @@ export default function NotificationBell() {
   const handleNotificationClick = (notificationId: number, link?: string) => {
     markAsReadMutation.mutate({ id: notificationId });
     if (link) {
-      navigate(link);
+      setLocation(link);
     }
   };
 
@@ -96,7 +96,7 @@ export default function NotificationBell() {
                 </DropdownMenuItem>
               ))}
               <DropdownMenuItem
-                onClick={() => navigate("/notifications")}
+                onClick={() => setLocation("/notifications")}
                 className="text-center text-blue-600 cursor-pointer"
               >
                 عرض جميع الإشعارات

@@ -1,6 +1,7 @@
 // Added for Flowchart Match - UPLINK2 Smart Matching Module
 import { z } from "zod";
 import * as db from "./db";
+import { createMatchingRequest, findMatchingCandidates, saveMatchingResults, updateMatchStatus, createNetworkingConnection } from "./db";
 import { invokeLLM } from "./_core/llm";
 
 export const matchingRequestSchema = z.object({
@@ -57,7 +58,8 @@ export async function calculateMatchingScore(
       ],
     });
 
-    const scoreText = response.choices[0].message.content.trim();
+    const content = response.choices[0].message.content;
+    const scoreText = typeof content === 'string' ? content.trim() : '0';
     const score = parseInt(scoreText);
     
     return isNaN(score) ? 0 : Math.min(100, Math.max(0, score));
@@ -87,26 +89,31 @@ export function validateMatch(score: number): { isValid: boolean; reason?: strin
  * Request a match
  */
 export async function requestMatch(data: MatchingRequest, userId: number) {
-  const requestId = await db.createMatchingRequest({
-    ...data,
+  // Create matching request
+  const requestId = await createMatchingRequest({
     userId,
-    status: 'pending',
-    createdAt: new Date(),
+    seekingType: data.seekingType,
+    requirements: data.requirements,
+    industry: data.industry,
+    stage: data.stage,
+    budget: data.budget,
+    location: data.location,
+    preferences: data.preferences,
   });
   
   // Find potential matches
-  const candidates = await db.findMatchingCandidates(data);
+  const candidates = await findMatchingCandidates(requestId);
   const matches = [];
   
   for (const candidate of candidates) {
-    const score = await calculateMatchingScore(data, candidate);
+    const score = await calculateMatchingScore(data, candidate as any);
     
     // Added for Flowchart Match - ValidMatch middleware
     const validation = validateMatch(score);
     
     if (validation.isValid) {
       matches.push({
-        candidateId: candidate.id,
+        candidateId: (candidate as any).id || 0,
         score,
         status: 'suggested',
       });
@@ -115,7 +122,7 @@ export async function requestMatch(data: MatchingRequest, userId: number) {
   
   // Save matches
   if (matches.length > 0) {
-    await db.saveMatchingResults(requestId, matches);
+    await saveMatchingResults({ requestId, matches });
   }
   
   return {
@@ -144,16 +151,16 @@ export async function acceptMatch(matchId: number, userId: number) {
   }
   
   // Check if user is part of the match
-  if (match.requesterId !== userId && match.candidateId !== userId) {
+  if (match.requestId !== userId && match.matchedUserId !== userId) {
     throw new Error('Unauthorized');
   }
   
-  await db.updateMatchStatus(matchId, 'accepted');
+  await updateMatchStatus(matchId, 'accepted');
   
   // Create networking connection
-  await db.createNetworkingConnection({
-    user1Id: match.requesterId,
-    user2Id: match.candidateId,
+  await createNetworkingConnection({
+    user1Id: match.requestId,
+    user2Id: match.matchedUserId,
     connectionType: 'match',
     status: 'active',
     createdAt: new Date(),
@@ -172,11 +179,11 @@ export async function rejectMatch(matchId: number, userId: number, reason?: stri
     throw new Error('Match not found');
   }
   
-  if (match.requesterId !== userId && match.candidateId !== userId) {
+  if (match.requestId !== userId && match.matchedUserId !== userId) {
     throw new Error('Unauthorized');
   }
   
-  await db.updateMatchStatus(matchId, 'rejected', reason);
+  await updateMatchStatus(matchId, 'rejected');
   
   return { success: true };
 }

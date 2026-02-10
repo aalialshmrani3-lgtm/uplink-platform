@@ -34,11 +34,12 @@ export default function RegisterCompany() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     registerMutation.mutate({
-      userType: "company",
+      role: "company",
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      profile: formData
+      organizationName: formData.companyName,
+      organizationType: formData.industry
     });
   };
 

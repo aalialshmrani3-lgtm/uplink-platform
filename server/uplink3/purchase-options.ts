@@ -10,7 +10,7 @@
 import { getDb } from "../db";
 import { contracts, escrowTransactions } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
-import { createSmartContract } from "../blockchain/blockchain-service";
+// import { createSmartContract } from "../blockchain/blockchain-service"; // TODO: Implement blockchain service
 
 export type PurchaseType = "solution" | "license" | "acquisition";
 
@@ -118,26 +118,28 @@ export async function createPurchaseContract(data: {
     
     // Create Smart Contract on blockchain
     let blockchainContractId = "pending_blockchain_deployment";
-    try {
-      const blockchainResult = await createSmartContract({
-        innovatorId: data.innovatorId,
-        investorId: data.organizationId,
-        ideaId: data.projectId,
-        contractType: data.purchaseType,
-        totalAmount: data.totalAmount,
-        milestones: data.milestones || []
-      });
-      blockchainContractId = blockchainResult.contractId || "pending";
-    } catch (error) {
-      console.warn("[Purchase Contract] Blockchain deployment pending:", error);
-    }
+    // TODO: Implement blockchain service
+    // try {
+    //   const blockchainResult = await createSmartContract({
+    //     innovatorId: data.innovatorId,
+    //     investorId: data.organizationId,
+    //     ideaId: data.projectId,
+    //     contractType: data.purchaseType,
+    //     totalAmount: data.totalAmount,
+    //     milestones: data.milestones || []
+    //   });
+    //   blockchainContractId = blockchainResult.contractId || "pending";
+    // } catch (error) {
+    //   console.warn("[Purchase Contract] Blockchain deployment pending:", error);
+    // }
     
     // Create contract in database
-    const [newContract] = await db.insert(contracts).values({
+    const contractResult = await db.insert(contracts).values({
       projectId: data.projectId,
       type: data.purchaseType === "solution" ? "service" : 
             data.purchaseType === "license" ? "license" : "acquisition",
       status: "draft",
+      totalValue: data.totalAmount.toString(),
       totalAmount: data.totalAmount.toString(),
       paidAmount: "0",
       currency: data.currency || "USD",
@@ -146,26 +148,26 @@ export async function createPurchaseContract(data: {
         ? data.milestones[data.milestones.length - 1].deadline 
         : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year default
       terms: JSON.stringify(contractTerms),
-      blockchainContractId,
-      escrowStatus: "pending"
-    }).$returningId();
+      blockchainHash: blockchainContractId || undefined,
+      partyA: data.organizationId, // Buyer (organization)
+      partyB: data.innovatorId, // Seller (innovator),
+      title: `${option.title} - Contract`,
+    });
+    const newContractId = Number(contractResult[0].insertId);
     
-    // Create escrow account
-    await db.insert(escrowTransactions).values({
-      escrowId: `ESC-${newContract.id}-${Date.now()}`,
-      amount: data.totalAmount.toString(),
-      currency: data.currency || "USD",
-      status: "pending",
-      releaseConditions: JSON.stringify({
-        type: option.paymentStructure,
-        milestones: data.milestones || [],
-        approvalRequired: true
-      })
+    // Create escrow account (using escrowAccounts table instead)
+    const { escrowAccounts } = await import('../../drizzle/schema');
+    const escrowAccountResult = await db.insert(escrowAccounts).values({
+      contractId: newContractId,
+      totalAmount: data.totalAmount.toString(),
+      balance: data.totalAmount.toString(),
+      currency: data.currency || "SAR",
+      status: "pending_deposit",
     });
     
     return {
       success: true,
-      contractId: newContract.id,
+      contractId: newContractId,
       blockchainContractId,
       purchaseType: data.purchaseType,
       totalAmount: data.totalAmount,
@@ -198,7 +200,7 @@ export async function processPurchasePayment(data: {
     }
     
     // Verify payment amount
-    const totalAmount = parseFloat(contract.totalAmount);
+    const totalAmount = parseFloat(contract.totalAmount || contract.totalValue || "0");
     const paidAmount = parseFloat(contract.paidAmount || "0");
     const remainingAmount = totalAmount - paidAmount;
     
@@ -230,9 +232,8 @@ export async function processPurchasePayment(data: {
     await db.update(escrowTransactions)
       .set({
         status: newStatus === "completed" ? "released" : "partial",
-        updatedAt: new Date()
       })
-      .where(eq(escrowTransactions.escrowId, `ESC-${data.contractId}-${contract.createdAt.getTime()}`));
+      .where(eq(escrowTransactions.escrowId, data.contractId));
     
     return {
       success: true,

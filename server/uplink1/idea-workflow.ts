@@ -1,4 +1,4 @@
-import { db } from "../db";
+import { getDb } from "../db";
 import { pipelineIdeas } from "../../drizzle/schema";
 import { analyzeIdea } from "../ai/idea-analyzer";
 import { eq } from "drizzle-orm";
@@ -15,15 +15,15 @@ export async function submitIdeaWithAnalysis(
   category?: string
 ) {
   // 1. Create idea in database
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
   const [idea] = await db
     .insert(pipelineIdeas)
     .values({
+      challengeId: 0, // Default challenge
       userId,
       title,
       description,
-      category,
-      stage: "idea_generation",
-      status: "pending",
     })
     .$returningId();
 
@@ -31,17 +31,15 @@ export async function submitIdeaWithAnalysis(
   const analysis = await analyzeIdea(title, description, category);
 
   // 3. Update idea with AI analysis
-  await db
+  const db2 = await getDb();
+  if (!db2) throw new Error("Database not available");
+  await db2
     .update(pipelineIdeas)
     .set({
       aiAnalysis: JSON.stringify(analysis),
-      innovationScore: analysis.innovationScore.toString(),
-      marketScore: analysis.marketPotentialScore.toString(),
-      feasibilityScore: analysis.feasibilityScore.toString(),
-      overallScore: analysis.overallScore.toString(),
-      classification: analysis.classification,
+      aiScore: analysis.overallScore.toString(),
       tags: analysis.tags,
-      status: analysis.uplink2Eligible ? "approved" : "needs_improvement",
+      status: analysis.uplink2Eligible ? "approved" : "parked",
     })
     .where(eq(pipelineIdeas.id, idea.id));
 
@@ -59,12 +57,12 @@ export async function submitIdeaWithAnalysis(
 
 export async function moveToUplink2(ideaId: number, userId: number) {
   // Update idea status
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
   await db
     .update(pipelineIdeas)
     .set({
-      stage: "challenge_matching", // UPLINK2 stage
       status: "approved",
-      movedToUplink2At: new Date(),
     })
     .where(eq(pipelineIdeas.id, ideaId));
 
@@ -75,9 +73,10 @@ export async function moveToUplink2(ideaId: number, userId: number) {
 }
 
 export async function getIdeaAnalysis(ideaId: number) {
-  const idea = await db.query.pipelineIdeas.findFirst({
-    where: eq(pipelineIdeas.id, ideaId),
-  });
+  const db = await getDb();
+  if (!db) return null;
+  const ideas = await db.select().from(pipelineIdeas).where(eq(pipelineIdeas.id, ideaId)).limit(1);
+  const idea = ideas[0];
 
   if (!idea || !idea.aiAnalysis) {
     return null;

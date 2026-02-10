@@ -14,12 +14,11 @@ import {
 export default function Uplink2BrowseHackathons() {
   const [, navigate] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'draft' | 'published' | 'ongoing' | 'completed' | 'cancelled' | undefined>();
+  const [statusFilter, setStatusFilter] = useState<'draft' | 'open' | 'closed' | 'judging' | 'completed' | 'cancelled' | undefined>();
   const [virtualFilter, setVirtualFilter] = useState<boolean | undefined>();
 
   const { data: hackathons, isLoading } = trpc.uplink2.hackathons.getAll.useQuery({
     status: statusFilter,
-    isVirtual: virtualFilter,
   });
 
   const filteredHackathons = hackathons?.filter(h => 
@@ -115,9 +114,10 @@ export default function Uplink2BrowseHackathons() {
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center group-hover:scale-110 transition-transform">
                       <Trophy className="w-6 h-6 text-white" />
                     </div>
-                    <Badge className={`${getStatusBadge(hackathon.status)} text-white border-0`}>
-                      {hackathon.status === 'published' ? 'منشور' : 
-                       hackathon.status === 'ongoing' ? 'جاري' :
+                    <Badge className={`${getStatusBadge(hackathon.status || 'draft')} text-white border-0`}>
+                      {hackathon.status === 'open' ? 'مفتوح' : 
+                       hackathon.status === 'closed' ? 'مغلق' :
+                       hackathon.status === 'judging' ? 'قيد التقييم' :
                        hackathon.status === 'completed' ? 'مكتمل' : 'مسودة'}
                     </Badge>
                   </div>
@@ -133,10 +133,11 @@ export default function Uplink2BrowseHackathons() {
                     <div className="flex items-center gap-2 text-sm text-slate-400">
                       <Calendar className="w-4 h-4 text-orange-500" />
                       <span>
-                        {new Date(hackathon.startDate).toLocaleDateString('ar-SA')} - {new Date(hackathon.endDate).toLocaleDateString('ar-SA')}
+                        {hackathon.startDate ? new Date(hackathon.startDate).toLocaleDateString('ar-SA') : 'غير محدد'} - {hackathon.endDate ? new Date(hackathon.endDate).toLocaleDateString('ar-SA') : 'غير محدد'}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-slate-400">
+                    {/* TODO: Add isVirtual, location, capacity, registrations, budget to events schema */}
+                    {/* <div className="flex items-center gap-2 text-sm text-slate-400">
                       {hackathon.isVirtual ? (
                         <>
                           <Globe className="w-4 h-4 text-blue-500" />
@@ -160,7 +161,7 @@ export default function Uplink2BrowseHackathons() {
                         <DollarSign className="w-4 h-4 text-yellow-500" />
                         <span>{hackathon.budget} ريال</span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <Button 
                     className="w-full mt-6 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"

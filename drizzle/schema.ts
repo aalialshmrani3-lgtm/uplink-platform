@@ -150,6 +150,8 @@ export const contracts = mysqlTable("contracts", {
   partyA: int("partyA").notNull(),
   partyB: int("partyB").notNull(),
   totalValue: decimal("totalValue", { precision: 15, scale: 2 }).notNull(),
+  totalAmount: decimal("totalAmount", { precision: 15, scale: 2 }),
+  paidAmount: decimal("paidAmount", { precision: 15, scale: 2 }).default("0"),
   currency: varchar("currency", { length: 10 }).default("SAR"),
   status: mysqlEnum("status", ["draft", "pending_signatures", "active", "completed", "disputed", "terminated", "expired"]).default("draft"),
   terms: text("terms"),
@@ -175,6 +177,7 @@ export const escrowAccounts = mysqlTable("escrow_accounts", {
   totalAmount: decimal("totalAmount", { precision: 15, scale: 2 }).notNull(),
   releasedAmount: decimal("releasedAmount", { precision: 15, scale: 2 }).default("0"),
   pendingAmount: decimal("pendingAmount", { precision: 15, scale: 2 }),
+  balance: decimal("balance", { precision: 15, scale: 2 }).default("0"),
   currency: varchar("currency", { length: 10 }).default("SAR"),
   status: mysqlEnum("status", ["pending_deposit", "funded", "partially_released", "fully_released", "refunded", "disputed"]).default("pending_deposit"),
   depositedAt: timestamp("depositedAt"),
@@ -192,13 +195,33 @@ export const escrowTransactions = mysqlTable("escrow_transactions", {
   amount: decimal("amount", { precision: 15, scale: 2 }).notNull(),
   milestoneId: varchar("milestoneId", { length: 100 }),
   description: text("description"),
-  status: mysqlEnum("status", ["pending", "completed", "failed", "reversed"]).default("pending"),
+  status: mysqlEnum("status", ["pending", "completed", "failed", "reversed", "partial", "released"]).default("pending"),
   transactionHash: varchar("transactionHash", { length: 256 }),
+  paymentMethod: mysqlEnum("paymentMethod", ["bank_transfer", "credit_card", "wallet"]),
+  transactionReference: varchar("transactionReference", { length: 256 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
 export type EscrowTransaction = typeof escrowTransactions.$inferSelect;
 export type InsertEscrowTransaction = typeof escrowTransactions.$inferInsert;
+
+export const releaseRequests = mysqlTable("release_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  escrowId: int("escrowId").notNull(),
+  contractId: int("contractId").notNull(),
+  milestoneIndex: int("milestoneIndex").notNull(),
+  amount: decimal("amount", { precision: 15, scale: 2 }).notNull(),
+  requestedBy: int("requestedBy").notNull(), // userId
+  status: mysqlEnum("status", ["pending", "approved", "rejected", "cancelled"]).default("pending"),
+  approvedBy: int("approvedBy"),
+  approvedAt: timestamp("approvedAt"),
+  rejectionReason: text("rejectionReason"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ReleaseRequest = typeof releaseRequests.$inferSelect;
+export type InsertReleaseRequest = typeof releaseRequests.$inferInsert;
 
 // ============================================
 // ACADEMY & COURSES
@@ -1475,7 +1498,10 @@ export const events = mysqlTable("events", {
   
   // Capacity & Budget
   capacity: int("capacity"),
+  maxAttendees: int("maxAttendees"),
+  maxTeams: int("maxTeams"),
   budget: decimal("budget", { precision: 15, scale: 2 }),
+  registrationDeadline: timestamp("registrationDeadline"),
   
   // Needs
   needSponsors: boolean("needSponsors").default(false),

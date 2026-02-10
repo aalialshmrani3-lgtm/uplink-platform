@@ -28,16 +28,17 @@ export interface DiamondDecisionResult {
  * Check if an IP has received all 3 required expert reviews
  */
 export async function checkReviewCompleteness(ipRegistrationId: number): Promise<boolean> {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
   
   const reviews = await db.select()
     .from(vettingReviews)
     .where(eq(vettingReviews.ipRegistrationId, ipRegistrationId));
   
   // Check if we have 1 review from each expert type
-  const hasLegal = reviews.some(r => r.expertType === "legal");
-  const hasTechnical = reviews.some(r => r.expertType === "technical");
-  const hasCommercial = reviews.some(r => r.expertType === "commercial");
+  const hasLegal = reviews.some((r: any) => r.expertType === "legal");
+  const hasTechnical = reviews.some((r: any) => r.expertType === "technical");
+  const hasCommercial = reviews.some((r: any) => r.expertType === "commercial");
   
   return hasLegal && hasTechnical && hasCommercial;
 }
@@ -46,7 +47,8 @@ export async function checkReviewCompleteness(ipRegistrationId: number): Promise
  * Execute Diamond Decision Point logic
  */
 export async function executeDiamondDecision(ipRegistrationId: number): Promise<DiamondDecisionResult> {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
   
   // Get all reviews for this IP
   const reviews = await db.select()
@@ -58,9 +60,9 @@ export async function executeDiamondDecision(ipRegistrationId: number): Promise<
   }
   
   // Extract scores by expert type
-  const legalReview = reviews.find(r => r.expertType === "legal");
-  const technicalReview = reviews.find(r => r.expertType === "technical");
-  const commercialReview = reviews.find(r => r.expertType === "commercial");
+  const legalReview = reviews.find((r: any) => r.expertType === "legal");
+  const technicalReview = reviews.find((r: any) => r.expertType === "technical");
+  const commercialReview = reviews.find((r: any) => r.expertType === "commercial");
   
   if (!legalReview || !technicalReview || !commercialReview) {
     throw new Error("Missing required expert reviews");
@@ -210,7 +212,8 @@ export async function autoTriggerDecision(ipRegistrationId: number): Promise<Dia
   }
   
   // Check if decision already exists
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
   const existingDecision = await db.select()
     .from(vettingDecisions)
     .where(eq(vettingDecisions.ipRegistrationId, ipRegistrationId))

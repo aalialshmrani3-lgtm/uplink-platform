@@ -12,12 +12,12 @@ export async function getAllEvents(filters?: {
   status?: "draft" | "published" | "ongoing" | "completed" | "cancelled";
   isVirtual?: boolean;
 }) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
   
-  let query = db
+  const baseQuery = db
     .select()
-    .from(events)
-    .orderBy(desc(events.startDate));
+    .from(events);
 
   // Apply filters
   const conditions = [];
@@ -34,8 +34,11 @@ export async function getAllEvents(filters?: {
     conditions.push(eq(events.isVirtual, filters.isVirtual));
   }
 
+  let query;
   if (conditions.length > 0) {
-    query = query.where(and(...conditions));
+    query = baseQuery.where(and(...conditions)).orderBy(desc(events.startDate));
+  } else {
+    query = baseQuery.orderBy(desc(events.startDate));
   }
 
   const allEvents = await query;
@@ -46,7 +49,8 @@ export async function getAllEvents(filters?: {
  * Get event by ID
  */
 export async function getEventById(id: number) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
   
   const [event] = await db
     .select()
@@ -92,7 +96,8 @@ export async function createEvent(data: {
   needInnovators?: boolean;
   sponsorshipTiers?: any;
 }) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
 
   const [event] = await db.insert(events).values({
     userId: data.userId,
@@ -125,7 +130,8 @@ export async function registerForEvent(data: {
   sponsorshipTier?: string;
   sponsorshipAmount?: string;
 }) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
 
   // Check if event exists
   const [event] = await db
@@ -199,7 +205,8 @@ export async function registerForEvent(data: {
  * Update event status
  */
 export async function updateEventStatus(id: number, status: "draft" | "published" | "ongoing" | "completed" | "cancelled") {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
 
   await db
     .update(events)

@@ -1,6 +1,6 @@
 // Added for Flowchart Match - Phase 6: REST API Layer
 import { Router } from 'express';
-import { db } from './db';
+import * as db from './db';
 
 const router = Router();
 

@@ -22,11 +22,11 @@ export default function SubmitIdea() {
   });
   const [analysisResult, setAnalysisResult] = useState<any>(null);
 
-  const submitMutation = trpc.uplink1.submitIdeaWithAnalysis.useMutation({
-    onSuccess: (data) => {
+  const submitMutation = trpc.uplink1.submitIdea.useMutation({
+    onSuccess: (data: any) => {
       setAnalysisResult(data.analysis);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       alert(`خطأ: ${error.message}`);
     },
   });

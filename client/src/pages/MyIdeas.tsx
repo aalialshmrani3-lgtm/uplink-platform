@@ -25,7 +25,7 @@ export default function MyIdeas() {
   const [activeTab, setActiveTab] = useState('all');
 
   // TODO: Replace with real tRPC query
-  const { data: ideas, isLoading } = trpc.uplink1.getMyIdeas.useQuery(undefined, {
+  const { data: ideas, isLoading } = trpc.uplink1.myIdeas.useQuery(undefined, {
     enabled: !!user,
   });
 

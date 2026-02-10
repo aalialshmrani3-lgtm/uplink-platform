@@ -49,7 +49,7 @@ export async function depositToEscrow(data: DepositInput, userId: number) {
 
   await db.updateEscrow(escrow.id, {
     balance: newBalance.toString(),
-    status: newBalance >= parseFloat(escrow.totalAmount) ? 'funded' : 'partial',
+    status: newBalance >= parseFloat(escrow.totalAmount) ? 'funded' : 'pending_deposit',
   });
 
   return {
@@ -159,11 +159,11 @@ export async function approveRelease(requestId: number, userId: number) {
   await db.updateEscrow(escrow.id, {
     balance: newBalance.toString(),
     releasedAmount: releasedAmount.toString(),
-    status: releasedAmount >= parseFloat(escrow.totalAmount) ? 'completed' : 'partial',
+    status: releasedAmount >= parseFloat(escrow.totalAmount) ? 'fully_released' : 'partially_released',
   });
 
   // Update milestone status
-  const milestones = contract.milestones ? JSON.parse(contract.milestones) : [];
+  const milestones = contract.milestones ? JSON.parse(contract.milestones as string) : [];
   if (milestones[request.milestoneIndex]) {
     milestones[request.milestoneIndex].status = 'completed';
     milestones[request.milestoneIndex].completedAt = new Date().toISOString();
@@ -200,7 +200,6 @@ export async function rejectRelease(requestId: number, userId: number, reason: s
   await db.updateReleaseRequest(requestId, {
     status: 'rejected',
     rejectionReason: reason,
-    rejectedAt: new Date(),
   });
 
   return { success: true };
@@ -269,6 +268,6 @@ export async function getEscrowStats(userId: number) {
     totalEscrow: totalEscrow.toString(),
     totalReleased: totalReleased.toString(),
     activeEscrows: escrows.filter(e => e && e.status === 'funded').length,
-    completedEscrows: escrows.filter(e => e && e.status === 'completed').length,
+    completedEscrows: escrows.filter(e => e && e.status === 'fully_released').length,
   };
 }

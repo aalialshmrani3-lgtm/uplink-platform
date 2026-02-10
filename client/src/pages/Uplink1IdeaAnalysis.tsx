@@ -13,7 +13,7 @@ export default function Uplink1IdeaAnalysis() {
   const [, params] = useRoute("/uplink1/ideas/:id/analysis");
   const ideaId = params?.id ? parseInt(params.id) : 0;
 
-  const { data: idea, isLoading } = trpc.uplink1.getIdeaById.useQuery({ id: ideaId });
+  const { data: idea, isLoading } = trpc.uplink1.getIdeaById.useQuery({ ideaId });
 
   if (isLoading) {
     return (

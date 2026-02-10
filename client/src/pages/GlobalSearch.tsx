@@ -12,7 +12,7 @@ export default function GlobalSearch() {
   const [activeTab, setActiveTab] = useState('all');
 
   const { data: results, isLoading } = trpc.search.global.useQuery(
-    { query, type: activeTab },
+    { query, type: activeTab as any },
     { enabled: query.length > 2 }
   );
 

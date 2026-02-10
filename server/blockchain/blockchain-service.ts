@@ -64,6 +64,7 @@ export class BlockchainService {
 
       const amountInWei = ethers.parseEther(params.totalAmount);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.createContract(
         params.innovatorAddress,
         params.investorAddress,
@@ -113,6 +114,7 @@ export class BlockchainService {
 
       const amountInWei = ethers.parseEther(params.amount);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.addMilestone(
         params.contractId,
         params.description,
@@ -140,6 +142,7 @@ export class BlockchainService {
       const wallet = new ethers.Wallet(params.privateKey, this.provider);
       const contractWithSigner = this.contract.connect(wallet);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.activateContract(params.contractId);
       const receipt = await tx.wait();
 
@@ -164,6 +167,7 @@ export class BlockchainService {
 
       const amountInWei = ethers.parseEther(params.amount);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.depositFunds(params.contractId, {
         value: amountInWei,
       });
@@ -189,6 +193,7 @@ export class BlockchainService {
       const wallet = new ethers.Wallet(params.privateKey, this.provider);
       const contractWithSigner = this.contract.connect(wallet);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.startMilestone(
         params.contractId,
         params.milestoneIndex
@@ -215,6 +220,7 @@ export class BlockchainService {
       const wallet = new ethers.Wallet(params.privateKey, this.provider);
       const contractWithSigner = this.contract.connect(wallet);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.completeMilestone(
         params.contractId,
         params.milestoneIndex
@@ -241,6 +247,7 @@ export class BlockchainService {
       const wallet = new ethers.Wallet(params.privateKey, this.provider);
       const contractWithSigner = this.contract.connect(wallet);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.rejectMilestone(
         params.contractId,
         params.milestoneIndex
@@ -267,6 +274,7 @@ export class BlockchainService {
       const wallet = new ethers.Wallet(params.privateKey, this.provider);
       const contractWithSigner = this.contract.connect(wallet);
 
+      // @ts-ignore - Contract methods are defined in ABI
       const tx = await contractWithSigner.approveMilestone(
         params.contractId,
         params.milestoneIndex

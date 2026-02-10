@@ -199,7 +199,7 @@ export default function AIStrategicAdvisor() {
         // Download file
         window.open(result.filePath, '_blank');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('PDF export error:', error);
       toast.error('فشل تصدير التقرير. يرجى المحاولة مرة أخرى.');
     } finally {
@@ -224,7 +224,7 @@ export default function AIStrategicAdvisor() {
         // Download file
         window.open(result.filePath, '_blank');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Excel export error:', error);
       toast.error('فشل تصدير التقرير. يرجى المحاولة مرة أخرى.');
     } finally {
@@ -244,7 +244,7 @@ export default function AIStrategicAdvisor() {
       if (feedback.type === 'general') {
         setGeneralFeedback('');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Feedback submission error:', error);
       toast.error('فشل إرسال الملاحظات. يرجى المحاولة مرة أخرى.');
     }
@@ -267,7 +267,7 @@ export default function AIStrategicAdvisor() {
 
       setWhatIfScenarios(prev => [result, ...prev]);
       toast.success(`تم محاكاة سيناريو: ${modifications.name}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error('What-If simulation error:', error);
       toast.error('فشلت المحاكاة. يرجى المحاولة مرة أخرى.');
     } finally {

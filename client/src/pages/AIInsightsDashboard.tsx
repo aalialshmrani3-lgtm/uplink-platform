@@ -54,7 +54,7 @@ export default function AIInsightsDashboard() {
       setSentimentResult(data);
       
       toast.success(`تم التحليل بنجاح - المشاعر: ${data.sentiment} ${data.emoji}`);
-    } catch (error) {
+    } catch (error: any) {
       toast.error("فشل الاتصال بخدمة تحليل المشاعر");
     } finally {
       setLoading(false);
@@ -87,7 +87,7 @@ export default function AIInsightsDashboard() {
       setPredictionResult(data);
       
       toast.success(`تم التوقع بنجاح - احتمالية النجاح: ${(data.success_probability * 100).toFixed(1)}%`);
-    } catch (error) {
+    } catch (error: any) {
       toast.error("فشل الاتصال بخدمة توقع النجاح");
     } finally {
       setLoading(false);
@@ -120,7 +120,7 @@ export default function AIInsightsDashboard() {
       setSuggestions(data);
       
       toast.success(`تم الاقتراح بنجاح - تم إيجاد ${data.total_count} اقتراح`);
-    } catch (error) {
+    } catch (error: any) {
       toast.error("فشل الاتصال بخدمة اقتراح الأفكار");
     } finally {
       setLoading(false);

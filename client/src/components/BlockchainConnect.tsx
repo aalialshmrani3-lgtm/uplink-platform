@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+
+// Type declaration for window.ethereum
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -43,7 +50,7 @@ export function BlockchainConnect({ onConnect }: BlockchainConnectProps) {
             onConnect(address, provider);
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error('Check connection error:', error);
       }
     }
@@ -92,10 +99,7 @@ export function BlockchainConnect({ onConnect }: BlockchainConnectProps) {
     setBalance('0');
     setChainId(0);
     
-    toast({
-      title: 'تم قطع الاتصال',
-      description: 'تم قطع الاتصال بالمحفظة بنجاح',
-    });
+    toast.success('تم قطع الاتصال بالمحفظة بنجاح');
   };
 
   const switchNetwork = async () => {
@@ -106,10 +110,7 @@ export function BlockchainConnect({ onConnect }: BlockchainConnectProps) {
         params: [{ chainId: '0x13881' }], // 80001 in hex
       });
       
-      toast({
-        title: 'تم تبديل الشبكة',
-        description: 'تم التبديل إلى Polygon Mumbai Testnet',
-      });
+      toast.success('تم التبديل إلى Polygon Mumbai Testnet');
       
       await checkConnection();
     } catch (error: any) {
@@ -133,25 +134,14 @@ export function BlockchainConnect({ onConnect }: BlockchainConnectProps) {
             ],
           });
           
-          toast({
-            title: 'تمت إضافة الشبكة',
-            description: 'تمت إضافة Polygon Mumbai Testnet بنجاح',
-          });
+          toast.success('تمت إضافة Polygon Mumbai Testnet بنجاح');
         } catch (addError: any) {
           console.error('Add network error:', addError);
-          toast({
-            title: 'فشل إضافة الشبكة',
-            description: addError.message,
-            variant: 'destructive',
-          });
+          toast.error('فشل إضافة الشبكة: ' + addError.message);
         }
       } else {
         console.error('Switch network error:', error);
-        toast({
-          title: 'فشل تبديل الشبكة',
-          description: error.message,
-          variant: 'destructive',
-        });
+        toast.error('فشل تبديل الشبكة: ' + error.message);
       }
     }
   };

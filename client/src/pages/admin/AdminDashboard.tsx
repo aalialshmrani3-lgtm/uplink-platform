@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Shield, Users, FileText, BarChart3, Ban, Trash2, CheckCircle } from 'lucide-react';
-import { Navigate } from 'wouter';
+import { Redirect } from 'wouter';
 
 export default function AdminDashboard() {
   const { user } = useAuth();
@@ -16,7 +16,7 @@ export default function AdminDashboard() {
 
   // Check if user is admin
   if (!user || user.role !== 'admin') {
-    return <Navigate to="/" />;
+    return <Redirect to="/" />;
   }
 
   const { data: stats } = trpc.admin.getStats.useQuery();

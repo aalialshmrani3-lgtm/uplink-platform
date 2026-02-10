@@ -2,10 +2,12 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
+import { getDb } from "./db";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink1-ai-analyzer";
 import crypto from "crypto";
@@ -23,6 +25,24 @@ export const appRouter = router({
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return { success: true } as const;
     }),
+    register: publicProcedure
+      .input(z.object({
+        role: z.enum(["innovator", "investor", "company"]),
+        name: z.string(),
+        email: z.string().email(),
+        phone: z.string().optional(),
+        organizationName: z.string().optional(),
+        organizationType: z.string().optional(),
+        country: z.string().optional(),
+        city: z.string().optional(),
+        bio: z.string().optional(),
+        website: z.string().optional(),
+        linkedIn: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // TODO: Implement registration logic
+        return { success: true, message: "Registration successful" };
+      }),
   }),
 
   // ============================================
@@ -561,9 +581,11 @@ Respond in JSON format:
         // UPLINK1 → UPLINK2 Transition: Create IP Registration
         if (newEngine === "uplink2") {
           const project = await db.getProjectById(input.projectId);
+          if (!project) throw new TRPCError({ code: 'NOT_FOUND', message: 'Project not found' });
           
           // Create IP Registration automatically
-          const db_instance = getDb();
+          const db_instance = await getDb();
+          if (!db_instance) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { ipRegistrations } = await import('../drizzle/schema');
           
           const ipResult = await db_instance.insert(ipRegistrations).values({
@@ -581,7 +603,7 @@ Respond in JSON format:
           });
           
           // Get the inserted IP ID
-          const ipId = Number(ipResult.insertId);
+          const ipId = Number(ipResult[0].insertId);
           
           // Link IP to project
           await db.updateProject(input.projectId, { 
@@ -2587,7 +2609,8 @@ Provide response in JSON format:
     vetting: router({
       getPendingIPs: protectedProcedure
         .query(async ({ ctx }) => {
-          const db = getDb();
+          const db = await getDb();
+          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { ipRegistrations } = await import('../drizzle/schema');
           const { eq } = await import('drizzle-orm');
           
@@ -2607,7 +2630,8 @@ Provide response in JSON format:
           revisionSuggestions: z.string().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          const db = getDb();
+          const db = await getDb();
+          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { vettingReviews } = await import('../drizzle/schema');
           
           // Determine expert type based on user role or assign default
@@ -2639,7 +2663,8 @@ Provide response in JSON format:
       getReviews: protectedProcedure
         .input(z.object({ ipRegistrationId: z.number() }))
         .query(async ({ input }) => {
-          const db = getDb();
+          const db = await getDb();
+          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { vettingReviews } = await import('../drizzle/schema');
           const { eq } = await import('drizzle-orm');
           
@@ -2652,7 +2677,8 @@ Provide response in JSON format:
     marketplace: router({
       getApprovedIPs: publicProcedure
         .query(async () => {
-          const db = getDb();
+          const db = await getDb();
+          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
           const { eq } = await import('drizzle-orm');
           
@@ -2693,7 +2719,8 @@ Provide response in JSON format:
       getListingById: publicProcedure
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
-          const db = getDb();
+          const db = await getDb();
+          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
           const { eq } = await import('drizzle-orm');
           
@@ -2762,7 +2789,8 @@ Provide response in JSON format:
           status: z.enum(['draft', 'open', 'closed', 'judging', 'completed', 'cancelled']).optional(),
         }).optional())
         .query(async ({ input }) => {
-          const db = getDb();
+          const db = await getDb();
+          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { challenges } = await import('../drizzle/schema');
           const { eq, and } = await import('drizzle-orm');
           
@@ -3232,11 +3260,10 @@ Provide response in JSON format:
           status: z.enum(['draft', 'open', 'closed', 'judging', 'completed', 'cancelled']).optional(),
         }).optional())
         .query(async ({ input }) => {
-          const db = getDb();
+          const db = await getDb();
+          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const { challenges } = await import('../drizzle/schema');
           const { eq, and } = await import('drizzle-orm');
-          
-          let query = db.select().from(challenges);
           
           const conditions = [];
           if (input?.type) {
@@ -3247,10 +3274,10 @@ Provide response in JSON format:
           }
           
           if (conditions.length > 0) {
-            query = query.where(and(...conditions));
+            return await db.select().from(challenges).where(and(...conditions));
           }
           
-          return await query;
+          return await db.select().from(challenges);
         }),
     }),
   }),

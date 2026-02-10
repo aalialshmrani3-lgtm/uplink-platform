@@ -11,29 +11,25 @@ export async function getAllHackathons(filters?: {
   status?: "draft" | "published" | "ongoing" | "completed" | "cancelled";
   isVirtual?: boolean;
 }) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
   
-  let query = db
+  const conditions = [eq(events.type, "hackathon")];
+  
+  if (filters?.status) {
+    conditions.push(eq(events.status, filters.status));
+  }
+  
+  if (filters?.isVirtual !== undefined) {
+    conditions.push(eq(events.isVirtual, filters.isVirtual));
+  }
+
+  const hackathons = await db
     .select()
     .from(events)
-    .where(eq(events.type, "hackathon"))
+    .where(and(...conditions))
     .orderBy(desc(events.startDate));
-
-  if (filters?.status) {
-    query = query.where(and(
-      eq(events.type, "hackathon"),
-      eq(events.status, filters.status)
-    ));
-  }
-
-  if (filters?.isVirtual !== undefined) {
-    query = query.where(and(
-      eq(events.type, "hackathon"),
-      eq(events.isVirtual, filters.isVirtual)
-    ));
-  }
-
-  const hackathons = await query;
+    
   return hackathons;
 }
 
@@ -41,7 +37,8 @@ export async function getAllHackathons(filters?: {
  * Get hackathon by ID
  */
 export async function getHackathonById(id: number) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
   
   const [hackathon] = await db
     .select()
@@ -89,7 +86,8 @@ export async function createHackathon(data: {
   needInnovators?: boolean;
   sponsorshipTiers?: any;
 }) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
 
   const [hackathon] = await db.insert(events).values({
     userId: data.userId,
@@ -122,7 +120,8 @@ export async function registerForHackathon(data: {
   sponsorshipTier?: string;
   sponsorshipAmount?: string;
 }) {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
 
   // Check if hackathon exists
   const [hackathon] = await db
@@ -199,7 +198,8 @@ export async function registerForHackathon(data: {
  * Update hackathon status
  */
 export async function updateHackathonStatus(id: number, status: "draft" | "published" | "ongoing" | "completed" | "cancelled") {
-  const db = getDb();
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
 
   await db
     .update(events)

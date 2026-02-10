@@ -34,11 +34,12 @@ export default function RegisterInvestor() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     registerMutation.mutate({
-      userType: "investor",
+      role: "investor",
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      profile: formData
+      organizationName: formData.firmName,
+      investmentRange: formData.investmentRange
     });
   };
 

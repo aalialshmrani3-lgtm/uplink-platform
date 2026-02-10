@@ -36,7 +36,7 @@ export default function Uplink3BlockchainContracts() {
   });
 
   const createBlockchainContract = trpc.uplink3.contracts.createBlockchainContract.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast.success(`تم إنشاء العقد الذكي بنجاح! Contract ID: ${data.contractId}`);
       setShowCreateForm(false);
       resetForm();
@@ -47,7 +47,7 @@ export default function Uplink3BlockchainContracts() {
   });
 
   const depositFunds = trpc.uplink3.contracts.depositFunds.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast.success(`تم إيداع الأموال بنجاح! Transaction: ${data.transactionHash}`);
     },
     onError: (error) => {
@@ -114,7 +114,7 @@ export default function Uplink3BlockchainContracts() {
           deadline: new Date(m.deadline).getTime() / 1000, // Convert to Unix timestamp
         })),
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Create contract error:', error);
     }
   };
@@ -130,7 +130,7 @@ export default function Uplink3BlockchainContracts() {
         contractId,
         amount,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Deposit funds error:', error);
     }
   };
