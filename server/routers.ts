@@ -11,6 +11,7 @@ import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink
 import crypto from "crypto";
 import * as hackathonsService from "./uplink2/hackathons";
 import * as eventsService from "./uplink2/events";
+import { autoTriggerDecision } from "./services/diamondDecisionPoint";
 
 export const appRouter = router({
   system: systemRouter,
@@ -557,14 +558,57 @@ Respond in JSON format:
           status: newStatus 
         });
 
-        // Create notification for successful transition to UPLINK2
+        // UPLINK1 → UPLINK2 Transition: Create IP Registration
         if (newEngine === "uplink2") {
           const project = await db.getProjectById(input.projectId);
+          
+          // Create IP Registration automatically
+          const db_instance = getDb();
+          const { ipRegistrations } = await import('../drizzle/schema');
+          
+          const ipResult = await db_instance.insert(ipRegistrations).values({
+            userId: project.userId,
+            type: 'patent', // Default to patent, can be changed later
+            title: project.title,
+            titleEn: project.titleEn,
+            description: project.description,
+            descriptionEn: project.descriptionEn,
+            category: project.category,
+            subCategory: project.subCategory,
+            status: 'submitted', // Ready for UPLINK2 vetting
+            blockchainHash: `temp_${Date.now()}`, // Temporary hash, will be replaced with real blockchain hash
+            blockchainTimestamp: new Date(),
+          });
+          
+          // Get the inserted IP ID
+          const ipId = Number(ipResult.insertId);
+          
+          // Link IP to project
+          await db.updateProject(input.projectId, { 
+            ipRegistrationId: ipId,
+          });
+          
+          // Create transition record
+          const { ideaTransitions } = await import('../drizzle/schema');
+          await db_instance.insert(ideaTransitions).values({
+            ideaId: input.projectId,
+            userId: project.userId,
+            fromEngine: 'uplink1',
+            toEngine: 'uplink2',
+            reason: `Approved by AI evaluation with score ${evalResult.overallScore}% - ${evalResult.classification}`,
+            score: evalResult.overallScore.toString(),
+            metadata: JSON.stringify({
+              classification: evalResult.classification,
+              ipRegistrationId: ipId,
+            }),
+          });
+          
+          // Create notification
           await db.createNotification({
             userId: project.userId,
             type: "success",
             title: "تهانينا! مشروعك انتقل إلى UPLINK2",
-            message: `مشروعك "${project.title}" حصل على تقييم ${evalResult.overallScore}% وانتقل بنجاح إلى UPLINK2 - ${evalResult.classification === "innovation" ? "التحديات والمطابقة" : "الفرص التجارية"}. يمكنك الآن المشاركة في التحديات والتواصل مع الجهات المستثمرة.`,
+            message: `مشروعك "${project.title}" حصل على تقييم ${evalResult.overallScore}% وانتقل بنجاح إلى UPLINK2. تم تسجيل ملكيتك الفكرية وإرسالها للخبراء للمراجعة.`,
             link: `/projects/${input.projectId}`,
           });
         }
@@ -2536,9 +2580,149 @@ Provide response in JSON format:
   }),
 
   // ============================================
-  // UPLINK2 - Added for Flowchart Match
+  // UPLINK2 - IP VETTING & MARKETPLACE
   // ============================================
   uplink2: router({
+    // Vetting System
+    vetting: router({
+      getPendingIPs: protectedProcedure
+        .query(async ({ ctx }) => {
+          const db = getDb();
+          const { ipRegistrations } = await import('../drizzle/schema');
+          const { eq } = await import('drizzle-orm');
+          
+          return await db.select().from(ipRegistrations)
+            .where(eq(ipRegistrations.status, 'submitted'));
+        }),
+
+      submitReview: protectedProcedure
+        .input(z.object({
+          ipRegistrationId: z.number(),
+          score: z.number().min(0).max(100),
+          noveltyScore: z.number().min(0).max(100),
+          feasibilityScore: z.number().min(0).max(100),
+          marketPotentialScore: z.number().min(0).max(100),
+          comments: z.string(),
+          recommendation: z.enum(['approve', 'reject', 'needs_revision']),
+          revisionSuggestions: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const db = getDb();
+          const { vettingReviews } = await import('../drizzle/schema');
+          
+          // Determine expert type based on user role or assign default
+          const expertType = 'technical'; // TODO: determine from user profile
+          
+          await db.insert(vettingReviews).values({
+            ipRegistrationId: input.ipRegistrationId,
+            expertId: ctx.user.id,
+            expertType,
+            score: input.score,
+            noveltyScore: input.noveltyScore,
+            feasibilityScore: input.feasibilityScore,
+            marketPotentialScore: input.marketPotentialScore,
+            comments: input.comments,
+            recommendation: input.recommendation,
+            revisionSuggestions: input.revisionSuggestions,
+          });
+          
+          // Auto-trigger Diamond Decision Point
+          const decision = await autoTriggerDecision(input.ipRegistrationId);
+          
+          return { 
+            success: true, 
+            decisionMade: decision !== null,
+            decision,
+          };
+        }),
+
+      getReviews: protectedProcedure
+        .input(z.object({ ipRegistrationId: z.number() }))
+        .query(async ({ input }) => {
+          const db = getDb();
+          const { vettingReviews } = await import('../drizzle/schema');
+          const { eq } = await import('drizzle-orm');
+          
+          return await db.select().from(vettingReviews)
+            .where(eq(vettingReviews.ipRegistrationId, input.ipRegistrationId));
+        }),
+    }),
+
+    // IP Marketplace
+    marketplace: router({
+      getApprovedIPs: publicProcedure
+        .query(async () => {
+          const db = getDb();
+          const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
+          const { eq } = await import('drizzle-orm');
+          
+          return await db.select({
+            id: ipMarketplaceListings.id,
+            ipRegistrationId: ipMarketplaceListings.ipRegistrationId,
+            userId: ipMarketplaceListings.userId,
+            listingType: ipMarketplaceListings.listingType,
+            price: ipMarketplaceListings.price,
+            currency: ipMarketplaceListings.currency,
+            priceType: ipMarketplaceListings.priceType,
+            description: ipMarketplaceListings.description,
+            terms: ipMarketplaceListings.terms,
+            exclusivity: ipMarketplaceListings.exclusivity,
+            views: ipMarketplaceListings.views,
+            inquiries: ipMarketplaceListings.inquiries,
+            status: ipMarketplaceListings.status,
+            listedAt: ipMarketplaceListings.listedAt,
+            ip_registrations: ipRegistrations,
+          })
+          .from(ipMarketplaceListings)
+          .leftJoin(ipRegistrations, eq(ipMarketplaceListings.ipRegistrationId, ipRegistrations.id))
+          .where(eq(ipMarketplaceListings.status, 'active'));
+        }),
+
+      requestPurchase: protectedProcedure
+        .input(z.object({
+          listingId: z.number(),
+          offerPrice: z.number().optional(),
+          message: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          // TODO: Create purchase request in database
+          // For now, just return success
+          return { success: true, message: 'Purchase request sent successfully' };
+        }),
+
+      getListingById: publicProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          const db = getDb();
+          const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
+          const { eq } = await import('drizzle-orm');
+          
+          const result = await db.select({
+            id: ipMarketplaceListings.id,
+            ipRegistrationId: ipMarketplaceListings.ipRegistrationId,
+            userId: ipMarketplaceListings.userId,
+            listingType: ipMarketplaceListings.listingType,
+            price: ipMarketplaceListings.price,
+            currency: ipMarketplaceListings.currency,
+            priceType: ipMarketplaceListings.priceType,
+            description: ipMarketplaceListings.description,
+            terms: ipMarketplaceListings.terms,
+            exclusivity: ipMarketplaceListings.exclusivity,
+            views: ipMarketplaceListings.views,
+            inquiries: ipMarketplaceListings.inquiries,
+            status: ipMarketplaceListings.status,
+            listedAt: ipMarketplaceListings.listedAt,
+            ip_registrations: ipRegistrations,
+          })
+          .from(ipMarketplaceListings)
+          .leftJoin(ipRegistrations, eq(ipMarketplaceListings.ipRegistrationId, ipRegistrations.id))
+          .where(eq(ipMarketplaceListings.id, input.id))
+          .limit(1);
+          
+          return result[0] || null;
+        }),
+    }),
+
     // Hackathons
     hackathons: router({
       create: protectedProcedure

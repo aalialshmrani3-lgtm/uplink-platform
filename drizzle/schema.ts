@@ -1583,3 +1583,118 @@ export type InsertIdeaTransition = typeof ideaTransitions.$inferInsert;
 
 // Note: organizations table already exists above (line 975)
 // Using existing table for UPLINK 2 matching
+
+// ============================================
+// UPLINK2: IP VETTING & MARKETPLACE
+// ============================================
+
+// Vetting Reviews (مراجعات الخبراء)
+export const vettingReviews = mysqlTable("vetting_reviews", {
+  id: int("id").autoincrement().primaryKey(),
+  ipRegistrationId: int("ipRegistrationId").notNull(),
+  expertId: int("expertId").notNull(),
+  
+  expertType: mysqlEnum("expertType", ["legal", "technical", "commercial"]).notNull(),
+  
+  // Review scores (0-100)
+  score: int("score").notNull(),
+  
+  // Detailed evaluation
+  noveltyScore: int("noveltyScore"), // 0-100
+  feasibilityScore: int("feasibilityScore"), // 0-100
+  marketPotentialScore: int("marketPotentialScore"), // 0-100
+  
+  comments: text("comments"),
+  recommendation: mysqlEnum("recommendation", ["approve", "reject", "needs_revision"]).notNull(),
+  
+  // Revision suggestions (if needs_revision)
+  revisionSuggestions: text("revisionSuggestions"),
+  
+  reviewedAt: timestamp("reviewedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type VettingReview = typeof vettingReviews.$inferSelect;
+export type InsertVettingReview = typeof vettingReviews.$inferInsert;
+
+// Vetting Decisions (Diamond Decision Point)
+export const vettingDecisions = mysqlTable("vetting_decisions", {
+  id: int("id").autoincrement().primaryKey(),
+  ipRegistrationId: int("ipRegistrationId").notNull().unique(),
+  
+  // Final decision based on 3 expert reviews
+  finalDecision: mysqlEnum("finalDecision", ["approved", "rejected", "needs_revision"]).notNull(),
+  
+  // Average scores
+  averageScore: int("averageScore").notNull(), // 0-100
+  legalScore: int("legalScore"),
+  technicalScore: int("technicalScore"),
+  commercialScore: int("commercialScore"),
+  
+  // Feedback for innovator
+  feedback: text("feedback"),
+  
+  // Decision maker
+  decidedBy: int("decidedBy"),
+  decidedAt: timestamp("decidedAt").defaultNow().notNull(),
+  
+  // If approved, move to UPLINK3
+  movedToUPLINK3: boolean("movedToUPLINK3").default(false),
+  movedToUPLINK3At: timestamp("movedToUPLINK3At"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type VettingDecision = typeof vettingDecisions.$inferSelect;
+export type InsertVettingDecision = typeof vettingDecisions.$inferInsert;
+
+// IP Marketplace Listings
+export const ipMarketplaceListings = mysqlTable("ip_marketplace_listings", {
+  id: int("id").autoincrement().primaryKey(),
+  ipRegistrationId: int("ipRegistrationId").notNull(),
+  userId: int("userId").notNull(), // IP owner
+  
+  // Listing details
+  listingType: mysqlEnum("listingType", ["license", "sale", "partnership", "joint_venture"]).notNull(),
+  
+  // Pricing
+  price: decimal("price", { precision: 15, scale: 2 }),
+  currency: varchar("currency", { length: 3 }).default("SAR"),
+  priceType: mysqlEnum("priceType", ["fixed", "negotiable", "royalty", "equity"]).default("negotiable"),
+  
+  // Royalty details (if applicable)
+  royaltyPercentage: decimal("royaltyPercentage", { precision: 5, scale: 2 }),
+  royaltyDuration: int("royaltyDuration"), // in months
+  
+  // Equity details (if applicable)
+  equityPercentage: decimal("equityPercentage", { precision: 5, scale: 2 }),
+  
+  // Listing content
+  description: text("description"),
+  terms: text("terms"),
+  exclusivity: mysqlEnum("exclusivity", ["exclusive", "non_exclusive"]).default("non_exclusive"),
+  
+  // Territory
+  territory: json("territory"), // Array of countries/regions
+  
+  // Status
+  status: mysqlEnum("status", ["active", "pending", "sold", "licensed", "withdrawn", "expired"]).default("active"),
+  
+  // Visibility
+  visibility: mysqlEnum("visibility", ["public", "private", "verified_only"]).default("public"),
+  
+  // Stats
+  views: int("views").default(0),
+  inquiries: int("inquiries").default(0),
+  
+  // Dates
+  listedAt: timestamp("listedAt").defaultNow().notNull(),
+  soldAt: timestamp("soldAt"),
+  expiresAt: timestamp("expiresAt"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type IPMarketplaceListing = typeof ipMarketplaceListings.$inferSelect;
+export type InsertIPMarketplaceListing = typeof ipMarketplaceListings.$inferInsert;

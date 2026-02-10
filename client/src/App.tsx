@@ -48,6 +48,9 @@ const ChallengeLibrary = lazy(() => import("./pages/ChallengeLibrary"));
 const HypothesisManagement = lazy(() => import("./pages/HypothesisManagement"));
 const RATTesting = lazy(() => import("./pages/RATTesting"));
 const GateReview = lazy(() => import("./pages/GateReview"));
+const Uplink1Opportunities = lazy(() => import("./pages/Uplink1Opportunities"));
+const Uplink2VettingDashboard = lazy(() => import("./pages/Uplink2VettingDashboard"));
+const Uplink2Marketplace = lazy(() => import("./pages/Uplink2Marketplace"));
 const LearningKnowledgeBase = lazy(() => import("./pages/LearningKnowledgeBase"));
 const AIInsightsDashboard = lazy(() => import("./pages/AIInsightsDashboard"));
 const IdeaClassification = lazy(() => import("./pages/IdeaClassification"));
@@ -91,7 +94,7 @@ const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for 
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
 const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge")); // Submit Challenge
 const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host Event Dashboard
-const Uplink2Dashboard = lazy(() => import("./pages/Uplink2Dashboard")); // UPLINK2 Main Dashboard
+// Removed: Uplink2Dashboard - replaced by Uplink2VettingDashboard and Uplink2Marketplace
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
 const RegisterPrivateSector = lazy(() => import("./pages/register/RegisterPrivateSector")); // Register Private Sector
@@ -281,7 +284,9 @@ function Router() {
         <Route path="/uplink1/ideas/:id/analysis" component={Uplink1IdeaAnalysis} />
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/uplink2" component={Uplink2} />
-        <Route path="/uplink2/dashboard" component={Uplink2Dashboard} />
+        <Route path="/uplink1/opportunities" component={Uplink1Opportunities} />
+        <Route path="/uplink2/vetting" component={Uplink2VettingDashboard} />
+        <Route path="/uplink2/marketplace" component={Uplink2Marketplace} />
         <Route path="/uplink2/hackathons" component={Uplink2BrowseHackathons} />
         <Route path="/uplink2/hackathons/create" component={Uplink2CreateHackathon} />
         <Route path="/uplink2/hackathons/:id" component={Uplink2HackathonDetail} />

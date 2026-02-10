@@ -652,3 +652,102 @@
 ✅ UI fully responsive with filtering and search
 ✅ tRPC procedures connected and working
 
+
+
+## 🔥 Phase 54: إعادة بناء منظومة UPLINK حسب المنطق الداخلي الصحيح
+
+### المشكلة الحالية
+- **UPLINK2 الحالي خاطئ تماماً**: يعرض Challenges/Hackathons بدلاً من IP & Vetting Marketplace
+- **التدفق خاطئ**: UPLINK1 → UPLINK3 مباشرة (يتخطى طبقة Vetting)
+- **لا يوجد Diamond Decision Point** في UPLINK2
+- **لا يوجد Feedback Loop** لإعادة المشاريع المرفوضة
+
+### الخطة التصحيحية
+
+#### Phase 1: تحليل الوضع الحالي
+- [ ] توثيق الأخطاء في التدفق الحالي
+- [ ] إنشاء مخطط التدفق الصحيح (UPLINK1 → UPLINK2 → UPLINK3)
+- [ ] تحديد الملفات التي تحتاج تعديل
+
+#### Phase 2: إعادة تصميم UPLINK2 (IP & Vetting Marketplace)
+- [ ] حذف Uplink2Dashboard.tsx الحالي (Challenges/Hackathons)
+- [ ] إنشاء UPLINK2 الجديد: IP Vetting & Marketplace
+  - [ ] صفحة عرض IPs المسجلة من UPLINK1
+  - [ ] نظام Vetting (فحص قانوني + فني + تجاري)
+  - [ ] Diamond Decision Point (Approve/Reject)
+  - [ ] IP Marketplace (عرض IPs المعتمدة للمستثمرين)
+- [ ] تحديث schema قاعدة البيانات:
+  - [ ] جدول `ip_registrations` (من UPLINK1)
+  - [ ] جدول `vetting_reviews` (مراجعات الخبراء)
+  - [ ] جدول `vetting_decisions` (قرارات الموافقة/الرفض)
+  - [ ] جدول `ip_marketplace_listings` (IPs المعروضة للبيع/الترخيص)
+
+#### Phase 3: بناء Diamond Decision Point & Feedback Loop
+- [ ] إنشاء واجهة Vetting Dashboard للخبراء
+- [ ] بناء نظام التصويت (3 خبراء: قانوني + فني + تجاري)
+- [ ] إضافة Diamond Logic:
+  - [ ] إذا Approved → ينتقل لـ UPLINK3
+  - [ ] إذا Rejected → يعود لـ UPLINK1 مع Feedback
+- [ ] بناء Feedback System:
+  - [ ] إرسال ملاحظات الخبراء للمبتكر
+  - [ ] إمكانية إعادة التقديم بعد التحسين
+
+#### Phase 4: ربط UPLINK1 → UPLINK2 → UPLINK3
+- [ ] تحديث UPLINK1:
+  - [ ] بعد التحليل AI والموافقة → تسجيل IP تلقائياً
+  - [ ] إرسال IP لـ UPLINK2 للـ Vetting
+- [ ] تحديث UPLINK2:
+  - [ ] استقبال IPs من UPLINK1
+  - [ ] بعد Approval → إرسال لـ UPLINK3
+- [ ] تحديث UPLINK3:
+  - [ ] استقبال IPs المعتمدة فقط من UPLINK2
+  - [ ] إنشاء Smart Contracts تلقائياً
+
+#### Phase 5: نقل Challenges/Hackathons إلى مكانها الصحيح
+- [ ] نقل Challenges/Hackathons إلى:
+  - [ ] أداة داعمة في UPLINK1 (لتطوير الأفكار)
+  - [ ] أو قسم منفصل في المنصة (خارج UPLINKs الثلاثة)
+- [ ] تحديث الروابط والـ navigation
+
+#### Phase 6: اختبار التدفق الكامل
+- [ ] اختبار: تقديم فكرة → تحليل AI → تسجيل IP → Vetting → Approval → UPLINK3
+- [ ] اختبار: Rejection → Feedback → إعادة التقديم
+- [ ] اختبار: ربط مع الشركاء (SAIP, Monsha'at, SDAIA)
+- [ ] حفظ checkpoint نهائي
+
+### ملاحظات مهمة
+- **Digital Thread**: البيانات تتحول من (وصف مشروع) → (شهادة IP) → (حصص استثمارية)
+- **External Integration**: SAIP يرتبط بـ UPLINK1&2، Monsha'at/SDAIA يرتبطون بـ UPLINK3
+- **Feedback Loop**: الفشل في UPLINK2 يعيد المشروع لـ UPLINK1، النجاح في UPLINK3 يؤسس شركة
+
+
+
+## ✅ Phase 54: إعادة بناء منظومة UPLINK بشكل صحيح - COMPLETED
+
+### ما تم إنجازه:
+- [x] تحليل الوضع الحالي وإنشاء خطة التصحيح (UPLINK_SYSTEM_REDESIGN.md)
+- [x] إعادة تصميم UPLINK2 كطبقة Vetting & IP Marketplace
+  - [x] إضافة 3 جداول جديدة (vettingReviews, vettingDecisions, ipMarketplaceListings)
+  - [x] إنشاء صفحتين جديدتين (Uplink2VettingDashboard, Uplink2Marketplace)
+  - [x] تحديث tRPC procedures (vetting, marketplace)
+- [x] بناء Diamond Decision Point و Feedback Loop
+  - [x] إنشاء server/services/diamondDecisionPoint.ts
+  - [x] ربط Diamond Decision Point بـ vetting router
+- [x] ربط UPLINK1 → UPLINK2 → UPLINK3 بشكل صحيح
+  - [x] تحديث evaluation.evaluate لإنشاء IP Registration تلقائياً عند الموافقة
+  - [x] إضافة منطق الانتقال التلقائي من UPLINK1 إلى UPLINK2
+- [x] نقل Challenges/Hackathons إلى مكانها الصحيح
+  - [x] إنشاء Uplink1Opportunities.tsx (التحديات والهاكاثونات كأدوات داعمة في UPLINK1)
+  - [x] تحديث App.tsx routes
+
+### الملفات المنشأة:
+- /home/ubuntu/UPLINK_SYSTEM_REDESIGN.md - خطة التصحيح الشاملة
+- server/services/diamondDecisionPoint.ts - نظام اتخاذ القرار الذكي
+- client/src/pages/Uplink2VettingDashboard.tsx - لوحة مراجعة الخبراء
+- client/src/pages/Uplink2Marketplace.tsx - سوق الملكية الفكرية
+- client/src/pages/Uplink1Opportunities.tsx - التحديات والهاكاثونات
+
+### ملاحظات:
+- الصفحات الجديدة تحتاج اختبار (حالياً تعرض 404)
+- يجب إضافة seed data لـ UPLINK2 (vetting reviews, marketplace listings)
+- Diamond Decision Point يعمل تلقائياً بعد 3 مراجعات
