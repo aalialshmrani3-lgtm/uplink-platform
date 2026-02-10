@@ -278,7 +278,71 @@ export const appRouter = router({
           status: "submitted",
         });
 
-        return { ideaId, message: "تم تقديم الفكرة بنجاح. جاري التحليل..." };
+        // Perform AI analysis immediately
+        try {
+          const analysisResult = await analyzeIdea({
+            title: input.title,
+            description: input.description,
+            problem: input.problem,
+            solution: input.solution,
+            targetMarket: input.targetMarket,
+            uniqueValue: input.uniqueValue,
+            category: input.category,
+          });
+
+          // Save analysis result to database
+          const analysisId = await db.createIdeaAnalysis({
+            ideaId,
+            overallScore: analysisResult.overallScore.toString(),
+            classification: analysisResult.classification,
+            classificationLabel: analysisResult.classificationLabel,
+            noveltyScore: analysisResult.criterionScores.find(c => c.criterion === "novelty")?.score.toString() || "0",
+            impactScore: analysisResult.criterionScores.find(c => c.criterion === "impact")?.score.toString() || "0",
+            feasibilityScore: analysisResult.criterionScores.find(c => c.criterion === "feasibility")?.score.toString() || "0",
+            commercialScore: analysisResult.criterionScores.find(c => c.criterion === "commercial")?.score.toString() || "0",
+            scalabilityScore: analysisResult.criterionScores.find(c => c.criterion === "scalability")?.score.toString() || "0",
+            sustainabilityScore: analysisResult.criterionScores.find(c => c.criterion === "sustainability")?.score.toString() || "0",
+            aiAnalysis: analysisResult.aiAnalysis,
+            strengths: JSON.stringify(analysisResult.strengths),
+            weaknesses: JSON.stringify(analysisResult.weaknesses),
+            opportunities: JSON.stringify(analysisResult.opportunities),
+            threats: JSON.stringify(analysisResult.threats),
+            recommendations: JSON.stringify(analysisResult.recommendations),
+            nextSteps: JSON.stringify(analysisResult.nextSteps),
+            similarInnovations: JSON.stringify(analysisResult.similarInnovations),
+            extractedKeywords: JSON.stringify(analysisResult.extractedKeywords),
+            sentimentScore: analysisResult.sentimentScore.toString(),
+            complexityLevel: analysisResult.complexityLevel,
+            marketSize: analysisResult.marketSize,
+            competitionLevel: analysisResult.competitionLevel,
+            marketTrends: analysisResult.marketTrends ? JSON.stringify(analysisResult.marketTrends) : undefined,
+            processingTime: analysisResult.processingTime.toString(),
+          });
+
+          // Update idea status
+          await db.updateIdea(ideaId, { status: "analyzed" });
+
+          // Create classification history record
+          await db.createClassificationHistory({
+            ideaId,
+            analysisId,
+            classification: analysisResult.classification,
+            overallScore: analysisResult.overallScore.toString(),
+            reason: "تحليل أولي بواسطة الذكاء الاصطناعي",
+          });
+
+          // Return analysis result
+          return {
+            ideaId,
+            analysisId,
+            analysis: analysisResult,
+            message: "تم تحليل الفكرة بنجاح!"
+          };
+        } catch (error) {
+          // Update status to failed
+          await db.updateIdea(ideaId, { status: "failed" });
+          throw error;
+        }
       }),
 
     // Analyze an idea using AI

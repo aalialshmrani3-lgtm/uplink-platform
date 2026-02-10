@@ -1,147 +1,114 @@
-import { useState } from "react";
+import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Building2 } from "lucide-react";
-import { Link } from "wouter";
+import { getLoginUrl } from "@/const";
+import { Globe, ArrowRight, ArrowLeft } from "lucide-react";
 
 export default function RegisterInternational() {
-  const [formData, setFormData] = useState({
-    entityName: "",
-    entityType: "",
-    licenseNumber: "",
-    contactPerson: "",
-    email: "",
-    phone: "",
-    website: "",
-    description: "",
-  });
+  const [, setLocation] = useLocation();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("International organization registration:", formData);
-    alert("تم التسجيل بنجاح! سيتم مراجعة طلبك.");
+  const handleRegister = () => {
+    window.location.href = getLoginUrl();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 p-4">
-      <div className="max-w-3xl mx-auto py-12">
-        <Card className="p-8 bg-slate-900/50 border-blue-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <Button
+          variant="ghost"
+          onClick={() => setLocation("/")}
+          className="mb-6 text-white hover:bg-white/10"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          العودة للرئيسية
+        </Button>
+
+        <Card className="p-8 bg-white/10 backdrop-blur-lg border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-blue-500/10 rounded-lg">
-              <Building2 className="w-6 h-6 text-blue-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-white">تسجيل منظمة دولية</h1>
-              <p className="text-slate-400">انضم كمنظمة دولية داعمة للابتكار</p>
-            </div>
+            <Globe className="h-8 w-8 text-purple-400" />
+            <h1 className="text-3xl font-bold text-white">تسجيل منظمة دولية</h1>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <Label className="text-white">اسم الجهة *</Label>
-                <Input
-                  required
-                  value={formData.entityName}
-                  onChange={(e) => setFormData({ ...formData, entityName: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="مثال: وزارة الاتصالات"
-                />
+          <div className="space-y-6 text-white/90">
+            <p className="text-lg">
+              انضم إلى منصة UPLINK كمنظمة دولية واحصل على:
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🌍 شراكات عالمية</h3>
+                <p className="text-sm text-white/70">
+                  بناء شراكات مع المبتكرين السعوديين
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">نوع الجهة *</Label>
-                <Input
-                  required
-                  value={formData.entityType}
-                  onChange={(e) => setFormData({ ...formData, entityType: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="مثال: وزارة، هيئة، مركز"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">💼 فرص استثمارية</h3>
+                <p className="text-sm text-white/70">
+                  اكتشف فرص استثمارية في السوق السعودي
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">رقم الترخيص *</Label>
-                <Input
-                  required
-                  value={formData.licenseNumber}
-                  onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="رقم الترخيص الرسمي"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🎯 دعم الابتكار</h3>
+                <p className="text-sm text-white/70">
+                  ادعم الابتكار في المملكة العربية السعودية
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">الشخص المسؤول *</Label>
-                <Input
-                  required
-                  value={formData.contactPerson}
-                  onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="اسم المسؤول"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🤝 التواصل المباشر</h3>
+                <p className="text-sm text-white/70">
+                  تواصل مع الجهات الحكومية والخاصة
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">البريد الإلكتروني *</Label>
-                <Input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="contact@entity.gov.sa"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">📊 تقارير وتحليلات</h3>
+                <p className="text-sm text-white/70">
+                  احصل على تقارير عن النظام البيئي للابتكار
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">رقم الجوال *</Label>
-                <Input
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="+966 5XX XXX XXX"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🏆 رعاية الفعاليات</h3>
+                <p className="text-sm text-white/70">
+                  رعاية الهاكاثونات والتحديات
+                </p>
               </div>
             </div>
 
-            <div>
-              <Label className="text-white">الموقع الإلكتروني</Label>
-              <Input
-                value={formData.website}
-                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                className="bg-slate-800/50 border-slate-700 text-white"
-                placeholder="https://www.entity.gov.sa"
-              />
+            <div className="bg-purple-500/20 border border-purple-400/30 rounded-lg p-4 mt-6">
+              <h3 className="font-semibold mb-2">📋 متطلبات التسجيل:</h3>
+              <ul className="list-disc list-inside space-y-1 text-sm text-white/80">
+                <li>حساب Manus (سيتم إنشاؤه تلقائياً)</li>
+                <li>معلومات المنظمة الدولية</li>
+                <li>بيانات الممثل المعتمد</li>
+              </ul>
             </div>
 
-            <div>
-              <Label className="text-white">نبذة عن الجهة *</Label>
-              <Textarea
-                required
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="bg-slate-800/50 border-slate-700 text-white min-h-[120px]"
-                placeholder="أهداف الجهة ومجالات الدعم..."
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700">
-                إرسال الطلب
-                <ArrowRight className="mr-2 w-4 h-4" />
+            <div className="flex gap-4 mt-8">
+              <Button
+                onClick={handleRegister}
+                className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                size="lg"
+              >
+                سجل الآن
+                <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
-              <Link href="/register">
-                <Button type="button" variant="outline" className="border-slate-700">
-                  رجوع
-                </Button>
-              </Link>
             </div>
-          </form>
+
+            <p className="text-sm text-white/60 text-center mt-4">
+              بالتسجيل، أنت توافق على{" "}
+              <a href="/terms" className="text-purple-400 hover:underline">
+                شروط الاستخدام
+              </a>{" "}
+              و{" "}
+              <a href="/privacy" className="text-purple-400 hover:underline">
+                سياسة الخصوصية
+              </a>
+            </p>
+          </div>
         </Card>
       </div>
     </div>

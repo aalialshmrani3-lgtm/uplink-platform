@@ -1,123 +1,114 @@
-import { useState } from "react";
+import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, User } from "lucide-react";
-import { Link } from "wouter";
+import { getLoginUrl } from "@/const";
+import { User, ArrowRight, ArrowLeft } from "lucide-react";
 
 export default function RegisterIndividual() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    nationalId: "",
-    interests: "",
-    bio: "",
-  });
+  const [, setLocation] = useLocation();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Individual registration:", formData);
-    alert("تم التسجيل بنجاح! سيتم مراجعة طلبك.");
+  const handleRegister = () => {
+    window.location.href = getLoginUrl();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 p-4">
-      <div className="max-w-3xl mx-auto py-12">
-        <Card className="p-8 bg-slate-900/50 border-blue-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <Button
+          variant="ghost"
+          onClick={() => setLocation("/")}
+          className="mb-6 text-white hover:bg-white/10"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          العودة للرئيسية
+        </Button>
+
+        <Card className="p-8 bg-white/10 backdrop-blur-lg border-white/20">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-blue-500/10 rounded-lg">
-              <User className="w-6 h-6 text-blue-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-white">تسجيل كفرد</h1>
-              <p className="text-slate-400">انضم كمواطن مهتم بالابتكار</p>
-            </div>
+            <User className="h-8 w-8 text-blue-400" />
+            <h1 className="text-3xl font-bold text-white">تسجيل كفرد</h1>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <Label className="text-white">الاسم الكامل *</Label>
-                <Input
-                  required
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="أدخل اسمك الكامل"
-                />
+          <div className="space-y-6 text-white/90">
+            <p className="text-lg">
+              انضم إلى منصة UPLINK كفرد واحصل على:
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">💡 تقديم الأفكار</h3>
+                <p className="text-sm text-white/70">
+                  شارك أفكارك المبتكرة مع المجتمع
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">البريد الإلكتروني *</Label>
-                <Input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="example@email.com"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🏆 المشاركة في الهاكاثونات</h3>
+                <p className="text-sm text-white/70">
+                  انضم إلى الهاكاثونات والتحديات
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">رقم الجوال *</Label>
-                <Input
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="+966 5XX XXX XXX"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🤝 التواصل مع المبتكرين</h3>
+                <p className="text-sm text-white/70">
+                  تواصل مع مبتكرين آخرين
+                </p>
               </div>
 
-              <div>
-                <Label className="text-white">رقم الهوية الوطنية *</Label>
-                <Input
-                  required
-                  value={formData.nationalId}
-                  onChange={(e) => setFormData({ ...formData, nationalId: e.target.value })}
-                  className="bg-slate-800/50 border-slate-700 text-white"
-                  placeholder="1XXXXXXXXX"
-                />
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">📚 التعلم والتطوير</h3>
+                <p className="text-sm text-white/70">
+                  استفد من الموارد التعليمية
+                </p>
+              </div>
+
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🎯 فرص التمويل</h3>
+                <p className="text-sm text-white/70">
+                  احصل على فرص تمويل لأفكارك
+                </p>
+              </div>
+
+              <div className="bg-white/5 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">🌟 بناء السمعة</h3>
+                <p className="text-sm text-white/70">
+                  اكتسب سمعة في مجتمع الابتكار
+                </p>
               </div>
             </div>
 
-            <div>
-              <Label className="text-white">المجالات المهتم بها *</Label>
-              <Input
-                required
-                value={formData.interests}
-                onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
-                className="bg-slate-800/50 border-slate-700 text-white"
-                placeholder="مثال: تقنية، صحة، تعليم"
-              />
+            <div className="bg-blue-500/20 border border-blue-400/30 rounded-lg p-4 mt-6">
+              <h3 className="font-semibold mb-2">📋 متطلبات التسجيل:</h3>
+              <ul className="list-disc list-inside space-y-1 text-sm text-white/80">
+                <li>حساب Manus (سيتم إنشاؤه تلقائياً)</li>
+                <li>معلومات الملف الشخصي</li>
+                <li>مجالات الاهتمام</li>
+              </ul>
             </div>
 
-            <div>
-              <Label className="text-white">نبذة عنك</Label>
-              <Textarea
-                value={formData.bio}
-                onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                className="bg-slate-800/50 border-slate-700 text-white min-h-[120px]"
-                placeholder="أخبرنا عن اهتماماتك وأهدافك..."
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700">
-                إرسال الطلب
-                <ArrowRight className="mr-2 w-4 h-4" />
+            <div className="flex gap-4 mt-8">
+              <Button
+                onClick={handleRegister}
+                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
+                size="lg"
+              >
+                سجل الآن
+                <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
-              <Link href="/register">
-                <Button type="button" variant="outline" className="border-slate-700">
-                  رجوع
-                </Button>
-              </Link>
             </div>
-          </form>
+
+            <p className="text-sm text-white/60 text-center mt-4">
+              بالتسجيل، أنت توافق على{" "}
+              <a href="/terms" className="text-blue-400 hover:underline">
+                شروط الاستخدام
+              </a>{" "}
+              و{" "}
+              <a href="/privacy" className="text-blue-400 hover:underline">
+                سياسة الخصوصية
+              </a>
+            </p>
+          </div>
         </Card>
       </div>
     </div>
