@@ -931,7 +931,7 @@ export async function getAllIdeas(filters?: {
     conditions.push(eq(ideas.category, filters.category));
   }
   if (filters?.status) {
-    conditions.push(eq(ideas.status, filters.status));
+    conditions.push(eq(ideas.status, filters.status as any));
   }
   
   if (conditions.length > 0) {

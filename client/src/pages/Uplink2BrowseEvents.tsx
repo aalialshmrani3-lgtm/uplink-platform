@@ -151,7 +151,7 @@ export default function Uplink2BrowseEvents() {
                     <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${getTypeColor(event.type)} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                       {getTypeIcon(event.type)}
                     </div>
-                    <Badge className={`${getStatusBadge(event.status)} text-white border-0`}>
+                    <Badge className={`${getStatusBadge(event.status || 'draft')} text-white border-0`}>
                       {event.status === 'published' ? 'منشور' : 
                        event.status === 'ongoing' ? 'جاري' :
                        event.status === 'completed' ? 'مكتمل' : 'مسودة'}

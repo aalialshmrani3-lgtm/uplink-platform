@@ -16,7 +16,7 @@ interface Milestone {
   description: string;
   amount: string;
   deadline: Date;
-  status: 'pending' | 'in_progress' | 'completed' | 'rejected';
+  status: string;
   fundsReleased: boolean;
 }
 
@@ -66,7 +66,7 @@ export function MilestoneCard({
       rejected: { label: 'مرفوض', variant: 'destructive' as const },
     };
     
-    const status = statusMap[milestone.status];
+    const status = statusMap[milestone.status as keyof typeof statusMap] || statusMap.pending;
     return <Badge variant={status.variant}>{status.label}</Badge>;
   };
 

@@ -127,7 +127,7 @@ export default function Uplink2EventDetail() {
                   </div>
                   <CardTitle className="text-white text-3xl mb-2">{event.title}</CardTitle>
                   <div className="flex items-center gap-4 text-sm text-slate-400">
-                    <Badge className={`${getStatusBadge(event.status)} text-white border-0`}>
+                    <Badge className={`${getStatusBadge(event.status || 'draft')} text-white border-0`}>
                       {event.status === 'published' ? 'منشور' : 
                        event.status === 'ongoing' ? 'جاري' :
                        event.status === 'completed' ? 'مكتمل' : 'مسودة'}

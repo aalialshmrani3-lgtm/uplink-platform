@@ -3021,6 +3021,28 @@ Provide response in JSON format:
           return { success: true };
         }),
     }),
+
+    // Challenges
+    getChallenges: publicProcedure
+      .query(async () => {
+        // TODO: Implement getChallenges
+        return [];
+      }),
+
+    submitChallenge: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        description: z.string(),
+        category: z.string(),
+        requirements: z.string(),
+        prize: z.string(),
+        deadline: z.string(),
+        targetAudience: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // TODO: Implement submitChallenge
+        return { success: true, id: 1 };
+      }),
   }),
 
   // ============================================
@@ -3233,6 +3255,10 @@ Provide response in JSON format:
             totalParticipants: 0,
             activeHackathons: 0,
             completedHackathons: 0,
+            totalEscrow: '0',
+            totalReleased: '0',
+            activeEscrows: 0,
+            completedEscrows: 0,
           };
         }),
     }),

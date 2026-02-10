@@ -148,7 +148,8 @@ ${category ? `الفئة: ${category}` : ""}
     throw new Error("No response from AI");
   }
 
-  const analysis: IdeaAnalysisResult = JSON.parse(content);
+  const contentStr = typeof content === 'string' ? content : JSON.stringify(content);
+  const analysis: IdeaAnalysisResult = JSON.parse(contentStr);
   return analysis;
 }
 
@@ -211,5 +212,6 @@ ${JSON.stringify(entity2, null, 2)}
     throw new Error("No response from AI");
   }
 
-  return JSON.parse(content);
+  const contentStr = typeof content === 'string' ? content : JSON.stringify(content);
+  return JSON.parse(contentStr);
 }

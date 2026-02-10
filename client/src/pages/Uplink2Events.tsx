@@ -52,7 +52,6 @@ export default function Uplink2Events() {
       endDate: formData.get('endDate') as string,
       location: formData.get('location') as string,
       isVirtual: formData.get('isOnline') === 'on',
-      maxAttendees: parseInt(formData.get('maxAttendees') as string) || undefined,
     });
   };
 

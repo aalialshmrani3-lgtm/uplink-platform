@@ -48,9 +48,6 @@ export default function Uplink2Hackathons() {
       endDate: formData.get('endDate') as string,
       location: formData.get('location') as string,
       isVirtual: formData.get('isOnline') === 'on',
-      maxTeams: parseInt(formData.get('maxTeams') as string) || undefined,
-      prizes: formData.get('prizes') as string,
-      requirements: formData.get('requirements') as string,
     });
   };
 

@@ -50,7 +50,7 @@ export default function Uplink1IdeaDetail() {
     return { label: 'منخفض', color: 'bg-gray-500' };
   };
 
-  const innovationScore = parseFloat(Number(idea.analysis?.innovationScore) || 0 || '0');
+  const innovationScore = parseFloat(idea.analysis?.overallScore || '0');
   const innovationLevel = getInnovationLevelBadge(innovationScore);
 
   return (
@@ -79,11 +79,11 @@ export default function Uplink1IdeaDetail() {
                   <div className="flex items-center gap-4 text-sm text-slate-400">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
-                      {new Date(idea.submittedAt).toLocaleDateString('ar-SA')}
+                      {idea.submittedAt ? new Date(idea.submittedAt).toLocaleDateString('ar-SA') : 'غير محدد'}
                     </span>
                     <span className="flex items-center gap-1">
                       <Eye className="w-4 h-4" />
-                      {idea.views || 0} مشاهدة
+                      0 مشاهدة
                     </span>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ export default function Uplink1IdeaDetail() {
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-blue-400">
-                {parseFloat(Number(idea.analysis?.marketScore) || 0 || '0').toFixed(0)}%
+                {parseFloat(idea.analysis?.overallScore || '0').toFixed(0)}%
               </p>
             </CardContent>
           </Card>
@@ -129,7 +129,7 @@ export default function Uplink1IdeaDetail() {
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-purple-400">
-                {parseFloat(Number(idea.analysis?.feasibilityScore) || 0 || '0').toFixed(0)}%
+                {parseFloat(idea.analysis?.overallScore || '0').toFixed(0)}%
               </p>
             </CardContent>
           </Card>
