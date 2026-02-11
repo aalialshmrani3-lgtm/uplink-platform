@@ -311,33 +311,42 @@ export const appRouter = router({
             return String(value);
           };
 
+          // Convert criterionScores (array or object) to individual scores
+          const criterionScores = analysisResult.criterionScores || [];
+          const scores: any = Array.isArray(criterionScores)
+            ? criterionScores.reduce((acc: any, item: any) => {
+                acc[item.criterion] = item;
+                return acc;
+              }, {})
+            : criterionScores;
+          
           const analysisId = await db.createIdeaAnalysis({
             ideaId,
             overallScore: safeToString(analysisResult.overallScore),
             classification: analysisResult.classification,
-            technicalNoveltyScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "technicalNovelty")?.score),
-            socialImpactScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "socialImpact")?.score),
-            technicalFeasibilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "technicalFeasibility")?.score),
-            commercialValueScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "commercialValue")?.score),
-            scalabilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "scalability")?.score),
-            sustainabilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "sustainability")?.score),
-            technicalRiskScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "technicalRisk")?.score),
-            timeToMarketScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "timeToMarket")?.score),
-            competitiveAdvantageScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "competitiveAdvantage")?.score),
-            organizationalReadinessScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "organizationalReadiness")?.score),
+            technicalNoveltyScore: safeToString(scores.technicalNovelty?.score),
+            socialImpactScore: safeToString(scores.socialImpact?.score),
+            technicalFeasibilityScore: safeToString(scores.technicalFeasibility?.score),
+            commercialValueScore: safeToString(scores.commercialValue?.score),
+            scalabilityScore: safeToString(scores.scalability?.score),
+            sustainabilityScore: safeToString(scores.sustainability?.score),
+            technicalRiskScore: safeToString(scores.technicalRisk?.score),
+            timeToMarketScore: safeToString(scores.timeToMarket?.score),
+            competitiveAdvantageScore: safeToString(scores.competitiveAdvantage?.score),
+            organizationalReadinessScore: safeToString(scores.organizationalReadiness?.score),
             trlLevel: null,
             trlDescription: null,
             currentStageGate: null,
             stageGateRecommendation: null,
-            aiAnalysis: null,
+            aiAnalysis: analysisResult.aiAnalysis || null,
             strengths: safeStringify(analysisResult.strengths),
             weaknesses: safeStringify(analysisResult.weaknesses),
             opportunities: safeStringify(analysisResult.opportunities),
             threats: safeStringify(analysisResult.threats),
             recommendations: safeStringify(analysisResult.recommendations),
-            nextSteps: null,
-            similarInnovations: null,
-            extractedKeywords: null,
+            nextSteps: safeStringify(analysisResult.nextSteps),
+            similarInnovations: safeStringify(analysisResult.similarInnovations),
+            extractedKeywords: safeStringify(analysisResult.extractedKeywords),
             sentimentScore: safeToString(analysisResult.sentimentScore),
             complexityLevel: analysisResult.complexityLevel || "medium",
             marketSize: analysisResult.marketSize || "medium",
@@ -363,6 +372,10 @@ export const appRouter = router({
           });
 
           // Return analysis result
+          console.log('[DEBUG] About to return analysis result');
+          console.log('[DEBUG] ideaId:', ideaId);
+          console.log('[DEBUG] analysisId:', analysisId);
+          console.log('[DEBUG] overallScore:', analysisResult.overallScore);
           return {
             ideaId,
             analysisId,
@@ -441,15 +454,15 @@ export const appRouter = router({
             trlDescription: null,
             currentStageGate: null,
             stageGateRecommendation: null,
-            aiAnalysis: null,
+            aiAnalysis: analysisResult.aiAnalysis || null,
             strengths: safeStringify(analysisResult.strengths),
             weaknesses: safeStringify(analysisResult.weaknesses),
             opportunities: safeStringify(analysisResult.opportunities),
             threats: safeStringify(analysisResult.threats),
             recommendations: safeStringify(analysisResult.recommendations),
-            nextSteps: null,
-            similarInnovations: null,
-            extractedKeywords: null,
+            nextSteps: safeStringify(analysisResult.nextSteps),
+            similarInnovations: safeStringify(analysisResult.similarInnovations),
+            extractedKeywords: safeStringify(analysisResult.extractedKeywords),
             sentimentScore: safeToString(analysisResult.sentimentScore),
             complexityLevel: analysisResult.complexityLevel || "medium",
             marketSize: analysisResult.marketSize || "medium",

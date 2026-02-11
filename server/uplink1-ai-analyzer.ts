@@ -302,108 +302,37 @@ export async function analyzeIdea(idea: IdeaInput): Promise<AnalysisResult> {
         }
       ],
       response_format: {
-        type: "json_schema",
-        json_schema: {
-          name: "idea_analysis",
-          strict: true,
-          schema: {
-            type: "object",
-            properties: {
-              criterionScores: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    criterion: { type: "string" },
-                    score: { type: "number" },
-                    reasoning: { type: "string" },
-                    strengths: {
-                      type: "array",
-                      items: { type: "string" }
-                    },
-                    weaknesses: {
-                      type: "array",
-                      items: { type: "string" }
-                    }
-                  },
-                  required: ["criterion", "score", "reasoning", "strengths", "weaknesses"],
-                  additionalProperties: false
-                }
-              },
-              aiAnalysis: { type: "string" },
-              strengths: {
-                type: "array",
-                items: { type: "string" }
-              },
-              weaknesses: {
-                type: "array",
-                items: { type: "string" }
-              },
-              opportunities: {
-                type: "array",
-                items: { type: "string" }
-              },
-              threats: {
-                type: "array",
-                items: { type: "string" }
-              },
-              recommendations: {
-                type: "array",
-                items: { type: "string" }
-              },
-              nextSteps: {
-                type: "array",
-                items: { type: "string" }
-              },
-              similarInnovations: {
-                type: "array",
-                items: { type: "string" }
-              },
-              extractedKeywords: {
-                type: "array",
-                items: { type: "string" }
-              },
-              sentimentScore: { type: "number" },
-              complexityLevel: {
-                type: "string",
-                enum: ["low", "medium", "high", "very_high"]
-              },
-              marketSize: { type: "string" },
-              competitionLevel: {
-                type: "string",
-                enum: ["low", "medium", "high", "very_high"]
-              },
-              marketTrends: {
-                type: "array",
-                items: { type: "string" }
-              }
-            },
-            required: [
-              "criterionScores",
-              "aiAnalysis",
-              "strengths",
-              "weaknesses",
-              "opportunities",
-              "threats",
-              "recommendations",
-              "nextSteps",
-              "similarInnovations",
-              "extractedKeywords",
-              "sentimentScore",
-              "complexityLevel"
-            ],
-            additionalProperties: false
-          }
-        }
+        type: "json_object"
       }
     });
     
     // Step 3: Parse the response
     const content = response.choices[0].message.content;
+    if (!content) {
+      throw new Error('استجابة AI فارغة');
+    }
+    
     const aiResult = JSON.parse(typeof content === 'string' ? content : JSON.stringify(content) || "{}");
     
+    // Step 3.5: Convert criterionScores from object to array if needed
+    let criterionScores: CriterionScore[];
+    if (Array.isArray(aiResult.criterionScores)) {
+      criterionScores = aiResult.criterionScores;
+    } else if (typeof aiResult.criterionScores === 'object' && aiResult.criterionScores !== null) {
+      // Convert object to array
+      criterionScores = Object.entries(aiResult.criterionScores).map(([criterion, data]: [string, any]) => ({
+        criterion,
+        score: data.score || 0,
+        reasoning: data.justification || data.reasoning || '',
+        strengths: data.strengths || [],
+        weaknesses: data.weaknesses || []
+      }));
+    } else {
+      throw new Error('criterionScores غير موجود أو بصيغة خاطئة');
+    }
+    
     // Step 4: Calculate overall score (weighted average)
-    const overallScore = calculateOverallScore(aiResult.criterionScores);
+    const overallScore = calculateOverallScore(criterionScores);
     
     // Step 5: Determine classification
     const classification = determineClassification(overallScore);
@@ -417,7 +346,7 @@ export async function analyzeIdea(idea: IdeaInput): Promise<AnalysisResult> {
       overallScore,
       classification,
       classificationLabel: classificationLevel.label,
-      criterionScores: aiResult.criterionScores,
+      criterionScores,
       aiAnalysis: aiResult.aiAnalysis,
       strengths: aiResult.strengths,
       weaknesses: aiResult.weaknesses,
@@ -496,7 +425,42 @@ ${c.guidelines.map(g => `   - ${g}`).join('\n')}
 13. **مستوى المنافسة** (low, medium, high, very_high)
 14. **اتجاهات السوق** ذات الصلة
 
-كن موضوعيًا ومفصلاً في تحليلك.`;
+كن موضوعيًا ومفصلاً في تحليلك.
+
+**مهم جداً:** يجب أن يكون الرد بصيغة JSON فقط بالبنية التالية:
+
+{
+  "criterionScores": [
+    {
+      "criterion": "technicalNovelty",
+      "score": 75,
+      "reasoning": "التبرير...",
+      "strengths": ["نقطة قوة 1", "نقطة قوة 2"],
+      "weaknesses": ["نقطة ضعف 1", "نقطة ضعف 2"]
+    },
+    // ... باقي المعايير: socialImpact, technicalFeasibility, commercialValue, scalability, sustainability, technicalRisk, timeToMarket, competitiveAdvantage, organizationalReadiness
+  ],
+  "aiAnalysis": "تحليل شامل...",
+  "strengths": ["نقطة قوة 1", "نقطة قوة 2"],
+  "weaknesses": ["نقطة ضعف 1", "نقطة ضعف 2"],
+  "opportunities": ["فرصة 1", "فرصة 2"],
+  "threats": ["تهديد 1", "تهديد 2"],
+  "recommendations": ["توصية 1", "توصية 2"],
+  "nextSteps": ["خطوة 1", "خطوة 2"],
+  "similarInnovations": ["ابتكار 1", "ابتكار 2"],
+  "extractedKeywords": ["كلمة 1", "كلمة 2"],
+  "sentimentScore": 0.75,
+  "complexityLevel": "high",
+  "marketSize": "وصف حجم السوق",
+  "competitionLevel": "high",
+  "marketTrends": ["اتجاه 1", "اتجاه 2"]
+}
+
+**ملاحظات:**
+- استخدم الأسماء الإنجليزية للمعايير: technicalNovelty, socialImpact, technicalFeasibility, commercialValue, scalability, sustainability, technicalRisk, timeToMarket, competitiveAdvantage, organizationalReadiness
+- يجب أن يكون criterionScores array وليس object
+- جميع النصوص يجب أن تكون بالعربية ما عدا أسماء المعايير
+- لا تضف أي نص خارج JSON`;
 }
 
 /**
