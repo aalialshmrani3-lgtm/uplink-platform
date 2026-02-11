@@ -920,6 +920,7 @@ export async function getAllIdeas(filters?: {
   search?: string;
   category?: string;
   status?: string;
+  challengeId?: number;
   limit?: number;
   offset?: number;
 }) {
@@ -932,6 +933,9 @@ export async function getAllIdeas(filters?: {
   }
   if (filters?.status) {
     conditions.push(eq(ideas.status, filters.status as any));
+  }
+  if (filters?.challengeId) {
+    conditions.push(eq(ideas.challengeId, filters.challengeId));
   }
   
   if (conditions.length > 0) {

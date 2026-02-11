@@ -17,11 +17,16 @@ export default function Uplink1BrowseIdeas() {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [challengeFilter, setChallengeFilter] = useState<string>('all');
+  
+  // Fetch active challenges for filter
+  const { data: challenges } = trpc.challenge.getActiveChallenges.useQuery();
 
   const { data: ideas, isLoading } = trpc.uplink1.ideas.browse.useQuery({
     search: searchQuery,
     category: categoryFilter !== 'all' ? categoryFilter : undefined,
     status: statusFilter !== 'all' ? statusFilter : undefined,
+    challengeId: challengeFilter !== 'all' ? parseInt(challengeFilter) : undefined,
   });
 
   const getStatusIcon = (status: string) => {
@@ -82,7 +87,7 @@ export default function Uplink1BrowseIdeas() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Search */}
               <div className="relative">
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -119,6 +124,21 @@ export default function Uplink1BrowseIdeas() {
                   <SelectItem value="approved">موافق عليها</SelectItem>
                   <SelectItem value="pending">قيد المراجعة</SelectItem>
                   <SelectItem value="needs_improvement">تحتاج تحسين</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Challenge Filter */}
+              <Select value={challengeFilter} onValueChange={setChallengeFilter}>
+                <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
+                  <SelectValue placeholder="التحدي" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">جميع التحديات</SelectItem>
+                  {challenges?.map((challenge) => (
+                    <SelectItem key={challenge.id} value={challenge.id.toString()}>
+                      {challenge.title}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

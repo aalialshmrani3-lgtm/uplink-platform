@@ -1192,6 +1192,9 @@ export const ideas = mysqlTable("ideas", {
   // Analysis Reference
   analysisId: int("analysisId"),
   
+  // Challenge Reference (UPLINK2 Integration)
+  challengeId: int("challengeId"), // Optional: Link to a challenge in UPLINK2
+  
   // Timestamps
   submittedAt: timestamp("submittedAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

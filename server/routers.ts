@@ -254,8 +254,9 @@ export const appRouter = router({
         description: z.string().min(50, "الوصف يجب أن يكون 50 حرفًا على الأقل"),
         problem: z.string().min(30, "وصف المشكلة يجب أن يكون 30 حرفًا على الأقل"),
         solution: z.string().min(30, "وصف الحل يجب أن يكون 30 حرفًا على الأقل"),
-        targetMarket: z.string().optional(),
-        uniqueValue: z.string().optional(),
+    targetMarket: z.string().optional(),
+    uniqueValue: z.string().optional(),
+    challengeId: z.number().optional(), // Optional: Link to a challenge in UPLINK2
         category: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
@@ -276,6 +277,7 @@ export const appRouter = router({
           uniqueValue: input.uniqueValue,
           category: input.category || "general",
           status: "submitted",
+          challengeId: input.challengeId, // Optional: Link to a challenge in UPLINK2
         });
 
         // Perform AI analysis immediately
@@ -615,6 +617,7 @@ export const appRouter = router({
           search: z.string().optional(),
           category: z.string().optional(),
           status: z.string().optional(),
+          challengeId: z.number().optional(),
           limit: z.number().optional(),
           offset: z.number().optional(),
         }))
@@ -624,6 +627,7 @@ export const appRouter = router({
             search: input.search,
             category: input.category,
             status: input.status,
+            challengeId: input.challengeId,
             limit: input.limit || 50,
             offset: input.offset || 0,
           });
@@ -1041,6 +1045,17 @@ Respond in JSON format:
       .input(z.object({ status: z.enum(["open", "closed", "completed"]).optional() }).optional())
       .query(async ({ input }) => {
         return db.getAllChallenges(input?.status);
+      }),
+    
+    // Get active challenges for idea submission
+    getActiveChallenges: publicProcedure
+      .query(async () => {
+        const challenges = await db.getAllChallenges("open");
+        return challenges.map(c => ({
+          id: c.id,
+          title: c.title,
+          category: c.category,
+        }));
       }),
 
     getById: publicProcedure

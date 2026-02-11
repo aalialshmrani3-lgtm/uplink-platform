@@ -9,6 +9,7 @@ import { Loader2, Sparkles, Brain } from "lucide-react";
 import AIAnalysisResults from "@/components/AIAnalysisResults";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function SubmitIdea() {
   const { user } = useAuth();
@@ -19,7 +20,11 @@ export default function SubmitIdea() {
     solution: "",
     targetMarket: "",
     uniqueValue: "",
+    challengeId: undefined as number | undefined,
   });
+  
+  // Fetch active challenges
+  const { data: challenges } = trpc.challenge.getActiveChallenges.useQuery();
   const [analysisResult, setAnalysisResult] = useState<any>(null);
 
   const submitMutation = trpc.uplink1.submitIdea.useMutation({
@@ -58,6 +63,7 @@ export default function SubmitIdea() {
                   solution: "",
                   targetMarket: "",
                   uniqueValue: "",
+                  challengeId: undefined,
                 });
               }}
               className="border-gray-700 hover:bg-gray-800"
@@ -176,6 +182,41 @@ export default function SubmitIdea() {
                 rows={3}
                 className="bg-slate-900 border-slate-700 text-white"
               />
+            </div>
+
+            {/* Optional: Link to a challenge */}
+            <div>
+              <Label className="text-white">
+                هل تريد ربط فكرتك بتحدٍ معين؟ (اختياري)
+              </Label>
+              <Select
+                value={formData.challengeId?.toString() || "none"}
+                onValueChange={(value) => {
+                  setFormData({ 
+                    ...formData, 
+                    challengeId: value === "none" ? undefined : parseInt(value) 
+                  });
+                }}
+              >
+                <SelectTrigger className="bg-slate-900 border-slate-700 text-white">
+                  <SelectValue placeholder="اختر تحدياً (اختياري)" />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-900 border-slate-700">
+                  <SelectItem value="none" className="text-white">لا يوجد تحدٍ محدد</SelectItem>
+                  {challenges?.map((challenge) => (
+                    <SelectItem 
+                      key={challenge.id} 
+                      value={challenge.id.toString()}
+                      className="text-white"
+                    >
+                      {challenge.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-sm text-gray-400 mt-1">
+                ربط فكرتك بتحدٍ يزيد من فرص ظهورها للمهتمين بهذا المجال
+              </p>
             </div>
 
             <Button
