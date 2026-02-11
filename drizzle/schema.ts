@@ -1259,7 +1259,7 @@ export const ideaAnalysis = mysqlTable("idea_analysis", {
   complexityLevel: mysqlEnum("complexityLevel", ["low", "medium", "high", "very_high"]),
   
   // Market Analysis
-  marketSize: varchar("marketSize", { length: 100 }),
+  marketSize: text("marketSize"),
   competitionLevel: mysqlEnum("competitionLevel", ["low", "medium", "high", "very_high"]),
   marketTrends: json("marketTrends"),
   

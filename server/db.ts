@@ -957,12 +957,20 @@ export async function updateIdea(id: number, data: any) {
 // UPLINK1: IDEA ANALYSIS OPERATIONS
 // ============================================
 export async function createIdeaAnalysis(data: any) {
+  console.log('[DEBUG] createIdeaAnalysis called with data keys:', Object.keys(data));
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  // Use Drizzle ORM - it handles defaults and nullable fields automatically
-  const result = await db.insert(ideaAnalysis).values(data);
-  return result[0].insertId;
+  try {
+    console.log('[DEBUG] About to insert into ideaAnalysis table');
+    // Use Drizzle ORM - it handles defaults and nullable fields automatically
+    const result = await db.insert(ideaAnalysis).values(data);
+    console.log('[DEBUG] Insert successful, insertId:', result[0].insertId);
+    return result[0].insertId;
+  } catch (error) {
+    console.error('[ERROR] createIdeaAnalysis failed:', error);
+    throw error;
+  }
 }
 
 export async function getIdeaAnalysisByIdeaId(ideaId: number) {

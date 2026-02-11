@@ -320,6 +320,10 @@ export const appRouter = router({
               }, {})
             : criterionScores;
           
+          console.log('[DEBUG] About to create idea analysis');
+          console.log('[DEBUG] ideaId:', ideaId);
+          console.log('[DEBUG] overallScore:', analysisResult.overallScore);
+          
           const analysisId = await db.createIdeaAnalysis({
             ideaId,
             overallScore: safeToString(analysisResult.overallScore),
@@ -377,18 +381,46 @@ export const appRouter = router({
           console.log('[DEBUG] analysisId:', analysisId);
           console.log('[DEBUG] overallScore:', analysisResult.overallScore);
           
-          // Return simplified version without complex nested objects
-          return {
+          // Return simplified version matching AIAnalysisResults interface
+          const criterionScoresArray = Array.isArray(analysisResult.criterionScores)
+            ? analysisResult.criterionScores
+            : Object.entries(analysisResult.criterionScores || {}).map(([criterion, data]: [string, any]) => ({
+                criterion,
+                score: data.score || 0,
+                reasoning: data.justification || data.reasoning || ""
+              }));
+
+          const getTechnicalNoveltyScore = () => {
+            const score = criterionScoresArray.find((c: any) => c.criterion === "technicalNovelty");
+            return score ? score.score : 0;
+          };
+
+          const getTechnicalFeasibilityScore = () => {
+            const score = criterionScoresArray.find((c: any) => c.criterion === "technicalFeasibility");
+            return score ? score.score : 0;
+          };
+
+          const getCommercialValueScore = () => {
+            const score = criterionScoresArray.find((c: any) => c.criterion === "commercialValue");
+            return score ? score.score : 0;
+          };
+
+          const responseData = {
             ideaId,
             analysisId,
-            overallScore: analysisResult.overallScore,
-            strengths: analysisResult.strengths,
-            weaknesses: analysisResult.weaknesses,
-            opportunities: analysisResult.opportunities,
-            threats: analysisResult.threats,
-            recommendations: analysisResult.recommendations,
+            overallScore: analysisResult.overallScore || 0,
+            technicalNoveltyScore: getTechnicalNoveltyScore(),
+            technicalFeasibilityScore: getTechnicalFeasibilityScore(),
+            commercialValueScore: getCommercialValueScore(),
+            classification: analysisResult.classification || "weak",
+            tags: analysisResult.extractedKeywords || [],
+            recommendations: analysisResult.recommendations || [],
+            nextSteps: analysisResult.nextSteps || "",
             message: "تم تحليل الفكرة بنجاح!"
           };
+          
+          console.log('[DEBUG] About to return response:', JSON.stringify(responseData).substring(0, 200));
+          return responseData;
         } catch (error) {
           // Update status to revision_needed
           await db.updateIdea(ideaId, { status: "revision_needed" });
@@ -443,6 +475,10 @@ export const appRouter = router({
             return String(value);
           };
 
+          console.log('[DEBUG] About to create idea analysis');
+          console.log('[DEBUG] ideaId:', input.ideaId);
+          console.log('[DEBUG] overallScore:', analysisResult.overallScore);
+          
           const analysisId = await db.createIdeaAnalysis({
             ideaId: input.ideaId,
             overallScore: safeToString(analysisResult.overallScore),
