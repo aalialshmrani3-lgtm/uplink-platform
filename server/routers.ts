@@ -291,35 +291,52 @@ export const appRouter = router({
           });
 
           // Save analysis result to database
+          // Helper function to safely stringify or return null
+          const safeStringify = (value: any) => {
+            if (value === undefined || value === null) return null;
+            if (typeof value === 'string') return value;
+            try {
+              return JSON.stringify(value);
+            } catch {
+              return null;
+            }
+          };
+
+          // Helper function to safely convert to string or return "0"
+          const safeToString = (value: any, defaultValue: string = "0") => {
+            if (value === undefined || value === null) return defaultValue;
+            return String(value);
+          };
+
           const analysisId = await db.createIdeaAnalysis({
             ideaId,
-            overallScore: analysisResult.overallScore.toString(),
+            overallScore: safeToString(analysisResult.overallScore),
             classification: analysisResult.classification,
-            technicalNoveltyScore: analysisResult.criterionScores.find(c => c.criterion === "novelty")?.score.toString() || "0",
-            socialImpactScore: analysisResult.criterionScores.find(c => c.criterion === "impact")?.score.toString() || "0",
-            technicalFeasibilityScore: analysisResult.criterionScores.find(c => c.criterion === "feasibility")?.score.toString() || "0",
-            commercialValueScore: analysisResult.criterionScores.find(c => c.criterion === "commercial")?.score.toString() || "0",
-            scalabilityScore: analysisResult.criterionScores.find(c => c.criterion === "scalability")?.score.toString() || "0",
-            sustainabilityScore: analysisResult.criterionScores.find(c => c.criterion === "sustainability")?.score.toString() || "0",
-            technicalRiskScore: "0",
-            timeToMarketScore: "0",
-            competitiveAdvantageScore: "0",
-            organizationalReadinessScore: "0",
-            aiAnalysis: analysisResult.aiAnalysis,
-            strengths: JSON.stringify(analysisResult.strengths),
-            weaknesses: JSON.stringify(analysisResult.weaknesses),
-            opportunities: JSON.stringify(analysisResult.opportunities),
-            threats: JSON.stringify(analysisResult.threats),
-            recommendations: JSON.stringify(analysisResult.recommendations),
-            nextSteps: JSON.stringify(analysisResult.nextSteps),
-            similarInnovations: JSON.stringify(analysisResult.similarInnovations),
-            extractedKeywords: JSON.stringify(analysisResult.extractedKeywords),
-            sentimentScore: analysisResult.sentimentScore.toString(),
-            complexityLevel: analysisResult.complexityLevel,
-            marketSize: analysisResult.marketSize,
-            competitionLevel: analysisResult.competitionLevel,
-            marketTrends: analysisResult.marketTrends ? JSON.stringify(analysisResult.marketTrends) : undefined,
-            processingTime: analysisResult.processingTime.toString(),
+            technicalNoveltyScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "novelty")?.score),
+            socialImpactScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "impact")?.score),
+            technicalFeasibilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "feasibility")?.score),
+            commercialValueScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "commercial")?.score),
+            scalabilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "scalability")?.score),
+            sustainabilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "sustainability")?.score),
+            technicalRiskScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "technical_risk")?.score),
+            timeToMarketScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "time_to_market")?.score),
+            competitiveAdvantageScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "competitive_advantage")?.score),
+            organizationalReadinessScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "organizational_readiness")?.score),
+            aiAnalysis: safeStringify(analysisResult.aiAnalysis),
+            strengths: safeStringify(analysisResult.strengths),
+            weaknesses: safeStringify(analysisResult.weaknesses),
+            opportunities: safeStringify(analysisResult.opportunities),
+            threats: safeStringify(analysisResult.threats),
+            recommendations: safeStringify(analysisResult.recommendations),
+            nextSteps: safeStringify(analysisResult.nextSteps),
+            similarInnovations: safeStringify(analysisResult.similarInnovations),
+            extractedKeywords: safeStringify(analysisResult.extractedKeywords),
+            sentimentScore: safeToString(analysisResult.sentimentScore),
+            complexityLevel: analysisResult.complexityLevel || null,
+            marketSize: analysisResult.marketSize || null,
+            competitionLevel: analysisResult.competitionLevel || null,
+            marketTrends: safeStringify(analysisResult.marketTrends),
+            processingTime: safeToString(analysisResult.processingTime),
           });
 
           // Update idea status
@@ -378,35 +395,52 @@ export const appRouter = router({
           });
 
           // Save analysis result to database
+          // Helper function to safely stringify or return null
+          const safeStringify = (value: any) => {
+            if (value === undefined || value === null) return null;
+            if (typeof value === 'string') return value;
+            try {
+              return JSON.stringify(value);
+            } catch {
+              return null;
+            }
+          };
+
+          // Helper function to safely convert to string or return "0"
+          const safeToString = (value: any, defaultValue: string = "0") => {
+            if (value === undefined || value === null) return defaultValue;
+            return String(value);
+          };
+
           const analysisId = await db.createIdeaAnalysis({
             ideaId: input.ideaId,
-            overallScore: analysisResult.overallScore.toString(),
+            overallScore: safeToString(analysisResult.overallScore),
             classification: analysisResult.classification,
-            technicalNoveltyScore: analysisResult.criterionScores.find(c => c.criterion === "novelty")?.score.toString() || "0",
-            socialImpactScore: analysisResult.criterionScores.find(c => c.criterion === "impact")?.score.toString() || "0",
-            technicalFeasibilityScore: analysisResult.criterionScores.find(c => c.criterion === "feasibility")?.score.toString() || "0",
-            commercialValueScore: analysisResult.criterionScores.find(c => c.criterion === "commercial")?.score.toString() || "0",
-            scalabilityScore: analysisResult.criterionScores.find(c => c.criterion === "scalability")?.score.toString() || "0",
-            sustainabilityScore: analysisResult.criterionScores.find(c => c.criterion === "sustainability")?.score.toString() || "0",
-            technicalRiskScore: "0",
-            timeToMarketScore: "0",
-            competitiveAdvantageScore: "0",
-            organizationalReadinessScore: "0",
-            aiAnalysis: analysisResult.aiAnalysis,
-            strengths: JSON.stringify(analysisResult.strengths),
-            weaknesses: JSON.stringify(analysisResult.weaknesses),
-            opportunities: JSON.stringify(analysisResult.opportunities),
-            threats: JSON.stringify(analysisResult.threats),
-            recommendations: JSON.stringify(analysisResult.recommendations),
-            nextSteps: JSON.stringify(analysisResult.nextSteps),
-            similarInnovations: JSON.stringify(analysisResult.similarInnovations),
-            extractedKeywords: JSON.stringify(analysisResult.extractedKeywords),
-            sentimentScore: analysisResult.sentimentScore.toString(),
-            complexityLevel: analysisResult.complexityLevel,
-            marketSize: analysisResult.marketSize,
-            competitionLevel: analysisResult.competitionLevel,
-            marketTrends: analysisResult.marketTrends ? JSON.stringify(analysisResult.marketTrends) : undefined,
-            processingTime: analysisResult.processingTime.toString(),
+            technicalNoveltyScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "novelty")?.score),
+            socialImpactScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "impact")?.score),
+            technicalFeasibilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "feasibility")?.score),
+            commercialValueScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "commercial")?.score),
+            scalabilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "scalability")?.score),
+            sustainabilityScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "sustainability")?.score),
+            technicalRiskScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "technical_risk")?.score),
+            timeToMarketScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "time_to_market")?.score),
+            competitiveAdvantageScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "competitive_advantage")?.score),
+            organizationalReadinessScore: safeToString(analysisResult.criterionScores.find(c => c.criterion === "organizational_readiness")?.score),
+            aiAnalysis: safeStringify(analysisResult.aiAnalysis),
+            strengths: safeStringify(analysisResult.strengths),
+            weaknesses: safeStringify(analysisResult.weaknesses),
+            opportunities: safeStringify(analysisResult.opportunities),
+            threats: safeStringify(analysisResult.threats),
+            recommendations: safeStringify(analysisResult.recommendations),
+            nextSteps: safeStringify(analysisResult.nextSteps),
+            similarInnovations: safeStringify(analysisResult.similarInnovations),
+            extractedKeywords: safeStringify(analysisResult.extractedKeywords),
+            sentimentScore: safeToString(analysisResult.sentimentScore),
+            complexityLevel: analysisResult.complexityLevel || null,
+            marketSize: analysisResult.marketSize || null,
+            competitionLevel: analysisResult.competitionLevel || null,
+            marketTrends: safeStringify(analysisResult.marketTrends),
+            processingTime: safeToString(analysisResult.processingTime),
           });
 
           // Update idea status
