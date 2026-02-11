@@ -339,8 +339,8 @@ export const appRouter = router({
             message: "تم تحليل الفكرة بنجاح!"
           };
         } catch (error) {
-          // Update status to failed
-          await db.updateIdea(ideaId, { status: "failed" });
+          // Update status to revision_needed
+          await db.updateIdea(ideaId, { status: "revision_needed" });
           throw error;
         }
       }),
@@ -438,8 +438,8 @@ export const appRouter = router({
             message: "تم تحليل الفكرة بنجاح!"
           };
         } catch (error) {
-          // Update status to failed
-          await db.updateIdea(input.ideaId, { status: "failed" });
+          // Update status to revision_needed
+          await db.updateIdea(input.ideaId, { status: "revision_needed" });
           throw error;
         }
       }),
