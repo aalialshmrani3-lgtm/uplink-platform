@@ -1215,16 +1215,16 @@ export const ideaAnalysis = mysqlTable("idea_analysis", {
   ]).notNull(),
   
   // 10 Evaluation Criteria Scores (0-100 each) - Enhanced from Innovation 360 best practices
-  technicalNoveltyScore: decimal("technicalNoveltyScore", { precision: 5, scale: 2 }).notNull(),     // Weight: 15%
-  socialImpactScore: decimal("socialImpactScore", { precision: 5, scale: 2 }).notNull(),             // Weight: 15%
-  technicalFeasibilityScore: decimal("technicalFeasibilityScore", { precision: 5, scale: 2 }).notNull(), // Weight: 12%
-  commercialValueScore: decimal("commercialValueScore", { precision: 5, scale: 2 }).notNull(),       // Weight: 12%
-  scalabilityScore: decimal("scalabilityScore", { precision: 5, scale: 2 }).notNull(),               // Weight: 10%
-  sustainabilityScore: decimal("sustainabilityScore", { precision: 5, scale: 2 }).notNull(),         // Weight: 10%
-  technicalRiskScore: decimal("technicalRiskScore", { precision: 5, scale: 2 }).notNull(),           // Weight: 8%
-  timeToMarketScore: decimal("timeToMarketScore", { precision: 5, scale: 2 }).notNull(),             // Weight: 8%
-  competitiveAdvantageScore: decimal("competitiveAdvantageScore", { precision: 5, scale: 2 }).notNull(), // Weight: 5%
-  organizationalReadinessScore: decimal("organizationalReadinessScore", { precision: 5, scale: 2 }).notNull(), // Weight: 5%
+  technicalNoveltyScore: decimal("technicalNoveltyScore", { precision: 5, scale: 2 }).notNull().default("0"),     // Weight: 15%
+  socialImpactScore: decimal("socialImpactScore", { precision: 5, scale: 2 }).notNull().default("0"),             // Weight: 15%
+  technicalFeasibilityScore: decimal("technicalFeasibilityScore", { precision: 5, scale: 2 }).notNull().default("0"), // Weight: 12%
+  commercialValueScore: decimal("commercialValueScore", { precision: 5, scale: 2 }).notNull().default("0"),       // Weight: 12%
+  scalabilityScore: decimal("scalabilityScore", { precision: 5, scale: 2 }).notNull().default("0"),               // Weight: 10%
+  sustainabilityScore: decimal("sustainabilityScore", { precision: 5, scale: 2 }).notNull().default("0"),         // Weight: 10%
+  technicalRiskScore: decimal("technicalRiskScore", { precision: 5, scale: 2 }).notNull().default("0"),           // Weight: 8%
+  timeToMarketScore: decimal("timeToMarketScore", { precision: 5, scale: 2 }).notNull().default("0"),             // Weight: 8%
+  competitiveAdvantageScore: decimal("competitiveAdvantageScore", { precision: 5, scale: 2 }).notNull().default("0"), // Weight: 5%
+  organizationalReadinessScore: decimal("organizationalReadinessScore", { precision: 5, scale: 2 }).notNull().default("0"), // Weight: 5%
   
   // Technology Readiness Level (TRL) Assessment - 9 levels from Innovation 360
   trlLevel: int("trlLevel"), // 1-9 (1: Basic principles, 9: Actual system proven)
