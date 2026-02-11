@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, ideaId, overallScore, classification, status, analyzedAt FROM idea_analysis ORDER BY id DESC LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, ideaId, overallScore, classification, status, analyzedAt FROM idea_analysis ORDER BY id DESC LIMIT 1;",
+  "rows": [
+    {
+      "id": "1",
+      "ideaId": "60020",
+      "overallScore": "0.00",
+      "classification": "weak",
+      "status": "pending",
+      "analyzedAt": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tideaId\toverallScore\tclassification\tstatus\tanalyzedAt\n1\t60020\t0.00\tweak\tpending\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 1679
+}

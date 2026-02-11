@@ -1,0 +1,8 @@
+{
+  "query": "ALTER TABLE `idea_analysis`\nADD COLUMN `confidence` decimal(5,2),\nADD COLUMN `regulatoryRisk` decimal(5,2),\nADD COLUMN `resourceRequirements` json,\nADD COLUMN `expectedROI` decimal(5,2),\nADD COLUMN `innovationIndex` decimal(5,2),\nADD COLUMN `sustainabilityImpact` json,\nADD COLUMN `ethicalConsiderations` json,\nADD COLUMN `partnershipOpportunities` json,\nADD COLUMN `intellectualPropertyPotential` json;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute ALTER TABLE `idea_analysis`\nADD COLUMN `confidence` decimal(5,2),\nADD COLUMN `regulatoryRisk` decimal(5,2),\nADD COLUMN `resourceRequirements` json,\nADD COLUMN `expectedROI` decimal(5,2),\nADD COLUMN `innovationIndex` decimal(5,2),\nADD COLUMN `sustainabilityImpact` json,\nADD COLUMN `ethicalConsiderations` json,\nADD COLUMN `partnershipOpportunities` json,\nADD COLUMN `intellectualPropertyPotential` json;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1060 (42S21) at line 1: Duplicate column name 'confidence'"
+  ]
+}

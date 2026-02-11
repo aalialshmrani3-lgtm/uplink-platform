@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, ideaId, classification, overallScore, confidence, createdAt FROM idea_analysis ORDER BY id DESC LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, ideaId, classification, overallScore, confidence, createdAt FROM idea_analysis ORDER BY id DESC LIMIT 1;",
+  "rows": [
+    {
+      "id": "2",
+      "ideaId": "60015",
+      "classification": "weak",
+      "overallScore": "0.00",
+      "confidence": "NULL",
+      "createdAt": "2026-02-11 12:17:50"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tideaId\tclassification\toverallScore\tconfidence\tcreatedAt\n2\t60015\tweak\t0.00\tNULL\t2026-02-11 12:17:50\n",
+  "stderr": "",
+  "execution_time_ms": 1517
+}

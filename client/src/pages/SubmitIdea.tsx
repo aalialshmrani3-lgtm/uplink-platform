@@ -24,6 +24,7 @@ export default function SubmitIdea() {
 
   const submitMutation = trpc.uplink1.submitIdea.useMutation({
     onSuccess: (data: any) => {
+      console.log('[DEBUG] Frontend received analysis:', data.analysis);
       setAnalysisResult(data.analysis);
     },
     onError: (error: any) => {

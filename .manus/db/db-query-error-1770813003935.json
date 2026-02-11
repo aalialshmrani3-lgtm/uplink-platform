@@ -1,0 +1,8 @@
+{
+  "query": "SHOW COLUMNS FROM idea_analysis;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SHOW COLUMNS FROM idea_analysis;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'fqijacsww6aumwqqsrr8z9.idea_analysis' doesn't exist"
+  ]
+}

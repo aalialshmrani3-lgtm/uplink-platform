@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, ideaId, overallScore, innovationScore, feasibilityScore, marketPotentialScore, classification, recommendations, nextSteps FROM idea_analysis ORDER BY id DESC LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, ideaId, overallScore, innovationScore, feasibilityScore, marketPotentialScore, classification, recommendations, nextSteps FROM idea_analysis ORDER BY id DESC LIMIT 1;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'innovationscore' in 'field list'"
+  ]
+}

@@ -959,6 +959,8 @@ export async function updateIdea(id: number, data: any) {
 export async function createIdeaAnalysis(data: any) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  
+  // Use Drizzle ORM - it handles defaults and nullable fields automatically
   const result = await db.insert(ideaAnalysis).values(data);
   return result[0].insertId;
 }

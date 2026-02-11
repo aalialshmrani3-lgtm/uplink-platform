@@ -16,11 +16,11 @@ import { useLocation } from "wouter";
 
 interface AIAnalysisResultsProps {
   analysis: {
-    innovationScore: number;
-    feasibilityScore: number;
-    marketPotentialScore: number;
+    technicalNoveltyScore: number;
+    technicalFeasibilityScore: number;
+    commercialValueScore: number;
     overallScore: number;
-    classification: "innovation" | "commercial" | "needs_development";
+    classification: "innovation" | "commercial" | "weak";
     tags: string[];
     recommendations: string[];
     nextSteps: string;
@@ -54,16 +54,27 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
           action: "انتقل إلى شبكة المطابقة",
           actionLink: "/uplink2/matching",
         };
-      case "needs_development":
+      case "weak":
         return {
           icon: XCircle,
-          title: "تحتاج تطوير",
+          title: "فكرة ضعيفة",
           color: "text-red-400",
           bgColor: "bg-red-500/10",
           borderColor: "border-red-500/30",
           description: "راجع التوصيات للتحسين",
           action: "راجع التوصيات",
           actionLink: "#recommendations",
+        };
+      default:
+        return {
+          icon: AlertCircle,
+          title: "غير محدد",
+          color: "text-gray-400",
+          bgColor: "bg-gray-500/10",
+          borderColor: "border-gray-500/30",
+          description: "تحليل غير مكتمل",
+          action: "إعادة المحاولة",
+          actionLink: "/uplink1/submit",
         };
     }
   };
@@ -108,10 +119,10 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
             </div>
             <div>
               <div className="text-sm text-gray-400">الجدة والابتكار</div>
-              <div className="text-2xl font-bold text-white">{analysis.innovationScore}%</div>
+              <div className="text-2xl font-bold text-white">{analysis.technicalNoveltyScore}%</div>
             </div>
           </div>
-          <Progress value={analysis.innovationScore} className="h-2" />
+          <Progress value={analysis.technicalNoveltyScore} className="h-2" />
         </Card>
 
         <Card className="glass-card p-6">
@@ -121,10 +132,10 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
             </div>
             <div>
               <div className="text-sm text-gray-400">الجدوى التقنية</div>
-              <div className="text-2xl font-bold text-white">{analysis.feasibilityScore}%</div>
+              <div className="text-2xl font-bold text-white">{analysis.technicalFeasibilityScore}%</div>
             </div>
           </div>
-          <Progress value={analysis.feasibilityScore} className="h-2" />
+          <Progress value={analysis.technicalFeasibilityScore} className="h-2" />
         </Card>
 
         <Card className="glass-card p-6">
@@ -133,11 +144,11 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
               <TrendingUp className="w-6 h-6 text-purple-400" />
             </div>
             <div>
-              <div className="text-sm text-gray-400">إمكانات السوق</div>
-              <div className="text-2xl font-bold text-white">{analysis.marketPotentialScore}%</div>
+              <div className="text-sm text-gray-400">القيمة التجارية</div>
+              <div className="text-2xl font-bold text-white">{analysis.commercialValueScore}%</div>
             </div>
           </div>
-          <Progress value={analysis.marketPotentialScore} className="h-2" />
+          <Progress value={analysis.commercialValueScore} className="h-2" />
         </Card>
       </div>
 
@@ -148,15 +159,19 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
           <h4 className="text-lg font-semibold text-white">التصنيفات</h4>
         </div>
         <div className="flex flex-wrap gap-2">
-          {analysis.tags.map((tag, index) => (
-            <Badge
-              key={index}
-              variant="secondary"
-              className="bg-blue-500/10 text-blue-300 border border-blue-500/30"
-            >
-              {tag}
-            </Badge>
-          ))}
+          {analysis.tags && analysis.tags.length > 0 ? (
+            analysis.tags.map((tag, index) => (
+              <Badge
+                key={index}
+                variant="secondary"
+                className="bg-blue-500/10 text-blue-300 border border-blue-500/30"
+              >
+                {tag}
+              </Badge>
+            ))
+          ) : (
+            <p className="text-gray-400 text-sm">لا توجد تصنيفات متاحة</p>
+          )}
         </div>
       </Card>
 
@@ -167,14 +182,18 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
           <h4 className="text-lg font-semibold text-white">التوصيات</h4>
         </div>
         <ul className="space-y-3">
-          {analysis.recommendations.map((recommendation, index) => (
-            <li key={index} className="flex items-start gap-3 text-gray-300">
-              <div className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-green-400">{index + 1}</span>
-              </div>
-              <span>{recommendation}</span>
-            </li>
-          ))}
+          {analysis.recommendations && analysis.recommendations.length > 0 ? (
+            analysis.recommendations.map((recommendation, index) => (
+              <li key={index} className="flex items-start gap-3 text-gray-300">
+                <div className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-xs font-bold text-green-400">{index + 1}</span>
+                </div>
+                <span>{recommendation}</span>
+              </li>
+            ))
+          ) : (
+            <p className="text-gray-400 text-sm">لا توجد توصيات متاحة</p>
+          )}
         </ul>
       </Card>
 
