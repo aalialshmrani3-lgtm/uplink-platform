@@ -371,15 +371,22 @@ export const appRouter = router({
             reason: "تحليل أولي بواسطة الذكاء الاصطناعي",
           });
 
-          // Return analysis result
-          console.log('[DEBUG] About to return analysis result');
+          // Return simplified analysis to avoid serialization issues
+          console.log('[DEBUG] Analysis completed successfully');
           console.log('[DEBUG] ideaId:', ideaId);
           console.log('[DEBUG] analysisId:', analysisId);
           console.log('[DEBUG] overallScore:', analysisResult.overallScore);
+          
+          // Return simplified version without complex nested objects
           return {
             ideaId,
             analysisId,
-            analysis: analysisResult,
+            overallScore: analysisResult.overallScore,
+            strengths: analysisResult.strengths,
+            weaknesses: analysisResult.weaknesses,
+            opportunities: analysisResult.opportunities,
+            threats: analysisResult.threats,
+            recommendations: analysisResult.recommendations,
             message: "تم تحليل الفكرة بنجاح!"
           };
         } catch (error) {
