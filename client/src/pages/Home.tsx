@@ -188,7 +188,7 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               {user ? (
-                <Link href="/projects/new">
+                <Link href="/uplink1/submit">
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-8 h-14 glow">
                     <Lightbulb className="w-5 h-5 ml-2" />
                     {t.home.cta}
@@ -554,7 +554,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {user ? (
-                <Link href="/projects/new">
+                <Link href="/uplink1/submit">
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-10 h-14">
                     {t.home.cta}
                     <ArrowUpRight className="w-5 h-5 mr-2" />
