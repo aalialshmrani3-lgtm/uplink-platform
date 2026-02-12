@@ -3222,6 +3222,12 @@ Provide response in JSON format:
         return db.getAllChallenges();
       }),
 
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return db.getChallengeById(input.id);
+      }),
+
     submitChallenge: protectedProcedure
       .input(z.object({
         title: z.string(),

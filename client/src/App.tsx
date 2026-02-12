@@ -96,6 +96,7 @@ const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Fl
 const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge")); // Submit Challenge
 const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host Event Dashboard
 const Uplink2Challenges = lazy(() => import("./pages/Uplink2Challenges")); // Browse Challenges
+const Uplink2ChallengeDetail = lazy(() => import("./pages/Uplink2ChallengeDetail")); // Challenge Detail
 // Removed: Uplink2Dashboard - replaced by Uplink2VettingDashboard and Uplink2Marketplace
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
@@ -305,6 +306,7 @@ function Router() {
         <Route path="/uplink2/submit-challenge" component={Uplink2SubmitChallenge} /> {/* Submit Challenge */}
         <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}
         <Route path="/uplink2/challenges" component={Uplink2Challenges} /> {/* Browse Challenges */}
+        <Route path="/uplink2/challenges/:id" component={Uplink2ChallengeDetail} /> {/* Challenge Detail */}
         <Route path="/uplink3" component={Uplink3} />
         <Route path="/uplink3/contracts" component={Uplink3Contracts} /> {/* Added for Flowchart Match */}
         <Route path="/uplink3/contracts/:id" component={Uplink3ContractDetail} /> {/* Contract Detail with Milestones */}
