@@ -204,9 +204,11 @@ export default function Uplink1() {
                   </a>
                 </Button>
               )}
-              <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                شاهد مثال تحليل
-              </Button>
+              <Link href="/uplink1/ideas/120002/analysis">
+                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
+                  شاهد مثال تحليل
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
