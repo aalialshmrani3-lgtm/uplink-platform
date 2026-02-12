@@ -41,6 +41,7 @@ export default function SubmitIdea() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
+      alert('يجب تسجيل الدخول أولاً لتقديم فكرتك. سيتم توجيهك إلى صفحة تسجيل الدخول.');
       window.location.href = getLoginUrl();
       return;
     }
