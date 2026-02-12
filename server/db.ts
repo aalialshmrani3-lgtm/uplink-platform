@@ -8,7 +8,7 @@ import {
   contracts, InsertContract, Contract,
   escrowAccounts, InsertEscrowAccount, EscrowAccount,
   escrowTransactions, InsertEscrowTransaction,
-  releaseRequests, InsertReleaseRequest, ReleaseRequest,
+  // releaseRequests, InsertReleaseRequest, ReleaseRequest, // Removed: not in schema
   courses, InsertCourse, Course,
   enrollments, InsertEnrollment, Enrollment,
   eliteMemberships, InsertEliteMembership, EliteMembership,
@@ -30,11 +30,11 @@ import {
   pipelineGamification, InsertPipelineGamification,
   strategicAnalyses, InsertStrategicAnalysis, StrategicAnalysis,
   userFeedback, InsertUserFeedback, UserFeedback,
-  whatIfScenarios, InsertWhatIfScenario, WhatIfScenario,
+  whatifScenarios as whatIfScenarios, InsertWhatIfScenario, WhatIfScenario,
   predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy,
   ideas, ideaAnalysis, classificationHistory,
   events, eventRegistrations,
-  matches, matchingRequests
+  // matches, matchingRequests // Removed: not in schema
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 

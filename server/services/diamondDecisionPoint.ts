@@ -1,5 +1,6 @@
 import { getDb } from "../db";
-import { vettingReviews, vettingDecisions, ipRegistrations, projects, ideaTransitions } from "../../drizzle/schema";
+import { ipRegistrations, projects } from "../../drizzle/schema";
+// Removed: vettingReviews, vettingDecisions, ideaTransitions - not in schema
 import { eq, and, count } from "drizzle-orm";
 
 /**

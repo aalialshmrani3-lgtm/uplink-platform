@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, title, status FROM ideas WHERE id = 120002;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, title, status FROM ideas WHERE id = 120002;",
+  "rows": [
+    {
+      "id": "120002",
+      "title": "منصة ذكية لربط المبتكرين بالمستثمرين والشركات",
+      "status": "approved"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\n120002\tمنصة ذكية لربط المبتكرين بالمستثمرين والشركات\tapproved\n",
+  "stderr": "",
+  "execution_time_ms": 1623
+}
