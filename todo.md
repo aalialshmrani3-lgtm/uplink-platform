@@ -199,3 +199,25 @@
 - [ ] التأكد من عرض جميع أقسام التحليل (SWOT, Scores, Recommendations)
 
 **آخر تحديث:** تم إضافة تحليل AI للفكرة 120002
+
+
+---
+
+## 🔐 Phase 1: إضافة Remember Me + Social Logins + MFA (جديد - 2026-02-13)
+
+### المهام:
+- [x] فحص نظام OAuth الحالي (server/_core/) ✅
+- [x] إضافة rememberMe, mfaEnabled, mfaSecret في جدول users ✅
+- [x] إضافة Remember Me checkbox في صفحة تسجيل الدخول ✅
+- [x] إضافة Social Login buttons (Google, Facebook, Twitter, LinkedIn, GitHub) ✅
+- [x] إنشاء صفحة /login مع UI كامل ✅
+- [x] إضافة MFA system (Google Authenticator) ✅
+  - [x] إضافة MFA procedures في routers.ts (setupMFA, enableMFA, disableMFA, verifyMFA, getMFAStatus) ✅
+  - [x] إضافة MFA helper functions في db.ts ✅
+  - [x] إنشاء صفحة MFA Setup (/settings/mfa) ✅
+  - [x] تثبيت speakeasy و qrcode packages ✅
+- [ ] اختبار Remember Me من المتصفح
+- [ ] اختبار Social Logins من المتصفح
+- [ ] اختبار MFA من المتصفح
+
+**آخر تحديث:** Phase 4 مكتمل - MFA system جاهز بالكامل

@@ -43,6 +43,126 @@ export const appRouter = router({
         // TODO: Implement registration logic
         return { success: true, message: "Registration successful" };
       }),
+    
+    // MFA (Multi-Factor Authentication)
+    setupMFA: protectedProcedure.mutation(async ({ ctx }) => {
+      const speakeasy = require('speakeasy');
+      const QRCode = require('qrcode');
+      
+      // Generate secret
+      const secret = speakeasy.generateSecret({
+        name: `UPLINK 5.0 (${ctx.user.email || ctx.user.name})`,
+        issuer: 'UPLINK 5.0'
+      });
+      
+      // Generate QR code
+      const qrCodeUrl = await QRCode.toDataURL(secret.otpauth_url);
+      
+      return {
+        secret: secret.base32,
+        qrCode: qrCodeUrl
+      };
+    }),
+    
+    enableMFA: protectedProcedure
+      .input(z.object({
+        secret: z.string(),
+        token: z.string()
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const speakeasy = require('speakeasy');
+        
+        // Verify token
+        const verified = speakeasy.totp.verify({
+          secret: input.secret,
+          encoding: 'base32',
+          token: input.token,
+          window: 2
+        });
+        
+        if (!verified) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Invalid verification code'
+          });
+        }
+        
+        // Enable MFA
+        await db.enableUserMFA(ctx.user.id, input.secret);
+        
+        return { success: true };
+      }),
+    
+    disableMFA: protectedProcedure
+      .input(z.object({
+        token: z.string()
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const speakeasy = require('speakeasy');
+        
+        // Get user MFA status
+        const mfaStatus = await db.getUserMFAStatus(ctx.user.id);
+        
+        if (!mfaStatus.mfaEnabled || !mfaStatus.mfaSecret) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'MFA is not enabled'
+          });
+        }
+        
+        // Verify token
+        const verified = speakeasy.totp.verify({
+          secret: mfaStatus.mfaSecret,
+          encoding: 'base32',
+          token: input.token,
+          window: 2
+        });
+        
+        if (!verified) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Invalid verification code'
+          });
+        }
+        
+        // Disable MFA
+        await db.disableUserMFA(ctx.user.id);
+        
+        return { success: true };
+      }),
+    
+    verifyMFA: protectedProcedure
+      .input(z.object({
+        token: z.string()
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const speakeasy = require('speakeasy');
+        
+        // Get user MFA status
+        const mfaStatus = await db.getUserMFAStatus(ctx.user.id);
+        
+        if (!mfaStatus.mfaEnabled || !mfaStatus.mfaSecret) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'MFA is not enabled'
+          });
+        }
+        
+        // Verify token
+        const verified = speakeasy.totp.verify({
+          secret: mfaStatus.mfaSecret,
+          encoding: 'base32',
+          token: input.token,
+          window: 2
+        });
+        
+        return { verified };
+      }),
+    
+    getMFAStatus: protectedProcedure.query(async ({ ctx }) => {
+      const mfaStatus = await db.getUserMFAStatus(ctx.user.id);
+      return { mfaEnabled: mfaStatus.mfaEnabled };
+    }),
   }),
 
   // ============================================
@@ -592,7 +712,7 @@ export const appRouter = router({
       }),
 
     // Get idea by ID
-    getIdeaById: protectedProcedure
+    getIdeaById: publicProcedure
       .input(z.object({ ideaId: z.number() }))
       .query(async ({ input }) => {
         return db.getIdeaById(input.ideaId);

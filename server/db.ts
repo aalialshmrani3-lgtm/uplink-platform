@@ -1314,3 +1314,50 @@ export async function createNetworkingConnection(data: any) {
   // TODO: Add networking_connections table
   return 0;
 }
+
+// ============================================
+// MFA (Multi-Factor Authentication)
+// ============================================
+export async function enableUserMFA(userId: number, secret: string): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(users)
+    .set({ 
+      mfaEnabled: 1,
+      mfaSecret: secret 
+    })
+    .where(eq(users.id, userId));
+}
+
+export async function disableUserMFA(userId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(users)
+    .set({ 
+      mfaEnabled: 0,
+      mfaSecret: null 
+    })
+    .where(eq(users.id, userId));
+}
+
+export async function getUserMFAStatus(userId: number): Promise<{ mfaEnabled: boolean; mfaSecret: string | null }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.select({
+    mfaEnabled: users.mfaEnabled,
+    mfaSecret: users.mfaSecret
+  })
+  .from(users)
+  .where(eq(users.id, userId))
+  .limit(1);
+  
+  if (!result[0]) throw new Error("User not found");
+  
+  return {
+    mfaEnabled: result[0].mfaEnabled === 1,
+    mfaSecret: result[0].mfaSecret
+  };
+}

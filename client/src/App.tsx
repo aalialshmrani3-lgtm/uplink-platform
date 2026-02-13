@@ -9,8 +9,10 @@ import { lazy, Suspense, useState, useEffect } from "react";
 
 // Lazy load Home page for better initial performance
 const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
 const UserRegistration = lazy(() => import("./pages/UserRegistration"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const MFASetup = lazy(() => import("./pages/MFASetup"));
 
 // Lazy load pages for better performance
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -279,8 +281,10 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/login" component={Login} />
         <Route path="/register" component={UserRegistration} />
         <Route path="/forgot-password" component={ForgotPassword} />
+        <Route path="/settings/mfa" component={MFASetup} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/ip/register" component={IPRegister} />
         <Route path="/ip/list" component={IPList} />

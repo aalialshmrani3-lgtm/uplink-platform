@@ -26,7 +26,7 @@ export default function Uplink1IdeaAnalysis() {
     );
   }
 
-  if (!idea || !idea.aiAnalysis) {
+  if (!idea || !idea.analysis) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -40,7 +40,18 @@ export default function Uplink1IdeaAnalysis() {
     );
   }
 
-  const analysis = typeof idea.aiAnalysis === 'string' ? JSON.parse(idea.aiAnalysis) : idea.aiAnalysis;
+  const analysis = idea.analysis;
+  
+  // Parse JSON fields if they are strings (with defensive checks)
+  const strengths = analysis?.strengths ? (typeof analysis.strengths === 'string' ? JSON.parse(analysis.strengths) : analysis.strengths) : [];
+  const weaknesses = analysis?.weaknesses ? (typeof analysis.weaknesses === 'string' ? JSON.parse(analysis.weaknesses) : analysis.weaknesses) : [];
+  const opportunities = analysis?.opportunities ? (typeof analysis.opportunities === 'string' ? JSON.parse(analysis.opportunities) : analysis.opportunities) : [];
+  const threats = analysis?.threats ? (typeof analysis.threats === 'string' ? JSON.parse(analysis.threats) : analysis.threats) : [];
+  const recommendations = analysis?.recommendations ? (typeof analysis.recommendations === 'string' ? JSON.parse(analysis.recommendations) : analysis.recommendations) : [];
+  const nextSteps = analysis?.nextSteps ? (typeof analysis.nextSteps === 'string' ? JSON.parse(analysis.nextSteps) : analysis.nextSteps) : [];
+  const similarInnovations = analysis?.similarInnovations ? (typeof analysis.similarInnovations === 'string' ? JSON.parse(analysis.similarInnovations) : analysis.similarInnovations) : [];
+  const extractedKeywords = analysis?.extractedKeywords ? (typeof analysis.extractedKeywords === 'string' ? JSON.parse(analysis.extractedKeywords) : analysis.extractedKeywords) : [];
+  const marketTrends = analysis?.marketTrends ? (typeof analysis.marketTrends === 'string' ? JSON.parse(analysis.marketTrends) : analysis.marketTrends) : [];
 
   const getInnovationColor = (level: string) => {
     switch (level) {
@@ -88,52 +99,54 @@ export default function Uplink1IdeaAnalysis() {
 
       <div className="container py-8">
         <div className="max-w-5xl mx-auto space-y-6">
-          {/* Innovation Level */}
+          {/* Overall Score */}
           <Card className="bg-card/50 backdrop-blur-sm border-border/50">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-2xl">مستوى الابتكار</CardTitle>
-                  <CardDescription>تقييم شامل لمستوى الابتكار في فكرتك</CardDescription>
+                  <CardTitle className="text-2xl">التقييم الشامل</CardTitle>
+                  <CardDescription>تقييم شامل للفكرة بناءً على 10 معايير</CardDescription>
                 </div>
-                <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${getInnovationColor(analysis.innovationLevel)} flex items-center justify-center`}>
+                <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center`}>
                   <Zap className="w-12 h-12 text-white" />
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-4 mb-4">
-                <Badge className={`text-lg px-4 py-2 bg-gradient-to-r ${getInnovationColor(analysis.innovationLevel)} text-white border-0`}>
-                  {getInnovationLabel(analysis.innovationLevel)}
+                <Badge className={`text-lg px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-0`}>
+                  {analysis.classification === 'innovation' ? 'ابتكار حقيقي' : analysis.classification === 'business' ? 'مشروع تجاري' : 'تحتاج تطوير'}
                 </Badge>
-                <span className="text-3xl font-bold text-foreground">{analysis.innovationScore}/100</span>
+                <span className="text-3xl font-bold text-foreground">{analysis.overallScore}%</span>
               </div>
-              <p className="text-muted-foreground leading-relaxed">{analysis.innovationRationale}</p>
+              <p className="text-muted-foreground leading-relaxed">{analysis.aiAnalysis}</p>
             </CardContent>
           </Card>
 
-          {/* Classification */}
+          {/* TRL & Stage Gate */}
           <Card className="bg-card/50 backdrop-blur-sm border-border/50">
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-2">
                 <Target className="w-6 h-6 text-cyan-400" />
-                التصنيف
+                مستوى النضج التقني
               </CardTitle>
-              <CardDescription>تصنيف الفكرة حسب المجال والنوع</CardDescription>
+              <CardDescription>Technology Readiness Level & Stage Gate</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-2">المجال</p>
+                  <p className="text-sm text-muted-foreground mb-2">TRL Level</p>
                   <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/30">
-                    {analysis.category}
+                    Level {analysis.trlLevel}
                   </Badge>
+                  <p className="text-sm text-muted-foreground mt-2">{analysis.trlDescription}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-2">النوع</p>
+                  <p className="text-sm text-muted-foreground mb-2">Stage Gate</p>
                   <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/30">
-                    {analysis.type}
+                    {analysis.currentStageGate}
                   </Badge>
+                  <p className="text-sm text-muted-foreground mt-2">{analysis.stageGateRecommendation}</p>
                 </div>
               </div>
             </CardContent>
@@ -157,7 +170,7 @@ export default function Uplink1IdeaAnalysis() {
                     نقاط القوة
                   </h3>
                   <ul className="space-y-2">
-                    {analysis.swot.strengths.map((strength: string, i: number) => (
+                    {strengths.map((strength: string, i: number) => (
                       <li key={i} className="flex items-start gap-2 text-muted-foreground">
                         <span className="text-green-400 mt-1">•</span>
                         <span>{strength}</span>
@@ -173,7 +186,7 @@ export default function Uplink1IdeaAnalysis() {
                     نقاط الضعف
                   </h3>
                   <ul className="space-y-2">
-                    {analysis.swot.weaknesses.map((weakness: string, i: number) => (
+                    {weaknesses.map((weakness: string, i: number) => (
                       <li key={i} className="flex items-start gap-2 text-muted-foreground">
                         <span className="text-yellow-400 mt-1">•</span>
                         <span>{weakness}</span>
@@ -189,7 +202,7 @@ export default function Uplink1IdeaAnalysis() {
                     الفرص
                   </h3>
                   <ul className="space-y-2">
-                    {analysis.swot.opportunities.map((opportunity: string, i: number) => (
+                    {opportunities.map((opportunity: string, i: number) => (
                       <li key={i} className="flex items-start gap-2 text-muted-foreground">
                         <span className="text-blue-400 mt-1">•</span>
                         <span>{opportunity}</span>
@@ -205,7 +218,7 @@ export default function Uplink1IdeaAnalysis() {
                     التهديدات
                   </h3>
                   <ul className="space-y-2">
-                    {analysis.swot.threats.map((threat: string, i: number) => (
+                    {threats.map((threat: string, i: number) => (
                       <li key={i} className="flex items-start gap-2 text-muted-foreground">
                         <span className="text-red-400 mt-1">•</span>
                         <span>{threat}</span>
@@ -228,7 +241,7 @@ export default function Uplink1IdeaAnalysis() {
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
-                {analysis.recommendations.map((recommendation: string, i: number) => (
+                {recommendations.map((recommendation: string, i: number) => (
                   <li key={i} className="flex items-start gap-3 p-4 rounded-lg bg-secondary/30">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm font-semibold">
                       {i + 1}
@@ -241,7 +254,7 @@ export default function Uplink1IdeaAnalysis() {
           </Card>
 
           {/* Market Potential */}
-          {analysis.marketPotential && (
+          {analysis.marketSize && (
             <Card className="bg-card/50 backdrop-blur-sm border-border/50">
               <CardHeader>
                 <CardTitle className="text-2xl flex items-center gap-2">
@@ -254,18 +267,27 @@ export default function Uplink1IdeaAnalysis() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <div className="p-4 rounded-lg bg-secondary/30">
                     <p className="text-sm text-muted-foreground mb-1">حجم السوق</p>
-                    <p className="text-2xl font-bold text-foreground">{analysis.marketPotential.size}</p>
+                    <p className="text-xl font-bold text-foreground">{analysis.marketSize}</p>
                   </div>
                   <div className="p-4 rounded-lg bg-secondary/30">
-                    <p className="text-sm text-muted-foreground mb-1">معدل النمو</p>
-                    <p className="text-2xl font-bold text-foreground">{analysis.marketPotential.growth}</p>
+                    <p className="text-sm text-muted-foreground mb-1">مستوى المنافسة</p>
+                    <p className="text-xl font-bold text-foreground">{analysis.competitionLevel}</p>
                   </div>
                   <div className="p-4 rounded-lg bg-secondary/30">
-                    <p className="text-sm text-muted-foreground mb-1">المنافسة</p>
-                    <p className="text-2xl font-bold text-foreground">{analysis.marketPotential.competition}</p>
+                    <p className="text-sm text-muted-foreground mb-1">مستوى التعقيد</p>
+                    <p className="text-xl font-bold text-foreground">{analysis.complexityLevel}</p>
                   </div>
                 </div>
-                <p className="text-muted-foreground leading-relaxed">{analysis.marketPotential.analysis}</p>
+                {marketTrends && marketTrends.length > 0 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">اتجاهات السوق:</p>
+                    <ul className="space-y-1">
+                      {marketTrends.map((trend: string, i: number) => (
+                        <li key={i} className="text-muted-foreground">• {trend}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}

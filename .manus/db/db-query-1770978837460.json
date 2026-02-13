@@ -1,0 +1,23 @@
+{
+  "query": "SELECT \n  ideaId, overallScore, classification,\n  strengths, weaknesses, opportunities, threats,\n  recommendations, nextSteps,\n  similarInnovations, extractedKeywords\nFROM idea_analysis \nWHERE ideaId = 120002;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT \n  ideaId, overallScore, classification,\n  strengths, weaknesses, opportunities, threats,\n  recommendations, nextSteps,\n  similarInnovations, extractedKeywords\nFROM idea_analysis \nWHERE ideaId = 120002;",
+  "rows": [
+    {
+      "ideaId": "120002",
+      "overallScore": "85.50",
+      "classification": "innovation",
+      "strengths": "[\"تقنية حديثة ومتطورة\", \"سوق مستهدف واسع\", \"فريق متمرس\", \"نموذج عمل واضح\"]",
+      "weaknesses": "[\"يحتاج تمويل كبير\", \"منافسة شديدة\", \"يحتاج وقت طويل للتطوير\"]",
+      "opportunities": "[\"توسع إقليمي\", \"شراكات استراتيجية\", \"تنويع الخدمات\"]",
+      "threats": "[\"دخول منافسين جدد\", \"تغيرات تنظيمية\", \"تقلبات السوق\"]",
+      "recommendations": "[\"تطوير MVP خلال 6 أشهر\", \"البحث عن تمويل أولي\", \"بناء شراكات استراتيجية\"]",
+      "nextSteps": "[\"إطلاق نسخة تجريبية\", \"جمع feedback من المستخدمين\", \"تحسين المنتج بناءً على الملاحظات\"]",
+      "similarInnovations": "[\"LinkedIn\", \"AngelList\", \"Crunchbase\"]",
+      "extractedKeywords": "[\"ابتكار\", \"تقنية\", \"استثمار\", \"ريادة أعمال\"]"
+    }
+  ],
+  "messages": [],
+  "stdout": "ideaId\toverallScore\tclassification\tstrengths\tweaknesses\topportunities\tthreats\trecommendations\tnextSteps\tsimilarInnovations\textractedKeywords\n120002\t85.50\tinnovation\t[\"تقنية حديثة ومتطورة\", \"سوق مستهدف واسع\", \"فريق متمرس\", \"نموذج عمل واضح\"]\t[\"يحتاج تمويل كبير\", \"منافسة شديدة\", \"يحتاج وقت طويل للتطوير\"]\t[\"توسع إقليمي\", \"شراكات استراتيجية\", \"تنويع الخدمات\"]\t[\"دخول منافسين جدد\", \"تغيرات تنظيمية\", \"تقلبات السوق\"]\t[\"تطوير MVP خلال 6 أشهر\", \"البحث عن تمويل أولي\", \"بناء شراكات استراتيجية\"]\t[\"إطلاق نسخة تجريبية\", \"جمع feedback من المستخدمين\", \"تحسين المنتج بناءً على الملاحظات\"]\t[\"LinkedIn\", \"AngelList\", \"Crunchbase\"]\t[\"ابتكار\", \"تقنية\", \"استثمار\", \"ريادة أعمال\"]\n",
+  "stderr": "",
+  "execution_time_ms": 1555
+}
