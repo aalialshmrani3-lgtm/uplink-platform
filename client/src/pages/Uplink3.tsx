@@ -261,9 +261,11 @@ export default function Uplink3() {
 
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in-up animation-delay-300">
               {user ? (
-                <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  تصفح البورصة
+                <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                  <Link href="/uplink3/marketplace">
+                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    تصفح البورصة
+                  </Link>
                 </Button>
               ) : (
                 <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
@@ -273,8 +275,10 @@ export default function Uplink3() {
                   </a>
                 </Button>
               )}
-              <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                عرض أصل للبيع
+              <Button size="lg" variant="outline" asChild className="border-gray-700 hover:bg-gray-800">
+                <Link href="/uplink3/sell">
+                  عرض أصل للبيع
+                </Link>
               </Button>
             </div>
           </div>
@@ -376,8 +380,10 @@ export default function Uplink3() {
                   <p className="text-gray-400 text-sm mb-4">{listing.seller}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-green-400">{listing.price}</span>
-                    <Button size="sm" className="bg-gradient-to-r from-purple-600 to-pink-600">
-                      عرض التفاصيل
+                    <Button size="sm" asChild className="bg-gradient-to-r from-purple-600 to-pink-600">
+                      <Link href={`/uplink3/assets/${index + 1}`}>
+                        عرض التفاصيل
+                      </Link>
                     </Button>
                   </div>
                 </Card>
@@ -483,9 +489,11 @@ export default function Uplink3() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               {user ? (
-                <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  تصفح البورصة الآن
+                <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                  <Link href="/uplink3/marketplace">
+                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    تصفح البورصة الآن
+                  </Link>
                 </Button>
               ) : (
                 <Button size="lg" asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
