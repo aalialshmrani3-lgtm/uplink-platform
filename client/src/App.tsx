@@ -318,8 +318,8 @@ function Router() {
         <Route path="/uplink2/matching" component={Uplink2Matching} /> {/* Added for Flowchart Match */}
         <Route path="/uplink2/submit-challenge" component={Uplink2SubmitChallenge} /> {/* Submit Challenge */}
         <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}
-        <Route path="/uplink2/challenges" component={Uplink2Challenges} /> {/* Browse Challenges */}
         <Route path="/uplink2/challenges/:id" component={Uplink2ChallengeDetails} /> {/* Challenge Details - Fixed */}
+        <Route path="/uplink2/challenges" component={Uplink2Challenges} /> {/* Browse Challenges */}
         <Route path="/uplink3" component={Uplink3} />
         <Route path="/uplink3/marketplace" component={Uplink3Marketplace} /> {/* Marketplace */}
         <Route path="/uplink3/sell" component={Uplink3SellAsset} /> {/* Sell Asset */}

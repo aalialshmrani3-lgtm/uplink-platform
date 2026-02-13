@@ -3337,41 +3337,47 @@ Provide response in JSON format:
     }),
 
     // Challenges
-    getChallenges: publicProcedure
-      .query(async () => {
-        return db.getAllChallenges();
-      }),
+    challenges: router({
+      getAll: publicProcedure
+        .query(async () => {
+          return db.getAllChallenges();
+        }),
 
-    getById: publicProcedure
-      .input(z.object({ id: z.number() }))
-      .query(async ({ input }) => {
-        return db.getChallengeById(input.id);
-      }),
+      getById: publicProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          const challenge = await db.getChallengeById(input.id);
+          if (!challenge) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Challenge not found' });
+          }
+          return challenge;
+        }),
 
-    submitChallenge: protectedProcedure
-      .input(z.object({
-        title: z.string(),
-        description: z.string(),
-        category: z.string(),
-        requirements: z.string(),
-        prize: z.string(),
-        deadline: z.string(),
-        targetAudience: z.string(),
-      }))
-      .mutation(async ({ ctx, input }) => {
-        const id = await db.createChallenge({
-          title: input.title,
-          description: input.description,
-          type: 'challenge',
-          category: input.category,
-          requirements: { text: input.requirements, targetAudience: input.targetAudience },
-          prize: input.prize,
-          endDate: new Date(input.deadline),
-          organizerId: ctx.user.id,
-          status: 'open',
-        });
-        return { success: true, id };
-      }),
+      submit: protectedProcedure
+        .input(z.object({
+          title: z.string(),
+          description: z.string(),
+          category: z.string(),
+          requirements: z.string(),
+          prize: z.string(),
+          deadline: z.string(),
+          targetAudience: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const id = await db.createChallenge({
+            title: input.title,
+            description: input.description,
+            type: 'challenge',
+            category: input.category,
+            requirements: { text: input.requirements, targetAudience: input.targetAudience },
+            prize: input.prize,
+            endDate: new Date(input.deadline),
+            organizerId: ctx.user.id,
+            status: 'open',
+          });
+          return { success: true, id };
+        }),
+    }),
   }),
 
   // ============================================
