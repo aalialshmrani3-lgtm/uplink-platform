@@ -1,0 +1,115 @@
+{
+  "query": "SELECT id, title, category, prize, status FROM challenges LIMIT 15;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, title, category, prize, status FROM challenges LIMIT 15;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "تحدي الذكاء الاصطناعي في الرعاية الصحية",
+      "category": "الصحة",
+      "prize": "500000.00",
+      "status": "open"
+    },
+    {
+      "id": "2",
+      "title": "تحدي التعليم الرقمي التفاعلي",
+      "category": "التعليم",
+      "prize": "300000.00",
+      "status": "open"
+    },
+    {
+      "id": "3",
+      "title": "تحدي الطاقة المتجددة الذكية",
+      "category": "الطاقة",
+      "prize": "750000.00",
+      "status": "open"
+    },
+    {
+      "id": "4",
+      "title": "تحدي النقل الذكي والمستدام",
+      "category": "النقل",
+      "prize": "400000.00",
+      "status": "open"
+    },
+    {
+      "id": "5",
+      "title": "تحدي الزراعة الذكية",
+      "category": "الزراعة",
+      "prize": "350000.00",
+      "status": "open"
+    },
+    {
+      "id": "6",
+      "title": "تحدي الأمن السيبراني",
+      "category": "التقنية",
+      "prize": "600000.00",
+      "status": "open"
+    },
+    {
+      "id": "7",
+      "title": "هاكاثون الابتكار الصحي 2026",
+      "category": "الصحة",
+      "prize": "1000000.00",
+      "status": "open"
+    },
+    {
+      "id": "8",
+      "title": "هاكاثون التقنية المالية",
+      "category": "التقنية المالية",
+      "prize": "800000.00",
+      "status": "open"
+    },
+    {
+      "id": "9",
+      "title": "هاكاثون الاستدامة البيئية",
+      "category": "البيئة",
+      "prize": "500000.00",
+      "status": "open"
+    },
+    {
+      "id": "10",
+      "title": "هاكاثون السياحة الذكية",
+      "category": "السياحة",
+      "prize": "600000.00",
+      "status": "open"
+    },
+    {
+      "id": "11",
+      "title": "هاكاثون الذكاء الاصطناعي للجميع",
+      "category": "الذكاء الاصطناعي",
+      "prize": "1200000.00",
+      "status": "open"
+    },
+    {
+      "id": "30001",
+      "title": "تحدي الذكاء الاصطناعي في الرعاية الصحية",
+      "category": "HealthTech",
+      "prize": "500000.00",
+      "status": "open"
+    },
+    {
+      "id": "30002",
+      "title": "تحدي Blockchain للتمويل اللامركزي",
+      "category": "FinTech",
+      "prize": "750000.00",
+      "status": "open"
+    },
+    {
+      "id": "30003",
+      "title": "تحدي إنترنت الأشياء للمدن الذكية",
+      "category": "Smart Cities",
+      "prize": "600000.00",
+      "status": "open"
+    },
+    {
+      "id": "30004",
+      "title": "تحدي الأمن السيبراني للشركات",
+      "category": "Cybersecurity",
+      "prize": "450000.00",
+      "status": "open"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tcategory\tprize\tstatus\n1\tتحدي الذكاء الاصطناعي في الرعاية الصحية\tالصحة\t500000.00\topen\n2\tتحدي التعليم الرقمي التفاعلي\tالتعليم\t300000.00\topen\n3\tتحدي الطاقة المتجددة الذكية\tالطاقة\t750000.00\topen\n4\tتحدي النقل الذكي والمستدام\tالنقل\t400000.00\topen\n5\tتحدي الزراعة الذكية\tالزراعة\t350000.00\topen\n6\tتحدي الأمن السيبراني\tالتقنية\t600000.00\topen\n7\tهاكاثون الابتكار الصحي 2026\tالصحة\t1000000.00\topen\n8\tهاكاثون التقنية المالية\tالتقنية المالية\t800000.00\topen\n9\tهاكاثون الاستدامة البيئية\tالبيئة\t500000.00\topen\n10\tهاكاثون السياحة الذكية\tالسياحة\t600000.00\topen\n11\tهاكاثون الذكاء الاصطناعي للجميع\tالذكاء الاصطناعي\t1200000.00\topen\n30001\tتحدي الذكاء الاصطناعي في الرعاية الصحية\tHealthTech\t500000.00\topen\n30002\tتحدي Blockchain للتمويل اللامركزي\tFinTech\t750000.00\topen\n30003\tتحدي إنترنت الأشياء للمدن الذكية\tSmart Cities\t600000.00\topen\n30004\tتحدي الأمن السيبراني للشركات\tCybersecurity\t450000.00\topen\n",
+  "stderr": "",
+  "execution_time_ms": 1534
+}

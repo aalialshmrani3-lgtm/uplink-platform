@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as total FROM challenges;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT COUNT(*) as total FROM challenges;",
+  "rows": [
+    {
+      "total": "21"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n21\n",
+  "stderr": "",
+  "execution_time_ms": 1854
+}

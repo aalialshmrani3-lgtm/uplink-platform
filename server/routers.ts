@@ -3717,59 +3717,7 @@ Provide response in JSON format:
         }),
     }),
 
-    // Challenges router
-    challenges: router({
-      submit: protectedProcedure
-        .input(z.object({
-          title: z.string(),
-          description: z.string(),
-          category: z.string(),
-          requirements: z.string(),
-          prize: z.string(),
-          deadline: z.string(),
-          targetAudience: z.string(),
-        }))
-        .mutation(async ({ ctx, input }) => {
-          // TODO: Save challenge to database
-          return { success: true, challengeId: 1 };
-        }),
 
-      getAll: publicProcedure
-        .input(z.object({
-          type: z.enum(['challenge', 'hackathon', 'competition', 'open_problem', 'conference']).optional(),
-          status: z.enum(['draft', 'open', 'closed', 'judging', 'completed', 'cancelled']).optional(),
-        }).optional())
-        .query(async ({ input }) => {
-          const db = await getDb();
-          if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          const { challenges } = await import('../drizzle/schema');
-          const { eq, and } = await import('drizzle-orm');
-          
-          const conditions = [];
-          if (input?.type) {
-            conditions.push(eq(challenges.type, input.type));
-          }
-          if (input?.status) {
-            conditions.push(eq(challenges.status, input.status));
-          }
-          
-          if (conditions.length > 0) {
-            return await db.select().from(challenges).where(and(...conditions));
-          }
-          
-          return await db.select().from(challenges);
-        }),
-
-      getById: publicProcedure
-        .input(z.object({ id: z.number() }))
-        .query(async ({ input }) => {
-          const challenge = await db.getChallengeById(input.id);
-          if (!challenge) {
-            throw new TRPCError({ code: 'NOT_FOUND', message: 'Challenge not found' });
-          }
-          return challenge;
-        }),
-    }),
   }),
 
   // ============================================

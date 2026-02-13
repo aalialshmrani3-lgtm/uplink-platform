@@ -11,7 +11,7 @@ import { Link } from "wouter";
 export default function Uplink2Challenges() {
   const [searchQuery, setSearchQuery] = useState("");
   
-  const { data: challenges, isLoading } = trpc.uplink2.getChallenges.useQuery();
+  const { data: challenges, isLoading } = trpc.uplink2.challenges.getAll.useQuery();
 
   const filteredChallenges = challenges?.filter((challenge: any) =>
     challenge.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
