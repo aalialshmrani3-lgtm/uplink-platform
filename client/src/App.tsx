@@ -87,6 +87,10 @@ const Uplink2CreateEvent = lazy(() => import('@/pages/Uplink2CreateEvent'));
 const Uplink2EventDetail = lazy(() => import('@/pages/Uplink2EventDetail'));
 const Uplink2 = lazy(() => import("./pages/Uplink2"));
 const Uplink3 = lazy(() => import("./pages/Uplink3"));
+const Uplink2ChallengeDetails = lazy(() => import("./pages/Uplink2ChallengeDetails"));
+const Uplink3Marketplace = lazy(() => import("./pages/Uplink3Marketplace"));
+const Uplink3SellAsset = lazy(() => import("./pages/Uplink3SellAsset"));
+const Uplink3AssetDetails = lazy(() => import("./pages/Uplink3AssetDetails"));
 const UserProfile = lazy(() => import("./pages/UserProfile")); // Added for Flowchart Match
 const UserSettings = lazy(() => import("./pages/UserSettings")); // Added for Flowchart Match
 const Uplink2Hackathons = lazy(() => import("./pages/Uplink2Hackathons")); // Added for Flowchart Match
@@ -314,8 +318,11 @@ function Router() {
         <Route path="/uplink2/submit-challenge" component={Uplink2SubmitChallenge} /> {/* Submit Challenge */}
         <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}
         <Route path="/uplink2/challenges" component={Uplink2Challenges} /> {/* Browse Challenges */}
-        <Route path="/uplink2/challenges/:id" component={Uplink2ChallengeDetail} /> {/* Challenge Detail */}
+        <Route path="/uplink2/challenges/:id" component={Uplink2ChallengeDetails} /> {/* Challenge Details - Fixed */}
         <Route path="/uplink3" component={Uplink3} />
+        <Route path="/uplink3/marketplace" component={Uplink3Marketplace} /> {/* Marketplace */}
+        <Route path="/uplink3/sell" component={Uplink3SellAsset} /> {/* Sell Asset */}
+        <Route path="/uplink3/assets/:id" component={Uplink3AssetDetails} /> {/* Asset Details */}
         <Route path="/uplink3/contracts" component={Uplink3Contracts} /> {/* Added for Flowchart Match */}
         <Route path="/uplink3/contracts/:id" component={Uplink3ContractDetail} /> {/* Contract Detail with Milestones */}
         <Route path="/uplink3/escrow" component={Uplink3Escrow} /> {/* Added for Flowchart Match */}
