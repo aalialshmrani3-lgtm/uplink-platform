@@ -1389,3 +1389,49 @@ export const blockchainAssets = mysqlTable("blockchain_assets", {
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 });
+
+// Challenge Registration & Submissions System
+export const challengeRegistrations = mysqlTable("challenge_registrations", {
+	id: int().autoincrement().notNull(),
+	challengeId: int().notNull(),
+	userId: int().notNull(),
+	teamName: varchar({ length: 200 }),
+	teamMembers: json(), // Array of {name, email, role}
+	status: mysqlEnum(['registered', 'submitted', 'under_review', 'accepted', 'rejected', 'winner']).default('registered'),
+	registeredAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+export const challengeVotes = mysqlTable("challenge_votes", {
+	id: int().autoincrement().notNull(),
+	submissionId: int().notNull(),
+	userId: int().notNull(),
+	voteType: mysqlEnum(['public', 'judge']).default('public'),
+	rating: int(), // 1-5 stars (optional)
+	comment: text(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export const challengeReviews = mysqlTable("challenge_reviews", {
+	id: int().autoincrement().notNull(),
+	submissionId: int().notNull(),
+	reviewerId: int().notNull(),
+	criteriaScores: json(), // {innovation: 8, feasibility: 7, impact: 9, ...}
+	overallScore: decimal({ precision: 5, scale: 2 }).notNull(),
+	strengths: text(),
+	weaknesses: text(),
+	recommendations: text(),
+	decision: mysqlEnum(['shortlist', 'finalist', 'winner', 'reject']),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+// TypeScript types
+export type ChallengeRegistration = typeof challengeRegistrations.$inferSelect;
+export type InsertChallengeRegistration = typeof challengeRegistrations.$inferInsert;
+
+export type ChallengeVote = typeof challengeVotes.$inferSelect;
+export type InsertChallengeVote = typeof challengeVotes.$inferInsert;
+
+export type ChallengeReview = typeof challengeReviews.$inferSelect;
+export type InsertChallengeReview = typeof challengeReviews.$inferInsert;

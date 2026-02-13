@@ -35,6 +35,10 @@ import {
   ideas, ideaAnalysis, classificationHistory,
   events, eventRegistrations,
   blockchainAssets,
+  challengeRegistrations, InsertChallengeRegistration, ChallengeRegistration,
+  challengeSubmissions, InsertChallengeSubmission, ChallengeSubmission,
+  challengeVotes, InsertChallengeVote, ChallengeVote,
+  challengeReviews, InsertChallengeReview, ChallengeReview,
   // matches, matchingRequests // Removed: not in schema
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -1470,3 +1474,229 @@ export async function contactAssetOwner(assetId: number) {
 // Challenges (Uplink 2)
 // ============================================
 // getChallengeById already defined above (line 352)
+
+
+// ============================================
+// CHALLENGE REGISTRATION & SUBMISSION OPERATIONS
+// ============================================
+
+// Registration functions
+export async function registerForChallenge(data: InsertChallengeRegistration) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if already registered
+  const existing = await db.select()
+    .from(challengeRegistrations)
+    .where(and(
+      eq(challengeRegistrations.challengeId, data.challengeId),
+      eq(challengeRegistrations.userId, data.userId)
+    ))
+    .limit(1);
+  
+  if (existing.length > 0) {
+    throw new Error("Already registered for this challenge");
+  }
+  
+  const result = await db.insert(challengeRegistrations).values(data);
+  
+  // Update challenge participants count
+  await db.update(challenges)
+    .set({ participants: sql`${challenges.participants} + 1` })
+    .where(eq(challenges.id, data.challengeId));
+  
+  return result[0].insertId;
+}
+
+export async function getChallengeRegistration(challengeId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select()
+    .from(challengeRegistrations)
+    .where(and(
+      eq(challengeRegistrations.challengeId, challengeId),
+      eq(challengeRegistrations.userId, userId)
+    ))
+    .limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getUserChallengeRegistrations(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select()
+    .from(challengeRegistrations)
+    .where(eq(challengeRegistrations.userId, userId))
+    .orderBy(desc(challengeRegistrations.registeredAt));
+}
+
+export async function getChallengeRegistrations(challengeId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select()
+    .from(challengeRegistrations)
+    .where(eq(challengeRegistrations.challengeId, challengeId))
+    .orderBy(desc(challengeRegistrations.registeredAt));
+}
+
+// Submission functions
+export async function createChallengeSubmission(data: InsertChallengeSubmission) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(challengeSubmissions).values(data);
+  
+  // Update challenge submissions count
+  await db.update(challenges)
+    .set({ submissions: sql`${challenges.submissions} + 1` })
+    .where(eq(challenges.id, data.challengeId));
+  
+  // Update registration status
+  const registration = await db.select()
+    .from(challengeRegistrations)
+    .where(and(
+      eq(challengeRegistrations.challengeId, data.challengeId),
+      eq(challengeRegistrations.userId, data.userId)
+    ))
+    .limit(1);
+  
+  if (registration.length > 0) {
+    await db.update(challengeRegistrations)
+      .set({ status: 'submitted' })
+      .where(eq(challengeRegistrations.id, registration[0].id));
+  }
+  
+  return result[0].insertId;
+}
+
+export async function getChallengeSubmissions(challengeId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select()
+    .from(challengeSubmissions)
+    .where(eq(challengeSubmissions.challengeId, challengeId))
+    .orderBy(desc(challengeSubmissions.submittedAt));
+}
+
+export async function getUserChallengeSubmissions(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select()
+    .from(challengeSubmissions)
+    .where(eq(challengeSubmissions.userId, userId))
+    .orderBy(desc(challengeSubmissions.submittedAt));
+}
+
+export async function getChallengeSubmissionById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select()
+    .from(challengeSubmissions)
+    .where(eq(challengeSubmissions.id, id))
+    .limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateChallengeSubmission(id: number, data: Partial<InsertChallengeSubmission>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(challengeSubmissions)
+    .set({ ...data, updatedAt: new Date().toISOString() })
+    .where(eq(challengeSubmissions.id, id));
+}
+
+// Vote functions
+export async function voteForSubmission(data: InsertChallengeVote) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if already voted
+  const existing = await db.select()
+    .from(challengeVotes)
+    .where(and(
+      eq(challengeVotes.submissionId, data.submissionId),
+      eq(challengeVotes.userId, data.userId)
+    ))
+    .limit(1);
+  
+  if (existing.length > 0) {
+    throw new Error("Already voted for this submission");
+  }
+  
+  const result = await db.insert(challengeVotes).values(data);
+  
+  // Update submission vote count
+  const voteField = data.voteType === 'judge' ? 'judgeVotes' : 'publicVotes';
+  await db.update(challengeSubmissions)
+    .set({ [voteField]: sql`${challengeSubmissions[voteField]} + 1` })
+    .where(eq(challengeSubmissions.id, data.submissionId));
+  
+  return result[0].insertId;
+}
+
+export async function getSubmissionVotes(submissionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select()
+    .from(challengeVotes)
+    .where(eq(challengeVotes.submissionId, submissionId))
+    .orderBy(desc(challengeVotes.createdAt));
+}
+
+export async function getUserVote(submissionId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select()
+    .from(challengeVotes)
+    .where(and(
+      eq(challengeVotes.submissionId, submissionId),
+      eq(challengeVotes.userId, userId)
+    ))
+    .limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// Review functions
+export async function createChallengeReview(data: InsertChallengeReview) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(challengeReviews).values(data);
+  
+  // Update submission score (average of all reviews)
+  const reviews = await db.select()
+    .from(challengeReviews)
+    .where(eq(challengeReviews.submissionId, data.submissionId));
+  
+  const avgScore = reviews.reduce((sum, r) => sum + Number(r.overallScore), Number(data.overallScore)) / (reviews.length + 1);
+  
+  await db.update(challengeSubmissions)
+    .set({ 
+      score: avgScore.toString(),
+      reviewerComments: data.recommendations || '',
+      status: data.decision === 'winner' ? 'winner' : 
+              data.decision === 'finalist' ? 'finalist' :
+              data.decision === 'shortlist' ? 'shortlisted' : 'under_review'
+    })
+    .where(eq(challengeSubmissions.id, data.submissionId));
+  
+  return result[0].insertId;
+}
+
+export async function getSubmissionReviews(submissionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select()
+    .from(challengeReviews)
+    .where(eq(challengeReviews.submissionId, submissionId))
+    .orderBy(desc(challengeReviews.createdAt));
+}
+
+export async function getChallengeReviewsByReviewer(reviewerId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select()
+    .from(challengeReviews)
+    .where(eq(challengeReviews.reviewerId, reviewerId))
+    .orderBy(desc(challengeReviews.createdAt));
+}

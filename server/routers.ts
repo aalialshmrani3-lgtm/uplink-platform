@@ -3377,6 +3377,155 @@ Provide response in JSON format:
           });
           return { success: true, id };
         }),
+
+      // Registration
+      register: protectedProcedure
+        .input(z.object({
+          challengeId: z.number(),
+          teamName: z.string().optional(),
+          teamMembers: z.array(z.object({
+            name: z.string(),
+            email: z.string(),
+            role: z.string(),
+          })).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const id = await db.registerForChallenge({
+            challengeId: input.challengeId,
+            userId: ctx.user.id,
+            teamName: input.teamName,
+            teamMembers: input.teamMembers,
+          });
+          return { success: true, registrationId: id };
+        }),
+
+      getRegistration: protectedProcedure
+        .input(z.object({ challengeId: z.number() }))
+        .query(async ({ ctx, input }) => {
+          return db.getChallengeRegistration(input.challengeId, ctx.user.id);
+        }),
+
+      getMyRegistrations: protectedProcedure
+        .query(async ({ ctx }) => {
+          return db.getUserChallengeRegistrations(ctx.user.id);
+        }),
+
+      // Submissions
+      submitSolution: protectedProcedure
+        .input(z.object({
+          challengeId: z.number(),
+          title: z.string(),
+          description: z.string(),
+          solution: z.string(),
+          expectedImpact: z.string().optional(),
+          teamName: z.string().optional(),
+          teamMembers: z.array(z.any()).optional(),
+          documents: z.array(z.any()).optional(),
+          images: z.array(z.any()).optional(),
+          video: z.string().optional(),
+          prototype: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const id = await db.createChallengeSubmission({
+            challengeId: input.challengeId,
+            userId: ctx.user.id,
+            title: input.title,
+            description: input.description,
+            solution: input.solution,
+            expectedImpact: input.expectedImpact,
+            teamName: input.teamName,
+            teamMembers: input.teamMembers,
+            documents: input.documents,
+            images: input.images,
+            video: input.video,
+            prototype: input.prototype,
+            status: 'submitted',
+            submittedAt: new Date().toISOString(),
+          });
+          return { success: true, submissionId: id };
+        }),
+
+      getSubmissions: publicProcedure
+        .input(z.object({ challengeId: z.number() }))
+        .query(async ({ input }) => {
+          return db.getChallengeSubmissions(input.challengeId);
+        }),
+
+      getMySubmissions: protectedProcedure
+        .query(async ({ ctx }) => {
+          return db.getUserChallengeSubmissions(ctx.user.id);
+        }),
+
+      getSubmissionById: publicProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          const submission = await db.getChallengeSubmissionById(input.id);
+          if (!submission) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Submission not found' });
+          }
+          return submission;
+        }),
+
+      // Voting
+      vote: protectedProcedure
+        .input(z.object({
+          submissionId: z.number(),
+          rating: z.number().min(1).max(5).optional(),
+          comment: z.string().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const id = await db.voteForSubmission({
+            submissionId: input.submissionId,
+            userId: ctx.user.id,
+            voteType: 'public',
+            rating: input.rating,
+            comment: input.comment,
+          });
+          return { success: true, voteId: id };
+        }),
+
+      getVotes: publicProcedure
+        .input(z.object({ submissionId: z.number() }))
+        .query(async ({ input }) => {
+          return db.getSubmissionVotes(input.submissionId);
+        }),
+
+      getUserVote: protectedProcedure
+        .input(z.object({ submissionId: z.number() }))
+        .query(async ({ ctx, input }) => {
+          return db.getUserVote(input.submissionId, ctx.user.id);
+        }),
+
+      // Admin/Judge Review
+      submitReview: protectedProcedure
+        .input(z.object({
+          submissionId: z.number(),
+          criteriaScores: z.record(z.number()),
+          overallScore: z.number(),
+          strengths: z.string().optional(),
+          weaknesses: z.string().optional(),
+          recommendations: z.string().optional(),
+          decision: z.enum(['shortlist', 'finalist', 'winner', 'reject']).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const id = await db.createChallengeReview({
+            submissionId: input.submissionId,
+            reviewerId: ctx.user.id,
+            criteriaScores: input.criteriaScores,
+            overallScore: input.overallScore.toString(),
+            strengths: input.strengths,
+            weaknesses: input.weaknesses,
+            recommendations: input.recommendations,
+            decision: input.decision,
+          });
+          return { success: true, reviewId: id };
+        }),
+
+      getReviews: publicProcedure
+        .input(z.object({ submissionId: z.number() }))
+        .query(async ({ input }) => {
+          return db.getSubmissionReviews(input.submissionId);
+        }),
     }),
   }),
 

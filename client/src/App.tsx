@@ -106,6 +106,9 @@ const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge
 const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host Event Dashboard
 const Uplink2Challenges = lazy(() => import("./pages/Uplink2Challenges")); // Browse Challenges
 const Uplink2ChallengeDetail = lazy(() => import("./pages/Uplink2ChallengeDetail")); // Challenge Detail
+const Uplink2SubmitSolution = lazy(() => import("./pages/Uplink2SubmitSolution")); // Submit Solution
+const Uplink2AdminChallenges = lazy(() => import("./pages/Uplink2AdminChallenges")); // Admin Challenges Dashboard
+const Uplink2AdminSubmissions = lazy(() => import("./pages/Uplink2AdminSubmissions")); // Admin Review Submissions
 // Removed: Uplink2Dashboard - replaced by Uplink2VettingDashboard and Uplink2Marketplace
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
@@ -318,6 +321,9 @@ function Router() {
         <Route path="/uplink2/matching" component={Uplink2Matching} /> {/* Added for Flowchart Match */}
         <Route path="/uplink2/submit-challenge" component={Uplink2SubmitChallenge} /> {/* Submit Challenge */}
         <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}
+        <Route path="/admin/challenges/:id/submissions" component={Uplink2AdminSubmissions} /> {/* Admin Review Submissions */}
+        <Route path="/admin/challenges" component={Uplink2AdminChallenges} /> {/* Admin Challenges Dashboard */}
+        <Route path="/uplink2/challenges/:id/submit" component={Uplink2SubmitSolution} /> {/* Submit Solution */}
         <Route path="/uplink2/challenges/:id" component={Uplink2ChallengeDetails} /> {/* Challenge Details - Fixed */}
         <Route path="/uplink2/challenges" component={Uplink2Challenges} /> {/* Browse Challenges */}
         <Route path="/uplink3" component={Uplink3} />

@@ -2,17 +2,45 @@ import { useParams, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calendar, Users, Trophy, Clock, Target, Lightbulb, ArrowLeft } from "lucide-react";
+import { ArrowRight, Calendar, Users, Trophy, Clock, Target, Lightbulb, ArrowLeft, CheckCircle2, Send } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLanguage } from "@/contexts/LanguageContext";
+// Auth via tRPC
+import { toast } from "sonner";
+import { useState } from "react";
 
 export default function Uplink2ChallengeDetails() {
   const { id } = useParams<{ id: string }>();
   const { t } = useLanguage();
   const challengeId = parseInt(id || "0");
 
+  const { data: user } = trpc.auth.me.useQuery();
+  const [showSubmitForm, setShowSubmitForm] = useState(false);
+
   const { data: challenge, isLoading } = trpc.uplink2.challenges.getById.useQuery({ id: challengeId });
   const { data: relatedIdeas } = trpc.uplink1.getIdeasByChallenge.useQuery({ challengeId });
+  const { data: registration } = trpc.uplink2.challenges.getRegistration.useQuery(
+    { challengeId },
+    { enabled: !!user }
+  );
+  const { data: submissions } = trpc.uplink2.challenges.getSubmissions.useQuery({ challengeId });
+
+  const registerMutation = trpc.uplink2.challenges.register.useMutation({
+    onSuccess: () => {
+      toast.success("تم التسجيل بنجاح! يمكنك الآن تقديم حلك للتحدي");
+    },
+    onError: (error) => {
+      toast.error(`خطأ في التسجيل: ${error.message}`);
+    },
+  });
+
+  const handleRegister = () => {
+    if (!user) {
+      toast.error("يجب تسجيل الدخول أولاً للتسجيل في التحدي");
+      return;
+    }
+    registerMutation.mutate({ challengeId });
+  };
 
   if (isLoading) {
     return (
@@ -86,13 +114,42 @@ export default function Uplink2ChallengeDetails() {
               </div>
             </div>
 
-            <div>
-              <Link href={`/uplink1/submit?challengeId=${challenge.id}`}>
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
-                  شارك في التحدي
+            <div className="flex flex-col gap-3">
+              {!user ? (
+                <Link href="/login">
+                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                    سجل الدخول للمشاركة
+                    <ArrowRight className="w-5 h-5 mr-2" />
+                  </Button>
+                </Link>
+              ) : registration ? (
+                <div className="flex flex-col gap-2">
+                  <Button
+                    size="lg"
+                    className="bg-green-600 hover:bg-green-700"
+                    disabled
+                  >
+                    <CheckCircle2 className="w-5 h-5 ml-2" />
+                    مسجل في التحدي
+                  </Button>
+                  <Link href={`/uplink2/challenges/${challengeId}/submit`}>
+                    <Button size="lg" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                      قدم حلك
+                      <Send className="w-5 h-5 mr-2" />
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                  onClick={handleRegister}
+                  disabled={registerMutation.isPending}
+                >
+                  {registerMutation.isPending ? "جاري التسجيل..." : "سجل الآن"}
                   <ArrowRight className="w-5 h-5 mr-2" />
                 </Button>
-              </Link>
+              )}
             </div>
           </div>
         </div>
