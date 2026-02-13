@@ -34,6 +34,7 @@ import {
   predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy,
   ideas, ideaAnalysis, classificationHistory,
   events, eventRegistrations,
+  blockchainAssets,
   // matches, matchingRequests // Removed: not in schema
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -1361,3 +1362,111 @@ export async function getUserMFAStatus(userId: number): Promise<{ mfaEnabled: bo
     mfaSecret: result[0].mfaSecret
   };
 }
+
+
+// ============================================
+// Blockchain Assets (Uplink 3)
+// ============================================
+export async function getAllAssets(filters?: {
+  type?: string;
+  category?: string;
+  search?: string;
+  status?: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  let query = db.select().from(blockchainAssets);
+
+  // Apply filters
+  const conditions = [];
+  if (filters?.type) {
+    conditions.push(eq(blockchainAssets.type, filters.type as any));
+  }
+  if (filters?.category) {
+    conditions.push(eq(blockchainAssets.category, filters.category));
+  }
+  if (filters?.status) {
+    conditions.push(eq(blockchainAssets.status, filters.status as any));
+  } else {
+    // Default: only show active assets
+    conditions.push(eq(blockchainAssets.status, 'active'));
+  }
+
+  if (conditions.length > 0) {
+    query = query.where(and(...conditions)) as any;
+  }
+
+  const results = await query;
+
+  // Apply search filter in memory (since we can't use LIKE with drizzle easily)
+  if (filters?.search) {
+    const searchLower = filters.search.toLowerCase();
+    return results.filter(asset => 
+      asset.title.toLowerCase().includes(searchLower) ||
+      asset.description.toLowerCase().includes(searchLower)
+    );
+  }
+
+  return results;
+}
+
+export async function getAssetById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.select()
+    .from(blockchainAssets)
+    .where(eq(blockchainAssets.id, id))
+    .limit(1);
+
+  if (!result[0]) return null;
+
+  // Increment views
+  await db.update(blockchainAssets)
+    .set({ views: result[0].views + 1 })
+    .where(eq(blockchainAssets.id, id));
+
+  return result[0];
+}
+
+export async function likeAsset(assetId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const asset = await db.select()
+    .from(blockchainAssets)
+    .where(eq(blockchainAssets.id, assetId))
+    .limit(1);
+
+  if (!asset[0]) throw new Error("Asset not found");
+
+  await db.update(blockchainAssets)
+    .set({ likes: asset[0].likes + 1 })
+    .where(eq(blockchainAssets.id, assetId));
+
+  return { success: true, likes: asset[0].likes + 1 };
+}
+
+export async function contactAssetOwner(assetId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const asset = await db.select()
+    .from(blockchainAssets)
+    .where(eq(blockchainAssets.id, assetId))
+    .limit(1);
+
+  if (!asset[0]) throw new Error("Asset not found");
+
+  await db.update(blockchainAssets)
+    .set({ contactCount: asset[0].contactCount + 1 })
+    .where(eq(blockchainAssets.id, assetId));
+
+  return { success: true };
+}
+
+// ============================================
+// Challenges (Uplink 2)
+// ============================================
+// getChallengeById already defined above (line 352)

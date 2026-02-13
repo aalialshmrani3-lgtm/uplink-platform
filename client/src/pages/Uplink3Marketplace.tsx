@@ -10,9 +10,10 @@ import {
   Search, Filter, TrendingUp, Star, ArrowLeft, 
   Building2, Package, Briefcase, Eye, Heart
 } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
-// Mock data - في المستقبل سيتم استبدالها بـ tRPC query
-const mockAssets = [
+// Removed mock data - now using tRPC
+const mockAssetsOld = [
   {
     id: 1,
     type: "license",
@@ -104,13 +105,14 @@ export default function Uplink3Marketplace() {
   const [selectedType, setSelectedType] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const filteredAssets = mockAssets.filter(asset => {
-    const matchesSearch = asset.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         asset.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = selectedType === "all" || asset.type === selectedType;
-    const matchesCategory = selectedCategory === "all" || asset.category === selectedCategory;
-    return matchesSearch && matchesType && matchesCategory;
+  // Fetch assets from backend
+  const { data: assets, isLoading } = trpc.uplink3.assets.getAll.useQuery({
+    type: selectedType !== "all" ? selectedType as any : undefined,
+    category: selectedCategory !== "all" ? selectedCategory : undefined,
+    search: searchQuery || undefined,
   });
+
+  const filteredAssets = assets || [];
 
   const getTypeLabel = (type: string) => {
     switch (type) {
@@ -201,6 +203,18 @@ export default function Uplink3Marketplace() {
 
       {/* Content */}
       <div className="container mx-auto px-4 py-12">
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+              <p className="text-muted-foreground">جاري تحميل الأصول...</p>
+            </div>
+          </div>
+        )}
+
+        {!isLoading && (
+        <>
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Card>
@@ -505,6 +519,8 @@ export default function Uplink3Marketplace() {
               </Button>
             </CardContent>
           </Card>
+        )}
+        </>
         )}
       </div>
     </div>

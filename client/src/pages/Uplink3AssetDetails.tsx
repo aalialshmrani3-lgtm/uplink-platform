@@ -9,6 +9,9 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { getLoginUrl } from "@/const";
 
 // Mock data - في المستقبل سيتم استبدالها بـ tRPC query
 const mockAsset = {
@@ -70,8 +73,20 @@ const mockAsset = {
 
 export default function Uplink3AssetDetails() {
   const { id } = useParams<{ id: string }>();
-  // Using toast from sonner (imported above)
+  const { user } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
+  
+  const createCheckoutMutation = trpc.uplink3.assets.createCheckout.useMutation({
+    onSuccess: (data) => {
+      if (data.checkoutUrl) {
+        window.open(data.checkoutUrl, '_blank');
+        toast.success('جاري تحويلك إلى صفحة الدفع...');
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message || 'حدث خطأ أثناء إنشاء جلسة الدفع');
+    },
+  });
 
   const handleContact = () => {
     toast.success("تم إرسال طلب التواصل", {
@@ -159,7 +174,20 @@ export default function Uplink3AssetDetails() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700" onClick={handleContact}>
+                  <Button 
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                    onClick={() => {
+                      if (!user) {
+                        window.location.href = getLoginUrl();
+                        return;
+                      }
+                      createCheckoutMutation.mutate({ assetId: parseInt(id || '1') });
+                    }}
+                    disabled={createCheckoutMutation.isPending}
+                  >
+                    {createCheckoutMutation.isPending ? 'جاري التحميل...' : 'شراء الآن'}
+                  </Button>
+                  <Button variant="outline" className="w-full" onClick={handleContact}>
                     تواصل مع المالك
                   </Button>
                   <Button variant="outline" className="w-full" onClick={handleLike}>

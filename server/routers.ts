@@ -3623,6 +3623,94 @@ Provide response in JSON format:
         }),
     }),
 
+    // Assets (Marketplace)
+    assets: router({
+      getAll: publicProcedure
+        .input(z.object({
+          type: z.enum(['license', 'product', 'acquisition', 'partnership', 'service', 'investment', 'nda']).optional(),
+          category: z.string().optional(),
+          search: z.string().optional(),
+          status: z.enum(['draft', 'active', 'sold', 'archived']).optional(),
+        }).optional())
+        .query(async ({ input }) => {
+          return await db.getAllAssets(input || {});
+        }),
+
+      getById: publicProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          const asset = await db.getAssetById(input.id);
+          if (!asset) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Asset not found' });
+          }
+          return asset;
+        }),
+
+      like: protectedProcedure
+        .input(z.object({ assetId: z.number() }))
+        .mutation(async ({ input }) => {
+          return await db.likeAsset(input.assetId);
+        }),
+
+      contact: protectedProcedure
+        .input(z.object({ assetId: z.number() }))
+        .mutation(async ({ input }) => {
+          return await db.contactAssetOwner(input.assetId);
+        }),
+
+      // Stripe Payment
+      createCheckout: protectedProcedure
+        .input(z.object({ 
+          assetId: z.number(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const asset = await db.getAssetById(input.assetId);
+          if (!asset) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Asset not found' });
+          }
+
+          // Initialize Stripe (will be configured with user's keys)
+          const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || '');
+          
+          if (!process.env.STRIPE_SECRET_KEY) {
+            throw new TRPCError({ 
+              code: 'PRECONDITION_FAILED', 
+              message: 'Stripe is not configured. Please add your Stripe keys in Settings → Payment.' 
+            });
+          }
+
+          // Create checkout session
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+              {
+                price_data: {
+                  currency: asset.currency?.toLowerCase() || 'sar',
+                  product_data: {
+                    name: asset.title,
+                    description: asset.description,
+                  },
+                  unit_amount: Math.round(parseFloat(asset.price.toString()) * 100),
+                },
+                quantity: 1,
+              },
+            ],
+            mode: 'payment',
+            success_url: `${ctx.req.headers.origin}/uplink3/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${ctx.req.headers.origin}/uplink3/assets/${asset.id}`,
+            client_reference_id: ctx.user.id.toString(),
+            metadata: {
+              user_id: ctx.user.id.toString(),
+              asset_id: asset.id.toString(),
+              customer_email: ctx.user.email || '',
+              customer_name: ctx.user.name || '',
+            },
+          });
+
+          return { checkoutUrl: session.url };
+        }),
+    }),
+
     // Challenges router
     challenges: router({
       submit: protectedProcedure
@@ -3664,6 +3752,16 @@ Provide response in JSON format:
           }
           
           return await db.select().from(challenges);
+        }),
+
+      getById: publicProcedure
+        .input(z.object({ id: z.number() }))
+        .query(async ({ input }) => {
+          const challenge = await db.getChallengeById(input.id);
+          if (!challenge) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Challenge not found' });
+          }
+          return challenge;
         }),
     }),
   }),

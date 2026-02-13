@@ -1364,3 +1364,28 @@ export const whatifScenarios = mysqlTable("whatif_scenarios", {
 	recommendation: text(),
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 });
+
+export const blockchainAssets = mysqlTable("blockchain_assets", {
+	id: int().autoincrement().notNull(),
+	ownerId: int().notNull(),
+	type: mysqlEnum(['license', 'product', 'acquisition', 'partnership', 'service', 'investment', 'nda']).notNull(),
+	title: varchar({ length: 500 }).notNull(),
+	description: text().notNull(),
+	category: varchar({ length: 100 }),
+	price: decimal({ precision: 15, scale: 2 }).notNull(),
+	currency: varchar({ length: 10 }).default('SAR'),
+	status: mysqlEnum(['draft', 'active', 'sold', 'archived']).default('draft'),
+	images: json(),
+	documents: json(),
+	specifications: json(),
+	features: json(),
+	views: int().default(0),
+	likes: int().default(0),
+	contactCount: int().default(0),
+	blockchainHash: varchar({ length: 255 }),
+	smartContractAddress: varchar({ length: 255 }),
+	tokenId: varchar({ length: 100 }),
+	verificationStatus: mysqlEnum(['pending', 'verified', 'rejected']).default('pending'),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
