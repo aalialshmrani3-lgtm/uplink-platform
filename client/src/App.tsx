@@ -110,6 +110,9 @@ const Uplink2SubmitSolution = lazy(() => import("./pages/Uplink2SubmitSolution")
 const Uplink2AdminChallenges = lazy(() => import("./pages/Uplink2AdminChallenges")); // Admin Challenges Dashboard
 const Uplink2AdminSubmissions = lazy(() => import("./pages/Uplink2AdminSubmissions")); // Admin Review Submissions
 const MySubmissions = lazy(() => import("./pages/MySubmissions")); // My Submissions
+const ClassificationPaths = lazy(() => import("./pages/ClassificationPaths")); // Classification Paths
+const StrategicPartners = lazy(() => import("./pages/StrategicPartners")); // Strategic Partners
+const ValueFootprints = lazy(() => import("./pages/ValueFootprints")); // Value Footprints
 // Removed: Uplink2Dashboard - replaced by Uplink2VettingDashboard and Uplink2Marketplace
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
@@ -308,6 +311,9 @@ function Router() {
         <Route path="/uplink1/ideas/:id" component={Uplink1IdeaDetail} />
         <Route path="/uplink1/ideas/:id/analysis" component={Uplink1IdeaAnalysis} />
         <Route path="/my-ideas" component={MyIdeas} />
+        <Route path="/classification-paths" component={ClassificationPaths} />
+        <Route path="/strategic-partners" component={StrategicPartners} />
+        <Route path="/value-footprints" component={ValueFootprints} />
         <Route path="/uplink2" component={Uplink2} />
         <Route path="/uplink1/opportunities" component={Uplink1Opportunities} />
         <Route path="/quick-assessment" component={QuickAssessment} />

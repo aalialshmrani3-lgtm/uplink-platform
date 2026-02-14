@@ -39,6 +39,11 @@ import {
   challengeSubmissions, InsertChallengeSubmission, ChallengeSubmission,
   challengeVotes, InsertChallengeVote, ChallengeVote,
   challengeReviews, InsertChallengeReview, ChallengeReview,
+  aiEvaluations, InsertAiEvaluation, AiEvaluation,
+  ideaClassifications, InsertIdeaClassification, IdeaClassification,
+  strategicPartners, InsertStrategicPartner, StrategicPartner,
+  partnerProjects, InsertPartnerProject, PartnerProject,
+  valueFootprints, InsertValueFootprint, ValueFootprint,
   // matches, matchingRequests // Removed: not in schema
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -1728,4 +1733,351 @@ export async function getMySubmissionsWithDetails(userId: number) {
     .orderBy(desc(challengeSubmissions.submittedAt));
   
   return submissions;
+}
+
+
+// ========================================
+// AI Evaluation & Classification Functions
+// ========================================
+
+/**
+ * إنشاء تقييم ذكي لفكرة
+ */
+export async function createAiEvaluation(data: InsertAiEvaluation) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(aiEvaluations).values(data);
+  return result.insertId;
+}
+
+/**
+ * الحصول على تقييم ذكي لفكرة
+ */
+export async function getAiEvaluationByIdeaId(ideaId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const [evaluation] = await db.select()
+    .from(aiEvaluations)
+    .where(eq(aiEvaluations.ideaId, ideaId))
+    .orderBy(desc(aiEvaluations.evaluatedAt))
+    .limit(1);
+  
+  return evaluation || null;
+}
+
+/**
+ * إنشاء تصنيف لفكرة
+ */
+export async function createIdeaClassification(data: InsertIdeaClassification) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(ideaClassifications).values(data);
+  return result.insertId;
+}
+
+/**
+ * الحصول على تصنيف فكرة
+ */
+export async function getIdeaClassification(ideaId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const [classification] = await db.select()
+    .from(ideaClassifications)
+    .where(eq(ideaClassifications.ideaId, ideaId))
+    .orderBy(desc(ideaClassifications.classifiedAt))
+    .limit(1);
+  
+  return classification || null;
+}
+
+/**
+ * تحديث حالة التصنيف
+ */
+export async function updateClassificationStatus(
+  id: number,
+  status: 'pending' | 'accepted' | 'rejected' | 'completed'
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(ideaClassifications)
+    .set({ status, updatedAt: new Date().toISOString() })
+    .where(eq(ideaClassifications.id, id));
+}
+
+/**
+ * الحصول على جميع الأفكار حسب المسار
+ */
+export async function getIdeasByClassificationPath(
+  path: 'innovation' | 'commercial' | 'guidance',
+  limit = 50
+) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const results = await db.select({
+    id: ideaClassifications.id,
+    ideaId: ideaClassifications.ideaId,
+    classificationPath: ideaClassifications.classificationPath,
+    score: ideaClassifications.score,
+    reason: ideaClassifications.reason,
+    nextSteps: ideaClassifications.nextSteps,
+    status: ideaClassifications.status,
+    classifiedAt: ideaClassifications.classifiedAt,
+    ideaTitle: ideas.title,
+    ideaDescription: ideas.description,
+    userId: ideas.userId,
+  })
+    .from(ideaClassifications)
+    .leftJoin(ideas, eq(ideaClassifications.ideaId, ideas.id))
+    .where(eq(ideaClassifications.classificationPath, path))
+    .orderBy(desc(ideaClassifications.classifiedAt))
+    .limit(limit);
+  
+  return results;
+}
+
+// ========================================
+// Strategic Partners Functions
+// ========================================
+
+/**
+ * إنشاء شريك استراتيجي
+ */
+export async function createStrategicPartner(data: InsertStrategicPartner) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(strategicPartners).values(data);
+  return result.insertId;
+}
+
+/**
+ * الحصول على جميع الشركاء الاستراتيجيين
+ */
+export async function getAllStrategicPartners(activeOnly = true) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = db.select().from(strategicPartners);
+  
+  if (activeOnly) {
+    query = query.where(eq(strategicPartners.status, 'active'));
+  }
+  
+  const partners = await query.orderBy(strategicPartners.name);
+  return partners;
+}
+
+/**
+ * الحصول على شريك استراتيجي بالـ ID
+ */
+export async function getStrategicPartnerById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const [partner] = await db.select()
+    .from(strategicPartners)
+    .where(eq(strategicPartners.id, id))
+    .limit(1);
+  
+  return partner || null;
+}
+
+/**
+ * تحديث شريك استراتيجي
+ */
+export async function updateStrategicPartner(id: number, data: Partial<InsertStrategicPartner>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(strategicPartners)
+    .set({ ...data, updatedAt: new Date().toISOString() })
+    .where(eq(strategicPartners.id, id));
+}
+
+// ========================================
+// Partner Projects Functions
+// ========================================
+
+/**
+ * إنشاء مشروع مدعوم من شريك
+ */
+export async function createPartnerProject(data: InsertPartnerProject) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(partnerProjects).values(data);
+  return result.insertId;
+}
+
+/**
+ * الحصول على جميع المشاريع المدعومة من شريك
+ */
+export async function getPartnerProjects(partnerId?: number, ideaId?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = db.select({
+    id: partnerProjects.id,
+    partnerId: partnerProjects.partnerId,
+    ideaId: partnerProjects.ideaId,
+    projectName: partnerProjects.projectName,
+    supportType: partnerProjects.supportType,
+    fundingAmount: partnerProjects.fundingAmount,
+    startDate: partnerProjects.startDate,
+    endDate: partnerProjects.endDate,
+    status: partnerProjects.status,
+    milestones: partnerProjects.milestones,
+    outcomes: partnerProjects.outcomes,
+    createdAt: partnerProjects.createdAt,
+    partnerName: strategicPartners.name,
+    partnerNameAr: strategicPartners.nameAr,
+    partnerType: strategicPartners.type,
+    ideaTitle: ideas.title,
+  })
+    .from(partnerProjects)
+    .leftJoin(strategicPartners, eq(partnerProjects.partnerId, strategicPartners.id))
+    .leftJoin(ideas, eq(partnerProjects.ideaId, ideas.id));
+  
+  if (partnerId) {
+    query = query.where(eq(partnerProjects.partnerId, partnerId));
+  }
+  
+  if (ideaId) {
+    query = query.where(eq(partnerProjects.ideaId, ideaId));
+  }
+  
+  const projects = await query.orderBy(desc(partnerProjects.createdAt));
+  return projects;
+}
+
+/**
+ * تحديث مشروع شريك
+ */
+export async function updatePartnerProject(id: number, data: Partial<InsertPartnerProject>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(partnerProjects)
+    .set({ ...data, updatedAt: new Date().toISOString() })
+    .where(eq(partnerProjects.id, id));
+}
+
+// ========================================
+// Value Footprints Functions
+// ========================================
+
+/**
+ * إنشاء أو تحديث Value Footprint
+ */
+export async function upsertValueFootprint(data: InsertValueFootprint) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if footprint exists for this period
+  const [existing] = await db.select()
+    .from(valueFootprints)
+    .where(eq(valueFootprints.period, data.period))
+    .limit(1);
+  
+  if (existing) {
+    // Update existing
+    await db.update(valueFootprints)
+      .set({ ...data, updatedAt: new Date().toISOString() })
+      .where(eq(valueFootprints.id, existing.id));
+    return existing.id;
+  } else {
+    // Insert new
+    const [result] = await db.insert(valueFootprints).values(data);
+    return result.insertId;
+  }
+}
+
+/**
+ * الحصول على Value Footprints
+ */
+export async function getValueFootprints(periodType?: 'monthly' | 'quarterly' | 'yearly', limit = 12) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  let query = db.select().from(valueFootprints);
+  
+  if (periodType) {
+    query = query.where(eq(valueFootprints.periodType, periodType));
+  }
+  
+  const footprints = await query
+    .orderBy(desc(valueFootprints.period))
+    .limit(limit);
+  
+  return footprints;
+}
+
+/**
+ * الحصول على آخر Value Footprint
+ */
+export async function getLatestValueFootprint() {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const [footprint] = await db.select()
+    .from(valueFootprints)
+    .orderBy(desc(valueFootprints.period))
+    .limit(1);
+  
+  return footprint || null;
+}
+
+/**
+ * حساب وتحديث Value Footprint تلقائياً
+ */
+export async function calculateValueFootprint(period: string, periodType: 'monthly' | 'quarterly' | 'yearly') {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Count total ideas
+  const [ideasCount] = await db.select({ count: sql`COUNT(*)` }).from(ideas);
+  const totalIdeas = Number(ideasCount?.count || 0);
+  
+  // Count classifications by path
+  const [innovationCount] = await db.select({ count: sql`COUNT(*)` })
+    .from(ideaClassifications)
+    .where(eq(ideaClassifications.classificationPath, 'innovation'));
+  
+  const [commercialCount] = await db.select({ count: sql`COUNT(*)` })
+    .from(ideaClassifications)
+    .where(eq(ideaClassifications.classificationPath, 'commercial'));
+  
+  const [guidanceCount] = await db.select({ count: sql`COUNT(*)` })
+    .from(ideaClassifications)
+    .where(eq(ideaClassifications.classificationPath, 'guidance'));
+  
+  // Count active partner projects (as proxy for startups)
+  const [startupsCount] = await db.select({ count: sql`COUNT(*)` })
+    .from(partnerProjects)
+    .where(eq(partnerProjects.status, 'active'));
+  
+  // Sum funding amounts (as proxy for revenue)
+  const [fundingSum] = await db.select({ 
+    total: sql`SUM(${partnerProjects.fundingAmount})` 
+  }).from(partnerProjects);
+  
+  const data: InsertValueFootprint = {
+    period,
+    periodType,
+    totalIdeas,
+    totalStartups: Number(startupsCount?.count || 0),
+    totalJobs: Number(startupsCount?.count || 0) * 5, // تقدير: كل شركة ناشئة = 5 وظائف
+    totalRevenue: fundingSum?.total || '0',
+    innovationPathCount: Number(innovationCount?.count || 0),
+    commercialPathCount: Number(commercialCount?.count || 0),
+    guidancePathCount: Number(guidanceCount?.count || 0),
+  };
+  
+  return await upsertValueFootprint(data);
 }

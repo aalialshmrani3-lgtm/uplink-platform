@@ -754,6 +754,63 @@ export const appRouter = router({
           return ideas;
         }),
     }),
+
+    // ========================================
+    // الآلية المتكاملة الجديدة - Integrated Innovation System
+    // ========================================
+
+    // تقييم فكرة بالذكاء الاصطناعي
+    evaluateIdeaWithAI: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .mutation(async ({ input }) => {
+        const { evaluateIdea } = await import("./services/aiEvaluation");
+        const result = await evaluateIdea(input.ideaId);
+        return result;
+      }),
+
+    // الحصول على تقييم فكرة
+    getAiEvaluation: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .query(async ({ input }) => {
+        const evaluation = await db.getAiEvaluationByIdeaId(input.ideaId);
+        return evaluation;
+      }),
+
+    // الحصول على تصنيف فكرة
+    getClassification: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .query(async ({ input }) => {
+        const classification = await db.getIdeaClassification(input.ideaId);
+        return classification;
+      }),
+
+    // الحصول على جميع الأفكار حسب المسار
+    getIdeasByPath: publicProcedure
+      .input(z.object({
+        path: z.enum(['innovation', 'commercial', 'guidance']),
+        limit: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const ideas = await db.getIdeasByClassificationPath(
+          input.path,
+          input.limit || 50
+        );
+        return ideas;
+      }),
+
+    // تحديث حالة التصنيف
+    updateClassificationStatus: protectedProcedure
+      .input(z.object({
+        classificationId: z.number(),
+        status: z.enum(['pending', 'accepted', 'rejected', 'completed']),
+      }))
+      .mutation(async ({ input }) => {
+        await db.updateClassificationStatus(
+          input.classificationId,
+          input.status
+        );
+        return { success: true };
+      }),
   }),
 
   // ============================================
@@ -3980,6 +4037,165 @@ Provide response in JSON format:
       .mutation(async ({ ctx, input }) => {
         // TODO: Implement send message
         return { success: true };
+      }),
+  }),
+
+  // ============================================
+  // STRATEGIC PARTNERS - الشركاء الاستراتيجيون
+  // ============================================
+  strategicPartners: router({
+    // الحصول على جميع الشركاء
+    getAll: publicProcedure
+      .input(z.object({ activeOnly: z.boolean().optional() }))
+      .query(async ({ input }) => {
+        const partners = await db.getAllStrategicPartners(input.activeOnly ?? true);
+        return partners;
+      }),
+
+    // الحصول على شريك بالـ ID
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const partner = await db.getStrategicPartnerById(input.id);
+        return partner;
+      }),
+
+    // إنشاء شريك جديد (admin only)
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        nameAr: z.string().optional(),
+        type: z.enum(['university', 'government', 'incubator', 'accelerator', 'investor', 'corporate']),
+        logo: z.string().optional(),
+        website: z.string().optional(),
+        description: z.string().optional(),
+        descriptionAr: z.string().optional(),
+        focusAreas: z.array(z.string()).optional(),
+        supportTypes: z.array(z.string()).optional(),
+        eligibilityCriteria: z.array(z.string()).optional(),
+        contactEmail: z.string().optional(),
+        contactPhone: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        const partnerId = await db.createStrategicPartner(input);
+        return { partnerId };
+      }),
+
+    // تحديث شريك
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        data: z.object({
+          name: z.string().optional(),
+          nameAr: z.string().optional(),
+          type: z.enum(['university', 'government', 'incubator', 'accelerator', 'investor', 'corporate']).optional(),
+          logo: z.string().optional(),
+          website: z.string().optional(),
+          description: z.string().optional(),
+          descriptionAr: z.string().optional(),
+          focusAreas: z.array(z.string()).optional(),
+          supportTypes: z.array(z.string()).optional(),
+          eligibilityCriteria: z.array(z.string()).optional(),
+          contactEmail: z.string().optional(),
+          contactPhone: z.string().optional(),
+          status: z.enum(['active', 'inactive', 'pending']).optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        await db.updateStrategicPartner(input.id, input.data);
+        return { success: true };
+      }),
+
+    // الحصول على المشاريع المدعومة
+    getProjects: publicProcedure
+      .input(z.object({
+        partnerId: z.number().optional(),
+        ideaId: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const projects = await db.getPartnerProjects(input.partnerId, input.ideaId);
+        return projects;
+      }),
+
+    // إنشاء مشروع مدعوم
+    createProject: protectedProcedure
+      .input(z.object({
+        partnerId: z.number(),
+        ideaId: z.number(),
+        projectName: z.string(),
+        supportType: z.enum(['funding', 'mentorship', 'infrastructure', 'training', 'networking', 'legal', 'marketing']),
+        fundingAmount: z.number().optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+        milestones: z.array(z.any()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const projectId = await db.createPartnerProject(input);
+        return { projectId };
+      }),
+
+    // تحديث مشروع مدعوم
+    updateProject: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        data: z.object({
+          status: z.enum(['pending', 'active', 'completed', 'cancelled']).optional(),
+          milestones: z.array(z.any()).optional(),
+          outcomes: z.array(z.any()).optional(),
+        }),
+      }))
+      .mutation(async ({ input }) => {
+        await db.updatePartnerProject(input.id, input.data);
+        return { success: true };
+      }),
+  }),
+
+  // ============================================
+  // VALUE FOOTPRINTS - قياس الأثر
+  // ============================================
+  valueFootprints: router({
+    // الحصول على جميع القياسات
+    getAll: publicProcedure
+      .input(z.object({
+        periodType: z.enum(['monthly', 'quarterly', 'yearly']).optional(),
+        limit: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const footprints = await db.getValueFootprints(
+          input.periodType,
+          input.limit || 12
+        );
+        return footprints;
+      }),
+
+    // الحصول على آخر قياس
+    getLatest: publicProcedure
+      .query(async () => {
+        const footprint = await db.getLatestValueFootprint();
+        return footprint;
+      }),
+
+    // حساب وتحديث القياس (admin only)
+    calculate: protectedProcedure
+      .input(z.object({
+        period: z.string(),
+        periodType: z.enum(['monthly', 'quarterly', 'yearly']),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin only' });
+        }
+        const footprintId = await db.calculateValueFootprint(
+          input.period,
+          input.periodType
+        );
+        return { footprintId };
       }),
   }),
 });

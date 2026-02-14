@@ -1435,3 +1435,115 @@ export type InsertChallengeVote = typeof challengeVotes.$inferInsert;
 
 export type ChallengeReview = typeof challengeReviews.$inferSelect;
 export type InsertChallengeReview = typeof challengeReviews.$inferInsert;
+
+
+// ========================================
+// الآلية المتكاملة الجديدة - Integrated Innovation System
+// ========================================
+
+// جدول AI Evaluations - تقييم الأفكار تلقائياً
+export const aiEvaluations = mysqlTable("ai_evaluations", {
+	id: int().autoincrement().notNull(),
+	ideaId: int().notNull(),
+	overallScore: decimal({ precision: 5, scale: 2 }).notNull(), // 0-100
+	innovationScore: decimal({ precision: 5, scale: 2 }),
+	feasibilityScore: decimal({ precision: 5, scale: 2 }),
+	impactScore: decimal({ precision: 5, scale: 2 }),
+	teamScore: decimal({ precision: 5, scale: 2 }),
+	marketScore: decimal({ precision: 5, scale: 2 }),
+	criteriaScores: json(), // جميع المعايير
+	strengths: json(), // نقاط القوة
+	weaknesses: json(), // نقاط الضعف
+	opportunities: json(), // الفرص
+	threats: json(), // التهديدات
+	recommendations: json(), // التوصيات
+	classificationPath: mysqlEnum(['innovation', 'commercial', 'guidance']), // المسار المقترح
+	evaluatedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+// جدول Idea Classifications - تصنيف الأفكار إلى 3 مسارات
+export const ideaClassifications = mysqlTable("idea_classifications", {
+	id: int().autoincrement().notNull(),
+	ideaId: int().notNull(),
+	evaluationId: int().notNull(),
+	classificationPath: mysqlEnum(['innovation', 'commercial', 'guidance']).notNull(),
+	score: decimal({ precision: 5, scale: 2 }).notNull(),
+	reason: text(), // سبب التصنيف
+	nextSteps: json(), // الخطوات التالية المقترحة
+	assignedPartnerId: int(), // الشريك الاستراتيجي المقترح
+	status: mysqlEnum(['pending', 'accepted', 'rejected', 'completed']).default('pending'),
+	classifiedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+// جدول Strategic Partners - الشركاء الاستراتيجيون
+export const strategicPartners = mysqlTable("strategic_partners", {
+	id: int().autoincrement().notNull(),
+	name: varchar({ length: 200 }).notNull(), // KAUST, SAIP, RDIA, MCIT, SDAIA, Monsha'at
+	nameAr: varchar({ length: 200 }),
+	type: mysqlEnum(['university', 'government', 'incubator', 'accelerator', 'investor', 'corporate']).notNull(),
+	logo: varchar({ length: 500 }),
+	website: varchar({ length: 500 }),
+	description: text(),
+	descriptionAr: text(),
+	focusAreas: json(), // مجالات التركيز
+	supportTypes: json(), // أنواع الدعم (funding, mentorship, infrastructure, etc.)
+	eligibilityCriteria: json(), // معايير الأهلية
+	contactEmail: varchar({ length: 200 }),
+	contactPhone: varchar({ length: 50 }),
+	status: mysqlEnum(['active', 'inactive', 'pending']).default('active'),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+// جدول Partner Projects - المشاريع المدعومة من الشركاء
+export const partnerProjects = mysqlTable("partner_projects", {
+	id: int().autoincrement().notNull(),
+	partnerId: int().notNull(),
+	ideaId: int().notNull(),
+	projectName: varchar({ length: 300 }).notNull(),
+	supportType: mysqlEnum(['funding', 'mentorship', 'infrastructure', 'training', 'networking', 'legal', 'marketing']).notNull(),
+	fundingAmount: decimal({ precision: 15, scale: 2 }), // مبلغ التمويل (إن وُجد)
+	startDate: timestamp({ mode: 'string' }),
+	endDate: timestamp({ mode: 'string' }),
+	status: mysqlEnum(['pending', 'active', 'completed', 'cancelled']).default('pending'),
+	milestones: json(), // المعالم الرئيسية
+	outcomes: json(), // النتائج المحققة
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+// جدول Value Footprints - قياس الأثر
+export const valueFootprints = mysqlTable("value_footprints", {
+	id: int().autoincrement().notNull(),
+	period: varchar({ length: 20 }).notNull(), // YYYY-MM (شهري) أو YYYY-Q1 (ربع سنوي) أو YYYY (سنوي)
+	periodType: mysqlEnum(['monthly', 'quarterly', 'yearly']).notNull(),
+	totalIdeas: int().default(0),
+	totalStartups: int().default(0), // عدد الشركات الناشئة المؤسسة
+	totalJobs: int().default(0), // عدد الوظائف المُنشأة
+	totalRevenue: decimal({ precision: 18, scale: 2 }).default('0'), // الإيرادات المُحققة (ريال)
+	gdpContribution: decimal({ precision: 10, scale: 4 }).default('0'), // المساهمة في GDP (%)
+	globalInnovationRank: int(), // الترتيب في مؤشر الابتكار العالمي
+	innovationPathCount: int().default(0), // عدد المشاريع في مسار Innovation
+	commercialPathCount: int().default(0), // عدد المشاريع في مسار Commercial
+	guidancePathCount: int().default(0), // عدد المشاريع في مسار Guidance
+	vision2030Alignment: decimal({ precision: 5, scale: 2 }), // نسبة التوافق مع رؤية 2030 (%)
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+// TypeScript types
+export type AiEvaluation = typeof aiEvaluations.$inferSelect;
+export type InsertAiEvaluation = typeof aiEvaluations.$inferInsert;
+
+export type IdeaClassification = typeof ideaClassifications.$inferSelect;
+export type InsertIdeaClassification = typeof ideaClassifications.$inferInsert;
+
+export type StrategicPartner = typeof strategicPartners.$inferSelect;
+export type InsertStrategicPartner = typeof strategicPartners.$inferInsert;
+
+export type PartnerProject = typeof partnerProjects.$inferSelect;
+export type InsertPartnerProject = typeof partnerProjects.$inferInsert;
+
+export type ValueFootprint = typeof valueFootprints.$inferSelect;
+export type InsertValueFootprint = typeof valueFootprints.$inferInsert;
