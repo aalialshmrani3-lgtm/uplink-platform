@@ -20,7 +20,9 @@ interface AIAnalysisResultsProps {
     technicalFeasibilityScore: number;
     commercialValueScore: number;
     overallScore: number;
-    classification: "innovation" | "commercial" | "weak";
+    classification: "innovation" | "commercial" | "guidance";
+    classificationPath?: string;
+    suggestedPartner?: string;
     tags: string[];
     recommendations: string[];
     nextSteps: string;
@@ -54,16 +56,16 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
           action: "انتقل إلى شبكة المطابقة",
           actionLink: "/uplink2/matching",
         };
-      case "weak":
+      case "guidance":
         return {
-          icon: XCircle,
-          title: "فكرة ضعيفة",
-          color: "text-red-400",
-          bgColor: "bg-red-500/10",
-          borderColor: "border-red-500/30",
-          description: "راجع التوصيات للتحسين",
-          action: "راجع التوصيات",
-          actionLink: "#recommendations",
+          icon: AlertCircle,
+          title: "مسار التوجيه والإرشاد",
+          color: "text-orange-400",
+          bgColor: "bg-orange-500/10",
+          borderColor: "border-orange-500/30",
+          description: "نوصي بالحصول على توجيه ودعم إضافي",
+          action: "احصل على توجيه",
+          actionLink: "/strategic-partners",
         };
       default:
         return {
@@ -92,7 +94,12 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
           </div>
           <div className="flex-1">
             <h3 className="text-2xl font-bold text-white mb-2">{config.title}</h3>
-            <p className="text-gray-400 mb-4">{config.description}</p>
+            <p className="text-gray-400 mb-2">{config.description}</p>
+            {analysis.suggestedPartner && (
+              <p className="text-sm text-blue-300 mb-4">
+                <span className="font-semibold">الشريك المقترح:</span> {analysis.suggestedPartner}
+              </p>
+            )}
             <div className="flex items-center gap-4">
               <div>
                 <div className="text-sm text-gray-500 mb-1">التقييم الإجمالي</div>

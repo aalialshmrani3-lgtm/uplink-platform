@@ -497,6 +497,53 @@ export const appRouter = router({
             reason: "تحليل أولي بواسطة الذكاء الاصطناعي",
           });
 
+          // Save to new ai_evaluations table
+          try {
+            await db.createAIEvaluation({
+              ideaId,
+              score: analysisResult.overallScore,
+              evaluationData: JSON.stringify({
+                criterionScores: analysisResult.criterionScores,
+                strengths: analysisResult.strengths,
+                weaknesses: analysisResult.weaknesses,
+                opportunities: analysisResult.opportunities,
+                threats: analysisResult.threats,
+                recommendations: analysisResult.recommendations,
+              }),
+              evaluatedAt: new Date(),
+            });
+          } catch (err) {
+            console.error('[ERROR] Failed to save AI evaluation:', err);
+          }
+
+          // Save to new idea_classifications table
+          let classificationPath: 'innovation' | 'commercial' | 'guidance' = 'guidance';
+          let suggestedPartner = '';
+          
+          try {
+            // Determine path based on score
+            if (analysisResult.overallScore >= 70) {
+              classificationPath = 'innovation';
+              suggestedPartner = 'KAUST - جامعة الملك عبدالله للعلوم والتقنية';
+            } else if (analysisResult.overallScore >= 60) {
+              classificationPath = 'commercial';
+              suggestedPartner = 'Monsha\'at - منشآت';
+            } else {
+              classificationPath = 'guidance';
+              suggestedPartner = 'RDIA - الهيئة الملكية للبيانات والذكاء الاصطناعي';
+            }
+
+            await db.createIdeaClassification({
+              ideaId,
+              path: classificationPath,
+              score: analysisResult.overallScore,
+              reason: `تصنيف تلقائي بناءً على الدرجة: ${analysisResult.overallScore}%`,
+              classifiedAt: new Date(),
+            });
+          } catch (err) {
+            console.error('[ERROR] Failed to save idea classification:', err);
+          }
+
           // Return simplified analysis to avoid serialization issues
           console.log('[DEBUG] Analysis completed successfully');
           console.log('[DEBUG] ideaId:', ideaId);
@@ -534,7 +581,9 @@ export const appRouter = router({
             technicalNoveltyScore: getTechnicalNoveltyScore(),
             technicalFeasibilityScore: getTechnicalFeasibilityScore(),
             commercialValueScore: getCommercialValueScore(),
-            classification: analysisResult.classification || "weak",
+            classification: classificationPath,
+            classificationPath,
+            suggestedPartner,
             tags: analysisResult.extractedKeywords || [],
             recommendations: analysisResult.recommendations || [],
             nextSteps: analysisResult.nextSteps || "",
