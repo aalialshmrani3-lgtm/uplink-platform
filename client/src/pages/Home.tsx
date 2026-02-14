@@ -17,6 +17,10 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEOHead from "@/components/SEOHead";
 import ImprovedFooter from "@/components/ImprovedFooter";
+import { InnovationHubsSection } from "@/components/InnovationHubsSection";
+import { ClassificationPathsSection } from "@/components/ClassificationPathsSection";
+import { StrategicPartnersSection } from "@/components/StrategicPartnersSection";
+import { ValueFootprintsSection } from "@/components/ValueFootprintsSection";
 
 // Animated Counter Component
 function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
@@ -130,6 +134,9 @@ export default function Home() {
               <Brain className="w-4 h-4" />
               {t.nav.aiInsights}
             </Link>
+            <Link href="/classification-paths" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المسارات</Link>
+            <Link href="/strategic-partners" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الشركاء</Link>
+            <Link href="/value-footprints" className="text-muted-foreground hover:text-foreground transition-colors text-sm">قياس الأثر</Link>
             <Link href="/help" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.help}</Link>
           </div>
           
@@ -590,6 +597,18 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Innovation Hubs Section */}
+      <InnovationHubsSection />
+
+      {/* Classification Paths Section */}
+      <ClassificationPathsSection />
+
+      {/* Strategic Partners Section */}
+      <StrategicPartnersSection />
+
+      {/* Value Footprints Section */}
+      <ValueFootprintsSection />
 
       {/* Footer */}
       <ImprovedFooter />
