@@ -1700,3 +1700,32 @@ export async function getChallengeReviewsByReviewer(reviewerId: number) {
     .where(eq(challengeReviews.reviewerId, reviewerId))
     .orderBy(desc(challengeReviews.createdAt));
 }
+
+// Get user submissions with challenge details and reviews
+export async function getMySubmissionsWithDetails(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const submissions = await db.select({
+    id: challengeSubmissions.id,
+    challengeId: challengeSubmissions.challengeId,
+    title: challengeSubmissions.title,
+    description: challengeSubmissions.description,
+    status: challengeSubmissions.status,
+    score: challengeSubmissions.score,
+    reviewerComments: challengeSubmissions.reviewerComments,
+    submittedAt: challengeSubmissions.submittedAt,
+    publicVotes: challengeSubmissions.publicVotes,
+    judgeVotes: challengeSubmissions.judgeVotes,
+    challengeTitle: challenges.title,
+    challengePrize: challenges.prize,
+    challengeDeadline: challenges.deadline,
+    challengeCategory: challenges.category,
+  })
+    .from(challengeSubmissions)
+    .leftJoin(challenges, eq(challengeSubmissions.challengeId, challenges.id))
+    .where(eq(challengeSubmissions.userId, userId))
+    .orderBy(desc(challengeSubmissions.submittedAt));
+  
+  return submissions;
+}

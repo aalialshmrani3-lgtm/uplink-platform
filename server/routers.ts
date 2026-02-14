@@ -3456,6 +3456,11 @@ Provide response in JSON format:
           return db.getUserChallengeSubmissions(ctx.user.id);
         }),
 
+      getMySubmissionsWithDetails: protectedProcedure
+        .query(async ({ ctx }) => {
+          return db.getMySubmissionsWithDetails(ctx.user.id);
+        }),
+
       getSubmissionById: publicProcedure
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
