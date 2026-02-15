@@ -3678,6 +3678,26 @@ Provide response in JSON format:
           return db.getSubmissionReviews(input.submissionId);
         }),
     }),
+
+    // ========================================
+    // UPLINK 2 → UPLINK 3 (Promotion after successful match)
+    // ========================================
+    promoteToUplink3: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        matchId: z.number(),
+        agreedPrice: z.number(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { promoteProjectToUplink3 } = await import('./uplink2-to-uplink3');
+        const result = await promoteProjectToUplink3({
+          projectId: input.projectId,
+          matchId: input.matchId,
+          agreedPrice: input.agreedPrice,
+          userId: ctx.user.id,
+        });
+        return result;
+      }),
   }),
 
   // ============================================
