@@ -135,3 +135,59 @@ UPLINK 3: البورصة والاستحواذ
 ---
 
 **آخر تحديث:** جميع المراحل مكتملة - جاهز لحفظ checkpoint نهائي
+
+
+---
+
+## 🚀 **المهام الجديدة - المرحلة التالية:**
+
+### Phase 9: صفحة رحلة الفكرة (Journey Page)
+- [ ] إنشاء `/journey/:ideaId` route في App.tsx
+- [ ] إنشاء `client/src/pages/IdeaJourney.tsx` component
+- [ ] إنشاء procedure `getIdeaJourney` في routers.ts
+- [ ] عرض timeline تفاعلي كامل بجميع المراحل
+- [ ] عرض جميع الإشعارات المرتبطة بالفكرة
+- [ ] عرض الوثائق والملفات المرتبطة بكل مرحلة
+- [ ] إضافة زر "تحميل PDF" لتحميل رحلة الفكرة كاملة
+- [ ] تصميم UI احترافي مع icons و colors مميزة
+
+### Phase 10: نظام المطابقة الذكي AI في UPLINK 2
+- [ ] إنشاء `server/services/aiMatching.ts` - AI matching algorithm
+- [ ] حساب match score حقيقي (0-100%) بناءً على:
+  - [ ] Keywords similarity
+  - [ ] Category matching
+  - [ ] Description semantic analysis
+  - [ ] Industry alignment
+- [ ] إنشاء procedure `calculateMatchScore` في routers.ts
+- [ ] تحديث `suggested_matches` table لإضافة `match_score`
+- [ ] إنشاء procedure `getSmartMatches` - يعرض أفضل المطابقات
+- [ ] إضافة إشعارات تلقائية عند match score ≥80%
+- [ ] تحديث Frontend لعرض match score مع progress bar
+
+### Phase 11: لوحة تحكم الشركاء الاستراتيجيين
+- [ ] إنشاء `/partners/dashboard` route
+- [ ] إنشاء `client/src/pages/PartnerDashboard.tsx`
+- [ ] إضافة `partner_type` enum في users table:
+  - [ ] 'kaust' (KAUST)
+  - [ ] 'monshaat' (Monsha'at)
+  - [ ] 'rdia' (RDIA)
+- [ ] إنشاء procedure `getPartnerIdeas` - يعرض الأفكار المُوجّهة للشريك
+- [ ] إنشاء procedure `reviewIdea` - قبول/رفض الفكرة
+- [ ] إنشاء procedure `sendFeedback` - إرسال feedback للمبتكر
+- [ ] إنشاء `partner_reviews` table:
+  - [ ] id, idea_id, partner_id, status ('accepted', 'rejected', 'pending')
+  - [ ] feedback (text), reviewed_at (timestamp)
+- [ ] تصميم UI للوحة التحكم مع filters و search
+- [ ] إضافة إشعارات للمبتكرين عند قبول/رفض الفكرة
+
+### Phase 12: الاختبار الشامل وحفظ checkpoint نهائي
+- [ ] اختبار صفحة رحلة الفكرة
+- [ ] اختبار نظام المطابقة الذكي
+- [ ] اختبار لوحة تحكم الشركاء
+- [ ] إنشاء unit tests لجميع الميزات الجديدة
+- [ ] حفظ checkpoint نهائي
+- [ ] تسليم المشروع للمستخدم
+
+---
+
+**آخر تحديث:** جاري العمل على المهام الجديدة

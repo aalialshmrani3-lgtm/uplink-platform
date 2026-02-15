@@ -900,6 +900,103 @@ export const appRouter = router({
 
         return { success: true };
       }),
+
+    // Get idea journey (timeline)
+    getIdeaJourney: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const idea = await db.getIdeaById(input.ideaId);
+        if (!idea) throw new Error("الفكرة غير موجودة");
+        
+        // جمع جميع البيانات المرتبطة
+        const analysis = await db.getIdeaAnalysisByIdeaId(input.ideaId);
+        const classification = await db.getIdeaClassificationByIdeaId(input.ideaId);
+        
+        // بناء timeline
+        const timeline: Array<{
+          id: number;
+          stage: string;
+          title: string;
+          description: string;
+          status: 'completed' | 'current' | 'pending';
+          timestamp?: Date;
+          data?: any;
+        }> = [];
+
+        // UPLINK 1: تقديم الفكرة
+        timeline.push({
+          id: 1,
+          stage: 'uplink1',
+          title: 'تقديم الفكرة',
+          description: 'تم تقديم الفكرة بنجاح',
+          status: 'completed',
+          timestamp: idea.createdAt,
+          data: { title: idea.title, category: idea.category },
+        });
+
+        // UPLINK 1: التقييم بالذكاء الاصطناعي
+        if (analysis) {
+          timeline.push({
+            id: 2,
+            stage: 'uplink1',
+            title: 'التقييم بالذكاء الاصطناعي',
+            description: 'تم تحليل الفكرة بنجاح',
+            status: 'completed',
+            timestamp: analysis.createdAt,
+            data: { 
+              overallScore: analysis.overallScore,
+              classification: classification?.classificationPath,
+              suggestedPartner: classification?.suggestedPartner,
+            },
+          });
+        }
+
+        // UPLINK 1: اختيار المستخدم
+        if (idea.userChoice) {
+          timeline.push({
+            id: 3,
+            stage: 'uplink1',
+            title: 'اختيار المسار',
+            description: idea.userChoice === 'uplink2' 
+              ? 'تم الانتقال إلى UPLINK 2 للبحث عن فرص'
+              : 'تم الانتقال مباشرة إلى UPLINK 3 للبيع',
+            status: 'completed',
+            data: { choice: idea.userChoice },
+          });
+        }
+
+        // UPLINK 2: المطابقة
+        if (idea.uplink2ProjectId) {
+          const project = await db.getProjectById(idea.uplink2ProjectId);
+          timeline.push({
+            id: 4,
+            stage: 'uplink2',
+            title: 'UPLINK 2: المطابقة والتوافق',
+            description: 'تم إنشاء مشروع في UPLINK 2',
+            status: project?.status === 'active' ? 'current' : 'completed',
+            data: { projectId: idea.uplink2ProjectId, projectStatus: project?.status },
+          });
+        }
+
+        // UPLINK 3: البورصة
+        if (idea.uplink3AssetId) {
+          timeline.push({
+            id: 5,
+            stage: 'uplink3',
+            title: 'UPLINK 3: البورصة والاستحواذ',
+            description: 'تم إضافة الفكرة للبيع في البورصة',
+            status: 'current',
+            data: { assetId: idea.uplink3AssetId },
+          });
+        }
+
+        return {
+          idea,
+          analysis,
+          classification,
+          timeline,
+        };
+      }),
   }),
 
   // ============================================
@@ -3698,6 +3795,73 @@ Provide response in JSON format:
         });
         return result;
       }),
+
+    // AI Matching System
+    calculateMatches: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        limit: z.number().optional().default(10),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { calculateMatchScore } = await import('./services/aiMatching');
+        
+        // جلب المشروع
+        const project = await db.getProjectById(input.projectId);
+        if (!project) throw new Error("المشروع غير موجود");
+
+        // جلب جميع التحديات النشطة
+        const challenges = await db.getActiveChallenges();
+        
+        // حساب match score لكل تحدي
+        const matches = await Promise.all(
+          challenges.map(async (challenge) => {
+            try {
+              const matchResult = await calculateMatchScore({
+                ideaTitle: project.title,
+                ideaDescription: project.description || '',
+                ideaCategory: project.category || '',
+                ideaKeywords: project.keywords ? JSON.parse(project.keywords as string) : [],
+                opportunityTitle: challenge.title,
+                opportunityDescription: challenge.description,
+                opportunityCategory: challenge.category || '',
+                opportunityIndustry: challenge.industry || '',
+              });
+
+              return {
+                challengeId: challenge.id,
+                challenge,
+                ...matchResult,
+              };
+            } catch (error) {
+              console.error(`Error calculating match for challenge ${challenge.id}:`, error);
+              return null;
+            }
+          })
+        );
+
+        // ترتيب حسب match score وأخذ أفضل N
+        const validMatches = matches
+          .filter((m): m is NonNullable<typeof m> => m !== null)
+          .sort((a, b) => b.matchScore - a.matchScore)
+          .slice(0, input.limit);
+
+        // حفظ المطابقات في suggested_matches
+        for (const match of validMatches) {
+          await db.createSuggestedMatch({
+            projectId: input.projectId,
+            challengeId: match.challengeId,
+            matchScore: match.matchScore.toString(),
+            reasoning: match.reasoning,
+            status: 'pending',
+          });
+        }
+
+        return {
+          projectId: input.projectId,
+          totalMatches: validMatches.length,
+          matches: validMatches,
+        };
+      }),
   }),
 
   // ============================================
@@ -4305,8 +4469,68 @@ Provide response in JSON format:
           input.periodType
         );
         return { footprintId };
+       }),
+  }),
+
+  // ============================================
+  // STRATEGIC PARTNERS
+  // ============================================
+  partners: router({
+    // جلب الأفكار المُوجّهة للشريك الاستراتيجي
+    getAssignedIdeas: protectedProcedure
+      .query(async ({ ctx }) => {
+        // تحديد نوع الشريك حسب المستخدم
+        // TODO: إضافة partner_type في users table
+        const partnerType = 'kaust'; // مؤقتاً
+        
+        // جلب الأفكار المُوجّهة لهذا الشريك
+        const ideas = await db.getIdeasByPartner(partnerType);
+        return ideas;
+      }),
+
+    // قبول فكرة
+    acceptIdea: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        await db.updateIdea(input.ideaId, { partnerStatus: 'accepted' });
+        
+        // TODO: إرسال إشعار للمبتكر
+        
+        return { success: true };
+      }),
+
+    // رفض فكرة
+    rejectIdea: protectedProcedure
+      .input(z.object({ 
+        ideaId: z.number(),
+        feedback: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.updateIdea(input.ideaId, { 
+          partnerStatus: 'rejected',
+          partnerFeedback: input.feedback,
+        });
+        
+        // TODO: إرسال إشعار للمبتكر مع feedback
+        
+        return { success: true };
+      }),
+
+    // إرسال feedback
+    sendFeedback: protectedProcedure
+      .input(z.object({ 
+        ideaId: z.number(),
+        feedback: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        await db.updateIdea(input.ideaId, { 
+          partnerFeedback: input.feedback,
+        });
+        
+        // TODO: إرسال إشعار للمبتكر
+        
+        return { success: true };
       }),
   }),
 });
-
 export type AppRouter = typeof appRouter;
