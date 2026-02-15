@@ -23,16 +23,14 @@ export async function getAllEvents(filters?: {
   const conditions = [];
   
   if (filters?.type) {
-    conditions.push(eq(events.type, filters.type));
+    conditions.push(eq(events.eventType, filters.type));
   }
   
   if (filters?.status) {
     conditions.push(eq(events.status, filters.status));
   }
   
-  if (filters?.isVirtual !== undefined) {
-    conditions.push(eq(events.isVirtual, filters.isVirtual));
-  }
+  // isVirtual filter removed - use deliveryMode instead
 
   let query;
   if (conditions.length > 0) {
@@ -100,19 +98,16 @@ export async function createEvent(data: {
   if (!db) throw new Error('Database not available');
 
   const [event] = await db.insert(events).values({
-    userId: data.userId,
+    organizerId: data.userId,
     title: data.title,
     description: data.description,
-    type: data.type,
+    eventType: data.type,
+    deliveryMode: data.isVirtual ? 'online' : 'in_person',
     location: data.location,
-    isVirtual: data.isVirtual || false,
-    startDate: data.startDate,
-    endDate: data.endDate,
+    startDate: data.startDate.toISOString(),
+    endDate: data.endDate.toISOString(),
     capacity: data.capacity,
-    budget: data.budget,
-    needSponsors: data.needSponsors || false,
-    needInnovators: data.needInnovators || false,
-    sponsorshipTiers: data.sponsorshipTiers,
+    sponsorPackages: data.sponsorshipTiers ? JSON.stringify(data.sponsorshipTiers) : undefined,
     status: "draft",
   });
 
@@ -183,20 +178,12 @@ export async function registerForEvent(data: {
   const [registration] = await db.insert(eventRegistrations).values({
     eventId: data.eventId,
     userId: data.userId,
-    attendeeType: data.attendeeType,
-    additionalInfo: data.additionalInfo,
-    sponsorshipTier: data.sponsorshipTier,
-    sponsorshipAmount: data.sponsorshipAmount,
+    registrationType: data.attendeeType === 'innovator' || data.attendeeType === 'investor' ? 'attendee' : data.attendeeType,
+    specialRequirements: data.additionalInfo,
     status: "pending",
   });
 
-  // Update registrations count
-  await db
-    .update(events)
-    .set({
-      registrations: (event.registrations || 0) + 1,
-    })
-    .where(eq(events.id, data.eventId));
+  // Note: registrations count is tracked separately in eventRegistrations table
 
   return registration;
 }

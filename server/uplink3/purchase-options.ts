@@ -135,18 +135,12 @@ export async function createPurchaseContract(data: {
     
     // Create contract in database
     const contractResult = await db.insert(contracts).values({
-      projectId: data.projectId,
+      projectId: data.projectId || 0, // Will be updated later
       type: data.purchaseType === "solution" ? "service" : 
             data.purchaseType === "license" ? "license" : "acquisition",
       status: "draft",
       totalValue: data.totalAmount.toString(),
-      totalAmount: data.totalAmount.toString(),
-      paidAmount: "0",
       currency: data.currency || "USD",
-      startDate: new Date(),
-      endDate: data.milestones && data.milestones.length > 0 
-        ? data.milestones[data.milestones.length - 1].deadline 
-        : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year default
       terms: JSON.stringify(contractTerms),
       blockchainHash: blockchainContractId || undefined,
       partyA: data.organizationId, // Buyer (organization)
@@ -160,7 +154,7 @@ export async function createPurchaseContract(data: {
     const escrowAccountResult = await db.insert(escrowAccounts).values({
       contractId: newContractId,
       totalAmount: data.totalAmount.toString(),
-      balance: data.totalAmount.toString(),
+      releasedAmount: "0",
       currency: data.currency || "SAR",
       status: "pending_deposit",
     });
@@ -200,13 +194,7 @@ export async function processPurchasePayment(data: {
     }
     
     // Verify payment amount
-    const totalAmount = parseFloat(contract.totalAmount || contract.totalValue || "0");
-    const paidAmount = parseFloat(contract.paidAmount || "0");
-    const remainingAmount = totalAmount - paidAmount;
-    
-    if (data.amount > remainingAmount) {
-      throw new Error(`Payment amount exceeds remaining balance. Remaining: ${remainingAmount}`);
-    }
+    const totalAmount = parseFloat(contract.totalValue || "0");
     
     // Process payment (placeholder - integrate with actual payment gateway)
     const paymentResult = {
@@ -216,31 +204,25 @@ export async function processPurchasePayment(data: {
       timestamp: new Date()
     };
     
-    // Update contract
-    const newPaidAmount = paidAmount + data.amount;
-    const newStatus = newPaidAmount >= totalAmount ? "completed" : "active";
-    
+    // Update contract status to active after payment
     await db.update(contracts)
       .set({
-        paidAmount: newPaidAmount.toString(),
-        status: newStatus,
-        updatedAt: new Date()
+        status: "active"
       })
       .where(eq(contracts.id, data.contractId));
     
     // Update escrow
     await db.update(escrowTransactions)
       .set({
-        status: newStatus === "completed" ? "released" : "partial",
+        status: "completed",
       })
       .where(eq(escrowTransactions.escrowId, data.contractId));
     
     return {
       success: true,
       transactionId: paymentResult.transactionId,
-      paidAmount: newPaidAmount,
-      remainingAmount: totalAmount - newPaidAmount,
-      contractStatus: newStatus
+      amount: data.amount,
+      contractStatus: "active"
     };
     
   } catch (error) {

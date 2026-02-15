@@ -14,15 +14,13 @@ export async function getAllHackathons(filters?: {
   const db = await getDb();
   if (!db) throw new Error('Database not available');
   
-  const conditions = [eq(events.type, "hackathon")];
+  const conditions = [eq(events.eventType, "hackathon")];
   
   if (filters?.status) {
     conditions.push(eq(events.status, filters.status));
   }
   
-  if (filters?.isVirtual !== undefined) {
-    conditions.push(eq(events.isVirtual, filters.isVirtual));
-  }
+  // isVirtual filter removed - use deliveryMode instead
 
   const hackathons = await db
     .select()
@@ -45,7 +43,7 @@ export async function getHackathonById(id: number) {
     .from(events)
     .where(and(
       eq(events.id, id),
-      eq(events.type, "hackathon")
+      eq(events.eventType, "hackathon")
     ))
     .limit(1);
 
@@ -90,19 +88,16 @@ export async function createHackathon(data: {
   if (!db) throw new Error('Database not available');
 
   const [hackathon] = await db.insert(events).values({
-    userId: data.userId,
+    organizerId: data.userId,
     title: data.title,
     description: data.description,
-    type: "hackathon",
+    eventType: "hackathon",
+    deliveryMode: data.isVirtual ? 'online' : 'in_person',
     location: data.location,
-    isVirtual: data.isVirtual || false,
-    startDate: data.startDate,
-    endDate: data.endDate,
+    startDate: typeof data.startDate === 'string' ? data.startDate : data.startDate.toISOString(),
+    endDate: typeof data.endDate === 'string' ? data.endDate : data.endDate.toISOString(),
     capacity: data.capacity,
-    budget: data.budget,
-    needSponsors: data.needSponsors || false,
-    needInnovators: data.needInnovators || false,
-    sponsorshipTiers: data.sponsorshipTiers,
+    sponsorPackages: data.sponsorshipTiers ? JSON.stringify(data.sponsorshipTiers) : undefined,
     status: "draft",
   });
 
@@ -129,7 +124,7 @@ export async function registerForHackathon(data: {
     .from(events)
     .where(and(
       eq(events.id, data.eventId),
-      eq(events.type, "hackathon")
+      eq(events.eventType, "hackathon")
     ))
     .limit(1);
 
@@ -173,24 +168,18 @@ export async function registerForHackathon(data: {
   }
 
   // Create registration
+  // Create registration
   const [registration] = await db.insert(eventRegistrations).values({
-    eventId: data.eventId,
-    userId: data.userId,
-    attendeeType: data.attendeeType,
-    additionalInfo: data.additionalInfo,
-    sponsorshipTier: data.sponsorshipTier,
-    sponsorshipAmount: data.sponsorshipAmount,
+    eventId: data.eventId, // Will be mapped to event_id by Drizzle
+    userId: data.userId, // Will be mapped to user_id by Drizzle
+    registrationType: data.attendeeType === 'innovator' || data.attendeeType === 'investor' ? 'attendee' : data.attendeeType,
+    specialRequirements: data.additionalInfo,
     status: "pending",
   });
 
-  // Update registrations count
-  await db
-    .update(events)
-    .set({
-      registrations: (hackathon.registrations || 0) + 1,
-    })
-    .where(eq(events.id, data.eventId));
-
+  // Note: registrations count is tracked separately in eventRegistrations table
+  // No need to update events table
+  
   return registration;
 }
 
@@ -206,7 +195,7 @@ export async function updateHackathonStatus(id: number, status: "draft" | "publi
     .set({ status })
     .where(and(
       eq(events.id, id),
-      eq(events.type, "hackathon")
+      eq(events.eventType, "hackathon")
     ));
 
   return { success: true };

@@ -84,7 +84,7 @@ export default function Uplink2AdminChallenges() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {challenges?.reduce((sum, c) => sum + (c.participantsCount || 0), 0) || 0}
+                {challenges?.reduce((sum, c) => sum + (c.participants || 0), 0) || 0}
               </div>
             </CardContent>
           </Card>
@@ -135,7 +135,7 @@ export default function Uplink2AdminChallenges() {
                       <div className="flex gap-6 text-sm text-gray-400">
                         <div className="flex items-center gap-2">
                           <Users className="h-4 w-4" />
-                          <span>{challenge.participantsCount || 0} مشارك</span>
+                          <span>{challenge.participants || 0} مشارك</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <FileText className="h-4 w-4" />
@@ -177,7 +177,7 @@ export default function Uplink2AdminChallenges() {
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div className="flex gap-4 text-sm text-gray-400">
-                        <span>{challenge.participantsCount || 0} مشارك</span>
+                        <span>{challenge.participants || 0} مشارك</span>
                         <span>0 حل</span>
                       </div>
                       <Link href={`/admin/challenges/${challenge.id}/submissions`}>
@@ -201,7 +201,7 @@ export default function Uplink2AdminChallenges() {
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div className="flex gap-4 text-sm text-gray-400">
-                        <span>{challenge.participantsCount || 0} مشارك</span>
+                        <span>{challenge.participants || 0} مشارك</span>
                         <span>0 حل</span>
                       </div>
                       <Link href={`/admin/challenges/${challenge.id}/submissions`}>

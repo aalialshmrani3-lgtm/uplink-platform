@@ -109,7 +109,7 @@ export default function Uplink2ChallengeDetails() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-green-500" />
-                  <span>{challenge.participantsCount || 0} مشارك</span>
+                  <span>{challenge.participants || 0} مشارك</span>
                 </div>
               </div>
             </div>
@@ -270,7 +270,7 @@ export default function Uplink2ChallengeDetails() {
                   <p className="text-sm text-muted-foreground mb-1">المشاركون</p>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    <span className="font-medium">{challenge.participantsCount || 0} مشارك</span>
+                    <span className="font-medium">{challenge.participants || 0} مشارك</span>
                   </div>
                 </div>
               </CardContent>

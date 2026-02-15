@@ -38,24 +38,22 @@ export async function depositToEscrow(data: DepositInput, userId: number) {
     amount: data.amount,
     type: 'deposit',
     status: 'pending',
-    paymentMethod: data.paymentMethod,
-    transactionReference: data.transactionReference,
-    createdAt: new Date(),
+    description: `Deposit via ${data.paymentMethod} - Ref: ${data.transactionReference || 'N/A'}`,
   });
 
   // Update escrow balance
-  const currentBalance = parseFloat(escrow.balance || '0');
-  const newBalance = currentBalance + parseFloat(data.amount);
+  const currentBalance = parseFloat(escrow.releasedAmount || '0');
+  const pendingAmount = parseFloat(escrow.totalAmount) - currentBalance;
 
   await db.updateEscrow(escrow.id, {
-    balance: newBalance.toString(),
-    status: newBalance >= parseFloat(escrow.totalAmount) ? 'funded' : 'pending_deposit',
+    pendingAmount: (pendingAmount - parseFloat(data.amount)).toString(),
+    status: (pendingAmount - parseFloat(data.amount)) <= 0 ? 'funded' : 'pending_deposit',
   });
 
   return {
     success: true,
     transactionId,
-    newBalance: newBalance.toString(),
+    pendingAmount: (pendingAmount - parseFloat(data.amount)).toString(),
   };
 }
 
@@ -130,10 +128,12 @@ export async function approveRelease(requestId: number, userId: number) {
   }
 
   // Check if sufficient balance
-  const balance = parseFloat(escrow.balance || '0');
+  const totalAmount = parseFloat(escrow.totalAmount || '0');
+  const releasedAmount = parseFloat(escrow.releasedAmount || '0');
+  const availableBalance = totalAmount - releasedAmount;
   const releaseAmount = parseFloat(request.amount);
 
-  if (balance < releaseAmount) {
+  if (availableBalance < releaseAmount) {
     throw new Error('Insufficient escrow balance');
   }
 
@@ -149,17 +149,14 @@ export async function approveRelease(requestId: number, userId: number) {
     amount: request.amount,
     type: 'release',
     status: 'completed',
-    createdAt: new Date(),
   });
 
   // Update escrow balance
-  const newBalance = balance - releaseAmount;
-  const releasedAmount = parseFloat(escrow.releasedAmount || '0') + releaseAmount;
+  const newReleasedAmount = releasedAmount + releaseAmount;
 
   await db.updateEscrow(escrow.id, {
-    balance: newBalance.toString(),
-    releasedAmount: releasedAmount.toString(),
-    status: releasedAmount >= parseFloat(escrow.totalAmount) ? 'fully_released' : 'partially_released',
+    releasedAmount: newReleasedAmount.toString(),
+    status: newReleasedAmount >= parseFloat(escrow.totalAmount) ? 'fully_released' : 'partially_released',
   });
 
   // Update milestone status
@@ -256,7 +253,9 @@ export async function getEscrowStats(userId: number) {
 
   const totalEscrow = escrows.reduce((sum, escrow) => {
     if (!escrow) return sum;
-    return sum + parseFloat(escrow.balance || '0');
+    const total = parseFloat(escrow.totalAmount || '0');
+    const released = parseFloat(escrow.releasedAmount || '0');
+    return sum + (total - released);
   }, 0);
 
   const totalReleased = escrows.reduce((sum, escrow) => {

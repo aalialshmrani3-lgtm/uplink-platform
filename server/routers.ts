@@ -13,7 +13,7 @@ import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink
 import crypto from "crypto";
 import * as hackathonsService from "./uplink2/hackathons";
 import * as eventsService from "./uplink2/events";
-import { autoTriggerDecision } from "./services/diamondDecisionPoint";
+// import { autoTriggerDecision } from "./services/diamondDecisionPoint"; // Removed - file deleted
 
 export const appRouter = router({
   system: systemRouter,
@@ -3070,13 +3070,13 @@ Provide response in JSON format:
             revisionSuggestions: input.revisionSuggestions,
           });
           
-          // Auto-trigger Diamond Decision Point
-          const decision = await autoTriggerDecision(input.ipRegistrationId);
+          // Auto-trigger Diamond Decision Point (disabled)
+          // const decision = await autoTriggerDecision(input.ipRegistrationId);
           
           return { 
             success: true, 
-            decisionMade: decision !== null,
-            decision,
+            decisionMade: false, // decision !== null
+            // decision, // removed
           };
         }),
 

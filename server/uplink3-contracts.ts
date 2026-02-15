@@ -33,11 +33,10 @@ export async function createContract(data: ContractInput, partyAId: number) {
     partyA: partyAId,
     partyB: data.partyB,
     totalValue: data.totalAmount,
-    totalAmount: data.totalAmount,
     currency: data.currency,
     milestones: data.milestones ? JSON.stringify(data.milestones) : undefined,
-    startDate: data.startDate ? new Date(data.startDate) : undefined,
-    endDate: data.endDate ? new Date(data.endDate) : undefined,
+    startDate: data.startDate || undefined,
+    endDate: data.endDate || undefined,
     terms: data.terms,
     status: 'draft',
   });
@@ -83,7 +82,7 @@ export async function signContract(contractId: number, userId: number, signature
   // Create escrow account
   await db.createEscrowAccount({
     contractId,
-    totalAmount: contract.totalAmount || "0",
+    totalAmount: contract.totalValue || "0",
     currency: contract.currency,
     status: 'pending_deposit',
   });
@@ -158,7 +157,6 @@ async function releaseMilestoneFunds(escrowId: number, amount: string) {
     amount,
     type: 'release',
     status: 'completed',
-    createdAt: new Date(),
   });
 
   return { success: true };

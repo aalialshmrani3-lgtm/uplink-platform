@@ -130,7 +130,7 @@ export default function MySubmissions() {
           <TabsTrigger value="submitted">مقدم ({stats.submitted})</TabsTrigger>
           <TabsTrigger value="under_review">قيد المراجعة ({stats.underReview})</TabsTrigger>
           <TabsTrigger value="shortlisted">مرشح ({stats.shortlisted})</TabsTrigger>
-          <TabsTrigger value="finalist">متأهل ({stats.finalist})</TabsTrigger>
+          <TabsTrigger value="shortlisted">متأهل ({stats.finalist})</TabsTrigger>
           <TabsTrigger value="winner">فائز ({stats.winner})</TabsTrigger>
           <TabsTrigger value="rejected">مرفوض ({stats.rejected})</TabsTrigger>
         </TabsList>

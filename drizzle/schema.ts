@@ -631,6 +631,7 @@ export const ideas = mysqlTable("ideas", {
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 	challengeId: int(),
+	uplink2ProjectId: int("uplink2_project_id"),
 });
 
 export const innovationHubs = mysqlTable("innovation_hubs", {
@@ -1547,3 +1548,100 @@ export type InsertPartnerProject = typeof partnerProjects.$inferInsert;
 
 export type ValueFootprint = typeof valueFootprints.$inferSelect;
 export type InsertValueFootprint = typeof valueFootprints.$inferInsert;
+
+// Additional TypeScript types for all tables
+export type InsertUser = typeof users.$inferInsert;
+
+export type Project = typeof projects.$inferSelect;
+export type InsertProject = typeof projects.$inferInsert;
+
+export type IPRegistration = typeof ipRegistrations.$inferSelect;
+export type InsertIPRegistration = typeof ipRegistrations.$inferInsert;
+
+export type Evaluation = typeof evaluations.$inferSelect;
+export type InsertEvaluation = typeof evaluations.$inferInsert;
+
+export type Contract = typeof contracts.$inferSelect;
+export type InsertContract = typeof contracts.$inferInsert;
+
+export type EscrowAccount = typeof escrowAccounts.$inferSelect;
+export type InsertEscrowAccount = typeof escrowAccounts.$inferInsert;
+
+export type InsertEscrowTransaction = typeof escrowTransactions.$inferInsert;
+
+export type Course = typeof courses.$inferSelect;
+export type InsertCourse = typeof courses.$inferInsert;
+
+export type Enrollment = typeof enrollments.$inferSelect;
+export type InsertEnrollment = typeof enrollments.$inferInsert;
+
+export type EliteMembership = typeof eliteMemberships.$inferSelect;
+export type InsertEliteMembership = typeof eliteMemberships.$inferInsert;
+
+export type ApiKey = typeof apiKeys.$inferSelect;
+export type InsertApiKey = typeof apiKeys.$inferInsert;
+
+export type InsertApiUsage = typeof apiUsage.$inferInsert;
+
+export type Challenge = typeof challenges.$inferSelect;
+export type InsertChallenge = typeof challenges.$inferInsert;
+
+export type Ambassador = typeof ambassadors.$inferSelect;
+export type InsertAmbassador = typeof ambassadors.$inferInsert;
+
+export type InnovationHub = typeof innovationHubs.$inferSelect;
+export type InsertInnovationHub = typeof innovationHubs.$inferInsert;
+
+export type Notification = typeof notifications.$inferSelect;
+export type InsertNotification = typeof notifications.$inferInsert;
+
+export type InsertAnalytics = typeof analytics.$inferInsert;
+
+export type PipelineInitiative = typeof pipelineInitiatives.$inferSelect;
+export type InsertPipelineInitiative = typeof pipelineInitiatives.$inferInsert;
+
+export type PipelineChallenge = typeof pipelineChallenges.$inferSelect;
+export type InsertPipelineChallenge = typeof pipelineChallenges.$inferInsert;
+
+export type PipelineIdea = typeof pipelineIdeas.$inferSelect;
+export type InsertPipelineIdea = typeof pipelineIdeas.$inferInsert;
+
+export type PipelineCluster = typeof pipelineClusters.$inferSelect;
+export type InsertPipelineCluster = typeof pipelineClusters.$inferInsert;
+
+export type PipelineHypothesis = typeof pipelineHypotheses.$inferSelect;
+export type InsertPipelineHypothesis = typeof pipelineHypotheses.$inferInsert;
+
+export type PipelineExperiment = typeof pipelineExperiments.$inferSelect;
+export type InsertPipelineExperiment = typeof pipelineExperiments.$inferInsert;
+
+export type InsertPipelineVote = typeof pipelineVotes.$inferInsert;
+
+export type PipelineTrend = typeof pipelineTrends.$inferSelect;
+export type InsertPipelineTrend = typeof pipelineTrends.$inferInsert;
+
+export type InsertPipelineGamification = typeof pipelineGamification.$inferInsert;
+
+export type StrategicAnalysis = typeof strategicAnalyses.$inferSelect;
+export type InsertStrategicAnalysis = typeof strategicAnalyses.$inferInsert;
+
+export type UserFeedback = typeof userFeedback.$inferSelect;
+export type InsertUserFeedback = typeof userFeedback.$inferInsert;
+
+export type WhatIfScenario = typeof whatifScenarios.$inferSelect;
+export type InsertWhatIfScenario = typeof whatifScenarios.$inferInsert;
+
+export type PredictionAccuracy = typeof predictionAccuracy.$inferSelect;
+export type InsertPredictionAccuracy = typeof predictionAccuracy.$inferInsert;
+
+export type ChallengeRegistration = typeof challengeRegistrations.$inferSelect;
+export type InsertChallengeRegistration = typeof challengeRegistrations.$inferInsert;
+
+export type ChallengeSubmission = typeof challengeSubmissions.$inferSelect;
+export type InsertChallengeSubmission = typeof challengeSubmissions.$inferInsert;
+
+export type ChallengeVote = typeof challengeVotes.$inferSelect;
+export type InsertChallengeVote = typeof challengeVotes.$inferInsert;
+
+export type ChallengeReview = typeof challengeReviews.$inferSelect;
+export type InsertChallengeReview = typeof challengeReviews.$inferInsert;
