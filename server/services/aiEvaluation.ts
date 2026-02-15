@@ -189,12 +189,12 @@ export async function evaluateIdea(ideaId: number): Promise<{
   // حفظ التقييم في قاعدة البيانات
   const aiEvaluationData: InsertAiEvaluation = {
     ideaId,
-    overallScore: Number(overallScore.toFixed(2)),
-    innovationScore: Number(evaluation.innovationScore.toFixed(2)),
-    feasibilityScore: Number(evaluation.feasibilityScore.toFixed(2)),
-    impactScore: Number(evaluation.impactScore.toFixed(2)),
-    teamScore: Number(evaluation.teamScore.toFixed(2)),
-    marketScore: Number(evaluation.marketScore.toFixed(2)),
+    overallScore: overallScore.toFixed(2),
+    innovationScore: evaluation.innovationScore.toFixed(2),
+    feasibilityScore: evaluation.feasibilityScore.toFixed(2),
+    impactScore: evaluation.impactScore.toFixed(2),
+    teamScore: evaluation.teamScore.toFixed(2),
+    marketScore: evaluation.marketScore.toFixed(2),
     criteriaScores: {
       innovation: evaluation.innovationScore,
       feasibility: evaluation.feasibilityScore,
@@ -217,7 +217,7 @@ export async function evaluateIdea(ideaId: number): Promise<{
     ideaId,
     evaluationId,
     classificationPath,
-    score: Number(overallScore.toFixed(2)),
+    score: overallScore.toFixed(2),
     reason,
     nextSteps: evaluation.recommendations,
     status: 'pending',

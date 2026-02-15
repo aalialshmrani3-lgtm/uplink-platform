@@ -1,239 +1,105 @@
-# UPLINK 5.0 - الرحلة الكاملة (Full Journey) ✅ مكتمل!
+# UPLINK Platform - المهام الفعلية
 
-**المهمة:** تنفيذ الرحلة الكاملة من التسجيل → UPLINK 1 → UPLINK 2 → UPLINK 3
+## ❌ المهام غير المكتملة (يجب تنفيذها):
 
----
+### Phase 1: ربط UserChoiceDialog بـ procedures الانتقال
+- [ ] تحديث UserChoiceDialog.tsx لاستدعاء promoteToUplink2 عند اختيار UPLINK 2
+- [ ] تحديث UserChoiceDialog.tsx لاستدعاء promoteToUplink3Direct عند اختيار UPLINK 3
+- [ ] إضافة error handling في UserChoiceDialog
+- [ ] إضافة loading states في UserChoiceDialog
 
-## 🎯 **نظرة عامة على الرحلة:**
+### Phase 2: إضافة زر الانتقال من UPLINK 2 إلى UPLINK 3
+- [ ] إنشاء صفحة UPLINK 2 Projects (/uplink2/projects)
+- [ ] عرض جميع المشاريع المنتقلة من UPLINK 1
+- [ ] إضافة زر "الانتقال إلى UPLINK 3" في كل project
+- [ ] ربط الزر بـ promoteToUplink3 procedure
 
-```
-التسجيل (6 أنواع)
-    ↓
-UPLINK 1: قدّم ابتكارك + تقييم AI
-    ↓
-    ├─→ <60% → ترجع للمقدم (Guidance)
-    │
-    └─→ ≥60% → خيار المستخدم:
-            ├─→ UPLINK 2 (البحث عن فرص)
-            └─→ UPLINK 3 (البيع مباشرة)
-    ↓
-UPLINK 2: المطابقة والتوافق
-    ↓
-    عند نجاح الاتفاق
-    ↓
-UPLINK 3: البورصة والاستحواذ
-```
+### Phase 3: اختبار التدفق الكامل
+- [ ] اختبار: تقديم فكرة → AI evaluation
+- [ ] اختبار: الحصول على ≥60% → ظهور UserChoiceDialog
+- [ ] اختبار: اختيار UPLINK 2 → إنشاء project
+- [ ] اختبار: اختيار UPLINK 3 → إنشاء asset
+- [ ] اختبار: الانتقال من UPLINK 2 إلى UPLINK 3
 
----
+### Phase 4: إصلاح أخطاء TypeScript
+- [ ] إصلاح 270 خطأ TypeScript
+- [ ] التأكد من build بدون أخطاء
 
-## ✅ Phase 1: تحديث todo.md بالخطة الكاملة
-- [x] إنشاء todo.md جديد مع الخطة الكاملة ✅
-
----
-
-## ✅ Phase 2: UPLINK 1 - إضافة خيار المستخدم بعد التقييم
-
-### Backend Tasks:
-- [x] تحديث schema: إضافة `user_choice` و `uplink3AssetId` في ideas table ✅
-- [x] تطبيق db:push ✅
-- [x] إنشاء procedure `setUserChoice` في routers.ts ✅
-- [x] تحديث submitIdea procedure لتحديث status حسب الدرجة ✅
-
-### Frontend Tasks:
-- [x] إنشاء UserChoiceDialog component ✅
-- [x] تحديث AIAnalysisResults.tsx لإظهار dialog عند ≥60% ✅
-- [x] إضافة أزرار الاختيار مع icons ✅
-- [x] استدعاء setUserChoice عند الاختيار ✅
-
----
-
-## ✅ Phase 3: UPLINK 1 → UPLINK 2 (الانتقال التلقائي)
-
-### Backend Tasks:
-- [x] إنشاء server/uplink1-to-uplink2.ts ✅
-- [x] إضافة promoteToUplink2() function ✅
-- [x] إضافة uplink2ProjectId في ideas table ✅
-- [x] البحث عن التحديات المناسبة ✅
-- [x] إنشاء إشعارات تلقائية ✅
-
-### Frontend Tasks:
-- [x] إنشاء ProgressTracker component ✅
-- [x] ربط UserChoiceDialog مع promoteToUplink2 ✅
-
----
-
-## ✅ Phase 4: UPLINK 1 → UPLINK 3 (الانتقال المباشر)
-
-### Backend Tasks:
-- [x] إنشاء server/uplink1-to-uplink3.ts ✅
-- [x] إضافة promoteDirectToUplink3() function ✅
-- [x] إنشاء asset في marketplace_assets ✅
-- [x] إضافة uplink3AssetId في ideas table ✅
-- [x] حساب السعر بناءً على الدرجة ✅
-
----
-
-## ✅ Phase 5: UPLINK 2 → UPLINK 3 (الانتقال بعد الاتفاق)
-
-### Backend Tasks:
-- [x] إنشاء server/uplink2-to-uplink3.ts ✅
-- [x] إضافة promoteProjectToUplink3() function ✅
-- [x] إنشاء asset و contract عند نجاح المطابقة ✅
-- [x] إنشاء procedure `promoteToUplink3` في uplink2 router ✅
-
----
-
-## ✅ Phase 6: تحديث Frontend - عرض الخيارات والتدفق
-
-### Components:
-- [x] إنشاء ProgressTracker component ✅
-- [x] إنشاء UserChoiceDialog component ✅
-- [x] تحديث AIAnalysisResults.tsx ✅
-
----
-
-## ✅ Phase 7: الاختبار الشامل للتدفق الكامل
-
-### Unit Tests:
-- [x] إنشاء uplink-journey.test.ts ✅
-- [x] اختبار Classification Logic (3 tests) ✅
-- [x] اختبار User Choice Logic (3 tests) ✅
-- [x] اختبار Strategic Partner Mapping (3 tests) ✅
-- [x] اختبار Price Calculation Logic (2 tests) ✅
-- [x] **النتيجة: 11/11 tests passed** ✅
-
----
-
-## ✅ Phase 8: حفظ checkpoint نهائي
-
-- [x] مراجعة جميع التغييرات ✅
-- [x] التأكد من نجاح جميع الاختبارات (11/11) ✅
-- [ ] حفظ checkpoint مع وصف شامل
-- [ ] تسليم المشروع للمستخدم
-
----
-
-## 📊 **الإنجازات:**
-
-### Backend:
-1. ✅ `server/uplink1-to-uplink2.ts` - الانتقال من UPLINK 1 إلى UPLINK 2
-2. ✅ `server/uplink1-to-uplink3.ts` - الانتقال المباشر من UPLINK 1 إلى UPLINK 3
-3. ✅ `server/uplink2-to-uplink3.ts` - الانتقال من UPLINK 2 إلى UPLINK 3
-4. ✅ `setUserChoice` procedure في routers.ts
-5. ✅ `promoteToUplink3` procedure في uplink2 router
-6. ✅ تحديث schema (user_choice, uplink2ProjectId, uplink3AssetId)
-
-### Frontend:
-1. ✅ `client/src/components/ProgressTracker.tsx` - عرض رحلة الفكرة
-2. ✅ `client/src/components/UserChoiceDialog.tsx` - dialog لاختيار المسار
-3. ✅ تحديث `AIAnalysisResults.tsx` - إظهار الخيارات عند ≥60%
-4. ✅ `client/src/hooks/use-toast.ts` - toast notifications
-
-### Testing:
-1. ✅ `server/uplink-journey.test.ts` - 11 unit tests (100% passed)
-
----
-
-**آخر تحديث:** جميع المراحل مكتملة - جاهز لحفظ checkpoint نهائي
-
-
----
-
-## 🚀 **المهام الجديدة - المرحلة التالية:**
-
-### Phase 9: صفحة رحلة الفكرة (Journey Page)
+### Phase 5: صفحة رحلة الفكرة (Journey Page)
 - [ ] إنشاء `/journey/:ideaId` route في App.tsx
 - [ ] إنشاء `client/src/pages/IdeaJourney.tsx` component
 - [ ] إنشاء procedure `getIdeaJourney` في routers.ts
 - [ ] عرض timeline تفاعلي كامل بجميع المراحل
 - [ ] عرض جميع الإشعارات المرتبطة بالفكرة
-- [ ] عرض الوثائق والملفات المرتبطة بكل مرحلة
 - [ ] إضافة زر "تحميل PDF" لتحميل رحلة الفكرة كاملة
-- [ ] تصميم UI احترافي مع icons و colors مميزة
 
-### Phase 10: نظام المطابقة الذكي AI في UPLINK 2
+### Phase 6: نظام المطابقة الذكي AI في UPLINK 2
 - [ ] إنشاء `server/services/aiMatching.ts` - AI matching algorithm
-- [ ] حساب match score حقيقي (0-100%) بناءً على:
-  - [ ] Keywords similarity
-  - [ ] Category matching
-  - [ ] Description semantic analysis
-  - [ ] Industry alignment
+- [ ] حساب match score حقيقي (0-100%)
 - [ ] إنشاء procedure `calculateMatchScore` في routers.ts
-- [ ] تحديث `suggested_matches` table لإضافة `match_score`
-- [ ] إنشاء procedure `getSmartMatches` - يعرض أفضل المطابقات
-- [ ] إضافة إشعارات تلقائية عند match score ≥80%
-- [ ] تحديث Frontend لعرض match score مع progress bar
+- [ ] تحديث Frontend لعرض match score
 
-### Phase 11: لوحة تحكم الشركاء الاستراتيجيين
+### Phase 7: لوحة تحكم الشركاء الاستراتيجيين
 - [ ] إنشاء `/partners/dashboard` route
 - [ ] إنشاء `client/src/pages/PartnerDashboard.tsx`
-- [ ] إضافة `partner_type` enum في users table:
-  - [ ] 'kaust' (KAUST)
-  - [ ] 'monshaat' (Monsha'at)
-  - [ ] 'rdia' (RDIA)
-- [ ] إنشاء procedure `getPartnerIdeas` - يعرض الأفكار المُوجّهة للشريك
-- [ ] إنشاء procedure `reviewIdea` - قبول/رفض الفكرة
-- [ ] إنشاء procedure `sendFeedback` - إرسال feedback للمبتكر
-- [ ] إنشاء `partner_reviews` table:
-  - [ ] id, idea_id, partner_id, status ('accepted', 'rejected', 'pending')
-  - [ ] feedback (text), reviewed_at (timestamp)
-- [ ] تصميم UI للوحة التحكم مع filters و search
-- [ ] إضافة إشعارات للمبتكرين عند قبول/رفض الفكرة
+- [ ] إنشاء procedure `getPartnerIdeas`
+- [ ] إنشاء procedure `reviewIdea`
+- [ ] إنشاء `partner_reviews` table
 
-### Phase 12: الاختبار الشامل وحفظ checkpoint نهائي
-- [ ] اختبار صفحة رحلة الفكرة
-- [ ] اختبار نظام المطابقة الذكي
-- [ ] اختبار لوحة تحكم الشركاء
-- [ ] إنشاء unit tests لجميع الميزات الجديدة
-- [ ] حفظ checkpoint نهائي
-- [ ] تسليم المشروع للمستخدم
-
----
-
-**آخر تحديث:** جاري العمل على المهام الجديدة
-
-
----
-
-## 📝 **نظام التوقيع الإلكتروني للعقود - UPLINK 3**
-
-### Phase 12: تحديث Schema لإضافة حقول التوقيع الإلكتروني
-- [x] إضافة حقول التوقيع في contracts table:
-  - seller_signature_url (رابط توقيع البائع في S3)
-  - buyer_signature_url (رابط توقيع المشتري في S3)
-  - seller_signed_at (تاريخ توقيع البائع)
-  - buyer_signed_at (تاريخ توقيع المشتري)
-  - signed_pdf_url (رابط PDF الموقع في S3)
-- [x] تطبيق db:push
-
-### Phase 13: إنشاء SignatureCanvas component
-- [x] إنشاء SignatureCanvas.tsx component
-- [x] استخدام Canvas API للتوقيع
-- [x] زر "مسح" لإعادة التوقيع
-- [x] زر "حفظ التوقيع"
-- [x] تحويل التوقيع إلى صورة (base64)
-
-### Phase 14: إضافة procedures للتوقيع في Backend
-- [x] إنشاء uploadSignature procedure في uplink3 router
-- [x] رفع التوقيع إلى S3 باستخدام storagePut
-- [x] حفظ رابط التوقيع في contracts table
-- [x] إنشاء generateSignedPDF procedure
-- [x] توليد PDF موقع يحتوي على تفاصيل العقد والتوقيعات
-- [x] رفع PDF إلى S3
-
-### Phase 15: تحديث صفحة العقد
-- [x] إضافة قسم "التوقيع الإلكتروني" في صفحة العقد
-- [x] عرض SignatureCanvas للبائع والمشتري- [x] عرض حالة التوقيع (موقّع/غير موقّع)- [x] زر "تحميل العقد الموقع" بعد توقيع الطرفين
-
-### Phase 16: PDF Generator
-- [x] إنشاء contractPdfGenerator.ts
-- [x] تضمين تفاصيل العقد (الأطراف، السعر، الشروط)
-- [x] تضمين التوقيعات الإلكترونية
-- [x] تضمين Audit trail (تواريخ التوقيع)
-
-### Phase 17: الاختبار وحفظ Checkpoint
+### Phase 8: نظام التوقيع الإلكتروني - الاختبار
 - [ ] اختبار التوقيع الإلكتروني للبائع
 - [ ] اختبار التوقيع الإلكتروني للمشتري
 - [ ] اختبار توليد PDF موقع
 - [ ] اختبار تحميل PDF
-- [ ] حفظ checkpoint نهائي
+
+### Phase 9: حفظ checkpoint نهائي
+- [ ] حفظ checkpoint مع وصف شامل
+- [ ] تسليم المشروع للمستخدم
+
+---
+
+## ✅ المهام المكتملة:
+
+### UPLINK 1:
+- [x] نظام تقديم الأفكار
+- [x] تحليل AI بـ 6 معايير
+- [x] التصنيف التلقائي (Innovation ≥70%, Commercial 60-69%, Guidance <60%)
+- [x] UserChoiceDialog component
+- [x] `setUserChoice` procedure
+
+### UPLINK 1 → UPLINK 2:
+- [x] `promoteToUplink2` function في `server/uplink1-to-uplink2.ts`
+- [x] إنشاء project تلقائياً
+
+### UPLINK 1 → UPLINK 3:
+- [x] `promoteToUplink3Direct` function في `server/uplink1-to-uplink3.ts`
+- [x] إنشاء asset تلقائياً
+
+### UPLINK 2 → UPLINK 3:
+- [x] `promoteToUplink3FromUplink2` function في `server/uplink2-to-uplink3.ts`
+
+### نظام التوقيع الإلكتروني:
+- [x] Schema updates (5 حقول جديدة)
+- [x] SignatureCanvas component
+- [x] uploadSignature procedure
+- [x] generateSignedPDF procedure
+- [x] contractPdfGenerator.ts
+- [x] ContractSignature page
+
+---
+
+## ✅ التحديث الأخير:
+
+### Phase 1: ربط UserChoiceDialog بـ procedures الانتقال
+- [x] تحديث UserChoiceDialog.tsx لاستدعاء promoteToUplink2 عند اختيار UPLINK 2 ✅
+- [x] تحديث UserChoiceDialog.tsx لاستدعاء promoteToUplink3Direct عند اختيار UPLINK 3 ✅
+- [x] إضافة error handling في UserChoiceDialog ✅
+- [x] إضافة loading states في UserChoiceDialog ✅
+
+### Phase 2: إضافة الصفحات الجديدة
+- [x] إنشاء صفحة UPLINK 2 Projects (/uplink2/projects/:id) ✅
+- [x] إنشاء صفحة UPLINK 3 Assets (/uplink3/assets/:id) ✅
+- [x] إضافة imports في App.tsx ✅
+- [x] إضافة routes في App.tsx ✅
+- [x] إضافة زر "الانتقال إلى UPLINK 3" في صفحة UPLINK 2 Projects ✅
+- [x] ربط الزر بـ promoteToUplink3 procedure ✅

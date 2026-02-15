@@ -13,6 +13,59 @@ export interface PromoteToUplink3FromUplink2Result {
   message: string;
 }
 
+export interface PromoteProjectToUplink3Result {
+  assetId: number;
+  contractId?: number;
+}
+
+/**
+ * الانتقال من UPLINK 2 إلى UPLINK 3 (إنشاء asset مباشرة)
+ */
+export async function promoteProjectToUplink3(params: {
+  projectId: number;
+  userId: number;
+}): Promise<PromoteProjectToUplink3Result> {
+  const { projectId, userId } = params;
+
+  // 1. الحصول على المشروع
+  const project = await db.getProjectById(projectId);
+  if (!project) {
+    throw new Error('المشروع غير موجود');
+  }
+
+  // 2. إنشاء asset في marketplace
+  const assetId = await db.createMarketplaceAsset({
+    userId,
+    title: project.title,
+    titleEn: project.titleEn || undefined,
+    description: project.description,
+    descriptionEn: project.descriptionEn || undefined,
+    category: project.category || 'general',
+    price: '100000', // سعر افتراضي
+    currency: 'SAR',
+    status: 'active',
+    type: 'ip',
+  });
+
+  // 3. تحديث المشروع
+  await db.updateProject(projectId, {
+    status: 'listed',
+  });
+
+  // 4. إنشاء إشعار
+  await db.createNotification({
+    userId,
+    title: 'تم نقل مشروعك إلى UPLINK 3',
+    message: `تم نشر مشروعك "${project.title}" في بورصة UPLINK 3 للبيع.`,
+    type: 'success',
+    link: `/uplink3/assets/${assetId}`,
+  });
+
+  return {
+    assetId,
+  };
+}
+
 /**
  * إنشاء عقد في UPLINK 3 بعد نجاح المطابقة
  */

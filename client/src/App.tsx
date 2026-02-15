@@ -113,6 +113,8 @@ const Uplink2AdminChallenges = lazy(() => import("./pages/Uplink2AdminChallenges
 const Uplink2AdminSubmissions = lazy(() => import("./pages/Uplink2AdminSubmissions")); // Admin Review Submissions
 const MySubmissions = lazy(() => import("./pages/MySubmissions")); // My Submissions
 const ClassificationPaths = lazy(() => import("./pages/ClassificationPaths")); // Classification Paths
+const Uplink2Projects = lazy(() => import("./pages/Uplink2Projects")); // UPLINK 2 Projects
+const Uplink3Assets = lazy(() => import("./pages/Uplink3Assets")); // UPLINK 3 Assets
 const StrategicPartners = lazy(() => import("./pages/StrategicPartners")); // Strategic Partners
 const ValueFootprints = lazy(() => import("./pages/ValueFootprints")); // Value Footprints
 // Removed: Uplink2Dashboard - replaced by Uplink2VettingDashboard and Uplink2Marketplace
@@ -338,7 +340,9 @@ function Router() {
         <Route path="/uplink2/challenges/:id" component={Uplink2ChallengeDetails} /> {/* Challenge Details - Fixed */}
         <Route path="/uplink2/challenges" component={Uplink2Challenges} /> {/* Browse Challenges */}
         <Route path="/my-submissions" component={MySubmissions} /> {/* My Submissions */}
+        <Route path="/uplink2/projects/:id" component={Uplink2Projects} /> {/* UPLINK 2 Project Detail */}
         <Route path="/uplink3" component={Uplink3} />
+        <Route path="/uplink3/assets/:id" component={Uplink3Assets} /> {/* UPLINK 3 Asset Detail - NEW */}
         <Route path="/uplink3/marketplace" component={Uplink3Marketplace} /> {/* Marketplace */}
         <Route path="/uplink3/sell" component={Uplink3SellAsset} /> {/* Sell Asset */}
         <Route path="/uplink3/assets/:id" component={Uplink3AssetDetails} /> {/* Asset Details */}

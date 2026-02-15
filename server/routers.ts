@@ -3163,6 +3163,13 @@ Provide response in JSON format:
   // UPLINK2 - IP VETTING & MARKETPLACE
   // ============================================
   uplink2: router({
+    // Get project by ID
+    getProjectById: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getProjectById(input.projectId);
+      }),
+
     // Vetting System
     vetting: router({
       getPendingIPs: protectedProcedure
@@ -3783,15 +3790,11 @@ Provide response in JSON format:
     promoteToUplink3: protectedProcedure
       .input(z.object({
         projectId: z.number(),
-        matchId: z.number(),
-        agreedPrice: z.number(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { promoteProjectToUplink3 } = await import('./uplink2-to-uplink3');
         const result = await promoteProjectToUplink3({
           projectId: input.projectId,
-          matchId: input.matchId,
-          agreedPrice: input.agreedPrice,
           userId: ctx.user.id,
         });
         return result;
@@ -3869,6 +3872,13 @@ Provide response in JSON format:
   // UPLINK3 - Smart Contracts & Escrow
   // ============================================
   uplink3: router({
+    // Get asset by ID
+    getAssetById: protectedProcedure
+      .input(z.object({ assetId: z.number() }))
+      .query(async ({ input }) => {
+        return db.getMarketplaceAssetById(input.assetId);
+      }),
+
     // Contracts
     contracts: router({
       create: protectedProcedure
