@@ -13,6 +13,7 @@ import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink
 import crypto from "crypto";
 import * as hackathonsService from "./uplink2/hackathons";
 import * as eventsService from "./uplink2/events";
+import { storagePut } from "./storage";
 // import { autoTriggerDecision } from "./services/diamondDecisionPoint"; // Removed - file deleted
 
 export const appRouter = router({
@@ -4198,6 +4199,80 @@ Provide response in JSON format:
           });
 
           return { checkoutUrl: session.url };
+        }),
+
+      // رفع التوقيع الإلكتروني
+      uploadSignature: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+          signatureDataUrl: z.string(), // base64 image
+          role: z.enum(['seller', 'buyer']),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const { contractId, signatureDataUrl, role } = input;
+
+          // التحقق من وجود العقد
+          const contract = await db.getContractById(contractId);
+          if (!contract) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'العقد غير موجود' });
+          }
+
+          // التحقق من صلاحية المستخدم
+          const isSeller = contract.partyA === ctx.user.id;
+          const isBuyer = contract.partyB === ctx.user.id;
+          
+          if (role === 'seller' && !isSeller) {
+            throw new TRPCError({ code: 'FORBIDDEN', message: 'ليس لديك صلاحية للتوقيع كبائع' });
+          }
+          if (role === 'buyer' && !isBuyer) {
+            throw new TRPCError({ code: 'FORBIDDEN', message: 'ليس لديك صلاحية للتوقيع كمشتري' });
+          }
+
+          // تحويل base64 إلى Buffer
+          const base64Data = signatureDataUrl.replace(/^data:image\/png;base64,/, '');
+          const buffer = Buffer.from(base64Data, 'base64');
+
+          // رفع التوقيع إلى S3
+          const fileName = `contract-${contractId}-${role}-signature-${Date.now()}.png`;
+          const { url } = await storagePut(fileName, buffer, 'image/png');
+
+          // تحديث العقد في قاعدة البيانات
+          const updateData = role === 'seller'
+            ? { sellerSignatureUrl: url, sellerSignedAt: new Date().toISOString() }
+            : { buyerSignatureUrl: url, buyerSignedAt: new Date().toISOString() };
+
+          await db.updateContract(contractId, updateData);
+
+          return { success: true, signatureUrl: url };
+        }),
+
+      // توليد PDF موقع
+      generateSignedPDF: protectedProcedure
+        .input(z.object({
+          contractId: z.number(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+          const { contractId } = input;
+
+          // التحقق من وجود العقد
+          const contract = await db.getContractById(contractId);
+          if (!contract) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'العقد غير موجود' });
+          }
+
+          // التحقق من اكتمال التوقيعين
+          if (!contract.sellerSignatureUrl || !contract.buyerSignatureUrl) {
+            throw new TRPCError({ code: 'BAD_REQUEST', message: 'يجب أن يوقع الطرفان قبل توليد PDF' });
+          }
+
+          // توليد PDF وحفظه في S3
+          const { generateContractPDF } = await import('./services/contractPdfGenerator');
+          const pdfUrl = await generateContractPDF(contract);
+
+          // تحديث العقد بـ PDF URL
+          await db.updateContract(contractId, { signedPdfUrl: pdfUrl });
+
+          return { success: true, pdfUrl };
         }),
     }),
 

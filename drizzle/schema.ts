@@ -259,6 +259,12 @@ export const contracts = mysqlTable("contracts", {
 	partyAsignedAt: timestamp({ mode: 'string' }),
 	partyBsignature: text(),
 	partyBsignedAt: timestamp({ mode: 'string' }),
+	// حقول التوقيع الإلكتروني
+	sellerSignatureUrl: varchar('seller_signature_url', { length: 500 }),
+	buyerSignatureUrl: varchar('buyer_signature_url', { length: 500 }),
+	sellerSignedAt: timestamp('seller_signed_at', { mode: 'string' }),
+	buyerSignedAt: timestamp('buyer_signed_at', { mode: 'string' }),
+	signedPdfUrl: varchar('signed_pdf_url', { length: 500 }),
 	blockchainHash: varchar({ length: 256 }),
 	startDate: timestamp({ mode: 'string' }),
 	endDate: timestamp({ mode: 'string' }),

@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
+import ContractSignature from "@/pages/ContractSignature";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -312,6 +313,7 @@ function Router() {
         <Route path="/uplink1/ideas/:id" component={Uplink1IdeaDetail} />
         <Route path="/uplink1/ideas/:id/analysis" component={Uplink1IdeaAnalysis} />
         <Route path="/journey/:id" component={IdeaJourney} />
+        <Route path="/contracts/:id/sign" component={ContractSignature} />
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/classification-paths" component={ClassificationPaths} />
         <Route path="/strategic-partners" component={StrategicPartners} />
