@@ -485,8 +485,12 @@ export const appRouter = router({
             updatedAt: new Date(),
           });
 
-          // Update idea status
-          await db.updateIdea(ideaId, { status: "analyzed" });
+          // Update idea status based on score
+          let ideaStatus: 'analyzed' | 'revision_needed' = 'analyzed';
+          if (analysisResult.overallScore < 60) {
+            ideaStatus = 'revision_needed';
+          }
+          await db.updateIdea(ideaId, { status: ideaStatus });
 
           // Create classification history record
           await db.createClassificationHistory({
@@ -858,6 +862,42 @@ export const appRouter = router({
           input.classificationId,
           input.status
         );
+        return { success: true };
+      }),
+
+    // حفظ اختيار المستخدم (UPLINK 2 أو UPLINK 3)
+    setUserChoice: protectedProcedure
+      .input(z.object({
+        ideaId: z.number(),
+        choice: z.enum(['uplink2', 'uplink3']),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // تحديث الفكرة بالاختيار
+        await db.updateIdea(input.ideaId, { userChoice: input.choice });
+
+        // إذا اختار UPLINK 2
+        if (input.choice === 'uplink2') {
+          const { promoteToUplink2 } = await import('./uplink1-to-uplink2');
+          const result = await promoteToUplink2(input.ideaId, ctx.user.id);
+          return {
+            success: true,
+            choice: 'uplink2',
+            projectId: result.projectId,
+            opportunities: result.opportunities,
+          };
+        }
+
+        // إذا اختار UPLINK 3
+        if (input.choice === 'uplink3') {
+          const { promoteToUplink3 } = await import('./uplink1-to-uplink3');
+          const result = await promoteToUplink3(input.ideaId, ctx.user.id);
+          return {
+            success: true,
+            choice: 'uplink3',
+            assetId: result.assetId,
+          };
+        }
+
         return { success: true };
       }),
   }),

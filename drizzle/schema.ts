@@ -632,6 +632,8 @@ export const ideas = mysqlTable("ideas", {
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 	challengeId: int(),
 	uplink2ProjectId: int("uplink2_project_id"),
+	uplink3AssetId: int("uplink3_asset_id"),
+	userChoice: mysqlEnum('user_choice', ['uplink2', 'uplink3']),
 });
 
 export const innovationHubs = mysqlTable("innovation_hubs", {

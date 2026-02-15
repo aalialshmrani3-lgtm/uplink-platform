@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
+import { useState, useEffect } from "react";
+import UserChoiceDialog from "@/components/UserChoiceDialog";
 
 interface AIAnalysisResultsProps {
   analysis: {
@@ -27,10 +29,19 @@ interface AIAnalysisResultsProps {
     recommendations: string[];
     nextSteps: string;
   };
+  ideaId?: number;
 }
 
-export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) {
+export default function AIAnalysisResults({ analysis, ideaId }: AIAnalysisResultsProps) {
   const [, setLocation] = useLocation();
+  const [showChoiceDialog, setShowChoiceDialog] = useState(false);
+
+  // إظهار dialog عند الدرجة ≥ 60%
+  useEffect(() => {
+    if (analysis.overallScore >= 60 && ideaId) {
+      setShowChoiceDialog(true);
+    }
+  }, [analysis.overallScore, ideaId]);
 
   const getClassificationConfig = () => {
     switch (analysis.classification) {
@@ -85,7 +96,14 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
   const StatusIcon = config.icon;
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <>
+      <UserChoiceDialog
+        open={showChoiceDialog}
+        onOpenChange={setShowChoiceDialog}
+        ideaId={ideaId || 0}
+        overallScore={analysis.overallScore}
+      />
+      <div className="space-y-6 animate-fade-in">
       {/* Overall Status Card */}
       <Card className={`glass-card p-8 border-2 ${config.borderColor}`}>
         <div className="flex items-start gap-6">
@@ -210,5 +228,6 @@ export default function AIAnalysisResults({ analysis }: AIAnalysisResultsProps) 
         <p className="text-gray-300">{analysis.nextSteps}</p>
       </Card>
     </div>
+    </>
   );
 }
