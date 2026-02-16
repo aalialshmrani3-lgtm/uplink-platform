@@ -7,7 +7,7 @@ interface ContractData {
   description: string | null;
   type: string;
   totalValue: string;
-  currency: string;
+  currency: string | null;
   status: string;
   partyA: number;
   partyB: number;

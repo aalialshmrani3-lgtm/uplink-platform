@@ -4054,8 +4054,8 @@ Provide response in JSON format:
           });
           
           // Update balance
-          const currentBalance = parseFloat(escrow.balance || '0');
-          const newBalance = (currentBalance + parseFloat(input.amount)).toString();
+          // const currentBalance = parseFloat(escrow.balance || '0');
+          // const newBalance = (currentBalance + parseFloat(input.amount)).toString();
           await db.updateEscrow(escrow.id, { 
             // balance: newBalance,
             status: 'funded'
