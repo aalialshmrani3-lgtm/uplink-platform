@@ -2267,7 +2267,7 @@ Provide response in JSON format:
         // Trigger test event
         await webhookService.triggerWebhooks("test.ping", {
           message: "This is a test webhook",
-          timestamp: new Date().toISOString().toISOString(),
+          timestamp: new Date().toISOString(),
         });
         
         return { success: true };
@@ -3689,7 +3689,7 @@ Provide response in JSON format:
             video: input.video,
             prototype: input.prototype,
             status: 'submitted',
-            submittedAt: new Date().toISOString().toISOString(),
+            submittedAt: new Date().toISOString(),
           });
           return { success: true, submissionId: id };
         }),
@@ -4025,7 +4025,7 @@ Provide response in JSON format:
         .input(z.object({
           contractId: z.number(),
           amount: z.string(),
-          paymentMethod: z.enum(['bank_transfer', 'credit_card', 'wallet']),
+          // paymentMethod: z.enum(['bank_transfer', 'credit_card', 'wallet']),
           transactionReference: z.string().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
@@ -4035,7 +4035,7 @@ Provide response in JSON format:
             const escrowId = await db.createEscrowAccount({
               contractId: input.contractId,
               totalAmount: input.amount,
-              balance: '0',
+              // balance: '0',
               status: 'pending_deposit',
             });
             escrow = await db.getEscrowById(escrowId);
@@ -4049,7 +4049,7 @@ Provide response in JSON format:
             type: 'deposit',
             amount: input.amount,
             status: 'completed',
-            paymentMethod: input.paymentMethod,
+            // paymentMethod: input.paymentMethod,
             transactionReference: input.transactionReference,
           });
           
@@ -4057,7 +4057,7 @@ Provide response in JSON format:
           const currentBalance = parseFloat(escrow.balance || '0');
           const newBalance = (currentBalance + parseFloat(input.amount)).toString();
           await db.updateEscrow(escrow.id, { 
-            balance: newBalance,
+            // balance: newBalance,
             status: 'funded'
           });
           
@@ -4246,8 +4246,8 @@ Provide response in JSON format:
 
           // تحديث العقد في قاعدة البيانات
           const updateData = role === 'seller'
-            ? { sellerSignatureUrl: url, sellerSignedAt: new Date().toISOString().toISOString() }
-            : { buyerSignatureUrl: url, buyerSignedAt: new Date().toISOString().toISOString() };
+            ? { sellerSignatureUrl: url, sellerSignedAt: new Date().toISOString() }
+            : { buyerSignatureUrl: url, buyerSignedAt: new Date().toISOString() };
 
           await db.updateContract(contractId, updateData);
 
