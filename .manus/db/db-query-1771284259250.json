@@ -1,0 +1,253 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "admin_logs"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "ai_evaluations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "ambassadors"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "analytics"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "analytics_events"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "api_keys"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "api_usage"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "asset_inquiries"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "asset_transactions"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "audit_logs"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "blockchain_assets"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "challenge_registrations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "challenge_reviews"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "challenge_submissions"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "challenge_votes"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "challenges"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "challenges_new"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "classification_history"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "contracts"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "courses"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "data_visibility_rules"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "elite_memberships"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "enrollments"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "escrow_accounts"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "escrow_transactions"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "evaluation_criteria"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "evaluations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "event_registrations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "events"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "gate_decisions"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "hackathon_registrations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "hackathons"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "idea_analysis"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "idea_classifications"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "idea_organizations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "idea_outcomes"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "ideas"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "innovation_hubs"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "innovation_hypotheses"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "innovator_applications"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "ip_registrations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "knowledge_base_items"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "knowledge_ratings"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "learning_logs"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "marketplace_assets"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "matching_requests"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "matching_results"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "networking_connections"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "notifications"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "organizations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "partner_projects"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "permissions"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_challenges"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_clusters"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_experiments"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_gamification"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_hypotheses"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_ideas"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_initiatives"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_trends"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "pipeline_votes"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "prediction_accuracy"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "project_organizations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "projects"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "rat_tests"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "role_permissions"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "roles"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "saved_views"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "sponsor_requests"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "strategic_analyses"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "strategic_challenges"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "strategic_partners"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "system_metrics"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "user_feedback"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "user_roles"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "users"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "value_footprints"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "webhook_logs"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "webhooks"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9": "whatif_scenarios"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_fqijacsWw6AUmwQQsRR8Z9\n__drizzle_migrations\nadmin_logs\nai_evaluations\nambassadors\nanalytics\nanalytics_events\napi_keys\napi_usage\nasset_inquiries\nasset_transactions\naudit_logs\nblockchain_assets\nchallenge_registrations\nchallenge_reviews\nchallenge_submissions\nchallenge_votes\nchallenges\nchallenges_new\nclassification_history\ncontracts\ncourses\ndata_visibility_rules\nelite_memberships\nenrollments\nescrow_accounts\nescrow_transactions\nevaluation_criteria\nevaluations\nevent_registrations\nevents\ngate_decisions\nhackathon_registrations\nhackathons\nidea_analysis\nidea_classifications\nidea_organizations\nidea_outcomes\nideas\ninnovation_hubs\ninnovation_hypotheses\ninnovator_applications\nip_registrations\nknowledge_base_items\nknowledge_ratings\nlearning_logs\nmarketplace_assets\nmatching_requests\nmatching_results\nnetworking_connections\nnotifications\norganizations\npartner_projects\npermissions\npipeline_challenges\npipeline_clusters\npipeline_experiments\npipeline_gamification\npipeline_hypotheses\npipeline_ideas\npipeline_initiatives\npipeline_trends\npipeline_votes\nprediction_accuracy\nproject_organizations\nprojects\nrat_tests\nrole_permissions\nroles\nsaved_views\nsponsor_requests\nstrategic_analyses\nstrategic_challenges\nstrategic_partners\nsystem_metrics\nuser_feedback\nuser_roles\nusers\nvalue_footprints\nwebhook_logs\nwebhooks\nwhatif_scenarios\n",
+  "stderr": "",
+  "execution_time_ms": 1559
+}

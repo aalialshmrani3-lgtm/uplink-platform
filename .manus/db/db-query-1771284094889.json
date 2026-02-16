@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE ideas \nADD COLUMN IF NOT EXISTS uplink2_project_id INT NULL,\nADD COLUMN IF NOT EXISTS uplink3_asset_id INT NULL,\nADD COLUMN IF NOT EXISTS user_choice VARCHAR(255) NULL,\nADD COLUMN IF NOT EXISTS overallScore VARCHAR(10) NULL,\nADD COLUMN IF NOT EXISTS classificationPath VARCHAR(50) NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute ALTER TABLE ideas \nADD COLUMN IF NOT EXISTS uplink2_project_id INT NULL,\nADD COLUMN IF NOT EXISTS uplink3_asset_id INT NULL,\nADD COLUMN IF NOT EXISTS user_choice VARCHAR(255) NULL,\nADD COLUMN IF NOT EXISTS overallScore VARCHAR(10) NULL,\nADD COLUMN IF NOT EXISTS classificationPath VARCHAR(50) NULL;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 3556
+}

@@ -1,0 +1,35 @@
+{
+  "query": "SELECT id, title, status FROM challenges WHERE status = 'open' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, title, status FROM challenges WHERE status = 'open' LIMIT 5;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "تحدي الذكاء الاصطناعي في الرعاية الصحية",
+      "status": "open"
+    },
+    {
+      "id": "2",
+      "title": "تحدي التعليم الرقمي التفاعلي",
+      "status": "open"
+    },
+    {
+      "id": "3",
+      "title": "تحدي الطاقة المتجددة الذكية",
+      "status": "open"
+    },
+    {
+      "id": "4",
+      "title": "تحدي النقل الذكي والمستدام",
+      "status": "open"
+    },
+    {
+      "id": "5",
+      "title": "تحدي الزراعة الذكية",
+      "status": "open"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\n1\tتحدي الذكاء الاصطناعي في الرعاية الصحية\topen\n2\tتحدي التعليم الرقمي التفاعلي\topen\n3\tتحدي الطاقة المتجددة الذكية\topen\n4\tتحدي النقل الذكي والمستدام\topen\n5\tتحدي الزراعة الذكية\topen\n",
+  "stderr": "",
+  "execution_time_ms": 1538
+}

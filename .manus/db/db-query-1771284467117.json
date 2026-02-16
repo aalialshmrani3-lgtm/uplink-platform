@@ -1,0 +1,25 @@
+{
+  "query": "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE 'idea%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE 'idea%';",
+  "rows": [
+    {
+      "TABLE_NAME": "idea_outcomes"
+    },
+    {
+      "TABLE_NAME": "idea_organizations"
+    },
+    {
+      "TABLE_NAME": "idea_analysis"
+    },
+    {
+      "TABLE_NAME": "idea_classifications"
+    },
+    {
+      "TABLE_NAME": "ideas"
+    }
+  ],
+  "messages": [],
+  "stdout": "TABLE_NAME\nidea_outcomes\nidea_organizations\nidea_analysis\nidea_classifications\nideas\n",
+  "stderr": "",
+  "execution_time_ms": 1551
+}

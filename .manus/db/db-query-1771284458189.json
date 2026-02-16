@@ -1,0 +1,25 @@
+{
+  "query": "SHOW TABLES LIKE 'idea%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SHOW TABLES LIKE 'idea%';",
+  "rows": [
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9 (idea%)": "idea_analysis"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9 (idea%)": "idea_classifications"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9 (idea%)": "idea_organizations"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9 (idea%)": "idea_outcomes"
+    },
+    {
+      "Tables_in_fqijacsWw6AUmwQQsRR8Z9 (idea%)": "ideas"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_fqijacsWw6AUmwQQsRR8Z9 (idea%)\nidea_analysis\nidea_classifications\nidea_organizations\nidea_outcomes\nideas\n",
+  "stderr": "",
+  "execution_time_ms": 1513
+}

@@ -8,7 +8,7 @@ interface ContractData {
   type: string;
   totalValue: string;
   currency: string | null;
-  status: string;
+  status: string | null;
   partyA: number;
   partyB: number;
   sellerSignatureUrl: string | null;
@@ -74,7 +74,7 @@ export async function generateContractPDF(contract: ContractData): Promise<strin
 
   // الحالة
   doc.text("Status:", 20, yPos);
-  doc.text(contract.status, 50, yPos);
+  doc.text(contract.status || 'N/A', 50, yPos);
   yPos += 7;
 
   // الوصف

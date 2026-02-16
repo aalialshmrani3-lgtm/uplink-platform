@@ -1,0 +1,28 @@
+{
+  "query": "SELECT id, title, status, createdAt FROM ideas ORDER BY id DESC LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, title, status, createdAt FROM ideas ORDER BY id DESC LIMIT 3;",
+  "rows": [
+    {
+      "id": "210004",
+      "title": "نظام ذكي لإدارة النفايات باستخدام IoT",
+      "status": "submitted",
+      "createdAt": "2026-02-16 23:29:49"
+    },
+    {
+      "id": "210003",
+      "title": "نظام ذكي لإدارة النفايات باستخدام IoT",
+      "status": "submitted",
+      "createdAt": "2026-02-16 23:28:49"
+    },
+    {
+      "id": "210002",
+      "title": "نظام ذكي لإدارة النفايات باستخدام IoT",
+      "status": "submitted",
+      "createdAt": "2026-02-16 23:23:29"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\tcreatedAt\n210004\tنظام ذكي لإدارة النفايات باستخدام IoT\tsubmitted\t2026-02-16 23:29:49\n210003\tنظام ذكي لإدارة النفايات باستخدام IoT\tsubmitted\t2026-02-16 23:28:49\n210002\tنظام ذكي لإدارة النفايات باستخدام IoT\tsubmitted\t2026-02-16 23:23:29\n",
+  "stderr": "",
+  "execution_time_ms": 1536
+}
