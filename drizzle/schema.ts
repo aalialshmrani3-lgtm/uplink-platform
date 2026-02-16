@@ -1642,3 +1642,6 @@ export type InsertChallengeVote = typeof challengeVotes.$inferInsert;
 
 export type ChallengeReview = typeof challengeReviews.$inferSelect;
 export type InsertChallengeReview = typeof challengeReviews.$inferInsert;
+
+export type AuditLog = typeof auditLogs.$inferSelect;
+export type InsertAuditLog = typeof auditLogs.$inferInsert;

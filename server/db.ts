@@ -278,7 +278,7 @@ export async function getAllCourses(published = true) {
   const db = await getDb();
   if (!db) return [];
   if (published) {
-    return db.select().from(courses).where(eq(courses.isPublished, true)).orderBy(desc(courses.createdAt));
+    return db.select().from(courses).where(eq(courses.isPublished, 1)).orderBy(desc(courses.createdAt));
   }
   return db.select().from(courses).orderBy(desc(courses.createdAt));
 }
