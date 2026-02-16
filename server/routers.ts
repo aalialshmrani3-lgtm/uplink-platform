@@ -4474,7 +4474,7 @@ Provide response in JSON format:
         ideaId: z.number(),
         projectName: z.string(),
         supportType: z.enum(['funding', 'mentorship', 'infrastructure', 'training', 'networking', 'legal', 'marketing']),
-        fundingAmount: z.number().optional(),
+        fundingAmount: z.string().optional(),
         startDate: z.string().optional(),
         endDate: z.string().optional(),
         milestones: z.array(z.any()).optional(),
@@ -4555,7 +4555,7 @@ Provide response in JSON format:
         const partnerType = 'kaust'; // مؤقتاً
         
         // جلب الأفكار المُوجّهة لهذا الشريك
-        const ideas = await db.getIdeasByPartner(partnerType);
+        const ideas = await db.getAllIdeas();
         return ideas;
       }),
 

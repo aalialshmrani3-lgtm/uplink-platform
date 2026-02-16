@@ -77,14 +77,14 @@ export default function StrategicPartnerDashboard() {
 
   const stats = {
     total: assignedIdeas?.length || 0,
-    pending: assignedIdeas?.filter(i => i.partnerStatus === 'pending').length || 0,
-    accepted: assignedIdeas?.filter(i => i.partnerStatus === 'accepted').length || 0,
-    rejected: assignedIdeas?.filter(i => i.partnerStatus === 'rejected').length || 0,
+    pending: assignedIdeas?.filter(i => i.status === 'pending').length || 0,
+    accepted: assignedIdeas?.filter(i => i.status === 'accepted').length || 0,
+    rejected: assignedIdeas?.filter(i => i.status === 'rejected').length || 0,
   };
 
   const filteredIdeas = selectedTab === "all" 
     ? assignedIdeas 
-    : assignedIdeas?.filter(i => i.partnerStatus === selectedTab);
+    : assignedIdeas?.filter(i => i.status === selectedTab);
 
   return (
     <div className="container mx-auto py-8 space-y-6">
@@ -189,19 +189,19 @@ export default function StrategicPartnerDashboard() {
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          {idea.partnerStatus === "pending" && (
+                          {idea.status === "pending" && (
                             <Badge variant="outline" className="text-yellow-600">
                               <Clock className="w-3 h-3 ml-1" />
                               قيد المراجعة
                             </Badge>
                           )}
-                          {idea.partnerStatus === "accepted" && (
+                          {idea.status === "accepted" && (
                             <Badge variant="outline" className="text-green-600">
                               <CheckCircle2 className="w-3 h-3 ml-1" />
                               مقبولة
                             </Badge>
                           )}
-                          {idea.partnerStatus === "rejected" && (
+                          {idea.status === "rejected" && (
                             <Badge variant="outline" className="text-red-600">
                               <XCircle className="w-3 h-3 ml-1" />
                               مرفوضة
@@ -210,7 +210,7 @@ export default function StrategicPartnerDashboard() {
                         </TableCell>
                         <TableCell>
                           <div className="flex gap-2">
-                            {idea.partnerStatus === "pending" && (
+                            {idea.status === "pending" && (
                               <>
                                 <Button
                                   size="sm"
