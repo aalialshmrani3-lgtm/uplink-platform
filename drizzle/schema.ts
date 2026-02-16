@@ -177,6 +177,10 @@ export const challenges = mysqlTable("challenges", {
 	participants: int().default(0),
 	submissions: int().default(0),
 	winnerId: int(),
+	budget: decimal({ precision: 15, scale: 2 }),
+	criteria: json(),
+	reward: varchar({ length: 500 }),
+	deadline: timestamp({ mode: 'string' }),
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 });
@@ -640,6 +644,8 @@ export const ideas = mysqlTable("ideas", {
 	uplink2ProjectId: int("uplink2_project_id"),
 	uplink3AssetId: int("uplink3_asset_id"),
 	userChoice: mysqlEnum('user_choice', ['uplink2', 'uplink3']),
+	overallScore: int(),
+	classificationPath: varchar({ length: 500 }),
 });
 
 export const innovationHubs = mysqlTable("innovation_hubs", {
@@ -810,6 +816,8 @@ export const marketplaceAssets = mysqlTable("marketplace_assets", {
 	listedAt: timestamp({ mode: 'string' }),
 	soldAt: timestamp({ mode: 'string' }),
 	expiresAt: timestamp({ mode: 'string' }),
+	rating: decimal({ precision: 3, scale: 2 }),
+	priceType: varchar({ length: 50 }),
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 });

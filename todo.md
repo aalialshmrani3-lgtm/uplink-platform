@@ -172,3 +172,35 @@
 - [ ] تشغيل `pnpm tsc --noEmit` → 0 أخطاء
 - [ ] تشغيل `pnpm build` → نجاح البناء
 - [ ] حفظ checkpoint نهائي
+
+
+---
+
+## 🔥 المهمة الجديدة: إصلاح جميع أخطاء TypeScript المتبقية (164 خطأ)
+
+### Phase 1: إضافة Properties الناقصة في schema
+- [ ] إضافة rating, priceType, owner في marketplaceAssets table
+- [ ] إضافة overallScore, classificationPath في ideas table  
+- [ ] إضافة budget, criteria, reward, deadline في challenges table
+- [ ] تشغيل `pnpm db:push` لتطبيق التغييرات
+
+### Phase 2: إصلاح Status enum mismatches
+- [ ] تحديث marketplaceAssets status enum لإضافة "available"
+- [ ] تحديث ideas status enum لإضافة "pending", "accepted", "rejected"
+- [ ] تحديث challengeSubmissions status enum لإضافة "finalist"
+- [ ] تشغيل `pnpm db:push` لتطبيق التغييرات
+
+### Phase 3: إصلاح Type mismatches في Frontend
+- [ ] إصلاح number vs string في IdeaJourney.tsx
+- [ ] إصلاح unknown types في StrategicPartners.tsx
+- [ ] إصلاح any types في RoleManagement.tsx
+- [ ] إصلاح Properties غير موجودة في Uplink3Marketplace.tsx
+- [ ] إصلاح Properties غير موجودة في StrategicPartnerDashboard.tsx
+
+### Phase 4: التحقق من 0 أخطاء TypeScript
+- [ ] تشغيل `pnpm tsc --noEmit` → التأكد من 0 أخطاء
+- [ ] تشغيل `pnpm build` → التأكد من نجاح البناء
+
+### Phase 5: حفظ checkpoint نهائي
+- [ ] حفظ checkpoint مع build نظيف 100%
+- [ ] تسليم النتائج للمستخدم

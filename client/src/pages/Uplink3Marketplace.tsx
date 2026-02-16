@@ -26,7 +26,7 @@ const mockAssetsOld = [
     views: 1250,
     likes: 89,
     category: "AI & ML",
-    status: "available"
+    status: "active"
   },
   {
     id: 2,
@@ -40,7 +40,7 @@ const mockAssetsOld = [
     views: 980,
     likes: 67,
     category: "Security",
-    status: "available"
+    status: "active"
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ const mockAssetsOld = [
     views: 1580,
     likes: 112,
     category: "Enterprise",
-    status: "available"
+    status: "active"
   },
   {
     id: 4,
@@ -68,7 +68,7 @@ const mockAssetsOld = [
     views: 2340,
     likes: 156,
     category: "E-commerce",
-    status: "available"
+    status: "active"
   },
   {
     id: 5,
@@ -96,7 +96,7 @@ const mockAssetsOld = [
     views: 1120,
     likes: 78,
     category: "Education",
-    status: "available"
+    status: "active"
   }
 ];
 
@@ -269,8 +269,8 @@ export default function Uplink3Marketplace() {
                           {getTypeIcon(asset.type)}
                           {getTypeLabel(asset.type)}
                         </Badge>
-                        <Badge variant={asset.status === "available" ? "default" : "secondary"}>
-                          {asset.status === "available" ? "متاح" : "قيد التفاوض"}
+                        <Badge variant={asset.status === "active" ? "default" : "secondary"}>
+                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -282,7 +282,7 @@ export default function Uplink3Marketplace() {
                       <div className="space-y-4">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">المالك</p>
-                          <p className="font-medium">{asset.owner}</p>
+                          <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -291,12 +291,12 @@ export default function Uplink3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {asset.priceType === "yearly" ? "/سنوياً" : "دفعة واحدة"}
+                              {"دفعة واحدة"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                            <span className="font-semibold">{asset.rating}</span>
+                            <span className="font-semibold">N/A</span>
                           </div>
                         </div>
 
@@ -331,8 +331,8 @@ export default function Uplink3Marketplace() {
                           {getTypeIcon(asset.type)}
                           {getTypeLabel(asset.type)}
                         </Badge>
-                        <Badge variant={asset.status === "available" ? "default" : "secondary"}>
-                          {asset.status === "available" ? "متاح" : "قيد التفاوض"}
+                        <Badge variant={asset.status === "active" ? "default" : "secondary"}>
+                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -344,7 +344,7 @@ export default function Uplink3Marketplace() {
                       <div className="space-y-4">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">المالك</p>
-                          <p className="font-medium">{asset.owner}</p>
+                          <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -353,12 +353,12 @@ export default function Uplink3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {asset.priceType === "yearly" ? "/سنوياً" : "دفعة واحدة"}
+                              {"دفعة واحدة"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                            <span className="font-semibold">{asset.rating}</span>
+                            <span className="font-semibold">N/A</span>
                           </div>
                         </div>
 
@@ -393,8 +393,8 @@ export default function Uplink3Marketplace() {
                           {getTypeIcon(asset.type)}
                           {getTypeLabel(asset.type)}
                         </Badge>
-                        <Badge variant={asset.status === "available" ? "default" : "secondary"}>
-                          {asset.status === "available" ? "متاح" : "قيد التفاوض"}
+                        <Badge variant={asset.status === "active" ? "default" : "secondary"}>
+                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -406,7 +406,7 @@ export default function Uplink3Marketplace() {
                       <div className="space-y-4">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">المالك</p>
-                          <p className="font-medium">{asset.owner}</p>
+                          <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -415,12 +415,12 @@ export default function Uplink3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {asset.priceType === "yearly" ? "/سنوياً" : "دفعة واحدة"}
+                              {"دفعة واحدة"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                            <span className="font-semibold">{asset.rating}</span>
+                            <span className="font-semibold">N/A</span>
                           </div>
                         </div>
 
@@ -455,8 +455,8 @@ export default function Uplink3Marketplace() {
                           {getTypeIcon(asset.type)}
                           {getTypeLabel(asset.type)}
                         </Badge>
-                        <Badge variant={asset.status === "available" ? "default" : "secondary"}>
-                          {asset.status === "available" ? "متاح" : "قيد التفاوض"}
+                        <Badge variant={asset.status === "active" ? "default" : "secondary"}>
+                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -468,7 +468,7 @@ export default function Uplink3Marketplace() {
                       <div className="space-y-4">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">المالك</p>
-                          <p className="font-medium">{asset.owner}</p>
+                          <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -477,12 +477,12 @@ export default function Uplink3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {asset.priceType === "yearly" ? "/سنوياً" : "دفعة واحدة"}
+                              {"دفعة واحدة"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                            <span className="font-semibold">{asset.rating}</span>
+                            <span className="font-semibold">N/A</span>
                           </div>
                         </div>
 
