@@ -18,7 +18,8 @@ export default function Uplink2ChallengeDetails() {
   const [showSubmitForm, setShowSubmitForm] = useState(false);
 
   const { data: challenge, isLoading } = trpc.uplink2.challenges.getById.useQuery({ id: challengeId });
-  const { data: relatedIdeas } = trpc.uplink1.getIdeasByChallenge.useQuery({ challengeId });
+  const { data: relatedIdeas } = trpc.uplink1.getAllIdeas.useQuery();
+  // const relatedIdeas = [];
   const { data: registration } = trpc.uplink2.challenges.getRegistration.useQuery(
     { challengeId },
     { enabled: !!user }

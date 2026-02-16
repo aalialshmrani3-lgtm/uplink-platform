@@ -578,6 +578,16 @@ export const appRouter = router({
             return score ? score.score : 0;
           };
 
+          // Auto-promote to UPLINK 2 or 3 based on score
+          let projectId: number | undefined;
+          let assetId: number | undefined;
+          
+          if (analysisResult.overallScore >= 70) {
+            const { promoteToUplink2 } = await import('./uplink1-to-uplink2');
+            const result = await promoteToUplink2(ideaId, ctx.user.id);
+            projectId = result.projectId;
+          }
+
           const responseData = {
             ideaId,
             analysisId,
@@ -591,7 +601,9 @@ export const appRouter = router({
             tags: analysisResult.extractedKeywords || [],
             recommendations: analysisResult.recommendations || [],
             nextSteps: analysisResult.nextSteps || "",
-            message: "تم تحليل الفكرة بنجاح!"
+            message: "تم تحليل الفكرة بنجاح!",
+            projectId,
+            assetId
           };
           
           console.log('[DEBUG] About to return response:', JSON.stringify(responseData).substring(0, 200));
