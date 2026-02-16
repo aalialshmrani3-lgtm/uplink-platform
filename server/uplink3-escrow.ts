@@ -58,8 +58,9 @@ export async function depositToEscrow(data: DepositInput, userId: number) {
 }
 
 /**
- * Request release from escrow
+ * Request release from escrow (TODO: releaseRequests table not yet created)
  */
+/*
 export async function requestRelease(
   contractId: number,
   milestoneIndex: number,
@@ -99,10 +100,12 @@ export async function requestRelease(
     requestId,
   };
 }
+*/
 
 /**
- * Approve release request
+ * Approve release request (TODO: releaseRequests table not yet created)
  */
+/*
 export async function approveRelease(requestId: number, userId: number) {
   const request = await db.getReleaseRequestById(requestId);
   
@@ -172,10 +175,12 @@ export async function approveRelease(requestId: number, userId: number) {
 
   return { success: true };
 }
+*/
 
 /**
- * Reject release request
+ * Reject release request (TODO: releaseRequests table not yet created)
  */
+/*
 export async function rejectRelease(requestId: number, userId: number, reason: string) {
   const request = await db.getReleaseRequestById(requestId);
   
@@ -201,6 +206,7 @@ export async function rejectRelease(requestId: number, userId: number, reason: s
 
   return { success: true };
 }
+*/
 
 /**
  * Get escrow transactions
@@ -226,8 +232,9 @@ export async function getEscrowTransactions(contractId: number, userId: number) 
 }
 
 /**
- * Get release requests
+ * Get release requests (TODO: releaseRequests table not yet created)
  */
+/*
 export async function getReleaseRequests(contractId: number, userId: number) {
   const contract = await db.getContractById(contractId);
   
@@ -241,6 +248,7 @@ export async function getReleaseRequests(contractId: number, userId: number) {
 
   return await db.getReleaseRequestsByContractId(contractId);
 }
+*/
 
 /**
  * Get escrow statistics

@@ -58,9 +58,7 @@ export async function evaluateIdea(ideaId: number): Promise<{
 
 **الفئة:** ${idea.category || 'غير محدد'}
 
-**المجال:** ${idea.field || 'غير محدد'}
-
-**المرحلة:** ${idea.stage || 'غير محدد'}
+**الفئة الفرعية:** ${idea.subCategory || 'غير محدد'}
 
 قم بتقييم الفكرة على المعايير التالية (من 0 إلى 100):
 
@@ -161,7 +159,7 @@ export async function evaluateIdea(ideaId: number): Promise<{
     throw new Error("No response from AI");
   }
 
-  const evaluation = JSON.parse(content);
+  const evaluation = JSON.parse(typeof content === 'string' ? content : JSON.stringify(content));
 
   // حساب الدرجة الإجمالية
   const overallScore =

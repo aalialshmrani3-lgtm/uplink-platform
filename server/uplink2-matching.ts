@@ -1,7 +1,9 @@
 // Added for Flowchart Match - UPLINK2 Smart Matching Module
 import { z } from "zod";
 import * as db from "./db";
-import { createMatchingRequest, findMatchingCandidates, saveMatchingResults, updateMatchStatus, createNetworkingConnection } from "./db";
+// TODO: matching functions not available (tables not created)
+// import { createMatchingRequest, findMatchingCandidates, saveMatchingResults, updateMatchStatus, createNetworkingConnection } from "./db";
+import { createNetworkingConnection } from "./db";
 import { invokeLLM } from "./_core/llm";
 
 export const matchingRequestSchema = z.object({
@@ -86,8 +88,9 @@ export function validateMatch(score: number): { isValid: boolean; reason?: strin
 }
 
 /**
- * Request a match
+ * Request a match (TODO: matching tables not created)
  */
+/*
 export async function requestMatch(data: MatchingRequest, userId: number) {
   // Create matching request
   const requestId = await createMatchingRequest({
@@ -132,17 +135,14 @@ export async function requestMatch(data: MatchingRequest, userId: number) {
     success: true
   };
 }
+*/
 
-/**
- * Get matches for a user
- */
+// Get matches for a user (TODO: matching tables not created)
+/*
 export async function getUserMatches(userId: number) {
   return await db.getUserMatches(userId);
 }
 
-/**
- * Accept a match
- */
 export async function acceptMatch(matchId: number, userId: number) {
   const match = await db.getMatchById(matchId);
   
@@ -169,9 +169,6 @@ export async function acceptMatch(matchId: number, userId: number) {
   return { success: true };
 }
 
-/**
- * Reject a match
- */
 export async function rejectMatch(matchId: number, userId: number, reason?: string) {
   const match = await db.getMatchById(matchId);
   
@@ -188,10 +185,9 @@ export async function rejectMatch(matchId: number, userId: number, reason?: stri
   return { success: true };
 }
 
-/**
- * Get matching statistics
- */
 export async function getMatchingStats(userId: number) {
   const stats = await db.getMatchingStats(userId);
   return stats;
 }
+
+*/

@@ -1111,7 +1111,7 @@ export const projects = mysqlTable("projects", {
 	subCategory: varchar({ length: 100 }),
 	stage: mysqlEnum(['idea','prototype','mvp','growth','scale']).default('idea'),
 	engine: mysqlEnum(['uplink1','uplink2','uplink3']).default('uplink1'),
-	status: mysqlEnum(['draft','submitted','evaluating','approved','matched','contracted','completed','rejected']).default('draft'),
+	status: mysqlEnum(['draft','submitted','evaluating','approved','matched','contracted','completed','rejected','listed']).default('draft'),
 	teamSize: int(),
 	fundingNeeded: decimal({ precision: 15, scale: 2 }),
 	fundingReceived: decimal({ precision: 15, scale: 2 }),
@@ -1434,17 +1434,6 @@ export const challengeReviews = mysqlTable("challenge_reviews", {
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 });
-
-// TypeScript types
-export type ChallengeRegistration = typeof challengeRegistrations.$inferSelect;
-export type InsertChallengeRegistration = typeof challengeRegistrations.$inferInsert;
-
-export type ChallengeVote = typeof challengeVotes.$inferSelect;
-export type InsertChallengeVote = typeof challengeVotes.$inferInsert;
-
-export type ChallengeReview = typeof challengeReviews.$inferSelect;
-export type InsertChallengeReview = typeof challengeReviews.$inferInsert;
-
 
 // ========================================
 // الآلية المتكاملة الجديدة - Integrated Innovation System

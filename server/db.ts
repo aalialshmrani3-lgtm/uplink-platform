@@ -44,6 +44,7 @@ import {
   strategicPartners, InsertStrategicPartner, StrategicPartner,
   partnerProjects, InsertPartnerProject, PartnerProject,
   valueFootprints, InsertValueFootprint, ValueFootprint,
+  marketplaceAssets,
   // matches, matchingRequests // Removed: not in schema
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -83,8 +84,8 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     if (user.lastSignedIn !== undefined) { values.lastSignedIn = user.lastSignedIn; updateSet.lastSignedIn = user.lastSignedIn; }
     if (user.role !== undefined) { values.role = user.role; updateSet.role = user.role; }
     else if (user.openId === ENV.ownerOpenId) { values.role = 'admin'; updateSet.role = 'admin'; }
-    if (!values.lastSignedIn) values.lastSignedIn = new Date();
-    if (Object.keys(updateSet).length === 0) updateSet.lastSignedIn = new Date();
+    if (!values.lastSignedIn) values.lastSignedIn = new Date().toISOString();
+    if (Object.keys(updateSet).length === 0) updateSet.lastSignedIn = new Date().toISOString();
 
     await db.insert(users).values(values).onDuplicateKeyUpdate({ set: updateSet });
   } catch (error) { console.error("[Database] Failed to upsert user:", error); throw error; }
@@ -107,7 +108,7 @@ export async function getUserById(id: number) {
 export async function updateUserProfile(userId: number, data: Partial<InsertUser>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(users).set({ ...data, updatedAt: new Date() }).where(eq(users.id, userId));
+  await db.update(users).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(users.id, userId));
 }
 
 export async function getAllUsers(limit = 100) {
@@ -148,7 +149,7 @@ export async function getAllProjects(limit = 100) {
 export async function updateProject(id: number, data: Partial<InsertProject>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(projects).set({ ...data, updatedAt: new Date() }).where(eq(projects.id, id));
+  await db.update(projects).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(projects.id, id));
 }
 
 export async function getProjectsByEngine(engine: 'uplink1' | 'uplink2' | 'uplink3') {
@@ -183,7 +184,7 @@ export async function getIPRegistrationsByUserId(userId: number) {
 export async function updateIPRegistration(id: number, data: Partial<InsertIPRegistration>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(ipRegistrations).set({ ...data, updatedAt: new Date() }).where(eq(ipRegistrations.id, id));
+  await db.update(ipRegistrations).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(ipRegistrations.id, id));
 }
 
 // ============================================
@@ -213,7 +214,7 @@ export async function getEvaluationByProjectId(projectId: number) {
 export async function updateEvaluation(id: number, data: Partial<InsertEvaluation>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(evaluations).set({ ...data, updatedAt: new Date() }).where(eq(evaluations.id, id));
+  await db.update(evaluations).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(evaluations.id, id));
 }
 
 // ============================================
@@ -244,7 +245,7 @@ export async function getContractsByUserId(userId: number) {
 export async function updateContract(id: number, data: Partial<InsertContract>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(contracts).set({ ...data, updatedAt: new Date() }).where(eq(contracts.id, id));
+  await db.update(contracts).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(contracts.id, id));
 }
 
 // ============================================
@@ -344,7 +345,7 @@ export async function getApiKeysByUserId(userId: number) {
 export async function revokeApiKey(id: number) {
   const db = await getDb();
   if (!db) return;
-  await db.update(apiKeys).set({ status: 'revoked', updatedAt: new Date() }).where(eq(apiKeys.id, id));
+  await db.update(apiKeys).set({ status: 'revoked', updatedAt: new Date().toISOString() }).where(eq(apiKeys.id, id));
 }
 
 // ============================================
@@ -423,13 +424,13 @@ export async function getNotificationsByUserId(userId: number, unreadOnly = fals
 export async function markNotificationAsRead(id: number) {
   const db = await getDb();
   if (!db) return;
-  await db.update(notifications).set({ isRead: true }).where(eq(notifications.id, id));
+  await db.update(notifications).set({ isRead: 1 }).where(eq(notifications.id, id));
 }
 
 export async function markAllNotificationsAsRead(userId: number) {
   const db = await getDb();
   if (!db) return;
-  await db.update(notifications).set({ isRead: true }).where(eq(notifications.userId, userId));
+  await db.update(notifications).set({ isRead: 1 }).where(eq(notifications.userId, userId));
 }
 
 // ============================================
@@ -503,7 +504,7 @@ export async function getPipelineInitiativeById(id: number) {
 export async function updatePipelineInitiative(id: number, data: Partial<InsertPipelineInitiative>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(pipelineInitiatives).set({ ...data, updatedAt: new Date() }).where(eq(pipelineInitiatives.id, id));
+  await db.update(pipelineInitiatives).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(pipelineInitiatives.id, id));
 }
 
 export async function deletePipelineInitiative(id: number) {
@@ -538,7 +539,7 @@ export async function getPipelineChallengeById(id: number) {
 export async function updatePipelineChallenge(id: number, data: Partial<InsertPipelineChallenge>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(pipelineChallenges).set({ ...data, updatedAt: new Date() }).where(eq(pipelineChallenges.id, id));
+  await db.update(pipelineChallenges).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(pipelineChallenges.id, id));
 }
 
 // ============================================
@@ -551,7 +552,7 @@ export async function createPipelineIdea(data: InsertPipelineIdea) {
   // Update challenge ideas count
   await db.update(pipelineChallenges).set({ 
     ideasCount: sql`${pipelineChallenges.ideasCount} + 1`,
-    updatedAt: new Date() 
+    updatedAt: new Date().toISOString() 
   }).where(eq(pipelineChallenges.id, data.challengeId));
   return result[0].insertId;
 }
@@ -572,7 +573,7 @@ export async function getPipelineIdeaById(id: number) {
 export async function updatePipelineIdea(id: number, data: Partial<InsertPipelineIdea>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(pipelineIdeas).set({ ...data, updatedAt: new Date() }).where(eq(pipelineIdeas.id, id));
+  await db.update(pipelineIdeas).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(pipelineIdeas.id, id));
 }
 
 export async function voteOnIdea(ideaId: number, userId: number, voteType: 'upvote' | 'downvote') {
@@ -595,7 +596,7 @@ export async function voteOnIdea(ideaId: number, userId: number, voteType: 'upvo
   const [downvotes] = await db.select({ count: sql<number>`count(*)` }).from(pipelineVotes).where(and(eq(pipelineVotes.ideaId, ideaId), eq(pipelineVotes.voteType, 'downvote')));
   
   const totalVotes = (upvotes?.count || 0) - (downvotes?.count || 0);
-  await db.update(pipelineIdeas).set({ votes: totalVotes, updatedAt: new Date() }).where(eq(pipelineIdeas.id, ideaId));
+  await db.update(pipelineIdeas).set({ votes: totalVotes, updatedAt: new Date().toISOString() }).where(eq(pipelineIdeas.id, ideaId));
   
   return totalVotes;
 }
@@ -619,10 +620,10 @@ export async function getPipelineClustersByInitiative(initiativeId: number) {
 export async function assignIdeaToCluster(ideaId: number, clusterId: number) {
   const db = await getDb();
   if (!db) return;
-  await db.update(pipelineIdeas).set({ clusterId, updatedAt: new Date() }).where(eq(pipelineIdeas.id, ideaId));
+  await db.update(pipelineIdeas).set({ clusterId, updatedAt: new Date().toISOString() }).where(eq(pipelineIdeas.id, ideaId));
   // Update cluster ideas count
   const [count] = await db.select({ count: sql<number>`count(*)` }).from(pipelineIdeas).where(eq(pipelineIdeas.clusterId, clusterId));
-  await db.update(pipelineClusters).set({ ideasCount: count?.count || 0, updatedAt: new Date() }).where(eq(pipelineClusters.id, clusterId));
+  await db.update(pipelineClusters).set({ ideasCount: count?.count || 0, updatedAt: new Date().toISOString() }).where(eq(pipelineClusters.id, clusterId));
 }
 
 // ============================================
@@ -644,7 +645,7 @@ export async function getPipelineHypothesesByIdea(ideaId: number) {
 export async function updatePipelineHypothesis(id: number, data: Partial<InsertPipelineHypothesis>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(pipelineHypotheses).set({ ...data, updatedAt: new Date() }).where(eq(pipelineHypotheses.id, id));
+  await db.update(pipelineHypotheses).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(pipelineHypotheses.id, id));
 }
 
 // ============================================
@@ -666,7 +667,7 @@ export async function getPipelineExperimentsByHypothesis(hypothesisId: number) {
 export async function updatePipelineExperiment(id: number, data: Partial<InsertPipelineExperiment>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(pipelineExperiments).set({ ...data, updatedAt: new Date() }).where(eq(pipelineExperiments.id, id));
+  await db.update(pipelineExperiments).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(pipelineExperiments.id, id));
 }
 
 // ============================================
@@ -688,7 +689,7 @@ export async function getPipelineTrends() {
 export async function updatePipelineTrend(id: number, data: Partial<InsertPipelineTrend>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(pipelineTrends).set({ ...data, updatedAt: new Date() }).where(eq(pipelineTrends.id, id));
+  await db.update(pipelineTrends).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(pipelineTrends.id, id));
 }
 
 // ============================================
@@ -717,7 +718,7 @@ export async function addGamificationPoints(userId: number, points: number, acti
   const updateData: Partial<InsertPipelineGamification> = {
     totalPoints: newPoints,
     level: newLevel,
-    lastActivityAt: new Date()
+    lastActivityAt: new Date().toISOString()
   };
   
   // Update specific counters based on action
@@ -727,7 +728,7 @@ export async function addGamificationPoints(userId: number, points: number, acti
   if (action === 'hypothesis_validated') updateData.hypothesesValidated = (gamification.hypothesesValidated || 0) + 1;
   if (action === 'vote_given') updateData.votesGiven = (gamification.votesGiven || 0) + 1;
   
-  await db.update(pipelineGamification).set({ ...updateData, updatedAt: new Date() }).where(eq(pipelineGamification.userId, userId));
+  await db.update(pipelineGamification).set({ ...updateData, updatedAt: new Date().toISOString() }).where(eq(pipelineGamification.userId, userId));
 }
 
 export async function getLeaderboard(limit = 10) {
@@ -826,7 +827,7 @@ export async function createPredictionAccuracy(data: InsertPredictionAccuracy) {
 export async function updatePredictionAccuracy(id: number, data: Partial<InsertPredictionAccuracy>) {
   const db = await getDb();
   if (!db) return;
-  await db.update(predictionAccuracy).set({ ...data, updatedAt: new Date() }).where(eq(predictionAccuracy.id, id));
+  await db.update(predictionAccuracy).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(predictionAccuracy.id, id));
 }
 
 export async function getPredictionAccuracyStats() {
@@ -964,7 +965,7 @@ export async function getAllIdeas(filters?: {
 export async function updateIdea(id: number, data: any) {
   const db = await getDb();
   if (!db) return;
-  await db.update(ideas).set({ ...data, updatedAt: new Date() }).where(eq(ideas.id, id));
+  await db.update(ideas).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(ideas.id, id));
 }
 
 // ============================================
@@ -1048,7 +1049,7 @@ export async function getUserIdeas(userId: number) {
 export async function updateEscrow(escrowId: number, data: Partial<InsertEscrowAccount>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.update(escrowAccounts).set({ ...data, updatedAt: new Date() }).where(eq(escrowAccounts.id, escrowId));
+  await db.update(escrowAccounts).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(escrowAccounts.id, escrowId));
 }
 
 export async function getEscrowById(escrowId: number) {
@@ -1065,8 +1066,10 @@ export async function getEscrowTransactions(escrowId: number) {
 }
 
 // ============================================
-// RELEASE REQUESTS
+// Escrow Release Requests (table not yet created)
 // ============================================
+// TODO: Add releaseRequests table to schema if needed
+/*
 export async function createReleaseRequest(data: InsertReleaseRequest) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
@@ -1087,12 +1090,15 @@ export async function updateReleaseRequest(id: number, data: Partial<InsertRelea
   await db.update(releaseRequests).set(data).where(eq(releaseRequests.id, id));
   return { success: true };
 }
+*/
 
+/*
 export async function getReleaseRequestsByContractId(contractId: number) {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(releaseRequests).where(eq(releaseRequests.contractId, contractId));
 }
+*/
 
 export async function getUserContracts(userId: number) {
   const db = await getDb();
@@ -1121,7 +1127,7 @@ export async function getAllEvents(filters?: any) {
     query = query.where(eq(events.status, filters.status)) as any;
   }
   if (filters?.type) {
-    query = query.where(eq(events.type, filters.type)) as any;
+    query = query.where(eq(events.eventType, filters.type)) as any;
   }
   
   return await query;
@@ -1137,7 +1143,7 @@ export async function getEventById(id: number) {
 export async function getUserEvents(userId: number) {
   const db = await getDb();
   if (!db) return [];
-  return await db.select().from(events).where(eq(events.userId, userId));
+  return await db.select().from(events).where(eq(events.organizerId, userId));
 }
 
 export async function updateEventStatus(id: number, status: any) {
@@ -1204,7 +1210,7 @@ export async function getAllHackathons(filters?: any) {
   const db = await getDb();
   if (!db) return [];
   
-  const conditions = [eq(events.type, 'hackathon')];
+  const conditions = [eq(events.eventType, 'hackathon')];
   if (filters?.status) {
     conditions.push(eq(events.status, filters.status));
   }
@@ -1216,7 +1222,7 @@ export async function getHackathonById(id: number) {
   const db = await getDb();
   if (!db) return undefined;
   const result = await db.select().from(events).where(
-    and(eq(events.id, id), eq(events.type, 'hackathon'))
+    and(eq(events.id, id), eq(events.eventType, 'hackathon'))
   ).limit(1);
   return result[0];
 }
@@ -1225,7 +1231,7 @@ export async function getUserHackathons(userId: number) {
   const db = await getDb();
   if (!db) return [];
   return await db.select().from(events).where(
-    and(eq(events.userId, userId), eq(events.type, 'hackathon'))
+    and(eq(events.organizerId, userId), eq(events.eventType, 'hackathon'))
   );
 }
 
@@ -1260,6 +1266,8 @@ export async function updateHackathonTeam(id: number, data: any) {
 // ============================================
 // MATCHING
 // ============================================
+// TODO: matches and matchingRequests tables not yet created
+/*
 export async function createMatchingRequest(data: any) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
@@ -1314,6 +1322,7 @@ export async function updateMatchStatus(id: number, status: any) {
   await db.update(matches).set({ status }).where(eq(matches.id, id));
   return { success: true };
 }
+*/
 
 // ============================================
 // NETWORKING
@@ -2072,7 +2081,7 @@ export async function calculateValueFootprint(period: string, periodType: 'month
     periodType,
     totalIdeas,
     totalStartups: Number(startupsCount?.count || 0),
-    totalJobs: Number(startupsCount?.count || 0) * 5, // تقدير: كل شركة ناشئة = 5 وظائف
+    totalJobs: (Number(startupsCount?.count || 0) * 5), // تقدير: كل شركة ناشئة = 5 وظائف
     totalRevenue: fundingSum?.total || '0',
     innovationPathCount: Number(innovationCount?.count || 0),
     commercialPathCount: Number(commercialCount?.count || 0),
@@ -2080,4 +2089,53 @@ export async function calculateValueFootprint(period: string, periodType: 'month
   };
   
   return await upsertValueFootprint(data);
+}
+
+/**
+ * إنشاء asset في marketplace
+ */
+export async function createMarketplaceAsset(data: {
+  userId: number;
+  title: string;
+  titleEn?: string;
+  description: string;
+  descriptionEn?: string;
+  category: string;
+  price: string;
+  currency: string;
+  status: 'draft' | 'active' | 'sold' | 'archived';
+  type: 'license' | 'acquisition' | 'partnership' | 'investment' | 'service' | 'nda' | 'product';
+}): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(marketplaceAssets).values({
+    ownerId: data.userId,
+    assetType: data.type === 'license' ? 'license' : data.type === 'product' ? 'product' : 'acquisition',
+    title: data.title,
+    titleEn: data.titleEn,
+    description: data.description,
+    descriptionEn: data.descriptionEn,
+    price: data.price,
+    currency: data.currency,
+    status: data.status,
+  });
+
+  return Number(result[0].insertId);
+}
+
+/**
+ * الحصول على marketplace asset بالـ ID
+ */
+export async function getMarketplaceAssetById(assetId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const [asset] = await db
+    .select()
+    .from(marketplaceAssets)
+    .where(eq(marketplaceAssets.id, assetId))
+    .limit(1);
+
+  return asset || null;
 }

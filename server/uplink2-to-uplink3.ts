@@ -44,7 +44,7 @@ export async function promoteProjectToUplink3(params: {
     price: '100000', // سعر افتراضي
     currency: 'SAR',
     status: 'active',
-    type: 'ip',
+    type: 'license', // IP license
   });
 
   // 3. تحديث المشروع
