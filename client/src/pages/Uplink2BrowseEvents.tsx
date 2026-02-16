@@ -148,8 +148,8 @@ export default function Uplink2BrowseEvents() {
               >
                 <CardHeader>
                   <div className="flex items-start justify-between mb-3">
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${getTypeColor(event.type)} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                      {getTypeIcon(event.type)}
+                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${getTypeColor(event.eventType)} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      {getTypeIcon(event.eventType)}
                     </div>
                     <Badge className={`${getStatusBadge(event.status || 'draft')} text-white border-0`}>
                       {event.status === 'published' ? 'منشور' : 
@@ -159,8 +159,8 @@ export default function Uplink2BrowseEvents() {
                   </div>
                   <div className="mb-2">
                     <Badge variant="outline" className="border-slate-700 text-slate-300">
-                      {event.type === 'workshop' ? 'ورشة عمل' : 
-                       event.type === 'conference' ? 'مؤتمر' : 'هاكاثون'}
+                      {event.eventType === 'workshop' ? 'ورشة عمل' : 
+                       event.eventType === 'conference' ? 'مؤتمر' : 'هاكاثون'}
                     </Badge>
                   </div>
                   <CardTitle className="text-white text-xl mb-2 line-clamp-2">
@@ -179,7 +179,7 @@ export default function Uplink2BrowseEvents() {
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-slate-400">
-                      {event.isVirtual ? (
+                      {event.deliveryMode === "online" ? (
                         <>
                           <Globe className="w-4 h-4 text-blue-500" />
                           <span>افتراضي</span>

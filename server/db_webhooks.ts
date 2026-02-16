@@ -26,7 +26,7 @@ export async function createWebhook(data: {
     url: data.url,
     events: data.events,
     secret: data.secret || crypto.randomBytes(32).toString('hex'),
-    isActive: true,
+    isActive: 1,
   });
   
   return {

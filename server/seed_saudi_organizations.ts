@@ -61,7 +61,7 @@ async function seedSaudiOrganizations() {
     ...org,
     scope: 'local' as const,
     country: 'Saudi Arabia',
-    isActive: true,
+    isActive: 1,
   }));
 
   console.log(`Seeding ${allOrgs.length} Saudi organizations...`);

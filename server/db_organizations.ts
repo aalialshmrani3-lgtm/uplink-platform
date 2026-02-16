@@ -104,7 +104,7 @@ export async function deleteOrganization(id: number) {
   const db = await getDb();
   if (!db) return false;
 
-  await db.update(organizations).set({ isActive: false }).where(eq(organizations.id, id));
+  await db.update(organizations).set({ isActive: 0 }).where(eq(organizations.id, id));
   return true;
 }
 
@@ -270,7 +270,7 @@ export async function getAllOrganizationsWithStats() {
   const db = await getDb();
   if (!db) return [];
 
-  const orgs = await getAllOrganizations({ isActive: true });
+  const orgs = await getAllOrganizations({ isActive: 1 });
 
   const orgsWithStats = await Promise.all(
     orgs.map(async (org) => {

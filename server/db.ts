@@ -1441,9 +1441,11 @@ export async function getAssetById(id: number) {
   if (!result[0]) return null;
 
   // Increment views
-  await db.update(blockchainAssets)
-    .set({ views: result[0].views + 1 })
-    .where(eq(blockchainAssets.id, id));
+  if (result[0]) {
+    await db.update(blockchainAssets)
+      .set({ views: (result[0].views || 0) + 1 })
+      .where(eq(blockchainAssets.id, id));
+  }
 
   return result[0];
 }
@@ -1460,10 +1462,10 @@ export async function likeAsset(assetId: number) {
   if (!asset[0]) throw new Error("Asset not found");
 
   await db.update(blockchainAssets)
-    .set({ likes: asset[0].likes + 1 })
+    .set({ likes: (asset[0].likes || 0) + 1 })
     .where(eq(blockchainAssets.id, assetId));
 
-  return { success: true, likes: asset[0].likes + 1 };
+  return { success: true, likes: (asset[0].likes || 0) + 1 };
 }
 
 export async function contactAssetOwner(assetId: number) {
@@ -1478,7 +1480,7 @@ export async function contactAssetOwner(assetId: number) {
   if (!asset[0]) throw new Error("Asset not found");
 
   await db.update(blockchainAssets)
-    .set({ contactCount: asset[0].contactCount + 1 })
+    .set({ contactCount: (asset[0].contactCount || 0) + 1 })
     .where(eq(blockchainAssets.id, assetId));
 
   return { success: true };

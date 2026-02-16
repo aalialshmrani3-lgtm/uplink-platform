@@ -115,14 +115,14 @@ export default function Uplink2EventDetail() {
           <CardHeader>
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${getTypeColor(event.type)} flex items-center justify-center`}>
-                  {getTypeIcon(event.type)}
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${getTypeColor(event.eventType)} flex items-center justify-center`}>
+                  {getTypeIcon(event.eventType)}
                 </div>
                 <div>
                   <div className="mb-2">
                     <Badge variant="outline" className="border-slate-700 text-slate-300">
-                      {event.type === 'workshop' ? 'ورشة عمل' : 
-                       event.type === 'conference' ? 'مؤتمر' : 'هاكاثون'}
+                      {event.eventType === 'workshop' ? 'ورشة عمل' : 
+                       event.eventType === 'conference' ? 'مؤتمر' : 'هاكاثون'}
                     </Badge>
                   </div>
                   <CardTitle className="text-white text-3xl mb-2">{event.title}</CardTitle>
