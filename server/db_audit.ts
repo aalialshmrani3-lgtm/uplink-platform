@@ -40,8 +40,8 @@ export async function getAllAuditLogs(params: {
   if (resource) conditions.push(eq(auditLogs.resource, resource));
   if (action) conditions.push(eq(auditLogs.action, action));
   if (status) conditions.push(eq(auditLogs.status, status));
-  if (startDate) conditions.push(gte(auditLogs.createdAt, startDate));
-  if (endDate) conditions.push(lte(auditLogs.createdAt, endDate));
+  if (startDate) conditions.push(gte(auditLogs.createdAt, startDate.toISOString()));
+  if (endDate) conditions.push(lte(auditLogs.createdAt, endDate.toISOString()));
   
   let query = db.select().from(auditLogs);
   
@@ -89,8 +89,8 @@ export async function getAuditLogsCount(params: {
   if (resource) conditions.push(eq(auditLogs.resource, resource));
   if (action) conditions.push(eq(auditLogs.action, action));
   if (status) conditions.push(eq(auditLogs.status, status));
-  if (startDate) conditions.push(gte(auditLogs.createdAt, startDate));
-  if (endDate) conditions.push(lte(auditLogs.createdAt, endDate));
+  if (startDate) conditions.push(gte(auditLogs.createdAt, startDate.toISOString()));
+  if (endDate) conditions.push(lte(auditLogs.createdAt, endDate.toISOString()));
   
   let query = db.select({ count: sql<number>`count(*)` }).from(auditLogs);
   

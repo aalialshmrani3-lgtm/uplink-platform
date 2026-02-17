@@ -41,7 +41,7 @@ export async function createApiKey(data: {
     rateLimit: data.rateLimit || 1000,
     expiresAt: data.expiresAt,
     status: 'active',
-  });
+  }).returning();
   
   // Return the plain key ONLY once (user must save it)
   return {
@@ -99,7 +99,7 @@ export async function validateApiKey(key: string) {
   }
   
   // Check expiration
-  if (apiKey.expiresAt && new Date() > apiKey.expiresAt) {
+  if (apiKey.expiresAt && new Date() > new Date(apiKey.expiresAt)) {
     return null;
   }
   
@@ -114,7 +114,7 @@ export async function updateApiKeyUsage(keyId: number) {
   if (!db) throw new Error('Database connection failed');
   await db
     .update(apiKeys)
-    .set({ lastUsedAt: new Date() })
+    .set({ lastUsedAt: new Date().toISOString() })
     .where(eq(apiKeys.id, keyId));
 }
 
