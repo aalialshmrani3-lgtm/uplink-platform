@@ -2465,7 +2465,7 @@ Provide response in JSON format:
       }))
       .mutation(async ({ input }) => {
         const { createRole } = await import('./db_rbac');
-        return await createRole({ ...input, isSystem: false });
+        return await createRole({ ...input, isSystem: 0 });
       }),
 
     updateRole: protectedProcedure

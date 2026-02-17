@@ -64,14 +64,14 @@ const defaultRoles = [
     name: 'super_admin',
     displayName: 'Super Administrator',
     description: 'Full system access with all permissions',
-    isSystem: true,
+    isSystem: 1,
     permissions: ['*'], // All permissions
   },
   {
     name: 'admin',
     displayName: 'Administrator',
     description: 'Platform administrator with most permissions',
-    isSystem: true,
+    isSystem: 1,
     permissions: [
       'ideas:read', 'ideas:create', 'ideas:update', 'ideas:delete', 'ideas:evaluate',
       'projects:read', 'projects:create', 'projects:update', 'projects:delete',
@@ -86,7 +86,7 @@ const defaultRoles = [
     name: 'data_scientist',
     displayName: 'Data Scientist',
     description: 'ML model management and analytics access',
-    isSystem: true,
+    isSystem: 1,
     permissions: [
       'ideas:read', 'ideas:evaluate',
       'projects:read',
@@ -98,7 +98,7 @@ const defaultRoles = [
     name: 'reviewer',
     displayName: 'Reviewer',
     description: 'Can review and evaluate ideas',
-    isSystem: true,
+    isSystem: 1,
     permissions: [
       'ideas:read', 'ideas:evaluate',
       'projects:read',
@@ -109,7 +109,7 @@ const defaultRoles = [
     name: 'innovator',
     displayName: 'Innovator',
     description: 'Can submit and manage own ideas',
-    isSystem: true,
+    isSystem: 1,
     permissions: [
       'ideas:read', 'ideas:create', 'ideas:update',
       'projects:read', 'projects:create', 'projects:update',
@@ -119,7 +119,7 @@ const defaultRoles = [
     name: 'viewer',
     displayName: 'Viewer',
     description: 'Read-only access to public information',
-    isSystem: true,
+    isSystem: 1,
     permissions: [
       'ideas:read',
       'projects:read',

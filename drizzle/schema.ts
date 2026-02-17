@@ -1660,3 +1660,9 @@ export type InsertChallengeReview = typeof challengeReviews.$inferInsert;
 
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type InsertAuditLog = typeof auditLogs.$inferInsert;
+
+export type IdeaOutcome = typeof ideaOutcomes.$inferSelect;
+export type InsertIdeaOutcome = typeof ideaOutcomes.$inferInsert;
+
+export type SavedView = typeof savedViews.$inferSelect;
+export type InsertSavedView = typeof savedViews.$inferInsert;
