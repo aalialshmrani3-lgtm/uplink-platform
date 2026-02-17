@@ -1561,6 +1561,42 @@ export type InsertPartnerProject = typeof partnerProjects.$inferInsert;
 export type ValueFootprint = typeof valueFootprints.$inferSelect;
 export type InsertValueFootprint = typeof valueFootprints.$inferInsert;
 
+// ============================================
+// Agreements System - نظام الاتفاقات
+// ============================================
+export const agreements = mysqlTable("agreements", {
+	id: int().autoincrement().notNull(),
+	projectId: int().notNull(), // المشروع الطالب
+	entityType: mysqlEnum(['challenge', 'accelerator', 'incubator', 'partner']).notNull(), // نوع الجهة
+	entityId: int().notNull(), // ID الجهة (تحدي/مسرع/حاضنة/شريك)
+	status: mysqlEnum(['pending', 'accepted', 'rejected', 'cancelled']).default('pending').notNull(),
+	requestMessage: text(), // رسالة الطلب من المشروع
+	responseMessage: text(), // رد الجهة (قبول/رفض)
+	matchScore: decimal({ precision: 5, scale: 2 }), // نسبة المطابقة AI (0-100%)
+	matchReasoning: text(), // أسباب المطابقة AI
+	requesterId: int().notNull(), // من قدم الطلب (userId)
+	responderId: int(), // من رد على الطلب (userId)
+	respondedAt: timestamp({ mode: 'string' }), // تاريخ الرد
+	promotedToUplink3: int().default(0), // هل تم الانتقال إلى UPLINK 3 (0/1)
+	promotedAt: timestamp({ mode: 'string' }), // تاريخ الانتقال
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+export const agreementMessages = mysqlTable("agreement_messages", {
+	id: int().autoincrement().notNull(),
+	agreementId: int().notNull(),
+	senderId: int().notNull(), // userId
+	message: text().notNull(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export type Agreement = typeof agreements.$inferSelect;
+export type InsertAgreement = typeof agreements.$inferInsert;
+
+export type AgreementMessage = typeof agreementMessages.$inferSelect;
+export type InsertAgreementMessage = typeof agreementMessages.$inferInsert;
+
 // Additional TypeScript types for all tables
 export type InsertUser = typeof users.$inferInsert;
 
