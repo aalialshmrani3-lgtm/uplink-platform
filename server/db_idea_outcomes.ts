@@ -87,9 +87,17 @@ export async function updateIdeaOutcome(
 ) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  
+  const updateData: any = {};
+  if (data.outcome) updateData.outcome = data.outcome;
+  if (data.outcomeDate) updateData.outcomeDate = data.outcomeDate.toISOString();
+  if (data.outcomeNotes) updateData.outcomeNotes = data.outcomeNotes;
+  if (data.classifiedBy) updateData.classifiedBy = data.classifiedBy;
+  if (data.classifiedAt) updateData.classifiedAt = data.classifiedAt.toISOString();
+  
   await db
     .update(ideaOutcomes)
-    .set(data)
+    .set(updateData)
     .where(eq(ideaOutcomes.id, id));
   
   return await getIdeaOutcomeById(id);

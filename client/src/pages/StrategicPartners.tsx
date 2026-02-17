@@ -68,13 +68,13 @@ export default function StrategicPartners() {
               <CardContent>
                 <div className="space-y-3">
                   {/* Focus Areas */}
-                  {partner.focusAreas && partner.focusAreas.length > 0 && (
+                  {partner.focusAreas && Array.isArray(partner.focusAreas) && partner.focusAreas.length > 0 && (
                     <div>
                       <strong className="text-sm">مجالات التركيز:</strong>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {partner.focusAreas.slice(0, 3).map((area: string, index: number) => (
+                        {(partner.focusAreas as any[]).slice(0, 3).map((area: any, index: number) => (
                           <Badge key={index} variant="outline" className="text-xs">
-                            {area}
+                            {String(area)}
                           </Badge>
                         ))}
                       </div>
@@ -82,13 +82,13 @@ export default function StrategicPartners() {
                   )}
 
                   {/* Support Types */}
-                  {partner.supportTypes && partner.supportTypes.length > 0 && (
+                  {partner.supportTypes && Array.isArray(partner.supportTypes) && partner.supportTypes.length > 0 && (
                     <div>
                       <strong className="text-sm">أنواع الدعم:</strong>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {partner.supportTypes.slice(0, 3).map((type: string, index: number) => (
+                        {(partner.supportTypes as any[]).slice(0, 3).map((type: any, index: number) => (
                           <Badge key={index} variant="secondary" className="text-xs">
-                            {type}
+                            {String(type)}
                           </Badge>
                         ))}
                       </div>

@@ -30,7 +30,7 @@ export default function ContractSignature() {
       refetch();
       setIsUploading(false);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({
         title: "❌ فشل حفظ التوقيع",
         description: error.message,
@@ -41,13 +41,13 @@ export default function ContractSignature() {
   });
 
   const generatePdfMutation = trpc.uplink3.contracts.generateSignedPDF.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast({
         title: "✅ تم توليد PDF",
         description: data.message,
       });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({
         title: "❌ فشل توليد PDF",
         description: error.message,

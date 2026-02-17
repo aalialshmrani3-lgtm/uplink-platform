@@ -23,6 +23,7 @@ export default function Uplink2Marketplace() {
 
   // Fetch approved IPs from marketplace
   const { data: listings, isLoading } = trpc.uplink2.marketplace.getApprovedIPs.useQuery();
+  const listingsArray = (listings as unknown as any[]) || [];
 
   // Request purchase mutation
   const requestPurchase = trpc.uplink2.marketplace.requestPurchase.useMutation({
@@ -40,7 +41,7 @@ export default function Uplink2Marketplace() {
   };
 
   // Filter listings
-  const filteredListings = listings?.filter((listing: any) => {
+  const filteredListings = listingsArray.filter((listing: any) => {
     const matchesSearch = !searchQuery || 
       listing.ip_registrations?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       listing.description?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -77,7 +78,7 @@ export default function Uplink2Marketplace() {
             <div className="flex items-center gap-4">
               <Award className="w-10 h-10 text-yellow-400" />
               <div>
-                <div className="text-3xl font-bold text-white">{listings?.length || 0}</div>
+                <div className="text-3xl font-bold text-white">{listingsArray.length || 0}</div>
                 <div className="text-sm text-purple-200">ملكية معتمدة</div>
               </div>
             </div>

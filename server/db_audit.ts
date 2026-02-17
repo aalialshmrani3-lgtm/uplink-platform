@@ -165,7 +165,7 @@ export async function deleteOldAuditLogs(daysToKeep: number = 90): Promise<numbe
   
   const result = await db
     .delete(auditLogs)
-    .where(lte(auditLogs.createdAt, cutoffDate));
+    .where(lte(auditLogs.createdAt, cutoffDate.toISOString()));
   
   return Number((result as any).rowsAffected || 0);
 }

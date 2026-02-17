@@ -239,7 +239,7 @@ export default function RoleManagement() {
                               id={`perm-${perm.id}`}
                               checked={isAssigned}
                               onCheckedChange={() => handleTogglePermission(perm.id, isAssigned)}
-                              disabled={selectedRoleData?.isSystem || false}
+                              disabled={!!selectedRoleData?.isSystem}
                             />
                             <label
                               htmlFor={`perm-${perm.id}`}

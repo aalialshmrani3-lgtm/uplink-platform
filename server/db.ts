@@ -416,7 +416,7 @@ export async function getNotificationsByUserId(userId: number, unreadOnly = fals
   const db = await getDb();
   if (!db) return [];
   if (unreadOnly) {
-    return db.select().from(notifications).where(and(eq(notifications.userId, userId), eq(notifications.isRead, false))).orderBy(desc(notifications.createdAt));
+    return db.select().from(notifications).where(and(eq(notifications.userId, userId), eq(notifications.isRead, 0))).orderBy(desc(notifications.createdAt));
   }
   return db.select().from(notifications).where(eq(notifications.userId, userId)).orderBy(desc(notifications.createdAt)).limit(50);
 }
@@ -446,7 +446,7 @@ export async function getAnalytics(metric: string, startDate: Date, endDate: Dat
   const db = await getDb();
   if (!db) return [];
   return db.select().from(analytics).where(
-    and(eq(analytics.metric, metric), gte(analytics.date, startDate), lte(analytics.date, endDate))
+    and(eq(analytics.metric, metric), gte(analytics.date, startDate.toISOString()), lte(analytics.date, endDate.toISOString()))
   ).orderBy(analytics.date);
 }
 
@@ -834,7 +834,7 @@ export async function getPredictionAccuracyStats() {
   const db = await getDb();
   if (!db) return { total: 0, correct: 0, accuracy: 0 };
   
-  const results = await db.select().from(predictionAccuracy).where(eq(predictionAccuracy.correct, true));
+  const results = await db.select().from(predictionAccuracy).where(eq(predictionAccuracy.correct, 1));
   const total = results.length;
   const correct = results.filter(r => r.correct).length;
   
@@ -1877,7 +1877,8 @@ export async function getAllStrategicPartners(activeOnly = true) {
   let query = db.select().from(strategicPartners);
   
   if (activeOnly) {
-    query = query.where(eq(strategicPartners.status, 'active'));
+    const partners = await query.where(eq(strategicPartners.status, 'active')).orderBy(strategicPartners.name);
+    return partners;
   }
   
   const partners = await query.orderBy(strategicPartners.name);
@@ -1933,7 +1934,7 @@ export async function getPartnerProjects(partnerId?: number, ideaId?: number) {
   const db = await getDb();
   if (!db) return [];
   
-  let query = db.select({
+  const baseQuery = db.select({
     id: partnerProjects.id,
     partnerId: partnerProjects.partnerId,
     ideaId: partnerProjects.ideaId,
@@ -1955,15 +1956,24 @@ export async function getPartnerProjects(partnerId?: number, ideaId?: number) {
     .leftJoin(strategicPartners, eq(partnerProjects.partnerId, strategicPartners.id))
     .leftJoin(ideas, eq(partnerProjects.ideaId, ideas.id));
   
-  if (partnerId) {
-    query = query.where(eq(partnerProjects.partnerId, partnerId));
+  if (partnerId && ideaId) {
+    const projects = await baseQuery
+      .where(and(eq(partnerProjects.partnerId, partnerId), eq(partnerProjects.ideaId, ideaId)))
+      .orderBy(desc(partnerProjects.createdAt));
+    return projects;
+  } else if (partnerId) {
+    const projects = await baseQuery
+      .where(eq(partnerProjects.partnerId, partnerId))
+      .orderBy(desc(partnerProjects.createdAt));
+    return projects;
+  } else if (ideaId) {
+    const projects = await baseQuery
+      .where(eq(partnerProjects.ideaId, ideaId))
+      .orderBy(desc(partnerProjects.createdAt));
+    return projects;
   }
   
-  if (ideaId) {
-    query = query.where(eq(partnerProjects.ideaId, ideaId));
-  }
-  
-  const projects = await query.orderBy(desc(partnerProjects.createdAt));
+  const projects = await baseQuery.orderBy(desc(partnerProjects.createdAt));
   return projects;
 }
 
@@ -2019,7 +2029,11 @@ export async function getValueFootprints(periodType?: 'monthly' | 'quarterly' | 
   let query = db.select().from(valueFootprints);
   
   if (periodType) {
-    query = query.where(eq(valueFootprints.periodType, periodType));
+    const footprints = await query
+      .where(eq(valueFootprints.periodType, periodType))
+      .orderBy(desc(valueFootprints.period))
+      .limit(limit);
+    return footprints;
   }
   
   const footprints = await query
@@ -2084,7 +2098,7 @@ export async function calculateValueFootprint(period: string, periodType: 'month
     totalIdeas,
     totalStartups: Number(startupsCount?.count || 0),
     totalJobs: (Number(startupsCount?.count || 0) * 5), // تقدير: كل شركة ناشئة = 5 وظائف
-    totalRevenue: fundingSum?.total || '0',
+    totalRevenue: String(fundingSum?.total || '0'),
     innovationPathCount: Number(innovationCount?.count || 0),
     commercialPathCount: Number(commercialCount?.count || 0),
     guidancePathCount: Number(guidanceCount?.count || 0),
@@ -2105,25 +2119,25 @@ export async function createMarketplaceAsset(data: {
   category: string;
   price: string;
   currency: string;
-  status: 'draft' | 'active' | 'sold' | 'archived';
+  status: 'draft' | 'pending_review' | 'active' | 'sold' | 'delisted' | 'expired';
   type: 'license' | 'acquisition' | 'partnership' | 'investment' | 'service' | 'nda' | 'product';
 }): Promise<number> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const result = await db.insert(marketplaceAssets).values({
+  const [result] = await db.insert(marketplaceAssets).values({
     ownerId: data.userId,
     assetType: data.type === 'license' ? 'license' : data.type === 'product' ? 'product' : 'acquisition',
     title: data.title,
-    titleEn: data.titleEn,
+    titleEn: data.titleEn || null,
     description: data.description,
-    descriptionEn: data.descriptionEn,
+    descriptionEn: data.descriptionEn || null,
     price: data.price,
     currency: data.currency,
     status: data.status,
   });
 
-  return Number(result[0].insertId);
+  return Number(result.insertId);
 }
 
 /**

@@ -18,7 +18,7 @@ export async function getUserSavedViews(userId: number, viewType?: string): Prom
   const conditions = [
     or(
       eq(savedViews.userId, userId),
-      eq(savedViews.isPublic, true)
+      eq(savedViews.isPublic, 1)
     )
   ];
   
@@ -38,7 +38,7 @@ export async function getSavedViewById(id: number, userId: number): Promise<Save
       eq(savedViews.id, id),
       or(
         eq(savedViews.userId, userId),
-        eq(savedViews.isPublic, true)
+        eq(savedViews.isPublic, 1)
       )
     )
   );

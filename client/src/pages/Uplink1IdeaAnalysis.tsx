@@ -115,7 +115,7 @@ export default function Uplink1IdeaAnalysis() {
             <CardContent>
               <div className="flex items-center gap-4 mb-4">
                 <Badge className={`text-lg px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-0`}>
-                  {analysis.classification === 'innovation' ? 'ابتكار حقيقي' : analysis.classification === 'business' ? 'مشروع تجاري' : 'تحتاج تطوير'}
+                  {analysis.classification === 'innovation' ? 'ابتكار حقيقي' : analysis.classification === 'commercial' ? 'مشروع تجاري' : 'تحتاج تطوير'}
                 </Badge>
                 <span className="text-3xl font-bold text-foreground">{analysis.overallScore}%</span>
               </div>

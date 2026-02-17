@@ -130,9 +130,9 @@ export default function IdeaJourney() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {classification.assignedPartnerId === "kaust" && "KAUST"}
-                {classification.assignedPartnerId === "monshaat" && "Monsha'at"}
-                {classification.assignedPartnerId === "rdia" && "RDIA"}
+                {classification.assignedPartnerId === 1 && "KAUST"}
+                {classification.assignedPartnerId === 2 && "Monsha'at"}
+                {classification.assignedPartnerId === 3 && "RDIA"}
               </div>
             </CardContent>
           </Card>

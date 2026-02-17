@@ -9,6 +9,7 @@ import { ArrowLeft, Star, CheckCircle2, XCircle, FileText, ExternalLink } from "
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useParams } from "wouter";
 
 export default function Uplink2AdminSubmissions() {
   const { id } = useParams<{ id: string }>();
@@ -22,7 +23,7 @@ export default function Uplink2AdminSubmissions() {
   const [reviewData, setReviewData] = useState({
     score: 0,
     feedback: "",
-    status: "pending" as "pending" | "approved" | "rejected",
+    status: "shortlist" as "shortlist" | "finalist" | "winner" | "reject",
   });
 
   const submitReviewMutation = trpc.uplink2.challenges.submitReview.useMutation({
@@ -41,9 +42,10 @@ export default function Uplink2AdminSubmissions() {
     
     submitReviewMutation.mutate({
       submissionId: selectedSubmission,
-      score: reviewData.score,
-      feedback: reviewData.feedback,
-      status: reviewData.status,
+      criteriaScores: {},
+      overallScore: reviewData.score || 0,
+      strengths: reviewData.feedback,
+      decision: reviewData.status as "shortlist" | "finalist" | "winner" | "reject",
     });
   };
 

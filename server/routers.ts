@@ -2668,6 +2668,7 @@ Provide response in JSON format:
         return await createSavedView({
           userId: ctx.user.id,
           ...input,
+          isPublic: input.isPublic ? 1 : 0,
         });
       }),
 
@@ -2696,7 +2697,13 @@ Provide response in JSON format:
       .mutation(async ({ ctx, input }) => {
         const { id, ...data } = input;
         const { updateSavedView } = await import('./db_saved_views');
-        const success = await updateSavedView(id, ctx.user.id, data);
+        const updateData: Partial<{ name: string; description: string; filters: any; isPublic: number }> = {
+          ...(data.name && { name: data.name }),
+          ...(data.description && { description: data.description }),
+          ...(data.filters && { filters: data.filters }),
+          ...(data.isPublic !== undefined && { isPublic: data.isPublic ? 1 : 0 }),
+        };
+        const success = await updateSavedView(id, ctx.user.id, updateData);
         if (!success) throw new Error('View not found or access denied');
         return { success };
       }),

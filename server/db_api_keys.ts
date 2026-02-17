@@ -39,9 +39,9 @@ export async function createApiKey(data: {
     keyHash: hash,
     keyPrefix: prefix,
     rateLimit: data.rateLimit || 1000,
-    expiresAt: data.expiresAt,
+    expiresAt: data.expiresAt ? data.expiresAt.toISOString() : null,
     status: 'active',
-  }).returning();
+  });
   
   // Return the plain key ONLY once (user must save it)
   return {

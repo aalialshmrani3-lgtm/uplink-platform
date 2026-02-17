@@ -21,7 +21,7 @@ export async function getAllOrganizations(filters?: {
     if (filters.type) conditions.push(eq(organizations.type, filters.type));
     if (filters.scope) conditions.push(eq(organizations.scope, filters.scope));
     if (filters.country) conditions.push(eq(organizations.country, filters.country));
-    if (filters.isActive !== undefined) conditions.push(eq(organizations.isActive, filters.isActive));
+    if (filters.isActive !== undefined) conditions.push(eq(organizations.isActive, filters.isActive ? 1 : 0));
   }
 
   if (conditions.length > 0) {
@@ -63,7 +63,7 @@ export async function createOrganization(data: {
 
   const result = await db.insert(organizations).values({
     ...data,
-    isActive: data.isActive ?? true,
+    isActive: (data.isActive ?? true) ? 1 : 0,
   });
 
   // Get the last inserted ID
@@ -93,7 +93,20 @@ export async function updateOrganization(
   const db = await getDb();
   if (!db) return null;
 
-  await db.update(organizations).set(data).where(eq(organizations.id, id));
+  const updateData: any = {};
+  if (data.nameAr) updateData.nameAr = data.nameAr;
+  if (data.nameEn) updateData.nameEn = data.nameEn;
+  if (data.type) updateData.type = data.type;
+  if (data.scope) updateData.scope = data.scope;
+  if (data.country) updateData.country = data.country;
+  if (data.logo) updateData.logo = data.logo;
+  if (data.description) updateData.description = data.description;
+  if (data.website) updateData.website = data.website;
+  if (data.contactEmail) updateData.contactEmail = data.contactEmail;
+  if (data.contactPhone) updateData.contactPhone = data.contactPhone;
+  if (data.isActive !== undefined) updateData.isActive = data.isActive ? 1 : 0;
+  
+  await db.update(organizations).set(updateData).where(eq(organizations.id, id));
   return await getOrganizationById(id);
 }
 
@@ -270,7 +283,7 @@ export async function getAllOrganizationsWithStats() {
   const db = await getDb();
   if (!db) return [];
 
-  const orgs = await getAllOrganizations({ isActive: 1 });
+  const orgs = await getAllOrganizations({ isActive: true });
 
   const orgsWithStats = await Promise.all(
     orgs.map(async (org) => {
