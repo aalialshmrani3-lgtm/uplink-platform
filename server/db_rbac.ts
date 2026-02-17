@@ -6,17 +6,18 @@ import {
   rolePermissions,
   userRoles,
   dataVisibilityRules,
-  type Role,
-  type Permission,
-  type RolePermission,
-  type UserRole,
-  type DataVisibilityRule,
-  type InsertRole,
-  type InsertPermission,
-  type InsertRolePermission,
-  type InsertUserRole,
-  type InsertDataVisibilityRule,
 } from '../drizzle/schema';
+
+type Role = typeof roles.$inferSelect;
+type Permission = typeof permissions.$inferSelect;
+type RolePermission = typeof rolePermissions.$inferSelect;
+type UserRole = typeof userRoles.$inferSelect;
+type DataVisibilityRule = typeof dataVisibilityRules.$inferSelect;
+type InsertRole = typeof roles.$inferInsert;
+type InsertPermission = typeof permissions.$inferInsert;
+type InsertRolePermission = typeof rolePermissions.$inferInsert;
+type InsertUserRole = typeof userRoles.$inferInsert;
+type InsertDataVisibilityRule = typeof dataVisibilityRules.$inferInsert;
 
 // ============================================
 // ROLES

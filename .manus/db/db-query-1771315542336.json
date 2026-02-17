@@ -1,0 +1,76 @@
+{
+  "query": "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'challenge_submissions' AND TABLE_SCHEMA = DATABASE() ORDER BY ORDINAL_POSITION;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'challenge_submissions' AND TABLE_SCHEMA = DATABASE() ORDER BY ORDINAL_POSITION;",
+  "rows": [
+    {
+      "COLUMN_NAME": "id"
+    },
+    {
+      "COLUMN_NAME": "challengeId"
+    },
+    {
+      "COLUMN_NAME": "userId"
+    },
+    {
+      "COLUMN_NAME": "ideaId"
+    },
+    {
+      "COLUMN_NAME": "title"
+    },
+    {
+      "COLUMN_NAME": "description"
+    },
+    {
+      "COLUMN_NAME": "solution"
+    },
+    {
+      "COLUMN_NAME": "expectedImpact"
+    },
+    {
+      "COLUMN_NAME": "teamName"
+    },
+    {
+      "COLUMN_NAME": "teamMembers"
+    },
+    {
+      "COLUMN_NAME": "teamSize"
+    },
+    {
+      "COLUMN_NAME": "documents"
+    },
+    {
+      "COLUMN_NAME": "images"
+    },
+    {
+      "COLUMN_NAME": "video"
+    },
+    {
+      "COLUMN_NAME": "prototype"
+    },
+    {
+      "COLUMN_NAME": "evaluationScore"
+    },
+    {
+      "COLUMN_NAME": "evaluationNotes"
+    },
+    {
+      "COLUMN_NAME": "rank"
+    },
+    {
+      "COLUMN_NAME": "status"
+    },
+    {
+      "COLUMN_NAME": "submittedAt"
+    },
+    {
+      "COLUMN_NAME": "createdAt"
+    },
+    {
+      "COLUMN_NAME": "updatedAt"
+    }
+  ],
+  "messages": [],
+  "stdout": "COLUMN_NAME\nid\nchallengeId\nuserId\nideaId\ntitle\ndescription\nsolution\nexpectedImpact\nteamName\nteamMembers\nteamSize\ndocuments\nimages\nvideo\nprototype\nevaluationScore\nevaluationNotes\nrank\nstatus\nsubmittedAt\ncreatedAt\nupdatedAt\n",
+  "stderr": "",
+  "execution_time_ms": 1541
+}
