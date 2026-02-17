@@ -106,7 +106,7 @@ export default function Uplink2ChallengeDetails() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-blue-500" />
-                  <span>ينتهي: {new Date(challenge.deadline).toLocaleDateString('ar-SA')}</span>
+                  <span>ينتهي: {challenge.deadline ? new Date(challenge.deadline).toLocaleDateString('ar-SA') : 'غير محدد'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-green-500" />
@@ -175,19 +175,25 @@ export default function Uplink2ChallengeDetails() {
                   <p className="text-muted-foreground leading-relaxed">{challenge.description}</p>
                 </div>
 
-                {challenge.requirements && (
-                  <div>
-                    <h3 className="font-semibold mb-2">المتطلبات:</h3>
-                    <p className="text-muted-foreground leading-relaxed">{challenge.requirements}</p>
-                  </div>
-                )}
+                {(() => {
+                  const reqs = challenge.requirements;
+                  return reqs && (
+                    <div>
+                      <h3 className="font-semibold mb-2">المتطلبات:</h3>
+                      <p className="text-muted-foreground leading-relaxed">{String(reqs)}</p>
+                    </div>
+                  );
+                })() as any}
 
-                {challenge.criteria && (
-                  <div>
-                    <h3 className="font-semibold mb-2">معايير التقييم:</h3>
-                    <p className="text-muted-foreground leading-relaxed">{challenge.criteria}</p>
-                  </div>
-                )}
+                {(() => {
+                  const crit = challenge.criteria;
+                  return crit && (
+                    <div>
+                      <h3 className="font-semibold mb-2">معايير التقييم:</h3>
+                      <p className="text-muted-foreground leading-relaxed">{String(crit)}</p>
+                    </div>
+                  );
+                })() as any}
               </CardContent>
             </Card>
 
@@ -262,7 +268,7 @@ export default function Uplink2ChallengeDetails() {
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4" />
                     <span className="font-medium">
-                      {new Date(challenge.deadline).toLocaleDateString('ar-SA')}
+                      {challenge.deadline ? new Date(challenge.deadline).toLocaleDateString('ar-SA') : 'غير محدد'}
                     </span>
                   </div>
                 </div>

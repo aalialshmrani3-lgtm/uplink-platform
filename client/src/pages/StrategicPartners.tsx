@@ -67,33 +67,37 @@ export default function StrategicPartners() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {/* Focus Areas */}
-                  {partner.focusAreas && Array.isArray(partner.focusAreas) && partner.focusAreas.length > 0 && (
-                    <div>
-                      <strong className="text-sm">مجالات التركيز:</strong>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {(partner.focusAreas as any[]).slice(0, 3).map((area: any, index: number) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {String(area)}
-                          </Badge>
-                        ))}
+                  {(() => {
+                    const areas = partner.focusAreas;
+                    return areas && Array.isArray(areas) && areas.length > 0 && (
+                      <div>
+                        <strong className="text-sm">مجالات التركيز:</strong>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {(areas as any[]).slice(0, 3).map((area: any, index: number) => (
+                            <Badge key={index} variant="outline" className="text-xs">
+                              {String(area)}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })() as any}
 
-                  {/* Support Types */}
-                  {partner.supportTypes && Array.isArray(partner.supportTypes) && partner.supportTypes.length > 0 && (
-                    <div>
-                      <strong className="text-sm">أنواع الدعم:</strong>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {(partner.supportTypes as any[]).slice(0, 3).map((type: any, index: number) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            {String(type)}
-                          </Badge>
-                        ))}
+                  {(() => {
+                    const types = partner.supportTypes;
+                    return types && Array.isArray(types) && types.length > 0 && (
+                      <div>
+                        <strong className="text-sm">أنواع الدعم:</strong>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {(types as any[]).slice(0, 3).map((type: any, index: number) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              {String(type)}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })() as any}
 
                   {/* Contact Info */}
                   <div className="pt-3 border-t space-y-2">

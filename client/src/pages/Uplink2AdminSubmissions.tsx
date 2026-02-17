@@ -9,7 +9,6 @@ import { ArrowLeft, Star, CheckCircle2, XCircle, FileText, ExternalLink } from "
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useParams } from "wouter";
 
 export default function Uplink2AdminSubmissions() {
   const { id } = useParams<{ id: string }>();
@@ -184,25 +183,25 @@ export default function Uplink2AdminSubmissions() {
                           <div className="flex gap-2 mt-2">
                             <Button
                               size="sm"
-                              variant={reviewData.status === "approved" ? "default" : "outline"}
-                              onClick={() => setReviewData({ ...reviewData, status: "approved" })}
-                              className={reviewData.status === "approved" ? "bg-green-500" : ""}
+                              variant={reviewData.status === "winner" ? "default" : "outline"}
+                              onClick={() => setReviewData({ ...reviewData, status: "winner" })}
+                              className={reviewData.status === "winner" ? "bg-green-500" : ""}
                             >
                               <CheckCircle2 className="h-4 w-4 mr-2" />
                               قبول
                             </Button>
                             <Button
                               size="sm"
-                              variant={reviewData.status === "rejected" ? "destructive" : "outline"}
-                              onClick={() => setReviewData({ ...reviewData, status: "rejected" })}
+                              variant={reviewData.status === "reject" ? "destructive" : "outline"}
+                              onClick={() => setReviewData({ ...reviewData, status: "reject" })}
                             >
                               <XCircle className="h-4 w-4 mr-2" />
                               رفض
                             </Button>
                             <Button
                               size="sm"
-                              variant={reviewData.status === "pending" ? "secondary" : "outline"}
-                              onClick={() => setReviewData({ ...reviewData, status: "pending" })}
+                              variant={reviewData.status === "shortlist" ? "secondary" : "outline"}
+                              onClick={() => setReviewData({ ...reviewData, status: "shortlist" })}
                             >
                               قيد المراجعة
                             </Button>

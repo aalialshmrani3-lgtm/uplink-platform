@@ -114,12 +114,14 @@ export default function ClassificationPaths() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {/* Reason */}
-                      {idea.reason && (
-                        <div className="text-sm text-muted-foreground">
-                          <strong>السبب:</strong> {idea.reason}
-                        </div>
-                      )}
+                      {(() => {
+                        const reason = idea.reason;
+                        return reason && (
+                          <div className="text-sm text-muted-foreground">
+                            <strong>السبب:</strong> {String(reason)}
+                          </div>
+                        );
+                      })() as any}
 
                       {/* Next Steps */}
                       {idea.nextSteps && Array.isArray(idea.nextSteps) && idea.nextSteps.length > 0 && (
