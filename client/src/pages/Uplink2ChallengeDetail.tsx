@@ -11,7 +11,7 @@ export default function Uplink2ChallengeDetail() {
   const challengeId = parseInt(params.id || "0");
 
   // Fetch challenge details
-  const { data: challenge, isLoading: challengeLoading } = trpc.uplink2.getById.useQuery({ id: challengeId });
+  const { data: challenge, isLoading: challengeLoading } = trpc.uplink2.challenges.getById.useQuery({ id: challengeId });
 
   // Fetch related ideas
   const { data: relatedIdeas, isLoading: ideasLoading } = trpc.uplink1.ideas.browse.useQuery({

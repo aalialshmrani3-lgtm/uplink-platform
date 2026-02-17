@@ -18,7 +18,7 @@ export default function Uplink2ChallengeDetails() {
   const [showSubmitForm, setShowSubmitForm] = useState(false);
 
   const { data: challenge, isLoading } = trpc.uplink2.challenges.getById.useQuery({ id: challengeId });
-  const { data: relatedIdeas } = trpc.uplink1.getAllIdeas.useQuery();
+  const { data: relatedIdeas } = trpc.uplink1.ideas.browse.useQuery({ challengeId });
   // const relatedIdeas = [];
   const { data: registration } = trpc.uplink2.challenges.getRegistration.useQuery(
     { challengeId },
@@ -203,7 +203,7 @@ export default function Uplink2ChallengeDetails() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {relatedIdeas.map((idea) => (
+                    {relatedIdeas.map((idea: any) => (
                       <Link key={idea.id} href={`/uplink1/ideas/${idea.id}`}>
                         <Card className="hover:border-primary/50 transition-colors cursor-pointer">
                           <CardHeader>

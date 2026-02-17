@@ -23,7 +23,7 @@ export default function Uplink2SubmitChallenge() {
     targetAudience: ''
   });
 
-  const submitChallengeMutation = trpc.uplink2.submitChallenge.useMutation({
+  const submitChallengeMutation = trpc.uplink2.challenges.submit.useMutation({
     onSuccess: () => {
       toast.success('تم إرسال التحدي بنجاح! سيتم مراجعته قريباً');
       setFormData({

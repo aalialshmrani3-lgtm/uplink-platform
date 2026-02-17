@@ -72,7 +72,7 @@ export default function StrategicPartners() {
                     <div>
                       <strong className="text-sm">مجالات التركيز:</strong>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {partner.focusAreas.slice(0, 3).map((area, index) => (
+                        {partner.focusAreas.slice(0, 3).map((area: string, index: number) => (
                           <Badge key={index} variant="outline" className="text-xs">
                             {area}
                           </Badge>
@@ -86,7 +86,7 @@ export default function StrategicPartners() {
                     <div>
                       <strong className="text-sm">أنواع الدعم:</strong>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {partner.supportTypes.slice(0, 3).map((type, index) => (
+                        {partner.supportTypes.slice(0, 3).map((type: string, index: number) => (
                           <Badge key={index} variant="secondary" className="text-xs">
                             {type}
                           </Badge>

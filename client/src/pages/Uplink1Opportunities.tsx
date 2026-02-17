@@ -23,7 +23,7 @@ export default function Uplink1Opportunities() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
 
-  const { data: challenges = [], isLoading: loadingChallenges } = trpc.uplink2.getChallenges.useQuery();
+  const { data: challenges = [], isLoading: loadingChallenges } = trpc.uplink2.challenges.getAll.useQuery();
   const { data: hackathons = [], isLoading: loadingHackathons } = trpc.uplink2.hackathons.getAll.useQuery();
 
   const filteredChallenges = challenges.filter((challenge: any) => {
