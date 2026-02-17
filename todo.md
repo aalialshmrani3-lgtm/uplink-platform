@@ -491,3 +491,36 @@
 - [ ] اختبار UPLINK 2 → AI Matching → جميع الأنواع
 - [ ] اختبار UPLINK 2 → Agreement → UPLINK 3 تلقائي
 - [ ] حفظ checkpoint نهائي
+
+
+---
+
+## 🚀 Phase 2: تطوير نظام الربط الذكي الشامل في UPLINK 2
+
+### Phase 1: تطوير AI Matching Engine الشامل ✅✅✅
+- [x] إنشاء `server/services/aiMatchingEngine.ts` - AI matching algorithm ✅
+- [x] تطوير `calculateChallengeMatch()` - مطابقة التحديات ✅
+- [x] تطوير `calculateAcceleratorMatch()` - مطابقة المسرعات ✅
+- [x] تطوير `calculateIncubatorMatch()` - مطابقة الحاضنات ✅
+- [x] تطوير `calculatePartnerMatch()` - مطابقة الشركاء الاستراتيجيين ✅
+- [x] إنشاء procedure `getProjectOpportunities` في routers.ts ✅
+
+### Phase 2: إنشاء صفحة Opportunities في UPLINK 2
+- [ ] إنشاء `/uplink2/opportunities/:projectId` route في App.tsx
+- [ ] إنشاء `client/src/pages/Uplink2Opportunities.tsx` component
+- [ ] عرض جميع المطابقات (Challenges, Accelerators, Incubators, Partners)
+- [ ] عرض match score لكل فرصة (0-100%)
+- [ ] إضافة filtering حسب النوع
+- [ ] إضافة sorting حسب match score
+
+### Phase 3: إضافة نظام طلب الانضمام
+- [ ] إنشاء `opportunityRequests` table في schema.ts
+- [ ] إنشاء procedure `requestToJoinOpportunity` في routers.ts
+- [ ] إضافة زر "طلب الانضمام" لكل فرصة
+- [ ] إضافة notifications للطرفين عند الطلب
+
+### Phase 4: اختبار شامل وحفظ checkpoint
+- [ ] اختبار AI Matching Engine
+- [ ] اختبار صفحة Opportunities
+- [ ] اختبار نظام طلب الانضمام
+- [ ] حفظ checkpoint نهائي

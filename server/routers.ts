@@ -3837,6 +3837,68 @@ Provide response in JSON format:
           matches: validMatches,
         };
       }),
+
+    // ========================================
+    // AI Opportunities Matching - المطابقة الذكية الشاملة
+    // ========================================
+    getProjectOpportunities: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        types: z.array(z.enum(['challenge', 'accelerator', 'incubator', 'partner'])).optional(),
+        minMatchScore: z.number().min(0).max(100).default(50),
+      }))
+      .query(async ({ input }) => {
+        const { getAllOpportunitiesForProject } = await import('./services/aiMatchingEngine');
+        
+        // جلب المشروع
+        const project = await db.getProjectById(input.projectId);
+        if (!project) throw new TRPCError({ code: 'NOT_FOUND', message: 'المشروع غير موجود' });
+
+        // جلب جميع الفرص
+        const challenges = await db.getAllChallenges();
+        // TODO: إضافة جلب المسرعات والحاضنات والشركاء
+        const accelerators: any[] = []; // await db.getAllAccelerators();
+        const incubators: any[] = []; // await db.getAllIncubators();
+        const partners: any[] = []; // await db.getAllPartners();
+
+        // تحويل project إلى Project type
+        const projectData = {
+          ...project,
+          fundingRequired: project.fundingRequired || 0,
+        };
+
+        // حساب المطابقات
+        const allOpportunities = await getAllOpportunitiesForProject(
+          projectData,
+          challenges,
+          accelerators,
+          incubators,
+          partners
+        );
+
+        // تصفية حسب النوع و match score
+        let filteredOpportunities = allOpportunities.filter(
+          (opp) => opp.matchScore >= input.minMatchScore
+        );
+
+        if (input.types && input.types.length > 0) {
+          filteredOpportunities = filteredOpportunities.filter((opp) =>
+            input.types!.includes(opp.type)
+          );
+        }
+
+        return {
+          projectId: input.projectId,
+          totalOpportunities: filteredOpportunities.length,
+          opportunities: filteredOpportunities,
+          breakdown: {
+            challenges: filteredOpportunities.filter((o) => o.type === 'challenge').length,
+            accelerators: filteredOpportunities.filter((o) => o.type === 'accelerator').length,
+            incubators: filteredOpportunities.filter((o) => o.type === 'incubator').length,
+            partners: filteredOpportunities.filter((o) => o.type === 'partner').length,
+          },
+        };
+      }),
   }),
 
   // ============================================
