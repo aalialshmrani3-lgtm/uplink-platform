@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE ideas MODIFY COLUMN status ENUM('draft','submitted','analyzing','analyzed','revision_needed','approved','commercial','pending','accepted','rejected') DEFAULT 'draft';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute ALTER TABLE ideas MODIFY COLUMN status ENUM('draft','submitted','analyzing','analyzed','revision_needed','approved','commercial','pending','accepted','rejected') DEFAULT 'draft';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2127
+}

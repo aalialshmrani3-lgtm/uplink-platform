@@ -80,7 +80,7 @@ export async function updateWebhook(
     name?: string;
     url?: string;
     events?: string[];
-    isActive?: boolean;
+    isActive?: number;
   }
 ) {
   const db = await getDb();
@@ -136,7 +136,7 @@ export async function logWebhookCall(data: {
     payload: data.payload,
     statusCode: data.statusCode,
     responseTime: data.responseTime,
-    success: data.success,
+    success: data.success ? 1 : 0,
     errorMessage: data.errorMessage,
     retryCount: data.retryCount || 0,
   });

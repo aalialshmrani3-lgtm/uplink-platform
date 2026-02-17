@@ -2234,7 +2234,7 @@ Provide response in JSON format:
           name: input.name,
           url: input.url,
           events: input.events,
-          isActive: input.isActive,
+          isActive: input.isActive !== undefined ? (input.isActive ? 1 : 0) : undefined,
         });
         return { success: true };
       }),
