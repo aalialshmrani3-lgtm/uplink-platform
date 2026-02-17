@@ -61,7 +61,7 @@ export async function getActiveWebhooksForEvent(event: string) {
   const allWebhooks = await db
     .select()
     .from(webhooks)
-    .where(eq(webhooks.isActive, true));
+    .where(eq(webhooks.isActive, 1));
   
   // Filter webhooks that listen to this event
   return allWebhooks.filter((webhook: any) => {
@@ -155,7 +155,7 @@ export async function logWebhookCall(data: {
         totalCalls: currentWebhook.totalCalls + 1,
         successfulCalls: data.success ? currentWebhook.successfulCalls + 1 : currentWebhook.successfulCalls,
         failedCalls: !data.success ? currentWebhook.failedCalls + 1 : currentWebhook.failedCalls,
-        lastTriggeredAt: new Date(),
+        lastTriggeredAt: new Date().toISOString(),
         lastError: data.errorMessage || currentWebhook.lastError,
       })
       .where(eq(webhooks.id, data.webhookId));

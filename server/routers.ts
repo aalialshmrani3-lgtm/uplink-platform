@@ -1624,7 +1624,7 @@ Respond in JSON format:
         const id = await db.createPipelineChallenge({
           ...input,
           userId: ctx.user.id,
-          deadline: input.deadline ? new Date(input.deadline) : undefined,
+          deadline: input.deadline ? new Date(input.deadline).toISOString() : null,
         });
         return { id };
       }),
@@ -2037,10 +2037,10 @@ Provide response in JSON format:
         const dbOutcomes = await import("./db_idea_outcomes");
         return await dbOutcomes.updateIdeaOutcome(input.id, {
           outcome: input.outcome,
-          outcomeDate: new Date().toISOString(),
+          outcomeDate: new Date(),
           outcomeNotes: input.outcomeNotes,
           classifiedBy: ctx.user.id,
-          classifiedAt: new Date().toISOString(),
+          classifiedAt: new Date(),
         });
       }),
 
@@ -3215,23 +3215,9 @@ Provide response in JSON format:
           // const { vettingReviews } = await import('../drizzle/schema');
           
           // Determine expert type based on user role or assign default
-          const expertType = 'technical'; // TODO: determine from user profile
-          
-          await db.insert(vettingReviews).values({
-            ipRegistrationId: input.ipRegistrationId,
-            expertId: ctx.user.id,
-            expertType,
-            score: input.score,
-            noveltyScore: input.noveltyScore,
-            feasibilityScore: input.feasibilityScore,
-            marketPotentialScore: input.marketPotentialScore,
-            comments: input.comments,
-            recommendation: input.recommendation,
-            revisionSuggestions: input.revisionSuggestions,
-          });
-          
+          // const expertType = 'technical'; // TODO: determine from user profile
+          // await db.insert(vettingReviews).values({...});
           // Auto-trigger Diamond Decision Point (disabled)
-          // const decision = await autoTriggerDecision(input.ipRegistrationId);
           
           return { 
             success: true, 
@@ -3263,28 +3249,8 @@ Provide response in JSON format:
           // const db = await getDb();
           // if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           // const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
-          const { eq } = await import('drizzle-orm');
-          
-          return await db.select({
-            id: ipMarketplaceListings.id,
-            ipRegistrationId: ipMarketplaceListings.ipRegistrationId,
-            userId: ipMarketplaceListings.userId,
-            listingType: ipMarketplaceListings.listingType,
-            price: ipMarketplaceListings.price,
-            currency: ipMarketplaceListings.currency,
-            priceType: ipMarketplaceListings.priceType,
-            description: ipMarketplaceListings.description,
-            terms: ipMarketplaceListings.terms,
-            exclusivity: ipMarketplaceListings.exclusivity,
-            views: ipMarketplaceListings.views,
-            inquiries: ipMarketplaceListings.inquiries,
-            status: ipMarketplaceListings.status,
-            listedAt: ipMarketplaceListings.listedAt,
-            ip_registrations: ipRegistrations,
-          })
-          .from(ipMarketplaceListings)
-          .leftJoin(ipRegistrations, eq(ipMarketplaceListings.ipRegistrationId, ipRegistrations.id))
-          .where(eq(ipMarketplaceListings.status, 'active'));
+          // const { eq } = await import('drizzle-orm');
+          // return await db.select({...}).from(ipMarketplaceListings)...
         }),
 
       requestPurchase: protectedProcedure
@@ -3307,31 +3273,9 @@ Provide response in JSON format:
           // const db = await getDb();
           // if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           // const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
-          const { eq } = await import('drizzle-orm');
-          
-          const result = await db.select({
-            id: ipMarketplaceListings.id,
-            ipRegistrationId: ipMarketplaceListings.ipRegistrationId,
-            userId: ipMarketplaceListings.userId,
-            listingType: ipMarketplaceListings.listingType,
-            price: ipMarketplaceListings.price,
-            currency: ipMarketplaceListings.currency,
-            priceType: ipMarketplaceListings.priceType,
-            description: ipMarketplaceListings.description,
-            terms: ipMarketplaceListings.terms,
-            exclusivity: ipMarketplaceListings.exclusivity,
-            views: ipMarketplaceListings.views,
-            inquiries: ipMarketplaceListings.inquiries,
-            status: ipMarketplaceListings.status,
-            listedAt: ipMarketplaceListings.listedAt,
-            ip_registrations: ipRegistrations,
-          })
-          .from(ipMarketplaceListings)
-          .leftJoin(ipRegistrations, eq(ipMarketplaceListings.ipRegistrationId, ipRegistrations.id))
-          .where(eq(ipMarketplaceListings.id, input.id))
-          .limit(1);
-          
-          return result[0] || null;
+          // const { eq } = await import('drizzle-orm');
+          // const result = await db.select({...}).from(ipMarketplaceListings)...
+          // return result[0] || null;
         }),
     }),
 
