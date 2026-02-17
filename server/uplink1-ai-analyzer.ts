@@ -231,6 +231,14 @@ export interface AnalysisResult {
   classification: "innovation" | "commercial" | "weak";
   classificationLabel: string;
   
+  // Recommended Path (NEW)
+  recommendedPath: "uplink2" | "uplink3" | "both" | "guidance"; // المسار الموصى به
+  pathRecommendations: {
+    uplink2?: string; // لماذا UPLINK 2 مناسب
+    uplink3?: string; // لماذا UPLINK 3 مناسب
+    guidance?: string; // إرشادات للتحسين
+  };
+  
   // Criterion Scores
   criterionScores: CriterionScore[];
   
@@ -341,11 +349,16 @@ export async function analyzeIdea(idea: IdeaInput): Promise<AnalysisResult> {
     // Step 6: Calculate processing time
     const processingTime = Math.round((Date.now() - startTime) / 1000);
     
+    // Step 6.5: Determine recommended path based on classification
+    const { recommendedPath, pathRecommendations } = determineRecommendedPath(classification, overallScore, aiResult);
+    
     // Step 7: Return complete analysis result
     return {
       overallScore,
       classification,
       classificationLabel: classificationLevel.label,
+      recommendedPath,
+      pathRecommendations,
       criterionScores,
       aiAnalysis: aiResult.aiAnalysis,
       strengths: aiResult.strengths,
@@ -502,6 +515,56 @@ export function getClassificationLevel(classification: "innovation" | "commercia
     throw new Error(`Invalid classification: ${classification}`);
   }
   return level;
+}
+
+/**
+ * Determine recommended path based on classification and analysis
+ */
+function determineRecommendedPath(
+  classification: "innovation" | "commercial" | "weak",
+  overallScore: number,
+  aiResult: any
+): { recommendedPath: "uplink2" | "uplink3" | "both" | "guidance"; pathRecommendations: any } {
+  
+  // للأفكار الضعيفة (<60%) - إرشادات فقط
+  if (classification === "weak") {
+    return {
+      recommendedPath: "guidance",
+      pathRecommendations: {
+        guidance: "فكرتك تحتاج إلى تطوير أكثر قبل الانتقال إلى UPLINK 2 أو 3. نوصي بالتركيز على تحسين الجوانب الضعيفة وإعادة التقديم."
+      }
+    };
+  }
+  
+  // للابتكارات الحقيقية (80-100%) - خيارات متعددة
+  if (classification === "innovation") {
+    return {
+      recommendedPath: "both",
+      pathRecommendations: {
+        uplink2: "🎯 UPLINK 2 (المطابقة الذكية): فكرتك ابتكارية وتستحق البحث عن شركاء وتحديات ومسرعات لتطويرها. سنساعدك في إيجاد الفرص المناسبة للتمويل والدعم.",
+        uplink3: "💼 UPLINK 3 (السوق والبورصة): إذا كنت جاهزًا للتسويق والتداول، يمكنك عرض فكرتك مباشرة في السوق للمستثمرين والشركات."
+      }
+    };
+  }
+  
+  // للحلول التجارية (60-79%) - خيارات متعددة مع ترجيح UPLINK 2
+  if (classification === "commercial") {
+    return {
+      recommendedPath: "both",
+      pathRecommendations: {
+        uplink2: "✅ موصى به: UPLINK 2 (المطابقة الذكية) - فكرتك حل تجاري واعد وتحتاج إلى شركاء استراتيجيين للنجاح. سنساعدك في إيجاد المسرعات والحاضنات والتحديات المناسبة.",
+        uplink3: "💼 UPLINK 3 (السوق والبورصة): إذا كنت ترغب في عرض فكرتك مباشرة للبيع أو الترخيص، يمكنك الانتقال مباشرة إلى السوق."
+      }
+    };
+  }
+  
+  // Default (shouldn't reach here)
+  return {
+    recommendedPath: "guidance",
+    pathRecommendations: {
+      guidance: "يرجى مراجعة التقييم واتباع التوصيات."
+    }
+  };
 }
 
 /**

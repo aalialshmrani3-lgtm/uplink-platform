@@ -28,6 +28,12 @@ interface AIAnalysisResultsProps {
     tags: string[];
     recommendations: string[];
     nextSteps: string;
+    recommendedPath?: "uplink2" | "uplink3" | "both" | "guidance";
+    pathRecommendations?: {
+      uplink2?: string;
+      uplink3?: string;
+      guidance?: string;
+    };
   };
   ideaId?: number;
 }
@@ -102,6 +108,8 @@ export default function AIAnalysisResults({ analysis, ideaId }: AIAnalysisResult
         onOpenChange={setShowChoiceDialog}
         ideaId={ideaId || 0}
         overallScore={analysis.overallScore}
+        recommendedPath={analysis.recommendedPath}
+        pathRecommendations={analysis.pathRecommendations}
       />
       <div className="space-y-6 animate-fade-in">
       {/* Overall Status Card */}

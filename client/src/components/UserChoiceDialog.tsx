@@ -18,6 +18,12 @@ interface UserChoiceDialogProps {
   onOpenChange: (open: boolean) => void;
   ideaId: number;
   overallScore: number;
+  recommendedPath?: "uplink2" | "uplink3" | "both" | "guidance";
+  pathRecommendations?: {
+    uplink2?: string;
+    uplink3?: string;
+    guidance?: string;
+  };
 }
 
 export default function UserChoiceDialog({
@@ -25,6 +31,8 @@ export default function UserChoiceDialog({
   onOpenChange,
   ideaId,
   overallScore,
+  recommendedPath = "both",
+  pathRecommendations = {},
 }: UserChoiceDialogProps) {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
@@ -95,7 +103,7 @@ export default function UserChoiceDialog({
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">UPLINK 2</h3>
                 <p className="text-sm text-gray-300 mb-4">
-                  البحث عن تحديات، مستثمرين، وشركاء استراتيجيين
+                  {pathRecommendations.uplink2 || "البحث عن تحديات، مستثمرين، وشركاء استراتيجيين"}
                 </p>
                 <ul className="text-xs text-gray-400 space-y-2 text-right">
                   <li>• المطابقة الذكية مع التحديات</li>
@@ -139,7 +147,7 @@ export default function UserChoiceDialog({
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">UPLINK 3</h3>
                 <p className="text-sm text-gray-300 mb-4">
-                  الانتقال مباشرة إلى البورصة للبيع أو الاستحواذ
+                  {pathRecommendations.uplink3 || "الانتقال مباشرة إلى البورصة للبيع أو الاستحواذ"}
                 </p>
                 <ul className="text-xs text-gray-400 space-y-2 text-right">
                   <li>• عرض فكرتك في البورصة</li>
