@@ -1725,3 +1725,156 @@ export type InsertIdeaOutcome = typeof ideaOutcomes.$inferInsert;
 
 export type SavedView = typeof savedViews.$inferSelect;
 export type InsertSavedView = typeof savedViews.$inferInsert;
+
+// ==================== Gemini Recommendations: Gamification System ====================
+export const userPoints = mysqlTable("user_points", {
+	id: int().autoincrement().notNull(),
+	userId: int().notNull(),
+	points: int().default(0).notNull(),
+	level: int().default(1).notNull(),
+	activityType: mysqlEnum(['idea_submitted','idea_approved','comment_added','vote_cast','challenge_created','challenge_completed','collaboration','badge_earned','referral']).notNull(),
+	activityId: int(), // ID of the related activity
+	pointsEarned: int().notNull(),
+	description: text(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export const userBadges = mysqlTable("user_badges", {
+	id: int().autoincrement().notNull(),
+	userId: int().notNull(),
+	badgeId: int().notNull(),
+	earnedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	progress: int().default(0), // Progress towards next level (0-100%)
+});
+
+export const badges = mysqlTable("badges", {
+	id: int().autoincrement().notNull(),
+	name: varchar({ length: 200 }).notNull(),
+	nameAr: varchar({ length: 200 }),
+	description: text(),
+	descriptionAr: text(),
+	icon: varchar({ length: 500 }),
+	category: mysqlEnum(['beginner','expert','innovator','collaborator','leader','special']).notNull(),
+	requirement: json(), // Conditions to earn the badge
+	pointsRequired: int().default(0),
+	rarity: mysqlEnum(['common','uncommon','rare','epic','legendary']).default('common'),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export const userLevels = mysqlTable("user_levels", {
+	id: int().autoincrement().notNull(),
+	userId: int().notNull(),
+	level: int().default(1).notNull(),
+	totalPoints: int().default(0).notNull(),
+	currentLevelPoints: int().default(0).notNull(),
+	nextLevelPoints: int().default(100).notNull(),
+	perks: json(), // Special perks for this level
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+// ==================== Gemini Recommendations: Smart Evaluation Engine ====================
+export const strategicGoals = mysqlTable("strategic_goals", {
+	id: int().autoincrement().notNull(),
+	title: varchar({ length: 500 }).notNull(),
+	titleAr: varchar({ length: 500 }),
+	description: text(),
+	descriptionAr: text(),
+	category: mysqlEnum(['vision2030','digital_transformation','sustainability','innovation','economic_growth','social_impact']).notNull(),
+	keywords: json(), // Array of keywords
+	weight: int().default(50), // Importance weight (1-100)
+	status: mysqlEnum(['active','inactive','archived']).default('active'),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+export const ideaStrategicAlignment = mysqlTable("idea_strategic_alignment", {
+	id: int().autoincrement().notNull(),
+	ideaId: int().notNull(),
+	goalId: int().notNull(),
+	alignmentScore: decimal({ precision: 5, scale: 2 }).notNull(), // 0-100
+	matchedKeywords: json(), // Array of matched keywords
+	aiReasoning: text(), // AI explanation
+	technicalFeasibility: decimal({ precision: 5, scale: 2 }), // 0-100
+	expectedImpact: decimal({ precision: 5, scale: 2 }), // 0-100
+	overallScore: decimal({ precision: 5, scale: 2 }), // Weighted average
+	recommendations: json(), // Array of improvement suggestions
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+// ==================== Gemini Recommendations: Impact Dashboard (ROI²) ====================
+export const ideaFinancialImpact = mysqlTable("idea_financial_impact", {
+	id: int().autoincrement().notNull(),
+	ideaId: int().notNull(),
+	// Costs
+	developmentCost: decimal({ precision: 15, scale: 2 }).default('0'),
+	resourceCost: decimal({ precision: 15, scale: 2 }).default('0'),
+	timeCost: decimal({ precision: 15, scale: 2 }).default('0'), // Hours × hourly rate
+	totalCost: decimal({ precision: 15, scale: 2 }).default('0'),
+	// Impact
+	revenueGenerated: decimal({ precision: 15, scale: 2 }).default('0'),
+	costSavings: decimal({ precision: 15, scale: 2 }).default('0'),
+	totalImpact: decimal({ precision: 15, scale: 2 }).default('0'),
+	// ROI²
+	roi: decimal({ precision: 10, scale: 2 }), // (Impact - Cost) / Cost × 100%
+	paybackPeriod: int(), // Months
+	// Benchmarking
+	industryAverage: decimal({ precision: 10, scale: 2 }),
+	competitorBenchmark: decimal({ precision: 10, scale: 2 }),
+	previousPerformance: decimal({ precision: 10, scale: 2 }),
+	// Status
+	status: mysqlEnum(['estimated','in_progress','completed','failed']).default('estimated'),
+	notes: text(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+});
+
+export const innovationMetrics = mysqlTable("innovation_metrics", {
+	id: int().autoincrement().notNull(),
+	period: mysqlEnum(['weekly','monthly','quarterly','yearly']).notNull(),
+	periodStart: timestamp({ mode: 'string' }).notNull(),
+	periodEnd: timestamp({ mode: 'string' }).notNull(),
+	// Ideas
+	totalIdeas: int().default(0),
+	approvedIdeas: int().default(0),
+	rejectedIdeas: int().default(0),
+	successRate: decimal({ precision: 5, scale: 2 }), // %
+	// Financial
+	totalInvestment: decimal({ precision: 15, scale: 2 }).default('0'),
+	totalReturn: decimal({ precision: 15, scale: 2 }).default('0'),
+	averageROI: decimal({ precision: 10, scale: 2 }), // %
+	// Flow
+	uplink1ToUplink2: int().default(0),
+	uplink2ToUplink3: int().default(0),
+	uplink1ToUplink3: int().default(0),
+	// Engagement
+	activeUsers: int().default(0),
+	totalPoints: int().default(0),
+	badgesEarned: int().default(0),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+// TypeScript types for new tables
+export type UserPoint = typeof userPoints.$inferSelect;
+export type InsertUserPoint = typeof userPoints.$inferInsert;
+
+export type UserBadge = typeof userBadges.$inferSelect;
+export type InsertUserBadge = typeof userBadges.$inferInsert;
+
+export type Badge = typeof badges.$inferSelect;
+export type InsertBadge = typeof badges.$inferInsert;
+
+export type UserLevel = typeof userLevels.$inferSelect;
+export type InsertUserLevel = typeof userLevels.$inferInsert;
+
+export type StrategicGoal = typeof strategicGoals.$inferSelect;
+export type InsertStrategicGoal = typeof strategicGoals.$inferInsert;
+
+export type IdeaStrategicAlignment = typeof ideaStrategicAlignment.$inferSelect;
+export type InsertIdeaStrategicAlignment = typeof ideaStrategicAlignment.$inferInsert;
+
+export type IdeaFinancialImpact = typeof ideaFinancialImpact.$inferSelect;
+export type InsertIdeaFinancialImpact = typeof ideaFinancialImpact.$inferInsert;
+
+export type InnovationMetric = typeof innovationMetrics.$inferSelect;
+export type InsertInnovationMetric = typeof innovationMetrics.$inferInsert;
