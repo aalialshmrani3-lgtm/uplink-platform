@@ -2379,6 +2379,32 @@ Provide response in JSON format:
   // ============================================
   analytics: router({
     // Admin dashboard statistics
+    // UPLINK Flow Statistics
+    getUplinkFlowStats: publicProcedure.query(async () => {
+      try {
+        const ideas = await db.getAllIdeas();
+        
+        const innovation = ideas.filter((idea: any) => idea.classification === 'innovation').length;
+        const commercial = ideas.filter((idea: any) => idea.classification === 'commercial').length;
+        const guidance = ideas.filter((idea: any) => idea.classification === 'guidance').length;
+        
+        return {
+          innovation,
+          commercial,
+          guidance,
+          total: ideas.length
+        };
+      } catch (error: any) {
+        console.error('Error fetching UPLINK flow stats:', error);
+        return {
+          innovation: 0,
+          commercial: 0,
+          guidance: 0,
+          total: 0
+        };
+      }
+    }),
+
     adminDashboard: protectedProcedure.query(async ({ ctx }) => {
       // Only allow admins
       if (ctx.user.role !== 'admin') {

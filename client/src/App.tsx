@@ -130,6 +130,7 @@ const DemoFlow = lazy(() => import("./pages/DemoFlow"));
 const MyJourney = lazy(() => import("./pages/MyJourney")); // Demo Flow - User Journey
 const IdeaClusters = lazy(() => import("./pages/IdeaClusters"));
 const Demo = lazy(() => import("./pages/Demo")); // AI Clustering (Innovation 360)
+const UplinkFlowAnalytics = lazy(() => import("./pages/UplinkFlowAnalytics"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -326,6 +327,7 @@ function Router() {
         <Route path="/uplink1/opportunities" component={Uplink1Opportunities} />
           <Route path="/uplink1/clusters" component={IdeaClusters} />
           <Route path="/demo" component={Demo} />
+          <Route path="/analytics/uplink-flow" component={UplinkFlowAnalytics} />
         <Route path="/quick-assessment" component={QuickAssessment} />
         <Route path="/uplink2/vetting" component={Uplink2VettingDashboard} />
         <Route path="/uplink2/marketplace" component={Uplink2Marketplace} />
