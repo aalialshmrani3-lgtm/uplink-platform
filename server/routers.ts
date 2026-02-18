@@ -4650,5 +4650,193 @@ Provide response in JSON format:
         return { success: true };
       }),
   }),
+
+  // ============================================
+  // AI CLUSTERING (Innovation 360 Feature)
+  // ============================================
+  clustering: router({
+    // تجميع الأفكار تلقائياً باستخدام AI
+    clusterIdeas: protectedProcedure
+      .input(z.object({
+        targetClusters: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // استيراد clustering engine
+        const { clusterIdeas } = await import('./services/aiClusteringEngine');
+        
+        // جلب جميع الأفكار المحللة
+        const ideas = await db.getAllIdeas();
+        const analyzedIdeas = ideas.filter(idea => idea.status === 'analyzed' || idea.status === 'approved');
+        
+        if (analyzedIdeas.length < 3) {
+          throw new TRPCError({ 
+            code: 'BAD_REQUEST', 
+            message: 'يجب أن يكون هناك 3 أفكار محللة على الأقل للتجميع' 
+          });
+        }
+
+        // تجميع الأفكار
+        const clusters = await clusterIdeas(
+          analyzedIdeas.map(idea => ({
+            id: idea.id,
+            title: idea.title,
+            description: idea.description,
+            category: idea.category || undefined,
+            keywords: idea.keywords as string[] || undefined,
+          })),
+          input.targetClusters
+        );
+
+        // حفظ المجموعات في database
+        const savedClusters = [];
+        for (const cluster of clusters) {
+          // إنشاء المجموعة
+          const clusterId = await db.createIdeaCluster({
+            name: cluster.name,
+            nameEn: cluster.nameEn || null,
+            description: cluster.description,
+            descriptionEn: cluster.descriptionEn || null,
+            strength: cluster.strength,
+            memberCount: cluster.memberCount,
+            createdBy: ctx.user.id,
+          });
+
+          // إضافة الأفكار للمجموعة
+          for (let i = 0; i < cluster.ideas.length; i++) {
+            const idea = cluster.ideas[i];
+            const similarity = cluster.similarities[i];
+            
+            await db.addIdeaToCluster({
+              clusterId,
+              ideaId: idea.id,
+              similarity,
+              addedBy: ctx.user.id,
+            });
+
+            // تحديث clusterId في ideas table
+            await db.updateIdea(idea.id, { clusterId });
+          }
+
+          savedClusters.push({ ...cluster, id: clusterId });
+        }
+
+        return { clusters: savedClusters };
+      }),
+
+    // جلب جميع المجموعات
+    getClusters: publicProcedure
+      .query(async () => {
+        const clusters = await db.getAllClusters();
+        return clusters;
+      }),
+
+    // جلب تفاصيل مجموعة واحدة مع الأفكار
+    getClusterDetails: publicProcedure
+      .input(z.object({ clusterId: z.number() }))
+      .query(async ({ input }) => {
+        const cluster = await db.getClusterById(input.clusterId);
+        if (!cluster) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'المجموعة غير موجودة' });
+        }
+
+        const members = await db.getClusterMembers(input.clusterId);
+        const ideas = await Promise.all(
+          members.map(m => db.getIdeaById(m.ideaId))
+        );
+
+        return {
+          ...cluster,
+          ideas: ideas.filter(Boolean),
+          similarities: members.map(m => m.similarity),
+        };
+      }),
+
+    // دمج أفكار في مجموعة موجودة (يدوي)
+    mergeIdeasIntoCluster: protectedProcedure
+      .input(z.object({
+        clusterId: z.number(),
+        ideaIds: z.array(z.number()),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // التحقق من وجود المجموعة
+        const cluster = await db.getClusterById(input.clusterId);
+        if (!cluster) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'المجموعة غير موجودة' });
+        }
+
+        // إضافة الأفكار للمجموعة
+        for (const ideaId of input.ideaIds) {
+          await db.addIdeaToCluster({
+            clusterId: input.clusterId,
+            ideaId,
+            similarity: 80, // default similarity for manual merge
+            addedBy: ctx.user.id,
+          });
+
+          // تحديث clusterId في ideas table
+          await db.updateIdea(ideaId, { clusterId: input.clusterId });
+        }
+
+        // تحديث memberCount
+        const members = await db.getClusterMembers(input.clusterId);
+        await db.updateCluster(input.clusterId, { 
+          memberCount: members.length 
+        });
+
+        return { success: true };
+      }),
+
+    // إنشاء مجموعة يدوياً
+    createManualCluster: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        nameEn: z.string().optional(),
+        description: z.string(),
+        descriptionEn: z.string().optional(),
+        ideaIds: z.array(z.number()),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // إنشاء المجموعة
+        const clusterId = await db.createIdeaCluster({
+          name: input.name,
+          nameEn: input.nameEn || null,
+          description: input.description,
+          descriptionEn: input.descriptionEn || null,
+          strength: 50, // default strength for manual cluster
+          memberCount: input.ideaIds.length,
+          createdBy: ctx.user.id,
+        });
+
+        // إضافة الأفكار
+        for (const ideaId of input.ideaIds) {
+          await db.addIdeaToCluster({
+            clusterId,
+            ideaId,
+            similarity: 80,
+            addedBy: ctx.user.id,
+          });
+
+          await db.updateIdea(ideaId, { clusterId });
+        }
+
+        return { clusterId };
+      }),
+
+    // حذف مجموعة
+    deleteCluster: protectedProcedure
+      .input(z.object({ clusterId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        // إزالة clusterId من الأفكار
+        const members = await db.getClusterMembers(input.clusterId);
+        for (const member of members) {
+          await db.updateIdea(member.ideaId, { clusterId: null });
+        }
+
+        // حذف المجموعة
+        await db.deleteCluster(input.clusterId);
+
+        return { success: true };
+      }),
+  }),
 });
 export type AppRouter = typeof appRouter;

@@ -653,6 +653,29 @@ export const ideas = mysqlTable("ideas", {
 	userChoice: mysqlEnum('user_choice', ['uplink2', 'uplink3']),
 	overallScore: int(),
 	classificationPath: varchar({ length: 500 }),
+	clusterId: int("cluster_id"),
+});
+
+export const ideaClusters = mysqlTable("idea_clusters", {
+	id: int().autoincrement().notNull(),
+	name: varchar({ length: 300 }).notNull(),
+	nameEn: varchar({ length: 300 }),
+	description: text(),
+	descriptionEn: text(),
+	strength: int().default(0),
+	memberCount: int().default(0),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+	createdBy: int(),
+});
+
+export const ideaClusterMembers = mysqlTable("idea_cluster_members", {
+	id: int().autoincrement().notNull(),
+	clusterId: int("cluster_id").notNull(),
+	ideaId: int("idea_id").notNull(),
+	similarity: int().default(0),
+	addedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	addedBy: int(),
 });
 
 export const innovationHubs = mysqlTable("innovation_hubs", {

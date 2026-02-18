@@ -33,6 +33,7 @@ import {
   whatifScenarios as whatIfScenarios, InsertWhatIfScenario, WhatIfScenario,
   predictionAccuracy, InsertPredictionAccuracy, PredictionAccuracy,
   ideas, ideaAnalysis, classificationHistory,
+  ideaClusters, ideaClusterMembers,
   events, eventRegistrations,
   blockchainAssets,
   challengeRegistrations, InsertChallengeRegistration, ChallengeRegistration,
@@ -2154,4 +2155,127 @@ export async function getMarketplaceAssetById(assetId: number) {
     .limit(1);
 
   return asset || null;
+}
+
+// ============================================
+// AI CLUSTERING FUNCTIONS (Innovation 360 Feature)
+// ============================================
+
+/**
+ * إنشاء مجموعة أفكار جديدة
+ */
+export async function createIdeaCluster(data: {
+  name: string;
+  nameEn: string | null;
+  description: string;
+  descriptionEn: string | null;
+  strength: number;
+  memberCount: number;
+  createdBy: number;
+}): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const [result] = await db.insert(ideaClusters).values(data);
+  return Number(result.insertId);
+}
+
+/**
+ * إضافة فكرة إلى مجموعة
+ */
+export async function addIdeaToCluster(data: {
+  clusterId: number;
+  ideaId: number;
+  similarity: number;
+  addedBy: number;
+}): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.insert(ideaClusterMembers).values(data);
+}
+
+/**
+ * جلب جميع المجموعات
+ */
+export async function getAllClusters() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const clusters = await db
+    .select()
+    .from(ideaClusters)
+    .orderBy(desc(ideaClusters.strength));
+
+  return clusters;
+}
+
+/**
+ * جلب مجموعة بالـ ID
+ */
+export async function getClusterById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const [cluster] = await db
+    .select()
+    .from(ideaClusters)
+    .where(eq(ideaClusters.id, id))
+    .limit(1);
+
+  return cluster || null;
+}
+
+/**
+ * جلب أعضاء مجموعة
+ */
+export async function getClusterMembers(clusterId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const members = await db
+    .select()
+    .from(ideaClusterMembers)
+    .where(eq(ideaClusterMembers.clusterId, clusterId))
+    .orderBy(desc(ideaClusterMembers.similarity));
+
+  return members;
+}
+
+/**
+ * تحديث مجموعة
+ */
+export async function updateCluster(id: number, data: Partial<{
+  name: string;
+  nameEn: string | null;
+  description: string;
+  descriptionEn: string | null;
+  strength: number;
+  memberCount: number;
+}>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(ideaClusters)
+    .set(data)
+    .where(eq(ideaClusters.id, id));
+}
+
+/**
+ * حذف مجموعة
+ */
+export async function deleteCluster(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  // حذف الأعضاء أولاً
+  await db
+    .delete(ideaClusterMembers)
+    .where(eq(ideaClusterMembers.clusterId, id));
+
+  // حذف المجموعة
+  await db
+    .delete(ideaClusters)
+    .where(eq(ideaClusters.id, id));
 }
