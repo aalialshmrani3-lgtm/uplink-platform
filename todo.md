@@ -1,25 +1,15 @@
 # UPLINK 5.0 - TODO
 
-## 🔥 المهمة الحالية: تنفيذ الانتقال الفعلي من UPLINK 1 إلى UPLINK 2 و UPLINK 3
+## 🔥 المهمة الحالية: إضافة مربع حوار تأكيد قبل الانتقال
 
-### Phase 1: إضافة procedures للانتقال في routers.ts ✅
-- [x] `setUserChoice` procedure موجود مسبقاً في routers.ts ✅
-- [x] يستدعي `promoteToUplink2` عند choice='uplink2' ✅
-- [x] يستدعي `promoteToUplink3` عند choice='uplink3' ✅
-- [x] ينشئ project في UPLINK 2 تلقائياً ✅
-- [x] ينشئ asset في UPLINK 3 تلقائياً ✅
+### Phase 1: إضافة AlertDialog في Uplink1IdeaAnalysis.tsx ✅
+- [x] إضافة AlertDialog component من shadcn/ui ✅
+- [x] إضافة state لإدارة فتح/إغلاق الـ dialog (showConfirmDialog) ✅
+- [x] إضافة state لتحديد الوجهة (targetUplink) ✅
+- [x] تحديث onClick handlers لفتح الـ dialog بدلاً من الانتقال المباشر ✅
+- [x] إضافة محتوى الـ dialog (عنوان، وصف، أزرار) ✅
+- [x] ربط زر التأكيد بـ handlePromote function ✅
+- [x] إضافة loading state في زر التأكيد ✅
 
-### Phase 2: تحديث الأزرار في Uplink1IdeaAnalysis.tsx ✅
-- [x] استبدال Link بـ Button مع onClick handler ✅
-- [x] استدعاء setUserChoice مع choice='uplink2' ✅
-- [x] استدعاء setUserChoice مع choice='uplink3' ✅
-- [x] إضافة loading states (isPromoting + Loader2) ✅
-- [x] إضافة error handling (try/catch) ✅
-- [x] إضافة toast notifications (success/error) ✅
-- [x] الانتقال إلى الصفحة المناسبة بعد النجاح ✅
-
-### Phase 3: اختبار وحفظ checkpoint
-- [ ] اختبار الانتقال من UPLINK 1 → UPLINK 2
-- [ ] اختبار الانتقال من UPLINK 1 → UPLINK 3
-- [ ] التحقق من إنشاء project/asset بنجاح
+### Phase 2: حفظ checkpoint
 - [ ] حفظ checkpoint نهائي

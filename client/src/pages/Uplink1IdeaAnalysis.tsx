@@ -2,6 +2,16 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { 
   ArrowLeft, Brain, TrendingUp, AlertTriangle, CheckCircle2,
   Target, Lightbulb, Users, DollarSign, Shield, Zap, Loader2
@@ -15,9 +25,38 @@ export default function Uplink1IdeaAnalysis() {
   const ideaId = params?.id ? parseInt(params.id) : 0;
   const [, setLocation] = useLocation();
   const [isPromoting, setIsPromoting] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [targetUplink, setTargetUplink] = useState<'uplink2' | 'uplink3' | null>(null);
 
   const { data: idea, isLoading } = trpc.uplink1.getIdeaById.useQuery({ ideaId });
   const setUserChoiceMutation = trpc.uplink1.setUserChoice.useMutation();
+
+  const handlePromote = async () => {
+    if (!targetUplink) return;
+    
+    setIsPromoting(true);
+    setShowConfirmDialog(false);
+    
+    try {
+      const result = await setUserChoiceMutation.mutateAsync({
+        ideaId,
+        choice: targetUplink,
+      });
+      
+      if (targetUplink === 'uplink2') {
+        toast.success('تم الانتقال إلى UPLINK 2 بنجاح!');
+        setLocation(`/uplink2/projects/${result.projectId}`);
+      } else {
+        toast.success('تم الانتقال إلى UPLINK 3 بنجاح!');
+        setLocation(`/uplink3/assets/${result.assetId}`);
+      }
+    } catch (error: any) {
+      toast.error(error.message || `فشل الانتقال إلى ${targetUplink === 'uplink2' ? 'UPLINK 2' : 'UPLINK 3'}`);
+    } finally {
+      setIsPromoting(false);
+      setTargetUplink(null);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -363,26 +402,15 @@ export default function Uplink1IdeaAnalysis() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* خيار 1: UPLINK 2 */}
                     <Button 
-                      onClick={async () => {
-                        setIsPromoting(true);
-                        try {
-                          const result = await setUserChoiceMutation.mutateAsync({
-                            ideaId,
-                            choice: 'uplink2',
-                          });
-                          toast.success('تم الانتقال إلى UPLINK 2 بنجاح!');
-                          setLocation(`/uplink2/projects/${result.projectId}`);
-                        } catch (error: any) {
-                          toast.error(error.message || 'فشل الانتقال إلى UPLINK 2');
-                        } finally {
-                          setIsPromoting(false);
-                        }
+                      onClick={() => {
+                        setTargetUplink('uplink2');
+                        setShowConfirmDialog(true);
                       }}
                       disabled={isPromoting}
                       className="w-full h-auto py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-start gap-2"
                     >
                       <div className="flex items-center gap-2 w-full">
-                        {isPromoting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Users className="w-5 h-5" />}
+                        {isPromoting && targetUplink === 'uplink2' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Users className="w-5 h-5" />}
                         <span className="font-semibold">UPLINK 2</span>
                       </div>
                       <span className="text-xs text-white/80 text-right">
@@ -392,26 +420,15 @@ export default function Uplink1IdeaAnalysis() {
 
                     {/* خيار 2: UPLINK 3 */}
                     <Button 
-                      onClick={async () => {
-                        setIsPromoting(true);
-                        try {
-                          const result = await setUserChoiceMutation.mutateAsync({
-                            ideaId,
-                            choice: 'uplink3',
-                          });
-                          toast.success('تم الانتقال إلى UPLINK 3 بنجاح!');
-                          setLocation(`/uplink3/assets/${result.assetId}`);
-                        } catch (error: any) {
-                          toast.error(error.message || 'فشل الانتقال إلى UPLINK 3');
-                        } finally {
-                          setIsPromoting(false);
-                        }
+                      onClick={() => {
+                        setTargetUplink('uplink3');
+                        setShowConfirmDialog(true);
                       }}
                       disabled={isPromoting}
                       className="w-full h-auto py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white flex flex-col items-start gap-2"
                     >
                       <div className="flex items-center gap-2 w-full">
-                        {isPromoting ? <Loader2 className="w-5 h-5 animate-spin" /> : <DollarSign className="w-5 h-5" />}
+                        {isPromoting && targetUplink === 'uplink3' ? <Loader2 className="w-5 h-5 animate-spin" /> : <DollarSign className="w-5 h-5" />}
                         <span className="font-semibold">UPLINK 3</span>
                       </div>
                       <span className="text-xs text-white/80 text-right">
@@ -419,6 +436,48 @@ export default function Uplink1IdeaAnalysis() {
                       </span>
                     </Button>
                   </div>
+
+                  {/* Confirmation Dialog */}
+                  <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-right">
+                          تأكيد الانتقال إلى {targetUplink === 'uplink2' ? 'UPLINK 2' : 'UPLINK 3'}
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-right">
+                          {targetUplink === 'uplink2' ? (
+                            <>
+                              سيتم إنشاء <strong>مشروع جديد</strong> في UPLINK 2 بناءً على هذه الفكرة.
+                              <br />
+                              سيتم مطابقة المشروع مع التحديات والفعاليات المتاحة.
+                            </>
+                          ) : (
+                            <>
+                              سيتم إنشاء <strong>أصل جديد</strong> في UPLINK 3 بناءً على هذه الفكرة.
+                              <br />
+                              سيتم عرض الأصل مباشرة في سوق الابتكارات للمستثمرين والشركاء.
+                            </>
+                          )}
+                          <br />
+                          <br />
+                          هل أنت متأكد من المتابعة؟
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className="flex-row-reverse gap-2">
+                        <AlertDialogAction onClick={handlePromote} disabled={isPromoting}>
+                          {isPromoting ? (
+                            <>
+                              <Loader2 className="w-4 h-4 ml-2 animate-spin" />
+                              جاري الانتقال...
+                            </>
+                          ) : (
+                            'نعم، انتقل الآن'
+                          )}
+                        </AlertDialogAction>
+                        <AlertDialogCancel disabled={isPromoting}>إلغاء</AlertDialogCancel>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
 
                   <div className="text-center">
                     <Link href={`/uplink1/ideas/${ideaId}`}>
