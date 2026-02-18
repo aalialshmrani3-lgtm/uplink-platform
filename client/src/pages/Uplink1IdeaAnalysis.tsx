@@ -1,19 +1,23 @@
-import { useRoute } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
   ArrowLeft, Brain, TrendingUp, AlertTriangle, CheckCircle2,
-  Target, Lightbulb, Users, DollarSign, Shield, Zap
+  Target, Lightbulb, Users, DollarSign, Shield, Zap, Loader2
 } from "lucide-react";
-import { Link, useRoute } from "wouter";
+import { Link, useRoute, useLocation } from "wouter";
+import { toast } from "sonner";
+import { useState } from "react";
 
 export default function Uplink1IdeaAnalysis() {
   const [, params] = useRoute("/uplink1/ideas/:id/analysis");
   const ideaId = params?.id ? parseInt(params.id) : 0;
+  const [, setLocation] = useLocation();
+  const [isPromoting, setIsPromoting] = useState(false);
 
   const { data: idea, isLoading } = trpc.uplink1.getIdeaById.useQuery({ ideaId });
+  const setUserChoiceMutation = trpc.uplink1.setUserChoice.useMutation();
 
   if (isLoading) {
     return (
@@ -358,30 +362,62 @@ export default function Uplink1IdeaAnalysis() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* خيار 1: UPLINK 2 */}
-                    <Link href="/uplink2">
-                      <Button className="w-full h-auto py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-start gap-2">
-                        <div className="flex items-center gap-2 w-full">
-                          <Users className="w-5 h-5" />
-                          <span className="font-semibold">UPLINK 2</span>
-                        </div>
-                        <span className="text-xs text-white/80 text-right">
-                          مطابقة مع التحديات والفعاليات
-                        </span>
-                      </Button>
-                    </Link>
+                    <Button 
+                      onClick={async () => {
+                        setIsPromoting(true);
+                        try {
+                          const result = await setUserChoiceMutation.mutateAsync({
+                            ideaId,
+                            choice: 'uplink2',
+                          });
+                          toast.success('تم الانتقال إلى UPLINK 2 بنجاح!');
+                          setLocation(`/uplink2/projects/${result.projectId}`);
+                        } catch (error: any) {
+                          toast.error(error.message || 'فشل الانتقال إلى UPLINK 2');
+                        } finally {
+                          setIsPromoting(false);
+                        }
+                      }}
+                      disabled={isPromoting}
+                      className="w-full h-auto py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-start gap-2"
+                    >
+                      <div className="flex items-center gap-2 w-full">
+                        {isPromoting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Users className="w-5 h-5" />}
+                        <span className="font-semibold">UPLINK 2</span>
+                      </div>
+                      <span className="text-xs text-white/80 text-right">
+                        مطابقة مع التحديات والفعاليات
+                      </span>
+                    </Button>
 
                     {/* خيار 2: UPLINK 3 */}
-                    <Link href="/uplink3">
-                      <Button className="w-full h-auto py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white flex flex-col items-start gap-2">
-                        <div className="flex items-center gap-2 w-full">
-                          <DollarSign className="w-5 h-5" />
-                          <span className="font-semibold">UPLINK 3</span>
-                        </div>
-                        <span className="text-xs text-white/80 text-right">
-                          الذهاب مباشرة إلى سوق الابتكارات
-                        </span>
-                      </Button>
-                    </Link>
+                    <Button 
+                      onClick={async () => {
+                        setIsPromoting(true);
+                        try {
+                          const result = await setUserChoiceMutation.mutateAsync({
+                            ideaId,
+                            choice: 'uplink3',
+                          });
+                          toast.success('تم الانتقال إلى UPLINK 3 بنجاح!');
+                          setLocation(`/uplink3/assets/${result.assetId}`);
+                        } catch (error: any) {
+                          toast.error(error.message || 'فشل الانتقال إلى UPLINK 3');
+                        } finally {
+                          setIsPromoting(false);
+                        }
+                      }}
+                      disabled={isPromoting}
+                      className="w-full h-auto py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white flex flex-col items-start gap-2"
+                    >
+                      <div className="flex items-center gap-2 w-full">
+                        {isPromoting ? <Loader2 className="w-5 h-5 animate-spin" /> : <DollarSign className="w-5 h-5" />}
+                        <span className="font-semibold">UPLINK 3</span>
+                      </div>
+                      <span className="text-xs text-white/80 text-right">
+                        الذهاب مباشرة إلى سوق الابتكارات
+                      </span>
+                    </Button>
                   </div>
 
                   <div className="text-center">
