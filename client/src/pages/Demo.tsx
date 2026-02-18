@@ -10,7 +10,10 @@ import {
   CheckCircle2, 
   XCircle, 
   AlertCircle,
-  Play
+  Play,
+  Clock,
+  TrendingUp,
+  Award
 } from "lucide-react";
 
 export default function Demo() {
@@ -45,6 +48,11 @@ export default function Demo() {
           feasibility: 85,
           market: 87
         }
+      },
+      comparisonData: {
+        time: "2-4 أسابيع",
+        steps: "5 خطوات",
+        successRate: "85%"
       }
     },
     {
@@ -75,6 +83,11 @@ export default function Demo() {
           feasibility: 80,
           market: 75
         }
+      },
+      comparisonData: {
+        time: "1-2 أسابيع",
+        steps: "4 خطوات",
+        successRate: "70%"
       }
     },
     {
@@ -105,6 +118,11 @@ export default function Demo() {
           feasibility: 60,
           market: 30
         }
+      },
+      comparisonData: {
+        time: "فوري",
+        steps: "3 خطوات",
+        successRate: "40%"
       }
     }
   ];
@@ -148,7 +166,94 @@ export default function Demo() {
           </div>
         </Card>
 
-        {/* Scenarios */}
+        {/* Visual Comparison Table */}
+        <Card className="bg-slate-900/50 border-slate-800 p-8 mb-12">
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">
+            📊 مقارنة بصرية للمسارات الثلاثة
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-slate-700">
+                  <th className="text-right p-4 text-slate-400 font-semibold">المعيار</th>
+                  <th className="text-center p-4">
+                    <div className="flex flex-col items-center gap-2">
+                      <Lightbulb className="w-6 h-6 text-green-500" />
+                      <span className="text-white font-semibold">ابتكار</span>
+                      <Badge className="bg-green-500/10 text-green-500">≥70%</Badge>
+                    </div>
+                  </th>
+                  <th className="text-center p-4">
+                    <div className="flex flex-col items-center gap-2">
+                      <Store className="w-6 h-6 text-blue-500" />
+                      <span className="text-white font-semibold">تجاري</span>
+                      <Badge className="bg-blue-500/10 text-blue-500">50-70%</Badge>
+                    </div>
+                  </th>
+                  <th className="text-center p-4">
+                    <div className="flex flex-col items-center gap-2">
+                      <XCircle className="w-6 h-6 text-red-500" />
+                      <span className="text-white font-semibold">ضعيف</span>
+                      <Badge className="bg-red-500/10 text-red-500">&lt;50%</Badge>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-slate-800">
+                  <td className="p-4 text-slate-300 flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    الوقت المتوقع
+                  </td>
+                  <td className="text-center p-4 text-white font-semibold">2-4 أسابيع</td>
+                  <td className="text-center p-4 text-white font-semibold">1-2 أسابيع</td>
+                  <td className="text-center p-4 text-white font-semibold">فوري</td>
+                </tr>
+                <tr className="border-b border-slate-800">
+                  <td className="p-4 text-slate-300 flex items-center gap-2">
+                    <Target className="w-4 h-4" />
+                    عدد الخطوات
+                  </td>
+                  <td className="text-center p-4 text-white font-semibold">5 خطوات</td>
+                  <td className="text-center p-4 text-white font-semibold">4 خطوات</td>
+                  <td className="text-center p-4 text-white font-semibold">3 خطوات</td>
+                </tr>
+                <tr className="border-b border-slate-800">
+                  <td className="p-4 text-slate-300 flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4" />
+                    معدل النجاح
+                  </td>
+                  <td className="text-center p-4">
+                    <Badge className="bg-green-500/20 text-green-400 font-bold">85%</Badge>
+                  </td>
+                  <td className="text-center p-4">
+                    <Badge className="bg-blue-500/20 text-blue-400 font-bold">70%</Badge>
+                  </td>
+                  <td className="text-center p-4">
+                    <Badge className="bg-red-500/20 text-red-400 font-bold">40%</Badge>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-4 text-slate-300 flex items-center gap-2">
+                    <Award className="w-4 h-4" />
+                    الخيارات المتاحة
+                  </td>
+                  <td className="text-center p-4 text-sm text-slate-300">
+                    UPLINK 2 أو 3
+                  </td>
+                  <td className="text-center p-4 text-sm text-slate-300">
+                    UPLINK 2 أو 3
+                  </td>
+                  <td className="text-center p-4 text-sm text-slate-300">
+                    إعادة تقديم
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </Card>
+
+        {/* Animated Flow Diagrams + Scenarios */}
         <div className="grid gap-8">
           {scenarios.map((scenario, index) => (
             <Card 
@@ -182,6 +287,43 @@ export default function Demo() {
                 </div>
               </div>
 
+              {/* Animated Flow Diagram */}
+              <div className={`${scenario.bgColor} p-6 border-b ${scenario.borderColor}`}>
+                <h4 className="text-lg font-semibold text-white mb-4 text-center">
+                  🔄 مخطط تدفق المسار (متحرك)
+                </h4>
+                <div className="flex items-center justify-center gap-2 flex-wrap">
+                  {scenario.steps.map((step, stepIndex) => (
+                    <div key={stepIndex} className="flex items-center gap-2">
+                      <div 
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-500 hover:scale-105 ${
+                          step.status === 'done' ? 'bg-green-500/20 border-green-500/40 animate-pulse' :
+                          step.status === 'option' ? 'bg-blue-500/20 border-blue-500/40' :
+                          step.status === 'reject' ? 'bg-red-500/20 border-red-500/40' :
+                          'bg-slate-800/50 border-slate-700'
+                        }`}
+                        style={{
+                          animationDelay: `${stepIndex * 0.2}s`
+                        }}
+                      >
+                        <step.icon className={`w-4 h-4 ${
+                          step.status === 'done' ? 'text-green-400' :
+                          step.status === 'option' ? 'text-blue-400' :
+                          step.status === 'reject' ? 'text-red-400' :
+                          'text-slate-400'
+                        }`} />
+                        <span className="text-xs text-white font-medium whitespace-nowrap">
+                          {step.text.split(':')[0]}
+                        </span>
+                      </div>
+                      {stepIndex < scenario.steps.length - 1 && (
+                        <ArrowRight className="w-4 h-4 text-slate-500 animate-pulse" style={{ animationDelay: `${stepIndex * 0.2 + 0.1}s` }} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Scenario Content */}
               <div className="p-6">
                 <div className="grid md:grid-cols-2 gap-8">
@@ -189,13 +331,13 @@ export default function Demo() {
                   <div>
                     <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <Play className="w-5 h-5" />
-                      خطوات المسار
+                      خطوات المسار التفصيلية
                     </h4>
                     <div className="space-y-3">
                       {scenario.steps.map((step, stepIndex) => (
                         <div 
                           key={stepIndex}
-                          className={`flex items-start gap-3 p-3 rounded-lg ${
+                          className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer ${
                             step.status === 'done' ? 'bg-green-500/10 border border-green-500/20' :
                             step.status === 'option' ? 'bg-blue-500/10 border border-blue-500/20' :
                             step.status === 'reject' ? 'bg-red-500/10 border border-red-500/20' :
@@ -218,12 +360,12 @@ export default function Demo() {
                     </div>
                   </div>
 
-                  {/* Example Idea */}
+                  {/* Example Idea (Interactive) */}
                   <div>
                     <h4 className="text-lg font-semibold text-white mb-4">
-                      مثال على الفكرة
+                      💡 مثال حي قابل للنقر
                     </h4>
-                    <Card className="bg-slate-800/50 border-slate-700 p-4">
+                    <Card className="bg-slate-800/50 border-slate-700 p-4 transition-all duration-300 hover:scale-105 hover:border-slate-600 cursor-pointer">
                       <h5 className="font-semibold text-white mb-2">
                         {scenario.exampleIdea.title}
                       </h5>
@@ -232,7 +374,7 @@ export default function Demo() {
                       </p>
                       <div className="grid grid-cols-2 gap-2">
                         {Object.entries(scenario.exampleIdea.scores).map(([key, value]) => (
-                          <div key={key} className="bg-slate-900/50 p-2 rounded">
+                          <div key={key} className="bg-slate-900/50 p-2 rounded hover:bg-slate-900 transition-colors">
                             <div className="text-xs text-slate-400 mb-1">
                               {key === 'novelty' ? 'الجدة' :
                                key === 'impact' ? 'التأثير' :
@@ -248,15 +390,15 @@ export default function Demo() {
                   </div>
                 </div>
 
-                {/* Action Button */}
+                {/* Action Button (Interactive) */}
                 <div className="mt-6 pt-6 border-t border-slate-800">
                   <Button
                     onClick={() => setLocation(scenario.demoUrl)}
-                    className={`w-full ${scenario.bgColor} ${scenario.color} hover:opacity-80 border ${scenario.borderColor}`}
+                    className={`w-full ${scenario.bgColor} ${scenario.color} hover:opacity-80 border ${scenario.borderColor} transition-all duration-300 hover:scale-105`}
                     size="lg"
                   >
                     <Play className="w-5 h-5 ml-2" />
-                    جرب هذا السيناريو الآن
+                    جرب هذا السيناريو الآن (تفاعلي)
                   </Button>
                 </div>
               </div>
@@ -274,22 +416,22 @@ export default function Demo() {
             <p className="text-slate-300 text-lg mb-6 max-w-2xl mx-auto">
               عند اختيار <strong>UPLINK 2</strong> (مطابقة مع التحديات)، إذا وجد النظام توافقاً بين فكرتك وأحد التحديات المطروحة، سيظهر لك زر <strong>"انتقل إلى UPLINK 3"</strong> لإكمال الصفقة مباشرة في سوق الابتكارات.
             </p>
-            <div className="flex items-center justify-center gap-4 text-sm">
-              <Badge variant="outline" className="bg-purple-500/10 text-purple-300 border-purple-500/30">
+            <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
+              <Badge variant="outline" className="bg-purple-500/10 text-purple-300 border-purple-500/30 animate-pulse">
                 UPLINK 2: مطابقة التحديات
               </Badge>
-              <ArrowRight className="w-5 h-5 text-slate-400" />
-              <Badge variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30">
+              <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
+              <Badge variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30 animate-pulse">
                 توافق مع تحدي
               </Badge>
-              <ArrowRight className="w-5 h-5 text-slate-400" />
-              <Badge variant="outline" className="bg-green-500/10 text-green-300 border-green-500/30">
+              <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
+              <Badge variant="outline" className="bg-green-500/10 text-green-300 border-green-500/30 animate-pulse">
                 UPLINK 3: إكمال الصفقة
               </Badge>
             </div>
             <Button
               onClick={() => setLocation("/uplink2")}
-              className="mt-6 bg-purple-600 hover:bg-purple-700"
+              className="mt-6 bg-purple-600 hover:bg-purple-700 transition-all duration-300 hover:scale-105"
               size="lg"
             >
               استكشف UPLINK 2
