@@ -12,6 +12,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { 
   ArrowLeft, Brain, TrendingUp, AlertTriangle, CheckCircle2,
   Target, Lightbulb, Users, DollarSign, Shield, Zap, Loader2
@@ -19,6 +21,7 @@ import {
 import { Link, useRoute, useLocation } from "wouter";
 import { toast } from "sonner";
 import { useState } from "react";
+import IdeaJourneyTimeline from "@/components/IdeaJourneyTimeline";
 
 export default function Uplink1IdeaAnalysis() {
   const [, params] = useRoute("/uplink1/ideas/:id/analysis");
@@ -27,6 +30,7 @@ export default function Uplink1IdeaAnalysis() {
   const [isPromoting, setIsPromoting] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [targetUplink, setTargetUplink] = useState<'uplink2' | 'uplink3' | null>(null);
+  const [userNotes, setUserNotes] = useState('');
 
   const { data: idea, isLoading } = trpc.uplink1.getIdeaById.useQuery({ ideaId });
   const setUserChoiceMutation = trpc.uplink1.setUserChoice.useMutation();
@@ -41,6 +45,7 @@ export default function Uplink1IdeaAnalysis() {
       const result = await setUserChoiceMutation.mutateAsync({
         ideaId,
         choice: targetUplink,
+        notes: userNotes || undefined,
       });
       
       if (targetUplink === 'uplink2') {
@@ -55,6 +60,7 @@ export default function Uplink1IdeaAnalysis() {
     } finally {
       setIsPromoting(false);
       setTargetUplink(null);
+      setUserNotes('');
     }
   };
 
@@ -463,6 +469,22 @@ export default function Uplink1IdeaAnalysis() {
                           هل أنت متأكد من المتابعة؟
                         </AlertDialogDescription>
                       </AlertDialogHeader>
+                      
+                      {/* User Notes Field */}
+                      <div className="space-y-2 my-4">
+                        <Label htmlFor="userNotes" className="text-right block">
+                          ملاحظات (اختياري)
+                        </Label>
+                        <Textarea
+                          id="userNotes"
+                          placeholder="اكتب سبب اختيارك لهذا المسار أو أي ملاحظات إضافية..."
+                          value={userNotes}
+                          onChange={(e) => setUserNotes(e.target.value)}
+                          className="min-h-[100px] text-right"
+                          disabled={isPromoting}
+                        />
+                      </div>
+                      
                       <AlertDialogFooter className="flex-row-reverse gap-2">
                         <AlertDialogAction onClick={handlePromote} disabled={isPromoting}>
                           {isPromoting ? (
@@ -479,7 +501,12 @@ export default function Uplink1IdeaAnalysis() {
                     </AlertDialogContent>
                   </AlertDialog>
 
-                  <div className="text-center">
+                  {/* Timeline */}
+                  <div className="mt-8">
+                    <IdeaJourneyTimeline ideaId={ideaId} />
+                  </div>
+
+                  <div className="text-center mt-6">
                     <Link href={`/uplink1/ideas/${ideaId}`}>
                       <Button variant="ghost" size="sm">
                         <ArrowLeft className="w-4 h-4 ml-2" />

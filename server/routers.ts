@@ -8,6 +8,8 @@ import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
+import { userChoices, ideaJourneyEvents } from "../drizzle/schema";
+import { eq, asc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink1-ai-analyzer";
 import crypto from "crypto";
@@ -892,10 +894,27 @@ export const appRouter = router({
       .input(z.object({
         ideaId: z.number(),
         choice: z.enum(['uplink2', 'uplink3']),
+        notes: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         // تحديث الفكرة بالاختيار
         await db.updateIdea(input.ideaId, { userChoice: input.choice });
+        
+        // حفظ الملاحظات في userChoices table
+        const db_conn = getDb();
+        await db_conn.insert(userChoices).values({
+          ideaId: input.ideaId,
+          userId: ctx.user.id,
+          choice: input.choice,
+          notes: input.notes || null,
+        });
+        
+        // حفظ حدث في journey
+        await db_conn.insert(ideaJourneyEvents).values({
+          ideaId: input.ideaId,
+          eventType: input.choice === 'uplink2' ? 'promoted_uplink2' : 'promoted_uplink3',
+          eventData: { notes: input.notes },
+        });
 
         // إذا اختار UPLINK 2
         if (input.choice === 'uplink2') {
@@ -930,93 +949,41 @@ export const appRouter = router({
         const idea = await db.getIdeaById(input.ideaId);
         if (!idea) throw new Error("الفكرة غير موجودة");
         
-        // جمع جميع البيانات المرتبطة
-        const analysis = await db.getIdeaAnalysisByIdeaId(input.ideaId);
-        const classification = await db.getIdeaClassification(input.ideaId);
+        // جلب الأحداث من ideaJourneyEvents
+        const db_conn = getDb();
+        const events = await db_conn
+          .select()
+          .from(ideaJourneyEvents)
+          .where(eq(ideaJourneyEvents.ideaId, input.ideaId))
+          .orderBy(asc(ideaJourneyEvents.timestamp));
         
-        // بناء timeline
-        const timeline: Array<{
-          id: number;
-          stage: string;
-          title: string;
-          description: string;
-          status: 'completed' | 'current' | 'pending';
-          timestamp?: string;
-          data?: any;
-        }> = [];
-
-        // UPLINK 1: تقديم الفكرة
-        timeline.push({
-          id: 1,
-          stage: 'uplink1',
-          title: 'تقديم الفكرة',
-          description: 'تم تقديم الفكرة بنجاح',
-          status: 'completed',
-          timestamp: idea.createdAt || new Date().toISOString(),
-          data: { title: idea.title, category: idea.category },
-        });
-
-        // UPLINK 1: التقييم بالذكاء الاصطناعي
-        if (analysis) {
-          timeline.push({
-            id: 2,
-            stage: 'uplink1',
-            title: 'التقييم بالذكاء الاصطناعي',
-            description: 'تم تحليل الفكرة بنجاح',
-            status: 'completed',
-            timestamp: analysis.createdAt || new Date().toISOString(),
-            data: { 
-              overallScore: analysis.overallScore,
-              classification: classification?.classificationPath,
-            },
+        // إذا لم تكن هناك أحداث، إنشاء حدث التقديم
+        if (events.length === 0) {
+          await db_conn.insert(ideaJourneyEvents).values({
+            ideaId: input.ideaId,
+            eventType: 'submitted',
+            eventData: { title: idea.title },
           });
+          
+          // إذا كان هناك تحليل، إضافة حدث analyzed
+          const analysis = await db.getIdeaAnalysisByIdeaId(input.ideaId);
+          if (analysis) {
+            await db_conn.insert(ideaJourneyEvents).values({
+              ideaId: input.ideaId,
+              eventType: 'analyzed',
+              eventData: { overallScore: analysis.overallScore },
+            });
+          }
+          
+          // إعادة جلب الأحداث
+          return await db_conn
+            .select()
+            .from(ideaJourneyEvents)
+            .where(eq(ideaJourneyEvents.ideaId, input.ideaId))
+            .orderBy(asc(ideaJourneyEvents.timestamp));
         }
-
-        // UPLINK 1: اختيار المستخدم
-        if (idea.userChoice) {
-          timeline.push({
-            id: 3,
-            stage: 'uplink1',
-            title: 'اختيار المسار',
-            description: idea.userChoice === 'uplink2' 
-              ? 'تم الانتقال إلى UPLINK 2 للبحث عن فرص'
-              : 'تم الانتقال مباشرة إلى UPLINK 3 للبيع',
-            status: 'completed',
-            data: { choice: idea.userChoice },
-          });
-        }
-
-        // UPLINK 2: المطابقة
-        if (idea.uplink2ProjectId) {
-          const project = await db.getProjectById(idea.uplink2ProjectId);
-          timeline.push({
-            id: 4,
-            stage: 'uplink2',
-            title: 'UPLINK 2: المطابقة والتوافق',
-            description: 'تم إنشاء مشروع في UPLINK 2',
-            status: (project?.status === 'matched' || project?.status === 'contracted') ? 'current' : 'completed',
-            data: { projectId: idea.uplink2ProjectId, projectStatus: project?.status },
-          });
-        }
-
-        // UPLINK 3: البورصة
-        if (idea.uplink3AssetId) {
-          timeline.push({
-            id: 5,
-            stage: 'uplink3',
-            title: 'UPLINK 3: البورصة والاستحواذ',
-            description: 'تم إضافة الفكرة للبيع في البورصة',
-            status: 'current',
-            data: { assetId: idea.uplink3AssetId },
-          });
-        }
-
-        return {
-          idea,
-          analysis,
-          classification,
-          timeline,
-        };
+        
+        return events;
       }),
   }),
 

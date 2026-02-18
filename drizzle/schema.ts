@@ -1878,3 +1878,30 @@ export type InsertIdeaFinancialImpact = typeof ideaFinancialImpact.$inferInsert;
 
 export type InnovationMetric = typeof innovationMetrics.$inferSelect;
 export type InsertInnovationMetric = typeof innovationMetrics.$inferInsert;
+
+// User Choices & Journey Tracking
+export const userChoices = mysqlTable("user_choices", {
+	id: int().autoincrement().notNull(),
+	ideaId: int().notNull(),
+	userId: int().notNull(),
+	choice: mysqlEnum(['uplink2','uplink3']).notNull(),
+	notes: text(), // User notes explaining their choice
+	projectId: int(), // If choice='uplink2'
+	assetId: int(), // If choice='uplink3'
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export const ideaJourneyEvents = mysqlTable("idea_journey_events", {
+	id: int().autoincrement().notNull(),
+	ideaId: int().notNull(),
+	eventType: mysqlEnum(['submitted','analyzed','promoted_uplink2','promoted_uplink3','matched','funded','completed']).notNull(),
+	eventData: json(), // Additional event-specific data
+	timestamp: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+// TypeScript types
+export type UserChoice = typeof userChoices.$inferSelect;
+export type InsertUserChoice = typeof userChoices.$inferInsert;
+
+export type IdeaJourneyEvent = typeof ideaJourneyEvents.$inferSelect;
+export type InsertIdeaJourneyEvent = typeof ideaJourneyEvents.$inferInsert;
