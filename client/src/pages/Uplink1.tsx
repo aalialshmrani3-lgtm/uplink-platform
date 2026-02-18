@@ -206,7 +206,13 @@ export default function Uplink1() {
               )}
               <Link href="/uplink1/ideas/120002/analysis">
                 <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  شاهد مثال تحليل
+                  شاهد مثال حي
+                </Button>
+              </Link>
+              <Link href="/demo">
+                <Button size="lg" variant="outline" className="border-purple-700 hover:bg-purple-800">
+                  <ArrowRight className="w-5 h-5 mr-2" />
+                  وجّه الفكرة
                 </Button>
               </Link>
             </div>
