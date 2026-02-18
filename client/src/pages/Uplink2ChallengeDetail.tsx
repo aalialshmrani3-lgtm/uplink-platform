@@ -190,12 +190,23 @@ export default function Uplink2ChallengeDetail() {
         <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-0 p-8 text-center">
           <h2 className="text-2xl font-bold text-white mb-3">هل لديك حل مبتكر لهذا التحدي؟</h2>
           <p className="text-blue-100 mb-6">قدّم فكرتك الآن واحصل على فرصة للفوز بالجائزة!</p>
-          <Button 
-            onClick={() => setLocation("/uplink1/submit")} 
-            className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-8 py-3"
-          >
-            قدّم حلك الآن
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              onClick={() => setLocation("/uplink1/submit")} 
+              className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-8 py-3"
+            >
+              قدّم حلك الآن
+            </Button>
+            {relatedIdeas && relatedIdeas.length > 0 && (
+              <Button 
+                onClick={() => setLocation("/uplink3")} 
+                className="bg-purple-600 text-white hover:bg-purple-700 font-bold px-8 py-3"
+              >
+                <DollarSign className="w-5 h-5 ml-2" />
+                انتقل إلى UPLINK 3 (إكمال الصفقة)
+              </Button>
+            )}
+          </div>
         </Card>
       </div>
     </div>

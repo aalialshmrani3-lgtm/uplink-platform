@@ -7,7 +7,7 @@ import {
   ArrowLeft, Brain, TrendingUp, AlertTriangle, CheckCircle2,
   Target, Lightbulb, Users, DollarSign, Shield, Zap
 } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useRoute } from "wouter";
 
 export default function Uplink1IdeaAnalysis() {
   const [, params] = useRoute("/uplink1/ideas/:id/analysis");
@@ -292,27 +292,108 @@ export default function Uplink1IdeaAnalysis() {
             </Card>
           )}
 
-          {/* Next Steps */}
+          {/* Next Steps - Based on Classification */}
           <Card className="bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 border-cyan-500/30">
             <CardHeader>
               <CardTitle className="text-2xl">الخطوات التالية</CardTitle>
-              <CardDescription>ماذا بعد التحليل؟</CardDescription>
+              <CardDescription>
+                {analysis.classification === 'guidance' 
+                  ? 'يرجى إعادة الإرسال مع تحسين النقاط التالية'
+                  : 'اختر المسار المناسب لفكرتك'}
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Link href="/uplink2">
-                  <Button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-                    <Users className="w-4 h-4 ml-2" />
-                    انتقل إلى UPLINK 2 (الفعاليات والتحديات)
-                  </Button>
-                </Link>
-                <Link href={`/uplink1/ideas/${ideaId}`}>
-                  <Button variant="outline" className="w-full">
-                    <ArrowLeft className="w-4 h-4 ml-2" />
-                    العودة إلى تفاصيل الفكرة
-                  </Button>
-                </Link>
-              </div>
+              {/* إذا كانت ضعيفة (Guidance Path) */}
+              {analysis.classification === 'guidance' && (
+                <div className="space-y-4">
+                  <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">الفكرة تحتاج إلى تطوير</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          نقدر جهدك في تقديم هذه الفكرة، لكنها تحتاج إلى مزيد من التطوير قبل الانتقال للمراحل التالية.
+                        </p>
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-foreground">التوصيات والتوجيهات:</p>
+                          <ul className="space-y-1">
+                            {recommendations.map((rec: string, i: number) => (
+                              <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                                <span className="text-yellow-400 mt-1">•</span>
+                                <span>{rec}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <Link href="/uplink1/submit">
+                    <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white">
+                      <Lightbulb className="w-4 h-4 ml-2" />
+                      إعادة تقديم الفكرة بعد التحسين
+                    </Button>
+                  </Link>
+                </div>
+              )}
+
+              {/* إذا كانت ابتكار أو حل تجاري */}
+              {(analysis.classification === 'innovation' || analysis.classification === 'commercial') && (
+                <div className="space-y-4">
+                  <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">
+                          {analysis.classification === 'innovation' ? 'فكرة ابتكارية ممتازة! 🎉' : 'حل تجاري قوي! 💼'}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {analysis.classification === 'innovation' 
+                            ? 'فكرتك تمثل ابتكاراً حقيقياً ولديها إمكانات كبيرة. اختر المسار المناسب للمضي قدماً:'
+                            : 'فكرتك تمثل حلاً تجارياً قوياً ولديها إمكانات سوقية واعدة. اختر المسار المناسب للمضي قدماً:'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* خيار 1: UPLINK 2 */}
+                    <Link href="/uplink2">
+                      <Button className="w-full h-auto py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-start gap-2">
+                        <div className="flex items-center gap-2 w-full">
+                          <Users className="w-5 h-5" />
+                          <span className="font-semibold">UPLINK 2</span>
+                        </div>
+                        <span className="text-xs text-white/80 text-right">
+                          مطابقة مع التحديات والفعاليات
+                        </span>
+                      </Button>
+                    </Link>
+
+                    {/* خيار 2: UPLINK 3 */}
+                    <Link href="/uplink3">
+                      <Button className="w-full h-auto py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white flex flex-col items-start gap-2">
+                        <div className="flex items-center gap-2 w-full">
+                          <DollarSign className="w-5 h-5" />
+                          <span className="font-semibold">UPLINK 3</span>
+                        </div>
+                        <span className="text-xs text-white/80 text-right">
+                          الذهاب مباشرة إلى سوق الابتكارات
+                        </span>
+                      </Button>
+                    </Link>
+                  </div>
+
+                  <div className="text-center">
+                    <Link href={`/uplink1/ideas/${ideaId}`}>
+                      <Button variant="ghost" size="sm">
+                        <ArrowLeft className="w-4 h-4 ml-2" />
+                        العودة إلى تفاصيل الفكرة
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
