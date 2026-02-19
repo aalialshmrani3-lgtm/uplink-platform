@@ -25,3 +25,8 @@
 ## Phase 4: اختبار
 - [ ] اختبار شامل
 - [ ] حفظ checkpoint
+
+## الأخطاء المتبقية (6):
+- [ ] إصلاح Challenge interface (titleEn: string | null)
+- [ ] إصلاح timeline property في IdeaJourney
+- [ ] إصلاح باقي type incompatibilities

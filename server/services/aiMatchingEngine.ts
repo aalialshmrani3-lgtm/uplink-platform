@@ -29,45 +29,45 @@ export interface Project {
 export interface Challenge {
   id: number;
   title: string;
-  titleEn: string;
+  titleEn: string | null;
   description: string;
-  descriptionEn: string;
-  category: string;
+  descriptionEn: string | null;
+  category: string | null;
   prize: number;
-  requirements?: string;
+  requirements?: string | null;
 }
 
 export interface Accelerator {
   id: number;
   name: string;
-  nameEn: string;
+  nameEn: string | null;
   description: string;
-  descriptionEn: string;
-  focusAreas: string;
-  supportTypes: string;
-  fundingRange?: string;
+  descriptionEn: string | null;
+  focusAreas: string | null;
+  supportTypes: string | null;
+  fundingRange?: string | null;
 }
 
 export interface Incubator {
   id: number;
   name: string;
-  nameEn: string;
+  nameEn: string | null;
   description: string;
-  descriptionEn: string;
-  focusAreas: string;
-  supportTypes: string;
-  fundingRange?: string;
+  descriptionEn: string | null;
+  focusAreas: string | null;
+  supportTypes: string | null;
+  fundingRange?: string | null;
 }
 
 export interface Partner {
   id: number;
   name: string;
-  nameEn: string;
+  nameEn: string | null;
   description: string;
-  descriptionEn: string;
-  industry: string;
-  focusAreas?: string;
-  partnershipTypes?: string;
+  descriptionEn: string | null;
+  industry: string | null;
+  focusAreas?: string | null;
+  partnershipTypes?: string | null;
 }
 
 export interface MatchResult {
@@ -76,16 +76,16 @@ export interface MatchResult {
   matchScore: number; // 0-100
   matchReasons: string[];
   title: string;
-  titleEn: string;
+  titleEn: string | null;
   description: string;
-  descriptionEn: string;
-  category?: string;
+  descriptionEn: string | null;
+  category?: string | null;
   prize?: number;
-  fundingRange?: string;
-  focusAreas?: string;
-  supportTypes?: string;
-  industry?: string;
-  partnershipTypes?: string;
+  fundingRange?: string | null;
+  focusAreas?: string | null;
+  supportTypes?: string | null;
+  industry?: string | null;
+  partnershipTypes?: string | null;
 }
 
 /**
