@@ -47,7 +47,8 @@ export default function IdeaJourney() {
     );
   }
 
-  const { idea, analysis, classification, timeline } = data;
+  const { idea, analysis, classification } = data;
+  const timeline = data.timeline || data;
 
   // Icons mapping
   const stageIcons: Record<string, any> = {
@@ -153,7 +154,7 @@ export default function IdeaJourney() {
             {/* Vertical line */}
             <div className="absolute right-[19px] top-2 bottom-2 w-0.5 bg-border" />
 
-            {timeline.map((step, index) => {
+            {timeline.map((step: any, index: number) => {
               const StageIcon = stageIcons[step.stage];
               const StatusIcon = statusIcons[step.status];
               const statusColor = statusColors[step.status];

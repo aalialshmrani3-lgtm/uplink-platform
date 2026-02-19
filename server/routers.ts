@@ -901,8 +901,8 @@ export const appRouter = router({
         await db.updateIdea(input.ideaId, { userChoice: input.choice });
         
         // حفظ الملاحظات في userChoices table
-        const db_conn = getDb();
-        await db_conn.insert(userChoices).values({
+        const db_conn = await getDb();
+        await db_conn!.insert(userChoices).values({
           ideaId: input.ideaId,
           userId: ctx.user.id,
           choice: input.choice,
@@ -910,7 +910,7 @@ export const appRouter = router({
         });
         
         // حفظ حدث في journey
-        await db_conn.insert(ideaJourneyEvents).values({
+        await db_conn!.insert(ideaJourneyEvents).values({
           ideaId: input.ideaId,
           eventType: input.choice === 'naqla2' ? 'promoted_naqla2' : 'promoted_naqla3',
           eventData: { notes: input.notes },
@@ -950,8 +950,8 @@ export const appRouter = router({
         if (!idea) throw new Error("الفكرة غير موجودة");
         
         // جلب الأحداث من ideaJourneyEvents
-        const db_conn = getDb();
-        const events = await db_conn
+        const db_conn = await getDb();
+        const events = await db_conn!
           .select()
           .from(ideaJourneyEvents)
           .where(eq(ideaJourneyEvents.ideaId, input.ideaId))
@@ -959,7 +959,7 @@ export const appRouter = router({
         
         // إذا لم تكن هناك أحداث، إنشاء حدث التقديم
         if (events.length === 0) {
-          await db_conn.insert(ideaJourneyEvents).values({
+          await db_conn!.insert(ideaJourneyEvents).values({
             ideaId: input.ideaId,
             eventType: 'submitted',
             eventData: { title: idea.title },
@@ -968,7 +968,7 @@ export const appRouter = router({
           // إذا كان هناك تحليل، إضافة حدث analyzed
           const analysis = await db.getIdeaAnalysisByIdeaId(input.ideaId);
           if (analysis) {
-            await db_conn.insert(ideaJourneyEvents).values({
+            await db_conn!.insert(ideaJourneyEvents).values({
               ideaId: input.ideaId,
               eventType: 'analyzed',
               eventData: { overallScore: analysis.overallScore },
@@ -976,7 +976,7 @@ export const appRouter = router({
           }
           
           // إعادة جلب الأحداث
-          return await db_conn
+          return await db_conn!
             .select()
             .from(ideaJourneyEvents)
             .where(eq(ideaJourneyEvents.ideaId, input.ideaId))
@@ -3857,7 +3857,8 @@ Provide response in JSON format:
         // تحويل project إلى Project type
         const projectData = {
           ...project,
-          fundingRequired: project.fundingRequired || 0,
+          fundingRequired: Number(project.fundingReceived) || 0,
+          tags: project.tags ? String(project.tags) : null,
         };
 
         // حساب المطابقات

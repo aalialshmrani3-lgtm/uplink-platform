@@ -346,14 +346,14 @@ export default function Naqla1IdeaAnalysis() {
             <CardHeader>
               <CardTitle className="text-2xl">الخطوات التالية</CardTitle>
               <CardDescription>
-                {analysis.classification === 'guidance' 
+                {analysis.classification === 'weak' 
                   ? 'يرجى إعادة الإرسال مع تحسين النقاط التالية'
                   : 'اختر المسار المناسب لفكرتك'}
               </CardDescription>
             </CardHeader>
             <CardContent>
               {/* إذا كانت ضعيفة (Guidance Path) */}
-              {analysis.classification === 'guidance' && (
+              {analysis.classification === 'weak' && (
                 <div className="space-y-4">
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
                     <div className="flex items-start gap-3">

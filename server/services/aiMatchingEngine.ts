@@ -15,14 +15,14 @@ import { invokeLLM } from "../_core/llm";
 export interface Project {
   id: number;
   title: string;
-  titleEn: string;
+  titleEn: string | null;
   description: string;
-  descriptionEn: string;
-  category: string;
-  stage: string;
-  teamSize: number;
+  descriptionEn: string | null;
+  category: string | null;
+  stage: string | null;
+  teamSize: number | null;
   fundingRequired: number;
-  tags?: string;
+  tags?: string | null;
   overallScore?: number;
 }
 

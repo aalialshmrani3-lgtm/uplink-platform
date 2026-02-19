@@ -130,7 +130,7 @@ export default function IdeaClusters() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {clusters.reduce((sum, c) => sum + c.memberCount, 0)}
+                {clusters.reduce((sum, c) => sum + (c.memberCount || 0), 0)}
               </div>
             </CardContent>
           </Card>
@@ -141,7 +141,7 @@ export default function IdeaClusters() {
             <CardContent>
               <div className="text-2xl font-bold">
                 {Math.round(
-                  clusters.reduce((sum, c) => sum + c.strength, 0) / clusters.length
+                  clusters.reduce((sum, c) => sum + (c.strength || 0), 0) / clusters.length
                 )}
                 %
               </div>
@@ -183,7 +183,7 @@ export default function IdeaClusters() {
                       <p className="text-sm text-muted-foreground">{cluster.nameEn}</p>
                     )}
                   </div>
-                  <Badge className={`${getStrengthColor(cluster.strength)} text-white`}>
+                  <Badge className={`${getStrengthColor(cluster.strength || 0)} text-white`}>
                     {cluster.strength}%
                   </Badge>
                 </div>
@@ -199,7 +199,7 @@ export default function IdeaClusters() {
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <TrendingUp className="h-4 w-4" />
-                    <span>{getStrengthLabel(cluster.strength)}</span>
+                    <span>{getStrengthLabel(cluster.strength || 0)}</span>
                   </div>
                 </div>
                 <Button
@@ -248,7 +248,7 @@ export default function IdeaClusters() {
                   <div className="text-2xl font-bold">
                     {clusterDetails.similarities
                       ? Math.round(
-                          clusterDetails.similarities.reduce((a, b) => a + b, 0) /
+                          clusterDetails.similarities.reduce((a, b) => (a || 0) + (b || 0), 0) /
                             clusterDetails.similarities.length
                         )
                       : 0}
