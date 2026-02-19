@@ -143,11 +143,11 @@ export default function Academy() {
   const faqData = [
     {
       question: "كيف يمكنني التسجيل في الدورات؟",
-      answer: "يمكنك التسجيل في أي دورة بالضغط على زر 'ابدأ التعلم' أو 'سجّل الآن'. يجب أن يكون لديك حساب في منصة UPLINK. الدورات المجانية متاحة فوراً، بينما الدورات المدفوعة تتطلب إتمام عملية الدفع."
+      answer: "يمكنك التسجيل في أي دورة بالضغط على زر 'ابدأ التعلم' أو 'سجّل الآن'. يجب أن يكون لديك حساب في منصة NAQLA. الدورات المجانية متاحة فوراً، بينما الدورات المدفوعة تتطلب إتمام عملية الدفع."
     },
     {
       question: "هل الشهادات معتمدة؟",
-      answer: "نعم، جميع الشهادات الصادرة من أكاديمية UPLINK معتمدة من شركائنا الأكاديميين (KAUST, SAIP, SDAIA, Monshaat, MCIT, KACST) ومعترف بها من قبل الجهات الحكومية والقطاع الخاص."
+      answer: "نعم، جميع الشهادات الصادرة من أكاديمية NAQLA معتمدة من شركائنا الأكاديميين (KAUST, SAIP, SDAIA, Monshaat, MCIT, KACST) ومعترف بها من قبل الجهات الحكومية والقطاع الخاص."
     },
     {
       question: "ما هي مدة صلاحية الوصول للدورة؟",
@@ -163,7 +163,7 @@ export default function Academy() {
     },
     {
       question: "هل يمكنني التعلم من الجوال؟",
-      answer: "نعم، منصة UPLINK متوافقة تماماً مع جميع الأجهزة. يمكنك متابعة الدورات من الكمبيوتر أو الجوال أو الجهاز اللوحي في أي وقت ومن أي مكان."
+      answer: "نعم، منصة NAQLA متوافقة تماماً مع جميع الأجهزة. يمكنك متابعة الدورات من الكمبيوتر أو الجوال أو الجهاز اللوحي في أي وقت ومن أي مكان."
     },
     {
       question: "ما هي اللغات المتاحة؟",
@@ -257,7 +257,7 @@ export default function Academy() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -278,7 +278,7 @@ export default function Academy() {
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full mb-6">
                   <GraduationCap className="w-4 h-4 text-purple-400" />
-                  <span className="text-purple-400 text-sm">أكاديمية UPLINK</span>
+                  <span className="text-purple-400 text-sm">أكاديمية NAQLA</span>
                 </div>
                 <h1 className="text-5xl font-bold text-white mb-6 leading-tight">
                   طوّر مهاراتك
@@ -586,7 +586,7 @@ export default function Academy() {
             </div>
             <h2 className="text-3xl font-bold text-white mb-4">هل لديك استفسار؟</h2>
             <p className="text-slate-400 max-w-xl mx-auto">
-              إجابات على أكثر الأسئلة شيوعاً حول أكاديمية UPLINK
+              إجابات على أكثر الأسئلة شيوعاً حول أكاديمية NAQLA
             </p>
           </div>
 

@@ -303,7 +303,7 @@ export default function WebhookManagement() {
               <Label htmlFor="webhookUrl">URL *</Label>
               <Input
                 id="webhookUrl"
-                placeholder="https://your-domain.com/webhooks/uplink"
+                placeholder="https://your-domain.com/webhooks/naqla"
                 value={formData.url}
                 onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                 className="mt-2"

@@ -1,8 +1,8 @@
 import { invokeLLM } from "../_core/llm";
 
 /**
- * AI Analysis Engine for UPLINK1
- * Analyzes ideas and determines if they should move to UPLINK2
+ * AI Analysis Engine for NAQLA1
+ * Analyzes ideas and determines if they should move to NAQLA2
  */
 
 export interface IdeaAnalysisResult {
@@ -17,7 +17,7 @@ export interface IdeaAnalysisResult {
   strengths: string[];
   weaknesses: string[];
   recommendations: string[];
-  uplink2Eligible: boolean;
+  naqla2Eligible: boolean;
   reasoning: string;
 }
 
@@ -42,7 +42,7 @@ ${category ? `الفئة: ${category}` : ""}
 6. تحديد الفئة والكلمات المفتاحية
 7. نقاط القوة والضعف
 8. التوصيات للتحسين
-9. هل مؤهل للانتقال إلى UPLINK2؟ (إذا Overall Score >= 70%)
+9. هل مؤهل للانتقال إلى NAQLA2؟ (إذا Overall Score >= 70%)
 
 **أجب بصيغة JSON فقط:**`;
 
@@ -113,9 +113,9 @@ ${category ? `الفئة: ${category}` : ""}
               items: { type: "string" },
               description: "Array of recommendations",
             },
-            uplink2Eligible: {
+            naqla2Eligible: {
               type: "boolean",
-              description: "Whether eligible for UPLINK2 (>= 70%)",
+              description: "Whether eligible for NAQLA2 (>= 70%)",
             },
             reasoning: {
               type: "string",
@@ -134,7 +134,7 @@ ${category ? `الفئة: ${category}` : ""}
             "strengths",
             "weaknesses",
             "recommendations",
-            "uplink2Eligible",
+            "naqla2Eligible",
             "reasoning",
           ],
           additionalProperties: false,

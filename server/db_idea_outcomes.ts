@@ -1,6 +1,6 @@
 /**
  * Database Helpers for Idea Outcomes (Real Data Collection)
- * UPLINK 5.0 Platform
+ * NAQLA 5.0 Platform
  */
 
 import { getDb } from "./db";

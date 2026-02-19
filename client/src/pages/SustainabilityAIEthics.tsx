@@ -126,7 +126,7 @@ export default function SustainabilityAIEthics() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-gradient-to-r from-green-600 to-blue-600 text-white border-0">
-            UPLINK 6.0 Preview
+            NAQLA 6.0 Preview
           </Badge>
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
             الاستدامة وأخلاقيات الذكاء الاصطناعي

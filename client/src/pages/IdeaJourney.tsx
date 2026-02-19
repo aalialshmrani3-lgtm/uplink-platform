@@ -21,7 +21,7 @@ export default function IdeaJourney() {
   const ideaId = parseInt(params.id || "0");
   const [, navigate] = useLocation();
 
-  const { data, isLoading } = trpc.uplink1.getIdeaJourney.useQuery({ ideaId });
+  const { data, isLoading } = trpc.naqla1.getIdeaJourney.useQuery({ ideaId });
 
   if (isLoading) {
     return (
@@ -51,9 +51,9 @@ export default function IdeaJourney() {
 
   // Icons mapping
   const stageIcons: Record<string, any> = {
-    uplink1: Lightbulb,
-    uplink2: Users,
-    uplink3: ShoppingCart,
+    naqla1: Lightbulb,
+    naqla2: Users,
+    naqla3: ShoppingCart,
   };
 
   const statusIcons: Record<string, any> = {
@@ -76,7 +76,7 @@ export default function IdeaJourney() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate("/uplink1/my-ideas")}
+            onClick={() => navigate("/naqla1/my-ideas")}
             className="mb-2"
           >
             <ArrowLeft className="w-4 h-4 ml-2" />
@@ -146,7 +146,7 @@ export default function IdeaJourney() {
             <GitBranch className="w-5 h-5" />
             رحلة الفكرة
           </CardTitle>
-          <CardDescription>تتبع مسار فكرتك عبر منصة UPLINK</CardDescription>
+          <CardDescription>تتبع مسار فكرتك عبر منصة NAQLA</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="relative space-y-8">
@@ -196,7 +196,7 @@ export default function IdeaJourney() {
                           <div><strong>الشريك المقترح:</strong> {step.data.suggestedPartner}</div>
                         )}
                         {step.data.choice && (
-                          <div><strong>الاختيار:</strong> {step.data.choice === 'uplink2' ? 'UPLINK 2' : 'UPLINK 3'}</div>
+                          <div><strong>الاختيار:</strong> {step.data.choice === 'naqla2' ? 'NAQLA 2' : 'NAQLA 3'}</div>
                         )}
                         {step.data.projectId && (
                           <div><strong>رقم المشروع:</strong> {step.data.projectId}</div>

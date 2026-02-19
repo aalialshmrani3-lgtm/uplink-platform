@@ -130,7 +130,7 @@ export default function OrganizationsDashboard() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>

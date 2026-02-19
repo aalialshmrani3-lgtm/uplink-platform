@@ -89,7 +89,7 @@ export default function APIManagement() {
         <div>
           <h1 className="text-3xl font-bold mb-2">إدارة API Keys</h1>
           <p className="text-muted-foreground">
-            إنشاء وإدارة مفاتيح API للوصول البرمجي إلى خدمات UPLINK
+            إنشاء وإدارة مفاتيح API للوصول البرمجي إلى خدمات NAQLA
           </p>
         </div>
         <Button onClick={() => setCreateDialogOpen(true)}>
@@ -152,7 +152,7 @@ export default function APIManagement() {
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`POST https://your-domain.com/api/public/v1/predict
-Authorization: Bearer uplink_your_api_key
+Authorization: Bearer naqla_your_api_key
 Content-Type: application/json
 
 {
@@ -190,7 +190,7 @@ Content-Type: application/json
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`POST https://your-domain.com/api/public/v1/batch-predict
-Authorization: Bearer uplink_your_api_key
+Authorization: Bearer naqla_your_api_key
 Content-Type: application/json
 
 {
@@ -250,7 +250,7 @@ Content-Type: application/json
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`GET https://your-domain.com/api/public/v1/usage
-Authorization: Bearer uplink_your_api_key`}
+Authorization: Bearer naqla_your_api_key`}
                 </pre>
               </div>
             </div>
@@ -330,7 +330,7 @@ Authorization: Bearer uplink_your_api_key`}
           <DialogHeader>
             <DialogTitle>إنشاء API Key جديد</DialogTitle>
             <DialogDescription>
-              أنشئ مفتاح API للوصول البرمجي إلى خدمات UPLINK
+              أنشئ مفتاح API للوصول البرمجي إلى خدمات NAQLA
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">

@@ -1,5 +1,5 @@
 /**
- * AI Matching System for UPLINK 2
+ * AI Matching System for NAQLA 2
  * 
  * يحسب match score بين الأفكار والتحديات/المستثمرين/الشركات
  * بناءً على:
@@ -39,7 +39,7 @@ export interface MatchResult {
  * حساب match score باستخدام AI
  */
 export async function calculateMatchScore(input: MatchInput): Promise<MatchResult> {
-  const prompt = `أنت خبير في مطابقة الأفكار الابتكارية مع الفرص المناسبة في منصة UPLINK.
+  const prompt = `أنت خبير في مطابقة الأفكار الابتكارية مع الفرص المناسبة في منصة NAQLA.
 
 **الفكرة:**
 - العنوان: ${input.ideaTitle}

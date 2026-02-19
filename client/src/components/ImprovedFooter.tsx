@@ -30,7 +30,7 @@ export default function ImprovedFooter() {
               <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <Rocket className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gradient-cyan">UPLINK 5.0</span>
+              <span className="text-xl font-bold text-gradient-cyan">NAQLA 5.0</span>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
               {t.footer.tagline}
@@ -39,7 +39,7 @@ export default function ImprovedFooter() {
             {/* Social Media Links */}
             <div className="flex items-center gap-3 mb-6">
               <a 
-                href="https://twitter.com/UPLINK_SA" 
+                href="https://twitter.com/NAQLA_SA" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-secondary/50 hover:bg-cyan-500/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -47,7 +47,7 @@ export default function ImprovedFooter() {
                 <Twitter className="w-4 h-4 text-muted-foreground hover:text-cyan-400" />
               </a>
               <a 
-                href="https://linkedin.com/company/uplink-sa" 
+                href="https://linkedin.com/company/naqla-sa" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-secondary/50 hover:bg-blue-500/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -55,7 +55,7 @@ export default function ImprovedFooter() {
                 <Linkedin className="w-4 h-4 text-muted-foreground hover:text-blue-400" />
               </a>
               <a 
-                href="https://facebook.com/UPLINK.SA" 
+                href="https://facebook.com/NAQLA.SA" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-secondary/50 hover:bg-blue-600/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -63,7 +63,7 @@ export default function ImprovedFooter() {
                 <Facebook className="w-4 h-4 text-muted-foreground hover:text-blue-500" />
               </a>
               <a 
-                href="https://instagram.com/uplink.sa" 
+                href="https://instagram.com/naqla.sa" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-secondary/50 hover:bg-pink-500/20 flex items-center justify-center transition-all duration-300 hover:scale-110"

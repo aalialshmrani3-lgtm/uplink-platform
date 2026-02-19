@@ -100,7 +100,7 @@ export default function ProjectDetail() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -252,8 +252,8 @@ export default function ProjectDetail() {
                           {getClassificationText(evaluation.classification)}
                         </p>
                         <p className="text-slate-400 text-sm">
-                          {evaluation.classification === "innovation" && "مسار سريع إلى UPLINK2 - التحديات والمطابقة"}
-                          {evaluation.classification === "commercial" && "مسار سريع إلى UPLINK2 - الفرص التجارية"}
+                          {evaluation.classification === "innovation" && "مسار سريع إلى NAQLA2 - التحديات والمطابقة"}
+                          {evaluation.classification === "commercial" && "مسار سريع إلى NAQLA2 - الفرص التجارية"}
                           {evaluation.classification === "guidance" && "برنامج إرشاد وتطوير مكثف"}
                         </p>
                       </div>

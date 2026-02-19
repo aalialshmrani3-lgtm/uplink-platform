@@ -153,7 +153,7 @@ export async function updateProject(id: number, data: Partial<InsertProject>) {
   await db.update(projects).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(projects.id, id));
 }
 
-export async function getProjectsByEngine(engine: 'uplink1' | 'uplink2' | 'uplink3') {
+export async function getProjectsByEngine(engine: 'naqla1' | 'naqla2' | 'naqla3') {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(projects).where(eq(projects.engine, engine)).orderBy(desc(projects.createdAt));
@@ -891,7 +891,7 @@ export async function getAnalysisStats() {
 }
 
 // ============================================
-// UPLINK1: IDEAS OPERATIONS
+// NAQLA1: IDEAS OPERATIONS
 // ============================================
 export async function createIdea(data: any) {
   const db = await getDb();
@@ -970,7 +970,7 @@ export async function updateIdea(id: number, data: any) {
 }
 
 // ============================================
-// UPLINK1: IDEA ANALYSIS OPERATIONS
+// NAQLA1: IDEA ANALYSIS OPERATIONS
 // ============================================
 export async function createIdeaAnalysis(data: any) {
   console.log('[DEBUG] createIdeaAnalysis called with data keys:', Object.keys(data));
@@ -1004,7 +1004,7 @@ export async function getIdeaAnalysisById(id: number) {
 }
 
 // ============================================
-// UPLINK1: CLASSIFICATION HISTORY OPERATIONS
+// NAQLA1: CLASSIFICATION HISTORY OPERATIONS
 // ============================================
 export async function createClassificationHistory(data: any) {
   const db = await getDb();
@@ -1020,7 +1020,7 @@ export async function getClassificationHistoryByIdeaId(ideaId: number) {
 }
 
 // ============================================
-// UPLINK1: STATISTICS OPERATIONS
+// NAQLA1: STATISTICS OPERATIONS
 // ============================================
 export async function getClassificationStats() {
   const db = await getDb();
@@ -1036,7 +1036,7 @@ export async function getClassificationStats() {
 }
 
 // ============================================
-// UPLINK1: USER IDEAS OPERATIONS
+// NAQLA1: USER IDEAS OPERATIONS
 // ============================================
 export async function getUserIdeas(userId: number) {
   const db = await getDb();
@@ -1384,7 +1384,7 @@ export async function getUserMFAStatus(userId: number): Promise<{ mfaEnabled: bo
 
 
 // ============================================
-// Blockchain Assets (Uplink 3)
+// Blockchain Assets (Naqla 3)
 // ============================================
 export async function getAllAssets(filters?: {
   type?: string;
@@ -1488,7 +1488,7 @@ export async function contactAssetOwner(assetId: number) {
 }
 
 // ============================================
-// Challenges (Uplink 2)
+// Challenges (Naqla 2)
 // ============================================
 // getChallengeById already defined above (line 352)
 

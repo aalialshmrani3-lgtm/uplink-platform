@@ -16,13 +16,13 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('uplink_language');
+    const saved = localStorage.getItem('naqla_language');
     return (saved as Language) || 'ar';
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('uplink_language', lang);
+    localStorage.setItem('naqla_language', lang);
     
     // Update document direction
     document.documentElement.dir = isRTL(lang) ? 'rtl' : 'ltr';

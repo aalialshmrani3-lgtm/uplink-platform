@@ -17,12 +17,12 @@ export default function ContractSignature() {
   const contractId = parseInt(id || "0");
   
   // Fetch contract details
-  const { data: contract, isLoading, refetch } = trpc.uplink3.contracts.getById.useQuery(
+  const { data: contract, isLoading, refetch } = trpc.naqla3.contracts.getById.useQuery(
     { id: contractId },
     { enabled: !!contractId }
   );
 
-  const uploadSignatureMutation = trpc.uplink3.contracts.uploadSignature.useMutation({
+  const uploadSignatureMutation = trpc.naqla3.contracts.uploadSignature.useMutation({
     onSuccess: () => {
       toast({
         title: "✅ تم حفظ التوقيع بنجاح",
@@ -41,7 +41,7 @@ export default function ContractSignature() {
     },
   });
 
-  const generatePdfMutation = trpc.uplink3.contracts.generateSignedPDF.useMutation({
+  const generatePdfMutation = trpc.naqla3.contracts.generateSignedPDF.useMutation({
     onSuccess: (data: any) => {
       toast({
         title: "✅ تم توليد PDF",

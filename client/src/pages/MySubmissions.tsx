@@ -19,7 +19,7 @@ import {
 
 export default function MySubmissions() {
   const [, setLocation] = useLocation();
-  const { data: submissions, isLoading } = trpc.uplink2.challenges.getMySubmissionsWithDetails.useQuery();
+  const { data: submissions, isLoading } = trpc.naqla2.challenges.getMySubmissionsWithDetails.useQuery();
   const [filter, setFilter] = useState<'all' | 'submitted' | 'under_review' | 'shortlisted' | 'finalist' | 'winner' | 'rejected'>('all');
 
   if (isLoading) {
@@ -148,7 +148,7 @@ export default function MySubmissions() {
                 : `لا توجد حلول بحالة "${filter}"`
               }
             </p>
-            <Button onClick={() => setLocation('/uplink2/challenges')}>
+            <Button onClick={() => setLocation('/naqla2/challenges')}>
               تصفح التحديات
             </Button>
           </CardContent>
@@ -227,7 +227,7 @@ export default function MySubmissions() {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => setLocation(`/uplink2/challenges/${submission.challengeId}`)}
+                    onClick={() => setLocation(`/naqla2/challenges/${submission.challengeId}`)}
                   >
                     <Eye className="h-4 w-4 ml-2" />
                     عرض التحدي
@@ -235,7 +235,7 @@ export default function MySubmissions() {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => setLocation(`/uplink2/submissions/${submission.id}`)}
+                    onClick={() => setLocation(`/naqla2/submissions/${submission.id}`)}
                   >
                     <FileText className="h-4 w-4 ml-2" />
                     عرض الحل

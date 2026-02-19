@@ -11,10 +11,10 @@ import { getDb } from "./db";
 import { userChoices, ideaJourneyEvents } from "../drizzle/schema";
 import { eq, asc } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./uplink1-ai-analyzer";
+import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./naqla1-ai-analyzer";
 import crypto from "crypto";
-import * as hackathonsService from "./uplink2/hackathons";
-import * as eventsService from "./uplink2/events";
+import * as hackathonsService from "./naqla2/hackathons";
+import * as eventsService from "./naqla2/events";
 import { storagePut } from "./storage";
 // import { autoTriggerDecision } from "./services/diamondDecisionPoint"; // Removed - file deleted
 
@@ -54,8 +54,8 @@ export const appRouter = router({
       
       // Generate secret
       const secret = speakeasy.generateSecret({
-        name: `UPLINK 5.0 (${ctx.user.email || ctx.user.name})`,
-        issuer: 'UPLINK 5.0'
+        name: `NAQLA 5.0 (${ctx.user.email || ctx.user.name})`,
+        issuer: 'NAQLA 5.0'
       });
       
       // Generate QR code
@@ -266,7 +266,7 @@ export const appRouter = router({
     }),
 
     getByEngine: publicProcedure
-      .input(z.object({ engine: z.enum(["uplink1", "uplink2", "uplink3"]) }))
+      .input(z.object({ engine: z.enum(["naqla1", "naqla2", "naqla3"]) }))
       .query(async ({ input }) => {
         return db.getProjectsByEngine(input.engine);
       }),
@@ -277,7 +277,7 @@ export const appRouter = router({
         title: z.string().optional(),
         description: z.string().optional(),
         status: z.enum(["draft", "submitted", "evaluating", "approved", "matched", "contracted", "completed", "rejected"]).optional(),
-        engine: z.enum(["uplink1", "uplink2", "uplink3"]).optional(),
+        engine: z.enum(["naqla1", "naqla2", "naqla3"]).optional(),
       }))
       .mutation(async ({ input }) => {
         const { id, ...data } = input;
@@ -367,9 +367,9 @@ export const appRouter = router({
   }),
 
   // ============================================
-  // UPLINK1: AI-POWERED IDEA ANALYSIS
+  // NAQLA1: AI-POWERED IDEA ANALYSIS
   // ============================================
-  uplink1: router({
+  naqla1: router({
     // Submit a new idea for AI analysis
     submitIdea: protectedProcedure
       .input(z.object({
@@ -379,7 +379,7 @@ export const appRouter = router({
         solution: z.string().min(30, "وصف الحل يجب أن يكون 30 حرفًا على الأقل"),
     targetMarket: z.string().optional(),
     uniqueValue: z.string().optional(),
-    challengeId: z.number().optional(), // Optional: Link to a challenge in UPLINK2
+    challengeId: z.number().optional(), // Optional: Link to a challenge in NAQLA2
         category: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
@@ -400,7 +400,7 @@ export const appRouter = router({
           uniqueValue: input.uniqueValue,
           category: input.category || "general",
           status: "submitted",
-          challengeId: input.challengeId, // Optional: Link to a challenge in UPLINK2
+          challengeId: input.challengeId, // Optional: Link to a challenge in NAQLA2
         });
 
         // Perform AI analysis immediately
@@ -580,13 +580,13 @@ export const appRouter = router({
             return score ? score.score : 0;
           };
 
-          // Auto-promote to UPLINK 2 or 3 based on score
+          // Auto-promote to NAQLA 2 or 3 based on score
           let projectId: number | undefined;
           let assetId: number | undefined;
           
           if (analysisResult.overallScore >= 70) {
-            const { promoteToUplink2 } = await import('./uplink1-to-uplink2');
-            const result = await promoteToUplink2(ideaId, ctx.user.id);
+            const { promoteToNaqla2 } = await import('./naqla1-to-naqla2');
+            const result = await promoteToNaqla2(ideaId, ctx.user.id);
             projectId = result.projectId;
           }
 
@@ -729,26 +729,26 @@ export const appRouter = router({
             reason: "تحليل أولي بواسطة الذكاء الاصطناعي",
           });
 
-          // Auto-transfer to UPLINK2 if innovation or commercial
-          let transferredToUplink2 = false;
-          let uplink2Message = "";
+          // Auto-transfer to NAQLA2 if innovation or commercial
+          let transferredToNaqla2 = false;
+          let naqla2Message = "";
           
           if (analysisResult.classification === "innovation" || analysisResult.classification === "commercial") {
-            // TODO: Implement actual transfer to UPLINK2 when UPLINK2 is ready
-            // For now, just mark the idea as eligible for UPLINK2
-            transferredToUplink2 = true;
-            uplink2Message = analysisResult.classification === "innovation" 
-              ? "🎉 مبروك! فكرتك ابتكار حقيقي! سيتم نقلها تلقائياً إلى UPLINK2 للمطابقة مع المستثمرين والتحديات."
-              : "🚀 رائع! فكرتك حل تجاري واعد! سيتم نقلها تلقائياً إلى UPLINK2 للمطابقة مع الفرص التجارية.";
+            // TODO: Implement actual transfer to NAQLA2 when NAQLA2 is ready
+            // For now, just mark the idea as eligible for NAQLA2
+            transferredToNaqla2 = true;
+            naqla2Message = analysisResult.classification === "innovation" 
+              ? "🎉 مبروك! فكرتك ابتكار حقيقي! سيتم نقلها تلقائياً إلى NAQLA2 للمطابقة مع المستثمرين والتحديات."
+              : "🚀 رائع! فكرتك حل تجاري واعد! سيتم نقلها تلقائياً إلى NAQLA2 للمطابقة مع الفرص التجارية.";
           } else {
-            uplink2Message = "💪 لا تستسلم! طور فكرتك حسب الاقتراحات وأعد التقديم مرة أخرى.";
+            naqla2Message = "💪 لا تستسلم! طور فكرتك حسب الاقتراحات وأعد التقديم مرة أخرى.";
           }
 
           return {
             analysisId,
             ...analysisResult,
-            transferredToUplink2,
-            uplink2Message,
+            transferredToNaqla2,
+            naqla2Message,
             message: "تم تحليل الفكرة بنجاح!"
           };
         } catch (error) {
@@ -889,11 +889,11 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    // حفظ اختيار المستخدم (UPLINK 2 أو UPLINK 3)
+    // حفظ اختيار المستخدم (NAQLA 2 أو NAQLA 3)
     setUserChoice: protectedProcedure
       .input(z.object({
         ideaId: z.number(),
-        choice: z.enum(['uplink2', 'uplink3']),
+        choice: z.enum(['naqla2', 'naqla3']),
         notes: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
@@ -912,29 +912,29 @@ export const appRouter = router({
         // حفظ حدث في journey
         await db_conn.insert(ideaJourneyEvents).values({
           ideaId: input.ideaId,
-          eventType: input.choice === 'uplink2' ? 'promoted_uplink2' : 'promoted_uplink3',
+          eventType: input.choice === 'naqla2' ? 'promoted_naqla2' : 'promoted_naqla3',
           eventData: { notes: input.notes },
         });
 
-        // إذا اختار UPLINK 2
-        if (input.choice === 'uplink2') {
-          const { promoteToUplink2 } = await import('./uplink1-to-uplink2');
-          const result = await promoteToUplink2(input.ideaId, ctx.user.id);
+        // إذا اختار NAQLA 2
+        if (input.choice === 'naqla2') {
+          const { promoteToNaqla2 } = await import('./naqla1-to-naqla2');
+          const result = await promoteToNaqla2(input.ideaId, ctx.user.id);
           return {
             success: true,
-            choice: 'uplink2',
+            choice: 'naqla2',
             projectId: result.projectId,
             opportunities: result.opportunities,
           };
         }
 
-        // إذا اختار UPLINK 3
-        if (input.choice === 'uplink3') {
-          const { promoteToUplink3 } = await import('./uplink1-to-uplink3');
-          const result = await promoteToUplink3(input.ideaId, ctx.user.id);
+        // إذا اختار NAQLA 3
+        if (input.choice === 'naqla3') {
+          const { promoteToNaqla3 } = await import('./naqla1-to-naqla3');
+          const result = await promoteToNaqla3(input.ideaId, ctx.user.id);
           return {
             success: true,
-            choice: 'uplink3',
+            choice: 'naqla3',
             assetId: result.assetId,
           };
         }
@@ -999,7 +999,7 @@ export const appRouter = router({
 
         await db.updateProject(input.projectId, { status: "evaluating" });
 
-        const prompt = `You are an expert innovation evaluator for UPLINK, Saudi Arabia's national innovation platform. Analyze the following innovation project and provide a comprehensive evaluation.
+        const prompt = `You are an expert innovation evaluator for NAQLA, Saudi Arabia's national innovation platform. Analyze the following innovation project and provide a comprehensive evaluation.
 
 Project Title: ${project.title}
 Description: ${project.description}
@@ -1018,7 +1018,7 @@ Evaluate this project on the following criteria (score each from 0-100):
 6. Scalability - Can this scale nationally/globally?
 
 Based on the overall score:
-- ≥70%: "innovation" (True Innovation - Fast track to UPLINK3)
+- ≥70%: "innovation" (True Innovation - Fast track to NAQLA3)
 - 50-70%: "commercial" (Business Solution - Business incubation support)
 - <50%: "guidance" (Needs Development - Mentorship and exploration)
 
@@ -1101,10 +1101,10 @@ Respond in JSON format:
         });
 
         // Correct classification logic:
-        // - "innovation" (≥70%) → UPLINK2
-        // - "commercial" (50-69%) → UPLINK2
-        // - "guidance" (<50%) → stays in UPLINK1
-        const newEngine = evalResult.classification === "guidance" ? "uplink1" : "uplink2";
+        // - "innovation" (≥70%) → NAQLA2
+        // - "commercial" (50-69%) → NAQLA2
+        // - "guidance" (<50%) → stays in NAQLA1
+        const newEngine = evalResult.classification === "guidance" ? "naqla1" : "naqla2";
         const newStatus = evalResult.classification === "guidance" ? "rejected" : "approved";
         await db.updateProject(input.projectId, { 
           evaluationId, 
@@ -1112,8 +1112,8 @@ Respond in JSON format:
           status: newStatus 
         });
 
-        // UPLINK1 → UPLINK2 Transition: Create IP Registration
-        if (newEngine === "uplink2") {
+        // NAQLA1 → NAQLA2 Transition: Create IP Registration
+        if (newEngine === "naqla2") {
           const project = await db.getProjectById(input.projectId);
           if (!project) throw new TRPCError({ code: 'NOT_FOUND', message: 'Project not found' });
           
@@ -1131,7 +1131,7 @@ Respond in JSON format:
             descriptionEn: project.descriptionEn,
             category: project.category,
             subCategory: project.subCategory,
-            status: 'submitted', // Ready for UPLINK2 vetting
+            status: 'submitted', // Ready for NAQLA2 vetting
             blockchainHash: `temp_${Date.now()}`, // Temporary hash, will be replaced with real blockchain hash
             blockchainTimestamp: new Date().toISOString(),
           });
@@ -1151,8 +1151,8 @@ Respond in JSON format:
           await db.createNotification({
             userId: project.userId,
             type: "success",
-            title: "تهانينا! مشروعك انتقل إلى UPLINK2",
-            message: `مشروعك "${project.title}" حصل على تقييم ${evalResult.overallScore}% وانتقل بنجاح إلى UPLINK2. تم تسجيل ملكيتك الفكرية وإرسالها للخبراء للمراجعة.`,
+            title: "تهانينا! مشروعك انتقل إلى NAQLA2",
+            message: `مشروعك "${project.title}" حصل على تقييم ${evalResult.overallScore}% وانتقل بنجاح إلى NAQLA2. تم تسجيل ملكيتك الفكرية وإرسالها للخبراء للمراجعة.`,
             link: `/projects/${input.projectId}`,
           });
         }
@@ -1348,7 +1348,7 @@ Respond in JSON format:
         permissions: z.array(z.string()).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const rawKey = `uplink_${nanoid(32)}`;
+        const rawKey = `naqla_${nanoid(32)}`;
         const keyHash = crypto.createHash('sha256').update(rawKey).digest('hex');
         const keyPrefix = rawKey.substring(0, 12);
 
@@ -1377,7 +1377,7 @@ Respond in JSON format:
   }),
 
   // ============================================
-  // CHALLENGES (UPLINK2)
+  // CHALLENGES (NAQLA2)
   // ============================================
   challenge: router({
     getAll: publicProcedure
@@ -2268,7 +2268,7 @@ Provide response in JSON format:
       
       try {
         const { stdout } = await execPromise(
-          "cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py list"
+          "cd /home/ubuntu/naqla-platform/ai-services/prediction && python3 model_versioning.py list"
         );
         return JSON.parse(stdout);
       } catch (error: any) {
@@ -2286,7 +2286,7 @@ Provide response in JSON format:
         
         try {
           await execPromise(
-            `cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py activate ${input.versionId}`
+            `cd /home/ubuntu/naqla-platform/ai-services/prediction && python3 model_versioning.py activate ${input.versionId}`
           );
           
           // Restart prediction service to use new model
@@ -2294,7 +2294,7 @@ Provide response in JSON format:
             await execPromise("pkill -f 'prediction/main.py'");
             await new Promise(resolve => setTimeout(resolve, 1000));
             execPromise(
-              "cd /home/ubuntu/uplink-platform/ai-services/prediction && nohup python3 main.py > /tmp/prediction_service_v2.log 2>&1 &"
+              "cd /home/ubuntu/naqla-platform/ai-services/prediction && nohup python3 main.py > /tmp/prediction_service_v2.log 2>&1 &"
             );
           } catch (e) {
             console.log("Prediction service restart initiated");
@@ -2315,7 +2315,7 @@ Provide response in JSON format:
         
         try {
           await execPromise(
-            `cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py delete ${input.versionId}`
+            `cd /home/ubuntu/naqla-platform/ai-services/prediction && python3 model_versioning.py delete ${input.versionId}`
           );
           return { success: true, message: "Model version deleted successfully" };
         } catch (error: any) {
@@ -2332,7 +2332,7 @@ Provide response in JSON format:
         
         try {
           const { stdout } = await execPromise(
-            `cd /home/ubuntu/uplink-platform/ai-services/prediction && python3 model_versioning.py compare ${input.versionId1} ${input.versionId2}`
+            `cd /home/ubuntu/naqla-platform/ai-services/prediction && python3 model_versioning.py compare ${input.versionId1} ${input.versionId2}`
           );
           return JSON.parse(stdout);
         } catch (error: any) {
@@ -2346,8 +2346,8 @@ Provide response in JSON format:
   // ============================================
   analytics: router({
     // Admin dashboard statistics
-    // UPLINK Flow Statistics
-    getUplinkFlowStats: publicProcedure.query(async () => {
+    // NAQLA Flow Statistics
+    getNaqlaFlowStats: publicProcedure.query(async () => {
       try {
         const ideas = await db.getAllIdeas();
         
@@ -2362,7 +2362,7 @@ Provide response in JSON format:
           total: ideas.length
         };
       } catch (error: any) {
-        console.error('Error fetching UPLINK flow stats:', error);
+        console.error('Error fetching NAQLA flow stats:', error);
         return {
           innovation: 0,
           commercial: 0,
@@ -3173,9 +3173,9 @@ Provide response in JSON format:
   }),
 
   // ============================================
-  // UPLINK2 - IP VETTING & MARKETPLACE
+  // NAQLA2 - IP VETTING & MARKETPLACE
   // ============================================
-  uplink2: router({
+  naqla2: router({
     // Get project by ID
     getProjectById: protectedProcedure
       .input(z.object({ projectId: z.number() }))
@@ -3474,7 +3474,7 @@ Provide response in JSON format:
       complete: protectedProcedure
         .input(z.object({ eventId: z.number() }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Mark event as complete and create contracts in UPLINK3
+          // TODO: Mark event as complete and create contracts in NAQLA3
           return { success: true, contractsCreated: 0 };
         }),
     }),
@@ -3749,15 +3749,15 @@ Provide response in JSON format:
     }),
 
     // ========================================
-    // UPLINK 2 → UPLINK 3 (Promotion after successful match)
+    // NAQLA 2 → NAQLA 3 (Promotion after successful match)
     // ========================================
-    promoteToUplink3: protectedProcedure
+    promoteToNaqla3: protectedProcedure
       .input(z.object({
         projectId: z.number(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { promoteProjectToUplink3 } = await import('./uplink2-to-uplink3');
-        const result = await promoteProjectToUplink3({
+        const { promoteProjectToNaqla3 } = await import('./naqla2-to-naqla3');
+        const result = await promoteProjectToNaqla3({
           projectId: input.projectId,
           userId: ctx.user.id,
         });
@@ -3895,9 +3895,9 @@ Provide response in JSON format:
   }),
 
   // ============================================
-  // UPLINK3 - Smart Contracts & Escrow
+  // NAQLA3 - Smart Contracts & Escrow
   // ============================================
-  uplink3: router({
+  naqla3: router({
     // Get asset by ID
     getAssetById: protectedProcedure
       .input(z.object({ assetId: z.number() }))
@@ -3982,7 +3982,7 @@ Provide response in JSON format:
           blockchainContractId: z.number(),
         }))
         .query(async ({ ctx, input }) => {
-          const { getContractMilestones } = await import('./uplink3-milestones');
+          const { getContractMilestones } = await import('./naqla3-milestones');
           return getContractMilestones(input.contractId, input.blockchainContractId);
         }),
 
@@ -3993,7 +3993,7 @@ Provide response in JSON format:
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
-          const { startMilestone } = await import('./uplink3-milestones');
+          const { startMilestone } = await import('./naqla3-milestones');
           const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return startMilestone({
             ...input,
@@ -4008,7 +4008,7 @@ Provide response in JSON format:
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
-          const { completeMilestone } = await import('./uplink3-milestones');
+          const { completeMilestone } = await import('./naqla3-milestones');
           const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return completeMilestone({
             ...input,
@@ -4023,7 +4023,7 @@ Provide response in JSON format:
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
-          const { approveMilestone } = await import('./uplink3-milestones');
+          const { approveMilestone } = await import('./naqla3-milestones');
           const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return approveMilestone({
             ...input,
@@ -4038,7 +4038,7 @@ Provide response in JSON format:
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
-          const { rejectMilestone } = await import('./uplink3-milestones');
+          const { rejectMilestone } = await import('./naqla3-milestones');
           const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return rejectMilestone({
             ...input,
@@ -4223,8 +4223,8 @@ Provide response in JSON format:
               },
             ],
             mode: 'payment',
-            success_url: `${ctx.req.headers.origin}/uplink3/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${ctx.req.headers.origin}/uplink3/assets/${asset.id}`,
+            success_url: `${ctx.req.headers.origin}/naqla3/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${ctx.req.headers.origin}/naqla3/assets/${asset.id}`,
             client_reference_id: ctx.user.id.toString(),
             metadata: {
               user_id: ctx.user.id.toString(),

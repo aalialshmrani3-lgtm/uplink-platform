@@ -64,7 +64,7 @@ export const LANGUAGES: Record<Language, LanguageMetadata> = {
 };
 
 // localStorage key
-const LANGUAGE_STORAGE_KEY = 'uplink-preferred-language';
+const LANGUAGE_STORAGE_KEY = 'naqla-preferred-language';
 
 // Translation cache
 const translationCache = new Map<Language, any>();

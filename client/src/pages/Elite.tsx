@@ -88,7 +88,7 @@ export default function Elite() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -107,7 +107,7 @@ export default function Elite() {
             <Crown className="w-4 h-4 text-amber-400" />
             <span className="text-amber-400 text-sm">نخبة المبتكرين</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-4">UPLINK Elite</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">NAQLA Elite</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
             تعرّف على أفضل المبتكرين السعوديين الذين يقودون مسيرة الابتكار
           </p>

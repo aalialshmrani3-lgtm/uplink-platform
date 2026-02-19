@@ -15,7 +15,7 @@ export interface EvaluationResult {
   recommendations: string[];
   strengths: string[];
   weaknesses: string[];
-  suggestedPath: "uplink2" | "uplink3" | "refine";
+  suggestedPath: "naqla2" | "naqla3" | "refine";
 }
 
 /**
@@ -58,8 +58,8 @@ ${goals.map((g: any) => `- ${g.title || g.titleAr}: ${g.description || g.descrip
 - حدد **نقاط الضعف** (Weaknesses) - 3-5 نقاط
 - قدم **توصيات** (Recommendations) - 3-5 توصيات عملية
 - اقترح **المسار الأنسب** (Suggested Path):
-  * "uplink2" إذا كانت الفكرة تحتاج مطابقة مع تحديات أو شركاء
-  * "uplink3" إذا كانت الفكرة جاهزة للعرض في السوق مباشرة
+  * "naqla2" إذا كانت الفكرة تحتاج مطابقة مع تحديات أو شركاء
+  * "naqla3" إذا كانت الفكرة جاهزة للعرض في السوق مباشرة
   * "refine" إذا كانت الفكرة تحتاج تحسين
 
 **أرجع النتيجة بصيغة JSON فقط:**
@@ -73,7 +73,7 @@ ${goals.map((g: any) => `- ${g.title || g.titleAr}: ${g.description || g.descrip
   "strengths": ["نقطة قوة 1", "نقطة قوة 2", "نقطة قوة 3"],
   "weaknesses": ["نقطة ضعف 1", "نقطة ضعف 2"],
   "recommendations": ["توصية 1", "توصية 2", "توصية 3"],
-  "suggestedPath": "uplink2"
+  "suggestedPath": "naqla2"
 }
 \`\`\`
 `;

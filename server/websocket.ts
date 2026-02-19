@@ -1,6 +1,6 @@
 /**
  * WebSocket Server for Real-time Notifications
- * UPLINK 5.0 Platform
+ * NAQLA 5.0 Platform
  */
 
 import { WebSocketServer, WebSocket } from 'ws';
@@ -72,7 +72,7 @@ export function initWebSocketServer(server: any) {
     // Send welcome message
     ws.send(JSON.stringify({
       type: 'connection',
-      message: 'Connected to UPLINK notification server',
+      message: 'Connected to NAQLA notification server',
       timestamp: Date.now()
     }));
 

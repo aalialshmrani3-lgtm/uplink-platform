@@ -109,7 +109,7 @@ export default function Contracts() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -126,7 +126,7 @@ export default function Contracts() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/30 rounded-full mb-4">
             <FileText className="w-4 h-4 text-indigo-400" />
-            <span className="text-indigo-400 text-sm">UPLINK4 - العقود الذكية</span>
+            <span className="text-indigo-400 text-sm">NAQLA4 - العقود الذكية</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">عقودي</h1>
           <p className="text-slate-400">إدارة العقود الذكية والاتفاقيات</p>
@@ -289,7 +289,7 @@ export default function Contracts() {
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">عقود ذكية آمنة</h3>
                 <p className="text-slate-300 mb-4">
-                  جميع العقود في UPLINK مؤمنة بتقنية البلوكتشين مع نظام ضمان (Escrow) لحماية جميع الأطراف.
+                  جميع العقود في NAQLA مؤمنة بتقنية البلوكتشين مع نظام ضمان (Escrow) لحماية جميع الأطراف.
                   يتم تنفيذ المدفوعات تلقائياً عند إتمام كل مرحلة.
                 </p>
                 <div className="flex gap-4">

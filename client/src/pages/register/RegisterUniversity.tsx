@@ -31,7 +31,7 @@ export default function RegisterUniversity() {
 
           <div className="space-y-6 text-white/90">
             <p className="text-lg">
-              انضم إلى منصة UPLINK كجامعة أو مؤسسة بحثية واحصل على:
+              انضم إلى منصة NAQLA كجامعة أو مؤسسة بحثية واحصل على:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">

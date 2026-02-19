@@ -2,48 +2,48 @@ import { Check, Circle, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 interface ProgressTrackerProps {
-  currentStage: "uplink1" | "uplink2" | "uplink3";
-  uplink1Status?: "completed" | "current" | "pending";
-  uplink2Status?: "completed" | "current" | "pending";
-  uplink3Status?: "completed" | "current" | "pending";
-  uplink1Score?: number;
-  uplink2ProjectId?: number;
-  uplink3AssetId?: number;
+  currentStage: "naqla1" | "naqla2" | "naqla3";
+  naqla1Status?: "completed" | "current" | "pending";
+  naqla2Status?: "completed" | "current" | "pending";
+  naqla3Status?: "completed" | "current" | "pending";
+  naqla1Score?: number;
+  naqla2ProjectId?: number;
+  naqla3AssetId?: number;
 }
 
 export default function ProgressTracker({
   currentStage,
-  uplink1Status = "pending",
-  uplink2Status = "pending",
-  uplink3Status = "pending",
-  uplink1Score,
-  uplink2ProjectId,
-  uplink3AssetId,
+  naqla1Status = "pending",
+  naqla2Status = "pending",
+  naqla3Status = "pending",
+  naqla1Score,
+  naqla2ProjectId,
+  naqla3AssetId,
 }: ProgressTrackerProps) {
   const stages = [
     {
-      id: "uplink1",
-      title: "UPLINK 1",
+      id: "naqla1",
+      title: "NAQLA 1",
       subtitle: "التقييم والتصنيف",
-      status: uplink1Status,
-      score: uplink1Score,
-      link: uplink1Score ? `/uplink1/ideas` : null,
+      status: naqla1Status,
+      score: naqla1Score,
+      link: naqla1Score ? `/naqla1/ideas` : null,
     },
     {
-      id: "uplink2",
-      title: "UPLINK 2",
+      id: "naqla2",
+      title: "NAQLA 2",
       subtitle: "المطابقة والتوافق",
-      status: uplink2Status,
-      projectId: uplink2ProjectId,
-      link: uplink2ProjectId ? `/uplink2/projects/${uplink2ProjectId}` : null,
+      status: naqla2Status,
+      projectId: naqla2ProjectId,
+      link: naqla2ProjectId ? `/naqla2/projects/${naqla2ProjectId}` : null,
     },
     {
-      id: "uplink3",
-      title: "UPLINK 3",
+      id: "naqla3",
+      title: "NAQLA 3",
       subtitle: "البورصة والاستحواذ",
-      status: uplink3Status,
-      assetId: uplink3AssetId,
-      link: uplink3AssetId ? `/uplink3/assets/${uplink3AssetId}` : null,
+      status: naqla3Status,
+      assetId: naqla3AssetId,
+      link: naqla3AssetId ? `/naqla3/assets/${naqla3AssetId}` : null,
     },
   ];
 
@@ -132,21 +132,21 @@ export default function ProgressTracker({
       {/* Current Stage Info */}
       <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
         <p className="text-sm text-gray-300 text-center">
-          {currentStage === "uplink1" && (
+          {currentStage === "naqla1" && (
             <>
-              <strong>المرحلة الحالية:</strong> UPLINK 1 - انتظار التقييم أو اختيار
+              <strong>المرحلة الحالية:</strong> NAQLA 1 - انتظار التقييم أو اختيار
               المسار
             </>
           )}
-          {currentStage === "uplink2" && (
+          {currentStage === "naqla2" && (
             <>
-              <strong>المرحلة الحالية:</strong> UPLINK 2 - البحث عن التحديات
+              <strong>المرحلة الحالية:</strong> NAQLA 2 - البحث عن التحديات
               والمستثمرين
             </>
           )}
-          {currentStage === "uplink3" && (
+          {currentStage === "naqla3" && (
             <>
-              <strong>المرحلة الحالية:</strong> UPLINK 3 - متاح للبيع أو الاستحواذ
+              <strong>المرحلة الحالية:</strong> NAQLA 3 - متاح للبيع أو الاستحواذ
             </>
           )}
         </p>

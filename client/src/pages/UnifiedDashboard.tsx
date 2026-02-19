@@ -108,7 +108,7 @@ export default function UnifiedDashboard() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">لوحة التحكم الموحدة</h1>
-          <p className="text-muted-foreground">نظرة شاملة على جميع ميزات UPLINK 6.0</p>
+          <p className="text-muted-foreground">نظرة شاملة على جميع ميزات NAQLA 6.0</p>
         </div>
 
         {/* KPI Cards */}

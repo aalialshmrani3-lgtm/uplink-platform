@@ -31,7 +31,7 @@ export default function RegisterCompany() {
 
           <div className="space-y-6 text-white/90">
             <p className="text-lg">
-              انضم إلى منصة UPLINK كشركة واحصل على:
+              انضم إلى منصة NAQLA كشركة واحصل على:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">

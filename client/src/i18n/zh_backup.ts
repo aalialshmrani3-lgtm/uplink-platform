@@ -48,7 +48,7 @@ export const en = {
     admin: 'Admin Panel',
     pipeline: 'Innovation Pipeline',
     aiInsights: 'AI Insights',
-    whyUplink: 'Why UPLINK',
+    whyNaqla: 'Why NAQLA',
     testimonials: 'Testimonials',
     integrations: 'Integrations',
     roiCalculator: 'ROI Calculator',
@@ -61,7 +61,7 @@ export const en = {
     badge: 'Global Innovation Ecosystem',
     title: 'Transform Your Ideas Into',
     titleHighlight: 'Global Innovations',
-    description: 'UPLINK 5.0 connects innovators worldwide with investors, companies, and institutions through three integrated engines: IP Generation, Challenges & Matching, and Open Marketplace',
+    description: 'NAQLA 5.0 connects innovators worldwide with investors, companies, and institutions through three integrated engines: IP Generation, Challenges & Matching, and Open Marketplace',
     cta: 'Register Your Innovation Now',
     exploreEngines: 'Explore Engines',
     stats: {
@@ -77,20 +77,20 @@ export const en = {
     title: 'The Three Engines',
     subtitle: 'Integrated Innovation Ecosystem',
     description: 'From idea to global market, we provide everything you need to turn your innovation into success',
-    uplink1: {
-      name: 'UPLINK1',
+    naqla1: {
+      name: 'NAQLA1',
       title: 'IP Generation',
       description: 'Register and protect intellectual property via SAIP & WIPO with blockchain documentation',
       features: ['Patents', 'Trademarks', 'Blockchain Documentation'],
     },
-    uplink2: {
-      name: 'UPLINK2',
+    naqla2: {
+      name: 'NAQLA2',
       title: 'Challenges & Matching',
       description: 'Advanced AI evaluation and smart matching with suitable investors and companies',
       features: ['AI Evaluation', 'Challenges & Competitions', 'Smart Matching'],
     },
-    uplink3: {
-      name: 'UPLINK3',
+    naqla3: {
+      name: 'NAQLA3',
       title: 'Market & Exchange',
       description: 'Open marketplace for innovations with smart contracts and Escrow system',
       features: ['Smart Contracts', 'Escrow System', 'Open Market'],
@@ -100,7 +100,7 @@ export const en = {
 
   // Features
   features: {
-    title: 'Why UPLINK 5.0?',
+    title: 'Why NAQLA 5.0?',
     subtitle: 'Unique features that make our platform the first choice for innovators worldwide',
     aiEvaluation: {
       title: 'Advanced AI Evaluation',
@@ -341,7 +341,7 @@ export const en = {
 
   // Academy
   academy: {
-    title: 'UPLINK Academy',
+    title: 'NAQLA Academy',
     courses: 'Courses',
     workshops: 'Workshops',
     webinars: 'Webinars',

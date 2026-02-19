@@ -1,5 +1,5 @@
 /**
- * Mock Data for UPLINK1 - AI-Powered Idea Analysis
+ * Mock Data for NAQLA1 - AI-Powered Idea Analysis
  */
 
 export const mockIdeas = [

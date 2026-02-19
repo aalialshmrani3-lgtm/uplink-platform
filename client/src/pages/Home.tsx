@@ -54,42 +54,42 @@ export default function Home() {
 
   const engines = [
     {
-      id: 'uplink1',
-      name: 'UPLINK1',
-      title: t.engines.uplink1.title,
-      description: t.engines.uplink1.description,
+      id: 'naqla1',
+      name: 'NAQLA1',
+      title: t.engines.naqla1.title,
+      description: t.engines.naqla1.description,
       icon: Shield,
       color: 'from-emerald-500 to-teal-600',
       bgColor: 'from-emerald-950/50',
       borderColor: 'border-emerald-500/30',
-      features: t.engines.uplink1.features,
-      link: '/uplink1',
+      features: t.engines.naqla1.features,
+      link: '/naqla1',
       stats: { value: '145+', label: t.home.stats.innovations }
     },
     {
-      id: 'uplink2',
-      name: 'UPLINK2',
-      title: t.engines.uplink2.title,
-      description: t.engines.uplink2.description,
+      id: 'naqla2',
+      name: 'NAQLA2',
+      title: t.engines.naqla2.title,
+      description: t.engines.naqla2.description,
       icon: Brain,
       color: 'from-blue-500 to-indigo-600',
       bgColor: 'from-blue-950/50',
       borderColor: 'border-blue-500/30',
-      features: t.engines.uplink2.features,
-      link: '/uplink2',
+      features: t.engines.naqla2.features,
+      link: '/naqla2',
       stats: { value: '50+', label: t.home.stats.partnerships }
     },
     {
-      id: 'uplink3',
-      name: 'UPLINK3',
-      title: t.engines.uplink3.title,
-      description: t.engines.uplink3.description,
+      id: 'naqla3',
+      name: 'NAQLA3',
+      title: t.engines.naqla3.title,
+      description: t.engines.naqla3.description,
       icon: Globe,
       color: 'from-purple-500 to-pink-600',
       bgColor: 'from-purple-950/50',
       borderColor: 'border-purple-500/30',
-      features: t.engines.uplink3.features,
-      link: '/uplink3',
+      features: t.engines.naqla3.features,
+      link: '/naqla3',
       stats: { value: '60M+', label: t.home.stats.funding }
     }
   ];
@@ -117,11 +117,11 @@ export default function Home() {
                 <Rocket className="w-5 h-5 text-white" />
               </div>
             </div>
-            <span className="text-xl font-bold text-gradient-cyan">UPLINK 5.0</span>
+            <span className="text-xl font-bold text-gradient-cyan">NAQLA 5.0</span>
           </div>
           
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/why-uplink" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.whyUplink}</Link>
+            <Link href="/why-naqla" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.whyNaqla}</Link>
             <Link href="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.caseStudies}</Link>
             <Link href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.integrations}</Link>
             <Link href="/testimonials" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.testimonials}</Link>
@@ -195,7 +195,7 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               {user ? (
-                <Link href="/uplink1/submit">
+                <Link href="/naqla1/submit">
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-8 h-14 glow">
                     <Lightbulb className="w-5 h-5 ml-2" />
                     {t.home.cta}
@@ -311,7 +311,7 @@ export default function Home() {
               المميزات
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              لماذا UPLINK 5.0؟
+              لماذا NAQLA 5.0؟
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               مميزات فريدة تجعل منصتنا الخيار الأول للمبتكرين حول العالم
@@ -465,7 +465,7 @@ export default function Home() {
                 سجل الآن
               </Badge>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                سجل في UPLINK
+                سجل في NAQLA
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 اختر نوع حسابك وابدأ رحلتك في منظومة الابتكار العالمية
@@ -561,7 +561,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {user ? (
-                <Link href="/uplink1/submit">
+                <Link href="/naqla1/submit">
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-10 h-14">
                     {t.home.cta}
                     <ArrowUpRight className="w-5 h-5 mr-2" />

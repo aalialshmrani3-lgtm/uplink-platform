@@ -27,7 +27,7 @@ export default function SubmitIdea() {
   const { data: challenges } = trpc.challenge.getActiveChallenges.useQuery();
   const [analysisResult, setAnalysisResult] = useState<any>(null);
 
-  const submitMutation = trpc.uplink1.submitIdea.useMutation({
+  const submitMutation = trpc.naqla1.submitIdea.useMutation({
     onSuccess: (data: any) => {
       console.log('[DEBUG] Frontend received:', data);
       // Use simplified analysis from response

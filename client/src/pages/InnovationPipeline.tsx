@@ -1004,7 +1004,7 @@ export default function InnovationPipeline() {
         </table>
         
         <div class="footer">
-          <p>تم إنشاء هذا التقرير بواسطة UPLINK 5.0 - Innovation Pipeline</p>
+          <p>تم إنشاء هذا التقرير بواسطة NAQLA 5.0 - Innovation Pipeline</p>
           <p>© ${new Date().getFullYear()} منصة الابتكار الوطنية</p>
         </div>
       </body>

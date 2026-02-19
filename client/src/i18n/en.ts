@@ -48,7 +48,7 @@ export const en = {
     admin: 'Admin Panel',
     pipeline: 'Innovation Pipeline',
     aiInsights: 'AI Insights',
-    whyUplink: 'Why UPLINK',
+    whyNaqla: 'Why NAQLA',
     testimonials: 'Testimonials',
     integrations: 'Integrations',
     roiCalculator: 'ROI Calculator',
@@ -61,7 +61,7 @@ export const en = {
     badge: 'Global Innovation Ecosystem',
     title: 'Transform Your Ideas Into',
     titleHighlight: 'Global Innovations',
-    description: 'UPLINK 5.0 connects innovators worldwide with investors, companies, and institutions through three integrated engines: IP Generation, Challenges & Matching, and Open Marketplace',
+    description: 'NAQLA 5.0 connects innovators worldwide with investors, companies, and institutions through three integrated engines: IP Generation, Challenges & Matching, and Open Marketplace',
     cta: 'Register Your Innovation Now',
     exploreEngines: 'Explore Engines',
     stats: {
@@ -77,20 +77,20 @@ export const en = {
     title: 'The Three Engines',
     subtitle: 'Integrated Innovation Ecosystem',
     description: 'From idea to global market, we provide everything you need to turn your innovation into success',
-    uplink1: {
-      name: 'UPLINK1',
+    naqla1: {
+      name: 'NAQLA1',
       title: 'Submit Your Idea - AI Analysis',
       description: 'Analyze ideas using AI and classify them into: true innovation, commercial project, or idea needing development',
       features: ['AI Analysis', 'Multi-Level Classification', 'Comprehensive Evaluation'],
     },
-    uplink2: {
-      name: 'UPLINK2',
+    naqla2: {
+      name: 'NAQLA2',
       title: 'Challenges & Matching',
       description: 'Challenges from ministries and companies, hackathons, and connecting creators with investors through smart matching',
       features: ['Real Challenges', 'Hackathons', 'Smart Matching'],
     },
-    uplink3: {
-      name: 'UPLINK3',
+    naqla3: {
+      name: 'NAQLA3',
       title: 'Exchange (Bourse)',
       description: 'Exchange for trading 3 types of assets: licenses, products/goods, and company acquisitions. Smart contracts and advanced valuation',
       features: ['Licenses', 'Products/Goods', 'Acquisitions'],
@@ -100,7 +100,7 @@ export const en = {
 
   // Features
   features: {
-    title: 'Why UPLINK 5.0?',
+    title: 'Why NAQLA 5.0?',
     subtitle: 'Unique features that make our platform the first choice for innovators worldwide',
     aiEvaluation: {
       title: 'Advanced AI Evaluation',
@@ -161,7 +161,7 @@ export const en = {
     ip: 'Intellectual Property',
     privacy: 'Privacy Policy',
     terms: 'Terms & Conditions',
-    copyright: '© 2026 UPLINK 5.0 - All Rights Reserved',
+    copyright: '© 2026 NAQLA 5.0 - All Rights Reserved',
     followUs: 'Follow Us',
     newsletter: 'Subscribe to Newsletter',
     newsletterPlaceholder: 'Enter your email',
@@ -355,7 +355,7 @@ export const en = {
 
   // Academy
   academy: {
-    title: 'UPLINK Academy',
+    title: 'NAQLA Academy',
     courses: 'Courses',
     workshops: 'Workshops',
     webinars: 'Webinars',

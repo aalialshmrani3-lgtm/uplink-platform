@@ -31,7 +31,7 @@ export default function RegisterPrivateSector() {
 
           <div className="space-y-6 text-white/90">
             <p className="text-lg">
-              انضم إلى منصة UPLINK كمؤسسة قطاع خاص واحصل على:
+              انضم إلى منصة NAQLA كمؤسسة قطاع خاص واحصل على:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">

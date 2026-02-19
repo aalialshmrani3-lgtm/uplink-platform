@@ -13,14 +13,14 @@ export default function ROICalculator() {
 
   // Calculations
   const currentCost = (employees * avgSalary * 0.1) + (ideasPerYear * timePerIdea * 100);
-  const uplinkCost = 5000 + (employees * 50); // Base + per user
+  const naqlaCost = 5000 + (employees * 50); // Base + per user
   const timeSaved = ideasPerYear * timePerIdea * 0.7; // 70% time reduction
   const timeSavingValue = timeSaved * 100;
   const efficiencyGain = currentCost * 0.4; // 40% efficiency improvement
   const totalSavings = timeSavingValue + efficiencyGain;
-  const netBenefit = totalSavings - uplinkCost;
-  const roi = ((netBenefit / uplinkCost) * 100).toFixed(0);
-  const paybackMonths = (uplinkCost / (totalSavings / 12)).toFixed(1);
+  const netBenefit = totalSavings - naqlaCost;
+  const roi = ((netBenefit / naqlaCost) * 100).toFixed(0);
+  const paybackMonths = (naqlaCost / (totalSavings / 12)).toFixed(1);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-950 dark:to-blue-950">
@@ -31,7 +31,7 @@ export default function ROICalculator() {
             حاسبة العائد على الاستثمار
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            اكتشف كم ستوفر مؤسستك باستخدام UPLINK 5.0
+            اكتشف كم ستوفر مؤسستك باستخدام NAQLA 5.0
           </p>
         </div>
 
@@ -153,14 +153,14 @@ export default function ROICalculator() {
                   </div>
                 </div>
 
-                {/* UPLINK Cost */}
+                {/* NAQLA Cost */}
                 <div className="flex items-start gap-4 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
                   <DollarSign className="text-blue-600 mt-1" size={24} />
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="font-semibold">تكلفة UPLINK</span>
+                      <span className="font-semibold">تكلفة NAQLA</span>
                       <span className="text-xl font-bold text-blue-600">
-                        ${uplinkCost.toLocaleString()}
+                        ${naqlaCost.toLocaleString()}
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground">

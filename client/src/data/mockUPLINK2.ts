@@ -1,5 +1,5 @@
 /**
- * Mock Data for UPLINK2 - Hackathons, Events & Matching
+ * Mock Data for NAQLA2 - Hackathons, Events & Matching
  */
 
 export const mockHackathons = [

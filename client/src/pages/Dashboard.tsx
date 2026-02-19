@@ -58,7 +58,7 @@ export default function Dashboard() {
                   <Rocket className="w-5 h-5 text-white" />
                 </div>
               </div>
-              <span className="text-xl font-bold text-gradient-cyan">UPLINK 5.0</span>
+              <span className="text-xl font-bold text-gradient-cyan">NAQLA 5.0</span>
             </div>
           </Link>
           
@@ -116,7 +116,7 @@ export default function Dashboard() {
             <span className="text-sm text-muted-foreground">لوحة التحكم</span>
           </div>
           <h1 className="text-3xl font-bold mb-2">مرحباً، {user.name || "مبتكر"}!</h1>
-          <p className="text-muted-foreground">إليك نظرة عامة على نشاطك في منصة UPLINK</p>
+          <p className="text-muted-foreground">إليك نظرة عامة على نشاطك في منصة NAQLA</p>
         </div>
 
         {/* Quick Stats */}
@@ -238,7 +238,7 @@ export default function Dashboard() {
                           project.status === "evaluating" ? "border-blue-500/50 text-blue-400" :
                           "border-border"
                         }`}>
-                          {project.engine?.toUpperCase() || "UPLINK1"}
+                          {project.engine?.toUpperCase() || "NAQLA1"}
                         </Badge>
                       </div>
                     </Link>

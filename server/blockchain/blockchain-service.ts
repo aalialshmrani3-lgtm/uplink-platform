@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 
 // Contract ABI (Application Binary Interface)
-const UPLINK_CONTRACT_ABI = [
+const NAQLA_CONTRACT_ABI = [
   "function createContract(address _innovator, address _investor, string _projectTitle, string _projectDescription, uint256 _totalAmount) returns (uint256)",
   "function addMilestone(uint256 _contractId, string _description, uint256 _amount, uint256 _deadline)",
   "function activateContract(uint256 _contractId)",
@@ -25,14 +25,14 @@ const BLOCKCHAIN_CONFIG = {
   // Polygon Mumbai Testnet
   rpcUrl: process.env.BLOCKCHAIN_RPC_URL || 'https://rpc-mumbai.maticvigil.com',
   chainId: 80001,
-  contractAddress: process.env.UPLINK_CONTRACT_ADDRESS || '0x0000000000000000000000000000000000000000',
+  contractAddress: process.env.NAQLA_CONTRACT_ADDRESS || '0x0000000000000000000000000000000000000000',
   // For production, use Polygon Mainnet
   // rpcUrl: 'https://polygon-rpc.com',
   // chainId: 137,
 };
 
 /**
- * Blockchain Service for UPLINK3 Smart Contracts
+ * Blockchain Service for NAQLA3 Smart Contracts
  */
 export class BlockchainService {
   private provider: ethers.JsonRpcProvider;
@@ -42,7 +42,7 @@ export class BlockchainService {
     this.provider = new ethers.JsonRpcProvider(BLOCKCHAIN_CONFIG.rpcUrl);
     this.contract = new ethers.Contract(
       BLOCKCHAIN_CONFIG.contractAddress,
-      UPLINK_CONTRACT_ABI,
+      NAQLA_CONTRACT_ABI,
       this.provider
     );
   }

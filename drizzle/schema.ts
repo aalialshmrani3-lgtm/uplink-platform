@@ -249,7 +249,7 @@ export const classificationHistory = mysqlTable("classification_history", {
 export const contracts = mysqlTable("contracts", {
 	id: int().autoincrement().notNull(),
 	contractType: mysqlEnum("contract_type", ['idea_contract','challenge_contract','event_contract','asset_license','asset_purchase','acquisition','partnership','service','other']).default('other'),
-	sourceType: mysqlEnum("source_type", ['uplink1_idea','uplink2_challenge','uplink2_event','uplink3_asset','manual']).default('manual'),
+	sourceType: mysqlEnum("source_type", ['naqla1_idea','naqla2_challenge','naqla2_event','naqla3_asset','manual']).default('manual'),
 	sourceId: int("source_id"),
 	projectId: int().notNull(),
 	type: mysqlEnum(['license','acquisition','partnership','investment','service','nda']).notNull(),
@@ -648,9 +648,9 @@ export const ideas = mysqlTable("ideas", {
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 	challengeId: int(),
-	uplink2ProjectId: int("uplink2_project_id"),
-	uplink3AssetId: int("uplink3_asset_id"),
-	userChoice: mysqlEnum('user_choice', ['uplink2', 'uplink3']),
+	naqla2ProjectId: int("naqla2_project_id"),
+	naqla3AssetId: int("naqla3_asset_id"),
+	userChoice: mysqlEnum('user_choice', ['naqla2', 'naqla3']),
 	overallScore: int(),
 	classificationPath: varchar({ length: 500 }),
 	clusterId: int("cluster_id"),
@@ -1148,7 +1148,7 @@ export const projects = mysqlTable("projects", {
 	category: varchar({ length: 100 }),
 	subCategory: varchar({ length: 100 }),
 	stage: mysqlEnum(['idea','prototype','mvp','growth','scale']).default('idea'),
-	engine: mysqlEnum(['uplink1','uplink2','uplink3']).default('uplink1'),
+	engine: mysqlEnum(['naqla1','naqla2','naqla3']).default('naqla1'),
 	status: mysqlEnum(['draft','submitted','evaluating','approved','matched','contracted','completed','rejected','listed']).default('draft'),
 	teamSize: int(),
 	fundingNeeded: decimal({ precision: 15, scale: 2 }),
@@ -1600,7 +1600,7 @@ export const agreements = mysqlTable("agreements", {
 	requesterId: int().notNull(), // من قدم الطلب (userId)
 	responderId: int(), // من رد على الطلب (userId)
 	respondedAt: timestamp({ mode: 'string' }), // تاريخ الرد
-	promotedToUplink3: int().default(0), // هل تم الانتقال إلى UPLINK 3 (0/1)
+	promotedToNaqla3: int().default(0), // هل تم الانتقال إلى NAQLA 3 (0/1)
 	promotedAt: timestamp({ mode: 'string' }), // تاريخ الانتقال
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
@@ -1844,9 +1844,9 @@ export const innovationMetrics = mysqlTable("innovation_metrics", {
 	totalReturn: decimal({ precision: 15, scale: 2 }).default('0'),
 	averageROI: decimal({ precision: 10, scale: 2 }), // %
 	// Flow
-	uplink1ToUplink2: int().default(0),
-	uplink2ToUplink3: int().default(0),
-	uplink1ToUplink3: int().default(0),
+	naqla1ToNaqla2: int().default(0),
+	naqla2ToNaqla3: int().default(0),
+	naqla1ToNaqla3: int().default(0),
 	// Engagement
 	activeUsers: int().default(0),
 	totalPoints: int().default(0),
@@ -1884,17 +1884,17 @@ export const userChoices = mysqlTable("user_choices", {
 	id: int().autoincrement().notNull(),
 	ideaId: int().notNull(),
 	userId: int().notNull(),
-	choice: mysqlEnum(['uplink2','uplink3']).notNull(),
+	choice: mysqlEnum(['naqla2','naqla3']).notNull(),
 	notes: text(), // User notes explaining their choice
-	projectId: int(), // If choice='uplink2'
-	assetId: int(), // If choice='uplink3'
+	projectId: int(), // If choice='naqla2'
+	assetId: int(), // If choice='naqla3'
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 });
 
 export const ideaJourneyEvents = mysqlTable("idea_journey_events", {
 	id: int().autoincrement().notNull(),
 	ideaId: int().notNull(),
-	eventType: mysqlEnum(['submitted','analyzed','promoted_uplink2','promoted_uplink3','matched','funded','completed']).notNull(),
+	eventType: mysqlEnum(['submitted','analyzed','promoted_naqla2','promoted_naqla3','matched','funded','completed']).notNull(),
 	eventData: json(), // Additional event-specific data
 	timestamp: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 });

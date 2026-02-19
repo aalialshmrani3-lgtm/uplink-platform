@@ -29,11 +29,11 @@ export default function DemoFlow() {
         { label: "جامعة/مؤسسة بحثية", icon: GraduationCap },
         { label: "مستثمر", icon: TrendingUp },
       ],
-      nextStage: "uplink1",
+      nextStage: "naqla1",
     },
     {
-      id: "uplink1",
-      title: "UPLINK 1 - تقديم الفكرة",
+      id: "naqla1",
+      title: "NAQLA 1 - تقديم الفكرة",
       icon: Lightbulb,
       color: "from-purple-500 to-pink-600",
       borderColor: "border-purple-500/30",
@@ -52,8 +52,8 @@ export default function DemoFlow() {
           color: "text-green-400",
           bgColor: "bg-green-500/10",
           borderColor: "border-green-500/30",
-          nextStage: "uplink2-innovation",
-          description: "فكرتك مبتكرة وعالية الجودة! ستنتقل إلى UPLINK 2 للمطابقة مع المستثمرين والهاكاثونات",
+          nextStage: "naqla2-innovation",
+          description: "فكرتك مبتكرة وعالية الجودة! ستنتقل إلى NAQLA 2 للمطابقة مع المستثمرين والهاكاثونات",
         },
         {
           condition: "50-69%",
@@ -62,8 +62,8 @@ export default function DemoFlow() {
           color: "text-yellow-400",
           bgColor: "bg-yellow-500/10",
           borderColor: "border-yellow-500/30",
-          nextStage: "uplink2-commercial",
-          description: "فكرتك لها قيمة تجارية! ستنتقل إلى UPLINK 2 للمطابقة مع التحديات التجارية",
+          nextStage: "naqla2-commercial",
+          description: "فكرتك لها قيمة تجارية! ستنتقل إلى NAQLA 2 للمطابقة مع التحديات التجارية",
         },
         {
           condition: "<50%",
@@ -78,8 +78,8 @@ export default function DemoFlow() {
       ],
     },
     {
-      id: "uplink2-innovation",
-      title: "UPLINK 2 - المطابقة (ابتكار عالي)",
+      id: "naqla2-innovation",
+      title: "NAQLA 2 - المطابقة (ابتكار عالي)",
       icon: Rocket,
       color: "from-green-500 to-emerald-600",
       borderColor: "border-green-500/30",
@@ -90,11 +90,11 @@ export default function DemoFlow() {
         "المطابقة مع الشركات الباحثة عن حلول مبتكرة",
         "الحصول على فرص تمويل وشراكات استراتيجية",
       ],
-      nextStage: "uplink3",
+      nextStage: "naqla3",
     },
     {
-      id: "uplink2-commercial",
-      title: "UPLINK 2 - المطابقة (حل تجاري)",
+      id: "naqla2-commercial",
+      title: "NAQLA 2 - المطابقة (حل تجاري)",
       icon: Target,
       color: "from-yellow-500 to-orange-600",
       borderColor: "border-yellow-500/30",
@@ -105,7 +105,7 @@ export default function DemoFlow() {
         "المطابقة مع الفعاليات والمؤتمرات التجارية",
         "الحصول على فرص استثمارية وشراكات تجارية",
       ],
-      nextStage: "uplink3",
+      nextStage: "naqla3",
     },
     {
       id: "feedback",
@@ -120,12 +120,12 @@ export default function DemoFlow() {
         "مصادر تعليمية وإرشادية",
         "إمكانية إعادة تقديم الفكرة بعد التحسين",
       ],
-      nextStage: "uplink1",
+      nextStage: "naqla1",
       isRetry: true,
     },
     {
-      id: "uplink3",
-      title: "UPLINK 3 - العقود الذكية",
+      id: "naqla3",
+      title: "NAQLA 3 - العقود الذكية",
       icon: FileText,
       color: "from-cyan-500 to-blue-600",
       borderColor: "border-cyan-500/30",
@@ -163,7 +163,7 @@ export default function DemoFlow() {
     <div className="min-h-screen bg-background">
       <SEOHead 
         title="Demo Flow - رحلة المستخدم الكاملة"
-        description="تعرف على رحلة المستخدم الكاملة في منصة UPLINK من التسجيل حتى العقود الذكية"
+        description="تعرف على رحلة المستخدم الكاملة في منصة NAQLA من التسجيل حتى العقود الذكية"
       />
 
       {/* Hero Section */}
@@ -251,8 +251,8 @@ export default function DemoFlow() {
                           </div>
                         )}
 
-                        {/* UPLINK 1 Steps */}
-                        {stage.id === "uplink1" && stage.steps && (
+                        {/* NAQLA 1 Steps */}
+                        {stage.id === "naqla1" && stage.steps && (
                           <div className="mb-6">
                             <h4 className="text-foreground font-semibold mb-3">خطوات التقديم:</h4>
                             <div className="space-y-2">
@@ -268,8 +268,8 @@ export default function DemoFlow() {
                           </div>
                         )}
 
-                        {/* UPLINK 1 Scenarios */}
-                        {stage.id === "uplink1" && stage.scenarios && (
+                        {/* NAQLA 1 Scenarios */}
+                        {stage.id === "naqla1" && stage.scenarios && (
                           <div>
                             <h4 className="text-foreground font-semibold mb-3">السيناريوهات المحتملة:</h4>
                             <div className="space-y-3">

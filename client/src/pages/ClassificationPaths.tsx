@@ -16,7 +16,7 @@ export default function ClassificationPaths() {
   const [selectedPath, setSelectedPath] = useState<'innovation' | 'commercial' | 'guidance'>('innovation');
 
   // جلب الأفكار حسب المسار
-  const { data: ideas, isLoading } = trpc.uplink1.getIdeasByPath.useQuery({
+  const { data: ideas, isLoading } = trpc.naqla1.getIdeasByPath.useQuery({
     path: selectedPath,
     limit: 50,
   });
@@ -138,7 +138,7 @@ export default function ClassificationPaths() {
                       {/* Status & Actions */}
                       <div className="flex items-center justify-between pt-3 border-t">
                         <Badge variant="outline">{idea.status}</Badge>
-                        <Link href={`/uplink1/ideas/${idea.ideaId}`}>
+                        <Link href={`/naqla1/ideas/${idea.ideaId}`}>
                           <Button variant="ghost" size="sm">
                             عرض التفاصيل
                             <ArrowRight className="w-4 h-4 mr-2" />

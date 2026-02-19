@@ -28,10 +28,10 @@ interface AIAnalysisResultsProps {
     tags: string[];
     recommendations: string[];
     nextSteps: string;
-    recommendedPath?: "uplink2" | "uplink3" | "both" | "guidance";
+    recommendedPath?: "naqla2" | "naqla3" | "both" | "guidance";
     pathRecommendations?: {
-      uplink2?: string;
-      uplink3?: string;
+      naqla2?: string;
+      naqla3?: string;
       guidance?: string;
     };
   };
@@ -59,8 +59,8 @@ export default function AIAnalysisResults({ analysis, ideaId }: AIAnalysisResult
           bgColor: "bg-green-500/10",
           borderColor: "border-green-500/30",
           description: "تحقق معايير الابتكار الصارمة",
-          action: "انتقل إلى UPLINK 2",
-          actionLink: "/uplink2",
+          action: "انتقل إلى NAQLA 2",
+          actionLink: "/naqla2",
         };
       case "commercial":
         return {
@@ -71,7 +71,7 @@ export default function AIAnalysisResults({ analysis, ideaId }: AIAnalysisResult
           borderColor: "border-yellow-500/30",
           description: "قيمة تجارية واضحة",
           action: "انتقل إلى شبكة المطابقة",
-          actionLink: "/uplink2/matching",
+          actionLink: "/naqla2/matching",
         };
       case "guidance":
         return {
@@ -93,7 +93,7 @@ export default function AIAnalysisResults({ analysis, ideaId }: AIAnalysisResult
           borderColor: "border-gray-500/30",
           description: "تحليل غير مكتمل",
           action: "إعادة المحاولة",
-          actionLink: "/uplink1/submit",
+          actionLink: "/naqla1/submit",
         };
     }
   };

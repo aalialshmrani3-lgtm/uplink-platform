@@ -9,13 +9,13 @@ import crypto from "crypto";
 
 /**
  * Generate a new API key
- * Format: uplink_<random_32_chars>
+ * Format: naqla_<random_32_chars>
  */
 export function generateApiKey(): { key: string; hash: string; prefix: string } {
   const randomPart = crypto.randomBytes(24).toString('base64url'); // URL-safe base64
-  const key = `uplink_${randomPart}`;
+  const key = `naqla_${randomPart}`;
   const hash = crypto.createHash('sha256').update(key).digest('hex');
-  const prefix = key.substring(0, 12); // "uplink_abc12"
+  const prefix = key.substring(0, 12); // "naqla_abc12"
   
   return { key, hash, prefix };
 }

@@ -31,7 +31,7 @@ export default function RegisterInvestor() {
 
           <div className="space-y-6 text-white/90">
             <p className="text-lg">
-              انضم إلى منصة UPLINK كمستثمر واحصل على:
+              انضم إلى منصة NAQLA كمستثمر واحصل على:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">

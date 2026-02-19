@@ -98,7 +98,7 @@ export default function Integrations() {
             التكاملات
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            اربط UPLINK مع أدواتك المفضلة لتجربة عمل متكاملة وسلسة
+            اربط NAQLA مع أدواتك المفضلة لتجربة عمل متكاملة وسلسة
           </p>
         </div>
 

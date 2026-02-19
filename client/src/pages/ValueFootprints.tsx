@@ -60,7 +60,7 @@ export default function ValueFootprints() {
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">قياس الأثر</h1>
         <p className="text-muted-foreground">
-          تتبع الأثر الاقتصادي والاجتماعي لمنصة UPLINK
+          تتبع الأثر الاقتصادي والاجتماعي لمنصة NAQLA
         </p>
       </div>
 

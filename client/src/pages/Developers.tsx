@@ -64,7 +64,7 @@ export default function Developers() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -83,9 +83,9 @@ export default function Developers() {
             <Code className="w-4 h-4 text-green-400" />
             <span className="text-green-400 text-sm">بوابة المطورين</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-4">UPLINK API</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">NAQLA API</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            ادمج منصة UPLINK مع أنظمتك واستفد من قوة الذكاء الاصطناعي في تقييم الابتكارات
+            ادمج منصة NAQLA مع أنظمتك واستفد من قوة الذكاء الاصطناعي في تقييم الابتكارات
           </p>
         </div>
 
@@ -98,14 +98,14 @@ export default function Developers() {
             </h2>
             <div className="bg-slate-900 rounded-xl p-4 font-mono text-sm">
               <div className="text-slate-400 mb-2"># تثبيت SDK</div>
-              <div className="text-green-400 mb-4">pip install uplink-sdk</div>
+              <div className="text-green-400 mb-4">pip install naqla-sdk</div>
               
               <div className="text-slate-400 mb-2"># استخدام API</div>
               <div className="text-cyan-400">
-                <span className="text-purple-400">from</span> uplink <span className="text-purple-400">import</span> UplinkClient
+                <span className="text-purple-400">from</span> naqla <span className="text-purple-400">import</span> NaqlaClient
               </div>
               <div className="text-white mt-2">
-                client = UplinkClient(api_key=<span className="text-amber-400">"your_api_key"</span>)
+                client = NaqlaClient(api_key=<span className="text-amber-400">"your_api_key"</span>)
               </div>
               <div className="text-white mt-2">
                 result = client.evaluate(project_data)

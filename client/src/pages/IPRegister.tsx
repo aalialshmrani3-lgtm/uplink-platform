@@ -123,7 +123,7 @@ export default function IPRegister() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -140,7 +140,7 @@ export default function IPRegister() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full mb-4">
             <Shield className="w-4 h-4 text-emerald-400" />
-            <span className="text-emerald-400 text-sm">UPLINK1 - توليد الملكية الفكرية</span>
+            <span className="text-emerald-400 text-sm">NAQLA1 - توليد الملكية الفكرية</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">تسجيل ملكية فكرية جديدة</h1>
           <p className="text-slate-400">سجّل ابتكارك واحصل على حماية فورية مع توثيق البلوكتشين</p>

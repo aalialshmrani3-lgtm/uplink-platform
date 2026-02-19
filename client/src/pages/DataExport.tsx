@@ -68,7 +68,7 @@ export default function DataExport() {
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `uplink_training_data_${new Date().toISOString().split('T')[0]}.csv`;
+    link.download = `naqla_training_data_${new Date().toISOString().split('T')[0]}.csv`;
     link.click();
     
     toast.success(`تم تصدير ${filtered.length} سجل بصيغة CSV`);
@@ -88,7 +88,7 @@ export default function DataExport() {
     const blob = new Blob([json], { type: 'application/json' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `uplink_training_data_${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `naqla_training_data_${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     
     toast.success(`تم تصدير ${filtered.length} سجل بصيغة JSON`);
@@ -116,7 +116,7 @@ export default function DataExport() {
     const blob = new Blob([tsv], { type: 'application/vnd.ms-excel' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `uplink_training_data_${new Date().toISOString().split('T')[0]}.xls`;
+    link.download = `naqla_training_data_${new Date().toISOString().split('T')[0]}.xls`;
     link.click();
     
     toast.success(`تم تصدير ${filtered.length} سجل بصيغة Excel`);

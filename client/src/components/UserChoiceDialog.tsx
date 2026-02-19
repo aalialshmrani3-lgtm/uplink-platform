@@ -18,10 +18,10 @@ interface UserChoiceDialogProps {
   onOpenChange: (open: boolean) => void;
   ideaId: number;
   overallScore: number;
-  recommendedPath?: "uplink2" | "uplink3" | "both" | "guidance";
+  recommendedPath?: "naqla2" | "naqla3" | "both" | "guidance";
   pathRecommendations?: {
-    uplink2?: string;
-    uplink3?: string;
+    naqla2?: string;
+    naqla3?: string;
     guidance?: string;
   };
 }
@@ -36,23 +36,23 @@ export default function UserChoiceDialog({
 }: UserChoiceDialogProps) {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const [selectedChoice, setSelectedChoice] = useState<"uplink2" | "uplink3" | null>(null);
+  const [selectedChoice, setSelectedChoice] = useState<"naqla2" | "naqla3" | null>(null);
 
-  const setUserChoiceMutation = trpc.uplink1.setUserChoice.useMutation({
+  const setUserChoiceMutation = trpc.naqla1.setUserChoice.useMutation({
     onSuccess: (data) => {
       toast({
         title: "تم بنجاح!",
         description:
-          data.choice === "uplink2"
-            ? "تم نقل فكرتك إلى UPLINK 2 للمطابقة"
-            : "تم نقل فكرتك إلى UPLINK 3 للبيع",
+          data.choice === "naqla2"
+            ? "تم نقل فكرتك إلى NAQLA 2 للمطابقة"
+            : "تم نقل فكرتك إلى NAQLA 3 للبيع",
       });
 
       // الانتقال إلى الصفحة المناسبة
-      if (data.choice === "uplink2" && data.projectId) {
-        setLocation(`/uplink2/projects/${data.projectId}`);
-      } else if (data.choice === "uplink3" && data.assetId) {
-        setLocation(`/uplink3/assets/${data.assetId}`);
+      if (data.choice === "naqla2" && data.projectId) {
+        setLocation(`/naqla2/projects/${data.projectId}`);
+      } else if (data.choice === "naqla3" && data.assetId) {
+        setLocation(`/naqla3/assets/${data.assetId}`);
       }
 
       onOpenChange(false);
@@ -66,7 +66,7 @@ export default function UserChoiceDialog({
     },
   });
 
-  const handleChoice = (choice: "uplink2" | "uplink3") => {
+  const handleChoice = (choice: "naqla2" | "naqla3") => {
     setSelectedChoice(choice);
     setUserChoiceMutation.mutate({
       ideaId,
@@ -87,23 +87,23 @@ export default function UserChoiceDialog({
         </DialogHeader>
 
         <div className="grid md:grid-cols-2 gap-4 mt-6">
-          {/* UPLINK 2 Option */}
+          {/* NAQLA 2 Option */}
           <Card
             className={`glass-card p-6 cursor-pointer transition-all hover:scale-105 border-2 ${
-              selectedChoice === "uplink2"
+              selectedChoice === "naqla2"
                 ? "border-blue-500 bg-blue-500/10"
                 : "border-gray-700 hover:border-blue-500/50"
             }`}
-            onClick={() => !setUserChoiceMutation.isPending && handleChoice("uplink2")}
+            onClick={() => !setUserChoiceMutation.isPending && handleChoice("naqla2")}
           >
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center">
                 <Users className="w-8 h-8 text-blue-400" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">UPLINK 2</h3>
+                <h3 className="text-xl font-bold text-white mb-2">NAQLA 2</h3>
                 <p className="text-sm text-gray-300 mb-4">
-                  {pathRecommendations.uplink2 || "البحث عن تحديات، مستثمرين، وشركاء استراتيجيين"}
+                  {pathRecommendations.naqla2 || "البحث عن تحديات، مستثمرين، وشركاء استراتيجيين"}
                 </p>
                 <ul className="text-xs text-gray-400 space-y-2 text-right">
                   <li>• المطابقة الذكية مع التحديات</li>
@@ -116,14 +116,14 @@ export default function UserChoiceDialog({
                 className="w-full bg-blue-600 hover:bg-blue-700"
                 disabled={setUserChoiceMutation.isPending}
               >
-                {setUserChoiceMutation.isPending && selectedChoice === "uplink2" ? (
+                {setUserChoiceMutation.isPending && selectedChoice === "naqla2" ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     جاري النقل...
                   </>
                 ) : (
                   <>
-                    اختر UPLINK 2
+                    اختر NAQLA 2
                     <ArrowRight className="w-4 h-4 mr-2" />
                   </>
                 )}
@@ -131,23 +131,23 @@ export default function UserChoiceDialog({
             </div>
           </Card>
 
-          {/* UPLINK 3 Option */}
+          {/* NAQLA 3 Option */}
           <Card
             className={`glass-card p-6 cursor-pointer transition-all hover:scale-105 border-2 ${
-              selectedChoice === "uplink3"
+              selectedChoice === "naqla3"
                 ? "border-purple-500 bg-purple-500/10"
                 : "border-gray-700 hover:border-purple-500/50"
             }`}
-            onClick={() => !setUserChoiceMutation.isPending && handleChoice("uplink3")}
+            onClick={() => !setUserChoiceMutation.isPending && handleChoice("naqla3")}
           >
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center">
                 <ShoppingCart className="w-8 h-8 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">UPLINK 3</h3>
+                <h3 className="text-xl font-bold text-white mb-2">NAQLA 3</h3>
                 <p className="text-sm text-gray-300 mb-4">
-                  {pathRecommendations.uplink3 || "الانتقال مباشرة إلى البورصة للبيع أو الاستحواذ"}
+                  {pathRecommendations.naqla3 || "الانتقال مباشرة إلى البورصة للبيع أو الاستحواذ"}
                 </p>
                 <ul className="text-xs text-gray-400 space-y-2 text-right">
                   <li>• عرض فكرتك في البورصة</li>
@@ -160,14 +160,14 @@ export default function UserChoiceDialog({
                 className="w-full bg-purple-600 hover:bg-purple-700"
                 disabled={setUserChoiceMutation.isPending}
               >
-                {setUserChoiceMutation.isPending && selectedChoice === "uplink3" ? (
+                {setUserChoiceMutation.isPending && selectedChoice === "naqla3" ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     جاري النقل...
                   </>
                 ) : (
                   <>
-                    اختر UPLINK 3
+                    اختر NAQLA 3
                     <ArrowRight className="w-4 h-4 mr-2" />
                   </>
                 )}
@@ -178,8 +178,8 @@ export default function UserChoiceDialog({
 
         <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
           <p className="text-sm text-gray-300 text-center">
-            💡 <strong>نصيحة:</strong> إذا كنت تبحث عن دعم وتمويل، اختر UPLINK 2. إذا كنت
-            جاهزاً للبيع مباشرة، اختر UPLINK 3.
+            💡 <strong>نصيحة:</strong> إذا كنت تبحث عن دعم وتمويل، اختر NAQLA 2. إذا كنت
+            جاهزاً للبيع مباشرة، اختر NAQLA 3.
           </p>
         </div>
       </DialogContent>

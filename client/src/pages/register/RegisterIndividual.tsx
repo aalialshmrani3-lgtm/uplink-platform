@@ -31,7 +31,7 @@ export default function RegisterIndividual() {
 
           <div className="space-y-6 text-white/90">
             <p className="text-lg">
-              انضم إلى منصة UPLINK كفرد واحصل على:
+              انضم إلى منصة NAQLA كفرد واحصل على:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">

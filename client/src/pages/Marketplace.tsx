@@ -301,7 +301,7 @@ export default function Marketplace() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -322,7 +322,7 @@ export default function Marketplace() {
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full mb-4">
                   <Globe className="w-4 h-4 text-purple-400" />
-                  <span className="text-purple-400 text-sm">UPLINK3 - السوق والتبادل</span>
+                  <span className="text-purple-400 text-sm">NAQLA3 - السوق والتبادل</span>
                 </div>
                 <h1 className="text-4xl font-bold text-white mb-4">سوق الابتكارات</h1>
                 <p className="text-slate-300 text-lg max-w-xl">

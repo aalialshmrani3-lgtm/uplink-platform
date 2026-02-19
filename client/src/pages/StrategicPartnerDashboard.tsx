@@ -91,7 +91,7 @@ export default function StrategicPartnerDashboard() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">لوحة تحكم الشريك الاستراتيجي</h1>
-        <p className="text-muted-foreground">إدارة الأفكار المُوجّهة إليك من UPLINK 1</p>
+        <p className="text-muted-foreground">إدارة الأفكار المُوجّهة إليك من NAQLA 1</p>
       </div>
 
       {/* Stats Cards */}

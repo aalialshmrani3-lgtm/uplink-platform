@@ -354,11 +354,11 @@ export default function QuickAssessment() {
               <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-8 rounded-lg text-center space-y-4">
                 <h3 className="text-2xl font-bold">هل تريد تقييماً شاملاً؟</h3>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  سجّل في UPLINK للحصول على تقييم كامل (60 سؤال) مع تقرير مفصل ومقارنة معيارية مع الشركات السعودية
+                  سجّل في NAQLA للحصول على تقييم كامل (60 سؤال) مع تقرير مفصل ومقارنة معيارية مع الشركات السعودية
                 </p>
                 <div className="flex gap-4 justify-center">
                   <Button size="lg" onClick={() => setLocation("/register")}>
-                    سجّل الآن في UPLINK
+                    سجّل الآن في NAQLA
                   </Button>
                   <Button size="lg" variant="outline" onClick={() => window.location.reload()}>
                     إعادة التقييم

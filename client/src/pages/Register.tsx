@@ -67,7 +67,7 @@ export default function Register() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            انضم إلى منظومة UPLINK
+            انضم إلى منظومة NAQLA
           </h1>
           <p className="text-xl text-blue-200 max-w-2xl mx-auto">
             اختر نوع حسابك للبدء في رحلة الابتكار والتطوير

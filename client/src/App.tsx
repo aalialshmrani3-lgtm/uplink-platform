@@ -37,7 +37,7 @@ const Calendar = lazy(() => import("./pages/Calendar"));
 const Recommendations = lazy(() => import("./pages/Recommendations"));
 const Admin = lazy(() => import("./pages/Admin"));
 const InnovationPipeline = lazy(() => import("./pages/InnovationPipeline"));
-const WhyUplink = lazy(() => import("./pages/WhyUplink"));
+const WhyNaqla = lazy(() => import("./pages/WhyNaqla"));
 const Testimonials = lazy(() => import("./pages/Testimonials"));
 const Integrations = lazy(() => import("./pages/Integrations"));
 const ROICalculator = lazy(() => import("./pages/ROICalculator"));
@@ -53,10 +53,10 @@ const ChallengeLibrary = lazy(() => import("./pages/ChallengeLibrary"));
 const HypothesisManagement = lazy(() => import("./pages/HypothesisManagement"));
 const RATTesting = lazy(() => import("./pages/RATTesting"));
 const GateReview = lazy(() => import("./pages/GateReview"));
-const Uplink1Opportunities = lazy(() => import("./pages/Uplink1Opportunities"));
+const Naqla1Opportunities = lazy(() => import("./pages/Naqla1Opportunities"));
 const QuickAssessment = lazy(() => import("./pages/QuickAssessment"));
-const Uplink2VettingDashboard = lazy(() => import("./pages/Uplink2VettingDashboard"));
-const Uplink2Marketplace = lazy(() => import("./pages/Uplink2Marketplace"));
+const Naqla2VettingDashboard = lazy(() => import("./pages/Naqla2VettingDashboard"));
+const Naqla2Marketplace = lazy(() => import("./pages/Naqla2Marketplace"));
 const LearningKnowledgeBase = lazy(() => import("./pages/LearningKnowledgeBase"));
 const AIInsightsDashboard = lazy(() => import("./pages/AIInsightsDashboard"));
 const IdeaClassification = lazy(() => import("./pages/IdeaClassification"));
@@ -74,50 +74,50 @@ const OrganizationsManagement = lazy(() => import("./pages/admin/OrganizationsMa
 const OrganizationsDashboard = lazy(() => import("./pages/OrganizationsDashboard"));
 const AIStrategicAdvisor = lazy(() => import("./pages/AIStrategicAdvisor"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
-const Uplink1 = lazy(() => import("./pages/Uplink1"));
+const Naqla1 = lazy(() => import("./pages/Naqla1"));
 const SubmitIdea = lazy(() => import('@/pages/SubmitIdea'));
 const MyIdeas = lazy(() => import('@/pages/MyIdeas'));
-const Uplink1BrowseIdeas = lazy(() => import('@/pages/Uplink1BrowseIdeas'));
-const Uplink1IdeaDetail = lazy(() => import('@/pages/Uplink1IdeaDetail'));
-const Uplink1IdeaAnalysis = lazy(() => import('@/pages/Uplink1IdeaAnalysis'));
+const Naqla1BrowseIdeas = lazy(() => import('@/pages/Naqla1BrowseIdeas'));
+const Naqla1IdeaDetail = lazy(() => import('@/pages/Naqla1IdeaDetail'));
+const Naqla1IdeaAnalysis = lazy(() => import('@/pages/Naqla1IdeaAnalysis'));
 const IdeaJourney = lazy(() => import('@/pages/IdeaJourney'));
-const Uplink2BrowseHackathons = lazy(() => import('@/pages/Uplink2BrowseHackathons'));
-const Uplink2CreateHackathon = lazy(() => import('@/pages/Uplink2CreateHackathon'));
-const Uplink2HackathonDetail = lazy(() => import('@/pages/Uplink2HackathonDetail'));
-const Uplink2BrowseEvents = lazy(() => import('@/pages/Uplink2BrowseEvents'));
-const Uplink2CreateEvent = lazy(() => import('@/pages/Uplink2CreateEvent'));
-const Uplink2EventDetail = lazy(() => import('@/pages/Uplink2EventDetail'));
-const Uplink2 = lazy(() => import("./pages/Uplink2"));
-const Uplink3 = lazy(() => import("./pages/Uplink3"));
-const Uplink2ChallengeDetails = lazy(() => import("./pages/Uplink2ChallengeDetails"));
-const Uplink3Marketplace = lazy(() => import("./pages/Uplink3Marketplace"));
-const Uplink3SellAsset = lazy(() => import("./pages/Uplink3SellAsset"));
-const Uplink3AssetDetails = lazy(() => import("./pages/Uplink3AssetDetails"));
-const Uplink3PaymentSuccess = lazy(() => import("./pages/Uplink3PaymentSuccess"));
+const Naqla2BrowseHackathons = lazy(() => import('@/pages/Naqla2BrowseHackathons'));
+const Naqla2CreateHackathon = lazy(() => import('@/pages/Naqla2CreateHackathon'));
+const Naqla2HackathonDetail = lazy(() => import('@/pages/Naqla2HackathonDetail'));
+const Naqla2BrowseEvents = lazy(() => import('@/pages/Naqla2BrowseEvents'));
+const Naqla2CreateEvent = lazy(() => import('@/pages/Naqla2CreateEvent'));
+const Naqla2EventDetail = lazy(() => import('@/pages/Naqla2EventDetail'));
+const Naqla2 = lazy(() => import("./pages/Naqla2"));
+const Naqla3 = lazy(() => import("./pages/Naqla3"));
+const Naqla2ChallengeDetails = lazy(() => import("./pages/Naqla2ChallengeDetails"));
+const Naqla3Marketplace = lazy(() => import("./pages/Naqla3Marketplace"));
+const Naqla3SellAsset = lazy(() => import("./pages/Naqla3SellAsset"));
+const Naqla3AssetDetails = lazy(() => import("./pages/Naqla3AssetDetails"));
+const Naqla3PaymentSuccess = lazy(() => import("./pages/Naqla3PaymentSuccess"));
 const UserProfile = lazy(() => import("./pages/UserProfile")); // Added for Flowchart Match
 const UserSettings = lazy(() => import("./pages/UserSettings")); // Added for Flowchart Match
-const Uplink2Hackathons = lazy(() => import("./pages/Uplink2Hackathons")); // Added for Flowchart Match
-const Uplink2Events = lazy(() => import("./pages/Uplink2Events")); // Added for Flowchart Match
-const Uplink2Matching = lazy(() => import("./pages/Uplink2Matching")); // Added for Flowchart Match
-const Uplink3Contracts = lazy(() => import('./pages/Uplink3Contracts'));
-const Uplink3ContractDetail = lazy(() => import('./pages/Uplink3ContractDetail')); // Contract Detail with Milestones
-const Uplink3BlockchainContracts = lazy(() => import('./pages/Uplink3BlockchainContracts')); // Added for Flowchart Match
-const Uplink3Escrow = lazy(() => import("./pages/Uplink3Escrow")); // Added for Flowchart Match
+const Naqla2Hackathons = lazy(() => import("./pages/Naqla2Hackathons")); // Added for Flowchart Match
+const Naqla2Events = lazy(() => import("./pages/Naqla2Events")); // Added for Flowchart Match
+const Naqla2Matching = lazy(() => import("./pages/Naqla2Matching")); // Added for Flowchart Match
+const Naqla3Contracts = lazy(() => import('./pages/Naqla3Contracts'));
+const Naqla3ContractDetail = lazy(() => import('./pages/Naqla3ContractDetail')); // Contract Detail with Milestones
+const Naqla3BlockchainContracts = lazy(() => import('./pages/Naqla3BlockchainContracts')); // Added for Flowchart Match
+const Naqla3Escrow = lazy(() => import("./pages/Naqla3Escrow")); // Added for Flowchart Match
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
-const Uplink2SubmitChallenge = lazy(() => import("./pages/Uplink2SubmitChallenge")); // Submit Challenge
-const Uplink2HostEvent = lazy(() => import("./pages/Uplink2HostEvent")); // Host Event Dashboard
-const Uplink2Challenges = lazy(() => import("./pages/Uplink2Challenges")); // Browse Challenges
-const Uplink2ChallengeDetail = lazy(() => import("./pages/Uplink2ChallengeDetail")); // Challenge Detail
-const Uplink2SubmitSolution = lazy(() => import("./pages/Uplink2SubmitSolution")); // Submit Solution
-const Uplink2AdminChallenges = lazy(() => import("./pages/Uplink2AdminChallenges")); // Admin Challenges Dashboard
-const Uplink2AdminSubmissions = lazy(() => import("./pages/Uplink2AdminSubmissions")); // Admin Review Submissions
+const Naqla2SubmitChallenge = lazy(() => import("./pages/Naqla2SubmitChallenge")); // Submit Challenge
+const Naqla2HostEvent = lazy(() => import("./pages/Naqla2HostEvent")); // Host Event Dashboard
+const Naqla2Challenges = lazy(() => import("./pages/Naqla2Challenges")); // Browse Challenges
+const Naqla2ChallengeDetail = lazy(() => import("./pages/Naqla2ChallengeDetail")); // Challenge Detail
+const Naqla2SubmitSolution = lazy(() => import("./pages/Naqla2SubmitSolution")); // Submit Solution
+const Naqla2AdminChallenges = lazy(() => import("./pages/Naqla2AdminChallenges")); // Admin Challenges Dashboard
+const Naqla2AdminSubmissions = lazy(() => import("./pages/Naqla2AdminSubmissions")); // Admin Review Submissions
 const MySubmissions = lazy(() => import("./pages/MySubmissions")); // My Submissions
 const ClassificationPaths = lazy(() => import("./pages/ClassificationPaths")); // Classification Paths
-const Uplink2Projects = lazy(() => import("./pages/Uplink2Projects")); // UPLINK 2 Projects
-const Uplink3Assets = lazy(() => import("./pages/Uplink3Assets")); // UPLINK 3 Assets
+const Naqla2Projects = lazy(() => import("./pages/Naqla2Projects")); // NAQLA 2 Projects
+const Naqla3Assets = lazy(() => import("./pages/Naqla3Assets")); // NAQLA 3 Assets
 const StrategicPartners = lazy(() => import("./pages/StrategicPartners")); // Strategic Partners
 const ValueFootprints = lazy(() => import("./pages/ValueFootprints")); // Value Footprints
-// Removed: Uplink2Dashboard - replaced by Uplink2VettingDashboard and Uplink2Marketplace
+// Removed: Naqla2Dashboard - replaced by Naqla2VettingDashboard and Naqla2Marketplace
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government
 const RegisterPrivateSector = lazy(() => import("./pages/register/RegisterPrivateSector")); // Register Private Sector
@@ -130,7 +130,7 @@ const DemoFlow = lazy(() => import("./pages/DemoFlow"));
 const MyJourney = lazy(() => import("./pages/MyJourney")); // Demo Flow - User Journey
 const IdeaClusters = lazy(() => import("./pages/IdeaClusters"));
 const Demo = lazy(() => import("./pages/Demo")); // AI Clustering (Innovation 360)
-const UplinkFlowAnalytics = lazy(() => import("./pages/UplinkFlowAnalytics"));
+const NaqlaFlowAnalytics = lazy(() => import("./pages/NaqlaFlowAnalytics"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -236,7 +236,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
       {/* Brand Name */}
       <h1 className="relative z-10 text-5xl font-bold mb-2">
         <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-          UPLINK
+          NAQLA
         </span>
         <span className="text-white/80 text-2xl mr-2">5.0</span>
       </h1>
@@ -312,50 +312,50 @@ function Router() {
         <Route path="/projects/:id" component={ProjectDetail} />
         <Route path="/challenges" component={Challenges} />
         <Route path="/marketplace" component={Marketplace} />
-        <Route path="/uplink1" component={Uplink1} />
-        <Route path="/uplink1/submit" component={SubmitIdea} />
-        <Route path="/uplink1/browse" component={Uplink1BrowseIdeas} />
-        <Route path="/uplink1/ideas/:id" component={Uplink1IdeaDetail} />
-        <Route path="/uplink1/ideas/:id/analysis" component={Uplink1IdeaAnalysis} />
+        <Route path="/naqla1" component={Naqla1} />
+        <Route path="/naqla1/submit" component={SubmitIdea} />
+        <Route path="/naqla1/browse" component={Naqla1BrowseIdeas} />
+        <Route path="/naqla1/ideas/:id" component={Naqla1IdeaDetail} />
+        <Route path="/naqla1/ideas/:id/analysis" component={Naqla1IdeaAnalysis} />
         <Route path="/journey/:id" component={IdeaJourney} />
         <Route path="/contracts/:id/sign" component={ContractSignature} />
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/classification-paths" component={ClassificationPaths} />
         <Route path="/strategic-partners" component={StrategicPartners} />
         <Route path="/value-footprints" component={ValueFootprints} />
-        <Route path="/uplink2" component={Uplink2} />
-        <Route path="/uplink1/opportunities" component={Uplink1Opportunities} />
-          <Route path="/uplink1/clusters" component={IdeaClusters} />
+        <Route path="/naqla2" component={Naqla2} />
+        <Route path="/naqla1/opportunities" component={Naqla1Opportunities} />
+          <Route path="/naqla1/clusters" component={IdeaClusters} />
           <Route path="/demo" component={Demo} />
-          <Route path="/analytics/uplink-flow" component={UplinkFlowAnalytics} />
+          <Route path="/analytics/naqla-flow" component={NaqlaFlowAnalytics} />
         <Route path="/quick-assessment" component={QuickAssessment} />
-        <Route path="/uplink2/vetting" component={Uplink2VettingDashboard} />
-        <Route path="/uplink2/marketplace" component={Uplink2Marketplace} />
-        <Route path="/uplink2/hackathons" component={Uplink2BrowseHackathons} />
-        <Route path="/uplink2/hackathons/create" component={Uplink2CreateHackathon} />
-        <Route path="/uplink2/hackathons/:id" component={Uplink2HackathonDetail} />
-        <Route path="/uplink2/events" component={Uplink2BrowseEvents} />
-        <Route path="/uplink2/events/create" component={Uplink2CreateEvent} />
-        <Route path="/uplink2/events/:id" component={Uplink2EventDetail} />
-        <Route path="/uplink2/matching" component={Uplink2Matching} /> {/* Added for Flowchart Match */}
-        <Route path="/uplink2/submit-challenge" component={Uplink2SubmitChallenge} /> {/* Submit Challenge */}
-        <Route path="/uplink2/host-event" component={Uplink2HostEvent} /> {/* Host Event Dashboard */}
-        <Route path="/admin/challenges/:id/submissions" component={Uplink2AdminSubmissions} /> {/* Admin Review Submissions */}
-        <Route path="/admin/challenges" component={Uplink2AdminChallenges} /> {/* Admin Challenges Dashboard */}
-        <Route path="/uplink2/challenges/:id/submit" component={Uplink2SubmitSolution} /> {/* Submit Solution */}
-        <Route path="/uplink2/challenges/:id" component={Uplink2ChallengeDetails} /> {/* Challenge Details - Fixed */}
-        <Route path="/uplink2/challenges" component={Uplink2Challenges} /> {/* Browse Challenges */}
+        <Route path="/naqla2/vetting" component={Naqla2VettingDashboard} />
+        <Route path="/naqla2/marketplace" component={Naqla2Marketplace} />
+        <Route path="/naqla2/hackathons" component={Naqla2BrowseHackathons} />
+        <Route path="/naqla2/hackathons/create" component={Naqla2CreateHackathon} />
+        <Route path="/naqla2/hackathons/:id" component={Naqla2HackathonDetail} />
+        <Route path="/naqla2/events" component={Naqla2BrowseEvents} />
+        <Route path="/naqla2/events/create" component={Naqla2CreateEvent} />
+        <Route path="/naqla2/events/:id" component={Naqla2EventDetail} />
+        <Route path="/naqla2/matching" component={Naqla2Matching} /> {/* Added for Flowchart Match */}
+        <Route path="/naqla2/submit-challenge" component={Naqla2SubmitChallenge} /> {/* Submit Challenge */}
+        <Route path="/naqla2/host-event" component={Naqla2HostEvent} /> {/* Host Event Dashboard */}
+        <Route path="/admin/challenges/:id/submissions" component={Naqla2AdminSubmissions} /> {/* Admin Review Submissions */}
+        <Route path="/admin/challenges" component={Naqla2AdminChallenges} /> {/* Admin Challenges Dashboard */}
+        <Route path="/naqla2/challenges/:id/submit" component={Naqla2SubmitSolution} /> {/* Submit Solution */}
+        <Route path="/naqla2/challenges/:id" component={Naqla2ChallengeDetails} /> {/* Challenge Details - Fixed */}
+        <Route path="/naqla2/challenges" component={Naqla2Challenges} /> {/* Browse Challenges */}
         <Route path="/my-submissions" component={MySubmissions} /> {/* My Submissions */}
-        <Route path="/uplink2/projects/:id" component={Uplink2Projects} /> {/* UPLINK 2 Project Detail */}
-        <Route path="/uplink3" component={Uplink3} />
-        <Route path="/uplink3/assets/:id" component={Uplink3Assets} /> {/* UPLINK 3 Asset Detail - NEW */}
-        <Route path="/uplink3/marketplace" component={Uplink3Marketplace} /> {/* Marketplace */}
-        <Route path="/uplink3/sell" component={Uplink3SellAsset} /> {/* Sell Asset */}
-        <Route path="/uplink3/assets/:id" component={Uplink3AssetDetails} /> {/* Asset Details */}
-        <Route path="/uplink3/payment/success" component={Uplink3PaymentSuccess} /> {/* Payment Success */}
-        <Route path="/uplink3/contracts" component={Uplink3Contracts} /> {/* Added for Flowchart Match */}
-        <Route path="/uplink3/contracts/:id" component={Uplink3ContractDetail} /> {/* Contract Detail with Milestones */}
-        <Route path="/uplink3/escrow" component={Uplink3Escrow} /> {/* Added for Flowchart Match */}
+        <Route path="/naqla2/projects/:id" component={Naqla2Projects} /> {/* NAQLA 2 Project Detail */}
+        <Route path="/naqla3" component={Naqla3} />
+        <Route path="/naqla3/assets/:id" component={Naqla3Assets} /> {/* NAQLA 3 Asset Detail - NEW */}
+        <Route path="/naqla3/marketplace" component={Naqla3Marketplace} /> {/* Marketplace */}
+        <Route path="/naqla3/sell" component={Naqla3SellAsset} /> {/* Sell Asset */}
+        <Route path="/naqla3/assets/:id" component={Naqla3AssetDetails} /> {/* Asset Details */}
+        <Route path="/naqla3/payment/success" component={Naqla3PaymentSuccess} /> {/* Payment Success */}
+        <Route path="/naqla3/contracts" component={Naqla3Contracts} /> {/* Added for Flowchart Match */}
+        <Route path="/naqla3/contracts/:id" component={Naqla3ContractDetail} /> {/* Contract Detail with Milestones */}
+        <Route path="/naqla3/escrow" component={Naqla3Escrow} /> {/* Added for Flowchart Match */}
         {/* /admin route already exists at /admin/dashboard */}
         <Route path="/search" component={GlobalSearch} /> {/* Added for Flowchart Match */}
         <Route path="/academy" component={Academy} />
@@ -373,7 +373,7 @@ function Router() {
         <Route path="/recommendations" component={Recommendations} />
         <Route path="/admin" component={Admin} />
         <Route path="/pipeline" component={InnovationPipeline} />
-        <Route path="/why-uplink" component={WhyUplink} />
+        <Route path="/why-naqla" component={WhyNaqla} />
         <Route path="/testimonials" component={Testimonials} />
         <Route path="/integrations" component={Integrations} />
         <Route path="/roi-calculator" component={ROICalculator} />

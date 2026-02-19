@@ -1,5 +1,5 @@
 /**
- * Mock Data for UPLINK3 - Smart Contracts & Innovation Exchange
+ * Mock Data for NAQLA3 - Smart Contracts & Innovation Exchange
  */
 
 export const mockContracts = [

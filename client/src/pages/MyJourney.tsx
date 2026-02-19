@@ -1,7 +1,7 @@
 /**
  * My Journey - Dashboard موحد لتتبع التقدم
  * 
- * يعرض رحلة المستخدم الكاملة من UPLINK 1 → 2 → 3
+ * يعرض رحلة المستخدم الكاملة من NAQLA 1 → 2 → 3
  */
 
 import { trpc } from "@/lib/trpc";
@@ -10,9 +10,9 @@ import { CheckCircle2, Circle, Clock, ArrowRight } from "lucide-react";
 
 export default function MyJourney() {
   const { data: user } = trpc.auth.me.useQuery();
-  const { data: ideas, isLoading: ideasLoading } = trpc.uplink1.myIdeas.useQuery();
-  const { data: matches, isLoading: matchesLoading } = trpc.uplink2.matching.getMyMatches.useQuery();
-  const { data: contracts, isLoading: contractsLoading } = trpc.uplink3.contracts.getMyContracts.useQuery();
+  const { data: ideas, isLoading: ideasLoading } = trpc.naqla1.myIdeas.useQuery();
+  const { data: matches, isLoading: matchesLoading } = trpc.naqla2.matching.getMyMatches.useQuery();
+  const { data: contracts, isLoading: contractsLoading } = trpc.naqla3.contracts.getMyContracts.useQuery();
 
   if (!user) {
     return (
@@ -37,7 +37,7 @@ export default function MyJourney() {
   const stages = [
     {
       id: 1,
-      title: "UPLINK 1",
+      title: "NAQLA 1",
       titleAr: "أبلينك 1",
       description: "تقديم الأفكار وتحليلها",
       status: currentStage >= 1 ? "completed" : "pending",
@@ -46,7 +46,7 @@ export default function MyJourney() {
     },
     {
       id: 2,
-      title: "UPLINK 2",
+      title: "NAQLA 2",
       titleAr: "أبلينك 2",
       description: "المطابقة مع الجهات المناسبة",
       status: currentStage >= 2 ? "completed" : currentStage === 1 ? "in-progress" : "pending",
@@ -55,7 +55,7 @@ export default function MyJourney() {
     },
     {
       id: 3,
-      title: "UPLINK 3",
+      title: "NAQLA 3",
       titleAr: "أبلينك 3",
       description: "العقود الذكية والتنفيذ",
       status: currentStage >= 3 ? "completed" : currentStage === 2 ? "in-progress" : "pending",
@@ -70,7 +70,7 @@ export default function MyJourney() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            رحلتي في UPLINK
+            رحلتي في NAQLA
           </h1>
           <p className="text-lg text-muted-foreground">
             تتبع تقدمك من الفكرة إلى التنفيذ
@@ -187,7 +187,7 @@ export default function MyJourney() {
               قدّم فكرتك الأولى وابدأ رحلتك في عالم الابتكار
             </p>
             <a
-              href="/uplink1"
+              href="/naqla1"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
             >
               قدّم فكرتك الآن

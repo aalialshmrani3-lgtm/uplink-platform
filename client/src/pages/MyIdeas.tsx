@@ -25,7 +25,7 @@ export default function MyIdeas() {
   const [activeTab, setActiveTab] = useState('all');
 
   // TODO: Replace with real tRPC query
-  const { data: ideas, isLoading } = trpc.uplink1.myIdeas.useQuery(undefined, {
+  const { data: ideas, isLoading } = trpc.naqla1.myIdeas.useQuery(undefined, {
     enabled: !!user,
   });
 
@@ -37,8 +37,8 @@ export default function MyIdeas() {
     if (activeTab === 'pending') return matchesSearch && idea.status === 'pending';
     if (activeTab === 'approved') return matchesSearch && idea.status === 'approved';
     if (activeTab === 'rejected') return matchesSearch && idea.status === 'rejected';
-    if (activeTab === 'uplink2') return matchesSearch && idea.status === 'in_uplink2';
-    if (activeTab === 'uplink3') return matchesSearch && idea.status === 'in_uplink3';
+    if (activeTab === 'naqla2') return matchesSearch && idea.status === 'in_naqla2';
+    if (activeTab === 'naqla3') return matchesSearch && idea.status === 'in_naqla3';
     
     return matchesSearch;
   });
@@ -60,15 +60,15 @@ export default function MyIdeas() {
           <XCircle className="w-3 h-3 mr-1" />
           مرفوضة
         </Badge>;
-      case 'in_uplink2':
+      case 'in_naqla2':
         return <Badge variant="outline" className="bg-cyan-500/10 border-cyan-500/30 text-cyan-300">
           <Target className="w-3 h-3 mr-1" />
-          في UPLINK2
+          في NAQLA2
         </Badge>;
-      case 'in_uplink3':
+      case 'in_naqla3':
         return <Badge variant="outline" className="bg-purple-500/10 border-purple-500/30 text-purple-300">
           <Rocket className="w-3 h-3 mr-1" />
-          في UPLINK3
+          في NAQLA3
         </Badge>;
       default:
         return null;
@@ -142,11 +142,11 @@ export default function MyIdeas() {
             <TabsTrigger value="rejected" className="data-[state=active]:bg-red-500/20 data-[state=active]:text-red-300">
               مرفوضة
             </TabsTrigger>
-            <TabsTrigger value="uplink2" className="data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-300">
-              UPLINK2
+            <TabsTrigger value="naqla2" className="data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-300">
+              NAQLA2
             </TabsTrigger>
-            <TabsTrigger value="uplink3" className="data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-300">
-              UPLINK3
+            <TabsTrigger value="naqla3" className="data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-300">
+              NAQLA3
             </TabsTrigger>
           </TabsList>
 

@@ -101,7 +101,7 @@ export default function GlobalInnovationNetworks() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
-            UPLINK 6.0 Preview
+            NAQLA 6.0 Preview
           </Badge>
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             شبكات الابتكار المفتوح العالمية

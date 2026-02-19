@@ -7,7 +7,7 @@ export default function HomeSimpleTest() {
       direction: 'rtl'
     }}>
       <h1 style={{ fontSize: '48px', marginBottom: '20px', color: '#1e40af' }}>
-        مرحباً بك في UPLINK 5.0
+        مرحباً بك في NAQLA 5.0
       </h1>
       <p style={{ fontSize: '24px', marginBottom: '30px', color: '#64748b' }}>
         المنصة الوطنية للابتكار

@@ -93,7 +93,7 @@ export default function Challenges() {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                UPLINK 5.0
+                NAQLA 5.0
               </span>
             </div>
           </Link>
@@ -110,7 +110,7 @@ export default function Challenges() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4">
             <Brain className="w-4 h-4 text-blue-400" />
-            <span className="text-blue-400 text-sm">UPLINK2 - التحديات والمطابقة</span>
+            <span className="text-blue-400 text-sm">NAQLA2 - التحديات والمطابقة</span>
           </div>
           <h1 className="text-4xl font-bold text-white mb-4">التحديات والمسابقات</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">

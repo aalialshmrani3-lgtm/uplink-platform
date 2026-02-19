@@ -183,7 +183,7 @@ export default function Analytics() {
               onClick={() => {
                 // إنشاء محتوى التقرير
                 const reportContent = `
-                  UPLINK 5.0 - تقرير التحليلات
+                  NAQLA 5.0 - تقرير التحليلات
                   ============================
                   
                   إجمالي المشاريع: 380 (+24%)
@@ -197,7 +197,7 @@ export default function Analytics() {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `UPLINK_Analytics_Report_${new Date().toISOString().split('T')[0]}.txt`;
+                a.download = `NAQLA_Analytics_Report_${new Date().toISOString().split('T')[0]}.txt`;
                 a.click();
                 URL.revokeObjectURL(url);
               }}

@@ -35,7 +35,7 @@ export default function BetaPrograms() {
       ],
       benefits: [
         "وصول مبكر لمدة 6 أشهر",
-        "تدريب مخصص من فريق UPLINK",
+        "تدريب مخصص من فريق NAQLA",
         "دعم فني أولوية",
         "خصم 50% على الاشتراك السنوي",
       ],
@@ -117,13 +117,13 @@ export default function BetaPrograms() {
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
             <Rocket className="mr-2" size={16} />
-            UPLINK 6.0 Beta Programs
+            NAQLA 6.0 Beta Programs
           </Badge>
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             كن من الرواد
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            انضم إلى البرامج التجريبية لميزات UPLINK 6.0 واحصل على وصول مبكر، تدريب مخصص، وخصومات حصرية
+            انضم إلى البرامج التجريبية لميزات NAQLA 6.0 واحصل على وصول مبكر، تدريب مخصص، وخصومات حصرية
           </p>
         </div>
 
@@ -282,7 +282,7 @@ export default function BetaPrograms() {
             <Card className="p-6">
               <h3 className="font-bold mb-2">ما هي متطلبات الانضمام؟</h3>
               <p className="text-muted-foreground">
-                نبحث عن مبتكرين وشركات ومؤسسات جادة في استكشاف ميزات UPLINK 6.0 وتقديم تغذية راجعة بناءة.
+                نبحث عن مبتكرين وشركات ومؤسسات جادة في استكشاف ميزات NAQLA 6.0 وتقديم تغذية راجعة بناءة.
               </p>
             </Card>
             <Card className="p-6">

@@ -21,7 +21,7 @@ async function authenticateApiKey(req: Request, res: Response, next: NextFunctio
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({
       error: 'Unauthorized',
-      message: 'API key required. Use: Authorization: Bearer uplink_your_key',
+      message: 'API key required. Use: Authorization: Bearer naqla_your_key',
     });
   }
   

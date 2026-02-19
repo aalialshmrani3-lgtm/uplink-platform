@@ -7,7 +7,7 @@ export default function ThreeEngines() {
   const engines = [
     {
       id: 1,
-      name: "UPLINK1",
+      name: "NAQLA1",
       title: "محرك توليد الملكية الفكرية",
       subtitle: "IP Generation Engine",
       icon: Shield,
@@ -57,7 +57,7 @@ export default function ThreeEngines() {
     },
     {
       id: 2,
-      name: "UPLINK2",
+      name: "NAQLA2",
       title: "محرك التحديات والمطابقة",
       subtitle: "Challenge Matching Engine",
       icon: Brain,
@@ -107,7 +107,7 @@ export default function ThreeEngines() {
     },
     {
       id: 3,
-      name: "UPLINK3",
+      name: "NAQLA3",
       title: "محرك السوق المفتوح",
       subtitle: "Open Market Engine",
       icon: Globe,
@@ -163,7 +163,7 @@ export default function ThreeEngines() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
-            ما يميز UPLINK
+            ما يميز NAQLA
           </Badge>
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             المحركات الثلاثة

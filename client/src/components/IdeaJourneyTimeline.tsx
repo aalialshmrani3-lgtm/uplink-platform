@@ -10,7 +10,7 @@ interface IdeaJourneyTimelineProps {
 }
 
 export default function IdeaJourneyTimeline({ ideaId }: IdeaJourneyTimelineProps) {
-  const { data: events, isLoading } = trpc.uplink1.getIdeaJourney.useQuery({ ideaId });
+  const { data: events, isLoading } = trpc.naqla1.getIdeaJourney.useQuery({ ideaId });
 
   if (isLoading) {
     return (
@@ -48,8 +48,8 @@ export default function IdeaJourneyTimeline({ ideaId }: IdeaJourneyTimelineProps
         return <Circle className="w-5 h-5 text-blue-500" />;
       case 'analyzed':
         return <CheckCircle2 className="w-5 h-5 text-green-500" />;
-      case 'promoted_uplink2':
-      case 'promoted_uplink3':
+      case 'promoted_naqla2':
+      case 'promoted_naqla3':
         return <ArrowRight className="w-5 h-5 text-purple-500" />;
       case 'matched':
         return <CheckCircle2 className="w-5 h-5 text-orange-500" />;
@@ -68,10 +68,10 @@ export default function IdeaJourneyTimeline({ ideaId }: IdeaJourneyTimelineProps
         return 'تم تقديم الفكرة';
       case 'analyzed':
         return 'تم تحليل الفكرة';
-      case 'promoted_uplink2':
-        return 'تم الانتقال إلى UPLINK 2';
-      case 'promoted_uplink3':
-        return 'تم الانتقال إلى UPLINK 3';
+      case 'promoted_naqla2':
+        return 'تم الانتقال إلى NAQLA 2';
+      case 'promoted_naqla3':
+        return 'تم الانتقال إلى NAQLA 3';
       case 'matched':
         return 'تم المطابقة مع تحدي';
       case 'funded':
@@ -86,15 +86,15 @@ export default function IdeaJourneyTimeline({ ideaId }: IdeaJourneyTimelineProps
   const getEventBadge = (eventType: string) => {
     switch (eventType) {
       case 'submitted':
-        return <Badge variant="outline" className="bg-blue-50">UPLINK 1</Badge>;
+        return <Badge variant="outline" className="bg-blue-50">NAQLA 1</Badge>;
       case 'analyzed':
-        return <Badge variant="outline" className="bg-green-50">UPLINK 1</Badge>;
-      case 'promoted_uplink2':
+        return <Badge variant="outline" className="bg-green-50">NAQLA 1</Badge>;
+      case 'promoted_naqla2':
       case 'matched':
-        return <Badge variant="outline" className="bg-purple-50">UPLINK 2</Badge>;
-      case 'promoted_uplink3':
+        return <Badge variant="outline" className="bg-purple-50">NAQLA 2</Badge>;
+      case 'promoted_naqla3':
       case 'funded':
-        return <Badge variant="outline" className="bg-orange-50">UPLINK 3</Badge>;
+        return <Badge variant="outline" className="bg-orange-50">NAQLA 3</Badge>;
       case 'completed':
         return <Badge variant="outline" className="bg-emerald-50">مكتمل</Badge>;
       default:

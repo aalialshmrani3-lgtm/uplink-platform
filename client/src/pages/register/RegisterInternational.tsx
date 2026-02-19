@@ -31,7 +31,7 @@ export default function RegisterInternational() {
 
           <div className="space-y-6 text-white/90">
             <p className="text-lg">
-              انضم إلى منصة UPLINK كمنظمة دولية واحصل على:
+              انضم إلى منصة NAQLA كمنظمة دولية واحصل على:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">

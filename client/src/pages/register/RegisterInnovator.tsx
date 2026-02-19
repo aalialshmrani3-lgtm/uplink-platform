@@ -36,7 +36,7 @@ export default function RegisterInnovator() {
 
           <div className="space-y-6 text-white/90">
             <p className="text-lg">
-              انضم إلى منصة UPLINK كمبتكر فردي واحصل على:
+              انضم إلى منصة NAQLA كمبتكر فردي واحصل على:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">

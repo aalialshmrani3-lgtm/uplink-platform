@@ -42,7 +42,7 @@ export default function Login() {
             </svg>
           </div>
           <CardTitle className="text-2xl font-bold">تسجيل الدخول</CardTitle>
-          <CardDescription>مرحباً بك في منصة UPLINK 5.0</CardDescription>
+          <CardDescription>مرحباً بك في منصة NAQLA 5.0</CardDescription>
         </CardHeader>
         
         <CardContent className="space-y-4">

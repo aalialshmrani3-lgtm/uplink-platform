@@ -48,7 +48,7 @@ export const zh = {
     admin: '管理面板',
     pipeline: '创新管道',
     aiInsights: 'AI洞察',
-    whyUplink: '为什么选择UPLINK',
+    whyNaqla: '为什么选择NAQLA',
     testimonials: '推荐',
     integrations: '集成',
     roiCalculator: 'ROI计算器',
@@ -61,7 +61,7 @@ export const zh = {
     badge: '全球创新生态系统',
     title: '将您的想法转化为',
     titleHighlight: '全球创新',
-    description: 'UPLINK 5.0通过三个集成引擎连接全球创新者与投资者、公司和机构',
+    description: 'NAQLA 5.0通过三个集成引擎连接全球创新者与投资者、公司和机构',
     cta: '立即注册您的创新',
     exploreEngines: '探索引擎',
     stats: {
@@ -77,20 +77,20 @@ export const zh = {
     title: '三大引擎',
     subtitle: '集成创新生态系统',
     description: '从想法到全球市场，我们提供您所需的一切',
-    uplink1: {
-      name: 'UPLINK1',
+    naqla1: {
+      name: 'NAQLA1',
       title: '提交您的创意 - AI分析',
       description: '通过SAIP和WIPO注册和保护知识产权',
-      features: ['6标准AI分析', '3级分类', '自动转至UPLINK2'],
+      features: ['6标准AI分析', '3级分类', '自动转至NAQLA2'],
     },
-    uplink2: {
-      name: 'UPLINK2',
+    naqla2: {
+      name: 'NAQLA2',
       title: '挑战与匹配',
       description: '先进的AI评估和智能匹配',
       features: ['AI评估', '挑战', '智能匹配'],
     },
-    uplink3: {
-      name: 'UPLINK3',
+    naqla3: {
+      name: 'NAQLA3',
       title: '市场与交换',
       description: '开放市场，智能合约和托管系统',
       features: ['许可证', '产品/商品', '收购'],
@@ -100,7 +100,7 @@ export const zh = {
 
   // Features
   features: {
-    title: '为什么选择UPLINK 5.0？',
+    title: '为什么选择NAQLA 5.0？',
     subtitle: '为全球创新者提供独特功能',
     aiEvaluation: {
       title: '先进的AI评估',
@@ -161,7 +161,7 @@ export const zh = {
     ip: '知识产权',
     privacy: '隐私政策',
     terms: '条款和条件',
-    copyright: '© 2026 UPLINK 5.0 - 版权所有',
+    copyright: '© 2026 NAQLA 5.0 - 版权所有',
     followUs: '关注我们',
     newsletter: '订阅新闻通讯',
     newsletterPlaceholder: '输入您的电子邮件',
@@ -355,7 +355,7 @@ export const zh = {
 
   // Academy
   academy: {
-    title: 'UPLINK学院',
+    title: 'NAQLA学院',
     courses: '课程',
     workshops: '研讨会',
     webinars: '网络研讨会',

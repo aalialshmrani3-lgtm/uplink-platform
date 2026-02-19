@@ -79,7 +79,7 @@ export default function UserRegistration() {
         <CardHeader>
           <CardTitle className="text-2xl">تسجيل مستخدم جديد</CardTitle>
           <CardDescription>
-            أنشئ حساباً جديداً للانضمام إلى منصة UPLINK
+            أنشئ حساباً جديداً للانضمام إلى منصة NAQLA
           </CardDescription>
         </CardHeader>
         <CardContent>

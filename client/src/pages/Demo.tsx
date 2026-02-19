@@ -32,13 +32,13 @@ export default function Demo() {
       classification: "ابتكار حقيقي",
       description: "فكرة مبتكرة بتقييم عالٍ (≥70%) تمثل ابتكاراً حقيقياً مع إمكانات كبيرة",
       steps: [
-        { icon: Lightbulb, text: "تقديم الفكرة في UPLINK 1", status: "done" },
+        { icon: Lightbulb, text: "تقديم الفكرة في NAQLA 1", status: "done" },
         { icon: CheckCircle2, text: "تحليل بالذكاء الاصطناعي (88%)", status: "done" },
         { icon: AlertCircle, text: "تصنيف: ابتكار حقيقي", status: "done" },
-        { icon: ArrowRight, text: "خيار 1: الذهاب لـ UPLINK 2 (مطابقة مع التحديات)", status: "option" },
-        { icon: ArrowRight, text: "خيار 2: الذهاب مباشرة لـ UPLINK 3 (السوق)", status: "option" },
+        { icon: ArrowRight, text: "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)", status: "option" },
+        { icon: ArrowRight, text: "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)", status: "option" },
       ],
-      demoUrl: "/uplink1/ideas/120002/analysis",
+      demoUrl: "/naqla1/ideas/120002/analysis",
       exampleIdea: {
         title: "نظام ذكاء اصطناعي متقدم",
         description: "نظام ذكاء اصطناعي متقدم لتحليل البيانات الضخمة في الوقت الفعلي باستخدام تقنيات التعلم العميق والحوسبة الكمومية",
@@ -67,13 +67,13 @@ export default function Demo() {
       classification: "حل تجاري",
       description: "فكرة تجارية بتقييم متوسط (50-70%) تمثل حلاً تجارياً قابلاً للتطبيق",
       steps: [
-        { icon: Store, text: "تقديم الفكرة في UPLINK 1", status: "done" },
+        { icon: Store, text: "تقديم الفكرة في NAQLA 1", status: "done" },
         { icon: CheckCircle2, text: "تحليل بالذكاء الاصطناعي (60%)", status: "done" },
         { icon: AlertCircle, text: "تصنيف: حل تجاري", status: "done" },
-        { icon: ArrowRight, text: "خيار 1: الذهاب لـ UPLINK 2 (مطابقة مع التحديات)", status: "option" },
-        { icon: ArrowRight, text: "خيار 2: الذهاب مباشرة لـ UPLINK 3 (السوق)", status: "option" },
+        { icon: ArrowRight, text: "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)", status: "option" },
+        { icon: ArrowRight, text: "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)", status: "option" },
       ],
-      demoUrl: "/uplink1/browse",
+      demoUrl: "/naqla1/browse",
       exampleIdea: {
         title: "تطبيق توصيل طعام صحي",
         description: "تطبيق جوال لتوصيل الطعام الصحي مع نظام توصيات غذائية مخصصة",
@@ -102,13 +102,13 @@ export default function Demo() {
       classification: "تحتاج تطوير",
       description: "فكرة ضعيفة بتقييم منخفض (<50%) تحتاج إلى تطوير وتحسين",
       steps: [
-        { icon: XCircle, text: "تقديم الفكرة في UPLINK 1", status: "done" },
+        { icon: XCircle, text: "تقديم الفكرة في NAQLA 1", status: "done" },
         { icon: CheckCircle2, text: "تحليل بالذكاء الاصطناعي (35%)", status: "done" },
         { icon: AlertCircle, text: "تصنيف: تحتاج تطوير", status: "done" },
         { icon: XCircle, text: "رفض مؤقت مع توصيات تفصيلية", status: "reject" },
         { icon: ArrowRight, text: "إعادة تقديم الفكرة بعد التحسين", status: "retry" },
       ],
-      demoUrl: "/uplink1/browse",
+      demoUrl: "/naqla1/browse",
       exampleIdea: {
         title: "تطبيق دردشة بسيط",
         description: "فكرة بسيطة لتطبيق دردشة عادي بدون ميزات مميزة",
@@ -138,15 +138,15 @@ export default function Demo() {
                 🎬 عرض توضيحي - مسارات الأفكار
               </h1>
               <p className="text-slate-400">
-                شرح تفصيلي لجميع السيناريوهات الممكنة في UPLINK 1, 2, 3
+                شرح تفصيلي لجميع السيناريوهات الممكنة في NAQLA 1, 2, 3
               </p>
             </div>
             <Button 
-              onClick={() => setLocation("/uplink1")}
+              onClick={() => setLocation("/naqla1")}
               variant="outline"
               className="border-slate-700 hover:bg-slate-800"
             >
-              العودة إلى UPLINK 1
+              العودة إلى NAQLA 1
             </Button>
           </div>
         </div>
@@ -158,10 +158,10 @@ export default function Demo() {
         <Card className="bg-slate-900/50 border-slate-800 p-8 mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-4">
-              كيف تعمل منصة UPLINK 5.0؟
+              كيف تعمل منصة NAQLA 5.0؟
             </h2>
             <p className="text-slate-300 text-lg leading-relaxed">
-              بعد تقديم فكرتك في <strong>UPLINK 1</strong>، يقوم نظام الذكاء الاصطناعي بتحليلها وتصنيفها إلى أحد المسارات الثلاثة التالية بناءً على التقييم الشامل. كل مسار له خيارات مختلفة تساعدك على المضي قدماً بفكرتك.
+              بعد تقديم فكرتك في <strong>NAQLA 1</strong>، يقوم نظام الذكاء الاصطناعي بتحليلها وتصنيفها إلى أحد المسارات الثلاثة التالية بناءً على التقييم الشامل. كل مسار له خيارات مختلفة تساعدك على المضي قدماً بفكرتك.
             </p>
           </div>
         </Card>
@@ -239,10 +239,10 @@ export default function Demo() {
                     الخيارات المتاحة
                   </td>
                   <td className="text-center p-4 text-sm text-slate-300">
-                    UPLINK 2 أو 3
+                    NAQLA 2 أو 3
                   </td>
                   <td className="text-center p-4 text-sm text-slate-300">
-                    UPLINK 2 أو 3
+                    NAQLA 2 أو 3
                   </td>
                   <td className="text-center p-4 text-sm text-slate-300">
                     إعادة تقديم
@@ -406,19 +406,19 @@ export default function Demo() {
           ))}
         </div>
 
-        {/* UPLINK 2 Flow */}
+        {/* NAQLA 2 Flow */}
         <Card className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 border-purple-500/20 p-8 mt-12">
           <div className="text-center">
             <Target className="w-12 h-12 text-purple-400 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-white mb-4">
-              مسار UPLINK 2 → UPLINK 3
+              مسار NAQLA 2 → NAQLA 3
             </h3>
             <p className="text-slate-300 text-lg mb-6 max-w-2xl mx-auto">
-              عند اختيار <strong>UPLINK 2</strong> (مطابقة مع التحديات)، إذا وجد النظام توافقاً بين فكرتك وأحد التحديات المطروحة، سيظهر لك زر <strong>"انتقل إلى UPLINK 3"</strong> لإكمال الصفقة مباشرة في سوق الابتكارات.
+              عند اختيار <strong>NAQLA 2</strong> (مطابقة مع التحديات)، إذا وجد النظام توافقاً بين فكرتك وأحد التحديات المطروحة، سيظهر لك زر <strong>"انتقل إلى NAQLA 3"</strong> لإكمال الصفقة مباشرة في سوق الابتكارات.
             </p>
             <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
               <Badge variant="outline" className="bg-purple-500/10 text-purple-300 border-purple-500/30 animate-pulse">
-                UPLINK 2: مطابقة التحديات
+                NAQLA 2: مطابقة التحديات
               </Badge>
               <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
               <Badge variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30 animate-pulse">
@@ -426,15 +426,15 @@ export default function Demo() {
               </Badge>
               <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
               <Badge variant="outline" className="bg-green-500/10 text-green-300 border-green-500/30 animate-pulse">
-                UPLINK 3: إكمال الصفقة
+                NAQLA 3: إكمال الصفقة
               </Badge>
             </div>
             <Button
-              onClick={() => setLocation("/uplink2")}
+              onClick={() => setLocation("/naqla2")}
               className="mt-6 bg-purple-600 hover:bg-purple-700 transition-all duration-300 hover:scale-105"
               size="lg"
             >
-              استكشف UPLINK 2
+              استكشف NAQLA 2
             </Button>
           </div>
         </Card>

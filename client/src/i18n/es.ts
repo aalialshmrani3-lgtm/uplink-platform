@@ -48,7 +48,7 @@ export const es = {
     admin: 'Administración',
     pipeline: 'Pipeline de innovación',
     aiInsights: 'Insights IA',
-    whyUplink: 'Por qué UPLINK',
+    whyNaqla: 'Por qué NAQLA',
     testimonials: 'Testimonios',
     integrations: 'Integraciones',
     roiCalculator: 'Calculadora ROI',
@@ -61,7 +61,7 @@ export const es = {
     badge: 'Ecosistema Global de Innovación',
     title: 'Transforma tus ideas en',
     titleHighlight: 'innovaciones globales',
-    description: 'UPLINK 5.0 conecta innovadores de todo el mundo con inversores, empresas e instituciones a través de tres motores integrados',
+    description: 'NAQLA 5.0 conecta innovadores de todo el mundo con inversores, empresas e instituciones a través de tres motores integrados',
     cta: 'Registra tu innovación ahora',
     exploreEngines: 'Explorar motores',
     stats: {
@@ -77,20 +77,20 @@ export const es = {
     title: 'Los Tres Motores',
     subtitle: 'Ecosistema de innovación integrado',
     description: 'De la idea al mercado global, proporcionamos todo lo que necesitas',
-    uplink1: {
-      name: 'UPLINK1',
+    naqla1: {
+      name: 'NAQLA1',
       title: 'Generación de PI',
       description: 'Registra y protege la propiedad intelectual vía SAIP & WIPO',
       features: ['Análisis IA', 'Clasificación Multi-Nivel', 'Evaluación Completa'],
     },
-    uplink2: {
-      name: 'UPLINK2',
+    naqla2: {
+      name: 'NAQLA2',
       title: 'Desafíos y Matching',
       description: 'Evaluación IA avanzada y matching inteligente',
       features: ['Evaluación IA', 'Desafíos', 'Matching inteligente'],
     },
-    uplink3: {
-      name: 'UPLINK3',
+    naqla3: {
+      name: 'NAQLA3',
       title: 'Bolsa',
       description: 'Mercado abierto con contratos inteligentes y sistema Escrow',
       features: ['Contratos inteligentes', 'Sistema Escrow', 'Mercado abierto'],
@@ -100,7 +100,7 @@ export const es = {
 
   // Features
   features: {
-    title: '¿Por qué UPLINK 5.0?',
+    title: '¿Por qué NAQLA 5.0?',
     subtitle: 'Características únicas para innovadores de todo el mundo',
     aiEvaluation: {
       title: 'Evaluación IA avanzada',
@@ -161,7 +161,7 @@ export const es = {
     ip: 'Propiedad Intelectual',
     privacy: 'Política de privacidad',
     terms: 'Términos y condiciones',
-    copyright: '© 2026 UPLINK 5.0 - Todos los derechos reservados',
+    copyright: '© 2026 NAQLA 5.0 - Todos los derechos reservados',
     followUs: 'Síguenos',
     newsletter: 'Suscribirse al boletín',
     newsletterPlaceholder: 'Ingresa tu email',
@@ -355,7 +355,7 @@ export const es = {
 
   // Academy
   academy: {
-    title: 'Academia UPLINK',
+    title: 'Academia NAQLA',
     courses: 'Cursos',
     workshops: 'Talleres',
     webinars: 'Webinars',
