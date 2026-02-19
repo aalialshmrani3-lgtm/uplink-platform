@@ -33,7 +33,7 @@ export interface Challenge {
   description: string;
   descriptionEn: string | null;
   category: string | null;
-  prize: number;
+  prize: number | string | null;
   requirements?: string | null;
 }
 
