@@ -976,14 +976,34 @@ export const appRouter = router({
           }
           
           // إعادة جلب الأحداث
-          return await db_conn!
+          const updatedEvents = await db_conn!
             .select()
             .from(ideaJourneyEvents)
             .where(eq(ideaJourneyEvents.ideaId, input.ideaId))
             .orderBy(asc(ideaJourneyEvents.timestamp));
+          
+          // جلب البيانات الإضافية
+          const analysis2 = await db.getIdeaAnalysisByIdeaId(input.ideaId);
+          const classification = await db.getIdeaClassificationByIdeaId(input.ideaId);
+          
+          return {
+            idea,
+            analysis: analysis2,
+            classification,
+            timeline: updatedEvents,
+          };
         }
         
-        return events;
+        // جلب البيانات الإضافية
+        const analysis = await db.getIdeaAnalysisByIdeaId(input.ideaId);
+        const classification = await db.getIdeaClassificationByIdeaId(input.ideaId);
+        
+        return {
+          idea,
+          analysis,
+          classification,
+          timeline: events,
+        };
       }),
   }),
 

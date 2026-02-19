@@ -34,7 +34,7 @@ export interface Challenge {
   descriptionEn: string | null;
   category: string | null;
   prize: number | string | null;
-  requirements?: string | null;
+  requirements?: string | null | unknown;
 }
 
 export interface Accelerator {
@@ -464,7 +464,7 @@ export async function getAllOpportunitiesForProject(
       description: challenge.description,
       descriptionEn: challenge.descriptionEn,
       category: challenge.category,
-      prize: challenge.prize,
+      prize: typeof challenge.prize === 'number' ? challenge.prize : Number(challenge.prize) || undefined,
     });
   }
 
