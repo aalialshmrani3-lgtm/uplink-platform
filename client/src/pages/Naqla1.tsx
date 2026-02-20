@@ -212,7 +212,7 @@ export default function Naqla1() {
               <Link href="/demo">
                 <Button size="lg" variant="outline" className="border-purple-700 hover:bg-purple-800">
                   <ArrowRight className="w-5 h-5 mr-2" />
-                  وجّه الفكرة
+                  نتيجة الفكرة والتوجيه
                 </Button>
               </Link>
             </div>
