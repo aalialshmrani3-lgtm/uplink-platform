@@ -48,6 +48,7 @@ const PredictiveInnovation = lazy(() => import("./pages/PredictiveInnovation"));
 const GlobalInnovationNetworks = lazy(() => import("./pages/GlobalInnovationNetworks"));
 const SustainabilityAIEthics = lazy(() => import("./pages/SustainabilityAIEthics"));
 const BetaPrograms = lazy(() => import("./pages/BetaPrograms"));
+const IdeaResult = lazy(() => import("./pages/IdeaResult"));
 const UnifiedDashboard = lazy(() => import("./pages/UnifiedDashboard"));
 const ChallengeLibrary = lazy(() => import("./pages/ChallengeLibrary"));
 const HypothesisManagement = lazy(() => import("./pages/HypothesisManagement"));
@@ -317,6 +318,7 @@ function Router() {
         <Route path="/naqla1/browse" component={Naqla1BrowseIdeas} />
         <Route path="/naqla1/ideas/:id" component={Naqla1IdeaDetail} />
         <Route path="/naqla1/ideas/:id/analysis" component={Naqla1IdeaAnalysis} />
+        <Route path="/naqla1/result" component={IdeaResult} />
         <Route path="/journey/:id" component={IdeaJourney} />
         <Route path="/contracts/:id/sign" component={ContractSignature} />
         <Route path="/my-ideas" component={MyIdeas} />
