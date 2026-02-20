@@ -10,7 +10,8 @@ interface IdeaJourneyTimelineProps {
 }
 
 export default function IdeaJourneyTimeline({ ideaId }: IdeaJourneyTimelineProps) {
-  const { data: events, isLoading } = trpc.naqla1.getIdeaJourney.useQuery({ ideaId });
+  const { data: journeyData, isLoading } = trpc.naqla1.getIdeaJourney.useQuery({ ideaId });
+  const events = journeyData?.timeline || [];
 
   if (isLoading) {
     return (
@@ -27,7 +28,7 @@ export default function IdeaJourneyTimeline({ ideaId }: IdeaJourneyTimelineProps
     );
   }
 
-  if (!events || events.length === 0) {
+  if (!journeyData || events.length === 0) {
     return (
       <Card>
         <CardHeader>

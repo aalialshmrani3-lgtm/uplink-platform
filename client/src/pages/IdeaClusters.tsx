@@ -246,9 +246,9 @@ export default function IdeaClusters() {
                 </div>
                 <div className="text-center p-4 bg-muted rounded-lg">
                   <div className="text-2xl font-bold">
-                    {clusterDetails.similarities
+                    {clusterDetails.similarities && clusterDetails.similarities.length > 0
                       ? Math.round(
-                          clusterDetails.similarities.reduce((a, b) => (a || 0) + (b || 0), 0) /
+                          clusterDetails.similarities!.reduce((a: number | null, b: number | null) => ((a ?? 0) + (b ?? 0)), 0) /
                             clusterDetails.similarities.length
                         )
                       : 0}

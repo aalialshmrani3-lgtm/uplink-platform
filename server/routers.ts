@@ -984,7 +984,7 @@ export const appRouter = router({
           
           // جلب البيانات الإضافية
           const analysis2 = await db.getIdeaAnalysisByIdeaId(input.ideaId);
-          const classification = await db.getIdeaClassificationByIdeaId(input.ideaId);
+          const classification = await db.getIdeaClassification(input.ideaId);
           
           return {
             idea,
@@ -996,7 +996,7 @@ export const appRouter = router({
         
         // جلب البيانات الإضافية
         const analysis = await db.getIdeaAnalysisByIdeaId(input.ideaId);
-        const classification = await db.getIdeaClassificationByIdeaId(input.ideaId);
+        const classification = await db.getIdeaClassification(input.ideaId);
         
         return {
           idea,
