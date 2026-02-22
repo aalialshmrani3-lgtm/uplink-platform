@@ -3284,6 +3284,45 @@ Provide response in JSON format:
   // NAQLA2 - IP VETTING & MARKETPLACE
   // ============================================
   naqla2: router({
+    // Get routed ideas from NAQLA 1
+    getRoutedIdeas: protectedProcedure
+      .input(z.object({
+        classification: z.enum(['innovation', 'commercial', 'all']).optional().default('all'),
+        search: z.string().optional(),
+      }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const { ideas } = await import('../drizzle/schema');
+        const { eq, and, or, like, desc } = await import('drizzle-orm');
+        
+        let conditions = [eq(ideas.routingStatus, 'naqla2')];
+        
+        // Filter by classification
+        if (input.classification !== 'all') {
+          if (input.classification === 'innovation') {
+            // overallScore >= 70
+            const { gte } = await import('drizzle-orm');
+            conditions.push(gte(ideas.overallScore, 70));
+          } else if (input.classification === 'commercial') {
+            // 50 <= overallScore < 70
+            const { gte, lt } = await import('drizzle-orm');
+            conditions.push(and(gte(ideas.overallScore, 50), lt(ideas.overallScore, 70))!);
+          }
+        }
+        
+        // Search by title
+        if (input.search && input.search.trim() !== '') {
+          conditions.push(like(ideas.title, `%${input.search}%`));
+        }
+        
+        const result = await database.select().from(ideas)
+          .where(and(...conditions))
+          .orderBy(desc(ideas.routedAt));
+        
+        return result;
+      }),
+
     // Get project by ID
     getProjectById: protectedProcedure
       .input(z.object({ projectId: z.number() }))

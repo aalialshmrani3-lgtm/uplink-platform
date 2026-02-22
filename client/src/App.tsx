@@ -92,6 +92,7 @@ const BrowseAllEvents = lazy(() => import('@/pages/BrowseAllEvents'));
 const EventsDashboard = lazy(() => import('@/pages/EventsDashboard'));
 const Naqla2EventDetail = lazy(() => import('@/pages/Naqla2EventDetail'));
 const Naqla2 = lazy(() => import("./pages/Naqla2"));
+const RoutedIdeas = lazy(() => import("./pages/RoutedIdeas"));
 const Naqla3 = lazy(() => import("./pages/Naqla3"));
 const Naqla2ChallengeDetails = lazy(() => import("./pages/Naqla2ChallengeDetails"));
 const Naqla3Marketplace = lazy(() => import("./pages/Naqla3Marketplace"));
@@ -336,6 +337,7 @@ function Router() {
         <Route path="/strategic-partners" component={StrategicPartners} />
         <Route path="/value-footprints" component={ValueFootprints} />
         <Route path="/naqla2" component={Naqla2} />
+        <Route path="/naqla2/routed-ideas" component={RoutedIdeas} />
         <Route path="/naqla1/opportunities" component={Naqla1Opportunities} />
           <Route path="/naqla1/clusters" component={IdeaClusters} />
           <Route path="/demo" component={Demo} />

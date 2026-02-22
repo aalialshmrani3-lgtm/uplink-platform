@@ -75,6 +75,16 @@ export default function Naqla2() {
 
   const innovatorOptions = [
     {
+      id: 'routed-ideas',
+      title: 'الأفكار الموجهة',
+      description: 'استعرض الأفكار التي تم توجيهها من نقلة 1',
+      icon: Lightbulb,
+      color: 'from-yellow-500 to-orange-600',
+      borderColor: 'border-yellow-500/30',
+      link: '/naqla2/routed-ideas',
+      badge: 'جديد',
+    },
+    {
       id: 'browse-challenges',
       title: 'استعرض التحديات',
       description: 'تصفح التحديات الحقيقية من الشركات والمؤسسات الرائدة',
