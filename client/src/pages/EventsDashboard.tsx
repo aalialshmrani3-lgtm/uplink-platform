@@ -27,19 +27,19 @@ export default function EventsDashboard() {
   const [selectedTab, setSelectedTab] = useState("all");
 
   // Fetch user's events
-  const { data: events, isLoading, refetch } = trpc.events.getMyEvents.useQuery(undefined, {
+  const { data: events, isLoading, refetch } = trpc.naqla2.events.getMyEvents.useQuery(undefined, {
     enabled: !!user,
   });
 
   // Update event status mutation
-  const updateStatusMutation = trpc.events.updateStatus.useMutation({
+  const updateStatusMutation = trpc.naqla2.events.updateStatus.useMutation({
     onSuccess: () => {
       refetch();
     },
   });
 
   // Delete event mutation
-  const deleteEventMutation = trpc.events.delete.useMutation({
+  const deleteEventMutation = trpc.naqla2.events.delete.useMutation({
     onSuccess: () => {
       refetch();
     },
@@ -85,16 +85,16 @@ export default function EventsDashboard() {
     return <Badge variant="outline">{typeMap[type as keyof typeof typeMap] || type}</Badge>;
   };
 
-  const filteredEvents = events?.filter((event) => {
+  const filteredEvents = events?.filter((event: any) => {
     if (selectedTab === "all") return true;
     return event.status === selectedTab;
   });
 
   const stats = {
     total: events?.length || 0,
-    published: events?.filter((e) => e.status === "published").length || 0,
-    ongoing: events?.filter((e) => e.status === "ongoing").length || 0,
-    completed: events?.filter((e) => e.status === "completed").length || 0,
+    published: events?.filter((e: any) => e.status === "published").length || 0,
+    ongoing: events?.filter((e: any) => e.status === "ongoing").length || 0,
+    completed: events?.filter((e: any) => e.status === "completed").length || 0,
   };
 
   if (!user) {

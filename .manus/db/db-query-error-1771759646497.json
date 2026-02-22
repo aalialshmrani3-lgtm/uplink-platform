@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO ideas (id, title, description, category, status, user_id, created_at, updated_at) \nVALUES (120002, 'نظام ذكاء اصطناعي متقدم', 'نظام ذكاء اصطناعي متقدم لتحليل البيانات الضخمة في الوقت الفعلي باستخدام تقنيات التعلم العميق والحوسبة الكمومية', 'technology', 'analyzed', 1, NOW(), NOW())\nON DUPLICATE KEY UPDATE title = 'نظام ذكاء اصطناعي متقدم';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute INSERT INTO ideas (id, title, description, category, status, user_id, created_at, updated_at) \nVALUES (120002, 'نظام ذكاء اصطناعي متقدم', 'نظام ذكاء اصطناعي متقدم لتحليل البيانات الضخمة في الوقت الفعلي باستخدام تقنيات التعلم العميق والحوسبة الكمومية', 'technology', 'analyzed', 1, NOW(), NOW())\nON DUPLICATE KEY UPDATE title = 'نظام ذكاء اصطناعي متقدم';",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'user_id' in 'field list'"
+  ]
+}

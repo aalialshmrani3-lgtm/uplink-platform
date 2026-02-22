@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE ideas SET analysisId = (SELECT id FROM idea_analysis WHERE ideaId = 120002 LIMIT 1), status = 'analyzed' WHERE id = 120002;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute UPDATE ideas SET analysisId = (SELECT id FROM idea_analysis WHERE ideaId = 120002 LIMIT 1), status = 'analyzed' WHERE id = 120002;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1553
+}

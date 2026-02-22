@@ -38,7 +38,7 @@ export default function Demo() {
         { icon: ArrowRight, text: "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)", status: "option" },
         { icon: ArrowRight, text: "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)", status: "option" },
       ],
-      demoUrl: "/naqla1/ideas/120002/analysis",
+      demoUrl: "/uplink1/ideas/120002/analysis",
       exampleIdea: {
         title: "نظام ذكاء اصطناعي متقدم",
         description: "نظام ذكاء اصطناعي متقدم لتحليل البيانات الضخمة في الوقت الفعلي باستخدام تقنيات التعلم العميق والحوسبة الكمومية",

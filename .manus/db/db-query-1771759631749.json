@@ -1,0 +1,60 @@
+{
+  "query": "SELECT id, title, status FROM ideas LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, title, status FROM ideas LIMIT 10;",
+  "rows": [
+    {
+      "id": "120001",
+      "title": "نظام ذكاء اصطناعي لإدارة الطاقة المتجددة",
+      "status": "approved"
+    },
+    {
+      "id": "120002",
+      "title": "منصة ذكية لربط المبتكرين بالمستثمرين والشركات",
+      "status": "approved"
+    },
+    {
+      "id": "120003",
+      "title": "منصة تعليمية تفاعلية للأطفال",
+      "status": "approved"
+    },
+    {
+      "id": "120004",
+      "title": "نظام أمن سيبراني متقدم للشركات الصغيرة",
+      "status": "approved"
+    },
+    {
+      "id": "120005",
+      "title": "تطبيق توصيل طعام صحي",
+      "status": "revision_needed"
+    },
+    {
+      "id": "120006",
+      "title": "نظام إدارة المخزون الذكي",
+      "status": "approved"
+    },
+    {
+      "id": "120007",
+      "title": "منصة تمويل جماعي للمشاريع الإبداعية",
+      "status": "approved"
+    },
+    {
+      "id": "120008",
+      "title": "تقنية تحلية المياه بالطاقة الشمسية",
+      "status": "approved"
+    },
+    {
+      "id": "120009",
+      "title": "روبوت خدمة عملاء ذكي",
+      "status": "approved"
+    },
+    {
+      "id": "120010",
+      "title": "منصة حجز مواقف السيارات الذكية",
+      "status": "revision_needed"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\n120001\tنظام ذكاء اصطناعي لإدارة الطاقة المتجددة\tapproved\n120002\tمنصة ذكية لربط المبتكرين بالمستثمرين والشركات\tapproved\n120003\tمنصة تعليمية تفاعلية للأطفال\tapproved\n120004\tنظام أمن سيبراني متقدم للشركات الصغيرة\tapproved\n120005\tتطبيق توصيل طعام صحي\trevision_needed\n120006\tنظام إدارة المخزون الذكي\tapproved\n120007\tمنصة تمويل جماعي للمشاريع الإبداعية\tapproved\n120008\tتقنية تحلية المياه بالطاقة الشمسية\tapproved\n120009\tروبوت خدمة عملاء ذكي\tapproved\n120010\tمنصة حجز مواقف السيارات الذكية\trevision_needed\n",
+  "stderr": "",
+  "execution_time_ms": 1583
+}

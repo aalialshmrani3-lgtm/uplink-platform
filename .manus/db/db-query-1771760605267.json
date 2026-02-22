@@ -1,0 +1,16 @@
+{
+  "query": "SELECT i.id, i.title, i.status, i.analysisId \nFROM ideas i \nWHERE i.analysisId IS NOT NULL \nLIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT i.id, i.title, i.status, i.analysisId \nFROM ideas i \nWHERE i.analysisId IS NOT NULL \nLIMIT 5;",
+  "rows": [
+    {
+      "id": "120002",
+      "title": "نظام ذكاء اصطناعي متقدم",
+      "status": "analyzed",
+      "analysisId": "90001"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\tanalysisId\n120002\tنظام ذكاء اصطناعي متقدم\tanalyzed\t90001\n",
+  "stderr": "",
+  "execution_time_ms": 1588
+}

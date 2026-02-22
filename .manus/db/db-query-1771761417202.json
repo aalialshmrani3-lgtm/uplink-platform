@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO idea_analysis (\n  ideaId,\n  overallScore,\n  classification,\n  aiAnalysis,\n  strengths,\n  weaknesses,\n  opportunities,\n  threats,\n  recommendations,\n  nextSteps,\n  status,\n  analyzedAt\n) VALUES (\n  120002,\n  84.50,\n  'innovation',\n  'فكرة ابتكارية متميزة تجمع بين التعلم العميق والحوسبة الكمومية لتحليل البيانات الضخمة بسرعة فائقة.',\n  JSON_ARRAY('تقنية متقدمة', 'سوق ضخم', 'قابلية للتوسع'),\n  JSON_ARRAY('استثمار كبير', 'تعقيد تقني', 'منافسة قوية'),\n  JSON_ARRAY('طلب متزايد', 'شراكات استراتيجية'),\n  JSON_ARRAY('تطور سريع في المنافسة', 'تكلفة عالية'),\n  JSON_ARRAY('تطوير نموذج أولي', 'البحث عن شركاء'),\n  JSON_ARRAY('الانتقال إلى نقلة 2', 'البحث عن تمويل'),\n  'completed',\n  NOW()\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute INSERT INTO idea_analysis (\n  ideaId,\n  overallScore,\n  classification,\n  aiAnalysis,\n  strengths,\n  weaknesses,\n  opportunities,\n  threats,\n  recommendations,\n  nextSteps,\n  status,\n  analyzedAt\n) VALUES (\n  120002,\n  84.50,\n  'innovation',\n  'فكرة ابتكارية متميزة تجمع بين التعلم العميق والحوسبة الكمومية لتحليل البيانات الضخمة بسرعة فائقة.',\n  JSON_ARRAY('تقنية متقدمة', 'سوق ضخم', 'قابلية للتوسع'),\n  JSON_ARRAY('استثمار كبير', 'تعقيد تقني', 'منافسة قوية'),\n  JSON_ARRAY('طلب متزايد', 'شراكات استراتيجية'),\n  JSON_ARRAY('تطور سريع في المنافسة', 'تكلفة عالية'),\n  JSON_ARRAY('تطوير نموذج أولي', 'البحث عن شركاء'),\n  JSON_ARRAY('الانتقال إلى نقلة 2', 'البحث عن تمويل'),\n  'completed',\n  NOW()\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1570
+}

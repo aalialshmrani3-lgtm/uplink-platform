@@ -1,0 +1,9 @@
+{
+  "query": "-- حذف الفكرة القديمة\nDELETE FROM ideas WHERE id = 120002;\n\n-- إنشاء فكرة جديدة\nINSERT INTO ideas (id, title, description, problem, solution, targetMarket, uniqueValue, userId, status, createdAt, updatedAt)\nVALUES (\n  120002,\n  'نظام ذكاء اصطناعي لتحليل البيانات الضخمة في الوقت الفعلي',\n  'نظام متقدم يجمع بين تقنيات التعلم العميق والحوسبة الكمومية لتحليل البيانات الضخمة في الوقت الفعلي بدقة عالية وسرعة فائقة',\n  'الشركات تعاني من بطء تحليل البيانات الضخمة وعدم القدرة على اتخاذ قرارات سريعة بناءً على بيانات حية',\n  'نستخدم خوارزميات التعلم العميق مع معالجات كمومية لتحليل ملايين السجلات في ثوانٍ معدودة',\n  'الشركات والمؤسسات الكبرى',\n  'يجمع بين التعلم العميق والحوسبة الكمومية لتحليل سريع ودقيق',\n  1,\n  'analyzed',\n  NOW(),\n  NOW()\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute -- حذف الفكرة القديمة\nDELETE FROM ideas WHERE id = 120002;\n\n-- إنشاء فكرة جديدة\nINSERT INTO ideas (id, title, description, problem, solution, targetMarket, uniqueValue, userId, status, createdAt, updatedAt)\nVALUES (\n  120002,\n  'نظام ذكاء اصطناعي لتحليل البيانات الضخمة في الوقت الفعلي',\n  'نظام متقدم يجمع بين تقنيات التعلم العميق والحوسبة الكمومية لتحليل البيانات الضخمة في الوقت الفعلي بدقة عالية وسرعة فائقة',\n  'الشركات تعاني من بطء تحليل البيانات الضخمة وعدم القدرة على اتخاذ قرارات سريعة بناءً على بيانات حية',\n  'نستخدم خوارزميات التعلم العميق مع معالجات كمومية لتحليل ملايين السجلات في ثوانٍ معدودة',\n  'الشركات والمؤسسات الكبرى',\n  'يجمع بين التعلم العميق والحوسبة الكمومية لتحليل سريع ودقيق',\n  1,\n  'analyzed',\n  NOW(),\n  NOW()\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1768
+}
