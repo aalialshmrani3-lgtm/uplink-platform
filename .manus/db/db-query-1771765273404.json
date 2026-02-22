@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, title, status, analysisId FROM ideas WHERE id = 120001;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT id, title, status, analysisId FROM ideas WHERE id = 120001;",
+  "rows": [
+    {
+      "id": "120001",
+      "title": "نظام ذكاء اصطناعي لإدارة الطاقة المتجددة",
+      "status": "approved",
+      "analysisId": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\tanalysisId\n120001\tنظام ذكاء اصطناعي لإدارة الطاقة المتجددة\tapproved\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 1596
+}

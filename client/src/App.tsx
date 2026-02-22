@@ -328,6 +328,7 @@ function Router() {
         <Route path="/uplink1/ideas/:id" component={Naqla1IdeaDetail} />
         <Route path="/uplink1/ideas/:id/analysis" component={Naqla1IdeaAnalysis} />
         <Route path="/naqla1/result" component={IdeaResult} />
+        <Route path="/naqla1/ideas/:ideaId/result" component={IdeaResult} />
         <Route path="/journey/:id" component={IdeaJourney} />
         <Route path="/contracts/:id/sign" component={ContractSignature} />
         <Route path="/my-ideas" component={MyIdeas} />

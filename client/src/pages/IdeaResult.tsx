@@ -1,30 +1,133 @@
-import { useEffect, useState } from 'react';
-import { useLocation, Link } from 'wouter';
+import { useState, useEffect } from 'react';
+import { useLocation, Link, useParams } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { CheckCircle2, AlertCircle, XCircle, ArrowRight, RefreshCw } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import { trpc } from '@/lib/trpc';
+import { useToast } from '@/hooks/use-toast';
 
 export default function IdeaResult() {
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
+  const params = useParams();
+  const ideaId = params.ideaId ? parseInt(params.ideaId) : null;
+
   const [ideaData, setIdeaData] = useState<{
+    id: number;
     title: string;
     score: number;
     classification: 'innovation' | 'commercial' | 'weak';
+    routingStatus: 'naqla2' | 'naqla3' | 'returned' | null;
   } | null>(null);
 
-  useEffect(() => {
-    // محاكاة بيانات الفكرة (في الواقع ستأتي من الـ state أو الـ API)
-    // يمكن استخدام query parameters أو state من React Router
-    const mockData = {
-      title: 'تطبيق ذكي لإدارة المشاريع',
-      score: 75,
-      classification: 'innovation' as const
-    };
-    setIdeaData(mockData);
-  }, []);
+  // جلب بيانات الفكرة من الخادم
+  const { data: idea, isLoading } = trpc.naqla1.getIdeaById.useQuery(
+    { ideaId: ideaId! },
+    { enabled: !!ideaId }
+  );
 
-  if (!ideaData) {
+  const { data: analysis } = trpc.naqla1.getAnalysisResult.useQuery(
+    { ideaId: ideaId! },
+    { enabled: !!ideaId }
+  );
+
+  // Mutations للتوجيه
+  const routeToNaqla2 = trpc.naqla1.routeToNaqla2.useMutation({
+    onSuccess: (data) => {
+      toast({
+        title: "✅ تم التوجيه بنجاح",
+        description: data.message,
+        variant: "default",
+      });
+      // تحديث الحالة المحلية
+      if (ideaData) {
+        setIdeaData({ ...ideaData, routingStatus: 'naqla2' });
+      }
+    },
+    onError: (error) => {
+      toast({
+        title: "❌ فشل التوجيه",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+
+  const routeToNaqla3 = trpc.naqla1.routeToNaqla3.useMutation({
+    onSuccess: (data) => {
+      toast({
+        title: "✅ تم التوجيه بنجاح",
+        description: data.message,
+        variant: "default",
+      });
+      // تحديث الحالة المحلية
+      if (ideaData) {
+        setIdeaData({ ...ideaData, routingStatus: 'naqla3' });
+      }
+    },
+    onError: (error) => {
+      toast({
+        title: "❌ فشل التوجيه",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+
+  const returnToSender = trpc.naqla1.returnToSender.useMutation({
+    onSuccess: (data) => {
+      toast({
+        title: "✅ تم إعادة الفكرة",
+        description: data.message,
+        variant: "default",
+      });
+      // تحديث الحالة المحلية
+      if (ideaData) {
+        setIdeaData({ ...ideaData, routingStatus: 'returned' });
+      }
+    },
+    onError: (error) => {
+      toast({
+        title: "❌ فشلت العملية",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+
+  useEffect(() => {
+    if (idea && analysis) {
+      const score = analysis.overallScore ? parseInt(analysis.overallScore) : 0;
+      let classification: 'innovation' | 'commercial' | 'weak' = 'weak';
+      
+      if (score >= 70) {
+        classification = 'innovation';
+      } else if (score >= 50) {
+        classification = 'commercial';
+      }
+
+      setIdeaData({
+        id: idea.id,
+        title: idea.title,
+        score,
+        classification,
+        routingStatus: idea.routingStatus as any || null,
+      });
+    } else if (!ideaId) {
+      // إذا لم يكن هناك ideaId، استخدم بيانات تجريبية
+      const mockData = {
+        id: 0,
+        title: 'تطبيق ذكي لإدارة المشاريع',
+        score: 75,
+        classification: 'innovation' as const,
+        routingStatus: null as null,
+      };
+      setIdeaData(mockData);
+    }
+  }, [idea, analysis, ideaId]);
+
+  if (isLoading || !ideaData) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -75,10 +178,20 @@ export default function IdeaResult() {
   const info = getClassificationInfo();
   const Icon = info.icon;
 
+  // التحقق من حالة التوجيه
+  const isRouted = ideaData.routingStatus !== null;
+  const routingMessage = ideaData.routingStatus === 'naqla2' 
+    ? 'تم توجيه فكرتك إلى NAQLA 2'
+    : ideaData.routingStatus === 'naqla3'
+    ? 'تم توجيه فكرتك إلى NAQLA 3'
+    : ideaData.routingStatus === 'returned'
+    ? 'تم إعادة الفكرة إليك مع التوصيات'
+    : '';
+
   return (
     <>
       <SEOHead 
-        title="نتيجة الفكرة والتوجيه | NAQLA 5.0"
+        title="نتيجة الفكرة والتوجيه | نقلة 5.0"
         description="نتيجة تحليل فكرتك والتوجيه للمسار المناسب"
       />
       
@@ -134,6 +247,15 @@ export default function IdeaResult() {
                 </div>
               </div>
 
+              {/* رسالة التوجيه إذا تم التوجيه */}
+              {isRouted && (
+                <div className="mb-8 p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+                  <p className="text-green-400 text-center font-semibold">
+                    ✅ {routingMessage}
+                  </p>
+                </div>
+              )}
+
               {/* الخيارات */}
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-foreground mb-4">
@@ -143,50 +265,86 @@ export default function IdeaResult() {
                 {ideaData.score >= 50 ? (
                   // خيارات للابتكار والتجاري
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Link href="/naqla2">
-                      <Button 
-                        className="w-full h-auto py-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-center gap-3 hover:scale-105 transition-transform"
-                      >
-                        <div className="flex items-center gap-2">
-                          <ArrowRight className="w-6 h-6" />
-                          <span className="text-xl font-bold">NAQLA 2</span>
-                        </div>
-                        <span className="text-sm text-white/80">
-                          مطابقة مع التحديات والفعاليات
+                    <Button 
+                      onClick={() => {
+                        if (ideaId) {
+                          routeToNaqla2.mutate({ ideaId });
+                        } else {
+                          toast({
+                            title: "تنبيه",
+                            description: "هذه صفحة تجريبية. يرجى تقديم فكرة حقيقية للتوجيه.",
+                            variant: "default",
+                          });
+                        }
+                      }}
+                      disabled={isRouted || routeToNaqla2.isPending}
+                      className="w-full h-auto py-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex flex-col items-center gap-3 hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <div className="flex items-center gap-2">
+                        <ArrowRight className="w-6 h-6" />
+                        <span className="text-xl font-bold">
+                          {routeToNaqla2.isPending ? 'جاري التوجيه...' : 'وجّه إلى نقلة 2'}
                         </span>
-                      </Button>
-                    </Link>
+                      </div>
+                      <span className="text-sm text-white/80">
+                        مطابقة مع التحديات والفعاليات
+                      </span>
+                    </Button>
 
-                    <Link href="/naqla3">
-                      <Button 
-                        className="w-full h-auto py-6 bg-gradient-to-r from-purple-500 to-pink-600 text-white flex flex-col items-center gap-3 hover:scale-105 transition-transform"
-                      >
-                        <div className="flex items-center gap-2">
-                          <ArrowRight className="w-6 h-6" />
-                          <span className="text-xl font-bold">NAQLA 3</span>
-                        </div>
-                        <span className="text-sm text-white/80">
-                          الذهاب مباشرة إلى سوق الابتكارات
+                    <Button 
+                      onClick={() => {
+                        if (ideaId) {
+                          routeToNaqla3.mutate({ ideaId });
+                        } else {
+                          toast({
+                            title: "تنبيه",
+                            description: "هذه صفحة تجريبية. يرجى تقديم فكرة حقيقية للتوجيه.",
+                            variant: "default",
+                          });
+                        }
+                      }}
+                      disabled={isRouted || routeToNaqla3.isPending}
+                      className="w-full h-auto py-6 bg-gradient-to-r from-purple-500 to-pink-600 text-white flex flex-col items-center gap-3 hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <div className="flex items-center gap-2">
+                        <ArrowRight className="w-6 h-6" />
+                        <span className="text-xl font-bold">
+                          {routeToNaqla3.isPending ? 'جاري التوجيه...' : 'وجّه إلى نقلة 3'}
                         </span>
-                      </Button>
-                    </Link>
+                      </div>
+                      <span className="text-sm text-white/80">
+                        الذهاب مباشرة إلى سوق الابتكارات
+                      </span>
+                    </Button>
                   </div>
                 ) : (
                   // خيار للضعيفة
                   <div className="space-y-4">
-                    <Link href="/naqla1/submit">
-                      <Button 
-                        className="w-full h-auto py-6 bg-gradient-to-r from-orange-500 to-red-600 text-white flex flex-col items-center gap-3 hover:scale-105 transition-transform"
-                      >
-                        <div className="flex items-center gap-2">
-                          <RefreshCw className="w-6 h-6" />
-                          <span className="text-xl font-bold">إعادة للمرسل</span>
-                        </div>
-                        <span className="text-sm text-white/80">
-                          إعادة تقديم الفكرة بعد التحسين
+                    <Button 
+                      onClick={() => {
+                        if (ideaId) {
+                          returnToSender.mutate({ ideaId });
+                        } else {
+                          toast({
+                            title: "تنبيه",
+                            description: "هذه صفحة تجريبية. يرجى تقديم فكرة حقيقية.",
+                            variant: "default",
+                          });
+                        }
+                      }}
+                      disabled={isRouted || returnToSender.isPending}
+                      className="w-full h-auto py-6 bg-gradient-to-r from-orange-500 to-red-600 text-white flex flex-col items-center gap-3 hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <div className="flex items-center gap-2">
+                        <RefreshCw className="w-6 h-6" />
+                        <span className="text-xl font-bold">
+                          {returnToSender.isPending ? 'جاري الإعادة...' : 'إعادة للمرسل'}
                         </span>
-                      </Button>
-                    </Link>
+                      </div>
+                      <span className="text-sm text-white/80">
+                        إعادة الفكرة مع التوصيات للتحسين
+                      </span>
+                    </Button>
 
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground mb-2">

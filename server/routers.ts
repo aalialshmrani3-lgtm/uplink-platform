@@ -1014,6 +1014,85 @@ export const appRouter = router({
           timeline: events,
         };
       }),
+
+    // ========================================
+    // توجيه الأفكار (Routing Ideas)
+    // ========================================
+    
+    // توجيه الفكرة إلى NAQLA 2
+    routeToNaqla2: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const idea = await db.getIdeaById(input.ideaId);
+        if (!idea) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'الفكرة غير موجودة'
+          });
+        }
+
+        // تحديث حالة التوجيه
+        await db.updateIdea(input.ideaId, {
+          routingStatus: 'naqla2',
+          routedAt: new Date().toISOString(),
+          routedBy: ctx.user.id,
+        });
+
+        return {
+          success: true,
+          message: 'تم توجيه فكرتك إلى NAQLA 2 بنجاح'
+        };
+      }),
+
+    // توجيه الفكرة إلى NAQLA 3
+    routeToNaqla3: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const idea = await db.getIdeaById(input.ideaId);
+        if (!idea) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'الفكرة غير موجودة'
+          });
+        }
+
+        // تحديث حالة التوجيه
+        await db.updateIdea(input.ideaId, {
+          routingStatus: 'naqla3',
+          routedAt: new Date().toISOString(),
+          routedBy: ctx.user.id,
+        });
+
+        return {
+          success: true,
+          message: 'تم توجيه فكرتك إلى NAQLA 3 بنجاح'
+        };
+      }),
+
+    // إعادة الفكرة للمرسل
+    returnToSender: protectedProcedure
+      .input(z.object({ ideaId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const idea = await db.getIdeaById(input.ideaId);
+        if (!idea) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'الفكرة غير موجودة'
+          });
+        }
+
+        // تحديث حالة التوجيه
+        await db.updateIdea(input.ideaId, {
+          routingStatus: 'returned',
+          routedAt: new Date().toISOString(),
+          routedBy: ctx.user.id,
+        });
+
+        return {
+          success: true,
+          message: 'تم إعادة الفكرة إليك مع التوصيات'
+        };
+      }),
   }),
 
   // ============================================

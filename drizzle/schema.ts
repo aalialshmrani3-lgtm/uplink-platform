@@ -654,6 +654,9 @@ export const ideas = mysqlTable("ideas", {
 	overallScore: int(),
 	classificationPath: varchar({ length: 500 }),
 	clusterId: int("cluster_id"),
+	routingStatus: mysqlEnum('routing_status', ['naqla2', 'naqla3', 'returned']),
+	routedAt: timestamp('routed_at', { mode: 'string' }),
+	routedBy: int('routed_by'),
 });
 
 export const ideaClusters = mysqlTable("idea_clusters", {
