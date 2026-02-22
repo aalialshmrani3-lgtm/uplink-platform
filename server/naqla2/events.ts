@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { getDb } from "../db";
 import { events, eventRegistrations } from "../../drizzle/schema";
 import { eq, and, desc, or } from "drizzle-orm";
+import { notifyEventOrganizer } from "./notifications";
 
 /**
  * Get all events
@@ -83,7 +84,7 @@ export async function createEvent(data: {
   userId: number;
   title: string;
   description: string;
-  type: "hackathon" | "workshop" | "conference";
+  type: "hackathon" | "workshop" | "conference" | "seminar" | "webinar" | "networking" | "exhibition" | "competition" | "training";
   location?: string;
   isVirtual?: boolean;
   startDate: Date;
@@ -183,7 +184,22 @@ export async function registerForEvent(data: {
     status: "pending",
   });
 
-  // Note: registrations count is tracked separately in eventRegistrations table
+  // Send notification to event organizer
+  try {
+    // Get user name
+    const { getUserById } = await import("../db");
+    const user = await getUserById(data.userId);
+    
+    await notifyEventOrganizer({
+      organizerId: event.organizerId,
+      eventTitle: event.title,
+      eventId: data.eventId,
+      participantName: user?.name || "مستخدم",
+      registrationType: data.attendeeType === "sponsor" ? "sponsor" : "participant",
+    });
+  } catch (error) {
+    console.error("Failed to send notification:", error);
+  }
 
   return registration;
 }

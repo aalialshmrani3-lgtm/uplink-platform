@@ -3466,11 +3466,11 @@ Provide response in JSON format:
 
       updateStatus: protectedProcedure
         .input(z.object({
-          id: z.number(),
+          eventId: z.number(),
           status: z.enum(['draft', 'published', 'ongoing', 'completed', 'cancelled']),
         }))
         .mutation(async ({ ctx, input }) => {
-          await eventsService.updateEventStatus(input.id, input.status);
+          await eventsService.updateEventStatus(input.eventId, input.status);
           return { success: true };
         }),
 
@@ -3496,6 +3496,21 @@ Provide response in JSON format:
         .mutation(async ({ ctx, input }) => {
           // TODO: Mark event as complete and create contracts in NAQLA3
           return { success: true, contractsCreated: 0 };
+        }),
+
+      getMyEvents: protectedProcedure
+        .query(async ({ ctx }) => {
+          const { getMyEvents } = await import('./naqla2/events-dashboard');
+          const events = await getMyEvents(ctx.user.id);
+          return events;
+        }),
+
+      delete: protectedProcedure
+        .input(z.object({ eventId: z.number() }))
+        .mutation(async ({ ctx, input }) => {
+          const { deleteEvent } = await import('./naqla2/events-dashboard');
+          await deleteEvent(input.eventId, ctx.user.id);
+          return { success: true };
         }),
     }),
 

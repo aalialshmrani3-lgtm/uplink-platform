@@ -62,6 +62,15 @@ export default function Naqla2() {
       link: '/naqla2/add-event',
       badge: 'جديد',
     },
+    {
+      id: 'events-dashboard',
+      title: 'لوحة تحكم الفعاليات',
+      description: 'إدارة ومتابعة جميع فعالياتك والتسجيلات',
+      icon: Briefcase,
+      color: 'from-indigo-500 to-purple-600',
+      borderColor: 'border-indigo-500/30',
+      link: '/naqla2/events-dashboard',
+    },
   ];
 
   const innovatorOptions = [
@@ -92,7 +101,7 @@ export default function Naqla2() {
       icon: Calendar,
       color: 'from-green-500 to-emerald-600',
       borderColor: 'border-green-500/30',
-      link: '/naqla2/events',
+      link: '/naqla2/browse-events',
       count: '100+',
     },
     {

@@ -88,6 +88,8 @@ const Naqla2HackathonDetail = lazy(() => import('@/pages/Naqla2HackathonDetail')
 const Naqla2BrowseEvents = lazy(() => import('@/pages/Naqla2BrowseEvents'));
 const Naqla2CreateEvent = lazy(() => import('@/pages/Naqla2CreateEvent'));
 const AddEvent = lazy(() => import('@/pages/AddEvent'));
+const BrowseAllEvents = lazy(() => import('@/pages/BrowseAllEvents'));
+const EventsDashboard = lazy(() => import('@/pages/EventsDashboard'));
 const Naqla2EventDetail = lazy(() => import('@/pages/Naqla2EventDetail'));
 const Naqla2 = lazy(() => import("./pages/Naqla2"));
 const Naqla3 = lazy(() => import("./pages/Naqla3"));
@@ -340,6 +342,8 @@ function Router() {
         <Route path="/naqla2/events" component={Naqla2BrowseEvents} />
         <Route path="/naqla2/events/create" component={Naqla2CreateEvent} />
         <Route path="/naqla2/add-event" component={AddEvent} />
+        <Route path="/naqla2/browse-events" component={BrowseAllEvents} />
+        <Route path="/naqla2/events-dashboard" component={EventsDashboard} />
         <Route path="/naqla2/events/:id" component={Naqla2EventDetail} />
         <Route path="/naqla2/matching" component={Naqla2Matching} /> {/* Added for Flowchart Match */}
         <Route path="/naqla2/submit-challenge" component={Naqla2SubmitChallenge} /> {/* Submit Challenge */}
