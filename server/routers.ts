@@ -3396,7 +3396,7 @@ Provide response in JSON format:
         .input(z.object({
           title: z.string().min(3),
           description: z.string().min(10),
-          type: z.enum(['hackathon', 'workshop', 'conference']),
+          type: z.enum(['hackathon', 'workshop', 'conference', 'seminar', 'webinar', 'networking', 'exhibition', 'competition', 'training']),
           startDate: z.string(),
           endDate: z.string(),
           location: z.string().optional(),
@@ -3428,7 +3428,7 @@ Provide response in JSON format:
 
       getAll: publicProcedure
         .input(z.object({
-          type: z.enum(['hackathon', 'workshop', 'conference']).optional(),
+          type: z.enum(['hackathon', 'workshop', 'conference', 'seminar', 'webinar', 'networking', 'exhibition', 'competition', 'training']).optional(),
           status: z.enum(['draft', 'published', 'ongoing', 'completed', 'cancelled']).optional(),
           isVirtual: z.boolean().optional(),
         }).optional())
@@ -3478,7 +3478,7 @@ Provide response in JSON format:
         .input(z.object({
           title: z.string(),
           description: z.string(),
-          type: z.enum(['hackathon', 'workshop', 'conference']),
+          type: z.enum(['hackathon', 'workshop', 'conference', 'seminar', 'webinar', 'networking', 'exhibition', 'competition', 'training']),
           date: z.string(),
           location: z.string(),
           capacity: z.string(),

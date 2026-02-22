@@ -52,6 +52,16 @@ export default function Naqla2() {
       borderColor: 'border-orange-500/30',
       link: '/naqla2/events/create?type=workshop',
     },
+    {
+      id: 'add-event',
+      title: 'أضف فعالية',
+      description: 'أضف أي نوع فعالية: ورشة، هاكاثون، مؤتمر، ندوة، ويبينار، لقاء علمي',
+      icon: Sparkles,
+      color: 'from-pink-500 to-rose-600',
+      borderColor: 'border-pink-500/30',
+      link: '/naqla2/add-event',
+      badge: 'جديد',
+    },
   ];
 
   const innovatorOptions = [

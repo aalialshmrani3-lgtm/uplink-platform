@@ -8,7 +8,7 @@ import { eq, and, desc, or } from "drizzle-orm";
  * Get all events
  */
 export async function getAllEvents(filters?: {
-  type?: "hackathon" | "workshop" | "conference";
+  type?: "hackathon" | "workshop" | "conference" | "seminar" | "webinar" | "networking" | "exhibition" | "competition" | "training";
   status?: "draft" | "published" | "ongoing" | "completed" | "cancelled";
   isVirtual?: boolean;
 }) {
