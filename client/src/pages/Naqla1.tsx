@@ -204,7 +204,7 @@ export default function Naqla1() {
                   </a>
                 </Button>
               )}
-              <Link href="/naqla1/ideas/120002/analysis">
+              <Link href="/naqla1/result">
                 <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
                   شاهد مثال حي
                 </Button>

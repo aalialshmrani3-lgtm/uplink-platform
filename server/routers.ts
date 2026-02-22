@@ -792,7 +792,16 @@ export const appRouter = router({
     getIdeaById: publicProcedure
       .input(z.object({ ideaId: z.number() }))
       .query(async ({ input }) => {
-        return db.getIdeaById(input.ideaId);
+        try {
+          const idea = await db.getIdeaById(input.ideaId);
+          if (!idea) {
+            throw new Error(`Idea with ID ${input.ideaId} not found`);
+          }
+          return idea;
+        } catch (error) {
+          console.error('[getIdeaById] Error:', error);
+          throw error;
+        }
       }),
 
     // Get classification statistics

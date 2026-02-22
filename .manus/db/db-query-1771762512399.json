@@ -1,0 +1,18 @@
+{
+  "query": "SELECT i.id, i.title, i.status, ia.id as analysis_id, ia.classification, ia.overallScore \nFROM ideas i \nLEFT JOIN idea_analysis ia ON i.id = ia.ideaId \nWHERE i.id = 120002;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT i.id, i.title, i.status, ia.id as analysis_id, ia.classification, ia.overallScore \nFROM ideas i \nLEFT JOIN idea_analysis ia ON i.id = ia.ideaId \nWHERE i.id = 120002;",
+  "rows": [
+    {
+      "id": "120002",
+      "title": "نظام ذكاء اصطناعي لتحليل البيانات الضخمة في الوقت الفعلي",
+      "status": "analyzed",
+      "analysis_id": "150002",
+      "classification": "innovation",
+      "overallScore": "84.50"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\tanalysis_id\tclassification\toverallScore\n120002\tنظام ذكاء اصطناعي لتحليل البيانات الضخمة في الوقت الفعلي\tanalyzed\t150002\tinnovation\t84.50\n",
+  "stderr": "",
+  "execution_time_ms": 1623
+}

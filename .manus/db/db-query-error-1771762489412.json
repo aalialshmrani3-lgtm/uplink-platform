@@ -1,0 +1,8 @@
+{
+  "query": "SELECT i.id, i.title, i.status, ia.id as analysis_id, ia.category, ia.score \nFROM ideas i \nLEFT JOIN idea_analysis ia ON i.id = ia.ideaId \nWHERE i.id = 120002;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3ENKKjNgJaxqLcS.fa3a405d8687 --database fqijacsWw6AUmwQQsRR8Z9 --execute SELECT i.id, i.title, i.status, ia.id as analysis_id, ia.category, ia.score \nFROM ideas i \nLEFT JOIN idea_analysis ia ON i.id = ia.ideaId \nWHERE i.id = 120002;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'ia.category' in 'field list'"
+  ]
+}
