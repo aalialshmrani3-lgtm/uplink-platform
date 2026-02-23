@@ -205,11 +205,6 @@ export default function Naqla1() {
                 </Button>
               )}
               <Link href="/naqla1/result">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  شاهد مثال حي
-                </Button>
-              </Link>
-              <Link href="/naqla1/result">
                 <Button size="lg" variant="outline" className="border-purple-700 hover:bg-purple-800">
                   <ArrowRight className="w-5 h-5 mr-2" />
                   نتيجة الفكرة والتوجيه
