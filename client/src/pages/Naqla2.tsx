@@ -82,6 +82,16 @@ export default function Naqla2() {
       color: 'from-yellow-500 to-orange-600',
       borderColor: 'border-yellow-500/30',
       link: '/naqla2/routed-ideas',
+    },
+    {
+      id: 'national-challenges',
+      title: 'التحديات الوطنية',
+      description: 'تحديات استراتيجية في الطاقة والاستدامة',
+      icon: Target,
+      color: 'from-emerald-500 to-teal-600',
+      borderColor: 'border-emerald-500/30',
+      link: '/naqla2/national-challenges',
+      count: '8',
       badge: 'جديد',
     },
     {
@@ -257,6 +267,11 @@ export default function Naqla2() {
                           {option.count && (
                             <Badge className="bg-secondary/50 text-foreground border-border/50">
                               {option.count}
+                            </Badge>
+                          )}
+                          {option.badge && (
+                            <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
+                              {option.badge}
                             </Badge>
                           )}
                         </div>

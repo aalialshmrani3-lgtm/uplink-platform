@@ -371,6 +371,125 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Strategic Innovation Areas Section */}
+      <section id="strategic-areas" className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/20 to-background pointer-events-none" />
+        <div className="container relative">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
+              <Zap className="w-3 h-3 ml-1" />
+              المجالات الاستراتيجية
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              مجالات الابتكار الاستراتيجية
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              نركز على المجالات الحيوية التي تدعم رؤية المملكة 2030 في الطاقة المتجددة والاستدامة والذكاء الاصطناعي
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {[
+              {
+                icon: Zap,
+                title: 'الطاقة المتجددة',
+                description: 'حلول مبتكرة في الطاقة الشمسية، طاقة الرياح، والهيدروجين الأخضر لتحقيق الاستدامة الطاقية',
+                color: 'from-yellow-500 to-orange-600',
+                borderColor: 'border-yellow-500/30',
+                highlights: [
+                  'روبوتات تنظيف الألواح الشمسية',
+                  'أنظمة تبريد البطاريات المتقدمة',
+                  'دمج الطاقة الشمسية في المباني (BIPV)',
+                  'إنتاج وتخزين الهيدروجين الأخضر'
+                ],
+                link: '/naqla2/national-challenges'
+              },
+              {
+                icon: Sparkles,
+                title: 'الاستدامة البيئية',
+                description: 'تقنيات احتجاز الكربون، كفاءة الطاقة، وإدارة الموارد المستدامة للحفاظ على البيئة',
+                color: 'from-green-500 to-emerald-600',
+                borderColor: 'border-green-500/30',
+                highlights: [
+                  'تقنيات احتجاز وتخزين الكربون',
+                  'كفاءة الطاقة في المباني والصناعة',
+                  'إدارة المياه والطاقة المتكاملة',
+                  'حلول الاقتصاد الدائري'
+                ],
+                link: '/naqla2/national-challenges'
+              },
+              {
+                icon: Brain,
+                title: 'الذكاء الاصطناعي',
+                description: 'تطبيقات AI المتقدمة في تحليل المدن، تحسين الطاقة، والذكاء الاصطناعي الفيزيائي',
+                color: 'from-blue-500 to-indigo-600',
+                borderColor: 'border-blue-500/30',
+                highlights: [
+                  'Physics-based AI لتحسين أنظمة الطاقة',
+                  'تحليل ثلاثي الأبعاد للمدن',
+                  'لوحات تحكم تفاعلية مع Gamification',
+                  'التنبؤ بالأعطال والصيانة الاستباقية'
+                ],
+                link: '/naqla2/national-challenges'
+              },
+              {
+                icon: Building2,
+                title: 'المدن الذكية',
+                description: 'تقنيات البنية التحتية الذكية، الشبكات الذكية، وإدارة الموارد الحضرية المستدامة',
+                color: 'from-purple-500 to-pink-600',
+                borderColor: 'border-purple-500/30',
+                highlights: [
+                  'الشبكات الذكية للطاقة المتجددة',
+                  'أنظمة النقل الذكي',
+                  'إدارة المباني الذكية',
+                  'حلول IoT للمدن المستدامة'
+                ],
+                link: '/naqla2/national-challenges'
+              }
+            ].map((area, i) => (
+              <Card key={i} className={`group border-2 ${area.borderColor} hover:border-opacity-100 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer`}>
+                <CardHeader>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${area.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      <area.icon className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <CardTitle className="text-2xl text-foreground mb-2">{area.title}</CardTitle>
+                      <CardDescription className="text-base">{area.description}</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 mb-6">
+                    {area.highlights.map((highlight, j) => (
+                      <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={area.link}>
+                    <Button className="w-full group-hover:bg-primary/90">
+                      استكشف التحديات
+                      <ChevronRight className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link href="/naqla2/national-challenges">
+              <Button size="lg" className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 h-14">
+                <Target className="w-5 h-5 ml-2" />
+                عرض جميع التحديات الوطنية
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Partners Section */}
       <section id="partners" className="py-24 px-6 overflow-hidden">
         <div className="container">
