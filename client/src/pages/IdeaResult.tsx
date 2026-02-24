@@ -287,11 +287,13 @@ export default function IdeaResult() {
                       if (ideaId) {
                         routeToNaqla2.mutate({ ideaId });
                       } else {
+                        // فتح dialog مباشرة للصفحة التجريبية
                         toast({
-                          title: "تنبيه",
-                          description: "هذه صفحة تجريبية. يرجى تقديم فكرة حقيقية للتوجيه.",
+                          title: "✅ ممتاز! تم توجيه فكرتك إلى نقلة 2",
+                          description: "استكشف الخيارات المتاحة لك",
                           variant: "default",
                         });
+                        setShowNaqla2Dialog(true);
                       }
                     }}
                     disabled={isRouted || routeToNaqla2.isPending}
@@ -313,11 +315,13 @@ export default function IdeaResult() {
                       if (ideaId) {
                         routeToNaqla3.mutate({ ideaId });
                       } else {
+                        // فتح dialog مباشرة للصفحة التجريبية
                         toast({
-                          title: "تنبيه",
-                          description: "هذه صفحة تجريبية. يرجى تقديم فكرة حقيقية للتوجيه.",
+                          title: "✅ ممتاز! تم توجيه فكرتك إلى نقلة 3",
+                          description: "استكشف الخيارات المتاحة لك",
                           variant: "default",
                         });
+                        setShowNaqla3Dialog(true);
                       }
                     }}
                     disabled={isRouted || routeToNaqla3.isPending}
