@@ -4,12 +4,9 @@ import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "path";
 import { defineConfig } from "vite";
-// Temporarily disable manus runtime to fix React hooks issue
-// import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-// Remove vitePluginManusRuntime temporarily to fix React duplicate issue
 const plugins = [react(), tailwindcss(), jsxLocPlugin()];
 
 export default defineConfig({
@@ -19,14 +16,18 @@ export default defineConfig({
       "@": path.resolve(__dirname, "client", "src"),
       "@shared": path.resolve(__dirname, "shared"),
       "@assets": path.resolve(__dirname, "attached_assets"),
+      // Force all React imports to resolve to the SAME instance
+      "react": path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
+      "react-dom/client": path.resolve(__dirname, "node_modules/react-dom/client"),
     },
-    dedupe: ["react", "react-dom"],
+    dedupe: ["react", "react-dom", "react-dom/client", "scheduler"],
   },
   optimizeDeps: {
     include: [
       "react",
       "react-dom",
-      "react-router-dom",
+      "react-dom/client",
       "wouter",
       "@trpc/client",
       "@trpc/react-query",
@@ -35,6 +36,7 @@ export default defineConfig({
       "recharts",
       "lucide-react",
     ],
+    force: false,
   },
   envDir: path.resolve(__dirname),
   root: path.resolve(__dirname, "client"),
@@ -46,34 +48,18 @@ export default defineConfig({
     target: 'es2020',
     sourcemap: false,
     rollupOptions: {
+      // Ensure React is deduplicated across all chunks
+      external: [],
       output: {
-        // Split into logical chunks to fix 5MB single bundle (black screen issue)
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react/') || id.includes('react-dom') || id.includes('scheduler')) {
-              return 'react-vendor';
-            }
-            if (id.includes('@trpc') || id.includes('@tanstack') || id.includes('superjson')) {
-              return 'trpc-vendor';
-            }
-            if (id.includes('framer-motion')) {
-              return 'animation-vendor';
-            }
-            if (id.includes('recharts') || id.includes('d3-')) {
-              return 'chart-vendor';
-            }
-            if (id.includes('lucide-react')) {
-              return 'icons-vendor';
-            }
-            return 'vendor';
-          }
-        },
+        // Single bundle to avoid React duplication across chunks
+        manualChunks: undefined,
+        inlineDynamicImports: true,
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
-    chunkSizeWarningLimit: 2000,
+    chunkSizeWarningLimit: 6000,
   },
   server: {
     host: '0.0.0.0',
@@ -99,7 +85,6 @@ export default defineConfig({
       deny: ["**/.*"],
     },
     watch: {
-      // Disable file watching to avoid EMFILE errors
       ignored: ['**/*'],
       usePolling: false,
     },
