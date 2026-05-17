@@ -1,8 +1,6 @@
-// v2.1 - Single bundle mode: fixes React useLayoutEffect duplication error
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import fs from "node:fs";
 import path from "path";
 import { defineConfig } from "vite";
 
@@ -17,18 +15,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "client", "src"),
       "@shared": path.resolve(__dirname, "shared"),
       "@assets": path.resolve(__dirname, "attached_assets"),
-      // Force all React imports to resolve to the SAME instance
-      "react": path.resolve(__dirname, "node_modules/react"),
-      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
-      "react-dom/client": path.resolve(__dirname, "node_modules/react-dom/client"),
     },
-    dedupe: ["react", "react-dom", "react-dom/client", "scheduler"],
+    dedupe: ["react", "react-dom"],
   },
   optimizeDeps: {
     include: [
       "react",
       "react-dom",
-      "react-dom/client",
       "wouter",
       "@trpc/client",
       "@trpc/react-query",
@@ -37,7 +30,6 @@ export default defineConfig({
       "recharts",
       "lucide-react",
     ],
-    force: false,
   },
   envDir: path.resolve(__dirname),
   root: path.resolve(__dirname, "client"),
@@ -45,25 +37,21 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
-    minify: 'esbuild',
-    target: 'es2020',
+    minify: "esbuild",
+    target: "es2020",
     sourcemap: false,
     rollupOptions: {
-      // Ensure React is deduplicated across all chunks
-      external: [],
       output: {
-        // Single bundle to avoid React duplication across chunks
-        manualChunks: undefined,
-        inlineDynamicImports: true,
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
-        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+        format: "es",
+        chunkFileNames: "assets/js/[name]-[hash].js",
+        entryFileNames: "assets/js/[name]-[hash].js",
+        assetFileNames: "assets/[ext]/[name]-[hash].[ext]",
       },
     },
     chunkSizeWarningLimit: 6000,
   },
   server: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 3000,
     strictPort: true,
     allowedHosts: [
@@ -76,8 +64,8 @@ export default defineConfig({
       "127.0.0.1",
     ],
     hmr: {
-      protocol: 'ws',
-      host: 'localhost',
+      protocol: "ws",
+      host: "localhost",
       port: 3000,
       clientPort: 3000,
     },
@@ -86,7 +74,7 @@ export default defineConfig({
       deny: ["**/.*"],
     },
     watch: {
-      ignored: ['**/*'],
+      ignored: ["**/*"],
       usePolling: false,
     },
   },
