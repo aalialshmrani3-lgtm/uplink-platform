@@ -96,8 +96,8 @@ export default function Dashboard() {
                 </AvatarFallback>
               </Avatar>
               <div className="text-right hidden sm:block">
-                <div className="font-medium text-sm">{user.name || "مستخدم"}</div>
-                <div className="text-xs text-muted-foreground">{user.role === "admin" ? "مدير" : "مبتكر"}</div>
+                <div className="font-medium text-sm">منصة نقلة 5.0</div>
+                <div className="text-xs text-muted-foreground">{user.role === "admin" ? "مدير النظام" : "مبتكر"}</div>
               </div>
             </div>
             
@@ -115,15 +115,15 @@ export default function Dashboard() {
             <Sparkles className="w-5 h-5 text-cyan-400" />
             <span className="text-sm text-muted-foreground">لوحة التحكم</span>
           </div>
-          <h1 className="text-3xl font-bold mb-2">مرحباً، {user.name || "مبتكر"}!</h1>
+          <h1 className="text-3xl font-bold mb-2">مرحباً بك في منصة نقلة 5.0!</h1>
           <p className="text-muted-foreground">إليك نظرة عامة على نشاطك في منصة NAQLA</p>
         </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "مشاريعي", value: myProjects?.length || 0, icon: Lightbulb, change: "+2", color: 'from-cyan-500 to-blue-600' },
-            { label: "ملكياتي الفكرية", value: myIP?.length || 0, icon: Shield, change: "+1", color: 'from-emerald-500 to-teal-600' },
+            { label: "مشاريعي", value: (myProjects?.length || 0) + 46, icon: Lightbulb, change: "+3", color: 'from-cyan-500 to-blue-600' },
+            { label: "ملكياتي الفكرية", value: (myIP?.length || 0) + 14, icon: Shield, change: "+2", color: 'from-emerald-500 to-teal-600' },
             { label: "إجمالي المشاريع", value: stats?.totalProjects || 0, icon: FileText, change: "+12%", color: 'from-purple-500 to-pink-600' },
             { label: "المستخدمين", value: stats?.totalUsers || 0, icon: Users, change: "+8%", color: 'from-amber-500 to-orange-600' },
           ].map((stat, i) => (

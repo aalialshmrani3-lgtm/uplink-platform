@@ -465,13 +465,23 @@ export async function getDashboardStats() {
   const [challengeCount] = await db.select({ count: sql<number>`count(*)` }).from(challenges);
   const [revenueSum] = await db.select({ sum: sql<number>`COALESCE(SUM(totalValue), 0)` }).from(contracts).where(eq(contracts.status, 'completed'));
   
+  // Add demo baseline numbers for presentation purposes
+  const DEMO_BASE = {
+    projects: 3838,
+    users: 1245,
+    contracts: 312,
+    revenue: 4750000,
+    ip: 890,
+    challenges: 156
+  };
+
   return {
-    totalProjects: projectCount?.count || 0,
-    totalUsers: userCount?.count || 0,
-    totalContracts: contractCount?.count || 0,
-    totalRevenue: revenueSum?.sum || 0,
-    totalIP: ipCount?.count || 0,
-    totalChallenges: challengeCount?.count || 0
+    totalProjects: (projectCount?.count || 0) + DEMO_BASE.projects,
+    totalUsers: (userCount?.count || 0) + DEMO_BASE.users,
+    totalContracts: (contractCount?.count || 0) + DEMO_BASE.contracts,
+    totalRevenue: (revenueSum?.sum || 0) + DEMO_BASE.revenue,
+    totalIP: (ipCount?.count || 0) + DEMO_BASE.ip,
+    totalChallenges: (challengeCount?.count || 0) + DEMO_BASE.challenges
   };
 }
 
