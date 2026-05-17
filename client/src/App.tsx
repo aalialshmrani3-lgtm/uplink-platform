@@ -138,6 +138,10 @@ const MyJourney = lazy(() => import("./pages/MyJourney")); // Demo Flow - User J
 const IdeaClusters = lazy(() => import("./pages/IdeaClusters"));
 const Demo = lazy(() => import("./pages/Demo")); // AI Clustering (Innovation 360)
 const NaqlaFlowAnalytics = lazy(() => import("./pages/NaqlaFlowAnalytics"));
+const Privacy = lazy(() => import("./pages/Privacy")); // Privacy Policy
+const Terms = lazy(() => import("./pages/Terms")); // Terms & Conditions
+const Contact = lazy(() => import("./pages/Contact")); // Contact Us
+const Blog = lazy(() => import("./pages/Blog")); // Blog
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -437,6 +441,10 @@ function Router() {
         <Route path="/register/university" component={RegisterUniversity} />
           <Route path="/demo" component={DemoFlow} />
           <Route path="/my-journey" component={MyJourney} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/blog" component={Blog} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

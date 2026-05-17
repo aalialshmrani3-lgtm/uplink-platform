@@ -9,7 +9,8 @@ import {
   ChevronRight, Lightbulb, Building2, Handshake,
   GraduationCap, Crown, Code, BarChart3, Zap,
   ArrowUpRight, Sparkles, Play, Star, TrendingUp,
-  MessageSquare, PenTool, Target, Layers, CheckCircle2
+  MessageSquare, PenTool, Target, Layers, CheckCircle2,
+  Menu, X
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
@@ -44,6 +45,7 @@ export default function Home() {
   const { user } = useAuth();
   const { t } = useLanguage();
   const [activeEngine, setActiveEngine] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -145,12 +147,12 @@ export default function Home() {
             <LanguageSwitcher />
             {user ? (
               <Link href="/dashboard">
-                <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                <Button className="hidden md:inline-flex bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
                   {t.common.dashboard}
                 </Button>
               </Link>
             ) : (
-              <>
+              <div className="hidden md:flex items-center gap-2">
                 <Link href="/register">
                   <Button variant="outline" className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
                     تسجيل
@@ -161,10 +163,92 @@ export default function Home() {
                     {t.common.login}
                   </Button>
                 </a>
-              </>
+              </div>
             )}
+            {/* Hamburger Button - Mobile Only */}
+            <button
+              className="md:hidden p-2 rounded-lg hover:bg-secondary/50 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="فتح القائمة"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-2xl">
+            <div className="container py-4 flex flex-col gap-1">
+              <Link href="/why-naqla" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                {t.nav.whyNaqla}
+              </Link>
+              <Link href="/case-studies" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                {t.nav.caseStudies}
+              </Link>
+              <Link href="/integrations" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                {t.nav.integrations}
+              </Link>
+              <Link href="/testimonials" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                {t.nav.testimonials}
+              </Link>
+              <Link href="/roi-calculator" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                {t.nav.roiCalculator}
+              </Link>
+              <Link href="/pipeline" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50 flex items-center gap-2">
+                <Layers className="w-4 h-4" />{t.nav.pipeline}
+              </Link>
+              <Link href="/ai-insights" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50 flex items-center gap-2">
+                <Brain className="w-4 h-4" />{t.nav.aiInsights}
+              </Link>
+              <Link href="/classification-paths" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                المسارات
+              </Link>
+              <Link href="/strategic-partners" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                الشركاء
+              </Link>
+              <Link href="/value-footprints" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                قياس الأثر
+              </Link>
+              <Link href="/help" onClick={() => setMobileMenuOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
+                {t.nav.help}
+              </Link>
+              <div className="border-t border-border/50 pt-3 mt-2 flex flex-col gap-2">
+                {user ? (
+                  <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                    <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                      {t.common.dashboard}
+                    </Button>
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
+                      <Button variant="outline" className="w-full border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
+                        تسجيل
+                      </Button>
+                    </Link>
+                    <a href={getLoginUrl()} onClick={() => setMobileMenuOpen(false)}>
+                      <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                        {t.common.login}
+                      </Button>
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
