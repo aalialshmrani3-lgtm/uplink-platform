@@ -432,6 +432,9 @@
 }
 
 /* Hide Manus badge/watermark for official presentations */
+manus-content-root {
+  display: none !important;
+}
 footer-watermark,
 manus-content-root footer-watermark,
 [class*="manus-badge"],

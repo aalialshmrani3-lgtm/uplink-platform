@@ -252,7 +252,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-6">
+      <section className="relative pt-16 pb-12 px-6">
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
@@ -277,7 +277,7 @@ export default function Home() {
             </p>
             
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
               {user ? (
                 <Link href="/naqla1/submit">
                   <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg px-8 h-14 glow">
@@ -323,9 +323,9 @@ export default function Home() {
       </section>
 
       {/* Three Engines Section */}
-      <section id="engines" className="py-24 px-6 relative">
+      <section id="engines" className="py-12 px-6 relative">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-6">
             <Badge className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
               <Sparkles className="w-3 h-3 ml-1" />
               المحركات الثلاثة
@@ -387,9 +387,9 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-6 bg-secondary/20">
+      <section id="features" className="py-12 px-6 bg-secondary/20">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-6">
             <Badge className="mb-4 bg-purple-500/10 text-purple-400 border-purple-500/30">
               <Target className="w-3 h-3 ml-1" />
               المميزات
@@ -456,10 +456,10 @@ export default function Home() {
       </section>
 
       {/* Strategic Innovation Areas Section */}
-      <section id="strategic-areas" className="py-24 px-6 relative overflow-hidden">
+      <section id="strategic-areas" className="py-12 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/20 to-background pointer-events-none" />
         <div className="container relative">
-          <div className="text-center mb-16">
+          <div className="text-center mb-6">
             <Badge className="mb-4 bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
               <Zap className="w-3 h-3 ml-1" />
               المجالات الاستراتيجية
@@ -575,9 +575,9 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section id="partners" className="py-24 px-6 overflow-hidden">
+      <section id="partners" className="py-12 px-6 overflow-hidden">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-6">
             <Badge className="mb-4 bg-amber-500/10 text-amber-400 border-amber-500/30">
               <Building2 className="w-3 h-3 ml-1" />
               شركاؤنا
@@ -750,7 +750,7 @@ export default function Home() {
       </section>
 
       {/* Registration Section */}
-      <section className="py-24 px-6 relative">
+      <section className="py-12 px-6 relative">
         <div className="container">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
@@ -843,7 +843,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6 relative">
+      <section className="py-12 px-6 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10" />
         <div className="container relative">
           <div className="max-w-3xl mx-auto text-center">
