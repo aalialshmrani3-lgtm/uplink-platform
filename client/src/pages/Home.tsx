@@ -147,7 +147,7 @@ export default function Home() {
             <LanguageSwitcher />
             {user ? (
               <Link href="/dashboard">
-                <Button className="hidden md:inline-flex bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                <Button className="hidden md:inline-flex bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border border-white/15">
                   {t.common.dashboard}
                 </Button>
               </Link>
@@ -159,7 +159,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <a href={getLoginUrl()}>
-                  <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                  <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border border-white/15">
                     {t.common.login}
                   </Button>
                 </a>
@@ -227,7 +227,7 @@ export default function Home() {
               <div className="border-t border-border/50 pt-3 mt-2 flex flex-col gap-2">
                 {user ? (
                   <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                    <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border border-white/15">
                       {t.common.dashboard}
                     </Button>
                   </Link>
@@ -239,7 +239,7 @@ export default function Home() {
                       </Button>
                     </Link>
                     <a href={getLoginUrl()} onClick={() => setMobileMenuOpen(false)}>
-                      <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border-0">
+                      <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white border border-white/15">
                         {t.common.login}
                       </Button>
                     </a>
@@ -357,7 +357,7 @@ export default function Home() {
                     <Badge variant="outline" className={engine.borderColor}>
                       {engine.name}
                     </Badge>
-                    <Badge className="bg-secondary/50 text-muted-foreground border-0">
+                    <Badge className="bg-secondary/50 text-muted-foreground border border-white/15">
                       {engine.stats.value} {engine.stats.label}
                     </Badge>
                   </div>
@@ -441,7 +441,7 @@ export default function Home() {
                 color: 'from-indigo-500 to-violet-600'
               }
             ].map((feature, i) => (
-              <Card key={i} className="border-0 bg-card/50 backdrop-blur-sm card-hover">
+              <Card key={i} className="border border-white/15 bg-card/50 backdrop-blur-sm card-hover">
                 <CardContent className="p-6">
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4`}>
                     <feature.icon className="w-6 h-6 text-white" />
@@ -876,7 +876,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/beta-programs">
-                <Button size="lg" variant="outline" className="text-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+                <Button size="lg" variant="outline" className="text-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white border border-white/15">
                   <Rocket className="ml-2" size={20} />
                   البرامج التجريبية
                 </Button>
