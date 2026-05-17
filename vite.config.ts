@@ -1,3 +1,4 @@
+// v2.1 - Single bundle mode: fixes React useLayoutEffect duplication error
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
