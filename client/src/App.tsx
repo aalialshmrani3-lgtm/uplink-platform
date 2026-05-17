@@ -453,31 +453,24 @@ function Router() {
 }
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
-  const [hasSeenSplash, setHasSeenSplash] = useState(false);
+  // Initialize splash state: skip if already seen in this session
+  const alreadySeen = typeof window !== 'undefined' && !!sessionStorage.getItem('splash_seen');
+  const [showSplash, setShowSplash] = useState(!alreadySeen);
 
   useEffect(() => {
-    // Check if user has seen splash in this session
-    const seen = sessionStorage.getItem('splash_seen');
-    if (seen) {
-      setShowSplash(false);
-      setHasSeenSplash(true);
-      return;
-    }
+    if (alreadySeen) return;
 
-    // HARD TIMEOUT: Force hide splash after 3 seconds no matter what
+    // HARD TIMEOUT: Force hide splash after 2.5 seconds max
     const forceHideTimeout = setTimeout(() => {
       setShowSplash(false);
-      setHasSeenSplash(true);
       sessionStorage.setItem('splash_seen', 'true');
-    }, 3000);
+    }, 2500);
 
     return () => clearTimeout(forceHideTimeout);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSplashComplete = () => {
     setShowSplash(false);
-    setHasSeenSplash(true);
     sessionStorage.setItem('splash_seen', 'true');
   };
 
@@ -486,7 +479,7 @@ function App() {
       <ThemeProvider defaultTheme="dark">
         <LanguageProvider>
         <TooltipProvider>
-          {showSplash && !hasSeenSplash && (
+          {showSplash && (
             <SplashScreen onComplete={handleSplashComplete} />
           )}
           <Toaster />

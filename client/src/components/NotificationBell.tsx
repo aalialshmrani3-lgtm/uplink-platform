@@ -36,21 +36,26 @@ export default function NotificationBell() {
     }
   }, [count]);
 
-  // WebSocket connection for real-time notifications
+  // WebSocket connection for real-time notifications (dev only)
   useEffect(() => {
-    const ws = new WebSocket(`ws://${window.location.host}/ws`);
+    const isDevMode = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (!isDevMode) return; // Skip WebSocket in production
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === "notification") {
-        setUnreadCount((prev) => prev + 1);
-        // Show toast notification
-        // toast.success(data.title);
-      }
-    };
-
+    let ws: WebSocket | null = null;
+    try {
+      ws = new WebSocket(`ws://${window.location.host}/ws`);
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === "notification") {
+            setUnreadCount((prev) => prev + 1);
+          }
+        } catch {}
+      };
+      ws.onerror = () => {}; // Silently ignore errors
+    } catch {}
     return () => {
-      ws.close();
+      if (ws) ws.close();
     };
   }, []);
 

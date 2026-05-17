@@ -47,15 +47,33 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        // Disable code splitting - single bundle to avoid module loading issues
-        manualChunks: undefined,
-        inlineDynamicImports: true,
+        // Split into logical chunks to fix 5MB single bundle (black screen issue)
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react/') || id.includes('react-dom') || id.includes('scheduler')) {
+              return 'react-vendor';
+            }
+            if (id.includes('@trpc') || id.includes('@tanstack') || id.includes('superjson')) {
+              return 'trpc-vendor';
+            }
+            if (id.includes('framer-motion')) {
+              return 'animation-vendor';
+            }
+            if (id.includes('recharts') || id.includes('d3-')) {
+              return 'chart-vendor';
+            }
+            if (id.includes('lucide-react')) {
+              return 'icons-vendor';
+            }
+            return 'vendor';
+          }
+        },
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
-    chunkSizeWarningLimit: 5000, // Increase limit for single bundle
+    chunkSizeWarningLimit: 2000,
   },
   server: {
     host: '0.0.0.0',

@@ -25,8 +25,12 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   const {
     onNotification,
     autoConnect = true,
-    reconnectInterval = 5000
+    reconnectInterval = 10000
   } = options;
+
+  // WebSocket is only available in development mode
+  // In production, the WebSocket server is not initialized
+  const isDevMode = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
   const { user } = useAuth();
   const wsRef = useRef<WebSocket | null>(null);
@@ -35,8 +39,12 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const connect = useCallback(() => {
+    // Only connect in development mode (localhost)
+    if (!isDevMode) {
+      return;
+    }
+
     if (wsRef.current?.readyState === WebSocket.OPEN) {
-      console.log('WebSocket already connected');
       return;
     }
 
@@ -46,17 +54,12 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     const userId = user?.id || '';
     const wsUrl = `${protocol}//${host}/ws?userId=${userId}`;
 
-    console.log('🔌 Connecting to WebSocket:', wsUrl);
-
     try {
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
       ws.onopen = () => {
-        console.log('✅ WebSocket connected');
         setIsConnected(true);
-        
-        // Clear reconnect timeout
         if (reconnectTimeoutRef.current) {
           clearTimeout(reconnectTimeoutRef.current);
           reconnectTimeoutRef.current = null;
@@ -66,41 +69,35 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
       ws.onmessage = (event) => {
         try {
           const notification: Notification = JSON.parse(event.data);
-          console.log('📨 Received notification:', notification);
-
-          // Add to notifications list
-          setNotifications(prev => [notification, ...prev].slice(0, 50)); // Keep last 50
-
-          // Call callback
+          setNotifications(prev => [notification, ...prev].slice(0, 50));
           if (onNotification) {
             onNotification(notification);
           }
         } catch (error) {
-          console.error('❌ Error parsing notification:', error);
+          // Silently ignore parse errors
         }
       };
 
-      ws.onerror = (error) => {
-        console.error('❌ WebSocket error:', error);
+      ws.onerror = () => {
+        // Silently handle errors - don't log to avoid console spam
+        setIsConnected(false);
       };
 
       ws.onclose = () => {
-        console.log('👋 WebSocket disconnected');
         setIsConnected(false);
         wsRef.current = null;
 
-        // Auto-reconnect
-        if (autoConnect) {
-          console.log(`🔄 Reconnecting in ${reconnectInterval}ms...`);
+        // Auto-reconnect only in dev mode with longer interval
+        if (autoConnect && isDevMode) {
           reconnectTimeoutRef.current = setTimeout(() => {
             connect();
           }, reconnectInterval);
         }
       };
     } catch (error) {
-      console.error('❌ Error creating WebSocket:', error);
+      // Silently ignore connection errors
     }
-  }, [user?.id, autoConnect, reconnectInterval, onNotification]);
+  }, [user?.id, autoConnect, reconnectInterval, onNotification, isDevMode]);
 
   const disconnect = useCallback(() => {
     if (wsRef.current) {
