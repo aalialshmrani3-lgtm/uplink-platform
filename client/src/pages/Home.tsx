@@ -97,7 +97,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background">
       <SEOHead />
       {/* Animated Background */}
       <div className="fixed inset-0 pointer-events-none">
