@@ -310,3 +310,32 @@
 - [x] إضافة routes في App.tsx
 - [x] اختبار جميع الصفحات الجديدة
 - [ ] حفظ checkpoint نهائي
+
+
+---
+
+## 🌟 التحسينات الشاملة للإطلاق العالمي
+
+- [ ] إصلاح صفحة قياس الأثر (/value-footprints) بلوحة بيانات احترافية
+- [ ] ربط التسجيل بالـ backend وإكمال إجراء register في routers.ts
+- [ ] إضافة تحديات وهاكاثونات حقيقية في /challenges
+- [ ] تحسين contrast الـ Home Page (قسم المحركات الثلاثة)
+- [ ] إضافة SEO meta tags و Open Graph لجميع الصفحات الرئيسية
+- [ ] تطبيق Lazy Loading للصور والمحتوى الثقيل
+
+
+---
+
+## 🌐 تعديلات التوافق مع QSTP (100%+)
+
+- [ ] إضافة Language Switcher (عربي/English) في الـ Navbar
+- [ ] إضافة خيار "International Registration" في /register
+- [ ] إضافة قطاع التكنولوجيا الحيوية (Biotechnology) في /challenges
+- [ ] إضافة قطاع المواد المتقدمة (Advanced Materials) في /challenges
+- [ ] إضافة قطاع Clean Tech المتقدم في /challenges
+- [ ] إنشاء صفحة TRL Assessment في نقلة 3
+- [ ] إضافة ميزة الترشيح الرسمي للبرامج الدولية في /admin
+- [ ] تحسين /value-footprints بمؤشرات KPI متوافقة مع QSTP
+- [ ] إضافة قسم "الشركاء الدوليون" في الصفحة الرئيسية مع روابط QSTP
+- [ ] إضافة صفحة IP Framework الدولي في نقلة 3
+- [ ] إضافة بانر QSTP Partnership في الصفحة الرئيسية

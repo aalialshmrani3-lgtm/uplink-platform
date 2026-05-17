@@ -208,6 +208,10 @@ export default function Admin() {
                 </Badge>
               )}
             </TabsTrigger>
+            <TabsTrigger value="qstp" className="gap-2">
+              <Globe className="w-4 h-4" />
+              {language === 'ar' ? 'ترشيح QSTP' : 'QSTP Nominations'}
+            </TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -505,6 +509,141 @@ export default function Admin() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* QSTP Nominations Tab */}
+          <TabsContent value="qstp">
+            <div className="space-y-6">
+              {/* QSTP Header Banner */}
+              <Card className="border border-violet-500/30 bg-gradient-to-r from-violet-900/40 to-blue-900/40">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-violet-600/20 rounded-xl flex items-center justify-center text-3xl shrink-0">🌐</div>
+                    <div className="flex-1">
+                      <h2 className="text-xl font-bold text-white mb-1">
+                        {language === 'ar' ? 'الترشيح المؤسسي لبرامج QSTP' : 'Institutional Nominations for QSTP Programs'}
+                      </h2>
+                      <p className="text-slate-300 text-sm mb-4">
+                        {language === 'ar'
+                          ? 'رشّح الابتكارات والمشاريع المتميزة لبرامج واحة قطر للعلوم والتكنولوجيا. المشاريع في TRL 4+ مؤهلة للتقدم لصندوق الـ 30 مليون دولار وبرنامج The 300 وحاضنة الأعمال.'
+                          : 'Nominate outstanding innovations for Qatar Science & Technology Park programs. Projects at TRL 4+ are eligible for the $30M fund, The 300 program, and the incubator.'
+                        }
+                      </p>
+                      <div className="flex gap-2 flex-wrap">
+                        <a href="https://qstp.qa/ar/programs/incubate/" target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white text-xs gap-1.5">
+                            🏢 {language === 'ar' ? 'حاضنة QSTP' : 'QSTP Incubator'}
+                          </Button>
+                        </a>
+                        <a href="https://qstp.qa/ar/programs/the-300/" target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-1.5">
+                            🏆 {language === 'ar' ? 'برنامج The 300' : 'The 300 Program'}
+                          </Button>
+                        </a>
+                        <a href="https://qstp.qa/ar/global-innovation-link/" target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="outline" className="border-violet-500/40 text-violet-300 hover:bg-violet-900/30 text-xs gap-1.5">
+                            🔗 {language === 'ar' ? 'رابط الابتكار العالمي' : 'Global Innovation Link'}
+                          </Button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: language === 'ar' ? 'مرشحون نشطون' : 'Active Nominations', value: '12', color: 'text-violet-400', icon: '📋' },
+                  { label: language === 'ar' ? 'قيد المراجعة' : 'Under Review', value: '5', color: 'text-amber-400', icon: '⏳' },
+                  { label: language === 'ar' ? 'تم القبول' : 'Accepted', value: '3', color: 'text-green-400', icon: '✅' },
+                  { label: language === 'ar' ? 'إجمالي التمويل المطلوب' : 'Total Funding Requested', value: '$2.4M', color: 'text-blue-400', icon: '💰' },
+                ].map((stat, i) => (
+                  <Card key={i} className="border-0 bg-card/50">
+                    <CardContent className="p-4 text-center">
+                      <div className="text-3xl mb-2">{stat.icon}</div>
+                      <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+                      <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Nominations List */}
+              <Card className="border-0 bg-card/50">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <span className="text-xl">📋</span>
+                      {language === 'ar' ? 'قائمة الترشيحات' : 'Nominations List'}
+                    </CardTitle>
+                    <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white text-xs gap-1">
+                      <span>+</span> {language === 'ar' ? 'إضافة ترشيح' : 'Add Nomination'}
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {[
+                      { name: language === 'ar' ? 'روبوت تنظيف الألواح الشمسية' : 'Solar Panel Cleaning Robot', org: 'KACST', trl: 6, program: 'The 300', status: 'review', funding: '$500K' },
+                      { name: language === 'ar' ? 'نظام تبريد البطاريات بالذكاء الاصطناعي' : 'AI Battery Cooling System', org: 'KFUPM', trl: 5, program: 'Incubator', status: 'pending', funding: '$300K' },
+                      { name: language === 'ar' ? 'منصة الهيدروجين الأخضر' : 'Green Hydrogen Platform', org: 'Saudi Aramco', trl: 7, program: 'Global Innovation Link', status: 'accepted', funding: '$1.2M' },
+                      { name: language === 'ar' ? 'تطبيق الذكاء الاصطناعي للطاقة' : 'AI Energy Optimization App', org: 'STC', trl: 4, program: 'Incubator', status: 'pending', funding: '$200K' },
+                      { name: language === 'ar' ? 'نظام احتجاز الكربون النانوي' : 'Nano Carbon Capture System', org: 'SABIC', trl: 5, program: 'The 300', status: 'review', funding: '$800K' },
+                    ].map((nom, i) => (
+                      <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-secondary/30 border border-border/50">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-violet-500/20 rounded-lg flex items-center justify-center text-lg">
+                            {nom.trl >= 7 ? '🚀' : nom.trl >= 5 ? '⚗️' : '🔬'}
+                          </div>
+                          <div>
+                            <p className="font-medium text-white">{nom.name}</p>
+                            <p className="text-xs text-muted-foreground">{nom.org} • TRL {nom.trl} • {nom.program}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Badge className={`text-xs border ${
+                            nom.status === 'accepted' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
+                            nom.status === 'review' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
+                            'bg-slate-500/20 text-slate-400 border-slate-500/30'
+                          }`}>
+                            {nom.status === 'accepted' ? '✅ ' + (language === 'ar' ? 'مقبول' : 'Accepted') :
+                             nom.status === 'review' ? '⏳ ' + (language === 'ar' ? 'قيد المراجعة' : 'Under Review') :
+                             '📋 ' + (language === 'ar' ? 'معلق' : 'Pending')}
+                          </Badge>
+                          <span className="text-blue-400 text-sm font-bold">{nom.funding}</span>
+                          <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white text-xs">
+                            {language === 'ar' ? 'عرض' : 'View'}
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* QSTP Programs Cards */}
+              <div className="grid md:grid-cols-3 gap-4">
+                {[
+                  { icon: '🏢', title: language === 'ar' ? 'حاضنة الأعمال' : 'Business Incubator', desc: language === 'ar' ? 'دعم شامل للشركات الناشئة في TRL 4-6 مع مساحة عمل ومرشدين متخصصين' : 'Comprehensive support for tech startups at TRL 4-6 with workspace and mentors', link: 'https://qstp.qa/ar/programs/incubate/', color: 'border-blue-500/30 bg-blue-900/20' },
+                  { icon: '🏆', title: language === 'ar' ? 'برنامج The 300' : 'The 300 Program', desc: language === 'ar' ? 'برنامج تسريع للشركات الأكثر تأثيراً في التكنولوجيا النظيفة والذكاء الاصطناعي والتكنولوجيا الحيوية' : 'Acceleration for most impactful startups in clean tech, AI, and biotech', link: 'https://qstp.qa/ar/programs/the-300/', color: 'border-amber-500/30 bg-amber-900/20' },
+                  { icon: '🔗', title: language === 'ar' ? 'رابط الابتكار العالمي' : 'Global Innovation Link', desc: language === 'ar' ? 'ربط المبتكرين بالشبكات الدولية والشركاء الاستراتيجيين والأسواق العالمية' : 'Connecting innovators with international networks and global markets', link: 'https://qstp.qa/ar/global-innovation-link/', color: 'border-violet-500/30 bg-violet-900/20' },
+                ].map((prog, i) => (
+                  <Card key={i} className={`border ${prog.color}`}>
+                    <CardContent className="p-5">
+                      <div className="text-3xl mb-3">{prog.icon}</div>
+                      <h3 className="text-white font-bold mb-2">{prog.title}</h3>
+                      <p className="text-slate-300 text-xs leading-relaxed mb-4">{prog.desc}</p>
+                      <a href={prog.link} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" variant="outline" className="w-full text-xs border-slate-600 text-slate-300 hover:bg-slate-700">
+                          {language === 'ar' ? 'اعرف أكثر' : 'Learn More'} →
+                        </Button>
+                      </a>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </main>

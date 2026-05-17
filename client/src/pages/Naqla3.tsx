@@ -476,6 +476,54 @@ export default function Naqla3() {
         </div>
       </section>
 
+      {/* International IP Protection Section - QSTP Compatible */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 rounded-full px-4 py-2 mb-4">
+              <span className="text-violet-400 text-sm font-medium">🌐 حماية الملكية الفكرية الدولية</span>
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">نموذج IP الدولي</h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">احمِ ابتكارك في 180+ دولة واستفد من اتفاقيات الترخيص الدولية</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            {[
+              { icon: '🌍', title: 'براءة اختراع PCT', desc: 'حماية براءتك عبر معاهدة التعاون بشأن براءات الاختراع (PCT) في 157 دولة', link: 'https://www.wipo.int/pct/ar/', badge: 'WIPO PCT', color: 'from-blue-600/20 to-blue-900/20 border-blue-500/30' },
+              { icon: '⚖️', title: 'عقود الترخيص الدولية', desc: 'عقود معيارية متوافقة مع معايير WIPO والاتحاد الأوروبي ومنظمة التجارة العالمية', link: 'https://www.wipo.int/treaties/ar/', badge: 'WIPO', color: 'from-emerald-600/20 to-emerald-900/20 border-emerald-500/30' },
+              { icon: '🏆', title: 'توافق QSTP', desc: 'عقود IP متوافقة مع متطلبات واحة قطر للعلوم والتكنولوجيا وبرامجها الدولية', link: 'https://qstp.qa/ar/', badge: 'QSTP', color: 'from-violet-600/20 to-violet-900/20 border-violet-500/30' },
+              { icon: '📊', title: 'تقييم قيمة IP', desc: 'تقييم احترافي لقيمة الملكية الفكرية وفق معايير السوق الدولية', link: '#', badge: 'Valuation', color: 'from-amber-600/20 to-amber-900/20 border-amber-500/30' },
+              { icon: '🔐', title: 'حماية الأسرار التجارية', desc: 'اتفاقيات عدم الإفصاح (NDA) معيارية متوافقة مع القانون الدولي', link: '#', badge: 'NDA', color: 'from-red-600/20 to-red-900/20 border-red-500/30' },
+              { icon: '🤝', title: 'شراكات الترخيص الدولية', desc: 'ربط المبتكرين بشركات عالمية لترخيص التكنولوجيا والتوسع في الأسواق الدولية', link: '#', badge: 'Licensing', color: 'from-cyan-600/20 to-cyan-900/20 border-cyan-500/30' },
+            ].map((item, i) => (
+              <Card key={i} className={`p-6 bg-gradient-to-br ${item.color} border hover:scale-105 transition-all duration-300`}>
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="text-white font-bold text-lg">{item.title}</h3>
+                  <span className="text-xs bg-white/10 text-white/70 px-2 py-0.5 rounded-full">{item.badge}</span>
+                </div>
+                <p className="text-gray-400 text-sm mb-4 leading-relaxed">{item.desc}</p>
+                {item.link !== '#' && (
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-violet-400 hover:text-violet-300 underline">
+                    اعرف أكثر →
+                  </a>
+                )}
+              </Card>
+            ))}
+          </div>
+          <div className="bg-gradient-to-r from-violet-900/30 to-blue-900/30 border border-violet-500/20 rounded-2xl p-6 text-center">
+            <p className="text-slate-300 text-sm mb-3">
+              📜 جميع العقود مطابقة لمعايير المنظمة العالمية للملكية الفكرية (WIPO) ومتطلبات QSTP والاتحاد الأوروبي
+            </p>
+            <div className="flex justify-center gap-6 flex-wrap">
+              <a href="https://www.wipo.int/portal/ar/" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 text-sm font-medium">🌐 WIPO</a>
+              <a href="https://qstp.qa/ar/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-sm font-medium">🏆 QSTP</a>
+              <a href="https://www.wto.org/english/tratop_e/trips_e/trips_e.htm" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 text-sm font-medium">📜 TRIPS/WTO</a>
+              <a href="https://epo.org" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 text-sm font-medium">🇪🇺 EPO</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto">

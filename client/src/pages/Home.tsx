@@ -60,7 +60,7 @@ export default function Home() {
       description: t.engines.naqla1.description,
       icon: Shield,
       color: 'from-emerald-500 to-teal-600',
-      bgColor: 'from-emerald-950/50',
+      bgColor: 'from-emerald-900/60',
       borderColor: 'border-emerald-500/30',
       features: t.engines.naqla1.features,
       link: '/naqla1',
@@ -73,7 +73,7 @@ export default function Home() {
       description: t.engines.naqla2.description,
       icon: Brain,
       color: 'from-blue-500 to-indigo-600',
-      bgColor: 'from-blue-950/50',
+      bgColor: 'from-blue-900/60',
       borderColor: 'border-blue-500/30',
       features: t.engines.naqla2.features,
       link: '/naqla2',
@@ -86,7 +86,7 @@ export default function Home() {
       description: t.engines.naqla3.description,
       icon: Globe,
       color: 'from-purple-500 to-pink-600',
-      bgColor: 'from-purple-950/50',
+      bgColor: 'from-purple-900/60',
       borderColor: 'border-purple-500/30',
       features: t.engines.naqla3.features,
       link: '/naqla3',
@@ -259,7 +259,7 @@ export default function Home() {
             {engines.map((engine, index) => (
               <Card 
                 key={engine.id}
-                className={`relative overflow-hidden border-0 bg-gradient-to-br ${engine.bgColor} to-card/50 backdrop-blur-sm transition-all duration-500 card-hover ${
+                className={`relative overflow-hidden border border-white/10 bg-gradient-to-br ${engine.bgColor} to-card/80 backdrop-blur-sm transition-all duration-500 card-hover ${
                   activeEngine === index ? 'ring-2 ring-cyan-500/50' : ''
                 }`}
                 onMouseEnter={() => setActiveEngine(index)}
@@ -570,6 +570,97 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Global Partners & QSTP Section */}
+      <section className="py-20 px-6 bg-gradient-to-b from-transparent via-violet-950/10 to-transparent">
+        <div className="container">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-500/10 border border-violet-500/30 rounded-full mb-4">
+              <Globe className="w-4 h-4 text-violet-400" />
+              <span className="text-violet-400 text-sm font-medium">شراكات دولية استراتيجية</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+              نقلة × الشركاء الدوليون
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              منصة نقلة شريك رسمي لأبرز مراكز الابتكار العالمية — وصول مباشر لشبكة 300+ شركة تقنية وبرامج تمويل دولية
+            </p>
+          </div>
+
+          {/* QSTP Featured Card */}
+          <div className="mb-8 rounded-2xl overflow-hidden border border-violet-500/30 bg-gradient-to-r from-violet-900/30 via-purple-900/20 to-blue-900/30">
+            <div className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
+              <div className="w-20 h-20 rounded-2xl bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0">
+                <Globe className="w-10 h-10 text-violet-400" />
+              </div>
+              <div className="flex-1 text-center md:text-right">
+                <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
+                  <span className="text-white font-bold text-xl">واحة قطر للعلوم والتكنولوجيا</span>
+                  <span className="text-xs bg-violet-600 text-white px-2 py-0.5 rounded-full">QSTP</span>
+                </div>
+                <p className="text-slate-300 text-sm mb-4 leading-relaxed">
+                  شراكة استراتيجية رسمية تتيح لمبتكري نقلة الوصول إلى صندوق تمويل بـ 30 مليون دولار، وبرامج التحضين والتسريع، وشبكة 300+ شركة تقنية عالمية في الدوحة، وبرنامج The 300 لأفضل المبتكرين الخليجيين.
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                  {[
+                    { label: '30M$ صندوق تمويل', icon: '💰' },
+                    { label: 'برنامج The 300', icon: '🏆' },
+                    { label: '300+ شركة تقنية', icon: '🌐' },
+                    { label: 'حاضنة أعمال', icon: '🚀' },
+                    { label: 'رابط الابتكار العالمي', icon: '🔗' },
+                  ].map((tag, i) => (
+                    <span key={i} className="text-xs bg-violet-500/20 text-violet-300 border border-violet-500/30 px-3 py-1 rounded-full">
+                      {tag.icon} {tag.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 shrink-0">
+                <a href="https://qstp.qa/ar/programs/" target="_blank" rel="noopener noreferrer">
+                  <button className="bg-violet-600 hover:bg-violet-700 text-white text-sm px-5 py-2.5 rounded-lg font-medium transition-colors w-full">
+                    برامج QSTP
+                  </button>
+                </a>
+                <a href="https://qstp.qa/ar/programs/the-300/" target="_blank" rel="noopener noreferrer">
+                  <button className="border border-violet-500/40 text-violet-300 hover:bg-violet-900/30 text-sm px-5 py-2.5 rounded-lg font-medium transition-colors w-full">
+                    برنامج The 300
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Other International Partners Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { name: 'MIT Enterprise Forum', country: '🇺🇸 الولايات المتحدة', desc: 'شبكة ريادة الأعمال التقنية العالمية', link: 'https://www.mitef.org/', color: 'border-red-500/20 hover:border-red-500/40' },
+              { name: 'Fraunhofer Institute', country: '🇩🇪 ألمانيا', desc: 'أبحاث تطبيقية في المواد المتقدمة والطاقة', link: 'https://www.fraunhofer.de/', color: 'border-green-500/20 hover:border-green-500/40' },
+              { name: 'KAIST', country: '🇰🇷 كوريا الجنوبية', desc: 'معهد العلوم والتكنولوجيا المتقدمة', link: 'https://www.kaist.ac.kr/', color: 'border-blue-500/20 hover:border-blue-500/40' },
+              { name: 'Skolkovo Foundation', country: '🇷🇺 روسيا', desc: 'مركز الابتكار والتكنولوجيا الروسي', link: 'https://sk.ru/', color: 'border-yellow-500/20 hover:border-yellow-500/40' },
+              { name: 'EIT InnoEnergy', country: '🇪🇺 أوروبا', desc: 'مسرّع الطاقة المستدامة الأوروبي', link: 'https://www.innoenergy.com/', color: 'border-teal-500/20 hover:border-teal-500/40' },
+              { name: 'Plug and Play Tech', country: '🇺🇸 سيليكون فالي', desc: 'أكبر مسرّع ابتكار في العالم', link: 'https://www.plugandplaytechcenter.com/', color: 'border-orange-500/20 hover:border-orange-500/40' },
+              { name: 'Nanyang TU', country: '🇸🇬 سنغافورة', desc: 'جامعة نانيانغ للتكنولوجيا', link: 'https://www.ntu.edu.sg/', color: 'border-pink-500/20 hover:border-pink-500/40' },
+              { name: 'CERN IdeaSquare', country: '🇨🇭 سويسرا', desc: 'مركز الابتكار في مختبر CERN', link: 'https://ideasquare.cern/', color: 'border-cyan-500/20 hover:border-cyan-500/40' },
+            ].map((partner, i) => (
+              <a key={i} href={partner.link} target="_blank" rel="noopener noreferrer">
+                <div className={`border ${partner.color} bg-card/30 rounded-xl p-4 hover:bg-card/50 transition-all cursor-pointer h-full`}>
+                  <div className="text-xs text-muted-foreground mb-1">{partner.country}</div>
+                  <div className="text-white font-semibold text-sm mb-1">{partner.name}</div>
+                  <div className="text-slate-400 text-xs leading-relaxed">{partner.desc}</div>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div className="text-center mt-6">
+            <a href="/strategic-partners">
+              <button className="text-sm text-muted-foreground hover:text-foreground border border-border/50 hover:border-border px-5 py-2 rounded-lg transition-colors">
+                عرض جميع الشركاء الاستراتيجيين ←
+              </button>
+            </a>
           </div>
         </div>
       </section>
