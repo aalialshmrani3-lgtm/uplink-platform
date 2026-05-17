@@ -21,7 +21,7 @@ const trlLevels = [
     badgeColor: "bg-slate-600/20 text-slate-400 border-slate-600/30",
     stage: "بحث أساسي",
     fundingRange: "منح بحثية",
-    qstpEligible: false,
+    globalEligible: false,
     icon: "🔬",
   },
   {
@@ -34,7 +34,7 @@ const trlLevels = [
     badgeColor: "bg-red-700/20 text-red-400 border-red-700/30",
     stage: "بحث تطبيقي",
     fundingRange: "منح بحثية",
-    qstpEligible: false,
+    globalEligible: false,
     icon: "💡",
   },
   {
@@ -47,7 +47,7 @@ const trlLevels = [
     badgeColor: "bg-orange-600/20 text-orange-400 border-orange-600/30",
     stage: "تطوير مبكر",
     fundingRange: "تمويل بذري",
-    qstpEligible: false,
+    globalEligible: false,
     icon: "⚗️",
   },
   {
@@ -60,7 +60,7 @@ const trlLevels = [
     badgeColor: "bg-yellow-600/20 text-yellow-400 border-yellow-600/30",
     stage: "نموذج أولي",
     fundingRange: "تمويل بذري - Series A",
-    qstpEligible: true,
+    globalEligible: true,
     icon: "🧪",
   },
   {
@@ -73,7 +73,7 @@ const trlLevels = [
     badgeColor: "bg-lime-600/20 text-lime-400 border-lime-600/30",
     stage: "تطوير متقدم",
     fundingRange: "Series A",
-    qstpEligible: true,
+    globalEligible: true,
     icon: "🔧",
   },
   {
@@ -86,7 +86,7 @@ const trlLevels = [
     badgeColor: "bg-green-600/20 text-green-400 border-green-600/30",
     stage: "تجريب ميداني",
     fundingRange: "Series A - B",
-    qstpEligible: true,
+    globalEligible: true,
     icon: "🌍",
   },
   {
@@ -99,7 +99,7 @@ const trlLevels = [
     badgeColor: "bg-teal-600/20 text-teal-400 border-teal-600/30",
     stage: "جاهز للسوق",
     fundingRange: "Series B - C",
-    qstpEligible: true,
+    globalEligible: true,
     icon: "🚀",
   },
   {
@@ -112,7 +112,7 @@ const trlLevels = [
     badgeColor: "bg-blue-600/20 text-blue-400 border-blue-600/30",
     stage: "ما قبل الإطلاق",
     fundingRange: "Series C+",
-    qstpEligible: true,
+    globalEligible: true,
     icon: "✅",
   },
   {
@@ -125,7 +125,7 @@ const trlLevels = [
     badgeColor: "bg-violet-600/20 text-violet-400 border-violet-600/30",
     stage: "تجاري ناجح",
     fundingRange: "IPO / استحواذ",
-    qstpEligible: true,
+    globalEligible: true,
     icon: "🏆",
   },
 ];
@@ -178,8 +178,8 @@ export default function TRLAssessment() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" dir="rtl">
       <SEOHead
         title="تقييم مستوى النضج التقني (TRL) - نقلة 5.0"
-        description="قيّم مستوى نضج ابتكارك التقني باستخدام مقياس TRL المعتمد دولياً من NASA وESA وQSTP. اعرف مكانك في رحلة الابتكار من البحث الأساسي إلى التجاري."
-        keywords="TRL, مستوى النضج التقني, ابتكار, QSTP, براءة اختراع, تقنية"
+        description="قيّم مستوى نضج ابتكارك التقني باستخدام مقياس TRL المعتمد دولياً من NASA وESA. اعرف مكانك في رحلة الابتكار من البحث الأساسي إلى التجاري."
+        keywords="TRL, مستوى النضج التقني, ابتكار, براءة اختراع, تقنية, نقلة"
       />
 
       {/* Header */}
@@ -196,12 +196,10 @@ export default function TRLAssessment() {
             </div>
           </Link>
           <div className="flex items-center gap-3">
-            <a href="https://qstp.qa" target="_blank" rel="noopener noreferrer">
-              <Badge className="bg-violet-500/20 text-violet-300 border-violet-500/40 gap-1.5">
+            <Badge className="bg-violet-500/20 text-violet-300 border-violet-500/40 gap-1.5">
                 <Globe className="w-3 h-3" />
-                معتمد QSTP
+                معتمد دولياً
               </Badge>
-            </a>
             <Link href="/naqla3">
               <Button variant="outline" size="sm" className="border-slate-700 text-slate-300 hover:bg-slate-800">
                 <ArrowRight className="w-4 h-4 ml-1" />
@@ -226,7 +224,7 @@ export default function TRLAssessment() {
             </span>
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-6">
-            المقياس المعتمد دولياً من NASA وESA وواحة قطر للعلوم والتكنولوجيا (QSTP) لتصنيف مستوى نضج الابتكارات التقنية من البحث الأساسي إلى التجاري
+            المقياس المعتمد دولياً من NASA وESA والاتحاد الأوروبي لتصنيف مستوى نضج الابتكارات التقنية من البحث الأساسي إلى التجاري
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 gap-1.5">
@@ -239,7 +237,7 @@ export default function TRLAssessment() {
             </Badge>
             <Badge className="bg-violet-500/20 text-violet-300 border-violet-500/30 gap-1.5">
               <Globe className="w-3 h-3" />
-              معتمد من QSTP
+              معتمد من الاتحاد الأوروبي
             </Badge>
           </div>
         </div>
@@ -330,10 +328,10 @@ export default function TRLAssessment() {
                             <Badge variant="outline" className="text-xs border-slate-600 text-slate-400">
                               💰 {level.fundingRange}
                             </Badge>
-                            {level.qstpEligible && (
+                            {level.globalEligible && (
                               <Badge className="text-xs bg-violet-500/20 text-violet-300 border-violet-500/30 gap-1">
                                 <Globe className="w-2.5 h-2.5" />
-                                مؤهل QSTP
+                                مؤهل للتمويل الدولي
                               </Badge>
                             )}
                           </div>
@@ -362,21 +360,21 @@ export default function TRLAssessment() {
                               ))}
                             </ul>
                           </div>
-                          {level.qstpEligible && (
+                          {level.globalEligible && (
                             <div className="bg-violet-900/20 rounded-xl p-4 border border-violet-500/20">
                               <div className="text-violet-300 text-xs font-medium mb-2 flex items-center gap-1">
                                 <Globe className="w-3.5 h-3.5" />
-                                مؤهل لبرامج QSTP
+                                مؤهل للبرامج الدولية
                               </div>
                               <p className="text-slate-300 text-xs leading-relaxed mb-3">
-                                ابتكارك في TRL {level.level} مؤهل للتقدم لبرامج واحة قطر للعلوم والتكنولوجيا، بما فيها حاضنة الأعمال وبرنامج The 300 وصندوق التمويل بـ 30M$.
+                                ابتكارك في TRL {level.level} مؤهل للتقدم لبرامج التمويل والتسريع الدولية، بما فيها حاضنات الأعمال العالمية وصناديق رأس المال المخاطر.
                               </p>
-                              <a href="https://qstp.qa/ar/programs/incubate/" target="_blank" rel="noopener noreferrer">
-                                <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white text-xs gap-1.5">
+                              <Link href="/naqla3">
+                                <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white gap-1.5">
                                   <Globe className="w-3 h-3" />
-                                  التقدم لـ QSTP
+                                  اعرض في نقلة 3
                                 </Button>
-                              </a>
+                              </Link>
                             </div>
                           )}
                         </div>
@@ -472,21 +470,21 @@ export default function TRLAssessment() {
                       </div>
                     </div>
 
-                    {selectedLevel.qstpEligible ? (
+                    {selectedLevel.globalEligible ? (
                       <div className="bg-violet-900/30 rounded-xl p-4 border border-violet-500/30 mb-4">
                         <div className="flex items-center gap-2 mb-2">
                           <CheckCircle2 className="w-4 h-4 text-violet-400" />
-                          <span className="text-violet-300 font-semibold text-sm">مؤهل لبرامج QSTP!</span>
+                          <span className="text-violet-300 font-semibold text-sm">مؤهل للتمويل الدولي!</span>
                         </div>
                         <p className="text-slate-300 text-xs leading-relaxed mb-3">
-                          ابتكارك في TRL {selectedLevel.level} مؤهل للتقدم لبرامج واحة قطر للعلوم والتكنولوجيا، بما فيها حاضنة الأعمال وبرنامج The 300 وصندوق التمويل بـ 30 مليون دولار.
+                          ابتكارك في TRL {selectedLevel.level} مؤهل للتقدم لبرامج التمويل الدولية وحاضنات الأعمال العالمية وصناديق رأس المال المخاطر.
                         </p>
-                        <a href="https://qstp.qa/ar/programs/" target="_blank" rel="noopener noreferrer">
-                          <Button className="bg-violet-600 hover:bg-violet-700 text-white text-sm gap-2">
-                            <Globe className="w-4 h-4" />
-                            التقدم لبرامج QSTP الآن
-                          </Button>
-                        </a>
+                        <Link href="/naqla3">
+                            <Button className="bg-violet-600 hover:bg-violet-700 text-white gap-2">
+                              <Globe className="w-4 h-4" />
+                              اعرض ابتكارك في نقلة 3
+                            </Button>
+                          </Link>
                       </div>
                     ) : (
                       <div className="bg-slate-700/30 rounded-xl p-4 border border-slate-600 mb-4">
@@ -495,7 +493,7 @@ export default function TRLAssessment() {
                           <span className="text-slate-300 font-semibold text-sm">تحتاج مزيداً من التطوير</span>
                         </div>
                         <p className="text-slate-400 text-xs leading-relaxed">
-                          ابتكارك في مرحلة مبكرة. ركز على إثبات المفهوم وبناء نموذج أولي للوصول إلى TRL 4+ والتأهل لبرامج QSTP.
+                          ابتكارك في مرحلة مبكرة. ركز على إثبات المفهوم وبناء نموذج أولي للوصول إلى TRL 4+ والتأهل للتمويل الدولي.
                         </p>
                       </div>
                     )}
@@ -536,12 +534,12 @@ export default function TRLAssessment() {
                 اعرض ابتكارك في نقلة 3
               </Button>
             </Link>
-            <a href="https://qstp.qa/ar/programs/incubate/" target="_blank" rel="noopener noreferrer">
+            <Link href="/register">
               <Button variant="outline" className="border-violet-600 text-violet-300 hover:bg-violet-900/30 gap-2">
                 <Globe className="w-4 h-4" />
-                برنامج حاضنة QSTP
+                سجّل ابتكارك في نقلة
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

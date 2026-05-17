@@ -123,7 +123,7 @@ const Naqla2Projects = lazy(() => import("./pages/Naqla2Projects")); // NAQLA 2 
 const Naqla3Assets = lazy(() => import("./pages/Naqla3Assets")); // NAQLA 3 Assets
 const StrategicPartners = lazy(() => import("./pages/StrategicPartners")); // Strategic Partners
 const ValueFootprints = lazy(() => import("./pages/ValueFootprints")); // Value Footprints
-const TRLAssessment = lazy(() => import("./pages/TRLAssessment")); // TRL Assessment - QSTP Compatible
+const TRLAssessment = lazy(() => import("./pages/TRLAssessment")); // TRL Assessment
 // Removed: Naqla2Dashboard - replaced by Naqla2VettingDashboard and Naqla2Marketplace
 const RegisterIndividual = lazy(() => import("./pages/register/RegisterIndividual")); // Register Individual
 const RegisterGovernment = lazy(() => import("./pages/register/RegisterGovernment")); // Register Government

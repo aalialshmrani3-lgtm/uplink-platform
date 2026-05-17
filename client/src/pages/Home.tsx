@@ -574,7 +574,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Global Partners & QSTP Section */}
+      {/* Global Partners Section */}
       <section className="py-20 px-6 bg-gradient-to-b from-transparent via-violet-950/10 to-transparent">
         <div className="container">
           <div className="text-center mb-10">
@@ -590,7 +590,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* QSTP Featured Card */}
+          {/* NEOM Featured Card */}
           <div className="mb-8 rounded-2xl overflow-hidden border border-violet-500/30 bg-gradient-to-r from-violet-900/30 via-purple-900/20 to-blue-900/30">
             <div className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
               <div className="w-20 h-20 rounded-2xl bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0">
@@ -598,19 +598,19 @@ export default function Home() {
               </div>
               <div className="flex-1 text-center md:text-right">
                 <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
-                  <span className="text-white font-bold text-xl">واحة قطر للعلوم والتكنولوجيا</span>
-                  <span className="text-xs bg-violet-600 text-white px-2 py-0.5 rounded-full">QSTP</span>
+                  <span className="text-white font-bold text-xl">شبكة الابتكار العالمية</span>
+                  <span className="text-xs bg-violet-600 text-white px-2 py-0.5 rounded-full">دولي</span>
                 </div>
                 <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                  شراكة استراتيجية رسمية تتيح لمبتكري نقلة الوصول إلى صندوق تمويل بـ 30 مليون دولار، وبرامج التحضين والتسريع، وشبكة 300+ شركة تقنية عالمية في الدوحة، وبرنامج The 300 لأفضل المبتكرين الخليجيين.
+                  شراكات استراتيجية مع أبرز مراكز الابتكار العالمية تتيح لمبتكري نقلة الوصول إلى صناديق رأس المال المخاطر، وبرامج التحضين والتسريع، وشبكة من أكثر من 500 شركة تقنية عالمية وبرامج تسريع دولية.
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                   {[
-                    { label: '30M$ صندوق تمويل', icon: '💰' },
-                    { label: 'برنامج The 300', icon: '🏆' },
-                    { label: '300+ شركة تقنية', icon: '🌐' },
-                    { label: 'حاضنة أعمال', icon: '🚀' },
-                    { label: 'رابط الابتكار العالمي', icon: '🔗' },
+                    { label: 'صناديق رأس المال', icon: '💰' },
+                    { label: 'برامج تسريع دولية', icon: '🏆' },
+                    { label: '500+ شركة تقنية', icon: '🌐' },
+                    { label: 'حاضنات عالمية', icon: '🚀' },
+                    { label: 'شبكة الابتكار العالمي', icon: '🔗' },
                   ].map((tag, i) => (
                     <span key={i} className="text-xs bg-violet-500/20 text-violet-300 border border-violet-500/30 px-3 py-1 rounded-full">
                       {tag.icon} {tag.label}
@@ -619,14 +619,14 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-col gap-2 shrink-0">
-                <a href="https://qstp.qa/ar/programs/" target="_blank" rel="noopener noreferrer">
+                <a href="/naqla2/national-challenges">
                   <button className="bg-violet-600 hover:bg-violet-700 text-white text-sm px-5 py-2.5 rounded-lg font-medium transition-colors w-full">
-                    برامج QSTP
+                    استكشف التحديات
                   </button>
                 </a>
-                <a href="https://qstp.qa/ar/programs/the-300/" target="_blank" rel="noopener noreferrer">
+                <a href="/trl-assessment">
                   <button className="border border-violet-500/40 text-violet-300 hover:bg-violet-900/30 text-sm px-5 py-2.5 rounded-lg font-medium transition-colors w-full">
-                    برنامج The 300
+                    تقييم TRL
                   </button>
                 </a>
               </div>

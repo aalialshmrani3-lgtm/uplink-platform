@@ -208,9 +208,9 @@ export default function Admin() {
                 </Badge>
               )}
             </TabsTrigger>
-            <TabsTrigger value="qstp" className="gap-2">
+            <TabsTrigger value="global" className="gap-2">
               <Globe className="w-4 h-4" />
-              {language === 'ar' ? 'ترشيح QSTP' : 'QSTP Nominations'}
+              {language === 'ar' ? 'برامج دولية' : 'Global Programs'}
             </TabsTrigger>
           </TabsList>
 
@@ -511,38 +511,38 @@ export default function Admin() {
             </Card>
           </TabsContent>
 
-          {/* QSTP Nominations Tab */}
-          <TabsContent value="qstp">
+          {/* Global Programs Tab */}
+          <TabsContent value="global">
             <div className="space-y-6">
-              {/* QSTP Header Banner */}
+              {/* Global Programs Header Banner */}
               <Card className="border border-violet-500/30 bg-gradient-to-r from-violet-900/40 to-blue-900/40">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 bg-violet-600/20 rounded-xl flex items-center justify-center text-3xl shrink-0">🌐</div>
                     <div className="flex-1">
                       <h2 className="text-xl font-bold text-white mb-1">
-                        {language === 'ar' ? 'الترشيح المؤسسي لبرامج QSTP' : 'Institutional Nominations for QSTP Programs'}
+                        {language === 'ar' ? 'الترشيح للبرامج الدولية' : 'Nominations for Global Programs'}
                       </h2>
                       <p className="text-slate-300 text-sm mb-4">
                         {language === 'ar'
-                          ? 'رشّح الابتكارات والمشاريع المتميزة لبرامج واحة قطر للعلوم والتكنولوجيا. المشاريع في TRL 4+ مؤهلة للتقدم لصندوق الـ 30 مليون دولار وبرنامج The 300 وحاضنة الأعمال.'
-                          : 'Nominate outstanding innovations for Qatar Science & Technology Park programs. Projects at TRL 4+ are eligible for the $30M fund, The 300 program, and the incubator.'
+                          ? 'رشّح الابتكارات والمشاريع المتميزة لبرامج التسريع والتمويل الدولية. المشاريع في TRL 4+ مؤهلة للتقدم لصناديق رأس المال المخاطر وحاضنات الأعمال العالمية.'
+                          : 'Nominate outstanding innovations for global acceleration and funding programs. Projects at TRL 4+ are eligible for venture capital funds and international incubators.'
                         }
                       </p>
                       <div className="flex gap-2 flex-wrap">
-                        <a href="https://qstp.qa/ar/programs/incubate/" target="_blank" rel="noopener noreferrer">
+                        <a href="/trl-assessment">
                           <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white text-xs gap-1.5">
-                            🏢 {language === 'ar' ? 'حاضنة QSTP' : 'QSTP Incubator'}
+                            🏢 {language === 'ar' ? 'تقييم TRL' : 'TRL Assessment'}
                           </Button>
                         </a>
-                        <a href="https://qstp.qa/ar/programs/the-300/" target="_blank" rel="noopener noreferrer">
+                        <a href="/naqla2/national-challenges">
                           <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-1.5">
-                            🏆 {language === 'ar' ? 'برنامج The 300' : 'The 300 Program'}
+                            🏆 {language === 'ar' ? 'التحديات الوطنية' : 'National Challenges'}
                           </Button>
                         </a>
-                        <a href="https://qstp.qa/ar/global-innovation-link/" target="_blank" rel="noopener noreferrer">
+                        <a href="/naqla3">
                           <Button size="sm" variant="outline" className="border-violet-500/40 text-violet-300 hover:bg-violet-900/30 text-xs gap-1.5">
-                            🔗 {language === 'ar' ? 'رابط الابتكار العالمي' : 'Global Innovation Link'}
+                            🔗 {language === 'ar' ? 'سوق الملكية الفكرية' : 'IP Marketplace'}
                           </Button>
                         </a>
                       </div>
@@ -622,19 +622,19 @@ export default function Admin() {
                 </CardContent>
               </Card>
 
-              {/* QSTP Programs Cards */}
+              {/* Global Programs Cards */}
               <div className="grid md:grid-cols-3 gap-4">
                 {[
-                  { icon: '🏢', title: language === 'ar' ? 'حاضنة الأعمال' : 'Business Incubator', desc: language === 'ar' ? 'دعم شامل للشركات الناشئة في TRL 4-6 مع مساحة عمل ومرشدين متخصصين' : 'Comprehensive support for tech startups at TRL 4-6 with workspace and mentors', link: 'https://qstp.qa/ar/programs/incubate/', color: 'border-blue-500/30 bg-blue-900/20' },
-                  { icon: '🏆', title: language === 'ar' ? 'برنامج The 300' : 'The 300 Program', desc: language === 'ar' ? 'برنامج تسريع للشركات الأكثر تأثيراً في التكنولوجيا النظيفة والذكاء الاصطناعي والتكنولوجيا الحيوية' : 'Acceleration for most impactful startups in clean tech, AI, and biotech', link: 'https://qstp.qa/ar/programs/the-300/', color: 'border-amber-500/30 bg-amber-900/20' },
-                  { icon: '🔗', title: language === 'ar' ? 'رابط الابتكار العالمي' : 'Global Innovation Link', desc: language === 'ar' ? 'ربط المبتكرين بالشبكات الدولية والشركاء الاستراتيجيين والأسواق العالمية' : 'Connecting innovators with international networks and global markets', link: 'https://qstp.qa/ar/global-innovation-link/', color: 'border-violet-500/30 bg-violet-900/20' },
+                  { icon: '🏢', title: language === 'ar' ? 'حاضنات الأعمال العالمية' : 'Global Business Incubators', desc: language === 'ar' ? 'دعم شامل للشركات الناشئة في TRL 4-6 مع مساحة عمل ومرشدين متخصصين من شبكة دولية' : 'Comprehensive support for tech startups at TRL 4-6 with workspace and mentors from global networks', link: '/naqla2/national-challenges', color: 'border-blue-500/30 bg-blue-900/20' },
+                  { icon: '🏆', title: language === 'ar' ? 'برامج التسريع الدولية' : 'Global Accelerators', desc: language === 'ar' ? 'برامج تسريع للشركات الأكثر تأثيراً في التكنولوجيا النظيفة والذكاء الاصطناعي والتكنولوجيا الحيوية' : 'Acceleration for most impactful startups in clean tech, AI, and biotech', link: '/trl-assessment', color: 'border-amber-500/30 bg-amber-900/20' },
+                  { icon: '🔗', title: language === 'ar' ? 'رابط الابتكار العالمي' : 'Global Innovation Link', desc: language === 'ar' ? 'ربط المبتكرين بالشبكات الدولية والشركاء الاستراتيجيين والأسواق العالمية' : 'Connecting innovators with international networks and global markets', link: '/naqla3', color: 'border-violet-500/30 bg-violet-900/20' },
                 ].map((prog, i) => (
                   <Card key={i} className={`border ${prog.color}`}>
                     <CardContent className="p-5">
                       <div className="text-3xl mb-3">{prog.icon}</div>
                       <h3 className="text-white font-bold mb-2">{prog.title}</h3>
                       <p className="text-slate-300 text-xs leading-relaxed mb-4">{prog.desc}</p>
-                      <a href={prog.link} target="_blank" rel="noopener noreferrer">
+                      <a href={prog.link}>
                         <Button size="sm" variant="outline" className="w-full text-xs border-slate-600 text-slate-300 hover:bg-slate-700">
                           {language === 'ar' ? 'اعرف أكثر' : 'Learn More'} →
                         </Button>

@@ -414,19 +414,19 @@ export default function ValueFootprints() {
           </div>
         )}
 
-        {/* QSTP Alignment Section */}
+        {/* Innovation Impact Section */}
         <div className="mt-8 p-6 rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-violet-500/5">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center">
               <Globe className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-foreground">مؤشرات التوافق مع QSTP</h3>
-              <p className="text-sm text-muted-foreground">واحة قطر للعلوم والتكنولوجيا — أهداف الشراكة الاستراتيجية</p>
+              <h3 className="text-lg font-bold text-foreground">مؤشرات الأثر والابتكار</h3>
+              <p className="text-sm text-muted-foreground">منصة نقلة — أهداف الابتكار الوطنية والدولية</p>
             </div>
-            <a href="https://qstp.qa/ar/" target="_blank" rel="noopener noreferrer"
+            <a href="/admin"
               className="mr-auto flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors">
-              <span>زيارة QSTP</span>
+              <span>برامج دولية</span>
               <ArrowUpRight className="w-3 h-3" />
             </a>
           </div>
@@ -450,11 +450,11 @@ export default function ValueFootprints() {
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             {[
-              { title: "التكنولوجيا النظيفة (Clean Tech)", count: "89 مشروع", growth: "+34%", icon: "🌿", link: "https://qstp.qa/ar/programs/" },
-              { title: "التكنولوجيا الحيوية (Biotech)", count: "43 مشروع", growth: "+28%", icon: "🧬", link: "https://qstp.qa/ar/programs/" },
-              { title: "المواد المتقدمة (Advanced Materials)", count: "31 مشروع", growth: "+19%", icon: "⚗️", link: "https://qstp.qa/ar/programs/" },
+              { title: "التكنولوجيا النظيفة (Clean Tech)", count: "89 مشروع", growth: "+34%", icon: "🌿", link: "/challenges" },
+              { title: "التكنولوجيا الحيوية (Biotech)", count: "43 مشروع", growth: "+28%", icon: "🧬", link: "/challenges" },
+              { title: "المواد المتقدمة (Advanced Materials)", count: "31 مشروع", growth: "+19%", icon: "⚗️", link: "/challenges" },
             ].map((sector, i) => (
-              <a key={i} href={sector.link} target="_blank" rel="noopener noreferrer"
+              <a key={i} href={sector.link}
                 className="flex items-center gap-3 p-4 rounded-xl border border-border/50 bg-card/30 hover:border-blue-500/40 transition-colors group">
                 <div className="text-3xl">{sector.icon}</div>
                 <div className="flex-1">

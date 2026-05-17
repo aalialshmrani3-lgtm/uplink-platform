@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-// QSTP Sector Icons mapping
+// Sector Icons mapping
 const sectorIcons: Record<string, React.ReactNode> = {
   biotechnology: <Dna className="w-4 h-4" />,
   advanced_materials: <Atom className="w-4 h-4" />,
@@ -47,7 +47,7 @@ export default function Challenges() {
       sponsor: "أرامكو السعودية",
       badge: "🏆 جائزة كبرى",
       badgeColor: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 2,
@@ -62,7 +62,7 @@ export default function Challenges() {
       sponsor: "نيوم",
       badge: "🌟 تحدي نيوم",
       badgeColor: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 3,
@@ -77,7 +77,7 @@ export default function Challenges() {
       sponsor: "وزارة الصحة",
       badge: "🏥 رعاية صحية",
       badgeColor: "bg-pink-500/20 text-pink-400 border-pink-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 4,
@@ -92,7 +92,7 @@ export default function Challenges() {
       sponsor: "وزارة الاتصالات",
       badge: "🏙️ مدن ذكية",
       badgeColor: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 5,
@@ -107,7 +107,7 @@ export default function Challenges() {
       sponsor: "الشركة السعودية للكهرباء",
       badge: "☀️ طاقة شمسية",
       badgeColor: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 6,
@@ -122,7 +122,7 @@ export default function Challenges() {
       sponsor: "وزارة البيئة والمياه",
       badge: "🌱 زراعة مستدامة",
       badgeColor: "bg-green-500/20 text-green-400 border-green-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 7,
@@ -137,7 +137,7 @@ export default function Challenges() {
       sponsor: "صندوق الاستثمارات العامة",
       badge: "🔗 بلوكتشين",
       badgeColor: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 8,
@@ -152,7 +152,7 @@ export default function Challenges() {
       sponsor: "مبادرة السعودية الخضراء",
       badge: "🌍 جائزة المناخ",
       badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 9,
@@ -167,7 +167,7 @@ export default function Challenges() {
       sponsor: "ساما",
       badge: "💰 تقنية مالية",
       badgeColor: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
     {
       id: 10,
@@ -182,83 +182,83 @@ export default function Challenges() {
       sponsor: "وزارة التعليم",
       badge: "📚 تعليم",
       badgeColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
-      qstpPartner: false,
+      globalPartner: false,
     },
-    // ===== قطاعات QSTP الجديدة =====
+    // ===== قطاعات دولية متخصصة =====
     {
       id: 11,
       title: "تحدي التكنولوجيا الحيوية - علاج السرطان بالنانو",
-      description: "طوّر جسيمات نانوية ذكية لاستهداف الخلايا السرطانية وتوصيل الأدوية بدقة تفوق 98% دون أضرار جانبية. شراكة مع واحة قطر للعلوم والتكنولوجيا (QSTP) وكلية طب وايل كورنيل.",
+      description: "طوّر جسيمات نانوية ذكية لاستهداف الخلايا السرطانية وتوصيل الأدوية بدقة تفوق 98% دون أضرار جانبية. شراكة مع كلية طب وايل كورنيل ومركز الابتكار الصحي.",
       type: "challenge",
       category: "biotechnology",
       prize: "5000000",
       status: "open",
       participants: 87,
       endDate: new Date(Date.now() + 120 * 24 * 60 * 60 * 1000),
-      sponsor: "QSTP × Weill Cornell Medicine",
-      badge: "🧬 QSTP Biotech",
+      sponsor: "KACST × Weill Cornell Medicine",
+      badge: "🧬 Biotech Challenge",
       badgeColor: "bg-rose-500/20 text-rose-400 border-rose-500/30",
-      qstpPartner: true,
+      globalPartner: true,
     },
     {
       id: 12,
       title: "هاكاثون المواد المتقدمة - بدائل الكربون الفائق",
-      description: "اكتشف مواد جديدة أخف وأقوى من الكربون الفائق لتطبيقات الفضاء والطاقة. الفائز يحصل على براءة اختراع مشتركة مع QSTP وتمويل بحثي 3 سنوات.",
+      description: "اكتشف مواد جديدة أخف وأقوى من الكربون الفائق لتطبيقات الفضاء والطاقة. الفائز يحصل على براءة اختراع مسجّلة دولياً وتمويل بحثي 3 سنوات.",
       type: "hackathon",
       category: "advanced_materials",
       prize: "4000000",
       status: "open",
       participants: 63,
       endDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-      sponsor: "QSTP × Qatar University",
+      sponsor: "KFUPM × MIT Materials Lab",
       badge: "⚗️ Advanced Materials",
       badgeColor: "bg-violet-500/20 text-violet-400 border-violet-500/30",
-      qstpPartner: true,
+      globalPartner: true,
     },
     {
       id: 13,
       title: "تحدي Clean Tech - تحلية المياه بالطاقة الشمسية",
-      description: "صمّم منظومة تحلية مياه تعمل 100% بالطاقة الشمسية بتكلفة أقل من 0.3 دولار/م³. يُطبَّق الحل في 5 دول خليجية بدعم من QSTP وصندوق قطر للتنمية.",
+      description: "صمّم منظومة تحلية مياه تعمل 100% بالطاقة الشمسية بتكلفة أقل من 0.3 دولار/م³. يُطبَّق الحل في 5 دول خليجية بدعم من صندوق التنمية الخليجي.",
       type: "challenge",
       category: "clean_tech",
       prize: "6000000",
       status: "open",
       participants: 142,
       endDate: new Date(Date.now() + 75 * 24 * 60 * 60 * 1000),
-      sponsor: "QSTP × Qatar Development Fund",
-      badge: "💧 Clean Tech QSTP",
+      sponsor: "NEOM × صندوق التنمية الخليجي",
+      badge: "💧 Clean Tech",
       badgeColor: "bg-teal-500/20 text-teal-400 border-teal-500/30",
-      qstpPartner: true,
+      globalPartner: true,
     },
     {
       id: 14,
       title: "مسابقة الحوسبة الكمية للأدوية",
-      description: "استخدم الحوسبة الكمية لاكتشاف أدوية جديدة لمرض الزهايمر في وقت قياسي. شراكة مع IBM Quantum وQSTP لتوفير بيئة حوسبة كمية مجانية للمتسابقين.",
+      description: "استخدم الحوسبة الكمية لاكتشاف أدوية جديدة لمرض الزهايمر في وقت قياسي. شراكة مع IBM Quantum لتوفير بيئة حوسبة كمية مجانية للمتسابقين.",
       type: "competition",
       category: "quantum_computing",
       prize: "3500000",
       status: "open",
       participants: 45,
       endDate: new Date(Date.now() + 150 * 24 * 60 * 60 * 1000),
-      sponsor: "QSTP × IBM Quantum",
-      badge: "⚛️ Quantum × QSTP",
+      sponsor: "KACST × IBM Quantum",
+      badge: "⚛️ Quantum Computing",
       badgeColor: "bg-sky-500/20 text-sky-400 border-sky-500/30",
-      qstpPartner: true,
+      globalPartner: true,
     },
     {
       id: 15,
       title: "هاكاثون الذكاء الاصطناعي للأمن السيبراني",
-      description: "طوّر نظام AI لاكتشاف التهديدات السيبرانية في الوقت الفعلي بدقة 99.9%. الفائز يحصل على عقد مع وزارة الداخلية وشهادة QSTP للابتكار الأمني.",
+      description: "طوّر نظام AI لاكتشاف التهديدات السيبرانية في الوقت الفعلي بدقة 99.9%. الفائز يحصل على عقد مع وزارة الداخلية وشهادة دولية للابتكار الأمني.",
       type: "hackathon",
       category: "technology",
       prize: "2500000",
       status: "open",
       participants: 198,
       endDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
-      sponsor: "QSTP × وزارة الداخلية",
+      sponsor: "STC × وزارة الداخلية",
       badge: "🔐 Cybersecurity",
       badgeColor: "bg-red-500/20 text-red-400 border-red-500/30",
-      qstpPartner: true,
+      globalPartner: true,
     },
   ];
 
@@ -308,7 +308,7 @@ export default function Challenges() {
     .filter((c: any) => c.status === "open")
     .reduce((sum: number, c: any) => sum + Number(c.prize), 0);
 
-  const qstpCount = displayChallenges.filter((c: any) => c.qstpPartner).length;
+  const globalPartnerCount = displayChallenges.filter((c: any) => c.globalPartner).length;
 
   const categories = [
     { id: "all", label: "الكل" },
@@ -338,12 +338,10 @@ export default function Challenges() {
             </div>
           </Link>
           <div className="flex items-center gap-3">
-            <a href="https://qstp.qa" target="_blank" rel="noopener noreferrer">
-              <Badge className="bg-violet-500/20 text-violet-300 border-violet-500/40 cursor-pointer hover:bg-violet-500/30 transition-colors gap-1.5">
+            <Badge className="bg-violet-500/20 text-violet-300 border-violet-500/40 gap-1.5">
                 <Globe className="w-3 h-3" />
-                شريك QSTP
+                تحديات دولية
               </Badge>
-            </a>
             <Link href="/dashboard">
               <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800">
                 لوحة التحكم
@@ -354,26 +352,26 @@ export default function Challenges() {
       </header>
 
       <div className="container mx-auto px-6 py-8">
-        {/* QSTP Partnership Banner */}
+        {/* Global Innovation Banner */}
         <div className="mb-8 bg-gradient-to-r from-violet-900/40 via-purple-900/30 to-blue-900/40 border border-violet-500/30 rounded-2xl p-5 flex flex-col md:flex-row items-center gap-4">
           <div className="flex items-center gap-3 shrink-0">
             <div className="w-12 h-12 bg-violet-500/20 rounded-xl flex items-center justify-center border border-violet-500/30">
               <Globe className="w-6 h-6 text-violet-400" />
             </div>
             <div>
-              <div className="text-white font-bold text-sm">شراكة استراتيجية</div>
-              <div className="text-violet-300 text-xs">واحة قطر للعلوم والتكنولوجيا</div>
+              <div className="text-white font-bold text-sm">منصة الابتكار الوطنية</div>
+              <div className="text-violet-300 text-xs">تحديات محلية ودولية متخصصة</div>
             </div>
           </div>
           <div className="flex-1 text-slate-300 text-sm text-center md:text-right">
-            نقلة 5.0 شريك رسمي لـ QSTP — {qstpCount} تحديات مشتركة بجوائز تتجاوز 21 مليون ريال، مع إمكانية الوصول إلى شبكة 300+ شركة تقنية عالمية في الدوحة.
+            نقلة 5.0 — {globalPartnerCount} تحديات دولية متخصصة بجوائز تتجاوز 21 مليون ريال، مع إمكانية التسجيل لأي مبتكر من أي دولة.
           </div>
-          <a href="https://qstp.qa/ar/programs/" target="_blank" rel="noopener noreferrer" className="shrink-0">
+          <Link href="/naqla2/national-challenges" className="shrink-0">
             <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white gap-2">
               <Globe className="w-3.5 h-3.5" />
-              تعرف على QSTP
+              التحديات الوطنية
             </Button>
-          </a>
+          </Link>
         </div>
 
         {/* Hero Section */}
@@ -396,7 +394,7 @@ export default function Challenges() {
             { label: "تحدي نشط", value: String(displayChallenges.filter((c: any) => c.status === "open").length), icon: Zap, color: "text-cyan-400" },
             { label: "مشارك مسجل", value: "3,940+", icon: Users, color: "text-blue-400" },
             { label: "إجمالي الجوائز", value: `${(totalPrize / 1000000).toFixed(1)}M ريال`, icon: DollarSign, color: "text-yellow-400" },
-            { label: "تحدي QSTP", value: String(qstpCount), icon: Globe, color: "text-violet-400" },
+            { label: "تحدي دولي", value: String(globalPartnerCount), icon: Globe, color: "text-violet-400" },
             { label: "فائز سابق", value: "150+", icon: Trophy, color: "text-emerald-400" },
           ].map((stat, i) => (
             <Card key={i} className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-colors">
@@ -409,7 +407,7 @@ export default function Challenges() {
           ))}
         </div>
 
-        {/* Category Filters (QSTP Sectors) */}
+        {/* Category Filters */}
         <div className="mb-5">
           <div className="flex items-center gap-2 mb-3">
             <Layers className="w-4 h-4 text-slate-400" />
@@ -481,14 +479,14 @@ export default function Challenges() {
                     challenge.status === "open"
                       ? "bg-slate-800/60 border-slate-700 hover:border-blue-500/50 hover:bg-slate-800/80"
                       : "bg-slate-900/40 border-slate-800 opacity-70"
-                  } ${challenge.qstpPartner ? "ring-1 ring-violet-500/30" : ""}`}
+                  } ${challenge.globalPartner ? "ring-1 ring-violet-500/30" : ""}`}
                 >
-                  {/* QSTP Badge */}
-                  {challenge.qstpPartner && (
+                  {/* Global Partner Badge */}
+                  {challenge.globalPartner && (
                     <div className="absolute top-3 left-3 z-10">
                       <Badge className="bg-violet-600/90 text-white border-0 text-[10px] gap-1 px-2 py-0.5">
                         <Globe className="w-2.5 h-2.5" />
-                        QSTP
+                        دولي
                       </Badge>
                     </div>
                   )}
@@ -583,25 +581,25 @@ export default function Challenges() {
           </div>
         )}
 
-        {/* QSTP Sectors Section */}
+        {/* Innovation Sectors Section */}
         <div className="mt-12 mb-8">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center">
               <Globe className="w-4 h-4 text-violet-400" />
             </div>
-            <h2 className="text-xl font-bold text-white">قطاعات QSTP المدعومة</h2>
-            <a href="https://qstp.qa/ar/programs/" target="_blank" rel="noopener noreferrer" className="text-violet-400 text-xs hover:underline mr-auto">
-              عرض جميع برامج QSTP ←
-            </a>
+            <h2 className="text-xl font-bold text-white">قطاعات الابتكار المتخصصة</h2>
+            <Link href="/naqla2/national-challenges" className="text-violet-400 text-xs hover:underline mr-auto">
+              عرض التحديات الوطنية ←
+            </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: <Dna className="w-6 h-6" />, title: "التكنولوجيا الحيوية", desc: "علم الجينوم، الأدوية الدقيقة، النانو الطبي", color: "text-rose-400", bg: "bg-rose-500/10 border-rose-500/20", link: "https://qstp.qa/ar/sectors/ict/" },
-              { icon: <Atom className="w-6 h-6" />, title: "المواد المتقدمة", desc: "الكربون الفائق، المواد النانوية، السيراميك الذكي", color: "text-violet-400", bg: "bg-violet-500/10 border-violet-500/20", link: "https://qstp.qa/ar/sectors/energy-environment/" },
-              { icon: <Leaf className="w-6 h-6" />, title: "التقنية النظيفة", desc: "تحلية المياه، الطاقة المتجددة، إدارة النفايات", color: "text-teal-400", bg: "bg-teal-500/10 border-teal-500/20", link: "https://qstp.qa/ar/sectors/energy-environment/" },
-              { icon: <Cpu className="w-6 h-6" />, title: "الحوسبة الكمية", desc: "خوارزميات كمية، تشفير ما بعد الكم، محاكاة", color: "text-sky-400", bg: "bg-sky-500/10 border-sky-500/20", link: "https://qstp.qa/ar/sectors/ict/" },
+              { icon: <Dna className="w-6 h-6" />, title: "التكنولوجيا الحيوية", desc: "علم الجينوم، الأدوية الدقيقة، النانو الطبي", color: "text-rose-400", bg: "bg-rose-500/10 border-rose-500/20", link: "/naqla2/national-challenges" },
+              { icon: <Atom className="w-6 h-6" />, title: "المواد المتقدمة", desc: "الكربون الفائق، المواد النانوية، السيراميك الذكي", color: "text-violet-400", bg: "bg-violet-500/10 border-violet-500/20", link: "/challenges" },
+              { icon: <Leaf className="w-6 h-6" />, title: "التقنية النظيفة", desc: "تحلية المياه، الطاقة المتجددة، إدارة النفايات", color: "text-teal-400", bg: "bg-teal-500/10 border-teal-500/20", link: "/challenges" },
+              { icon: <Cpu className="w-6 h-6" />, title: "الحوسبة الكمية", desc: "خوارزميات كمية، تشفير ما بعد الكم، محاكاة", color: "text-sky-400", bg: "bg-sky-500/10 border-sky-500/20", link: "/challenges" },
             ].map((sector, i) => (
-              <a key={i} href={sector.link} target="_blank" rel="noopener noreferrer">
+              <Link key={i} href={sector.link}>
                 <Card className={`border ${sector.bg} hover:scale-105 transition-transform cursor-pointer h-full`}>
                   <CardContent className="p-4">
                     <div className={`${sector.color} mb-3`}>{sector.icon}</div>
@@ -609,7 +607,7 @@ export default function Challenges() {
                     <div className="text-slate-400 text-xs leading-relaxed">{sector.desc}</div>
                   </CardContent>
                 </Card>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -619,18 +617,18 @@ export default function Challenges() {
           <div className="text-4xl mb-3">🚀</div>
           <h2 className="text-2xl font-bold text-white mb-3">هل لديك تحدي لطرحه؟</h2>
           <p className="text-slate-300 mb-6 max-w-xl mx-auto text-sm">
-            إذا كنت شركة أو جهة حكومية وتريد طرح تحدي للمبتكرين والحصول على أفضل الحلول، تواصل معنا الآن. يمكنك أيضاً التقدم لبرنامج الترشيح المؤسسي لـ QSTP عبر نقلة.
+            إذا كنت شركة أو جهة حكومية وتريد طرح تحدي للمبتكرين والحصول على أفضل الحلول، تواصل معنا الآن. يمكنك أيضاً التقدم لبرامج التسريع والتمويل الدولية عبر نقلة.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white">
               طرح تحدي جديد
             </Button>
-            <a href="https://qstp.qa/ar/programs/incubate/" target="_blank" rel="noopener noreferrer">
+            <Link href="/admin">
               <Button variant="outline" className="border-violet-600 text-violet-300 hover:bg-violet-900/30 gap-2">
                 <Globe className="w-4 h-4" />
-                التقدم لبرنامج QSTP
+                البرامج الدولية
               </Button>
-            </a>
+            </Link>
             <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
               تعرف على الشروط
             </Button>
