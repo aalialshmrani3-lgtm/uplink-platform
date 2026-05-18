@@ -39,7 +39,7 @@ export function ClassificationPathsSection() {
       icon: Lightbulb,
       title: "مسار التوجيه",
       subtitle: "Guidance Path",
-      score: "<60%",
+      score: "أقل من 60%",
       description: "أفكار تحتاج تطوير تحصل على توجيه واقتراحات لتحسينها وإعادة تقديمها",
       color: "from-orange-500 to-red-600",
       bgColor: "bg-orange-500/10",

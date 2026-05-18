@@ -10,9 +10,9 @@ import {
   GraduationCap, Crown, Code, BarChart3, Zap,
   ArrowUpRight, Sparkles, Play, Star, TrendingUp,
   MessageSquare, PenTool, Target, Layers, CheckCircle2,
-  Menu, X
+  Menu, X, ArrowUp
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -46,6 +46,17 @@ export default function Home() {
   const { t } = useLanguage();
   const [activeEngine, setActiveEngine] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -128,7 +139,7 @@ export default function Home() {
             <Link href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.integrations}</Link>
             <Link href="/testimonials" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.testimonials}</Link>
             <Link href="/roi-calculator" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.roiCalculator}</Link>
-            <Link href="/pipeline" className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1">
+            <Link href="/innovation-pipeline" className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1">
               <Layers className="w-4 h-4" />
               {t.nav.pipeline}
             </Link>
@@ -200,7 +211,7 @@ export default function Home() {
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
                 {t.nav.roiCalculator}
               </Link>
-              <Link href="/pipeline" onClick={() => setMobileMenuOpen(false)}
+              <Link href="/innovation-pipeline" onClick={() => setMobileMenuOpen(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50 flex items-center gap-2">
                 <Layers className="w-4 h-4" />{t.nav.pipeline}
               </Link>
@@ -906,6 +917,17 @@ export default function Home() {
 
       {/* Footer */}
       <ImprovedFooter />
+
+      {/* زر العودة للأعلى */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 left-6 z-50 w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full shadow-lg shadow-cyan-500/30 flex items-center justify-center hover:scale-110 transition-transform duration-200 border border-white/20"
+          aria-label="العودة للأعلى"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </button>
+      )}
     </div>
   );
 }

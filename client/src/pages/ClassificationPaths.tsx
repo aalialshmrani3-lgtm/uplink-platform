@@ -38,7 +38,7 @@ export default function ClassificationPaths() {
     },
     guidance: {
       title: "مسار التوجيه",
-      description: "الأفكار التي تحتاج إلى تطوير وتوجيه (<60%)",
+      description: "الأفكار التي تحتاج إلى تطوير وتوجيه (أقل من 60%)",
       icon: Lightbulb,
       color: "bg-blue-500",
       badge: "info",
