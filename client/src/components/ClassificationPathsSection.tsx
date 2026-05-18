@@ -77,7 +77,7 @@ export function ClassificationPathsSection() {
                 
                 <div className="text-center mb-4">
                   <div className={`inline-block px-4 py-2 rounded-full ${path.bgColor} mb-3`}>
-                    <span className={`text-lg font-bold bg-gradient-to-r ${path.color} bg-clip-text text-transparent`}>
+                    <span dir="ltr" className={`text-lg font-bold bg-gradient-to-r ${path.color} bg-clip-text text-transparent`}>
                       {path.score}
                     </span>
                   </div>
