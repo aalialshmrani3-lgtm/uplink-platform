@@ -54,6 +54,10 @@ export const fr = {
     roiCalculator: 'Calculateur ROI',
     help: 'Aide',
     caseStudies: 'Études de cas',
+    classificationPaths: 'Parcours',
+    strategicPartners: 'Partenaires',
+    valueFootprints: 'Impact',
+    register: "S'inscrire",
   },
 
   // Home Page

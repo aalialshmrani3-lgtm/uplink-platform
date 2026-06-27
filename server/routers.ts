@@ -3278,6 +3278,136 @@ Provide response in JSON format:
           throw new Error('Failed to export Excel');
         }
       }),
+
+    // AI Insights - replaces localhost:8001/8002/8003
+    analyzeSentiment: publicProcedure
+      .input(z.object({ text: z.string().min(1) }))
+      .mutation(async ({ input }) => {
+        const response = await invokeLLM({
+          messages: [
+            {
+              role: "system",
+              content: `You are an Arabic/English sentiment analysis expert. Analyze the sentiment of the given text and respond ONLY with valid JSON in this exact format: {"sentiment": "Positive", "confidence": 0.85, "emoji": "😊", "explanation": "brief explanation in Arabic"}`
+            },
+            { role: "user", content: `Analyze sentiment: ${input.text}` }
+          ],
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "sentiment_result",
+              strict: true,
+              schema: {
+                type: "object",
+                properties: {
+                  sentiment: { type: "string", enum: ["Positive", "Negative", "Neutral"] },
+                  confidence: { type: "number" },
+                  emoji: { type: "string" },
+                  explanation: { type: "string" }
+                },
+                required: ["sentiment", "confidence", "emoji", "explanation"],
+                additionalProperties: false
+              }
+            }
+          }
+        });
+        const content = response.choices[0].message.content;
+        return typeof content === "string" ? JSON.parse(content) : content;
+      }),
+
+    predictSuccess: publicProcedure
+      .input(z.object({
+        title: z.string(),
+        description: z.string(),
+        sector: z.string(),
+        budget: z.number()
+      }))
+      .mutation(async ({ input }) => {
+        const response = await invokeLLM({
+          messages: [
+            {
+              role: "system",
+              content: `You are an innovation success prediction expert for Saudi Arabia Vision 2030. Analyze the idea and respond ONLY with valid JSON: {"success_probability": 0.75, "risk_level": "Medium", "recommendations": ["rec1", "rec2", "rec3"], "key_factors": ["factor1", "factor2"]}`
+            },
+            {
+              role: "user",
+              content: `Predict success for this idea:\nTitle: ${input.title}\nDescription: ${input.description}\nSector: ${input.sector}\nBudget: ${input.budget} SAR`
+            }
+          ],
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "prediction_result",
+              strict: true,
+              schema: {
+                type: "object",
+                properties: {
+                  success_probability: { type: "number" },
+                  risk_level: { type: "string", enum: ["Low", "Medium", "High"] },
+                  recommendations: { type: "array", items: { type: "string" } },
+                  key_factors: { type: "array", items: { type: "string" } }
+                },
+                required: ["success_probability", "risk_level", "recommendations", "key_factors"],
+                additionalProperties: false
+              }
+            }
+          }
+        });
+        const content = response.choices[0].message.content;
+        return typeof content === "string" ? JSON.parse(content) : content;
+      }),
+
+    suggestIdeas: publicProcedure
+      .input(z.object({
+        interests: z.array(z.string()),
+        sector: z.string()
+      }))
+      .mutation(async ({ input }) => {
+        const response = await invokeLLM({
+          messages: [
+            {
+              role: "system",
+              content: `You are an innovation idea generator for Saudi Arabia Vision 2030. Generate 3 creative ideas and respond ONLY with valid JSON: {"suggestions": [{"id": 1, "title": "...", "description": "...", "tags": ["tag1"], "relevance_score": 0.9, "why_suggested": "..."}], "total_count": 3}`
+            },
+            {
+              role: "user",
+              content: `Generate 3 innovative ideas for:\nInterests: ${input.interests.join(", ")}\nSector: ${input.sector}`
+            }
+          ],
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "suggestions_result",
+              strict: true,
+              schema: {
+                type: "object",
+                properties: {
+                  suggestions: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        id: { type: "number" },
+                        title: { type: "string" },
+                        description: { type: "string" },
+                        tags: { type: "array", items: { type: "string" } },
+                        relevance_score: { type: "number" },
+                        why_suggested: { type: "string" }
+                      },
+                      required: ["id", "title", "description", "tags", "relevance_score", "why_suggested"],
+                      additionalProperties: false
+                    }
+                  },
+                  total_count: { type: "number" }
+                },
+                required: ["suggestions", "total_count"],
+                additionalProperties: false
+              }
+            }
+          }
+        });
+        const content = response.choices[0].message.content;
+        return typeof content === "string" ? JSON.parse(content) : content;
+      }),
   }),
 
   // ============================================

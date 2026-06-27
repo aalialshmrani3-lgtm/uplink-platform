@@ -147,9 +147,9 @@ export default function Home() {
               <Brain className="w-4 h-4" />
               {t.nav.aiInsights}
             </Link>
-            <Link href="/classification-paths" className="text-muted-foreground hover:text-foreground transition-colors text-sm">المسارات</Link>
-            <Link href="/strategic-partners" className="text-muted-foreground hover:text-foreground transition-colors text-sm">الشركاء</Link>
-            <Link href="/value-footprints" className="text-muted-foreground hover:text-foreground transition-colors text-sm">قياس الأثر</Link>
+            <Link href="/classification-paths" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.classificationPaths}</Link>
+            <Link href="/strategic-partners" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.strategicPartners}</Link>
+            <Link href="/value-footprints" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.valueFootprints}</Link>
             <Link href="/help" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.help}</Link>
           </div>
           
@@ -166,7 +166,7 @@ export default function Home() {
               <div className="hidden md:flex items-center gap-2">
                 <Link href="/register">
                   <Button variant="outline" className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
-                    تسجيل
+                    {t.nav.register}
                   </Button>
                 </Link>
                 <a href={getLoginUrl()}>
@@ -221,15 +221,15 @@ export default function Home() {
               </Link>
               <Link href="/classification-paths" onClick={() => setMobileMenuOpen(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
-                المسارات
+                {t.nav.classificationPaths}
               </Link>
               <Link href="/strategic-partners" onClick={() => setMobileMenuOpen(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
-                الشركاء
+                {t.nav.strategicPartners}
               </Link>
               <Link href="/value-footprints" onClick={() => setMobileMenuOpen(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
-                قياس الأثر
+                {t.nav.valueFootprints}
               </Link>
               <Link href="/help" onClick={() => setMobileMenuOpen(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm py-3 px-3 rounded-lg hover:bg-secondary/50">
@@ -246,7 +246,7 @@ export default function Home() {
                   <>
                     <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
                       <Button variant="outline" className="w-full border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
-                        تسجيل
+                        {t.nav.register}
                       </Button>
                     </Link>
                     <a href={getLoginUrl()} onClick={() => setMobileMenuOpen(false)}>
@@ -339,13 +339,13 @@ export default function Home() {
           <div className="text-center mb-6">
             <Badge className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
               <Sparkles className="w-3 h-3 ml-1" />
-              المحركات الثلاثة
+              {t.engines.title}
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              منظومة متكاملة للابتكار
+              {t.engines.subtitle}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              من الفكرة إلى السوق العالمي، نوفر لك كل ما تحتاجه لتحويل ابتكارك إلى نجاح
+              {t.engines.description}
             </p>
           </div>
 

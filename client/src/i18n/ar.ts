@@ -54,6 +54,10 @@ export const ar = {
     roiCalculator: 'حاسبة ROI',
     help: 'المساعدة',
     caseStudies: 'دراسات الحالة',
+    classificationPaths: 'المسارات',
+    strategicPartners: 'الشركاء',
+    valueFootprints: 'قياس الأثر',
+    register: 'تسجيل',
   },
 
   // Home Page

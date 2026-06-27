@@ -397,7 +397,7 @@ function Router() {
         <Route path="/calendar" component={Calendar} />
         <Route path="/recommendations" component={Recommendations} />
         <Route path="/admin" component={Admin} />
-        <Route path="/pipeline" component={InnovationPipeline} />
+        <Route path="/innovation-pipeline" component={InnovationPipeline} />
         <Route path="/why-naqla" component={WhyNaqla} />
         <Route path="/testimonials" component={Testimonials} />
         <Route path="/integrations" component={Integrations} />

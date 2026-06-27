@@ -54,6 +54,10 @@ export const zh = {
     roiCalculator: 'ROI计算器',
     help: '帮助',
     caseStudies: '案例研究',
+    classificationPaths: '分类路径',
+    strategicPartners: '合作伙伴',
+    valueFootprints: '影响评估',
+    register: '注册',
   },
 
   // Home Page

@@ -9,10 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Brain, TrendingUp, Lightbulb, MessageSquare, Sparkles, Target, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 export default function AIInsightsDashboard() {
-  const [loading, setLoading] = useState(false);
-
   // Sentiment Analysis State
   const [sentimentText, setSentimentText] = useState("");
   const [sentimentResult, setSentimentResult] = useState<any>(null);
@@ -33,99 +32,71 @@ export default function AIInsightsDashboard() {
   });
   const [suggestions, setSuggestions] = useState<any>(null);
 
+  // TRPC Mutations
+  const sentimentMutation = trpc.ai.analyzeSentiment.useMutation({
+    onSuccess: (data) => {
+      setSentimentResult(data);
+      toast.success(`تم التحليل بنجاح - المشاعر: ${data.sentiment} ${data.emoji}`);
+    },
+    onError: () => {
+      toast.error("فشل تحليل المشاعر");
+    }
+  });
+
+  const predictionMutation = trpc.ai.predictSuccess.useMutation({
+    onSuccess: (data) => {
+      setPredictionResult(data);
+      toast.success(`تم التوقع بنجاح - احتمالية النجاح: ${(data.success_probability * 100).toFixed(1)}%`);
+    },
+    onError: () => {
+      toast.error("فشل توقع النجاح");
+    }
+  });
+
+  const suggestionMutation = trpc.ai.suggestIdeas.useMutation({
+    onSuccess: (data) => {
+      setSuggestions(data);
+      toast.success(`تم الاقتراح بنجاح - تم إيجاد ${data.total_count} اقتراح`);
+    },
+    onError: () => {
+      toast.error("فشل اقتراح الأفكار");
+    }
+  });
+
   // Sentiment Analysis Handler
-  const analyzeSentiment = async () => {
+  const analyzeSentiment = () => {
     if (!sentimentText.trim()) {
       toast.error("الرجاء إدخال نص للتحليل");
       return;
     }
-
-    setLoading(true);
-    try {
-      const response = await fetch("http://localhost:8001/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: sentimentText })
-      });
-      
-      if (!response.ok) throw new Error("فشل التحليل");
-      
-      const data = await response.json();
-      setSentimentResult(data);
-      
-      toast.success(`تم التحليل بنجاح - المشاعر: ${data.sentiment} ${data.emoji}`);
-    } catch (error: any) {
-      toast.error("فشل الاتصال بخدمة تحليل المشاعر");
-    } finally {
-      setLoading(false);
-    }
+    sentimentMutation.mutate({ text: sentimentText });
   };
 
   // Success Prediction Handler
-  const predictSuccess = async () => {
+  const predictSuccess = () => {
     if (!predictionForm.title || !predictionForm.description || !predictionForm.sector || !predictionForm.budget) {
       toast.error("الرجاء ملء جميع الحقول");
       return;
     }
-
-    setLoading(true);
-    try {
-      const response = await fetch("http://localhost:8002/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: predictionForm.title,
-          description: predictionForm.description,
-          sector: predictionForm.sector,
-          budget: parseFloat(predictionForm.budget)
-        })
-      });
-      
-      if (!response.ok) throw new Error("فشل التوقع");
-      
-      const data = await response.json();
-      setPredictionResult(data);
-      
-      toast.success(`تم التوقع بنجاح - احتمالية النجاح: ${(data.success_probability * 100).toFixed(1)}%`);
-    } catch (error: any) {
-      toast.error("فشل الاتصال بخدمة توقع النجاح");
-    } finally {
-      setLoading(false);
-    }
+    predictionMutation.mutate({
+      title: predictionForm.title,
+      description: predictionForm.description,
+      sector: predictionForm.sector,
+      budget: parseFloat(predictionForm.budget)
+    });
   };
 
   // Idea Suggestion Handler
-  const suggestIdeas = async () => {
+  const suggestIdeas = () => {
     if (!suggestionForm.interests || !suggestionForm.sector) {
       toast.error("الرجاء ملء جميع الحقول");
       return;
     }
-
-    setLoading(true);
-    try {
-      const interests = suggestionForm.interests.split(",").map(i => i.trim());
-      
-      const response = await fetch("http://localhost:8003/suggest-ideas", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          interests,
-          sector: suggestionForm.sector
-        })
-      });
-      
-      if (!response.ok) throw new Error("فشل الاقتراح");
-      
-      const data = await response.json();
-      setSuggestions(data);
-      
-      toast.success(`تم الاقتراح بنجاح - تم إيجاد ${data.total_count} اقتراح`);
-    } catch (error: any) {
-      toast.error("فشل الاتصال بخدمة اقتراح الأفكار");
-    } finally {
-      setLoading(false);
-    }
+    const interests = suggestionForm.interests.split(",").map(i => i.trim()).filter(Boolean);
+    suggestionMutation.mutate({ interests, sector: suggestionForm.sector });
   };
+
+  const isLoading = sentimentMutation.isPending || predictionMutation.isPending || suggestionMutation.isPending;
 
   return (
     <div className="container mx-auto py-8">
@@ -216,8 +187,8 @@ export default function AIInsightsDashboard() {
                 />
               </div>
 
-              <Button onClick={analyzeSentiment} disabled={loading} className="w-full">
-                {loading ? "جاري التحليل..." : "تحليل المشاعر"}
+              <Button onClick={analyzeSentiment} disabled={isLoading} className="w-full">
+                {sentimentMutation.isPending ? "جاري التحليل..." : "تحليل المشاعر"}
               </Button>
 
               {sentimentResult && (
@@ -248,6 +219,9 @@ export default function AIInsightsDashboard() {
                         style={{ width: `${sentimentResult.confidence * 100}%` }}
                       />
                     </div>
+                    {sentimentResult.explanation && (
+                      <p className="text-sm text-muted-foreground">{sentimentResult.explanation}</p>
+                    )}
                   </CardContent>
                 </Card>
               )}
@@ -317,8 +291,8 @@ export default function AIInsightsDashboard() {
                 />
               </div>
 
-              <Button onClick={predictSuccess} disabled={loading} className="w-full">
-                {loading ? "جاري التوقع..." : "توقع النجاح"}
+              <Button onClick={predictSuccess} disabled={isLoading} className="w-full">
+                {predictionMutation.isPending ? "جاري التوقع..." : "توقع النجاح"}
               </Button>
 
               {predictionResult && (
@@ -353,9 +327,7 @@ export default function AIInsightsDashboard() {
                       </h4>
                       <ul className="space-y-1">
                         {predictionResult.recommendations.map((rec: string, idx: number) => (
-                          <li key={idx} className="text-sm text-muted-foreground">
-                            {rec}
-                          </li>
+                          <li key={idx} className="text-sm text-muted-foreground">• {rec}</li>
                         ))}
                       </ul>
                     </div>
@@ -406,8 +378,8 @@ export default function AIInsightsDashboard() {
                 </Select>
               </div>
 
-              <Button onClick={suggestIdeas} disabled={loading} className="w-full">
-                {loading ? "جاري الاقتراح..." : "اقترح أفكار"}
+              <Button onClick={suggestIdeas} disabled={isLoading} className="w-full">
+                {suggestionMutation.isPending ? "جاري الاقتراح..." : "اقترح أفكار"}
               </Button>
 
               {suggestions && (
