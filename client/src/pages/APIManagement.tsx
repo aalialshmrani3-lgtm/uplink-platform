@@ -77,9 +77,7 @@ export default function APIManagement() {
   };
 
   const handleRevokeKey = (keyId: number, keyName: string) => {
-    if (confirm(`هل أنت متأكد من إلغاء API Key "${keyName}"؟ لن تتمكن من استخدامه بعد ذلك.`)) {
-      revokeMutation.mutate({ keyId });
-    }
+    revokeMutation.mutate({ keyId });
   };
 
   return (

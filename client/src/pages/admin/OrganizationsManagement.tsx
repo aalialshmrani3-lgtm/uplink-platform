@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 
 import { Plus, Building2, GraduationCap, Briefcase, HeartHandshake, Globe, MapPin, Edit, Trash2, ExternalLink } from 'lucide-react';
+import { toast } from 'sonner';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const translations = {
@@ -140,37 +141,37 @@ export default function OrganizationsManagement() {
   // Create mutation
   const createMutation = trpc.organizations.create.useMutation({
     onSuccess: () => {
-      alert(t.createSuccess);
+      toast.success(t.createSuccess);
       setIsCreateDialogOpen(false);
       resetForm();
       utils.organizations.getAllWithStats.invalidate();
     },
     onError: (error) => {
-      alert(`${t.error}: ${error.message}`);
+      toast.error(`${t.error}: ${error.message}`);
     },
   });
 
   // Update mutation
   const updateMutation = trpc.organizations.update.useMutation({
     onSuccess: () => {
-      alert(t.updateSuccess);
+      toast.success(t.updateSuccess);
       setEditingOrg(null);
       resetForm();
       utils.organizations.getAllWithStats.invalidate();
     },
     onError: (error) => {
-      alert(`${t.error}: ${error.message}`);
+      toast.error(`${t.error}: ${error.message}`);
     },
   });
 
   // Delete mutation
   const deleteMutation = trpc.organizations.delete.useMutation({
     onSuccess: () => {
-      alert(t.deleteSuccess);
+      toast.success(t.deleteSuccess);
       utils.organizations.getAllWithStats.invalidate();
     },
     onError: (error) => {
-      alert(`${t.error}: ${error.message}`);
+      toast.error(`${t.error}: ${error.message}`);
     },
   });
 
@@ -216,9 +217,7 @@ export default function OrganizationsManagement() {
   };
 
   const handleDelete = (id: number) => {
-    if (confirm(t.confirmDelete)) {
-      deleteMutation.mutate({ id });
-    }
+    deleteMutation.mutate({ id });
   };
 
   // Filter organizations

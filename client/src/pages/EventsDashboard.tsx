@@ -53,9 +53,7 @@ export default function EventsDashboard() {
   };
 
   const handleDelete = (eventId: number) => {
-    if (confirm("هل أنت متأكد من حذف هذه الفعالية؟")) {
-      deleteEventMutation.mutate({ eventId });
-    }
+    deleteEventMutation.mutate({ eventId });
   };
 
   const getStatusBadge = (status: string) => {

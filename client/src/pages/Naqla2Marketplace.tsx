@@ -15,6 +15,7 @@ import {
   MessageCircle,
   ShoppingCart
 } from "lucide-react";
+import { toast } from 'sonner';
 
 export default function Naqla2Marketplace() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,7 +29,7 @@ export default function Naqla2Marketplace() {
   // Request purchase mutation
   const requestPurchase = trpc.naqla2.marketplace.requestPurchase.useMutation({
     onSuccess: () => {
-      alert("تم إرسال طلب الشراء/الترخيص بنجاح!");
+      toast.success('تم إرسال طلب الشراء/الترخيص بنجاح');
     },
   });
 

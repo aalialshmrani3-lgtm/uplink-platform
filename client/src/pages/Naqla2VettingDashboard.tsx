@@ -17,6 +17,7 @@ import {
   Eye,
   Clock
 } from "lucide-react";
+import { toast } from 'sonner';
 
 export default function Naqla2VettingDashboard() {
   const [selectedIP, setSelectedIP] = useState<number | null>(null);
@@ -36,7 +37,7 @@ export default function Naqla2VettingDashboard() {
   // Submit review mutation
   const submitReview = trpc.naqla2.vetting.submitReview.useMutation({
     onSuccess: () => {
-      alert("تم تقديم المراجعة بنجاح!");
+      toast.success('تم تقديم المراجعة بنجاح');
       setSelectedIP(null);
       setReviewForm({
         score: 75,

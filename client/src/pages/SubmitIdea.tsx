@@ -10,6 +10,7 @@ import AIAnalysisResults from "@/components/AIAnalysisResults";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from 'sonner';
 
 export default function SubmitIdea() {
   const { user } = useAuth();
@@ -32,7 +33,7 @@ export default function SubmitIdea() {
       setAnalysisResult(data);
     },
     onError: (error: any) => {
-      alert(`خطأ: ${error.message}`);
+      toast.error(`خطأ: ${error.message}`);
     },
   });
 
@@ -40,7 +41,7 @@ export default function SubmitIdea() {
     e.preventDefault();
     
     if (!user) {
-      alert('يجب تسجيل الدخول أولاً لتقديم فكرتك. سيتم توجيهك إلى صفحة تسجيل الدخول.');
+      toast.error('يجب تسجيل الدخول أولاً لتقديم فكرتك');
       window.location.href = getLoginUrl();
       return;
     }

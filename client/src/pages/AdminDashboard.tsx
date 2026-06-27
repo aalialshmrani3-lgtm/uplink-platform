@@ -18,6 +18,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { useWebSocket } from '@/hooks/useWebSocket';
+import { toast } from 'sonner';
 import { InnovationFunnelChart } from '@/components/charts/InnovationFunnelChart';
 import { MLPerformanceChart } from '@/components/charts/MLPerformanceChart';
 import { EngagementMetricsChart } from '@/components/charts/EngagementMetricsChart';
@@ -244,8 +245,8 @@ export default function AdminDashboard() {
       {/* Chart Filters */}
       <ChartFilters
         onFilterChange={setChartFilters}
-        onSaveView={() => alert('Save View functionality coming soon!')}
-        onShareView={() => alert('Share View functionality coming soon!')}
+        onSaveView={() => toast.info('سيتم إضافة ميزة حفظ العرض قريباً')}
+        onShareView={() => toast.info('سيتم إضافة ميزة مشاركة العرض قريباً')}
       />
 
       {/* Charts Section */}

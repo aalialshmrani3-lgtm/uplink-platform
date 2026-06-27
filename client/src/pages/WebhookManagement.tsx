@@ -133,9 +133,7 @@ export default function WebhookManagement() {
   };
 
   const handleDeleteWebhook = (webhookId: number, name: string) => {
-    if (confirm(`هل أنت متأكد من حذف Webhook "${name}"؟`)) {
-      deleteMutation.mutate({ webhookId });
-    }
+    deleteMutation.mutate({ webhookId });
   };
 
   const handleTestWebhook = (webhookId: number) => {

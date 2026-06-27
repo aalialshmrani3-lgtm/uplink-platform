@@ -86,9 +86,7 @@ export default function RoleManagement() {
   };
 
   const handleDeleteRole = (id: number) => {
-    if (confirm('Are you sure you want to delete this role?')) {
-      deleteRoleMutation.mutate({ id });
-    }
+    deleteRoleMutation.mutate({ id });
   };
 
   const handleTogglePermission = (permissionId: number, isAssigned: boolean) => {

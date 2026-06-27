@@ -60,15 +60,11 @@ export default function ModelHistory() {
   });
 
   const handleActivateVersion = (versionId: string) => {
-    if (confirm('هل أنت متأكد من تفعيل هذا النموذج؟ سيتم إعادة تشغيل خدمة التنبؤ.')) {
-      activateMutation.mutate({ versionId });
-    }
+    activateMutation.mutate({ versionId });
   };
 
   const handleDeleteVersion = (versionId: string) => {
-    if (confirm('هل أنت متأكد من حذف هذا النموذج؟ لا يمكن التراجع عن هذا الإجراء.')) {
-      deleteMutation.mutate({ versionId });
-    }
+    deleteMutation.mutate({ versionId });
   };
 
   const handleCompare = (versionId: string) => {
