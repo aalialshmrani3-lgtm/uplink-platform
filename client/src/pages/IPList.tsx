@@ -8,8 +8,11 @@ import {
   XCircle, AlertCircle, ExternalLink, Copy
 } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function IPList() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const { data: ipList, isLoading } = trpc.ip.getMyRegistrations.useQuery(undefined, { enabled: !!user });
 
@@ -92,8 +95,8 @@ export default function IPList() {
 
       <div className="container mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">ملكياتي الفكرية</h1>
-          <p className="text-slate-400">إدارة وتتبع تسجيلات الملكية الفكرية الخاصة بك</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "ملكياتي الفكرية" : "[ملكياتي الفكرية]"}</h1>
+          <p className="text-slate-400">{isAr ? "إدارة وتتبع تسجيلات الملكية الفكرية الخاصة بك" : "إدارة وتتبع Registerات الملكية الفكرية الخاصة بك"}</p>
         </div>
 
         {isLoading ? (
@@ -128,7 +131,7 @@ export default function IPList() {
                         </p>
                         {ip.blockchainHash && (
                           <div className="flex items-center gap-2 mt-3">
-                            <span className="text-xs text-slate-500">توثيق البلوكتشين:</span>
+                            <span className="text-xs text-slate-500">{isAr ? "توثيق البلوكتشين:" : "[توثيق البلوكتشين:]"}</span>
                             <code className="text-xs text-emerald-400 bg-slate-900 px-2 py-1 rounded">
                               {ip.blockchainHash.substring(0, 20)}...
                             </code>
@@ -177,8 +180,8 @@ export default function IPList() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <Shield className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">لا توجد ملكيات فكرية</h3>
-              <p className="text-slate-400 mb-6">ابدأ بتسجيل ملكيتك الفكرية الأولى</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد ملكيات فكرية" : "No توجد ملكيات فكرية"}</h3>
+              <p className="text-slate-400 mb-6">{isAr ? "ابدأ بتسجيل ملكيتك الفكرية الأولى" : "ابدأ بRegister ملكيتك الفكرية الأولى"}</p>
               <Link href="/ip/register">
                 <Button className="bg-emerald-500 hover:bg-emerald-600">
                   <Plus className="w-4 h-4 ml-2" />

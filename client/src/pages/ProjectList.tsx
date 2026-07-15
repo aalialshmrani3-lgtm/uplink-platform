@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Rocket, Lightbulb, Plus, Clock, CheckCircle, 
   XCircle, AlertCircle, Brain, Target
 } from "lucide-react";
 
 export default function ProjectList() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const { data: projects, isLoading } = trpc.project.getMyProjects.useQuery(undefined, { enabled: !!user });
 
@@ -87,8 +90,8 @@ export default function ProjectList() {
 
       <div className="container mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">مشاريعي</h1>
-          <p className="text-slate-400">إدارة وتتبع مشاريعك الابتكارية</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "مشاريعي" : "[مشاريعي]"}</h1>
+          <p className="text-slate-400">{isAr ? "إدارة وتتبع مشاريعك الابتكارية" : "إدارة وتتبع مشاريعك اNoبتكارية"}</p>
         </div>
 
         {isLoading ? (
@@ -148,7 +151,7 @@ export default function ProjectList() {
                     {project.evaluationId && (
                       <div className="mt-4 pt-4 border-t border-slate-700 flex items-center gap-2 text-emerald-400">
                         <Brain className="w-4 h-4" />
-                        <span className="text-sm">تم التقييم</span>
+                        <span className="text-sm">{isAr ? "تم التقييم" : "Done التقييم"}</span>
                       </div>
                     )}
                   </CardContent>
@@ -160,8 +163,8 @@ export default function ProjectList() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <Lightbulb className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">لا توجد مشاريع</h3>
-              <p className="text-slate-400 mb-6">ابدأ بتسجيل مشروعك الأول</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد مشاريع" : "No توجد مشاريع"}</h3>
+              <p className="text-slate-400 mb-6">{isAr ? "ابدأ بتسجيل مشروعك الأول" : "ابدأ بRegister مشروعك الأول"}</p>
               <Link href="/projects/new">
                 <Button className="bg-cyan-500 hover:bg-cyan-600">
                   <Plus className="w-4 h-4 ml-2" />

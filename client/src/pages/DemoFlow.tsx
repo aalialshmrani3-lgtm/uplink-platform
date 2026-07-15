@@ -9,8 +9,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function DemoFlow() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [expandedStage, setExpandedStage] = useState<string | null>("registration");
 
   const stages = [
@@ -177,7 +180,7 @@ export default function DemoFlow() {
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
               من الفكرة إلى
-              <span className="text-gradient-blue"> العقد الذكي</span>
+              <span className="text-gradient-blue">{isAr ? " العقد الذكي" : "[العقد الذكي]"}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               اكتشف كيف تتحول فكرتك إلى مشروع حقيقي مع شراكات عالمية وعقود ذكية آمنة
@@ -254,7 +257,7 @@ export default function DemoFlow() {
                         {/* NAQLA 1 Steps */}
                         {stage.id === "naqla1" && stage.steps && (
                           <div className="mb-6">
-                            <h4 className="text-foreground font-semibold mb-3">خطوات التقديم:</h4>
+                            <h4 className="text-foreground font-semibold mb-3">{isAr ? "خطوات التقديم:" : "[خطوات التقديم:]"}</h4>
                             <div className="space-y-2">
                               {stage.steps.map((step, i) => (
                                 <div key={i} className="flex items-start gap-3">
@@ -271,7 +274,7 @@ export default function DemoFlow() {
                         {/* NAQLA 1 Scenarios */}
                         {stage.id === "naqla1" && stage.scenarios && (
                           <div>
-                            <h4 className="text-foreground font-semibold mb-3">السيناريوهات المحتملة:</h4>
+                            <h4 className="text-foreground font-semibold mb-3">{isAr ? "السيناريوهات المحتملة:" : "السيناريوهات المحDoneلة:"}</h4>
                             <div className="space-y-3">
                               {stage.scenarios.map((scenario, i) => {
                                 const ScenarioIcon = scenario.icon;

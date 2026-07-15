@@ -9,6 +9,7 @@ import {
   Building2, DollarSign, Award, Info, ChevronDown, ChevronUp
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const trlLevels = [
   {
@@ -141,6 +142,8 @@ const assessmentQuestions = [
 ];
 
 export default function TRLAssessment() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [selectedTRL, setSelectedTRL] = useState<number | null>(null);
   const [expandedLevel, setExpandedLevel] = useState<number | null>(null);
   const [assessmentAnswers, setAssessmentAnswers] = useState<Record<number, boolean>>({});
@@ -215,7 +218,7 @@ export default function TRLAssessment() {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-500/10 border border-teal-500/30 rounded-full mb-4">
             <FlaskConical className="w-4 h-4 text-teal-400" />
-            <span className="text-teal-400 text-sm font-medium">نقلة 3 - تقييم النضج التقني</span>
+            <span className="text-teal-400 text-sm font-medium">{isAr ? "نقلة 3 - تقييم النضج التقني" : "NAQLA 3 - تقييم النضج التقني"}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             مقياس النضج التقني
@@ -270,7 +273,7 @@ export default function TRLAssessment() {
           <>
             {/* TRL Scale Visual */}
             <div className="mb-8 bg-slate-800/30 rounded-2xl p-6 border border-slate-700">
-              <h2 className="text-white font-bold mb-4 text-center">مقياس TRL - من البحث إلى السوق</h2>
+              <h2 className="text-white font-bold mb-4 text-center">{isAr ? "مقياس TRL - من البحث إلى السوق" : "مقياس TRL - من Search إلى السوق"}</h2>
               <div className="flex gap-1 items-end justify-center flex-wrap">
                 {trlLevels.map((level) => (
                   <button
@@ -290,8 +293,8 @@ export default function TRLAssessment() {
                 ))}
               </div>
               <div className="flex justify-between mt-3 text-xs text-slate-500">
-                <span>← بحث أساسي</span>
-                <span>تجاري ناجح →</span>
+                <span>{isAr ? "← بحث أساسي" : "← Search أساسي"}</span>
+                <span>{isAr ? "تجاري ناجح →" : "[تجاري ناجح →]"}</span>
               </div>
             </div>
 
@@ -392,8 +395,8 @@ export default function TRLAssessment() {
             {!showResult ? (
               <Card className="bg-slate-800/50 border-slate-700">
                 <CardContent className="p-6">
-                  <h2 className="text-xl font-bold text-white mb-2">قيّم مستوى نضج ابتكارك</h2>
-                  <p className="text-slate-400 text-sm mb-6">أجب على الأسئلة التالية بصدق للحصول على تقييم دقيق لمستوى TRL الخاص بك</p>
+                  <h2 className="text-xl font-bold text-white mb-2">{isAr ? "قيّم مستوى نضج ابتكارك" : "[قيّم مستوى نضج ابتكارك]"}</h2>
+                  <p className="text-slate-400 text-sm mb-6">{isAr ? "أجب على الأسئلة التالية بصدق للحصول على تقييم دقيق لمستوى TRL الخاص بك" : "أجب على الأسئلة Nextة بصدق للحصول على تقييم دقيق لمستوى TRL الخاص بك"}</p>
                   
                   <div className="space-y-4">
                     {assessmentQuestions.map((q) => (
@@ -447,7 +450,7 @@ export default function TRLAssessment() {
                 <Card className={`bg-gradient-to-br ${selectedLevel.color} border-0`}>
                   <CardContent className="p-8 text-center">
                     <div className="text-6xl mb-4">{selectedLevel.icon}</div>
-                    <div className="text-white/80 text-sm mb-2">مستوى نضج ابتكارك</div>
+                    <div className="text-white/80 text-sm mb-2">{isAr ? "مستوى نضج ابتكارك" : "[مستوى نضج ابتكارك]"}</div>
                     <div className="text-7xl font-black text-white mb-2">TRL {selectedLevel.level}</div>
                     <div className="text-white text-2xl font-bold mb-1">{selectedLevel.title}</div>
                     <div className="text-white/70 text-lg">{selectedLevel.titleEn}</div>
@@ -456,16 +459,16 @@ export default function TRLAssessment() {
 
                 <Card className="bg-slate-800/50 border-slate-700">
                   <CardContent className="p-6">
-                    <h3 className="text-white font-bold mb-3">ماذا يعني هذا؟</h3>
+                    <h3 className="text-white font-bold mb-3">{isAr ? "ماذا يعني هذا؟" : "[ماذا يعني هذا؟]"}</h3>
                     <p className="text-slate-300 text-sm leading-relaxed mb-4">{selectedLevel.description}</p>
                     
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div className="bg-slate-700/30 rounded-xl p-4">
-                        <div className="text-slate-400 text-xs mb-1">مرحلتك الحالية</div>
+                        <div className="text-slate-400 text-xs mb-1">{isAr ? "مرحلتك الحالية" : "[مرحلتك الحالية]"}</div>
                         <div className="text-white font-bold">{selectedLevel.stage}</div>
                       </div>
                       <div className="bg-slate-700/30 rounded-xl p-4">
-                        <div className="text-slate-400 text-xs mb-1">نطاق التمويل المناسب</div>
+                        <div className="text-slate-400 text-xs mb-1">{isAr ? "نطاق التمويل المناسب" : "نطاق الDoneويل المناسب"}</div>
                         <div className="text-white font-bold">{selectedLevel.fundingRange}</div>
                       </div>
                     </div>
@@ -474,7 +477,7 @@ export default function TRLAssessment() {
                       <div className="bg-violet-900/30 rounded-xl p-4 border border-violet-500/30 mb-4">
                         <div className="flex items-center gap-2 mb-2">
                           <CheckCircle2 className="w-4 h-4 text-violet-400" />
-                          <span className="text-violet-300 font-semibold text-sm">مؤهل للتمويل الدولي!</span>
+                          <span className="text-violet-300 font-semibold text-sm">{isAr ? "مؤهل للتمويل الدولي!" : "مؤهل للDoneويل الدولي!"}</span>
                         </div>
                         <p className="text-slate-300 text-xs leading-relaxed mb-3">
                           ابتكارك في TRL {selectedLevel.level} مؤهل للتقدم لبرامج التمويل الدولية وحاضنات الأعمال العالمية وصناديق رأس المال المخاطر.
@@ -490,7 +493,7 @@ export default function TRLAssessment() {
                       <div className="bg-slate-700/30 rounded-xl p-4 border border-slate-600 mb-4">
                         <div className="flex items-center gap-2 mb-2">
                           <Info className="w-4 h-4 text-slate-400" />
-                          <span className="text-slate-300 font-semibold text-sm">تحتاج مزيداً من التطوير</span>
+                          <span className="text-slate-300 font-semibold text-sm">{isAr ? "تحتاج مزيداً من التطوير" : "تحتاج مزيداً من Development"}</span>
                         </div>
                         <p className="text-slate-400 text-xs leading-relaxed">
                           ابتكارك في مرحلة مبكرة. ركز على إثبات المفهوم وبناء نموذج أولي للوصول إلى TRL 4+ والتأهل للتمويل الدولي.
@@ -523,7 +526,7 @@ export default function TRLAssessment() {
         {/* CTA */}
         <div className="mt-12 bg-gradient-to-r from-teal-900/40 to-blue-900/40 rounded-2xl p-8 text-center border border-teal-800/40">
           <div className="text-4xl mb-3">🎯</div>
-          <h2 className="text-2xl font-bold text-white mb-3">هل ابتكارك في TRL 4 أو أعلى؟</h2>
+          <h2 className="text-2xl font-bold text-white mb-3">{isAr ? "هل ابتكارك في TRL 4 أو أعلى؟" : "[هل ابتكارك في TRL 4 أو أعلى؟]"}</h2>
           <p className="text-slate-300 mb-6 max-w-xl mx-auto text-sm">
             اعرض ابتكارك في سوق نقلة 3 للملكية الفكرية وتواصل مع المستثمرين والشركات الباحثة عن حلول تقنية متقدمة
           </p>

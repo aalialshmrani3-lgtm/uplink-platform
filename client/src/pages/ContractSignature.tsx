@@ -7,8 +7,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Download, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ContractSignature() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { id } = useParams<{ id: string }>();
 
   const { toast } = useToast();
@@ -83,7 +86,7 @@ export default function ContractSignature() {
   if (isLoading) {
     return (
       <div className="container mx-auto py-8">
-        <div className="text-center">جاري التحميل...</div>
+        <div className="text-center">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
       </div>
     );
   }
@@ -91,7 +94,7 @@ export default function ContractSignature() {
   if (!contract) {
     return (
       <div className="container mx-auto py-8">
-        <div className="text-center text-red-600">العقد غير موجود</div>
+        <div className="text-center text-red-600">{isAr ? "العقد غير موجود" : "[العقد غير موجود]"}</div>
       </div>
     );
   }
@@ -105,7 +108,7 @@ export default function ContractSignature() {
   return (
     <div className="container mx-auto py-8 max-w-4xl">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">التوقيع الإلكتروني للعقد</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? "التوقيع الإلكتروني للعقد" : "[التوقيع الإلكتروني للعقد]"}</h1>
         <p className="text-muted-foreground">{contract.title}</p>
       </div>
 
@@ -117,21 +120,21 @@ export default function ContractSignature() {
         </h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-muted-foreground">نوع العقد</p>
+            <p className="text-sm text-muted-foreground">{isAr ? "نوع العقد" : "[نوع العقد]"}</p>
             <p className="font-medium">{contract.type}</p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">القيمة الإجمالية</p>
+            <p className="text-sm text-muted-foreground">{isAr ? "القيمة الإجمالية" : "الValuesة الإجمالية"}</p>
             <p className="font-medium">{contract.totalValue} {contract.currency}</p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">الحالة</p>
+            <p className="text-sm text-muted-foreground">{isAr ? "الحالة" : "Status"}</p>
             <p className="font-medium">{contract.status}</p>
           </div>
         </div>
         {contract.description && (
           <div className="mt-4">
-            <p className="text-sm text-muted-foreground">الوصف</p>
+            <p className="text-sm text-muted-foreground">{isAr ? "الوصف" : "Description"}</p>
             <p className="mt-1">{contract.description}</p>
           </div>
         )}
@@ -139,28 +142,28 @@ export default function ContractSignature() {
 
       {/* Signature Status */}
       <Card className="p-6 mb-6">
-        <h2 className="text-xl font-semibold mb-4">حالة التوقيعات</h2>
+        <h2 className="text-xl font-semibold mb-4">{isAr ? "حالة التوقيعات" : "[حالة التوقيعات]"}</h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-            <span>البائع (الطرف الأول)</span>
+            <span>{isAr ? "البائع (الطرف الأول)" : "[البائع (الطرف الأول)]"}</span>
             {sellerSigned ? (
               <span className="flex items-center gap-2 text-green-600">
                 <CheckCircle2 className="w-5 h-5" />
                 موقّع
               </span>
             ) : (
-              <span className="text-muted-foreground">لم يوقع بعد</span>
+              <span className="text-muted-foreground">{isAr ? "لم يوقع بعد" : "[لم يوقع بعد]"}</span>
             )}
           </div>
           <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-            <span>المشتري (الطرف الثاني)</span>
+            <span>{isAr ? "المشتري (الطرف الثاني)" : "[المشتري (الطرف الثاني)]"}</span>
             {buyerSigned ? (
               <span className="flex items-center gap-2 text-green-600">
                 <CheckCircle2 className="w-5 h-5" />
                 موقّع
               </span>
             ) : (
-              <span className="text-muted-foreground">لم يوقع بعد</span>
+              <span className="text-muted-foreground">{isAr ? "لم يوقع بعد" : "[لم يوقع بعد]"}</span>
             )}
           </div>
         </div>
@@ -169,7 +172,7 @@ export default function ContractSignature() {
       {/* Signature Canvas */}
       {((isSeller && !sellerSigned) || (isBuyer && !buyerSigned)) && (
         <Card className="p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">توقيعك الإلكتروني</h2>
+          <h2 className="text-xl font-semibold mb-4">{isAr ? "توقيعك الإلكتروني" : "[توقيعك الإلكتروني]"}</h2>
           <SignatureCanvas
             onSave={handleSaveSignature}
             disabled={isUploading}
@@ -180,7 +183,7 @@ export default function ContractSignature() {
       {/* Download PDF */}
       {bothSigned && (
         <Card className="p-6">
-          <h2 className="text-xl font-semibold mb-4">تحميل العقد الموقع</h2>
+          <h2 className="text-xl font-semibold mb-4">{isAr ? "تحميل العقد الموقع" : "Download العقد الموقع"}</h2>
           <p className="text-muted-foreground mb-4">
             تم توقيع العقد من قبل الطرفين. يمكنك الآن تحميل نسخة PDF موقعة.
           </p>

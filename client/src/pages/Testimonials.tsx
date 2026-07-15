@@ -1,7 +1,10 @@
 import { Star, Quote } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Testimonials() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const testimonials = [
     {
       id: 1,
@@ -129,7 +132,7 @@ export default function Testimonials() {
 
               {/* Results */}
               <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg p-4 border border-blue-500/20">
-                <p className="text-sm font-semibold text-blue-600 mb-1">النتائج:</p>
+                <p className="text-sm font-semibold text-blue-600 mb-1">{isAr ? "النتائج:" : "الResults:"}</p>
                 <p className="text-sm">{testimonial.results}</p>
               </div>
             </Card>
@@ -138,7 +141,7 @@ export default function Testimonials() {
 
         {/* CTA Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
-          <h2 className="text-3xl font-bold mb-4">انضم إلى آلاف المبتكرين الناجحين</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? "انضم إلى آلاف المبتكرين الناجحين" : "انضم إلى آNoف المبتكرين الناجحين"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             ابدأ رحلتك في الابتكار اليوم واكتشف لماذا يثق الآلاف في NAQLA
           </p>

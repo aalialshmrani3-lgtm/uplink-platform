@@ -13,8 +13,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function IdeaResult() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const params = useParams();
@@ -46,7 +49,7 @@ export default function IdeaResult() {
   const routeToNaqla2 = trpc.naqla1.routeToNaqla2.useMutation({
     onSuccess: (data) => {
       toast({
-        title: "✅ ممتاز! تم توجيه فكرتك إلى نقلة 2",
+        title: isAr ? "✅ ممتاز! تم توجيه فكرتك إلى نقلة 2" : "✅ Excellent! Your idea has been routed to Naqla 2",
         description: data.message,
         variant: "default",
       });
@@ -59,7 +62,7 @@ export default function IdeaResult() {
     },
     onError: (error) => {
       toast({
-        title: "❌ فشل التوجيه",
+        title: isAr ? "❌ فشل التوجيه" : "❌ Routing Failed",
         description: error.message,
         variant: "destructive",
       });
@@ -69,7 +72,7 @@ export default function IdeaResult() {
   const routeToNaqla3 = trpc.naqla1.routeToNaqla3.useMutation({
     onSuccess: (data) => {
       toast({
-        title: "✅ ممتاز! تم توجيه فكرتك إلى نقلة 3",
+        title: isAr ? "✅ ممتاز! تم توجيه فكرتك إلى نقلة 3" : "✅ Excellent! Your idea has been routed to Naqla 3",
         description: data.message,
         variant: "default",
       });
@@ -82,7 +85,7 @@ export default function IdeaResult() {
     },
     onError: (error) => {
       toast({
-        title: "❌ فشل التوجيه",
+        title: isAr ? "❌ فشل التوجيه" : "❌ Routing Failed",
         description: error.message,
         variant: "destructive",
       });
@@ -92,7 +95,7 @@ export default function IdeaResult() {
   const returnToSender = trpc.naqla1.returnToSender.useMutation({
     onSuccess: (data) => {
       toast({
-        title: "✅ تم إعادة الفكرة",
+        title: isAr ? "✅ تم إعادة الفكرة" : "✅ Idea Returned",
         description: data.message,
         variant: "default",
       });
@@ -103,7 +106,7 @@ export default function IdeaResult() {
     },
     onError: (error) => {
       toast({
-        title: "❌ فشلت العملية",
+        title: isAr ? "❌ فشلت العملية" : "❌ Operation Failed",
         description: error.message,
         variant: "destructive",
       });
@@ -132,18 +135,18 @@ export default function IdeaResult() {
       // بيانات تجريبية إذا لم يكن هناك ideaId
       setIdeaData({
         id: 0,
-        title: "منصة ذكية لإدارة الموارد البشرية بالذكاء الاصطناعي",
+        title: isAr ? "منصة ذكية لإدارة الموارد البشرية بالذكاء الاصطناعي" : "Smart HR Management Platform with AI",
         score: 78,
         classification: 'innovation',
         routingStatus: null,
       });
     }
-  }, [idea, analysis, ideaId]);
+  }, [idea, analysis, ideaId, isAr]);
 
   if (isLoading || !ideaData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 flex items-center justify-center">
-        <div className="text-white text-xl">جاري التحميل...</div>
+        <div className="text-white text-xl">{isAr ? "جاري التحميل..." : "Loading..."}</div>
       </div>
     );
   }
@@ -151,11 +154,11 @@ export default function IdeaResult() {
   const isRouted = ideaData.routingStatus !== null;
   let routingMessage = '';
   if (ideaData.routingStatus === 'naqla2') {
-    routingMessage = 'تم توجيه فكرتك إلى نقلة 2';
+    routingMessage = isAr ? 'تم توجيه فكرتك إلى نقلة 2' : 'Your idea has been routed to Naqla 2';
   } else if (ideaData.routingStatus === 'naqla3') {
-    routingMessage = 'تم توجيه فكرتك إلى نقلة 3';
+    routingMessage = isAr ? 'تم توجيه فكرتك إلى نقلة 3' : 'Your idea has been routed to Naqla 3';
   } else if (ideaData.routingStatus === 'returned') {
-    routingMessage = 'تم إعادة الفكرة إليك مع التوصيات';
+    routingMessage = isAr ? 'تم إعادة الفكرة إليك مع التوصيات' : 'The idea has been returned to you with recommendations';
   }
 
   // تحديد معلومات العرض بناءً على التصنيف
@@ -172,8 +175,8 @@ export default function IdeaResult() {
 
   if (ideaData.classification === 'innovation') {
     info = {
-      title: "ابتكار حقيقي",
-      message: "فكرتك تمتلك إمكانيات ابتكارية عالية وتستحق التطوير والاستثمار!",
+      title: isAr ? "ابتكار حقيقي" : "True Innovation",
+      message: isAr ? "فكرتك تمتلك إمكانيات ابتكارية عالية وتستحق التطوير والاستثمار!" : "Your idea has high innovative potential and deserves development and investment!",
       icon: CheckCircle2,
       color: "from-green-400 to-emerald-600",
       bgColor: "bg-green-500/10",
@@ -183,8 +186,8 @@ export default function IdeaResult() {
     };
   } else if (ideaData.classification === 'commercial') {
     info = {
-      title: "مشروع تجاري",
-      message: "فكرتك لديها إمكانيات تجارية جيدة وتحتاج إلى تطوير استراتيجي.",
+      title: isAr ? "مشروع تجاري" : "Commercial Project",
+      message: isAr ? "فكرتك لديها إمكانيات تجارية جيدة وتحتاج إلى تطوير استراتيجي." : "Your idea has good commercial potential and needs strategic development.",
       icon: AlertCircle,
       color: "from-blue-400 to-cyan-600",
       bgColor: "bg-blue-500/10",
@@ -194,8 +197,8 @@ export default function IdeaResult() {
     };
   } else {
     info = {
-      title: "تحتاج تطوير",
-      message: "فكرتك تحتاج إلى مزيد من التطوير والتحسين لتصبح قابلة للتنفيذ.",
+      title: isAr ? "تحتاج تطوير" : "Needs Development",
+      message: isAr ? "فكرتك تحتاج إلى مزيد من التطوير والتحسين لتصبح قابلة للتنفيذ." : "Your idea needs more development and improvement to become viable.",
       icon: XCircle,
       color: "from-orange-400 to-red-600",
       bgColor: "bg-orange-500/10",
@@ -210,18 +213,18 @@ export default function IdeaResult() {
   return (
     <>
       <SEOHead 
-        title="نتيجة الفكرة والتوجيه - NAQLA 5.0"
-        description="تحليل شامل لفكرتك وتوجيه للمسار المناسب"
+        title={isAr ? "نتيجة الفكرة والتوجيه - NAQLA 5.0" : "Idea Result and Routing - NAQLA 5.0"}
+        description={isAr ? "تحليل شامل لفكرتك وتوجيه للمسار المناسب" : "Comprehensive analysis of your idea and routing to the appropriate path"}
       />
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 py-12 px-4" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 py-12 px-4" dir={isAr ? "rtl" : "ltr"}>
         <div className="container mx-auto max-w-4xl">
           {/* العنوان الرئيسي */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-              نتيجة الفكرة والتوجيه
+              {isAr ? "نتيجة الفكرة والتوجيه" : "Idea Result and Routing"}
             </h1>
             <p className="text-muted-foreground text-lg">
-              تحليل شامل لفكرتك وتوجيه للمسار المناسب
+              {isAr ? "تحليل شامل لفكرتك وتوجيه للمسار المناسب" : "Comprehensive analysis of your idea and routing to the appropriate path"}
             </p>
           </div>
 
@@ -230,7 +233,7 @@ export default function IdeaResult() {
             {/* عنوان الفكرة */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-foreground mb-2">
-                عنوان فكرتك:
+                {isAr ? "عنوان فكرتك:" : "Your Idea Title:"}
               </h2>
               <p className="text-xl text-muted-foreground">
                 {ideaData.title}
@@ -244,7 +247,7 @@ export default function IdeaResult() {
                   {ideaData.score}%
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  نتيجة التحليل
+                  {isAr ? "نتيجة التحليل" : "Analysis Result"}
                 </p>
               </div>
             </div>
@@ -276,7 +279,7 @@ export default function IdeaResult() {
             {/* الخيارات */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-foreground mb-4">
-                الخطوة التالية:
+                {isAr ? "الخطوة التالية:" : "Next Step:"}
               </h3>
 
               {ideaData.score >= 50 ? (
@@ -289,8 +292,8 @@ export default function IdeaResult() {
                       } else {
                         // فتح dialog مباشرة للصفحة التجريبية
                         toast({
-                          title: "✅ ممتاز! تم توجيه فكرتك إلى نقلة 2",
-                          description: "استكشف الخيارات المتاحة لك",
+                          title: isAr ? "✅ ممتاز! تم توجيه فكرتك إلى نقلة 2" : "✅ Excellent! Your idea has been routed to Naqla 2",
+                          description: isAr ? "استكشف الخيارات المتاحة لك" : "Explore the available options for you",
                           variant: "default",
                         });
                         setShowNaqla2Dialog(true);
@@ -302,11 +305,11 @@ export default function IdeaResult() {
                     <div className="flex items-center gap-2">
                       <ArrowRight className="w-6 h-6" />
                       <span className="text-xl font-bold">
-                        {routeToNaqla2.isPending ? 'جاري التوجيه...' : 'وجّه إلى نقلة 2'}
+                        {routeToNaqla2.isPending ? (isAr ? 'جاري التوجيه...' : 'Routing...') : (isAr ? 'وجّه إلى نقلة 2' : 'Route to Naqla 2')}
                       </span>
                     </div>
                     <span className="text-sm text-white/80">
-                      مطابقة مع التحديات والفعاليات
+                      {isAr ? "مطابقة مع التحديات والفعاليات" : "Match with challenges and events"}
                     </span>
                   </Button>
 
@@ -317,8 +320,8 @@ export default function IdeaResult() {
                       } else {
                         // فتح dialog مباشرة للصفحة التجريبية
                         toast({
-                          title: "✅ ممتاز! تم توجيه فكرتك إلى نقلة 3",
-                          description: "استكشف الخيارات المتاحة لك",
+                          title: isAr ? "✅ ممتاز! تم توجيه فكرتك إلى نقلة 3" : "✅ Excellent! Your idea has been routed to Naqla 3",
+                          description: isAr ? "استكشف الخيارات المتاحة لك" : "Explore the available options for you",
                           variant: "default",
                         });
                         setShowNaqla3Dialog(true);
@@ -330,11 +333,11 @@ export default function IdeaResult() {
                     <div className="flex items-center gap-2">
                       <ArrowRight className="w-6 h-6" />
                       <span className="text-xl font-bold">
-                        {routeToNaqla3.isPending ? 'جاري التوجيه...' : 'وجّه إلى نقلة 3'}
+                        {routeToNaqla3.isPending ? (isAr ? 'جاري التوجيه...' : 'Routing...') : (isAr ? 'وجّه إلى نقلة 3' : 'Route to Naqla 3')}
                       </span>
                     </div>
                     <span className="text-sm text-white/80">
-                      عرض في البورصة والسوق
+                      {isAr ? "عرض في البورصة والسوق" : "Display in the exchange and market"}
                     </span>
                   </Button>
                 </div>
@@ -346,8 +349,8 @@ export default function IdeaResult() {
                       returnToSender.mutate({ ideaId });
                     } else {
                       toast({
-                        title: "تنبيه",
-                        description: "هذه صفحة تجريبية. يرجى تقديم فكرة حقيقية.",
+                        title: isAr ? "تنبيه" : "Notice",
+                        description: isAr ? "هذه صفحة تجريبية. يرجى تقديم فكرة حقيقية." : "This is a demo page. Please submit a real idea.",
                         variant: "default",
                       });
                     }
@@ -358,11 +361,11 @@ export default function IdeaResult() {
                   <div className="flex items-center gap-2">
                     <RefreshCw className="w-6 h-6" />
                     <span className="text-xl font-bold">
-                      {returnToSender.isPending ? 'جاري الإعادة...' : 'إعادة للمرسل مع التوصيات'}
+                      {returnToSender.isPending ? (isAr ? 'جاري الإعادة...' : 'Returning...') : (isAr ? 'إعادة للمرسل مع التوصيات' : 'Return to sender with recommendations')}
                     </span>
                   </div>
                   <span className="text-sm text-white/80">
-                    تحسين الفكرة وإعادة التقديم
+                    {isAr ? "تحسين الفكرة وإعادة التقديم" : "Improve the idea and resubmit"}
                   </span>
                 </Button>
               )}
@@ -373,7 +376,7 @@ export default function IdeaResult() {
           <div className="text-center">
             <Link href="/naqla1">
               <Button variant="outline" className="border-purple-500 text-purple-400 hover:bg-purple-500/10">
-                العودة إلى نقلة 1
+                {isAr ? "العودة إلى نقلة 1" : "Back to Naqla 1"}
               </Button>
             </Link>
           </div>
@@ -382,13 +385,13 @@ export default function IdeaResult() {
 
       {/* Dialog لخيارات نقلة 2 */}
       <Dialog open={showNaqla2Dialog} onOpenChange={setShowNaqla2Dialog}>
-        <DialogContent className="sm:max-w-[600px]" dir="rtl">
+        <DialogContent className="sm:max-w-[600px]" dir={isAr ? "rtl" : "ltr"}>
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-center mb-4">
-              🎉 ممتاز! تم توجيه فكرتك إلى نقلة 2
+              {isAr ? "🎉 ممتاز! تم توجيه فكرتك إلى نقلة 2" : "🎉 Excellent! Your idea has been routed to Naqla 2"}
             </DialogTitle>
             <DialogDescription className="text-center text-lg mb-6">
-              يوجد التحديات والهاكاثونات والفعاليات التالية. هل ترغب في مطابقة فكرتك معها؟
+              {isAr ? "يوجد التحديات والهاكاثونات والفعاليات التالية. هل ترغب في مطابقة فكرتك معها؟" : "There are the following challenges, hackathons, and events. Would you like to match your idea with them?"}
             </DialogDescription>
           </DialogHeader>
           
@@ -399,9 +402,9 @@ export default function IdeaResult() {
                 onClick={() => setShowNaqla2Dialog(false)}
               >
                 <Target className="w-8 h-8" />
-                <div className="text-right flex-1">
-                  <div className="text-xl font-bold">مطابقة مع التحديات</div>
-                  <div className="text-sm text-white/80">استعرض التحديات المتاحة وطابق فكرتك معها</div>
+                <div className={`${isAr ? "text-right" : "text-left"} flex-1`}>
+                  <div className="text-xl font-bold">{isAr ? "مطابقة مع التحديات" : "Match with Challenges"}</div>
+                  <div className="text-sm text-white/80">{isAr ? "استعرض التحديات المتاحة وطابق فكرتك معها" : "Browse available challenges and match your idea with them"}</div>
                 </div>
               </Button>
             </Link>
@@ -412,9 +415,9 @@ export default function IdeaResult() {
                 onClick={() => setShowNaqla2Dialog(false)}
               >
                 <Trophy className="w-8 h-8" />
-                <div className="text-right flex-1">
-                  <div className="text-xl font-bold">استعرض الهاكاثونات</div>
-                  <div className="text-sm text-white/80">شارك في الهاكاثونات ذات الصلة بفكرتك</div>
+                <div className={`${isAr ? "text-right" : "text-left"} flex-1`}>
+                  <div className="text-xl font-bold">{isAr ? "استعرض الهاكاثونات" : "Browse Hackathons"}</div>
+                  <div className="text-sm text-white/80">{isAr ? "شارك في الهاكاثونات ذات الصلة بفكرتك" : "Participate in hackathons relevant to your idea"}</div>
                 </div>
               </Button>
             </Link>
@@ -425,9 +428,9 @@ export default function IdeaResult() {
                 onClick={() => setShowNaqla2Dialog(false)}
               >
                 <Calendar className="w-8 h-8" />
-                <div className="text-right flex-1">
-                  <div className="text-xl font-bold">تصفح الفعاليات</div>
-                  <div className="text-sm text-white/80">اكتشف الفعاليات القادمة المتعلقة بمجالك</div>
+                <div className={`${isAr ? "text-right" : "text-left"} flex-1`}>
+                  <div className="text-xl font-bold">{isAr ? "تصفح الفعاليات" : "Browse Events"}</div>
+                  <div className="text-sm text-white/80">{isAr ? "اكتشف الفعاليات القادمة المتعلقة بمجالك" : "Discover upcoming events related to your field"}</div>
                 </div>
               </Button>
             </Link>
@@ -439,7 +442,7 @@ export default function IdeaResult() {
               onClick={() => setShowNaqla2Dialog(false)}
               className="w-full"
             >
-              إغلاق
+              {isAr ? "إغلاق" : "Close"}
             </Button>
           </div>
         </DialogContent>
@@ -447,13 +450,13 @@ export default function IdeaResult() {
 
       {/* Dialog لخيارات نقلة 3 */}
       <Dialog open={showNaqla3Dialog} onOpenChange={setShowNaqla3Dialog}>
-        <DialogContent className="sm:max-w-[600px]" dir="rtl">
+        <DialogContent className="sm:max-w-[600px]" dir={isAr ? "rtl" : "ltr"}>
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-center mb-4">
-              🎉 ممتاز! تم توجيه فكرتك إلى نقلة 3
+              {isAr ? "🎉 ممتاز! تم توجيه فكرتك إلى نقلة 3" : "🎉 Excellent! Your idea has been routed to Naqla 3"}
             </DialogTitle>
             <DialogDescription className="text-center text-lg mb-6">
-              هل ترغب في عرض فكرتك في البورصة وإعدادها لدخول السوق؟
+              {isAr ? "هل ترغب في عرض فكرتك في البورصة وإعدادها لدخول السوق؟" : "Would you like to display your idea on the exchange and prepare it for market entry?"}
             </DialogDescription>
           </DialogHeader>
           
@@ -464,9 +467,9 @@ export default function IdeaResult() {
                 onClick={() => setShowNaqla3Dialog(false)}
               >
                 <ShoppingCart className="w-8 h-8" />
-                <div className="text-right flex-1">
-                  <div className="text-xl font-bold">عرض في البورصة</div>
-                  <div className="text-sm text-white/80">عرض فكرتك للبيع في بورصة الأصول</div>
+                <div className={`${isAr ? "text-right" : "text-left"} flex-1`}>
+                  <div className="text-xl font-bold">{isAr ? "عرض في البورصة" : "Display on Exchange"}</div>
+                  <div className="text-sm text-white/80">{isAr ? "عرض فكرتك للبيع في بورصة الأصول" : "Display your idea for sale on the asset exchange"}</div>
                 </div>
               </Button>
             </Link>
@@ -477,9 +480,9 @@ export default function IdeaResult() {
                 onClick={() => setShowNaqla3Dialog(false)}
               >
                 <TrendingUp className="w-8 h-8" />
-                <div className="text-right flex-1">
-                  <div className="text-xl font-bold">إعداد لدخول السوق</div>
-                  <div className="text-sm text-white/80">جهز فكرتك للبيع والتسويق</div>
+                <div className={`${isAr ? "text-right" : "text-left"} flex-1`}>
+                  <div className="text-xl font-bold">{isAr ? "إعداد لدخول السوق" : "Prepare for Market Entry"}</div>
+                  <div className="text-sm text-white/80">{isAr ? "جهز فكرتك للبيع والتسويق" : "Prepare your idea for sale and marketing"}</div>
                 </div>
               </Button>
             </Link>
@@ -490,9 +493,9 @@ export default function IdeaResult() {
                 onClick={() => setShowNaqla3Dialog(false)}
               >
                 <Package className="w-8 h-8" />
-                <div className="text-right flex-1">
-                  <div className="text-xl font-bold">استعرض الأصول المشابهة</div>
-                  <div className="text-sm text-white/80">اكتشف الأصول المشابهة في السوق</div>
+                <div className={`${isAr ? "text-right" : "text-left"} flex-1`}>
+                  <div className="text-xl font-bold">{isAr ? "استعرض الأصول المشابهة" : "Browse Similar Assets"}</div>
+                  <div className="text-sm text-white/80">{isAr ? "اكتشف الأصول المشابهة في السوق" : "Discover similar assets in the market"}</div>
                 </div>
               </Button>
             </Link>
@@ -504,7 +507,7 @@ export default function IdeaResult() {
               onClick={() => setShowNaqla3Dialog(false)}
               className="w-full"
             >
-              إغلاق
+              {isAr ? "إغلاق" : "Close"}
             </Button>
           </div>
         </DialogContent>

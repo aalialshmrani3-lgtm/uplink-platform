@@ -5,8 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ForgotPassword() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, setLocation] = useLocation();
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,7 +45,7 @@ export default function ForgotPassword() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle className="text-2xl">تم إرسال الرابط</CardTitle>
+            <CardTitle className="text-2xl">{isAr ? "تم إرسال الرابط" : "تم Submit الرابط"}</CardTitle>
             <CardDescription>
               تحقق من بريدك الإلكتروني
             </CardDescription>
@@ -73,7 +76,7 @@ export default function ForgotPassword() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">استعادة كلمة المرور</CardTitle>
+          <CardTitle className="text-2xl">{isAr ? "استعادة كلمة المرور" : "استعادة Password"}</CardTitle>
           <CardDescription>
             أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور
           </CardDescription>
@@ -81,7 +84,7 @@ export default function ForgotPassword() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">البريد الإلكتروني</Label>
+              <Label htmlFor="email">{isAr ? "البريد الإلكتروني" : "Email"}</Label>
               <Input
                 id="email"
                 type="email"

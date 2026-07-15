@@ -16,6 +16,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Sparkles, Users, TrendingUp, Eye } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Dialog,
   DialogContent,
@@ -25,6 +26,8 @@ import {
 } from "@/components/ui/dialog";
 
 export default function IdeaClusters() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { toast } = useToast();
   const [isClustering, setIsClustering] = useState(false);
   const [selectedCluster, setSelectedCluster] = useState<number | null>(null);
@@ -88,7 +91,7 @@ export default function IdeaClusters() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold mb-2">مجموعات الأفكار</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? "مجموعات الأفكار" : "Idea Clusters"}</h1>
           <p className="text-muted-foreground">
             تجميع ذكي للأفكار المتشابهة باستخدام AI - مستوحى من Innovation 360
           </p>
@@ -118,7 +121,7 @@ export default function IdeaClusters() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">إجمالي المجموعات</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "إجمالي المجموعات" : "Total المجموعات"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{clusters.length}</div>
@@ -126,7 +129,7 @@ export default function IdeaClusters() {
           </Card>
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">إجمالي الأفكار</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "إجمالي الأفكار" : "Total الأفكار"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -136,7 +139,7 @@ export default function IdeaClusters() {
           </Card>
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">متوسط القوة</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "متوسط القوة" : "Average القوة"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -156,7 +159,7 @@ export default function IdeaClusters() {
           <div className="flex flex-col items-center gap-4">
             <Users className="h-16 w-16 text-muted-foreground" />
             <div>
-              <h3 className="text-xl font-semibold mb-2">لا توجد مجموعات بعد</h3>
+              <h3 className="text-xl font-semibold mb-2">{isAr ? "لا توجد مجموعات بعد" : "No توجد مجموعات بعد"}</h3>
               <p className="text-muted-foreground mb-4">
                 ابدأ بتجميع الأفكار تلقائياً باستخدام AI للحصول على مجموعات قوية
               </p>
@@ -238,11 +241,11 @@ export default function IdeaClusters() {
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-muted rounded-lg">
                   <div className="text-2xl font-bold">{clusterDetails.memberCount}</div>
-                  <div className="text-sm text-muted-foreground">أفكار</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "أفكار" : "[أفكار]"}</div>
                 </div>
                 <div className="text-center p-4 bg-muted rounded-lg">
                   <div className="text-2xl font-bold">{clusterDetails.strength}%</div>
-                  <div className="text-sm text-muted-foreground">القوة</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "القوة" : "[القوة]"}</div>
                 </div>
                 <div className="text-center p-4 bg-muted rounded-lg">
                   <div className="text-2xl font-bold">
@@ -254,13 +257,13 @@ export default function IdeaClusters() {
                       : 0}
                     %
                   </div>
-                  <div className="text-sm text-muted-foreground">متوسط التشابه</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "متوسط التشابه" : "Average التشابه"}</div>
                 </div>
               </div>
 
               {/* Ideas List */}
               <div>
-                <h3 className="font-semibold mb-4">الأفكار في هذه المجموعة:</h3>
+                <h3 className="font-semibold mb-4">{isAr ? "الأفكار في هذه المجموعة:" : "الأفكار في هذه الSumة:"}</h3>
                 <div className="space-y-3">
                   {clusterDetails.ideas?.map((idea: any, index: number) => (
                     <Card key={idea.id}>

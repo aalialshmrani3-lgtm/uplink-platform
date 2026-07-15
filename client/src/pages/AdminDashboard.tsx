@@ -23,6 +23,7 @@ import { InnovationFunnelChart } from '@/components/charts/InnovationFunnelChart
 import { MLPerformanceChart } from '@/components/charts/MLPerformanceChart';
 import { EngagementMetricsChart } from '@/components/charts/EngagementMetricsChart';
 import { ChartFilters, ChartFilterState } from '@/components/ChartFilters';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface DashboardStats {
   totalIdeas: number;
@@ -41,6 +42,8 @@ interface DashboardStats {
 }
 
 export default function AdminDashboard() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [chartFilters, setChartFilters] = useState<ChartFilterState>({
     startDate: '',
@@ -75,7 +78,7 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <Activity className="w-12 h-12 mx-auto animate-pulse text-muted-foreground mb-4" />
-            <p className="text-muted-foreground">جاري تحميل البيانات...</p>
+            <p className="text-muted-foreground">{isAr ? "جاري تحميل البيانات..." : "جاري Download البيانات..."}</p>
           </div>
         </div>
       </div>
@@ -138,7 +141,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">لوحة تحكم المشرفين</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? "لوحة تحكم المشرفين" : "لوحة تحكم الSupervisorين"}</h1>
           <p className="text-muted-foreground">
             إحصائيات فورية ومباشرة للمنصة
           </p>
@@ -177,7 +180,7 @@ export default function AdminDashboard() {
                           {kpi.change > 0 ? '+' : ''}
                           {kpi.change}%
                         </span>
-                        <span className="text-xs text-muted-foreground">آخر 7 أيام</span>
+                        <span className="text-xs text-muted-foreground">{isAr ? "آخر 7 أيام" : "Last 7 Days"}</span>
                       </div>
                     )}
                   </div>
@@ -195,8 +198,8 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>المستخدمون النشطون</CardTitle>
-            <CardDescription>المستخدمون المتصلون حاليًا</CardDescription>
+            <CardTitle>{isAr ? "المستخدمون النشطون" : "المستخدمون الActiveون"}</CardTitle>
+            <CardDescription>{isAr ? "المستخدمون المتصلون حاليًا" : "الUserون المتصلون حاليًا"}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
@@ -218,8 +221,8 @@ export default function AdminDashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle>التقييمات المعلقة</CardTitle>
-            <CardDescription>تتطلب اهتمام المشرفين</CardDescription>
+            <CardTitle>{isAr ? "التقييمات المعلقة" : "Evaluationات المعلقة"}</CardTitle>
+            <CardDescription>{isAr ? "تتطلب اهتمام المشرفين" : "تتطلب اهDoneام المشرفين"}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
@@ -286,8 +289,8 @@ export default function AdminDashboard() {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>إجراءات سريعة</CardTitle>
-          <CardDescription>الوصول السريع للأدوات الإدارية</CardDescription>
+          <CardTitle>{isAr ? "إجراءات سريعة" : "[إجراءات سريعة]"}</CardTitle>
+          <CardDescription>{isAr ? "الوصول السريع للأدوات الإدارية" : "الوصول السريع للTools الإدارية"}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -296,28 +299,28 @@ export default function AdminDashboard() {
               className="p-4 border rounded-lg hover:bg-accent transition-colors text-center"
             >
               <Lightbulb className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <p className="font-medium text-sm">تصنيف الأفكار</p>
+              <p className="font-medium text-sm">{isAr ? "تصنيف الأفكار" : "Idea Classification"}</p>
             </a>
             <a
               href="/admin/model-performance"
               className="p-4 border rounded-lg hover:bg-accent transition-colors text-center"
             >
               <Activity className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <p className="font-medium text-sm">أداء النموذج</p>
+              <p className="font-medium text-sm">{isAr ? "أداء النموذج" : "أداء Growthذج"}</p>
             </a>
             <a
               href="/admin/data-export"
               className="p-4 border rounded-lg hover:bg-accent transition-colors text-center"
             >
               <Globe className="w-8 h-8 mx-auto mb-2 text-green-600" />
-              <p className="font-medium text-sm">تصدير البيانات</p>
+              <p className="font-medium text-sm">{isAr ? "تصدير البيانات" : "Data Export"}</p>
             </a>
             <a
               href="/webhook-management"
               className="p-4 border rounded-lg hover:bg-accent transition-colors text-center"
             >
               <Activity className="w-8 h-8 mx-auto mb-2 text-orange-600" />
-              <p className="font-medium text-sm">إدارة Webhooks</p>
+              <p className="font-medium text-sm">{isAr ? "إدارة Webhooks" : "[إدارة Webhooks]"}</p>
             </a>
           </div>
         </CardContent>

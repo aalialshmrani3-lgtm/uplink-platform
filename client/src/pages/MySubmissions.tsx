@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLocation } from 'wouter';
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Trophy, 
   Clock, 
@@ -18,6 +19,8 @@ import {
 } from 'lucide-react';
 
 export default function MySubmissions() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, setLocation] = useLocation();
   const { data: submissions, isLoading } = trpc.naqla2.challenges.getMySubmissionsWithDetails.useQuery();
   const [filter, setFilter] = useState<'all' | 'submitted' | 'under_review' | 'shortlisted' | 'finalist' | 'winner' | 'rejected'>('all');
@@ -28,7 +31,7 @@ export default function MySubmissions() {
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">جاري تحميل حلولك...</p>
+            <p className="text-muted-foreground">{isAr ? "جاري تحميل حلولك..." : "جاري Download حلولك..."}</p>
           </div>
         </div>
       </div>
@@ -74,7 +77,7 @@ export default function MySubmissions() {
     <div className="container mx-auto py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">حلولي المقدمة</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? "حلولي المقدمة" : "Solutionsي المقدمة"}</h1>
         <p className="text-muted-foreground">
           تتبع جميع مشاركاتك في التحديات وحالتها
         </p>
@@ -84,7 +87,7 @@ export default function MySubmissions() {
       <div className="grid gap-4 md:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">إجمالي الحلول</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "إجمالي الحلول" : "إجمالي الSolutions"}</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -94,7 +97,7 @@ export default function MySubmissions() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">قيد المراجعة</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "قيد المراجعة" : "قيد Audit"}</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -104,7 +107,7 @@ export default function MySubmissions() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">متأهل/مرشح</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "متأهل/مرشح" : "[متأهل/مرشح]"}</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -114,7 +117,7 @@ export default function MySubmissions() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">فائز</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "فائز" : "[فائز]"}</CardTitle>
             <Trophy className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>
@@ -141,7 +144,7 @@ export default function MySubmissions() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-            <p className="text-lg font-medium mb-2">لا توجد حلول مقدمة</p>
+            <p className="text-lg font-medium mb-2">{isAr ? "لا توجد حلول مقدمة" : "No توجد حلول مقدمة"}</p>
             <p className="text-muted-foreground mb-4">
               {filter === 'all' 
                 ? 'لم تقدم أي حلول بعد. ابدأ بالمشاركة في التحديات!'

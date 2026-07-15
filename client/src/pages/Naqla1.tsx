@@ -19,8 +19,11 @@ import { getLoginUrl } from '@/const';
 import { useAuth } from '@/_core/hooks/useAuth';
 import SEOHead from '@/components/SEOHead';
 import { mockIdeas, mockClassificationStats } from '@/data/mockNAQLA1';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla1() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
@@ -173,7 +176,7 @@ export default function Naqla1() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 animate-fade-in">
               <Brain className="w-5 h-5 text-blue-400" />
-              <span className="text-sm font-medium text-blue-300">محرك التحليل بالذكاء الاصطناعي</span>
+              <span className="text-sm font-medium text-blue-300">{isAr ? "محرك التحليل بالذكاء الاصطناعي" : "محرك التحليل بالذكاء اNoصطناعي"}</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in-up">
@@ -237,8 +240,8 @@ export default function Naqla1() {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">كيف يعمل التحليل؟</h2>
-            <p className="text-xl text-gray-400">خمس خطوات لتحليل فكرتك بدقة عالية</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "كيف يعمل التحليل؟" : "كيف يعمل Analysis؟"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? "خمس خطوات لتحليل فكرتك بدقة عالية" : "[خمس خطوات لتحليل فكرتك بدقة عالية]"}</p>
           </div>
 
           <div className="grid md:grid-cols-5 gap-6">
@@ -265,8 +268,8 @@ export default function Naqla1() {
       <section className="py-20 px-4 bg-gradient-to-b from-transparent to-slate-900/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">مستويات التصنيف</h2>
-            <p className="text-xl text-gray-400">نصنف الأفكار إلى 3 مستويات بناءً على معايير دقيقة</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "مستويات التصنيف" : "[مستويات التصنيف]"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? "نصنف الأفكار إلى 3 مستويات بناءً على معايير دقيقة" : "نصنف الأفكار إلى 3 مستويات Buildً على معايير دقيقة"}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -284,7 +287,7 @@ export default function Naqla1() {
                 <p className="text-gray-300 mb-6">{level.description}</p>
                 
                 <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-3">المعايير:</h4>
+                  <h4 className="text-sm font-semibold text-gray-400 mb-3">{isAr ? "المعايير:" : "Standards:"}</h4>
                   <ul className="space-y-2">
                     {level.criteria.map((criterion, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
@@ -296,7 +299,7 @@ export default function Naqla1() {
                 </div>
                 
                 <div className="pt-6 border-t border-gray-700">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-2">الخطوة التالية:</h4>
+                  <h4 className="text-sm font-semibold text-gray-400 mb-2">{isAr ? "الخطوة التالية:" : "الخطوة Nextة:"}</h4>
                   <p className="text-sm text-gray-300">{level.nextStep}</p>
                 </div>
               </Card>
@@ -309,8 +312,8 @@ export default function Naqla1() {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">معايير التقييم</h2>
-            <p className="text-xl text-gray-400">نقيّم الأفكار بناءً على 10 معايير رئيسية محدثة بأوزان مختلفة</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "معايير التقييم" : "معايير Evaluation"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? "نقيّم الأفكار بناءً على 10 معايير رئيسية محدثة بأوزان مختلفة" : "نقيّم الأفكار بناءً على 10 معايير رئيسية Updatedة بأوزان مختلفة"}</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">

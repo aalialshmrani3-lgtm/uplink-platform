@@ -8,8 +8,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast as showToast } from "sonner";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function BetaPrograms() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   // Using sonner toast
   const [selectedProgram, setSelectedProgram] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -145,7 +148,7 @@ export default function BetaPrograms() {
               <p className="text-muted-foreground mb-6">{program.description}</p>
 
               <div className="mb-6">
-                <h4 className="font-semibold mb-3 text-sm">الميزات الرئيسية:</h4>
+                <h4 className="font-semibold mb-3 text-sm">{isAr ? "الميزات الرئيسية:" : "الميزات Home:"}</h4>
                 <div className="space-y-2">
                   {program.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-2">
@@ -157,7 +160,7 @@ export default function BetaPrograms() {
               </div>
 
               <div className="mb-6">
-                <h4 className="font-semibold mb-3 text-sm">فوائد المشاركين:</h4>
+                <h4 className="font-semibold mb-3 text-sm">{isAr ? "فوائد المشاركين:" : "[فوائد المشاركين:]"}</h4>
                 <div className="space-y-2">
                   {program.benefits.map((benefit, i) => (
                     <div key={i} className="flex items-start gap-2">
@@ -170,7 +173,7 @@ export default function BetaPrograms() {
 
               <div className="flex items-center justify-between pt-4 border-t">
                 <div>
-                  <div className="text-sm text-muted-foreground">المدة</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "المدة" : "[المدة]"}</div>
                   <div className="font-semibold">{program.duration}</div>
                 </div>
                 <Badge variant="secondary">{program.slots}</Badge>
@@ -181,7 +184,7 @@ export default function BetaPrograms() {
 
         {/* Registration Form */}
         <Card className="p-8 max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">نموذج التسجيل</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">{isAr ? "نموذج التسجيل" : "نموذج الRegister"}</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -210,7 +213,7 @@ export default function BetaPrograms() {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">الشركة/المؤسسة</label>
+                <label className="block text-sm font-medium mb-2">{isAr ? "الشركة/المؤسسة" : "[الشركة/المؤسسة]"}</label>
                 <Input
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -218,7 +221,7 @@ export default function BetaPrograms() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">المسمى الوظيفي</label>
+                <label className="block text-sm font-medium mb-2">{isAr ? "المسمى الوظيفي" : "[المسمى الوظيفي]"}</label>
                 <Input
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -277,22 +280,22 @@ export default function BetaPrograms() {
 
         {/* FAQ Section */}
         <div className="mt-16 max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center">أسئلة شائعة</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "أسئلة شائعة" : "[أسئلة شائعة]"}</h2>
           <div className="space-y-4">
             <Card className="p-6">
-              <h3 className="font-bold mb-2">ما هي متطلبات الانضمام؟</h3>
+              <h3 className="font-bold mb-2">{isAr ? "ما هي متطلبات الانضمام؟" : "ما هي متطلبات اNoنضمام؟"}</h3>
               <p className="text-muted-foreground">
                 نبحث عن مبتكرين وشركات ومؤسسات جادة في استكشاف ميزات NAQLA 6.0 وتقديم تغذية راجعة بناءة.
               </p>
             </Card>
             <Card className="p-6">
-              <h3 className="font-bold mb-2">هل البرنامج التجريبي مجاني؟</h3>
+              <h3 className="font-bold mb-2">{isAr ? "هل البرنامج التجريبي مجاني؟" : "[هل البرنامج التجريبي مجاني؟]"}</h3>
               <p className="text-muted-foreground">
                 نعم، المشاركة في البرنامج التجريبي مجانية بالكامل، بالإضافة إلى الحصول على خصومات حصرية عند الإطلاق الرسمي.
               </p>
             </Card>
             <Card className="p-6">
-              <h3 className="font-bold mb-2">متى يبدأ البرنامج؟</h3>
+              <h3 className="font-bold mb-2">{isAr ? "متى يبدأ البرنامج؟" : "[متى يبدأ البرنامج؟]"}</h3>
               <p className="text-muted-foreground">
                 سيتم الإعلان عن تاريخ البدء للمشاركين المقبولين عبر البريد الإلكتروني خلال أسبوعين من التسجيل.
               </p>

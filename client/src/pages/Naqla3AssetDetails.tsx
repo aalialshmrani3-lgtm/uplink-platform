@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Mock data - في المستقبل سيتم استبدالها بـ tRPC query
 const mockAsset = {
@@ -72,6 +73,8 @@ const mockAsset = {
 };
 
 export default function Naqla3AssetDetails() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
@@ -198,15 +201,15 @@ export default function Naqla3AssetDetails() {
                   <div className="pt-4 border-t space-y-2">
                     <div className="flex items-center gap-2 text-sm">
                       <Shield className="w-4 h-4 text-green-500" />
-                      <span>معاملة آمنة 100%</span>
+                      <span>{isAr ? "معاملة آمنة 100%" : "[معاملة آمنة 100%]"}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <CheckCircle2 className="w-4 h-4 text-blue-500" />
-                      <span>مالك موثوق</span>
+                      <span>{isAr ? "مالك موثوق" : "[مالك موثوق]"}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <TrendingUp className="w-4 h-4 text-yellow-500" />
-                      <span>عائد استثمار مضمون</span>
+                      <span>{isAr ? "عائد استثمار مضمون" : "[عائد استثمار مضمون]"}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -223,23 +226,23 @@ export default function Naqla3AssetDetails() {
           <div className="lg:col-span-2">
             <Tabs defaultValue="overview" className="w-full">
               <TabsList className="w-full justify-start mb-6">
-                <TabsTrigger value="overview">نظرة عامة</TabsTrigger>
-                <TabsTrigger value="features">المميزات</TabsTrigger>
-                <TabsTrigger value="specs">المواصفات</TabsTrigger>
-                <TabsTrigger value="reviews">التقييمات</TabsTrigger>
+                <TabsTrigger value="overview">{isAr ? "نظرة عامة" : "[نظرة عامة]"}</TabsTrigger>
+                <TabsTrigger value="features">{isAr ? "المميزات" : "المFeatures"}</TabsTrigger>
+                <TabsTrigger value="specs">{isAr ? "المواصفات" : "المواRowات"}</TabsTrigger>
+                <TabsTrigger value="reviews">{isAr ? "التقييمات" : "Evaluationات"}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview">
                 <Card>
                   <CardHeader>
-                    <CardTitle>نظرة عامة</CardTitle>
+                    <CardTitle>{isAr ? "نظرة عامة" : "[نظرة عامة]"}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-muted-foreground leading-relaxed">
                       {mockAsset.description}
                     </p>
                     <div className="pt-4 border-t">
-                      <h3 className="font-semibold mb-3">المستندات المرفقة:</h3>
+                      <h3 className="font-semibold mb-3">{isAr ? "المستندات المرفقة:" : "[المستندات المرفقة:]"}</h3>
                       <div className="space-y-2">
                         {mockAsset.documents.map((doc, index) => (
                           <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors">
@@ -252,7 +255,7 @@ export default function Naqla3AssetDetails() {
                                 <p className="text-xs text-muted-foreground">{doc.size}</p>
                               </div>
                             </div>
-                            <Button variant="ghost" size="sm">تحميل</Button>
+                            <Button variant="ghost" size="sm">{isAr ? "تحميل" : "Download"}</Button>
                           </div>
                         ))}
                       </div>
@@ -264,7 +267,7 @@ export default function Naqla3AssetDetails() {
               <TabsContent value="features">
                 <Card>
                   <CardHeader>
-                    <CardTitle>المميزات الرئيسية</CardTitle>
+                    <CardTitle>{isAr ? "المميزات الرئيسية" : "المميزات Home"}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
@@ -282,7 +285,7 @@ export default function Naqla3AssetDetails() {
               <TabsContent value="specs">
                 <Card>
                   <CardHeader>
-                    <CardTitle>المواصفات التفصيلية</CardTitle>
+                    <CardTitle>{isAr ? "المواصفات التفصيلية" : "المواRowات التفصيلية"}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -301,7 +304,7 @@ export default function Naqla3AssetDetails() {
                 <Card>
                   <CardHeader>
                     <CardTitle>التقييمات ({mockAsset.reviews_list.length})</CardTitle>
-                    <CardDescription>آراء العملاء السابقين</CardDescription>
+                    <CardDescription>{isAr ? "آراء العملاء السابقين" : "آراء العملاء Previousين"}</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {mockAsset.reviews_list.map((review) => (
@@ -333,7 +336,7 @@ export default function Naqla3AssetDetails() {
             {/* Owner Info */}
             <Card>
               <CardHeader>
-                <CardTitle>معلومات المالك</CardTitle>
+                <CardTitle>{isAr ? "معلومات المالك" : "Information المالك"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
@@ -344,7 +347,7 @@ export default function Naqla3AssetDetails() {
                     <p className="font-semibold">{mockAsset.owner}</p>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
                       <CheckCircle2 className="w-3 h-3 text-green-500" />
-                      <span>موثوق</span>
+                      <span>{isAr ? "موثوق" : "[موثوق]"}</span>
                     </div>
                   </div>
                 </div>
@@ -365,23 +368,23 @@ export default function Naqla3AssetDetails() {
             {/* Stats */}
             <Card>
               <CardHeader>
-                <CardTitle>إحصائيات</CardTitle>
+                <CardTitle>{isAr ? "إحصائيات" : "[إحصائيات]"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">المشاهدات</span>
+                  <span className="text-sm text-muted-foreground">{isAr ? "المشاهدات" : "[المشاهدات]"}</span>
                   <span className="font-semibold">{mockAsset.views}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">الإعجابات</span>
+                  <span className="text-sm text-muted-foreground">{isAr ? "الإعجابات" : "[الإعجابات]"}</span>
                   <span className="font-semibold">{mockAsset.likes}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">التقييم</span>
+                  <span className="text-sm text-muted-foreground">{isAr ? "التقييم" : "Evaluation"}</span>
                   <span className="font-semibold">{mockAsset.rating} / 5.0</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">الفئة</span>
+                  <span className="text-sm text-muted-foreground">{isAr ? "الفئة" : "Category"}</span>
                   <Badge variant="secondary">{mockAsset.category}</Badge>
                 </div>
               </CardContent>

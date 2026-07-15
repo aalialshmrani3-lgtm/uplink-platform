@@ -15,8 +15,11 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Calendar, MapPin, Users, DollarSign, Sparkles } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AddEvent() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -85,7 +88,7 @@ export default function AddEvent() {
         <div className="mb-8 text-center">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
             <Sparkles className="w-4 h-4" />
-            <span>نقلة 2 - إضافة فعالية</span>
+            <span>{isAr ? "نقلة 2 - إضافة فعالية" : "نقلة 2 - Add فعالية"}</span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             أضف فعاليتك الآن
@@ -97,7 +100,7 @@ export default function AddEvent() {
 
         <Card className="shadow-xl border-0">
           <CardHeader className="bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-t-lg">
-            <CardTitle className="text-2xl">تفاصيل الفعالية</CardTitle>
+            <CardTitle className="text-2xl">{isAr ? "تفاصيل الفعالية" : "Event Details"}</CardTitle>
             <CardDescription className="text-blue-50">
               املأ جميع الحقول لإنشاء فعاليتك
             </CardDescription>
@@ -311,7 +314,7 @@ export default function AddEvent() {
           <Card className="border-blue-200 bg-blue-50">
             <CardContent className="p-6 text-center">
               <div className="text-4xl mb-3">🎯</div>
-              <h3 className="font-semibold text-blue-900 mb-2">رعاة مؤهلين</h3>
+              <h3 className="font-semibold text-blue-900 mb-2">{isAr ? "رعاة مؤهلين" : "[رعاة مؤهلين]"}</h3>
               <p className="text-sm text-blue-700">
                 احصل على رعاة من حاضنات وشركات مسجلة في المنصة
               </p>
@@ -320,7 +323,7 @@ export default function AddEvent() {
           <Card className="border-green-200 bg-green-50">
             <CardContent className="p-6 text-center">
               <div className="text-4xl mb-3">💡</div>
-              <h3 className="font-semibold text-green-900 mb-2">مبتكرون موهوبون</h3>
+              <h3 className="font-semibold text-green-900 mb-2">{isAr ? "مبتكرون موهوبون" : "Innovatorون موهوبون"}</h3>
               <p className="text-sm text-green-700">
                 اجذب أفضل المبتكرين والموهوبين في مجالك
               </p>
@@ -329,7 +332,7 @@ export default function AddEvent() {
           <Card className="border-purple-200 bg-purple-50">
             <CardContent className="p-6 text-center">
               <div className="text-4xl mb-3">🔒</div>
-              <h3 className="font-semibold text-purple-900 mb-2">عقود آمنة</h3>
+              <h3 className="font-semibold text-purple-900 mb-2">{isAr ? "عقود آمنة" : "[عقود آمنة]"}</h3>
               <p className="text-sm text-purple-700">
                 انتقل مباشرة لنقلة 3 لإبرام عقود الرعاية بأمان
               </p>

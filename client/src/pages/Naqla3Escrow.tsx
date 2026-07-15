@@ -9,8 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Shield, DollarSign } from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla3Escrow() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
 
   const { data: stats } = trpc.naqla3.escrow.getStats.useQuery(undefined, {
@@ -31,7 +34,7 @@ export default function Naqla3Escrow() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="w-full max-w-md bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">يجب تسجيل الدخول</CardTitle>
+            <CardTitle className="text-white">{isAr ? "يجب تسجيل الدخول" : "يجب Login"}</CardTitle>
           </CardHeader>
         </Card>
       </div>
@@ -55,7 +58,7 @@ export default function Naqla3Escrow() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-sm">إجمالي Escrow</CardTitle>
+              <CardTitle className="text-white text-sm">{isAr ? "إجمالي Escrow" : "Total Escrow"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-purple-400">{stats?.totalEscrow || '0'} ريال</p>
@@ -63,7 +66,7 @@ export default function Naqla3Escrow() {
           </Card>
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-sm">المبالغ المحررة</CardTitle>
+              <CardTitle className="text-white text-sm">{isAr ? "المبالغ المحررة" : "[المبالغ المحررة]"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-green-400">{stats?.totalReleased || '0'} ريال</p>
@@ -71,7 +74,7 @@ export default function Naqla3Escrow() {
           </Card>
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-sm">Escrow نشط</CardTitle>
+              <CardTitle className="text-white text-sm">{isAr ? "Escrow نشط" : "Escrow Active"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-blue-400">{stats?.activeEscrows || 0}</p>
@@ -79,7 +82,7 @@ export default function Naqla3Escrow() {
           </Card>
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-sm">Escrow مكتمل</CardTitle>
+              <CardTitle className="text-white text-sm">{isAr ? "Escrow مكتمل" : "Escrow مكDoneل"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-cyan-400">{stats?.completedEscrows || 0}</p>
@@ -89,7 +92,7 @@ export default function Naqla3Escrow() {
 
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">إيداع في Escrow</CardTitle>
+            <CardTitle className="text-white">{isAr ? "إيداع في Escrow" : "[إيداع في Escrow]"}</CardTitle>
             <CardDescription className="text-slate-400">
               قم بإيداع الأموال لبدء العقد
             </CardDescription>
@@ -98,7 +101,7 @@ export default function Naqla3Escrow() {
             <form className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="contractId" className="text-white">رقم العقد</Label>
+                  <Label htmlFor="contractId" className="text-white">{isAr ? "رقم العقد" : "[رقم العقد]"}</Label>
                   <Input
                     id="contractId"
                     type="number"
@@ -107,7 +110,7 @@ export default function Naqla3Escrow() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="amount" className="text-white">المبلغ (ريال)</Label>
+                  <Label htmlFor="amount" className="text-white">{isAr ? "المبلغ (ريال)" : "Amount (ريال)"}</Label>
                   <Input
                     id="amount"
                     type="number"
@@ -117,15 +120,15 @@ export default function Naqla3Escrow() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="paymentMethod" className="text-white">طريقة الدفع</Label>
+                <Label htmlFor="paymentMethod" className="text-white">{isAr ? "طريقة الدفع" : "[طريقة الدفع]"}</Label>
                 <Select name="paymentMethod" required>
                   <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
                     <SelectValue placeholder="اختر الطريقة" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-700">
-                    <SelectItem value="bank_transfer">تحويل بنكي</SelectItem>
-                    <SelectItem value="credit_card">بطاقة ائتمان</SelectItem>
-                    <SelectItem value="wallet">محفظة إلكترونية</SelectItem>
+                    <SelectItem value="bank_transfer">{isAr ? "تحويل بنكي" : "[تحويل بنكي]"}</SelectItem>
+                    <SelectItem value="credit_card">{isAr ? "بطاقة ائتمان" : "بطاقة ائDoneان"}</SelectItem>
+                    <SelectItem value="wallet">{isAr ? "محفظة إلكترونية" : "مSaveة إلكترونية"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

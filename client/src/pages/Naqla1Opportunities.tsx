@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, MapPin, Trophy, Users, Search, TrendingUp } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 /**
  * NAQLA1 Opportunities Page
@@ -20,6 +21,8 @@ import { Calendar, MapPin, Trophy, Users, Search, TrendingUp } from "lucide-reac
  */
 
 export default function Naqla1Opportunities() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
 
@@ -57,15 +60,15 @@ export default function Naqla1Opportunities() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold">{challenges.length}</div>
-                <div className="text-sm text-blue-100">تحديات نشطة</div>
+                <div className="text-sm text-blue-100">{isAr ? "تحديات نشطة" : "تحديات Activeة"}</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold">{hackathons.length}</div>
-                <div className="text-sm text-blue-100">هاكاثونات قادمة</div>
+                <div className="text-sm text-blue-100">{isAr ? "هاكاثونات قادمة" : "Hackathons قادمة"}</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold">50+</div>
-                <div className="text-sm text-blue-100">جهة شريكة</div>
+                <div className="text-sm text-blue-100">{isAr ? "جهة شريكة" : "جهة Partnerة"}</div>
               </div>
             </div>
           </div>
@@ -90,12 +93,12 @@ export default function Naqla1Opportunities() {
               <SelectValue placeholder="الفئة" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">جميع الفئات</SelectItem>
-              <SelectItem value="technology">التقنية</SelectItem>
-              <SelectItem value="health">الصحة</SelectItem>
-              <SelectItem value="environment">البيئة</SelectItem>
-              <SelectItem value="education">التعليم</SelectItem>
-              <SelectItem value="finance">المالية</SelectItem>
+              <SelectItem value="all">{isAr ? "جميع الفئات" : "All Categories"}</SelectItem>
+              <SelectItem value="technology">{isAr ? "التقنية" : "Technology"}</SelectItem>
+              <SelectItem value="health">{isAr ? "الصحة" : "Health"}</SelectItem>
+              <SelectItem value="environment">{isAr ? "البيئة" : "Environment"}</SelectItem>
+              <SelectItem value="education">{isAr ? "التعليم" : "Education"}</SelectItem>
+              <SelectItem value="finance">{isAr ? "المالية" : "[المالية]"}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -109,7 +112,7 @@ export default function Naqla1Opportunities() {
           {/* Challenges Tab */}
           <TabsContent value="challenges" className="mt-6">
             {loadingChallenges ? (
-              <div className="text-center py-12">جاري التحميل...</div>
+              <div className="text-center py-12">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
             ) : filteredChallenges.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center text-gray-500">
@@ -163,7 +166,7 @@ export default function Naqla1Opportunities() {
           {/* Hackathons Tab */}
           <TabsContent value="hackathons" className="mt-6">
             {loadingHackathons ? (
-              <div className="text-center py-12">جاري التحميل...</div>
+              <div className="text-center py-12">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
             ) : filteredHackathons.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center text-gray-500">

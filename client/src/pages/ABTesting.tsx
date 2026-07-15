@@ -13,8 +13,11 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { FlaskConical, TrendingUp, Trophy, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLocation } from 'wouter';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ABTesting() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [, navigate] = useLocation();
   const [isRunning, setIsRunning] = useState(false);
@@ -31,18 +34,18 @@ export default function ABTesting() {
   // A/B Testing mutation
   const abTestingMutation = trpc.ideaOutcomes.runABTesting.useMutation({
     onSuccess: () => {
-      toast.success('تم إكمال A/B Testing بنجاح! تم اختيار النموذج الأفضل.');
+      toast.success(isAr ? 'تم إكمال A/B Testing بنجاح! تم اختيار النموذج الأفضل.' : 'A/B Testing completed successfully! Best model selected.');
       setIsRunning(false);
     },
     onError: (error) => {
-      toast.error(`خطأ في A/B Testing: ${error.message}`);
+      toast.error(isAr ? `خطأ في A/B Testing: ${error.message}` : `A/B Testing error: ${error.message}`);
       setIsRunning(false);
     },
   });
 
   const handleRunABTesting = () => {
     if (!stats || (stats.success + stats.failure) < 20) {
-      toast.error('تحتاج إلى 20 فكرة مصنفة على الأقل لتشغيل A/B Testing');
+      toast.error(isAr ? 'تحتاج إلى 20 فكرة مصنفة على الأقل لتشغيل A/B Testing' : 'You need at least 20 classified ideas to run A/B Testing');
       return;
     }
 
@@ -56,9 +59,9 @@ export default function ABTesting() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">A/B Testing للنماذج</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? "A/B Testing للنماذج" : "A/B Testing for Models"}</h1>
         <p className="text-muted-foreground">
-          مقارنة أداء نماذج مختلفة واختيار الأفضل تلقائيًا
+          {isAr ? "مقارنة أداء نماذج مختلفة واختيار الأفضل تلقائيًا" : "Compare different model performances and automatically select the best one"}
         </p>
       </div>
 
@@ -66,8 +69,13 @@ export default function ABTesting() {
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
-          سيتم اختبار 3 نماذج مختلفة: <strong>XGBoost</strong>, <strong>Random Forest</strong>, و <strong>Neural Network</strong>.
-          سيتم اختيار النموذج الأفضل بناءً على F1 Score وحفظه كنموذج رئيسي.
+          {isAr ? (
+            <>سيتم اختبار 3 نماذج مختلفة: <strong>XGBoost</strong>, <strong>Random Forest</strong>, و <strong>Neural Network</strong>.
+            سيتم اختيار النموذج الأفضل بناءً على F1 Score وحفظه كنموذج رئيسي.</>
+          ) : (
+            <>3 different models will be tested: <strong>XGBoost</strong>, <strong>Random Forest</strong>, and <strong>Neural Network</strong>.
+            The best model will be selected based on F1 Score and saved as the main model.</>
+          )}
         </AlertDescription>
       </Alert>
 
@@ -76,18 +84,18 @@ export default function ABTesting() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>متطلبات A/B Testing</CardTitle>
+              <CardTitle>{isAr ? "متطلبات A/B Testing" : "A/B Testing Requirements"}</CardTitle>
               <CardDescription>
-                تحقق من توفر البيانات الكافية
+                {isAr ? "تحقق من توفر البيانات الكافية" : "Check for sufficient data availability"}
               </CardDescription>
             </div>
             {canRunABTesting ? (
               <Badge variant="default" className="bg-green-600">
-                ✅ جاهز
+                {isAr ? "✅ جاهز" : "✅ Ready"}
               </Badge>
             ) : (
               <Badge variant="default" className="bg-yellow-600">
-                ⚠️ غير جاهز
+                {isAr ? "⚠️ غير جاهز" : "⚠️ Not Ready"}
               </Badge>
             )}
           </div>
@@ -96,7 +104,7 @@ export default function ABTesting() {
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">الحد الأدنى: 20 فكرة مصنفة</span>
+                <span className="text-sm font-medium">{isAr ? "الحد الأدنى: 20 فكرة مصنفة" : "Minimum: 20 classified ideas"}</span>
                 <span className="text-sm font-bold">
                   {stats ? stats.success + stats.failure : 0} / 20
                 </span>
@@ -118,7 +126,9 @@ export default function ABTesting() {
 
             {!canRunABTesting && (
               <p className="text-sm text-muted-foreground">
-                ⚠️ تحتاج إلى {20 - (stats ? stats.success + stats.failure : 0)} فكرة إضافية لتشغيل A/B Testing
+                {isAr 
+                  ? `⚠️ تحتاج إلى ${20 - (stats ? stats.success + stats.failure : 0)} فكرة إضافية لتشغيل A/B Testing`
+                  : `⚠️ You need ${20 - (stats ? stats.success + stats.failure : 0)} more ideas to run A/B Testing`}
               </p>
             )}
           </div>
@@ -139,9 +149,9 @@ export default function ABTesting() {
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-1 text-muted-foreground">
-              <li>✓ دقة عالية</li>
-              <li>✓ سريع في التدريب</li>
-              <li>✓ يعمل جيدًا مع البيانات المحدودة</li>
+              <li>{isAr ? "✓ دقة عالية" : "✓ High accuracy"}</li>
+              <li>{isAr ? "✓ سريع في التدريب" : "✓ Fast training"}</li>
+              <li>{isAr ? "✓ يعمل جيدًا مع البيانات المحدودة" : "✓ Works well with limited data"}</li>
             </ul>
           </CardContent>
         </Card>
@@ -158,9 +168,9 @@ export default function ABTesting() {
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-1 text-muted-foreground">
-              <li>✓ مقاوم للـ overfitting</li>
-              <li>✓ يتعامل مع البيانات غير المتوازنة</li>
-              <li>✓ Feature importance واضح</li>
+              <li>{isAr ? "✓ مقاوم للـ overfitting" : "✓ Resistant to overfitting"}</li>
+              <li>{isAr ? "✓ يتعامل مع البيانات غير المتوازنة" : "✓ Handles imbalanced data"}</li>
+              <li>{isAr ? "✓ Feature importance واضح" : "✓ Clear feature importance"}</li>
             </ul>
           </CardContent>
         </Card>
@@ -177,9 +187,9 @@ export default function ABTesting() {
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-1 text-muted-foreground">
-              <li>✓ يتعلم علاقات معقدة</li>
-              <li>✓ يتحسن مع البيانات الكبيرة</li>
-              <li>✓ مرن وقابل للتخصيص</li>
+              <li>{isAr ? "✓ يتعلم علاقات معقدة" : "✓ Learns complex relationships"}</li>
+              <li>{isAr ? "✓ يتحسن مع البيانات الكبيرة" : "✓ Improves with large data"}</li>
+              <li>{isAr ? "✓ مرن وقابل للتخصيص" : "✓ Flexible and customizable"}</li>
             </ul>
           </CardContent>
         </Card>
@@ -188,21 +198,21 @@ export default function ABTesting() {
       {/* Run A/B Testing */}
       <Card>
         <CardHeader>
-          <CardTitle>تشغيل A/B Testing</CardTitle>
+          <CardTitle>{isAr ? "تشغيل A/B Testing" : "Run A/B Testing"}</CardTitle>
           <CardDescription>
-            قد يستغرق الأمر عدة دقائق حسب حجم البيانات
+            {isAr ? "قد يستغرق الأمر عدة دقائق حسب حجم البيانات" : "This may take several minutes depending on data size"}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold mb-2">ماذا سيحدث؟</h3>
+              <h3 className="font-semibold mb-2">{isAr ? "ماذا سيحدث؟" : "What will happen?"}</h3>
               <ol className="text-sm space-y-1 list-decimal list-inside text-muted-foreground">
-                <li>تدريب 3 نماذج مختلفة على نفس البيانات</li>
-                <li>تقييم كل نموذج باستخدام Cross-Validation</li>
-                <li>مقارنة الأداء (Accuracy, Precision, Recall, F1 Score)</li>
-                <li>اختيار النموذج الأفضل تلقائيًا</li>
-                <li>حفظ النموذج الفائز كنموذج رئيسي</li>
+                <li>{isAr ? "تدريب 3 نماذج مختلفة على نفس البيانات" : "Train 3 different models on the same data"}</li>
+                <li>{isAr ? "تقييم كل نموذج باستخدام Cross-Validation" : "Evaluate each model using Cross-Validation"}</li>
+                <li>{isAr ? "مقارنة الأداء (Accuracy, Precision, Recall, F1 Score)" : "Compare performance (Accuracy, Precision, Recall, F1 Score)"}</li>
+                <li>{isAr ? "اختيار النموذج الأفضل تلقائيًا" : "Automatically select the best model"}</li>
+                <li>{isAr ? "حفظ النموذج الفائز كنموذج رئيسي" : "Save the winning model as the main model"}</li>
               </ol>
             </div>
 
@@ -214,17 +224,25 @@ export default function ABTesting() {
             >
               <FlaskConical className="w-5 h-5 mr-2" />
               {isRunning || abTestingMutation.isPending
-                ? 'جاري التشغيل... (قد يستغرق عدة دقائق)'
-                : 'بدء A/B Testing'}
+                ? (isAr ? 'جاري التشغيل... (قد يستغرق عدة دقائق)' : 'Running... (may take several minutes)')
+                : (isAr ? 'بدء A/B Testing' : 'Start A/B Testing')}
             </Button>
 
             {!canRunABTesting && (
               <p className="text-sm text-center text-muted-foreground">
-                قم بتصنيف المزيد من الأفكار في{' '}
-                <a href="/admin/idea-classification" className="text-primary underline">
-                  صفحة التصنيف
-                </a>{' '}
-                لتفعيل A/B Testing
+                {isAr ? (
+                  <>قم بتصنيف المزيد من الأفكار في{' '}
+                  <a href="/admin/idea-classification" className="text-primary underline">
+                    صفحة التصنيف
+                  </a>{' '}
+                  لتفعيل A/B Testing</>
+                ) : (
+                  <>Classify more ideas on the{' '}
+                  <a href="/admin/idea-classification" className="text-primary underline">
+                    classification page
+                  </a>{' '}
+                  to enable A/B Testing</>
+                )}
               </p>
             )}
           </div>
@@ -234,9 +252,9 @@ export default function ABTesting() {
       {/* Results Info */}
       <Card>
         <CardHeader>
-          <CardTitle>عرض النتائج</CardTitle>
+          <CardTitle>{isAr ? "عرض النتائج" : "View Results"}</CardTitle>
           <CardDescription>
-            بعد إكمال A/B Testing، يمكنك مشاهدة النتائج التفصيلية
+            {isAr ? "بعد إكمال A/B Testing، يمكنك مشاهدة النتائج التفصيلية" : "After completing A/B Testing, you can view detailed results"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -247,11 +265,13 @@ export default function ABTesting() {
               className="w-full"
             >
               <TrendingUp className="w-4 h-4 mr-2" />
-              عرض تحليلات الأداء
+              {isAr ? "عرض تحليلات الأداء" : "View Performance Analytics"}
             </Button>
 
             <p className="text-xs text-center text-muted-foreground">
-              ستجد تقرير A/B Testing الكامل في ملف <code>training_report.md</code>
+              {isAr 
+                ? <>ستجد تقرير A/B Testing الكامل في ملف <code>training_report.md</code></>
+                : <>You will find the complete A/B Testing report in the <code>training_report.md</code> file</>}
             </p>
           </div>
         </CardContent>

@@ -18,8 +18,11 @@ import {
   Clock
 } from "lucide-react";
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2VettingDashboard() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [selectedIP, setSelectedIP] = useState<number | null>(null);
   const [reviewForm, setReviewForm] = useState({
     score: 75,
@@ -69,7 +72,7 @@ export default function Naqla2VettingDashboard() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">جاري التحميل...</div>
+        <div className="text-white text-xl">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
       </div>
     );
   }
@@ -94,7 +97,7 @@ export default function Naqla2VettingDashboard() {
               <Clock className="w-10 h-10 text-yellow-400" />
               <div>
                 <div className="text-3xl font-bold text-white">{pendingIPs?.length || 0}</div>
-                <div className="text-sm text-blue-200">قيد الانتظار</div>
+                <div className="text-sm text-blue-200">{isAr ? "قيد الانتظار" : "قيد اNoنتظار"}</div>
               </div>
             </div>
           </Card>
@@ -104,7 +107,7 @@ export default function Naqla2VettingDashboard() {
               <Scale className="w-10 h-10 text-blue-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-blue-200">مراجعة قانونية</div>
+                <div className="text-sm text-blue-200">{isAr ? "مراجعة قانونية" : "[مراجعة قانونية]"}</div>
               </div>
             </div>
           </Card>
@@ -114,7 +117,7 @@ export default function Naqla2VettingDashboard() {
               <Cpu className="w-10 h-10 text-purple-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-blue-200">مراجعة فنية</div>
+                <div className="text-sm text-blue-200">{isAr ? "مراجعة فنية" : "[مراجعة فنية]"}</div>
               </div>
             </div>
           </Card>
@@ -124,7 +127,7 @@ export default function Naqla2VettingDashboard() {
               <TrendingUp className="w-10 h-10 text-green-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-blue-200">مراجعة تجارية</div>
+                <div className="text-sm text-blue-200">{isAr ? "مراجعة تجارية" : "[مراجعة تجارية]"}</div>
               </div>
             </div>
           </Card>
@@ -142,7 +145,7 @@ export default function Naqla2VettingDashboard() {
             {pendingIPs && pendingIPs.length === 0 ? (
               <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-8 text-center">
                 <AlertCircle className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                <p className="text-white text-lg">لا توجد ملكيات فكرية منتظرة للمراجعة</p>
+                <p className="text-white text-lg">{isAr ? "لا توجد ملكيات فكرية منتظرة للمراجعة" : "No توجد ملكيات فكرية منتظرة للمراجعة"}</p>
               </Card>
             ) : (
               <div className="space-y-4">
@@ -185,18 +188,18 @@ export default function Naqla2VettingDashboard() {
 
           {/* Right: Review Form */}
           <div>
-            <h2 className="text-2xl font-bold text-white mb-4">نموذج المراجعة</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "نموذج المراجعة" : "Growذج المراجعة"}</h2>
 
             {!selectedIP ? (
               <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-8 text-center">
                 <AlertCircle className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                <p className="text-white text-lg">اختر ملكية فكرية من القائمة لبدء المراجعة</p>
+                <p className="text-white text-lg">{isAr ? "اختر ملكية فكرية من القائمة لبدء المراجعة" : "اختر ملكية فكرية من الMenu لبدء المراجعة"}</p>
               </Card>
             ) : (
               <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-6 space-y-6">
                 {/* Overall Score */}
                 <div>
-                  <Label className="text-white text-lg mb-2 block">الدرجة الإجمالية (0-100)</Label>
+                  <Label className="text-white text-lg mb-2 block">{isAr ? "الدرجة الإجمالية (0-100)" : "الدرجة الTotalة (0-100)"}</Label>
                   <Input
                     type="number"
                     min="0"
@@ -210,7 +213,7 @@ export default function Naqla2VettingDashboard() {
                 {/* Detailed Scores */}
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <Label className="text-white text-sm mb-1 block">الجدة</Label>
+                    <Label className="text-white text-sm mb-1 block">{isAr ? "الجدة" : "الJeddah"}</Label>
                     <Input
                       type="number"
                       min="0"
@@ -222,7 +225,7 @@ export default function Naqla2VettingDashboard() {
                   </div>
 
                   <div>
-                    <Label className="text-white text-sm mb-1 block">الجدوى</Label>
+                    <Label className="text-white text-sm mb-1 block">{isAr ? "الجدوى" : "[الجدوى]"}</Label>
                     <Input
                       type="number"
                       min="0"
@@ -234,7 +237,7 @@ export default function Naqla2VettingDashboard() {
                   </div>
 
                   <div>
-                    <Label className="text-white text-sm mb-1 block">السوق</Label>
+                    <Label className="text-white text-sm mb-1 block">{isAr ? "السوق" : "Market"}</Label>
                     <Input
                       type="number"
                       min="0"
@@ -248,7 +251,7 @@ export default function Naqla2VettingDashboard() {
 
                 {/* Comments */}
                 <div>
-                  <Label className="text-white text-lg mb-2 block">ملاحظات المراجعة</Label>
+                  <Label className="text-white text-lg mb-2 block">{isAr ? "ملاحظات المراجعة" : "مNoحظات المراجعة"}</Label>
                   <Textarea
                     value={reviewForm.comments}
                     onChange={(e) => setReviewForm({ ...reviewForm, comments: e.target.value })}
@@ -259,7 +262,7 @@ export default function Naqla2VettingDashboard() {
 
                 {/* Recommendation */}
                 <div>
-                  <Label className="text-white text-lg mb-2 block">التوصية</Label>
+                  <Label className="text-white text-lg mb-2 block">{isAr ? "التوصية" : "[التوصية]"}</Label>
                   <div className="grid grid-cols-3 gap-3">
                     <Button
                       variant={reviewForm.recommendation === "approve" ? "default" : "outline"}
@@ -299,7 +302,7 @@ export default function Naqla2VettingDashboard() {
                 {/* Revision Suggestions (if needs_revision) */}
                 {reviewForm.recommendation === "needs_revision" && (
                   <div>
-                    <Label className="text-white text-lg mb-2 block">اقتراحات التعديل</Label>
+                    <Label className="text-white text-lg mb-2 block">{isAr ? "اقتراحات التعديل" : "اقتراحات الEdit"}</Label>
                     <Textarea
                       value={reviewForm.revisionSuggestions}
                       onChange={(e) => setReviewForm({ ...reviewForm, revisionSuggestions: e.target.value })}

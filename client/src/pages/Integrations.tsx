@@ -1,8 +1,11 @@
 import { Check, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Integrations() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const categories = [
     {
       name: "إدارة المشاريع",
@@ -159,7 +162,7 @@ export default function Integrations() {
         {/* Custom Integration CTA */}
         <Card className="mt-16 p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">🔌</div>
-          <h2 className="text-3xl font-bold mb-4">هل تحتاج تكاملاً مخصصاً؟</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? "هل تحتاج تكاملاً مخصصاً؟" : "هل تحتاج تكامNoً مخصصاً؟"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             استخدم API المفتوحة لدينا لبناء تكاملات مخصصة تناسب احتياجات مؤسستك
           </p>
@@ -179,19 +182,19 @@ export default function Integrations() {
             <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               50+
             </div>
-            <p className="text-muted-foreground">تكامل متاح</p>
+            <p className="text-muted-foreground">{isAr ? "تكامل متاح" : "[تكامل متاح]"}</p>
           </div>
           <div>
             <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               99.9%
             </div>
-            <p className="text-muted-foreground">وقت التشغيل</p>
+            <p className="text-muted-foreground">{isAr ? "وقت التشغيل" : "وقت Operation"}</p>
           </div>
           <div>
             <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               &lt;5 دقائق
             </div>
-            <p className="text-muted-foreground">وقت الإعداد</p>
+            <p className="text-muted-foreground">{isAr ? "وقت الإعداد" : "[وقت الإعداد]"}</p>
           </div>
         </div>
       </div>

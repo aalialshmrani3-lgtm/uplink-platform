@@ -18,8 +18,11 @@ import {
   Rocket
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function MyIdeas() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -107,8 +110,8 @@ export default function MyIdeas() {
               <Lightbulb className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-white">أفكاري</h1>
-              <p className="text-slate-400">تتبع جميع الأفكار المرسلة ونتائج التحليل</p>
+              <h1 className="text-4xl font-bold text-white">{isAr ? "أفكاري" : "My Ideas"}</h1>
+              <p className="text-slate-400">{isAr ? "تتبع جميع الأفكار المرسلة ونتائج التحليل" : "تتبع جميع الأفكار المرسلة ونتائج Analysis"}</p>
             </div>
           </div>
         </div>
@@ -152,7 +155,7 @@ export default function MyIdeas() {
 
           <TabsContent value={activeTab} className="mt-6">
             {isLoading ? (
-              <div className="text-center py-12 text-slate-400">جاري التحميل...</div>
+              <div className="text-center py-12 text-slate-400">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
             ) : filteredIdeas && filteredIdeas.length > 0 ? (
               <div className="grid grid-cols-1 gap-6">
                 {filteredIdeas.map((idea: any) => (
@@ -183,15 +186,15 @@ export default function MyIdeas() {
                           
                           <div className="grid grid-cols-3 gap-4 mb-3">
                             <div>
-                              <div className="text-xs text-slate-400 mb-1">الابتكار</div>
+                              <div className="text-xs text-slate-400 mb-1">{isAr ? "الابتكار" : "Innovation"}</div>
                               <div className="text-lg font-bold text-white">{idea.aiAnalysis.innovationScore}%</div>
                             </div>
                             <div>
-                              <div className="text-xs text-slate-400 mb-1">الجدوى</div>
+                              <div className="text-xs text-slate-400 mb-1">{isAr ? "الجدوى" : "[الجدوى]"}</div>
                               <div className="text-lg font-bold text-white">{idea.aiAnalysis.feasibilityScore}%</div>
                             </div>
                             <div>
-                              <div className="text-xs text-slate-400 mb-1">السوق</div>
+                              <div className="text-xs text-slate-400 mb-1">{isAr ? "السوق" : "Market"}</div>
                               <div className="text-lg font-bold text-white">{idea.aiAnalysis.marketPotential}%</div>
                             </div>
                           </div>
@@ -214,7 +217,7 @@ export default function MyIdeas() {
                           {/* Recommendations */}
                           {idea.aiAnalysis.recommendations && (
                             <div className="text-sm text-slate-300">
-                              <div className="font-semibold text-cyan-300 mb-1">التوصيات:</div>
+                              <div className="font-semibold text-cyan-300 mb-1">{isAr ? "التوصيات:" : "Recommendations:"}</div>
                               <p className="text-slate-400">{idea.aiAnalysis.recommendations}</p>
                             </div>
                           )}
@@ -247,7 +250,7 @@ export default function MyIdeas() {
             ) : (
               <div className="text-center py-12">
                 <Lightbulb className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                <p className="text-slate-400">لا توجد أفكار في هذا القسم</p>
+                <p className="text-slate-400">{isAr ? "لا توجد أفكار في هذا القسم" : "No توجد أفكار في هذا القسم"}</p>
               </div>
             )}
           </TabsContent>

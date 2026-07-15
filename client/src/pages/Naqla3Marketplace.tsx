@@ -11,6 +11,7 @@ import {
   Building2, Package, Briefcase, Eye, Heart
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Removed mock data - now using tRPC
 const mockAssetsOld = [
@@ -101,6 +102,8 @@ const mockAssetsOld = [
 ];
 
 export default function Naqla3Marketplace() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -146,7 +149,7 @@ export default function Naqla3Marketplace() {
 
           <div className="flex items-center justify-between gap-6 mb-8">
             <div>
-              <h1 className="text-4xl font-bold mb-4">بورصة الابتكار</h1>
+              <h1 className="text-4xl font-bold mb-4">{isAr ? "بورصة الابتكار" : "بورصة اNoبتكار"}</h1>
               <p className="text-xl text-muted-foreground">
                 تصفح واشترِ التراخيص، المنتجات، والشركات الناشئة
               </p>
@@ -176,10 +179,10 @@ export default function Naqla3Marketplace() {
                 <SelectValue placeholder="نوع الأصل" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">جميع الأنواع</SelectItem>
-                <SelectItem value="license">تراخيص</SelectItem>
-                <SelectItem value="product">منتجات</SelectItem>
-                <SelectItem value="acquisition">استحواذ</SelectItem>
+                <SelectItem value="all">{isAr ? "جميع الأنواع" : "[جميع الأنواع]"}</SelectItem>
+                <SelectItem value="license">{isAr ? "تراخيص" : "[تراخيص]"}</SelectItem>
+                <SelectItem value="product">{isAr ? "منتجات" : "Products"}</SelectItem>
+                <SelectItem value="acquisition">{isAr ? "استحواذ" : "[استحواذ]"}</SelectItem>
               </SelectContent>
             </Select>
 
@@ -188,7 +191,7 @@ export default function Naqla3Marketplace() {
                 <SelectValue placeholder="الفئة" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">جميع الفئات</SelectItem>
+                <SelectItem value="all">{isAr ? "جميع الفئات" : "All Categories"}</SelectItem>
                 <SelectItem value="AI & ML">AI & ML</SelectItem>
                 <SelectItem value="Security">Security</SelectItem>
                 <SelectItem value="Enterprise">Enterprise</SelectItem>
@@ -208,7 +211,7 @@ export default function Naqla3Marketplace() {
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-              <p className="text-muted-foreground">جاري تحميل الأصول...</p>
+              <p className="text-muted-foreground">{isAr ? "جاري تحميل الأصول..." : "جاري Download الأصول..."}</p>
             </div>
           </div>
         )}
@@ -220,25 +223,25 @@ export default function Naqla3Marketplace() {
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-purple-600 mb-1">5,000+</div>
-              <div className="text-sm text-muted-foreground">أصل معروض</div>
+              <div className="text-sm text-muted-foreground">{isAr ? "أصل معروض" : "أصل مOffers"}</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-green-600 mb-1">2,000+</div>
-              <div className="text-sm text-muted-foreground">صفقة مكتملة</div>
+              <div className="text-sm text-muted-foreground">{isAr ? "صفقة مكتملة" : "صفقة مكDoneلة"}</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-blue-600 mb-1">100M+</div>
-              <div className="text-sm text-muted-foreground">ريال معاملات</div>
+              <div className="text-sm text-muted-foreground">{isAr ? "ريال معاملات" : "ريال معامNoت"}</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-yellow-600 mb-1">99%</div>
-              <div className="text-sm text-muted-foreground">معدل الأمان</div>
+              <div className="text-sm text-muted-foreground">{isAr ? "معدل الأمان" : "Rate الأمان"}</div>
             </CardContent>
           </Card>
         </div>
@@ -281,7 +284,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">المالك</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -343,7 +346,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">المالك</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -405,7 +408,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">المالك</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -467,7 +470,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">المالك</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -509,7 +512,7 @@ export default function Naqla3Marketplace() {
         {filteredAssets.length === 0 && (
           <Card className="text-center py-12">
             <CardContent>
-              <p className="text-muted-foreground mb-4">لم يتم العثور على نتائج</p>
+              <p className="text-muted-foreground mb-4">{isAr ? "لم يتم العثور على نتائج" : "لم يDone العثور على نتائج"}</p>
               <Button variant="outline" onClick={() => {
                 setSearchQuery("");
                 setSelectedType("all");

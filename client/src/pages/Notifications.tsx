@@ -13,6 +13,7 @@ import {
   Clock, AlertCircle, Info, CheckCircle2, XCircle
 } from 'lucide-react';
 import { useAuth } from '@/_core/hooks/useAuth';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // أنواع الإشعارات
 type NotificationType = 'project' | 'message' | 'contract' | 'ip' | 'challenge' | 'system';
@@ -122,6 +123,8 @@ const notificationSettings = [
 ];
 
 export default function Notifications() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [notifications, setNotifications] = useState(notificationsData);
   const [settings, setSettings] = useState(notificationSettings);
@@ -155,8 +158,8 @@ export default function Notifications() {
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
-      case 'high': return <Badge className="bg-red-500/20 text-red-400 border-0">عاجل</Badge>;
-      case 'medium': return <Badge className="bg-amber-500/20 text-amber-400 border-0">متوسط</Badge>;
+      case 'high': return <Badge className="bg-red-500/20 text-red-400 border-0">{isAr ? "عاجل" : "[عاجل]"}</Badge>;
+      case 'medium': return <Badge className="bg-amber-500/20 text-amber-400 border-0">{isAr ? "متوسط" : "Average"}</Badge>;
       default: return null;
     }
   };
@@ -201,7 +204,7 @@ export default function Notifications() {
                 <BellRing className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="font-bold">الإشعارات</h1>
+                <h1 className="font-bold">{isAr ? "الإشعارات" : "Notifications"}</h1>
                 <p className="text-xs text-muted-foreground">
                   {unreadCount > 0 ? `${unreadCount} إشعار غير مقروء` : 'لا توجد إشعارات جديدة'}
                 </p>
@@ -336,7 +339,7 @@ export default function Notifications() {
                       <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mb-4">
                         <Bell className="w-8 h-8 text-muted-foreground" />
                       </div>
-                      <p className="text-muted-foreground">لا توجد إشعارات</p>
+                      <p className="text-muted-foreground">{isAr ? "لا توجد إشعارات" : "No توجد إشعارات"}</p>
                     </div>
                   )}
                 </ScrollArea>
@@ -380,7 +383,7 @@ export default function Notifications() {
               <CardContent>
                 <div className="flex items-center justify-between p-4 rounded-xl bg-secondary/30">
                   <div>
-                    <h4 className="font-medium">تفعيل إشعارات الدفع</h4>
+                    <h4 className="font-medium">{isAr ? "تفعيل إشعارات الدفع" : "[تفعيل إشعارات الدفع]"}</h4>
                     <p className="text-sm text-muted-foreground">
                       استلام إشعارات فورية على جهازك
                     </p>

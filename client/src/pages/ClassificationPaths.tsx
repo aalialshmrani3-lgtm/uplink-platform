@@ -11,8 +11,11 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, TrendingUp, Briefcase, Lightbulb, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ClassificationPaths() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [selectedPath, setSelectedPath] = useState<'innovation' | 'commercial' | 'guidance'>('innovation');
 
   // جلب الأفكار حسب المسار
@@ -51,7 +54,7 @@ export default function ClassificationPaths() {
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">مسارات التصنيف</h1>
+        <h1 className="text-4xl font-bold mb-2">{isAr ? "مسارات التصنيف" : "[مسارات التصنيف]"}</h1>
         <p className="text-muted-foreground">
           عرض الأفكار حسب المسار المحدد من نظام التقييم الذكي
         </p>
@@ -118,7 +121,7 @@ export default function ClassificationPaths() {
                         const reason = idea.reason;
                         return reason && (
                           <div className="text-sm text-muted-foreground">
-                            <strong>السبب:</strong> {String(reason)}
+                            <strong>{isAr ? "السبب:" : "[السبب:]"}</strong> {String(reason)}
                           </div>
                         );
                       })() as any}
@@ -126,7 +129,7 @@ export default function ClassificationPaths() {
                       {/* Next Steps */}
                       {idea.nextSteps && Array.isArray(idea.nextSteps) && idea.nextSteps.length > 0 && (
                         <div>
-                          <strong className="text-sm">الخطوات التالية:</strong>
+                          <strong className="text-sm">{isAr ? "الخطوات التالية:" : "الخطوات Nextة:"}</strong>
                           <ul className="list-disc list-inside text-sm text-muted-foreground mt-1">
                             {idea.nextSteps.slice(0, 3).map((step: string, index: number) => (
                               <li key={index}>{step}</li>

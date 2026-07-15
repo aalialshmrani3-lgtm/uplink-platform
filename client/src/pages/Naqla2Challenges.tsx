@@ -7,8 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Search, Target, TrendingUp, Clock, Award, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2Challenges() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [searchQuery, setSearchQuery] = useState("");
   
   const { data: challenges, isLoading } = trpc.naqla2.challenges.getAll.useQuery();
@@ -28,7 +31,7 @@ export default function Naqla2Challenges() {
             <div className="p-3 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl">
               <Target className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-white">التحديات</h1>
+            <h1 className="text-4xl font-bold text-white">{isAr ? "التحديات" : "Challenges"}</h1>
           </div>
           <p className="text-xl text-slate-300 max-w-3xl">
             اكتشف التحديات الحقيقية من الشركات والمؤسسات الرائدة وقدم حلولك المبتكرة
@@ -61,7 +64,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">{challenges?.length || 0}</p>
-                  <p className="text-sm text-slate-400">تحدٍ نشط</p>
+                  <p className="text-sm text-slate-400">{isAr ? "تحدٍ نشط" : "تحدٍ Active"}</p>
                 </div>
               </div>
             </CardContent>
@@ -75,7 +78,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">500K+</p>
-                  <p className="text-sm text-slate-400">إجمالي الجوائز</p>
+                  <p className="text-sm text-slate-400">{isAr ? "إجمالي الجوائز" : "إجمالي الAwards"}</p>
                 </div>
               </div>
             </CardContent>
@@ -89,7 +92,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">30+</p>
-                  <p className="text-sm text-slate-400">يوم متوسط</p>
+                  <p className="text-sm text-slate-400">{isAr ? "يوم متوسط" : "يوم Average"}</p>
                 </div>
               </div>
             </CardContent>
@@ -103,7 +106,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">1,200+</p>
-                  <p className="text-sm text-slate-400">مشارك</p>
+                  <p className="text-sm text-slate-400">{isAr ? "مشارك" : "[مشارك]"}</p>
                 </div>
               </div>
             </CardContent>
@@ -181,8 +184,8 @@ export default function Naqla2Challenges() {
           <Card className="bg-slate-900/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <Target className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">لا توجد تحديات</h3>
-              <p className="text-slate-400">لم يتم العثور على تحديات مطابقة لبحثك</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد تحديات" : "No توجد تحديات"}</h3>
+              <p className="text-slate-400">{isAr ? "لم يتم العثور على تحديات مطابقة لبحثك" : "لم يتم العثور على تحديات مطابقة لSearchك"}</p>
             </CardContent>
           </Card>
         )}

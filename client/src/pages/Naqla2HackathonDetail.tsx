@@ -4,6 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import { 
   Trophy, ArrowLeft, Calendar, MapPin, Users, DollarSign,
@@ -11,6 +12,8 @@ import {
 } from 'lucide-react';
 
 export default function Naqla2HackathonDetail() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { id } = useParams<{ id: string }>();
   const hackathonId = parseInt(id || '0');
   const { user } = useAuth();
@@ -54,7 +57,7 @@ export default function Naqla2HackathonDetail() {
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardContent className="py-12 text-center">
-            <p className="text-slate-400 text-lg">الهاكاثون غير موجود</p>
+            <p className="text-slate-400 text-lg">{isAr ? "الهاكاثون غير موجود" : "[الهاكاثون غير موجود]"}</p>
             <Button onClick={() => navigate('/naqla2/hackathons')} className="mt-4">
               <ArrowLeft className="w-4 h-4 ml-2" />
               العودة
@@ -137,11 +140,11 @@ export default function Naqla2HackathonDetail() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <p className="text-sm text-slate-400">تاريخ البداية</p>
+                <p className="text-sm text-slate-400">{isAr ? "تاريخ البداية" : "[تاريخ البداية]"}</p>
                 <p className="text-white">{new Date(hackathon.startDate).toLocaleString('ar-SA')}</p>
               </div>
               <div>
-                <p className="text-sm text-slate-400">تاريخ النهاية</p>
+                <p className="text-sm text-slate-400">{isAr ? "تاريخ النهاية" : "[تاريخ النهاية]"}</p>
                 <p className="text-white">{new Date(hackathon.endDate).toLocaleString('ar-SA')}</p>
               </div>
             </CardContent>
@@ -158,7 +161,7 @@ export default function Naqla2HackathonDetail() {
               {hackathon.isVirtual ? (
                 <div className="flex items-center gap-2 text-blue-400">
                   <Globe className="w-5 h-5" />
-                  <span>هاكاثون افتراضي (عبر الإنترنت)</span>
+                  <span>{isAr ? "هاكاثون افتراضي (عبر الإنترنت)" : "[هاكاثون افتراضي (عبر الإنترنت)]"}</span>
                 </div>
               ) : (
                 <p className="text-white">{hackathon.location || 'غير محدد'}</p>
@@ -178,7 +181,7 @@ export default function Naqla2HackathonDetail() {
                 {hackathon.registrationsCount || 0}
                 {hackathon.capacity && ` / ${hackathon.capacity}`}
               </p>
-              <p className="text-sm text-slate-400 mt-1">مشارك مسجل</p>
+              <p className="text-sm text-slate-400 mt-1">{isAr ? "مشارك مسجل" : "[مشارك مسجل]"}</p>
             </CardContent>
           </Card>
 
@@ -192,7 +195,7 @@ export default function Naqla2HackathonDetail() {
               </CardHeader>
               <CardContent>
                 <p className="text-white text-2xl font-bold">{hackathon.budget} ريال</p>
-                <p className="text-sm text-slate-400 mt-1">إجمالي الجوائز</p>
+                <p className="text-sm text-slate-400 mt-1">{isAr ? "إجمالي الجوائز" : "إجمالي الAwards"}</p>
               </CardContent>
             </Card>
           )}

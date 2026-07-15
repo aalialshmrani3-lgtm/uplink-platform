@@ -12,8 +12,11 @@ import { BlockchainConnect } from '@/components/BlockchainConnect';
 import { toast } from 'sonner';
 import { FileText, Plus, CheckCircle, XCircle, Clock, DollarSign, Shield, ExternalLink } from 'lucide-react';
 import { ethers } from 'ethers';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla3BlockchainContracts() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [isConnected, setIsConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState('');
@@ -140,15 +143,15 @@ export default function Naqla3BlockchainContracts() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'DRAFT':
-        return <Badge variant="secondary"><Clock className="w-3 h-3 ml-1" />مسودة</Badge>;
+        return <Badge variant="secondary"><Clock className="w-3 h-3 ml-1" />{isAr ? "مسودة" : "Draft"}</Badge>;
       case 'ACTIVE':
-        return <Badge variant="default"><CheckCircle className="w-3 h-3 ml-1" />نشط</Badge>;
+        return <Badge variant="default"><CheckCircle className="w-3 h-3 ml-1" />{isAr ? "نشط" : "Active"}</Badge>;
       case 'COMPLETED':
-        return <Badge variant="default" className="bg-green-600"><CheckCircle className="w-3 h-3 ml-1" />مكتمل</Badge>;
+        return <Badge variant="default" className="bg-green-600"><CheckCircle className="w-3 h-3 ml-1" />{isAr ? "مكتمل" : "Completed"}</Badge>;
       case 'CANCELLED':
-        return <Badge variant="destructive"><XCircle className="w-3 h-3 ml-1" />ملغي</Badge>;
+        return <Badge variant="destructive"><XCircle className="w-3 h-3 ml-1" />{isAr ? "ملغي" : "Cancelled"}</Badge>;
       case 'DISPUTED':
-        return <Badge variant="destructive"><Shield className="w-3 h-3 ml-1" />متنازع عليه</Badge>;
+        return <Badge variant="destructive"><Shield className="w-3 h-3 ml-1" />{isAr ? "متنازع عليه" : "[متنازع عليه]"}</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -159,7 +162,7 @@ export default function Naqla3BlockchainContracts() {
       <div className="container mx-auto py-8">
         <Card>
           <CardContent className="p-8 text-center">
-            <p className="text-muted-foreground">يرجى تسجيل الدخول لعرض العقود الذكية</p>
+            <p className="text-muted-foreground">{isAr ? "يرجى تسجيل الدخول لعرض العقود الذكية" : "يرجى Login لعرض العقود الذكية"}</p>
           </CardContent>
         </Card>
       </div>
@@ -170,7 +173,7 @@ export default function Naqla3BlockchainContracts() {
     <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">NAQLA3: العقود الذكية</h1>
+          <h1 className="text-3xl font-bold">{isAr ? "NAQLA3: العقود الذكية" : "NAQLA3: Contracts الذكية"}</h1>
           <p className="text-muted-foreground mt-2">
             إدارة العقود الذكية على Blockchain مع نظام الضمان (Escrow)
           </p>
@@ -188,7 +191,7 @@ export default function Naqla3BlockchainContracts() {
       {showCreateForm && (
         <Card>
           <CardHeader>
-            <CardTitle>إنشاء عقد ذكي جديد</CardTitle>
+            <CardTitle>{isAr ? "إنشاء عقد ذكي جديد" : "إنشاء عقد ذكي New"}</CardTitle>
             <CardDescription>
               سيتم نشر هذا العقد على Polygon Mumbai Testnet
             </CardDescription>
@@ -196,7 +199,7 @@ export default function Naqla3BlockchainContracts() {
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="projectTitle">عنوان المشروع *</Label>
+                <Label htmlFor="projectTitle">{isAr ? "عنوان المشروع *" : "عنوان Project *"}</Label>
                 <Input
                   id="projectTitle"
                   value={formData.projectTitle}
@@ -206,7 +209,7 @@ export default function Naqla3BlockchainContracts() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="investorAddress">عنوان محفظة المستثمر *</Label>
+                <Label htmlFor="investorAddress">{isAr ? "عنوان محفظة المستثمر *" : "عنوان مSaveة المستثمر *"}</Label>
                 <Input
                   id="investorAddress"
                   value={formData.investorAddress}
@@ -217,7 +220,7 @@ export default function Naqla3BlockchainContracts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="projectDescription">وصف المشروع</Label>
+              <Label htmlFor="projectDescription">{isAr ? "وصف المشروع" : "وRow المشروع"}</Label>
               <Textarea
                 id="projectDescription"
                 value={formData.projectDescription}
@@ -228,7 +231,7 @@ export default function Naqla3BlockchainContracts() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="totalAmount">المبلغ الإجمالي (MATIC) *</Label>
+              <Label htmlFor="totalAmount">{isAr ? "المبلغ الإجمالي (MATIC) *" : "Amount الإجمالي (MATIC) *"}</Label>
               <Input
                 id="totalAmount"
                 type="number"
@@ -242,7 +245,7 @@ export default function Naqla3BlockchainContracts() {
             {/* Milestones */}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <Label>المراحل (Milestones)</Label>
+                <Label>{isAr ? "المراحل (Milestones)" : "Phases (Milestones)"}</Label>
                 <Button variant="outline" size="sm" onClick={handleAddMilestone}>
                   <Plus className="ml-2 h-4 w-4" />
                   إضافة مرحلة
@@ -253,7 +256,7 @@ export default function Naqla3BlockchainContracts() {
                 <Card key={index} className="p-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label>الوصف</Label>
+                      <Label>{isAr ? "الوصف" : "Description"}</Label>
                       <Input
                         value={milestone.description}
                         onChange={(e) => handleMilestoneChange(index, 'description', e.target.value)}
@@ -262,7 +265,7 @@ export default function Naqla3BlockchainContracts() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label>المبلغ (MATIC)</Label>
+                      <Label>{isAr ? "المبلغ (MATIC)" : "Amount (MATIC)"}</Label>
                       <Input
                         type="number"
                         step="0.01"
@@ -273,7 +276,7 @@ export default function Naqla3BlockchainContracts() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label>الموعد النهائي</Label>
+                      <Label>{isAr ? "الموعد النهائي" : "[الموعد النهائي]"}</Label>
                       <div className="flex gap-2">
                         <Input
                           type="date"
@@ -314,11 +317,11 @@ export default function Naqla3BlockchainContracts() {
       {/* Contracts List */}
       <Card>
         <CardHeader>
-          <CardTitle>العقود الذكية الخاصة بي</CardTitle>
+          <CardTitle>{isAr ? "العقود الذكية الخاصة بي" : "Contracts الذكية الخاصة بي"}</CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading ? (
-            <p className="text-center text-muted-foreground">جاري التحميل...</p>
+            <p className="text-center text-muted-foreground">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</p>
           ) : contracts && contracts.length > 0 ? (
             <div className="space-y-4">
               {contracts.map((contract: any) => (
@@ -333,7 +336,7 @@ export default function Naqla3BlockchainContracts() {
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <p className="text-muted-foreground">المبلغ الإجمالي</p>
+                      <p className="text-muted-foreground">{isAr ? "المبلغ الإجمالي" : "Amount الإجمالي"}</p>
                       <p className="font-semibold">{contract.totalAmount} MATIC</p>
                     </div>
                     <div>
@@ -356,7 +359,7 @@ export default function Naqla3BlockchainContracts() {
                       )}
                     </div>
                     <div>
-                      <p className="text-muted-foreground">تاريخ الإنشاء</p>
+                      <p className="text-muted-foreground">{isAr ? "تاريخ الإنشاء" : "[تاريخ الإنشاء]"}</p>
                       <p>{new Date(contract.createdAt).toLocaleDateString('ar-SA')}</p>
                     </div>
                   </div>
@@ -377,7 +380,7 @@ export default function Naqla3BlockchainContracts() {
               ))}
             </div>
           ) : (
-            <p className="text-center text-muted-foreground">لا توجد عقود ذكية حتى الآن</p>
+            <p className="text-center text-muted-foreground">{isAr ? "لا توجد عقود ذكية حتى الآن" : "No توجد عقود ذكية حتى الآن"}</p>
           )}
         </CardContent>
       </Card>

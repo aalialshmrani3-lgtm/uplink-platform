@@ -6,8 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, FileText, Users, Calendar, FileCode } from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function GlobalSearch() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [query, setQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
 
@@ -46,11 +49,11 @@ export default function GlobalSearch() {
         {/* Results Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="bg-slate-900/50 border-slate-800 mb-6">
-            <TabsTrigger value="all">الكل</TabsTrigger>
-            <TabsTrigger value="ideas">الأفكار</TabsTrigger>
-            <TabsTrigger value="users">المستخدمين</TabsTrigger>
-            <TabsTrigger value="events">الفعاليات</TabsTrigger>
-            <TabsTrigger value="contracts">العقود</TabsTrigger>
+            <TabsTrigger value="all">{isAr ? "الكل" : "[الكل]"}</TabsTrigger>
+            <TabsTrigger value="ideas">{isAr ? "الأفكار" : "[الأفكار]"}</TabsTrigger>
+            <TabsTrigger value="users">{isAr ? "المستخدمين" : "الUserين"}</TabsTrigger>
+            <TabsTrigger value="events">{isAr ? "الفعاليات" : "الEvents"}</TabsTrigger>
+            <TabsTrigger value="contracts">{isAr ? "العقود" : "Contracts"}</TabsTrigger>
           </TabsList>
 
           {/* All Results */}

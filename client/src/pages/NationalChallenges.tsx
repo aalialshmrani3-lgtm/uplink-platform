@@ -12,6 +12,7 @@ import {
   Target
 } from "lucide-react";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Challenge {
   id: string;
@@ -174,6 +175,8 @@ const challenges: Challenge[] = [
 ];
 
 export default function NationalChallenges() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const getDifficultyColor = (difficulty: Challenge["difficulty"]) => {
     switch (difficulty) {
       case "متقدم":
@@ -242,17 +245,17 @@ export default function NationalChallenges() {
 
               <div className="space-y-4 mb-6">
                 <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">الجائزة</span>
+                  <span className="text-slate-600 font-medium">{isAr ? "الجائزة" : "[الجائزة]"}</span>
                   <span className="text-2xl font-bold text-emerald-600">{challenge.reward}</span>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">المدة المتوقعة</span>
+                  <span className="text-slate-600 font-medium">{isAr ? "المدة المتوقعة" : "[المدة المتوقعة]"}</span>
                   <span className="text-lg font-semibold text-slate-900">{challenge.deadline}</span>
                 </div>
               </div>
 
               <div className="mb-6">
-                <h4 className="font-semibold text-slate-900 mb-3">المتطلبات الأساسية:</h4>
+                <h4 className="font-semibold text-slate-900 mb-3">{isAr ? "المتطلبات الأساسية:" : "[المتطلبات الأساسية:]"}</h4>
                 <ul className="space-y-2">
                   {challenge.details.map((detail, index) => (
                     <li key={index} className="flex items-start gap-2 text-slate-600">

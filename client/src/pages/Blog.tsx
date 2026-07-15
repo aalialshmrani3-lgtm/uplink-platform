@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
 import ImprovedFooter from "@/components/ImprovedFooter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const blogPosts = [
   {
@@ -105,6 +106,8 @@ export default function Blog() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("الكل");
 
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const filtered = blogPosts.filter((post) => {
     const matchSearch =
       post.title.includes(search) ||
@@ -124,11 +127,11 @@ export default function Blog() {
           <Link href="/">
             <div className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
               <ArrowRight className="w-4 h-4" />
-              <span className="text-sm">العودة للرئيسية</span>
+              <span className="text-sm">{isAr ? "العودة للرئيسية" : "[العودة للرئيسية]"}</span>
             </div>
           </Link>
           <span className="text-border/50">|</span>
-          <span className="text-sm font-medium">المدونة</span>
+          <span className="text-sm font-medium">{isAr ? "المدونة" : "Blog"}</span>
         </div>
       </div>
 
@@ -138,7 +141,7 @@ export default function Blog() {
           <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <BookOpen className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">مدونة نقلة</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? "مدونة نقلة" : "[مدونة نقلة]"}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             مقالات وتقارير ودراسات حالة من عالم الابتكار والريادة في المملكة العربية السعودية والعالم.
           </p>
@@ -177,7 +180,7 @@ export default function Blog() {
           {featured && activeCategory === "الكل" && !search && (
             <div className={`mb-10 rounded-2xl border ${featured.border} bg-gradient-to-br ${featured.color} p-8`}>
               <div className="flex items-center gap-2 mb-4">
-                <Badge className="bg-cyan-500 text-white border-0 text-xs">مقال مميز</Badge>
+                <Badge className="bg-cyan-500 text-white border-0 text-xs">{isAr ? "مقال مميز" : "[مقال مميز]"}</Badge>
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">{featured.title}</h2>
               <p className="text-muted-foreground mb-6 leading-relaxed">{featured.excerpt}</p>
@@ -198,7 +201,7 @@ export default function Blog() {
           {filtered.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">
               <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-30" />
-              <p>لا توجد مقالات تطابق بحثك</p>
+              <p>{isAr ? "لا توجد مقالات تطابق بحثك" : "لا توجد مقالات تطابق Searchك"}</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -240,8 +243,8 @@ export default function Blog() {
 
           {/* Newsletter CTA */}
           <div className="mt-16 p-8 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl text-center">
-            <h3 className="text-xl font-bold mb-2">اشترك في النشرة البريدية</h3>
-            <p className="text-muted-foreground text-sm mb-6">احصل على أحدث المقالات والتقارير مباشرةً في بريدك الإلكتروني</p>
+            <h3 className="text-xl font-bold mb-2">{isAr ? "اشترك في النشرة البريدية" : "اشترك في Deploymentة البريدية"}</h3>
+            <p className="text-muted-foreground text-sm mb-6">{isAr ? "احصل على أحدث المقالات والتقارير مباشرةً في بريدك الإلكتروني" : "احصل على أحدث المقاNoت والتقارير مباشرةً في بريدك الإلكتروني"}</p>
             <div className="flex gap-3 max-w-md mx-auto">
               <Input placeholder="بريدك الإلكتروني" className="bg-card/50 border-border/50 flex-1" />
               <button

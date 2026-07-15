@@ -5,8 +5,11 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
 import ImprovedFooter from "@/components/ImprovedFooter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Contact() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -83,11 +86,11 @@ export default function Contact() {
           <Link href="/">
             <div className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
               <ArrowRight className="w-4 h-4" />
-              <span className="text-sm">العودة للرئيسية</span>
+              <span className="text-sm">{isAr ? "العودة للرئيسية" : "[العودة للرئيسية]"}</span>
             </div>
           </Link>
           <span className="text-border/50">|</span>
-          <span className="text-sm font-medium">اتصل بنا</span>
+          <span className="text-sm font-medium">{isAr ? "اتصل بنا" : "[اتصل بنا]"}</span>
         </div>
       </div>
 
@@ -97,7 +100,7 @@ export default function Contact() {
           <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <MessageSquare className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">اتصل بنا</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? "اتصل بنا" : "[اتصل بنا]"}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             فريقنا جاهز للإجابة على استفساراتك ومساعدتك في رحلة الابتكار. تواصل معنا بأي طريقة تناسبك.
           </p>
@@ -126,7 +129,7 @@ export default function Contact() {
           {/* Contact Form */}
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
-              <h2 className="text-2xl font-bold mb-3">أرسل لنا رسالة</h2>
+              <h2 className="text-2xl font-bold mb-3">{isAr ? "أرسل لنا رسالة" : "[أرسل لنا رسالة]"}</h2>
               <p className="text-muted-foreground mb-8">
                 سنرد على رسالتك خلال يوم عمل واحد. يمكنك أيضاً التواصل معنا عبر البريد الإلكتروني مباشرةً.
               </p>
@@ -136,7 +139,7 @@ export default function Contact() {
                   <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mb-4">
                     <CheckCircle className="w-8 h-8 text-emerald-400" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">تم الإرسال بنجاح!</h3>
+                  <h3 className="text-xl font-bold mb-2">{isAr ? "تم الإرسال بنجاح!" : "تم الSubmit بنجاح!"}</h3>
                   <p className="text-muted-foreground mb-6">
                     شكراً لتواصلك معنا. سنرد عليك خلال 24 ساعة على بريدك الإلكتروني.
                   </p>
@@ -151,7 +154,7 @@ export default function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Inquiry Type */}
                   <div>
-                    <label className="text-sm font-medium mb-2 block">نوع الاستفسار</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? "نوع الاستفسار" : "نوع اNoستفسار"}</label>
                     <div className="grid grid-cols-2 gap-2">
                       {inquiryTypes.map((type) => (
                         <button
@@ -172,7 +175,7 @@ export default function Contact() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium mb-2 block">الاسم *</label>
+                      <label className="text-sm font-medium mb-2 block">{isAr ? "الاسم *" : "اNoسم *"}</label>
                       <Input
                         placeholder="اسمك الكامل"
                         value={form.name}
@@ -182,7 +185,7 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-medium mb-2 block">البريد الإلكتروني *</label>
+                      <label className="text-sm font-medium mb-2 block">{isAr ? "البريد الإلكتروني *" : "Email *"}</label>
                       <Input
                         type="email"
                         placeholder="email@example.com"
@@ -195,7 +198,7 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">الموضوع</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? "الموضوع" : "الTheme"}</label>
                     <Input
                       placeholder="موضوع رسالتك"
                       value={form.subject}
@@ -205,7 +208,7 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">الرسالة *</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? "الرسالة *" : "[الرسالة *]"}</label>
                     <textarea
                       placeholder="اكتب رسالتك هنا..."
                       value={form.message}
@@ -239,7 +242,7 @@ export default function Contact() {
 
             {/* FAQ Quick Links */}
             <div>
-              <h2 className="text-2xl font-bold mb-3">أسئلة شائعة</h2>
+              <h2 className="text-2xl font-bold mb-3">{isAr ? "أسئلة شائعة" : "[أسئلة شائعة]"}</h2>
               <p className="text-muted-foreground mb-8">
                 قد تجد إجابتك في هذه الأسئلة الشائعة قبل التواصل معنا.
               </p>

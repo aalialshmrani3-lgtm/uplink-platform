@@ -7,12 +7,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Calendar, MapPin, Users, DollarSign, Search, Filter, 
   Zap, Globe, Building, Presentation, GraduationCap
 } from 'lucide-react';
 
 export default function Naqla2BrowseEvents() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, navigate] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<'hackathon' | 'workshop' | 'conference' | undefined>();
@@ -96,10 +99,10 @@ export default function Naqla2BrowseEvents() {
               <SelectValue placeholder="النوع" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">الكل</SelectItem>
-              <SelectItem value="workshop">ورشة عمل</SelectItem>
-              <SelectItem value="conference">مؤتمر</SelectItem>
-              <SelectItem value="hackathon">هاكاثون</SelectItem>
+              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
+              <SelectItem value="workshop">{isAr ? "ورشة عمل" : "[ورشة عمل]"}</SelectItem>
+              <SelectItem value="conference">{isAr ? "مؤتمر" : "مؤDoneر"}</SelectItem>
+              <SelectItem value="hackathon">{isAr ? "هاكاثون" : "[هاكاثون]"}</SelectItem>
             </SelectContent>
           </Select>
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
@@ -108,10 +111,10 @@ export default function Naqla2BrowseEvents() {
               <SelectValue placeholder="الحالة" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">الكل</SelectItem>
-              <SelectItem value="published">منشور</SelectItem>
-              <SelectItem value="ongoing">جاري</SelectItem>
-              <SelectItem value="completed">مكتمل</SelectItem>
+              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
+              <SelectItem value="published">{isAr ? "منشور" : "Published"}</SelectItem>
+              <SelectItem value="ongoing">{isAr ? "جاري" : "[جاري]"}</SelectItem>
+              <SelectItem value="completed">{isAr ? "مكتمل" : "Completed"}</SelectItem>
             </SelectContent>
           </Select>
           <Select value={virtualFilter?.toString()} onValueChange={(v) => setVirtualFilter(v === 'true' ? true : v === 'false' ? false : undefined)}>
@@ -120,9 +123,9 @@ export default function Naqla2BrowseEvents() {
               <SelectValue placeholder="النوع" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">الكل</SelectItem>
-              <SelectItem value="true">افتراضي</SelectItem>
-              <SelectItem value="false">حضوري</SelectItem>
+              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
+              <SelectItem value="true">{isAr ? "افتراضي" : "[افتراضي]"}</SelectItem>
+              <SelectItem value="false">{isAr ? "حضوري" : "[حضوري]"}</SelectItem>
             </SelectContent>
           </Select>
           <Button 
@@ -183,7 +186,7 @@ export default function Naqla2BrowseEvents() {
                       {event.deliveryMode === "online" ? (
                         <>
                           <Globe className="w-4 h-4 text-blue-500" />
-                          <span>افتراضي</span>
+                          <span>{isAr ? "افتراضي" : "[افتراضي]"}</span>
                         </>
                       ) : (
                         <>
@@ -227,7 +230,7 @@ export default function Naqla2BrowseEvents() {
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardContent className="py-20 text-center">
               <Calendar className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">لا توجد فعاليات حالياً</p>
+              <p className="text-slate-400 text-lg">{isAr ? "لا توجد فعاليات حالياً" : "No توجد فعاليات حالياً"}</p>
               <Button 
                 onClick={() => navigate('/naqla2/events/create')}
                 className="mt-6 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"

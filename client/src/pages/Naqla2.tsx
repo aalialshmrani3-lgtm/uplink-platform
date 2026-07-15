@@ -11,8 +11,11 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import SEOHead from "@/components/SEOHead";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
 
   const organizerOptions = [
@@ -167,14 +170,14 @@ export default function Naqla2() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              <span className="text-sm text-muted-foreground">NAQLA 2 - منظومة الفعاليات والتحديات</span>
+              <span className="text-sm text-muted-foreground">{isAr ? "NAQLA 2 - منظومة الفعاليات والتحديات" : "NAQLA 2 - منظومة الفعاليات وChallenges"}</span>
             </div>
 
             {/* Heading */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">حوّل أفكارك إلى</span>
+              <span className="text-foreground">{isAr ? "حوّل أفكارك إلى" : "Transform أفكارك إلى"}</span>
               <br />
-              <span className="text-gradient-blue">شراكات عالمية</span>
+              <span className="text-gradient-blue">{isAr ? "شراكات عالمية" : "[شراكات عالمية]"}</span>
             </h1>
 
             {/* Description */}

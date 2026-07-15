@@ -9,8 +9,11 @@ import { trpc } from "@/lib/trpc";
 // Auth via tRPC
 import { toast } from "sonner";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2SubmitSolution() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { id } = useParams<{ id: string }>();
   const [, setLocation] = useLocation();
   const { data: user } = trpc.auth.me.useQuery();
@@ -66,7 +69,7 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">جاري التحميل...</p>
+          <p className="text-muted-foreground">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</p>
         </div>
       </div>
     );
@@ -77,8 +80,8 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>التحدي غير موجود</CardTitle>
-            <CardDescription>لم يتم العثور على التحدي المطلوب</CardDescription>
+            <CardTitle>{isAr ? "التحدي غير موجود" : "التBorderي غير موجود"}</CardTitle>
+            <CardDescription>{isAr ? "لم يتم العثور على التحدي المطلوب" : "لم يDone العثور على التحدي المطلوب"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/naqla2/challenges">
@@ -98,12 +101,12 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>تسجيل الدخول مطلوب</CardTitle>
-            <CardDescription>يجب تسجيل الدخول أولاً لتقديم حلك</CardDescription>
+            <CardTitle>{isAr ? "تسجيل الدخول مطلوب" : "Login مطلوب"}</CardTitle>
+            <CardDescription>{isAr ? "يجب تسجيل الدخول أولاً لتقديم حلك" : "يجب Login أولاً لتقديم حلك"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/login">
-              <Button className="w-full">تسجيل الدخول</Button>
+              <Button className="w-full">{isAr ? "تسجيل الدخول" : "Login"}</Button>
             </Link>
           </CardContent>
         </Card>
@@ -116,12 +119,12 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>التسجيل مطلوب</CardTitle>
-            <CardDescription>يجب التسجيل في التحدي أولاً قبل تقديم الحل</CardDescription>
+            <CardTitle>{isAr ? "التسجيل مطلوب" : "الRegister مطلوب"}</CardTitle>
+            <CardDescription>{isAr ? "يجب التسجيل في التحدي أولاً قبل تقديم الحل" : "يجب الRegister في التحدي أولاً قبل تقديم الحل"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href={`/naqla2/challenges/${challengeId}`}>
-              <Button className="w-full">العودة إلى التحدي</Button>
+              <Button className="w-full">{isAr ? "العودة إلى التحدي" : "العودة إلى التBorderي"}</Button>
             </Link>
           </CardContent>
         </Card>
@@ -141,7 +144,7 @@ export default function Naqla2SubmitSolution() {
             </Button>
           </Link>
 
-          <h1 className="text-3xl font-bold mb-2">قدم حلك</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? "قدم حلك" : "[قدم حلك]"}</h1>
           <p className="text-muted-foreground">{challenge.title}</p>
         </div>
       </div>
@@ -153,12 +156,12 @@ export default function Naqla2SubmitSolution() {
             {/* Basic Info */}
             <Card>
               <CardHeader>
-                <CardTitle>المعلومات الأساسية</CardTitle>
-                <CardDescription>أدخل تفاصيل حلك المقترح</CardDescription>
+                <CardTitle>{isAr ? "المعلومات الأساسية" : "الInformation الأساسية"}</CardTitle>
+                <CardDescription>{isAr ? "أدخل تفاصيل حلك المقترح" : "[أدخل تفاصيل حلك المقترح]"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="title">عنوان الحل *</Label>
+                  <Label htmlFor="title">{isAr ? "عنوان الحل *" : "عنوان Solution *"}</Label>
                   <Input
                     id="title"
                     value={formData.title}
@@ -169,7 +172,7 @@ export default function Naqla2SubmitSolution() {
                 </div>
 
                 <div>
-                  <Label htmlFor="description">وصف الحل *</Label>
+                  <Label htmlFor="description">{isAr ? "وصف الحل *" : "وRow الحل *"}</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
@@ -181,7 +184,7 @@ export default function Naqla2SubmitSolution() {
                 </div>
 
                 <div>
-                  <Label htmlFor="solution">التفاصيل التقنية *</Label>
+                  <Label htmlFor="solution">{isAr ? "التفاصيل التقنية *" : "التفاصيل Technology *"}</Label>
                   <Textarea
                     id="solution"
                     value={formData.solution}
@@ -193,7 +196,7 @@ export default function Naqla2SubmitSolution() {
                 </div>
 
                 <div>
-                  <Label htmlFor="expectedImpact">التأثير المتوقع</Label>
+                  <Label htmlFor="expectedImpact">{isAr ? "التأثير المتوقع" : "الEffect المتوقع"}</Label>
                   <Textarea
                     id="expectedImpact"
                     value={formData.expectedImpact}
@@ -208,12 +211,12 @@ export default function Naqla2SubmitSolution() {
             {/* Team Info */}
             <Card>
               <CardHeader>
-                <CardTitle>معلومات الفريق (اختياري)</CardTitle>
-                <CardDescription>إذا كنت تعمل ضمن فريق، أدخل اسم الفريق</CardDescription>
+                <CardTitle>{isAr ? "معلومات الفريق (اختياري)" : "Information الفريق (اختياري)"}</CardTitle>
+                <CardDescription>{isAr ? "إذا كنت تعمل ضمن فريق، أدخل اسم الفريق" : "إذا كنت تعمل ضمن فريق، أدخل اسم Team"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div>
-                  <Label htmlFor="teamName">اسم الفريق</Label>
+                  <Label htmlFor="teamName">{isAr ? "اسم الفريق" : "اسم Team"}</Label>
                   <Input
                     id="teamName"
                     value={formData.teamName}
@@ -227,12 +230,12 @@ export default function Naqla2SubmitSolution() {
             {/* Links & Resources */}
             <Card>
               <CardHeader>
-                <CardTitle>الروابط والموارد (اختياري)</CardTitle>
-                <CardDescription>أضف روابط للعرض التوضيحي، الكود، أو الفيديو</CardDescription>
+                <CardTitle>{isAr ? "الروابط والموارد (اختياري)" : "الLinks والموارد (اختياري)"}</CardTitle>
+                <CardDescription>{isAr ? "أضف روابط للعرض التوضيحي، الكود، أو الفيديو" : "أضف Links للعرض التوضيحي، الكود، أو الفيديو"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="video">رابط الفيديو التوضيحي</Label>
+                  <Label htmlFor="video">{isAr ? "رابط الفيديو التوضيحي" : "[رابط الفيديو التوضيحي]"}</Label>
                   <Input
                     id="video"
                     type="url"
@@ -243,7 +246,7 @@ export default function Naqla2SubmitSolution() {
                 </div>
 
                 <div>
-                  <Label htmlFor="prototype">رابط النموذج الأولي / Demo</Label>
+                  <Label htmlFor="prototype">{isAr ? "رابط النموذج الأولي / Demo" : "رابط Growthذج الأولي / Demo"}</Label>
                   <Input
                     id="prototype"
                     type="url"

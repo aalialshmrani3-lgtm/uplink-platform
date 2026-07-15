@@ -10,8 +10,11 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 
 import { Trophy, ArrowLeft, Calendar, MapPin, Users, DollarSign, Globe } from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2CreateHackathon() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, navigate] = useLocation();
   const { user } = useAuth();
 
@@ -90,7 +93,7 @@ export default function Naqla2CreateHackathon() {
         {/* Form */}
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">معلومات الهاكاثون</CardTitle>
+            <CardTitle className="text-white">{isAr ? "معلومات الهاكاثون" : "Information الهاكاثون"}</CardTitle>
             <CardDescription className="text-slate-400">
               املأ التفاصيل الأساسية للهاكاثون
             </CardDescription>
@@ -99,7 +102,7 @@ export default function Naqla2CreateHackathon() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Title */}
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-white">عنوان الهاكاثون *</Label>
+                <Label htmlFor="title" className="text-white">{isAr ? "عنوان الهاكاثون *" : "[عنوان الهاكاثون *]"}</Label>
                 <Input
                   id="title"
                   value={formData.title}
@@ -112,7 +115,7 @@ export default function Naqla2CreateHackathon() {
 
               {/* Description */}
               <div className="space-y-2">
-                <Label htmlFor="description" className="text-white">الوصف *</Label>
+                <Label htmlFor="description" className="text-white">{isAr ? "الوصف *" : "Description *"}</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
@@ -161,8 +164,8 @@ export default function Naqla2CreateHackathon() {
                 <div className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-blue-500" />
                   <div>
-                    <Label htmlFor="isVirtual" className="text-white">هاكاثون افتراضي</Label>
-                    <p className="text-sm text-slate-400">سيتم عقده عبر الإنترنت</p>
+                    <Label htmlFor="isVirtual" className="text-white">{isAr ? "هاكاثون افتراضي" : "[هاكاثون افتراضي]"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? "سيتم عقده عبر الإنترنت" : "سيDone عقده عبر الإنترنت"}</p>
                   </div>
                 </div>
                 <Switch
@@ -225,8 +228,8 @@ export default function Naqla2CreateHackathon() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 rounded-lg bg-slate-950/50 border border-slate-700">
                   <div>
-                    <Label htmlFor="needSponsors" className="text-white">نحتاج رعاة</Label>
-                    <p className="text-sm text-slate-400">هل تبحث عن رعاة للهاكاثون؟</p>
+                    <Label htmlFor="needSponsors" className="text-white">{isAr ? "نحتاج رعاة" : "[نحتاج رعاة]"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? "هل تبحث عن رعاة للهاكاثون؟" : "هل تSearch عن رعاة للهاكاثون؟"}</p>
                   </div>
                   <Switch
                     id="needSponsors"
@@ -236,8 +239,8 @@ export default function Naqla2CreateHackathon() {
                 </div>
                 <div className="flex items-center justify-between p-4 rounded-lg bg-slate-950/50 border border-slate-700">
                   <div>
-                    <Label htmlFor="needInnovators" className="text-white">نحتاج مبتكرين</Label>
-                    <p className="text-sm text-slate-400">هل تبحث عن مبتكرين للمشاركة؟</p>
+                    <Label htmlFor="needInnovators" className="text-white">{isAr ? "نحتاج مبتكرين" : "نحتاج Innovatorين"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? "هل تبحث عن مبتكرين للمشاركة؟" : "هل تبحث عن مبتكرين للShare؟"}</p>
                   </div>
                   <Switch
                     id="needInnovators"

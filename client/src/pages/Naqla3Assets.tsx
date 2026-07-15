@@ -4,8 +4,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2, Download, FileText } from "lucide-react";
 import { useLocation } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla3Assets() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const params = useParams<{ id: string }>();
   const assetId = Number(params.id);
   const [, setLocation] = useLocation();
@@ -27,8 +30,8 @@ export default function Naqla3Assets() {
     return (
       <div className="container mx-auto py-12">
         <Card className="glass-card p-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">الأصل غير موجود</h2>
-          <Button onClick={() => setLocation("/")}>العودة للرئيسية</Button>
+          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "الأصل غير موجود" : "[الأصل غير موجود]"}</h2>
+          <Button onClick={() => setLocation("/")}>{isAr ? "العودة للرئيسية" : "[العودة للرئيسية]"}</Button>
         </Card>
       </div>
     );
@@ -52,17 +55,17 @@ export default function Naqla3Assets() {
           {/* Asset Details */}
           <div className="grid md:grid-cols-3 gap-4 mt-6">
             <div>
-              <p className="text-sm text-gray-400">السعر</p>
+              <p className="text-sm text-gray-400">{isAr ? "السعر" : "Price"}</p>
               <p className="text-2xl font-bold text-white">
                 {asset.price ? `${asset.price} ر.س` : "غير محدد"}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">الفئة</p>
+              <p className="text-sm text-gray-400">{isAr ? "الفئة" : "Category"}</p>
               <p className="text-white font-semibold">{asset.category}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">تاريخ الإنشاء</p>
+              <p className="text-sm text-gray-400">{isAr ? "تاريخ الإنشاء" : "[تاريخ الإنشاء]"}</p>
               <p className="text-white font-semibold">
                 {new Date(asset.createdAt).toLocaleDateString("ar-SA")}
               </p>
@@ -72,7 +75,7 @@ export default function Naqla3Assets() {
 
         {/* Listing Information */}
         <Card className="glass-card p-8">
-          <h2 className="text-2xl font-bold text-white mb-4">معلومات العرض</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "معلومات العرض" : "Information العرض"}</h2>
           <div className="space-y-4">
             <div className="p-4 bg-purple-500/10 border border-purple-500/30 rounded-lg">
               <p className="text-gray-300 text-sm">
@@ -85,7 +88,7 @@ export default function Naqla3Assets() {
 
         {/* Actions */}
         <Card className="glass-card p-8">
-          <h2 className="text-2xl font-bold text-white mb-4">الإجراءات</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "الإجراءات" : "Procedures"}</h2>
           <div className="space-y-3">
             <Button className="w-full bg-blue-600 hover:bg-blue-700">
               <FileText className="w-4 h-4 mr-2" />

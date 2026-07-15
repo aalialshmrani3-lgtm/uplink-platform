@@ -10,8 +10,11 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar, ArrowLeft, MapPin, Users, DollarSign, Globe } from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2CreateEvent() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, navigate] = useLocation();
   const { user } = useAuth();
 
@@ -88,7 +91,7 @@ export default function Naqla2CreateEvent() {
 
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">معلومات الفعالية</CardTitle>
+            <CardTitle className="text-white">{isAr ? "معلومات الفعالية" : "Information الفعالية"}</CardTitle>
             <CardDescription className="text-slate-400">
               املأ التفاصيل الأساسية للفعالية
             </CardDescription>
@@ -96,21 +99,21 @@ export default function Naqla2CreateEvent() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="type" className="text-white">نوع الفعالية *</Label>
+                <Label htmlFor="type" className="text-white">{isAr ? "نوع الفعالية *" : "[نوع الفعالية *]"}</Label>
                 <Select value={formData.type} onValueChange={(v) => setFormData({ ...formData, type: v as any })}>
                   <SelectTrigger className="bg-slate-950/50 border-slate-700 text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="workshop">ورشة عمل</SelectItem>
-                    <SelectItem value="conference">مؤتمر</SelectItem>
-                    <SelectItem value="hackathon">هاكاثون</SelectItem>
+                    <SelectItem value="workshop">{isAr ? "ورشة عمل" : "[ورشة عمل]"}</SelectItem>
+                    <SelectItem value="conference">{isAr ? "مؤتمر" : "مؤDoneر"}</SelectItem>
+                    <SelectItem value="hackathon">{isAr ? "هاكاثون" : "[هاكاثون]"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-white">عنوان الفعالية *</Label>
+                <Label htmlFor="title" className="text-white">{isAr ? "عنوان الفعالية *" : "[عنوان الفعالية *]"}</Label>
                 <Input
                   id="title"
                   value={formData.title}
@@ -122,7 +125,7 @@ export default function Naqla2CreateEvent() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description" className="text-white">الوصف *</Label>
+                <Label htmlFor="description" className="text-white">{isAr ? "الوصف *" : "Description *"}</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
@@ -169,8 +172,8 @@ export default function Naqla2CreateEvent() {
                 <div className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-blue-500" />
                   <div>
-                    <Label htmlFor="isVirtual" className="text-white">فعالية افتراضية</Label>
-                    <p className="text-sm text-slate-400">سيتم عقدها عبر الإنترنت</p>
+                    <Label htmlFor="isVirtual" className="text-white">{isAr ? "فعالية افتراضية" : "[فعالية افتراضية]"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? "سيتم عقدها عبر الإنترنت" : "سيDone عقدها عبر الإنترنت"}</p>
                   </div>
                 </div>
                 <Switch

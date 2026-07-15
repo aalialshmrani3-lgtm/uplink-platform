@@ -14,8 +14,11 @@ import { Label } from '@/components/ui/label';
 import { Download, FileJson, FileSpreadsheet, FileText, Filter } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLocation } from 'wouter';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function DataExport() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [, navigate] = useLocation();
   const [includeSuccess, setIncludeSuccess] = useState(true);
@@ -138,7 +141,7 @@ export default function DataExport() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">تصدير بيانات التدريب</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? "تصدير بيانات التدريب" : "تصدير بيانات الTraining"}</h1>
         <p className="text-muted-foreground">
           تصدير بيانات الأفكار المصنفة بصيغ متعددة للتحليل الخارجي
         </p>
@@ -149,7 +152,7 @@ export default function DataExport() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">أفكار ناجحة</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "أفكار ناجحة" : "[أفكار ناجحة]"}</CardTitle>
               <Badge variant="default" className="bg-green-600">{stats.success}</Badge>
             </CardHeader>
             <CardContent>
@@ -161,7 +164,7 @@ export default function DataExport() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">أفكار فاشلة</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "أفكار فاشلة" : "[أفكار فاشلة]"}</CardTitle>
               <Badge variant="default" className="bg-red-600">{stats.failure}</Badge>
             </CardHeader>
             <CardContent>
@@ -173,7 +176,7 @@ export default function DataExport() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">قيد المراجعة</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "قيد المراجعة" : "قيد Audit"}</CardTitle>
               <Badge variant="default" className="bg-yellow-600">{stats.pending}</Badge>
             </CardHeader>
             <CardContent>
@@ -190,7 +193,7 @@ export default function DataExport() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Filter className="w-5 h-5" />
-            <CardTitle>تصفية البيانات</CardTitle>
+            <CardTitle>{isAr ? "تصفية البيانات" : "Filter البيانات"}</CardTitle>
           </div>
           <CardDescription>
             اختر أنواع الأفكار التي تريد تصديرها
@@ -232,7 +235,7 @@ export default function DataExport() {
       {/* Export Options */}
       <Card>
         <CardHeader>
-          <CardTitle>تصدير البيانات</CardTitle>
+          <CardTitle>{isAr ? "تصدير البيانات" : "Data Export"}</CardTitle>
           <CardDescription>
             اختر الصيغة المناسبة لاحتياجاتك
           </CardDescription>
@@ -332,7 +335,7 @@ export default function DataExport() {
       {trainingData && trainingData.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>معاينة البيانات</CardTitle>
+            <CardTitle>{isAr ? "معاينة البيانات" : "معاينة Data"}</CardTitle>
             <CardDescription>
               أول 5 سجلات من البيانات المتاحة
             </CardDescription>
@@ -342,12 +345,12 @@ export default function DataExport() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b">
-                    <th className="text-right p-2">الميزانية</th>
-                    <th className="text-right p-2">حجم الفريق</th>
-                    <th className="text-right p-2">المدة</th>
-                    <th className="text-right p-2">الطلب</th>
-                    <th className="text-right p-2">الجدوى</th>
-                    <th className="text-right p-2">النتيجة</th>
+                    <th className="text-right p-2">{isAr ? "الميزانية" : "Budget"}</th>
+                    <th className="text-right p-2">{isAr ? "حجم الفريق" : "حجم Team"}</th>
+                    <th className="text-right p-2">{isAr ? "المدة" : "[المدة]"}</th>
+                    <th className="text-right p-2">{isAr ? "الطلب" : "[الطلب]"}</th>
+                    <th className="text-right p-2">{isAr ? "الجدوى" : "[الجدوى]"}</th>
+                    <th className="text-right p-2">{isAr ? "النتيجة" : "[النتيجة]"}</th>
                   </tr>
                 </thead>
                 <tbody>

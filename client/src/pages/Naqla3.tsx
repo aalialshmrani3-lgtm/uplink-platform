@@ -22,8 +22,11 @@ import { getLoginUrl } from '@/const';
 import { useAuth } from '@/_core/hooks/useAuth';
 import SEOHead from '@/components/SEOHead';
 import { mockContracts, mockMarketplace, mockMarketStats } from '@/data/mockNAQLA3';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla3() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [selectedAssetType, setSelectedAssetType] = useState<'license' | 'product' | 'company'>('license');
 
@@ -244,7 +247,7 @@ export default function Naqla3() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6 animate-fade-in">
               <ShoppingCart className="w-5 h-5 text-purple-400" />
-              <span className="text-sm font-medium text-purple-300">البورصة - Marketplace</span>
+              <span className="text-sm font-medium text-purple-300">{isAr ? "البورصة - Marketplace" : "[البورصة - Marketplace]"}</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent animate-fade-in-up">
@@ -307,8 +310,8 @@ export default function Naqla3() {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">3 أنواع من الأصول</h2>
-            <p className="text-xl text-gray-400">اختر نوع الأصل المناسب لاحتياجاتك</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "3 أنواع من الأصول" : "3 أنواع من Assets"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? "اختر نوع الأصل المناسب لاحتياجاتك" : "اختر نوع الأصل المناسب Noحتياجاتك"}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -330,7 +333,7 @@ export default function Naqla3() {
                 <p className="text-gray-400 mb-6">{type.description}</p>
                 
                 <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-3">أمثلة:</h4>
+                  <h4 className="text-sm font-semibold text-gray-400 mb-3">{isAr ? "أمثلة:" : "[أمثلة:]"}</h4>
                   <ul className="space-y-2">
                     {type.examples.map((example, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
@@ -342,7 +345,7 @@ export default function Naqla3() {
                 </div>
                 
                 <div className="pt-6 border-t border-gray-700">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-3">الفوائد:</h4>
+                  <h4 className="text-sm font-semibold text-gray-400 mb-3">{isAr ? "الفوائد:" : "[الفوائد:]"}</h4>
                   <ul className="space-y-2">
                     {type.benefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
@@ -397,8 +400,8 @@ export default function Naqla3() {
       <section className="py-20 px-4 bg-gradient-to-b from-transparent to-slate-900/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">لماذا NAQLA3؟</h2>
-            <p className="text-xl text-gray-400">منصة متكاملة لتداول الأصول الرقمية والملكية الفكرية</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "لماذا NAQLA3؟" : "[لماذا NAQLA3؟]"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? "منصة متكاملة لتداول الأصول الرقمية والملكية الفكرية" : "منصة متكاملة لتداول الأصول الرقمية وIntellectual Property"}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -422,8 +425,8 @@ export default function Naqla3() {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">نظام التقييم الذكي</h2>
-            <p className="text-xl text-gray-400">تقييم عادل ومتقدم بناءً على 5 عوامل رئيسية</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "نظام التقييم الذكي" : "نظام Evaluation الذكي"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? "تقييم عادل ومتقدم بناءً على 5 عوامل رئيسية" : "تقييم عادل ومتقدم Buildً على 5 عوامل رئيسية"}</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">
@@ -451,8 +454,8 @@ export default function Naqla3() {
       <section className="py-20 px-4 bg-gradient-to-b from-transparent to-slate-900/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">كيف تعمل البورصة؟</h2>
-            <p className="text-xl text-gray-400">5 خطوات من العرض إلى إتمام الصفقة</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "كيف تعمل البورصة؟" : "[كيف تعمل البورصة؟]"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? "5 خطوات من العرض إلى إتمام الصفقة" : "5 خطوات من العرض إلى إDoneام الصفقة"}</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">
@@ -481,10 +484,10 @@ export default function Naqla3() {
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 rounded-full px-4 py-2 mb-4">
-              <span className="text-violet-400 text-sm font-medium">🌐 حماية الملكية الفكرية الدولية</span>
+              <span className="text-violet-400 text-sm font-medium">{isAr ? "🌐 حماية الملكية الفكرية الدولية" : "🌐 حماية Intellectual Property الدولية"}</span>
             </div>
-            <h2 className="text-4xl font-bold text-white mb-4">نموذج IP الدولي</h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">احمِ ابتكارك في 180+ دولة واستفد من اتفاقيات الترخيص الدولية</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "نموذج IP الدولي" : "Growذج IP الدولي"}</h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">{isAr ? "احمِ ابتكارك في 180+ دولة واستفد من اتفاقيات الترخيص الدولية" : "[احمِ ابتكارك في 180+ دولة واستفد من اتفاقيات الترخيص الدولية]"}</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             {[

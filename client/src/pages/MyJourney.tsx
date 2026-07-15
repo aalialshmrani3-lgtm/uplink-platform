@@ -7,8 +7,11 @@
 import { trpc } from "@/lib/trpc";
 import { Card } from "@/components/ui/card";
 import { CheckCircle2, Circle, Clock, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function MyJourney() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { data: user } = trpc.auth.me.useQuery();
   const { data: ideas, isLoading: ideasLoading } = trpc.naqla1.myIdeas.useQuery();
   const { data: matches, isLoading: matchesLoading } = trpc.naqla2.matching.getMyMatches.useQuery();
@@ -17,7 +20,7 @@ export default function MyJourney() {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-muted-foreground">يرجى تسجيل الدخول لعرض رحلتك</p>
+        <p className="text-muted-foreground">{isAr ? "يرجى تسجيل الدخول لعرض رحلتك" : "يرجى Login لعرض رحلتك"}</p>
       </div>
     );
   }
@@ -182,7 +185,7 @@ export default function MyJourney() {
         {/* Call to Action */}
         {currentStage === 0 && (
           <Card className="mt-8 p-8 text-center bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
-            <h3 className="text-2xl font-bold mb-4">ابدأ رحلتك الآن!</h3>
+            <h3 className="text-2xl font-bold mb-4">{isAr ? "ابدأ رحلتك الآن!" : "Start Your Journey الآن!"}</h3>
             <p className="text-muted-foreground mb-6">
               قدّم فكرتك الأولى وابدأ رحلتك في عالم الابتكار
             </p>

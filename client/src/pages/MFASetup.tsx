@@ -6,8 +6,11 @@ import { trpc } from "@/lib/trpc";
 import { Shield, ShieldCheck, ShieldOff } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function MFASetup() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [secret, setSecret] = useState<string | null>(null);
   const [verificationCode, setVerificationCode] = useState("");
@@ -120,7 +123,7 @@ export default function MFASetup() {
                 {!qrCode ? (
                   <div className="space-y-4">
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                      <h3 className="font-semibold text-blue-400 mb-2">الخطوة 1: تحميل التطبيق</h3>
+                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? "الخطوة 1: تحميل التطبيق" : "الخطوة 1: Download التطبيق"}</h3>
                       <p className="text-sm text-slate-300">
                         قم بتحميل تطبيق Google Authenticator من متجر التطبيقات
                       </p>
@@ -137,7 +140,7 @@ export default function MFASetup() {
                 ) : (
                   <div className="space-y-6">
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                      <h3 className="font-semibold text-blue-400 mb-2">الخطوة 2: مسح رمز QR</h3>
+                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? "الخطوة 2: مسح رمز QR" : "[الخطوة 2: مسح رمز QR]"}</h3>
                       <p className="text-sm text-slate-300 mb-4">
                         افتح تطبيق Google Authenticator وامسح الرمز التالي:
                       </p>
@@ -147,13 +150,13 @@ export default function MFASetup() {
                     </div>
 
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                      <h3 className="font-semibold text-blue-400 mb-2">الخطوة 3: التحقق</h3>
+                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? "الخطوة 3: التحقق" : "الخطوة 3: التAchieve"}</h3>
                       <p className="text-sm text-slate-300 mb-4">
                         أدخل الرمز المكون من 6 أرقام من التطبيق:
                       </p>
                       <div className="space-y-3">
                         <div>
-                          <Label htmlFor="verificationCode">رمز التحقق</Label>
+                          <Label htmlFor="verificationCode">{isAr ? "رمز التحقق" : "رمز التAchieve"}</Label>
                           <Input
                             id="verificationCode"
                             type="text"
@@ -194,7 +197,7 @@ export default function MFASetup() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="disableCode">رمز التحقق</Label>
+                  <Label htmlFor="disableCode">{isAr ? "رمز التحقق" : "رمز التAchieve"}</Label>
                   <Input
                     id="disableCode"
                     type="text"

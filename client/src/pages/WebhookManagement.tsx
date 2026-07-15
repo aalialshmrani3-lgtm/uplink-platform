@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/dialog';
 import { Webhook, Trash2, Play, Pause, TestTube, Eye } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const AVAILABLE_EVENTS = [
   { id: 'idea.created', label: 'فكرة جديدة' },
@@ -36,6 +37,8 @@ const AVAILABLE_EVENTS = [
 ];
 
 export default function WebhookManagement() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [logsDialogOpen, setLogsDialogOpen] = useState(false);
@@ -159,7 +162,7 @@ export default function WebhookManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">إدارة Webhooks</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? "إدارة Webhooks" : "[إدارة Webhooks]"}</h1>
           <p className="text-muted-foreground">
             استقبل إشعارات فورية عند حدوث أحداث مهمة في المنصة
           </p>
@@ -173,7 +176,7 @@ export default function WebhookManagement() {
       {/* Webhooks List */}
       <Card>
         <CardHeader>
-          <CardTitle>Webhooks الخاصة بك</CardTitle>
+          <CardTitle>{isAr ? "Webhooks الخاصة بك" : "[Webhooks الخاصة بك]"}</CardTitle>
           <CardDescription>
             {webhooks?.length || 0} webhook نشط
           </CardDescription>
@@ -280,14 +283,14 @@ export default function WebhookManagement() {
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>إنشاء Webhook جديد</DialogTitle>
+            <DialogTitle>{isAr ? "إنشاء Webhook جديد" : "إنشاء Webhook New"}</DialogTitle>
             <DialogDescription>
               أنشئ webhook لاستقبال إشعارات عند حدوث أحداث معينة
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div>
-              <Label htmlFor="webhookName">الاسم *</Label>
+              <Label htmlFor="webhookName">{isAr ? "الاسم *" : "اNoسم *"}</Label>
               <Input
                 id="webhookName"
                 placeholder="مثال: Slack Notifications"
@@ -309,7 +312,7 @@ export default function WebhookManagement() {
             </div>
 
             <div>
-              <Label htmlFor="webhookSecret">Secret (اختياري)</Label>
+              <Label htmlFor="webhookSecret">{isAr ? "Secret (اختياري)" : "[Secret (اختياري)]"}</Label>
               <Input
                 id="webhookSecret"
                 placeholder="سيتم توليد secret تلقائيًا إذا تركته فارغًا"
@@ -323,7 +326,7 @@ export default function WebhookManagement() {
             </div>
 
             <div>
-              <Label>الأحداث *</Label>
+              <Label>{isAr ? "الأحداث *" : "الأBorderاث *"}</Label>
               <div className="grid grid-cols-2 gap-3 mt-2">
                 {AVAILABLE_EVENTS.map((event) => (
                   <div key={event.id} className="flex items-center space-x-2 space-x-reverse">
@@ -367,7 +370,7 @@ export default function WebhookManagement() {
       <Dialog open={logsDialogOpen} onOpenChange={setLogsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>سجل Webhook</DialogTitle>
+            <DialogTitle>{isAr ? "سجل Webhook" : "[سجل Webhook]"}</DialogTitle>
             <DialogDescription>
               آخر 20 محاولة لتشغيل هذا Webhook
             </DialogDescription>

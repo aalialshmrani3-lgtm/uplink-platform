@@ -2,8 +2,11 @@ import { TrendingUp, Brain, Globe, Sparkles, Target, BarChart3, Zap, ArrowRight,
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function PredictiveInnovation() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const features = [
     {
       icon: <TrendingUp className="text-blue-600" size={32} />,
@@ -115,13 +118,13 @@ export default function PredictiveInnovation() {
 
         {/* How It Works */}
         <Card className="p-8 mb-16 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
-          <h2 className="text-3xl font-bold mb-8 text-center">كيف يعمل النظام</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "كيف يعمل النظام" : "[كيف يعمل النظام]"}</h2>
           <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
-              <h4 className="font-bold mb-2">جمع البيانات</h4>
+              <h4 className="font-bold mb-2">{isAr ? "جمع البيانات" : "جمع Data"}</h4>
               <p className="text-sm text-muted-foreground">
                 جمع بيانات من مصادر عالمية متعددة في الوقت الفعلي
               </p>
@@ -130,7 +133,7 @@ export default function PredictiveInnovation() {
               <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-purple-600">2</span>
               </div>
-              <h4 className="font-bold mb-2">التحليل الذكي</h4>
+              <h4 className="font-bold mb-2">{isAr ? "التحليل الذكي" : "Analysis الذكي"}</h4>
               <p className="text-sm text-muted-foreground">
                 تحليل متقدم باستخدام خوارزميات AI وML
               </p>
@@ -139,7 +142,7 @@ export default function PredictiveInnovation() {
               <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-green-600">3</span>
               </div>
-              <h4 className="font-bold mb-2">التنبؤ بالفرص</h4>
+              <h4 className="font-bold mb-2">{isAr ? "التنبؤ بالفرص" : "التنبؤ بOpportunities"}</h4>
               <p className="text-sm text-muted-foreground">
                 تحديد فجوات السوق والفرص الناشئة
               </p>
@@ -148,7 +151,7 @@ export default function PredictiveInnovation() {
               <div className="w-16 h-16 rounded-full bg-orange-500/20 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-orange-600">4</span>
               </div>
-              <h4 className="font-bold mb-2">التوصيات</h4>
+              <h4 className="font-bold mb-2">{isAr ? "التوصيات" : "Recommendations"}</h4>
               <p className="text-sm text-muted-foreground">
                 توصيات قابلة للتنفيذ مع خطط عمل
               </p>
@@ -158,7 +161,7 @@ export default function PredictiveInnovation() {
 
         {/* Predictions */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">توقعات الابتكار الحالية</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "توقعات الابتكار الحالية" : "توقعات اNoبتكار الحالية"}</h2>
           <div className="space-y-6">
             {predictions.map((prediction) => (
               <Card key={prediction.id} className="overflow-hidden">
@@ -178,7 +181,7 @@ export default function PredictiveInnovation() {
                       <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                         {prediction.confidence}%
                       </div>
-                      <div className="text-xs text-muted-foreground">ثقة</div>
+                      <div className="text-xs text-muted-foreground">{isAr ? "ثقة" : "[ثقة]"}</div>
                     </div>
                   </div>
 
@@ -209,7 +212,7 @@ export default function PredictiveInnovation() {
         {/* CTA Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">🔮</div>
-          <h2 className="text-3xl font-bold mb-4">كن أول من يكتشف الفرص</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? "كن أول من يكتشف الفرص" : "كن أول من يكتشف Opportunities"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             انضم إلى البرنامج التجريبي للابتكار التنبؤي واحصل على ميزة تنافسية لا تُضاهى
           </p>

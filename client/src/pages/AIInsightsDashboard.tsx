@@ -10,8 +10,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Brain, TrendingUp, Lightbulb, MessageSquare, Sparkles, Target, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AIInsightsDashboard() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   // Sentiment Analysis State
   const [sentimentText, setSentimentText] = useState("");
   const [sentimentResult, setSentimentResult] = useState<any>(null);
@@ -36,37 +40,37 @@ export default function AIInsightsDashboard() {
   const sentimentMutation = trpc.ai.analyzeSentiment.useMutation({
     onSuccess: (data) => {
       setSentimentResult(data);
-      toast.success(`تم التحليل بنجاح - المشاعر: ${data.sentiment} ${data.emoji}`);
+      toast.success(isAr ? `تم التحليل بنجاح - المشاعر: ${data.sentiment} ${data.emoji}` : `Analysis successful - Sentiment: ${data.sentiment} ${data.emoji}`);
     },
     onError: () => {
-      toast.error("فشل تحليل المشاعر");
+      toast.error(isAr ? "فشل تحليل المشاعر" : "Sentiment analysis failed");
     }
   });
 
   const predictionMutation = trpc.ai.predictSuccess.useMutation({
     onSuccess: (data) => {
       setPredictionResult(data);
-      toast.success(`تم التوقع بنجاح - احتمالية النجاح: ${(data.success_probability * 100).toFixed(1)}%`);
+      toast.success(isAr ? `تم التوقع بنجاح - احتمالية النجاح: ${(data.success_probability * 100).toFixed(1)}%` : `Prediction successful - Success probability: ${(data.success_probability * 100).toFixed(1)}%`);
     },
     onError: () => {
-      toast.error("فشل توقع النجاح");
+      toast.error(isAr ? "فشل توقع النجاح" : "Success prediction failed");
     }
   });
 
   const suggestionMutation = trpc.ai.suggestIdeas.useMutation({
     onSuccess: (data) => {
       setSuggestions(data);
-      toast.success(`تم الاقتراح بنجاح - تم إيجاد ${data.total_count} اقتراح`);
+      toast.success(isAr ? `تم الاقتراح بنجاح - تم إيجاد ${data.total_count} اقتراح` : `Suggestion successful - Found ${data.total_count} suggestions`);
     },
     onError: () => {
-      toast.error("فشل اقتراح الأفكار");
+      toast.error(isAr ? "فشل اقتراح الأفكار" : "Idea suggestion failed");
     }
   });
 
   // Sentiment Analysis Handler
   const analyzeSentiment = () => {
     if (!sentimentText.trim()) {
-      toast.error("الرجاء إدخال نص للتحليل");
+      toast.error(isAr ? "الرجاء إدخال نص للتحليل" : "Please enter text for analysis");
       return;
     }
     sentimentMutation.mutate({ text: sentimentText });
@@ -75,7 +79,7 @@ export default function AIInsightsDashboard() {
   // Success Prediction Handler
   const predictSuccess = () => {
     if (!predictionForm.title || !predictionForm.description || !predictionForm.sector || !predictionForm.budget) {
-      toast.error("الرجاء ملء جميع الحقول");
+      toast.error(isAr ? "الرجاء ملء جميع الحقول" : "Please fill in all fields");
       return;
     }
     predictionMutation.mutate({
@@ -89,7 +93,7 @@ export default function AIInsightsDashboard() {
   // Idea Suggestion Handler
   const suggestIdeas = () => {
     if (!suggestionForm.interests || !suggestionForm.sector) {
-      toast.error("الرجاء ملء جميع الحقول");
+      toast.error(isAr ? "الرجاء ملء جميع الحقول" : "Please fill in all fields");
       return;
     }
     const interests = suggestionForm.interests.split(",").map(i => i.trim()).filter(Boolean);
@@ -103,10 +107,10 @@ export default function AIInsightsDashboard() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <Brain className="w-10 h-10 text-purple-600" />
-          <h1 className="text-4xl font-bold">لوحة رؤى الذكاء الاصطناعي</h1>
+          <h1 className="text-4xl font-bold">{isAr ? "لوحة رؤى الذكاء الاصطناعي" : "AI Insights Dashboard"}</h1>
         </div>
         <p className="text-muted-foreground text-lg">
-          استخدم قوة الذكاء الاصطناعي لتحليل الأفكار، توقع النجاح، واكتشاف فرص جديدة
+          {isAr ? "استخدم قوة الذكاء الاصطناعي لتحليل الأفكار، توقع النجاح، واكتشاف فرص جديدة" : "Harness the power of AI to analyze ideas, predict success, and discover new opportunities"}
         </p>
       </div>
 
@@ -114,34 +118,34 @@ export default function AIInsightsDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">تحليل المشاعر</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "تحليل المشاعر" : "Sentiment Analysis"}</CardTitle>
             <MessageSquare className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">AraBERT</div>
-            <p className="text-xs text-muted-foreground">نموذج متقدم للغة العربية</p>
+            <p className="text-xs text-muted-foreground">{isAr ? "نموذج متقدم للغة العربية" : "Advanced Arabic Language Model"}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">توقع النجاح</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "توقع النجاح" : "Success Prediction"}</CardTitle>
             <TrendingUp className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">XGBoost</div>
-            <p className="text-xs text-muted-foreground">دقة تصل إلى 85%</p>
+            <p className="text-xs text-muted-foreground">{isAr ? "دقة تصل إلى 85%" : "Up to 85% Accuracy"}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">اقتراح الأفكار</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "اقتراح الأفكار" : "Idea Suggestion"}</CardTitle>
             <Lightbulb className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">AI-Powered</div>
-            <p className="text-xs text-muted-foreground">اقتراحات مخصصة</p>
+            <p className="text-xs text-muted-foreground">{isAr ? "اقتراحات مخصصة" : "Personalized Suggestions"}</p>
           </CardContent>
         </Card>
       </div>
@@ -151,15 +155,15 @@ export default function AIInsightsDashboard() {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="sentiment">
             <MessageSquare className="w-4 h-4 ml-2" />
-            تحليل المشاعر
+            {isAr ? "تحليل المشاعر" : "Sentiment Analysis"}
           </TabsTrigger>
           <TabsTrigger value="prediction">
             <TrendingUp className="w-4 h-4 ml-2" />
-            توقع النجاح
+            {isAr ? "توقع النجاح" : "Success Prediction"}
           </TabsTrigger>
           <TabsTrigger value="suggestion">
             <Lightbulb className="w-4 h-4 ml-2" />
-            اقتراح الأفكار
+            {isAr ? "اقتراح الأفكار" : "Idea Suggestion"}
           </TabsTrigger>
         </TabsList>
 
@@ -169,18 +173,18 @@ export default function AIInsightsDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MessageSquare className="w-5 h-5" />
-                تحليل المشاعر بالذكاء الاصطناعي
+                {isAr ? "تحليل المشاعر بالذكاء الاصطناعي" : "AI Sentiment Analysis"}
               </CardTitle>
               <CardDescription>
-                استخدم AraBERT لتحليل مشاعر النصوص العربية والإنجليزية
+                {isAr ? "استخدم AraBERT لتحليل مشاعر النصوص العربية والإنجليزية" : "Use AraBERT to analyze sentiment in Arabic and English texts"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="sentiment-text">النص للتحليل</Label>
+                <Label htmlFor="sentiment-text">{isAr ? "النص للتحليل" : "Text for Analysis"}</Label>
                 <Textarea
                   id="sentiment-text"
-                  placeholder="أدخل النص الذي تريد تحليل مشاعره..."
+                  placeholder={isAr ? "أدخل النص الذي تريد تحليل مشاعره..." : "Enter the text you want to analyze its sentiment..."}
                   value={sentimentText}
                   onChange={(e) => setSentimentText(e.target.value)}
                   rows={4}
@@ -188,7 +192,7 @@ export default function AIInsightsDashboard() {
               </div>
 
               <Button onClick={analyzeSentiment} disabled={isLoading} className="w-full">
-                {sentimentMutation.isPending ? "جاري التحليل..." : "تحليل المشاعر"}
+                {sentimentMutation.isPending ? (isAr ? "جاري التحليل..." : "Analyzing...") : (isAr ? "تحليل المشاعر" : "Analyze Sentiment")}
               </Button>
 
               {sentimentResult && (
@@ -196,21 +200,25 @@ export default function AIInsightsDashboard() {
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                       <Sparkles className="w-5 h-5 text-yellow-500" />
-                      نتيجة التحليل
+                      {isAr ? "نتيجة التحليل" : "Analysis Result"}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">المشاعر:</span>
+                      <span className="text-sm font-medium">{isAr ? "المشاعر:" : "Sentiment:"}</span>
                       <Badge variant={
                         sentimentResult.sentiment === "Positive" ? "default" :
                         sentimentResult.sentiment === "Negative" ? "destructive" : "secondary"
                       }>
-                        {sentimentResult.emoji} {sentimentResult.sentiment}
+                        {isAr ?
+                          `${sentimentResult.emoji} ${sentimentResult.sentiment === "Positive" ? "إيجابي" : sentimentResult.sentiment === "Negative" ? "سلبي" : "محايد"}`
+                          :
+                          `${sentimentResult.emoji} ${sentimentResult.sentiment}`
+                        }
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">الثقة:</span>
+                      <span className="text-sm font-medium">{isAr ? "الثقة:" : "Confidence:"}</span>
                       <span className="text-sm">{(sentimentResult.confidence * 100).toFixed(1)}%</span>
                     </div>
                     <div className="w-full bg-secondary rounded-full h-2">
@@ -235,45 +243,45 @@ export default function AIInsightsDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="w-5 h-5" />
-                توقع نجاح الفكرة
+                {isAr ? "توقع نجاح الفكرة" : "Idea Success Prediction"}
               </CardTitle>
               <CardDescription>
-                استخدم التعلم الآلي لتوقع احتمالية نجاح فكرتك
+                {isAr ? "استخدم التعلم الآلي لتوقع احتمالية نجاح فكرتك" : "Use machine learning to predict the probability of your idea's success"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="pred-title">عنوان الفكرة</Label>
+                  <Label htmlFor="pred-title">{isAr ? "عنوان الفكرة" : "Idea Title"}</Label>
                   <Input
                     id="pred-title"
-                    placeholder="مثال: منصة ذكية للتعليم"
+                    placeholder={isAr ? "مثال: منصة ذكية للتعليم" : "Example: Smart Education Platform"}
                     value={predictionForm.title}
                     onChange={(e) => setPredictionForm({...predictionForm, title: e.target.value})}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="pred-sector">القطاع</Label>
+                  <Label htmlFor="pred-sector">{isAr ? "القطاع" : "Sector"}</Label>
                   <Select value={predictionForm.sector} onValueChange={(v) => setPredictionForm({...predictionForm, sector: v})}>
                     <SelectTrigger>
-                      <SelectValue placeholder="اختر القطاع" />
+                      <SelectValue placeholder={isAr ? "اختر القطاع" : "Select Sector"} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="التقنية">التقنية</SelectItem>
-                      <SelectItem value="الصحة">الصحة</SelectItem>
-                      <SelectItem value="التعليم">التعليم</SelectItem>
-                      <SelectItem value="الطاقة">الطاقة</SelectItem>
-                      <SelectItem value="التجارة">التجارة</SelectItem>
+                      <SelectItem value="التقنية">{isAr ? "التقنية" : "Technology"}</SelectItem>
+                      <SelectItem value="الصحة">{isAr ? "الصحة" : "Health"}</SelectItem>
+                      <SelectItem value="التعليم">{isAr ? "التعليم" : "Education"}</SelectItem>
+                      <SelectItem value="الطاقة">{isAr ? "الطاقة" : "Energy"}</SelectItem>
+                      <SelectItem value="التجارة">{isAr ? "التجارة" : "Commerce"}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
 
               <div>
-                <Label htmlFor="pred-desc">الوصف</Label>
+                <Label htmlFor="pred-desc">{isAr ? "الوصف" : "Description"}</Label>
                 <Textarea
                   id="pred-desc"
-                  placeholder="صف فكرتك بالتفصيل..."
+                  placeholder={isAr ? "صف فكرتك بالتفصيل..." : "Describe your idea in detail..."}
                   value={predictionForm.description}
                   onChange={(e) => setPredictionForm({...predictionForm, description: e.target.value})}
                   rows={3}
@@ -281,7 +289,7 @@ export default function AIInsightsDashboard() {
               </div>
 
               <div>
-                <Label htmlFor="pred-budget">الميزانية (ريال)</Label>
+                <Label htmlFor="pred-budget">{isAr ? "الميزانية (ريال)" : "Budget (SAR)"}</Label>
                 <Input
                   id="pred-budget"
                   type="number"
@@ -292,7 +300,7 @@ export default function AIInsightsDashboard() {
               </div>
 
               <Button onClick={predictSuccess} disabled={isLoading} className="w-full">
-                {predictionMutation.isPending ? "جاري التوقع..." : "توقع النجاح"}
+                {predictionMutation.isPending ? (isAr ? "جاري التوقع..." : "Predicting...") : (isAr ? "توقع النجاح" : "Predict Success")}
               </Button>
 
               {predictionResult && (
@@ -300,30 +308,30 @@ export default function AIInsightsDashboard() {
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                       <Target className="w-5 h-5 text-green-500" />
-                      نتيجة التوقع
+                      {isAr ? "نتيجة التوقع" : "Prediction Result"}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">احتمالية النجاح:</span>
+                      <span className="text-sm font-medium">{isAr ? "احتمالية النجاح:" : "Success Probability:"}</span>
                       <span className="text-2xl font-bold text-green-600">
                         {(predictionResult.success_probability * 100).toFixed(1)}%
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">مستوى المخاطرة:</span>
+                      <span className="text-sm font-medium">{isAr ? "مستوى المخاطرة:" : "Risk Level:"}</span>
                       <Badge variant={
                         predictionResult.risk_level === "Low" ? "default" :
                         predictionResult.risk_level === "High" ? "destructive" : "secondary"
                       }>
-                        {predictionResult.risk_level}
+                        {isAr ? (predictionResult.risk_level === "Low" ? "منخفض" : predictionResult.risk_level === "High" ? "مرتفع" : "متوسط") : predictionResult.risk_level}
                       </Badge>
                     </div>
 
                     <div className="space-y-2">
                       <h4 className="font-semibold flex items-center gap-2">
                         <AlertCircle className="w-4 h-4" />
-                        التوصيات:
+                        {isAr ? "التوصيات:" : "Recommendations:"}
                       </h4>
                       <ul className="space-y-1">
                         {predictionResult.recommendations.map((rec: string, idx: number) => (
@@ -344,47 +352,47 @@ export default function AIInsightsDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Lightbulb className="w-5 h-5" />
-                اقتراح أفكار جديدة
+                {isAr ? "اقتراح أفكار جديدة" : "Suggest New Ideas"}
               </CardTitle>
               <CardDescription>
-                احصل على اقتراحات مخصصة بناءً على اهتماماتك وقطاعك
+                {isAr ? "احصل على اقتراحات مخصصة بناءً على اهتماماتك وقطاعك" : "Get personalized suggestions based on your interests and sector"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="sugg-interests">الاهتمامات (مفصولة بفواصل)</Label>
+                <Label htmlFor="sugg-interests">{isAr ? "الاهتمامات (مفصولة بفواصل)" : "Interests (comma-separated)"}</Label>
                 <Input
                   id="sugg-interests"
-                  placeholder="مثال: AI, صحة, تعليم"
+                  placeholder={isAr ? "مثال: AI, صحة, تعليم" : "Example: AI, Health, Education"}
                   value={suggestionForm.interests}
                   onChange={(e) => setSuggestionForm({...suggestionForm, interests: e.target.value})}
                 />
               </div>
 
               <div>
-                <Label htmlFor="sugg-sector">القطاع</Label>
+                <Label htmlFor="sugg-sector">{isAr ? "القطاع" : "Sector"}</Label>
                 <Select value={suggestionForm.sector} onValueChange={(v) => setSuggestionForm({...suggestionForm, sector: v})}>
                   <SelectTrigger>
-                    <SelectValue placeholder="اختر القطاع" />
+                    <SelectValue placeholder={isAr ? "اختر القطاع" : "Select Sector"} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="الكل">جميع القطاعات</SelectItem>
-                    <SelectItem value="التقنية">التقنية</SelectItem>
-                    <SelectItem value="الصحة">الصحة</SelectItem>
-                    <SelectItem value="التعليم">التعليم</SelectItem>
-                    <SelectItem value="الطاقة">الطاقة</SelectItem>
-                    <SelectItem value="التجارة">التجارة</SelectItem>
+                    <SelectItem value="الكل">{isAr ? "جميع القطاعات" : "All Sectors"}</SelectItem>
+                    <SelectItem value="التقنية">{isAr ? "التقنية" : "Technology"}</SelectItem>
+                    <SelectItem value="الصحة">{isAr ? "الصحة" : "Health"}</SelectItem>
+                    <SelectItem value="التعليم">{isAr ? "التعليم" : "Education"}</SelectItem>
+                    <SelectItem value="الطاقة">{isAr ? "الطاقة" : "Energy"}</SelectItem>
+                    <SelectItem value="التجارة">{isAr ? "التجارة" : "Commerce"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <Button onClick={suggestIdeas} disabled={isLoading} className="w-full">
-                {suggestionMutation.isPending ? "جاري الاقتراح..." : "اقترح أفكار"}
+                {suggestionMutation.isPending ? (isAr ? "جاري الاقتراح..." : "Suggesting...") : (isAr ? "اقترح أفكار" : "Suggest Ideas")}
               </Button>
 
               {suggestions && (
                 <div className="space-y-4">
-                  <h4 className="font-semibold">تم إيجاد {suggestions.total_count} اقتراح:</h4>
+                  <h4 className="font-semibold">{isAr ? `تم إيجاد ${suggestions.total_count} اقتراح:` : `Found ${suggestions.total_count} suggestions:`}</h4>
                   {suggestions.suggestions.map((idea: any) => (
                     <Card key={idea.id} className="bg-muted/50">
                       <CardHeader>

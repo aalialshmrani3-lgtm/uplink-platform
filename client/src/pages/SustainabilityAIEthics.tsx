@@ -2,8 +2,11 @@ import { Leaf, Shield, Award, TrendingUp, CheckCircle2, ArrowRight, Target, BarC
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function SustainabilityAIEthics() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const esgMetrics = [
     {
       category: "البيئة",
@@ -151,7 +154,7 @@ export default function SustainabilityAIEthics() {
 
         {/* ESG Metrics */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">معايير ESG المتكاملة</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "معايير ESG المتكاملة" : "[معايير ESG المتكاملة]"}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {esgMetrics.map((category, index) => (
               <Card key={index} className="p-6 hover:shadow-xl transition-all">
@@ -172,7 +175,7 @@ export default function SustainabilityAIEthics() {
 
         {/* AI Ethics Principles */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">مبادئ أخلاقيات الذكاء الاصطناعي</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "مبادئ أخلاقيات الذكاء الاصطناعي" : "مبادئ أخNoقيات الذكاء اNoصطناعي"}</h2>
           <div className="space-y-6">
             {aiEthicsPrinciples.map((principle, index) => (
               <Card key={index} className="p-6">
@@ -198,7 +201,7 @@ export default function SustainabilityAIEthics() {
 
         {/* Certifications */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">الشهادات والامتثال</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "الشهادات والامتثال" : "الشهادات واNoمتثال"}</h2>
           <div className="grid md:grid-cols-4 gap-6">
             {certifications.map((cert, index) => (
               <Card key={index} className="p-6 text-center hover:shadow-xl transition-all hover:-translate-y-2">
@@ -213,7 +216,7 @@ export default function SustainabilityAIEthics() {
 
         {/* Assessment Tool */}
         <Card className="p-8 mb-16 bg-gradient-to-r from-green-500/10 to-blue-500/10 border-2 border-green-500/20">
-          <h2 className="text-3xl font-bold mb-6 text-center">أداة تقييم الاستدامة وأخلاقيات AI</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">{isAr ? "أداة تقييم الاستدامة وأخلاقيات AI" : "أداة تقييم اNoستدامة وأخNoقيات AI"}</h2>
           <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
             قيّم مشروعك الابتكاري بناءً على معايير ESG وأخلاقيات AI واحصل على تقرير شامل مع توصيات للتحسين
           </p>
@@ -223,7 +226,7 @@ export default function SustainabilityAIEthics() {
               <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-3">
                 <Target className="text-green-600" size={32} />
               </div>
-              <h4 className="font-bold mb-2">تقييم شامل</h4>
+              <h4 className="font-bold mb-2">{isAr ? "تقييم شامل" : "[تقييم شامل]"}</h4>
               <p className="text-sm text-muted-foreground">
                 تقييم متعدد الأبعاد يغطي جميع جوانب ESG وأخلاقيات AI
               </p>
@@ -232,7 +235,7 @@ export default function SustainabilityAIEthics() {
               <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-3">
                 <BarChart3 className="text-blue-600" size={32} />
               </div>
-              <h4 className="font-bold mb-2">تقرير تفصيلي</h4>
+              <h4 className="font-bold mb-2">{isAr ? "تقرير تفصيلي" : "[تقرير تفصيلي]"}</h4>
               <p className="text-sm text-muted-foreground">
                 تقرير مفصل مع نقاط القوة والضعف والمقارنة مع المعايير
               </p>
@@ -241,7 +244,7 @@ export default function SustainabilityAIEthics() {
               <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
                 <TrendingUp className="text-purple-600" size={32} />
               </div>
-              <h4 className="font-bold mb-2">توصيات عملية</h4>
+              <h4 className="font-bold mb-2">{isAr ? "توصيات عملية" : "[توصيات عملية]"}</h4>
               <p className="text-sm text-muted-foreground">
                 خطة عمل واضحة لتحسين أداء الاستدامة والأخلاقيات
               </p>
@@ -261,7 +264,7 @@ export default function SustainabilityAIEthics() {
         {/* CTA Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-green-500/10 to-blue-500/10 border-2 border-green-500/20">
           <div className="text-5xl mb-6">🌍</div>
-          <h2 className="text-3xl font-bold mb-4">ابتكر بمسؤولية</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? "ابتكر بمسؤولية" : "Innovate بمسؤولية"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             انضم إلى حركة الابتكار المسؤول وكن جزءاً من بناء مستقبل مستدام للجميع
           </p>

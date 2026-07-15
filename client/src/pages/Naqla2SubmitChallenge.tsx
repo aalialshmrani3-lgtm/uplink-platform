@@ -10,8 +10,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Target, Award, Users, Calendar } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2SubmitChallenge() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
@@ -56,7 +59,7 @@ export default function Naqla2SubmitChallenge() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800 max-w-md">
           <CardContent className="p-8">
-            <p className="text-white text-center">يرجى تسجيل الدخول لإرسال تحدي</p>
+            <p className="text-white text-center">{isAr ? "يرجى تسجيل الدخول لإرسال تحدي" : "يرجى Login لإرسال تحدي"}</p>
           </CardContent>
         </Card>
       </div>
@@ -80,7 +83,7 @@ export default function Naqla2SubmitChallenge() {
         {/* Form */}
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">تفاصيل التحدي</CardTitle>
+            <CardTitle className="text-white">{isAr ? "تفاصيل التحدي" : "Challenge Details"}</CardTitle>
             <CardDescription className="text-slate-400">
               املأ التفاصيل التالية لإطلاق تحديك
             </CardDescription>
@@ -89,7 +92,7 @@ export default function Naqla2SubmitChallenge() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Title */}
               <div>
-                <Label htmlFor="title" className="text-white">عنوان التحدي *</Label>
+                <Label htmlFor="title" className="text-white">{isAr ? "عنوان التحدي *" : "عنوان التBorderي *"}</Label>
                 <Input
                   id="title"
                   placeholder="مثال: تطوير نظام ذكاء اصطناعي للتشخيص الطبي"
@@ -102,7 +105,7 @@ export default function Naqla2SubmitChallenge() {
 
               {/* Description */}
               <div>
-                <Label htmlFor="description" className="text-white">وصف التحدي *</Label>
+                <Label htmlFor="description" className="text-white">{isAr ? "وصف التحدي *" : "وRow التحدي *"}</Label>
                 <Textarea
                   id="description"
                   placeholder="اشرح المشكلة والهدف من التحدي..."
@@ -116,7 +119,7 @@ export default function Naqla2SubmitChallenge() {
 
               {/* Category */}
               <div>
-                <Label htmlFor="category" className="text-white">الفئة *</Label>
+                <Label htmlFor="category" className="text-white">{isAr ? "الفئة *" : "Category *"}</Label>
                 <Select
                   value={formData.category}
                   onValueChange={(value) => setFormData({ ...formData, category: value })}
@@ -125,19 +128,19 @@ export default function Naqla2SubmitChallenge() {
                     <SelectValue placeholder="اختر الفئة" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ai">الذكاء الاصطناعي</SelectItem>
-                    <SelectItem value="health">الصحة</SelectItem>
-                    <SelectItem value="education">التعليم</SelectItem>
-                    <SelectItem value="environment">البيئة</SelectItem>
-                    <SelectItem value="fintech">التقنية المالية</SelectItem>
-                    <SelectItem value="other">أخرى</SelectItem>
+                    <SelectItem value="ai">{isAr ? "الذكاء الاصطناعي" : "Artificial Intelligence"}</SelectItem>
+                    <SelectItem value="health">{isAr ? "الصحة" : "Health"}</SelectItem>
+                    <SelectItem value="education">{isAr ? "التعليم" : "Education"}</SelectItem>
+                    <SelectItem value="environment">{isAr ? "البيئة" : "Environment"}</SelectItem>
+                    <SelectItem value="fintech">{isAr ? "التقنية المالية" : "FinTech"}</SelectItem>
+                    <SelectItem value="other">{isAr ? "أخرى" : "[أخرى]"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Requirements */}
               <div>
-                <Label htmlFor="requirements" className="text-white">المتطلبات *</Label>
+                <Label htmlFor="requirements" className="text-white">{isAr ? "المتطلبات *" : "[المتطلبات *]"}</Label>
                 <Textarea
                   id="requirements"
                   placeholder="ما هي المتطلبات والمعايير للحل؟"

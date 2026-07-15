@@ -15,6 +15,7 @@ import {
   Plus, Circle, Calendar
 } from 'lucide-react';
 import { useAuth } from '@/_core/hooks/useAuth';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // بيانات المحادثات التجريبية
 const conversations = [
@@ -136,6 +137,8 @@ const messagesData = [
 ];
 
 export default function Messages() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [selectedConversation, setSelectedConversation] = useState(conversations[0]);
   const [messages, setMessages] = useState(messagesData);
@@ -192,8 +195,8 @@ export default function Messages() {
                 <MessageSquare className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="text-lg font-bold">الرسائل</h1>
-                <p className="text-xs text-muted-foreground">تواصل آمن ومشفر</p>
+                <h1 className="text-lg font-bold">{isAr ? "الرسائل" : "Messages"}</h1>
+                <p className="text-xs text-muted-foreground">{isAr ? "تواصل آمن ومشفر" : "Connect آمن ومشفر"}</p>
               </div>
             </div>
           </div>
@@ -213,7 +216,7 @@ export default function Messages() {
           <Card className="border-0 bg-card/50 backdrop-blur-sm overflow-hidden">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between mb-4">
-                <CardTitle className="text-lg">المحادثات</CardTitle>
+                <CardTitle className="text-lg">{isAr ? "المحادثات" : "[المحادثات]"}</CardTitle>
                 <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
                   <Plus className="w-4 h-4 ml-1" />
                   جديد
@@ -234,9 +237,9 @@ export default function Messages() {
               {/* Tabs */}
               <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
                 <TabsList className="w-full bg-secondary/50">
-                  <TabsTrigger value="all" className="flex-1 text-xs">الكل</TabsTrigger>
-                  <TabsTrigger value="investors" className="flex-1 text-xs">مستثمرين</TabsTrigger>
-                  <TabsTrigger value="innovators" className="flex-1 text-xs">مبتكرين</TabsTrigger>
+                  <TabsTrigger value="all" className="flex-1 text-xs">{isAr ? "الكل" : "[الكل]"}</TabsTrigger>
+                  <TabsTrigger value="investors" className="flex-1 text-xs">{isAr ? "مستثمرين" : "Investorين"}</TabsTrigger>
+                  <TabsTrigger value="innovators" className="flex-1 text-xs">{isAr ? "مبتكرين" : "Innovatorين"}</TabsTrigger>
                 </TabsList>
               </Tabs>
             </CardHeader>

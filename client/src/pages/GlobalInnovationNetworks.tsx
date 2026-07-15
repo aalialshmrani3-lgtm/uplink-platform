@@ -2,8 +2,11 @@ import { Globe, Users, Shield, Award, TrendingUp, Zap, ArrowRight, Star, MapPin 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function GlobalInnovationNetworks() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const networkStats = [
     { label: "خبراء مستقلين", value: "25,000+", icon: <Users className="text-blue-600" /> },
     { label: "دولة", value: "120+", icon: <Globe className="text-green-600" /> },
@@ -126,7 +129,7 @@ export default function GlobalInnovationNetworks() {
 
         {/* Expert Categories */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">فئات الخبراء</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "فئات الخبراء" : "[فئات الخبراء]"}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {expertCategories.map((category, index) => (
               <Card key={index} className="p-6 hover:shadow-xl transition-all hover:-translate-y-2">
@@ -155,7 +158,7 @@ export default function GlobalInnovationNetworks() {
 
         {/* Features */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">ميزات الشبكة</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "ميزات الشبكة" : "Features الشبكة"}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {features.map((feature, index) => (
               <Card key={index} className="p-6 hover:shadow-xl transition-all">
@@ -171,7 +174,7 @@ export default function GlobalInnovationNetworks() {
 
         {/* Success Stories */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">قصص نجاح التعاون</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "قصص نجاح التعاون" : "قصص Success التعاون"}</h2>
           <div className="space-y-6">
             {successStories.map((story) => (
               <Card key={story.id} className="p-6">
@@ -183,26 +186,26 @@ export default function GlobalInnovationNetworks() {
                   <div className="flex gap-4 ml-6">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-green-600">{story.savings}</div>
-                      <div className="text-xs text-muted-foreground">توفير</div>
+                      <div className="text-xs text-muted-foreground">{isAr ? "توفير" : "[توفير]"}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-blue-600">{story.time}</div>
-                      <div className="text-xs text-muted-foreground">مدة</div>
+                      <div className="text-xs text-muted-foreground">{isAr ? "مدة" : "[مدة]"}</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
-                    <h4 className="font-semibold mb-2 text-sm">التحدي</h4>
+                    <h4 className="font-semibold mb-2 text-sm">{isAr ? "التحدي" : "التBorderي"}</h4>
                     <p className="text-sm text-muted-foreground">{story.challenge}</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2 text-sm">الحل</h4>
+                    <h4 className="font-semibold mb-2 text-sm">{isAr ? "الحل" : "Solution"}</h4>
                     <p className="text-sm text-muted-foreground">{story.solution}</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2 text-sm">النتيجة</h4>
+                    <h4 className="font-semibold mb-2 text-sm">{isAr ? "النتيجة" : "[النتيجة]"}</h4>
                     <p className="text-sm text-muted-foreground">{story.result}</p>
                   </div>
                 </div>
@@ -214,7 +217,7 @@ export default function GlobalInnovationNetworks() {
         {/* CTA Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">🌍</div>
-          <h2 className="text-3xl font-bold mb-4">انضم إلى الشبكة العالمية</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? "انضم إلى الشبكة العالمية" : "انضم إلى Network العالمية"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             سواء كنت تبحث عن خبراء أو ترغب في الانضمام كخبير، شبكتنا العالمية تفتح لك أبواب الفرص
           </p>

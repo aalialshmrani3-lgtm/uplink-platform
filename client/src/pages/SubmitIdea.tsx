@@ -11,8 +11,11 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function SubmitIdea() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     title: "",
@@ -75,8 +78,8 @@ export default function SubmitIdea() {
           </div>
 
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">نتائج التحليل</h1>
-            <p className="text-gray-400">تم تحليل فكرتك باستخدام الذكاء الاصطناعي</p>
+            <h1 className="text-4xl font-bold text-white mb-2">{isAr ? "نتائج التحليل" : "نتائج Analysis"}</h1>
+            <p className="text-gray-400">{isAr ? "تم تحليل فكرتك باستخدام الذكاء الاصطناعي" : "Done تحليل فكرتك باستخدام الذكاء الاصطناعي"}</p>
           </div>
 
           <AIAnalysisResults analysis={analysisResult} />
@@ -94,8 +97,8 @@ export default function SubmitIdea() {
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">قدّم فكرتك</h1>
-              <p className="text-gray-400">سنحللها بالذكاء الاصطناعي خلال ثوانٍ</p>
+              <h1 className="text-3xl font-bold text-white">{isAr ? "قدّم فكرتك" : "[قدّم فكرتك]"}</h1>
+              <p className="text-gray-400">{isAr ? "سنحللها بالذكاء الاصطناعي خلال ثوانٍ" : "سنحللها بالذكاء اNoصطناعي خNoل ثوانٍ"}</p>
             </div>
           </div>
 
@@ -204,7 +207,7 @@ export default function SubmitIdea() {
                   <SelectValue placeholder="اختر تحدياً (اختياري)" />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-900 border-slate-700">
-                  <SelectItem value="none" className="text-white">لا يوجد تحدٍ محدد</SelectItem>
+                  <SelectItem value="none" className="text-white">{isAr ? "لا يوجد تحدٍ محدد" : "No يوجد تحدٍ محدد"}</SelectItem>
                   {challenges?.map((challenge) => (
                     <SelectItem 
                       key={challenge.id} 
@@ -244,14 +247,14 @@ export default function SubmitIdea() {
             <div className="mt-8 p-6 bg-blue-500/10 border border-blue-500/30 rounded-lg">
               <div className="flex items-center gap-3 mb-4">
                 <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
-                <h3 className="text-lg font-semibold text-white">جاري التحليل...</h3>
+                <h3 className="text-lg font-semibold text-white">{isAr ? "جاري التحليل..." : "جاري Analysis..."}</h3>
               </div>
               <div className="space-y-2 text-sm text-gray-400">
-                <p>✓ تحليل النص باستخدام NLP</p>
-                <p>✓ مقارنة مع قاعدة البيانات</p>
-                <p>✓ تقييم الجدة والابتكار</p>
-                <p>✓ حساب إمكانات السوق</p>
-                <p>✓ إنشاء التوصيات...</p>
+                <p>{isAr ? "✓ تحليل النص باستخدام NLP" : "[✓ تحليل النص باستخدام NLP]"}</p>
+                <p>{isAr ? "✓ مقارنة مع قاعدة البيانات" : "✓ مقارنة مع قاعدة Data"}</p>
+                <p>{isAr ? "✓ تقييم الجدة والابتكار" : "✓ تقييم الجدة واNoبتكار"}</p>
+                <p>{isAr ? "✓ حساب إمكانات السوق" : "✓ حساب إمكانات Market"}</p>
+                <p>{isAr ? "✓ إنشاء التوصيات..." : "✓ إنشاء Recommendations..."}</p>
               </div>
             </div>
           )}

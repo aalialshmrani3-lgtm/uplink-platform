@@ -1,8 +1,11 @@
 import { Link } from "wouter";
 import { Shield, ArrowRight, Lock, Eye, Database, UserCheck, Bell, Mail } from "lucide-react";
 import ImprovedFooter from "@/components/ImprovedFooter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Privacy() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const sections = [
     {
       icon: Database,
@@ -76,11 +79,11 @@ export default function Privacy() {
           <Link href="/">
             <div className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
               <ArrowRight className="w-4 h-4" />
-              <span className="text-sm">العودة للرئيسية</span>
+              <span className="text-sm">{isAr ? "العودة للرئيسية" : "[العودة للرئيسية]"}</span>
             </div>
           </Link>
           <span className="text-border/50">|</span>
-          <span className="text-sm font-medium">سياسة الخصوصية</span>
+          <span className="text-sm font-medium">{isAr ? "سياسة الخصوصية" : "Privacy Policy"}</span>
         </div>
       </div>
 
@@ -90,11 +93,11 @@ export default function Privacy() {
           <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Shield className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">سياسة الخصوصية</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? "سياسة الخصوصية" : "Privacy Policy"}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             نحن في منصة نقلة نلتزم بحماية خصوصيتك وأمان بياناتك. تعرّف على كيفية جمع بياناتك واستخدامها وحمايتها.
           </p>
-          <p className="text-sm text-muted-foreground mt-4">آخر تحديث: يناير 2025</p>
+          <p className="text-sm text-muted-foreground mt-4">{isAr ? "آخر تحديث: يناير 2025" : "آخر تBorderيث: يناير 2025"}</p>
         </div>
       </div>
 

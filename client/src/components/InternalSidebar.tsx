@@ -1,32 +1,11 @@
 import { Link, useLocation } from "wouter";
 import { 
-  Home, BarChart3, Lightbulb, MessageSquare, PenTool, 
+  Home, BarChart3, MessageSquare, PenTool, 
   Calendar, Users, Settings, Award, Briefcase,
   Rocket, Globe, Shield, GraduationCap, Code
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-interface NavItem {
-  href: string;
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-}
-
-const navItems: NavItem[] = [
-  { href: "/", label: "الرئيسية", icon: Home },
-  { href: "/analytics", label: "التحليلات", icon: BarChart3 },
-  { href: "/projects", label: "مشاريعي", icon: Briefcase },
-  { href: "/challenges", label: "التحديات", icon: Award },
-  { href: "/marketplace", label: "السوق", icon: Globe },
-  { href: "/ip/register", label: "الملكية الفكرية", icon: Shield },
-  { href: "/messages", label: "الرسائل", icon: MessageSquare },
-  { href: "/whiteboard", label: "لوحة الأفكار", icon: PenTool },
-  { href: "/calendar", label: "التقويم", icon: Calendar },
-  { href: "/academy", label: "الأكاديمية", icon: GraduationCap },
-  { href: "/developers", label: "المطورين", icon: Code },
-  { href: "/profile", label: "الملف الشخصي", icon: Users },
-  { href: "/settings", label: "الإعدادات", icon: Settings },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface InternalSidebarProps {
   className?: string;
@@ -34,6 +13,23 @@ interface InternalSidebarProps {
 
 export default function InternalSidebar({ className }: InternalSidebarProps) {
   const [location] = useLocation();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { href: "/", label: t.sidebar.home, icon: Home },
+    { href: "/analytics", label: t.sidebar.analytics, icon: BarChart3 },
+    { href: "/projects", label: t.sidebar.myProjects, icon: Briefcase },
+    { href: "/challenges", label: t.sidebar.challenges, icon: Award },
+    { href: "/marketplace", label: t.sidebar.marketplace, icon: Globe },
+    { href: "/ip/register", label: t.sidebar.ipRegister, icon: Shield },
+    { href: "/messages", label: t.sidebar.messages, icon: MessageSquare },
+    { href: "/whiteboard", label: t.sidebar.whiteboard, icon: PenTool },
+    { href: "/calendar", label: t.sidebar.calendar, icon: Calendar },
+    { href: "/academy", label: t.sidebar.academy, icon: GraduationCap },
+    { href: "/developers", label: t.sidebar.developers, icon: Code },
+    { href: "/profile", label: t.sidebar.profile, icon: Users },
+    { href: "/settings", label: t.sidebar.settings, icon: Settings },
+  ];
 
   return (
     <aside className={cn(
@@ -77,18 +73,18 @@ export default function InternalSidebar({ className }: InternalSidebarProps) {
 
         {/* Quick Stats */}
         <div className="mt-8 p-4 rounded-lg bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border border-cyan-500/20">
-          <h4 className="text-sm font-semibold text-foreground mb-3">إحصائياتك</h4>
+          <h4 className="text-sm font-semibold text-foreground mb-3">{t.dashboard.myStats}</h4>
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
-              <span className="text-muted-foreground">المشاريع</span>
+              <span className="text-muted-foreground">{t.sidebar.myProjects}</span>
               <span className="font-semibold text-cyan-400">12</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-muted-foreground">التحديات</span>
+              <span className="text-muted-foreground">{t.sidebar.challenges}</span>
               <span className="font-semibold text-cyan-400">5</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-muted-foreground">الرسائل</span>
+              <span className="text-muted-foreground">{t.sidebar.messages}</span>
               <span className="font-semibold text-cyan-400">23</span>
             </div>
           </div>

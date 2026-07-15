@@ -20,8 +20,11 @@ import {
 } from "lucide-react";
 import { useLocation } from "wouter";
 import SEOHead from "@/components/SEOHead";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function EventsDashboard() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [selectedTab, setSelectedTab] = useState("all");
@@ -98,8 +101,8 @@ export default function EventsDashboard() {
   if (!user) {
     return (
       <div className="container py-20 text-center">
-        <h1 className="text-2xl font-bold mb-4">يرجى تسجيل الدخول</h1>
-        <p className="text-muted-foreground">يجب تسجيل الدخول لعرض لوحة تحكم الفعاليات</p>
+        <h1 className="text-2xl font-bold mb-4">{isAr ? "يرجى تسجيل الدخول" : "يرجى Login"}</h1>
+        <p className="text-muted-foreground">{isAr ? "يجب تسجيل الدخول لعرض لوحة تحكم الفعاليات" : "يجب Login لعرض لوحة تحكم الفعاليات"}</p>
       </div>
     );
   }
@@ -115,8 +118,8 @@ export default function EventsDashboard() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold mb-2">لوحة تحكم الفعاليات</h1>
-            <p className="text-muted-foreground">إدارة ومتابعة جميع فعالياتك</p>
+            <h1 className="text-3xl font-bold mb-2">{isAr ? "لوحة تحكم الفعاليات" : "لوحة تحكم الEvents"}</h1>
+            <p className="text-muted-foreground">{isAr ? "إدارة ومتابعة جميع فعالياتك" : "إدارة ومتابعة جميع Eventsك"}</p>
           </div>
           <Button onClick={() => setLocation("/naqla2/add-event")}>
             <Plus className="w-4 h-4 ml-2" />
@@ -139,7 +142,7 @@ export default function EventsDashboard() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">منشورة</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? "منشورة" : "Publishedة"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">{stats.published}</div>
@@ -148,7 +151,7 @@ export default function EventsDashboard() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">جارية</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? "جارية" : "[جارية]"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-blue-600">{stats.ongoing}</div>
@@ -157,7 +160,7 @@ export default function EventsDashboard() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">مكتملة</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? "مكتملة" : "مكDoneلة"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-gray-600">{stats.completed}</div>
@@ -168,8 +171,8 @@ export default function EventsDashboard() {
         {/* Events List */}
         <Card>
           <CardHeader>
-            <CardTitle>فعالياتي</CardTitle>
-            <CardDescription>إدارة ومتابعة جميع الفعاليات التي أنشأتها</CardDescription>
+            <CardTitle>{isAr ? "فعالياتي" : "Eventsي"}</CardTitle>
+            <CardDescription>{isAr ? "إدارة ومتابعة جميع الفعاليات التي أنشأتها" : "إدارة ومتابعة جميع الEvents التي أنشأتها"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs value={selectedTab} onValueChange={setSelectedTab}>
@@ -178,14 +181,14 @@ export default function EventsDashboard() {
                 <TabsTrigger value="published">منشورة ({stats.published})</TabsTrigger>
                 <TabsTrigger value="ongoing">جارية ({stats.ongoing})</TabsTrigger>
                 <TabsTrigger value="completed">مكتملة ({stats.completed})</TabsTrigger>
-                <TabsTrigger value="draft">مسودات</TabsTrigger>
+                <TabsTrigger value="draft">{isAr ? "مسودات" : "[مسودات]"}</TabsTrigger>
               </TabsList>
 
               <TabsContent value={selectedTab} className="space-y-4">
                 {isLoading ? (
                   <div className="text-center py-12">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                    <p className="mt-4 text-muted-foreground">جارٍ التحميل...</p>
+                    <p className="mt-4 text-muted-foreground">{isAr ? "جارٍ التحميل..." : "جارٍ الDownload..."}</p>
                   </div>
                 ) : filteredEvents && filteredEvents.length > 0 ? (
                   filteredEvents.map((event: any) => (
@@ -288,7 +291,7 @@ export default function EventsDashboard() {
                 ) : (
                   <div className="text-center py-12">
                     <Calendar className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">لا توجد فعاليات</h3>
+                    <h3 className="text-lg font-semibold mb-2">{isAr ? "لا توجد فعاليات" : "No توجد فعاليات"}</h3>
                     <p className="text-muted-foreground mb-4">
                       لم تقم بإنشاء أي فعاليات بعد
                     </p>

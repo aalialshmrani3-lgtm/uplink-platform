@@ -6,8 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function UserRegistration() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, setLocation] = useLocation();
   
   const [formData, setFormData] = useState({
@@ -77,7 +80,7 @@ export default function UserRegistration() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">تسجيل مستخدم جديد</CardTitle>
+          <CardTitle className="text-2xl">{isAr ? "تسجيل مستخدم جديد" : "Register مستخدم جديد"}</CardTitle>
           <CardDescription>
             أنشئ حساباً جديداً للانضمام إلى منصة NAQLA
           </CardDescription>
@@ -85,7 +88,7 @@ export default function UserRegistration() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="fullName">الاسم الكامل *</Label>
+              <Label htmlFor="fullName">{isAr ? "الاسم الكامل *" : "اNoسم الكامل *"}</Label>
               <Input
                 id="fullName"
                 type="text"
@@ -97,7 +100,7 @@ export default function UserRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">البريد الإلكتروني *</Label>
+              <Label htmlFor="email">{isAr ? "البريد الإلكتروني *" : "Email *"}</Label>
               <Input
                 id="email"
                 type="email"
@@ -109,7 +112,7 @@ export default function UserRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">كلمة المرور *</Label>
+              <Label htmlFor="password">{isAr ? "كلمة المرور *" : "Password *"}</Label>
               <Input
                 id="password"
                 type="password"
@@ -124,7 +127,7 @@ export default function UserRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">تأكيد كلمة المرور *</Label>
+              <Label htmlFor="confirmPassword">{isAr ? "تأكيد كلمة المرور *" : "Confirm كلمة المرور *"}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -136,7 +139,7 @@ export default function UserRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phoneNumber">رقم الهاتف *</Label>
+              <Label htmlFor="phoneNumber">{isAr ? "رقم الهاتف *" : "Phone Number *"}</Label>
               <Input
                 id="phoneNumber"
                 type="tel"
@@ -148,7 +151,7 @@ export default function UserRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="dateOfBirth">تاريخ الميلاد *</Label>
+              <Label htmlFor="dateOfBirth">{isAr ? "تاريخ الميلاد *" : "تاريخ الميNoد *"}</Label>
               <Input
                 id="dateOfBirth"
                 type="date"
@@ -177,7 +180,7 @@ export default function UserRegistration() {
             </Button>
 
             <div className="text-center text-sm">
-              <span className="text-muted-foreground">لديك حساب بالفعل؟ </span>
+              <span className="text-muted-foreground">{isAr ? "لديك حساب بالفعل؟ " : "[لديك حساب بالفعل؟]"}</span>
               <Button
                 type="button"
                 variant="link"

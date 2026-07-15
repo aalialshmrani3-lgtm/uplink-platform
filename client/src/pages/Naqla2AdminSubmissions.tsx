@@ -9,8 +9,11 @@ import { ArrowLeft, Star, CheckCircle2, XCircle, FileText, ExternalLink } from "
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2AdminSubmissions() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { id } = useParams<{ id: string }>();
   const challengeId = parseInt(id || "0");
   
@@ -53,8 +56,8 @@ export default function Naqla2AdminSubmissions() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle className="text-red-500">غير مصرح</CardTitle>
-            <CardDescription>ليس لديك صلاحية الوصول إلى هذه الصفحة</CardDescription>
+            <CardTitle className="text-red-500">{isAr ? "غير مصرح" : "[غير مصرح]"}</CardTitle>
+            <CardDescription>{isAr ? "ليس لديك صلاحية الوصول إلى هذه الصفحة" : "ليس لديك صNoحية الوصول إلى هذه الصفحة"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -64,7 +67,7 @@ export default function Naqla2AdminSubmissions() {
   if (!challenge) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">جاري تحميل...</p>
+        <p className="text-gray-400">{isAr ? "جاري تحميل..." : "جاري Download..."}</p>
       </div>
     );
   }
@@ -80,7 +83,7 @@ export default function Naqla2AdminSubmissions() {
               العودة إلى لوحة التحكم
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-2">مراجعة الحلول</h1>
+          <h1 className="text-4xl font-bold mb-2">{isAr ? "مراجعة الحلول" : "مراجعة الSolutions"}</h1>
           <p className="text-gray-400">{challenge.title}</p>
         </div>
 
@@ -119,14 +122,14 @@ export default function Naqla2AdminSubmissions() {
                   <div className="space-y-4">
                     {/* Solution Details */}
                     <div>
-                      <h3 className="font-semibold mb-2">الحل المقترح:</h3>
+                      <h3 className="font-semibold mb-2">{isAr ? "الحل المقترح:" : "Solution المقترح:"}</h3>
                       <p className="text-gray-400 text-sm">{submission.solution}</p>
                     </div>
 
                     {/* Impact */}
                     {submission.expectedImpact && (
                       <div>
-                        <h3 className="font-semibold mb-2">التأثير المتوقع:</h3>
+                        <h3 className="font-semibold mb-2">{isAr ? "التأثير المتوقع:" : "الEffect المتوقع:"}</h3>
                         <p className="text-gray-400 text-sm">{submission.expectedImpact}</p>
                       </div>
                     )}
@@ -154,10 +157,10 @@ export default function Naqla2AdminSubmissions() {
                     {/* Review Form */}
                     {selectedSubmission === submission.id ? (
                       <div className="mt-6 p-6 bg-gray-900/50 rounded-lg space-y-4">
-                        <h3 className="font-semibold text-lg">تقديم مراجعة</h3>
+                        <h3 className="font-semibold text-lg">{isAr ? "تقديم مراجعة" : "[تقديم مراجعة]"}</h3>
                         
                         <div>
-                          <Label>الدرجة (من 100)</Label>
+                          <Label>{isAr ? "الدرجة (من 100)" : "[الدرجة (من 100)]"}</Label>
                           <Input
                             type="number"
                             min="0"
@@ -169,7 +172,7 @@ export default function Naqla2AdminSubmissions() {
                         </div>
 
                         <div>
-                          <Label>التعليقات</Label>
+                          <Label>{isAr ? "التعليقات" : "Comments"}</Label>
                           <Textarea
                             value={reviewData.feedback}
                             onChange={(e) => setReviewData({ ...reviewData, feedback: e.target.value })}
@@ -179,7 +182,7 @@ export default function Naqla2AdminSubmissions() {
                         </div>
 
                         <div>
-                          <Label>الحالة</Label>
+                          <Label>{isAr ? "الحالة" : "Status"}</Label>
                           <div className="flex gap-2 mt-2">
                             <Button
                               size="sm"
@@ -231,7 +234,7 @@ export default function Naqla2AdminSubmissions() {
             <Card className="bg-gray-800/50 border-gray-700">
               <CardContent className="py-12 text-center">
                 <FileText className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400">لا توجد حلول مقدمة لهذا التحدي بعد</p>
+                <p className="text-gray-400">{isAr ? "لا توجد حلول مقدمة لهذا التحدي بعد" : "No توجد حلول مقدمة لهذا التحدي بعد"}</p>
               </CardContent>
             </Card>
           )}

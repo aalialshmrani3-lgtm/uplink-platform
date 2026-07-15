@@ -15,8 +15,11 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function IdeaJourney() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const params = useParams<{ id: string }>();
   const ideaId = parseInt(params.id || "0");
   const [, navigate] = useLocation();
@@ -39,8 +42,8 @@ export default function IdeaJourney() {
       <div className="container mx-auto py-8">
         <Card>
           <CardHeader>
-            <CardTitle>الفكرة غير موجودة</CardTitle>
-            <CardDescription>لم يتم العثور على الفكرة المطلوبة</CardDescription>
+            <CardTitle>{isAr ? "الفكرة غير موجودة" : "الIdea غير موجودة"}</CardTitle>
+            <CardDescription>{isAr ? "لم يتم العثور على الفكرة المطلوبة" : "لم يDone العثور على الفكرة المطلوبة"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -96,7 +99,7 @@ export default function IdeaJourney() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">الحالة</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "الحالة" : "Status"}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
@@ -111,7 +114,7 @@ export default function IdeaJourney() {
         {analysis && (
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">الدرجة الإجمالية</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "الدرجة الإجمالية" : "الدرجة الTotalة"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{analysis.overallScore}%</div>
@@ -127,7 +130,7 @@ export default function IdeaJourney() {
         {classification && (
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">الشريك الاستراتيجي</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "الشريك الاستراتيجي" : "الشريك اNoستراتيجي"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -147,7 +150,7 @@ export default function IdeaJourney() {
             <GitBranch className="w-5 h-5" />
             رحلة الفكرة
           </CardTitle>
-          <CardDescription>تتبع مسار فكرتك عبر منصة NAQLA</CardDescription>
+          <CardDescription>{isAr ? "تتبع مسار فكرتك عبر منصة NAQLA" : "[تتبع مسار فكرتك عبر منصة NAQLA]"}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="relative space-y-8">
@@ -182,28 +185,28 @@ export default function IdeaJourney() {
                     {step.data && (
                       <div className="mt-2 p-3 bg-muted rounded-lg text-sm">
                         {step.data.title && (
-                          <div><strong>العنوان:</strong> {step.data.title}</div>
+                          <div><strong>{isAr ? "العنوان:" : "Title:"}</strong> {step.data.title}</div>
                         )}
                         {step.data.category && (
-                          <div><strong>الفئة:</strong> {step.data.category}</div>
+                          <div><strong>{isAr ? "الفئة:" : "Category:"}</strong> {step.data.category}</div>
                         )}
                         {step.data.overallScore && (
-                          <div><strong>الدرجة:</strong> {step.data.overallScore}%</div>
+                          <div><strong>{isAr ? "الدرجة:" : "[الدرجة:]"}</strong> {step.data.overallScore}%</div>
                         )}
                         {step.data.classification && (
-                          <div><strong>التصنيف:</strong> {step.data.classification}</div>
+                          <div><strong>{isAr ? "التصنيف:" : "[التصنيف:]"}</strong> {step.data.classification}</div>
                         )}
                         {step.data.suggestedPartner && (
-                          <div><strong>الشريك المقترح:</strong> {step.data.suggestedPartner}</div>
+                          <div><strong>{isAr ? "الشريك المقترح:" : "الPartner المقترح:"}</strong> {step.data.suggestedPartner}</div>
                         )}
                         {step.data.choice && (
-                          <div><strong>الاختيار:</strong> {step.data.choice === 'naqla2' ? 'NAQLA 2' : 'NAQLA 3'}</div>
+                          <div><strong>{isAr ? "الاختيار:" : "اNoختيار:"}</strong> {step.data.choice === 'naqla2' ? 'NAQLA 2' : 'NAQLA 3'}</div>
                         )}
                         {step.data.projectId && (
-                          <div><strong>رقم المشروع:</strong> {step.data.projectId}</div>
+                          <div><strong>{isAr ? "رقم المشروع:" : "رقم Project:"}</strong> {step.data.projectId}</div>
                         )}
                         {step.data.assetId && (
-                          <div><strong>رقم الأصل:</strong> {step.data.assetId}</div>
+                          <div><strong>{isAr ? "رقم الأصل:" : "[رقم الأصل:]"}</strong> {step.data.assetId}</div>
                         )}
                       </div>
                     )}
@@ -218,23 +221,23 @@ export default function IdeaJourney() {
       {/* Idea Details */}
       <Card>
         <CardHeader>
-          <CardTitle>تفاصيل الفكرة</CardTitle>
+          <CardTitle>{isAr ? "تفاصيل الفكرة" : "Idea Details"}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h3 className="font-semibold mb-1">الوصف</h3>
+            <h3 className="font-semibold mb-1">{isAr ? "الوصف" : "Description"}</h3>
             <p className="text-sm text-muted-foreground">{idea.description}</p>
           </div>
           <div>
-            <h3 className="font-semibold mb-1">المشكلة</h3>
+            <h3 className="font-semibold mb-1">{isAr ? "المشكلة" : "[المشكلة]"}</h3>
             <p className="text-sm text-muted-foreground">{idea.problem}</p>
           </div>
           <div>
-            <h3 className="font-semibold mb-1">الحل</h3>
+            <h3 className="font-semibold mb-1">{isAr ? "الحل" : "Solution"}</h3>
             <p className="text-sm text-muted-foreground">{idea.solution}</p>
           </div>
           <div>
-            <h3 className="font-semibold mb-1">السوق المستهدف</h3>
+            <h3 className="font-semibold mb-1">{isAr ? "السوق المستهدف" : "Market المستهدف"}</h3>
             <p className="text-sm text-muted-foreground">{idea.targetMarket}</p>
           </div>
         </CardContent>

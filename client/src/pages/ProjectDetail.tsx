@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Rocket, Lightbulb, Brain, ArrowRight, CheckCircle, 
   Target, Users, DollarSign, TrendingUp, AlertTriangle,
@@ -11,6 +12,8 @@ import {
 } from "lucide-react";
 
 export default function ProjectDetail() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const params = useParams();
   const projectId = parseInt(params.id || "0");
@@ -62,9 +65,9 @@ export default function ProjectDetail() {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">المشروع غير موجود</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "المشروع غير موجود" : "Project غير موجود"}</h2>
           <Link href="/projects">
-            <Button>العودة للمشاريع</Button>
+            <Button>{isAr ? "العودة للمشاريع" : "[العودة للمشاريع]"}</Button>
           </Link>
         </div>
       </div>
@@ -192,7 +195,7 @@ export default function ProjectDetail() {
             {/* Description */}
             <Card className="bg-slate-800/50 border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white">وصف المشروع</CardTitle>
+                <CardTitle className="text-white">{isAr ? "وصف المشروع" : "وRow المشروع"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-300 leading-relaxed">{project.description}</p>
@@ -202,24 +205,24 @@ export default function ProjectDetail() {
             {/* Details */}
             <Card className="bg-slate-800/50 border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white">تفاصيل المشروع</CardTitle>
+                <CardTitle className="text-white">{isAr ? "تفاصيل المشروع" : "Project Details"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {project.targetMarket && (
                   <div>
-                    <p className="text-slate-400 text-sm mb-1">السوق المستهدف</p>
+                    <p className="text-slate-400 text-sm mb-1">{isAr ? "السوق المستهدف" : "Market المستهدف"}</p>
                     <p className="text-white">{project.targetMarket}</p>
                   </div>
                 )}
                 {project.competitiveAdvantage && (
                   <div>
-                    <p className="text-slate-400 text-sm mb-1">الميزة التنافسية</p>
+                    <p className="text-slate-400 text-sm mb-1">{isAr ? "الميزة التنافسية" : "Competitive Advantage"}</p>
                     <p className="text-white">{project.competitiveAdvantage}</p>
                   </div>
                 )}
                 {project.businessModel && (
                   <div>
-                    <p className="text-slate-400 text-sm mb-1">نموذج العمل</p>
+                    <p className="text-slate-400 text-sm mb-1">{isAr ? "نموذج العمل" : "Growذج العمل"}</p>
                     <p className="text-white">{project.businessModel}</p>
                   </div>
                 )}
@@ -326,7 +329,7 @@ export default function ProjectDetail() {
 
                   {/* Recommendations */}
                   <div className="bg-slate-900/50 rounded-xl p-4">
-                    <h4 className="text-cyan-400 font-semibold mb-3">التوصيات</h4>
+                    <h4 className="text-cyan-400 font-semibold mb-3">{isAr ? "التوصيات" : "Recommendations"}</h4>
                     <ul className="space-y-2">
                       {(JSON.parse(evaluation.recommendations as string) || []).map((r: string, i: number) => (
                         <li key={i} className="text-slate-300 text-sm flex items-start gap-2">
@@ -340,7 +343,7 @@ export default function ProjectDetail() {
                   {/* Market Analysis */}
                   {evaluation.marketAnalysis && (
                     <div>
-                      <h4 className="text-white font-semibold mb-2">تحليل السوق</h4>
+                      <h4 className="text-white font-semibold mb-2">{isAr ? "تحليل السوق" : "Market Analysis"}</h4>
                       <p className="text-slate-300 text-sm">{evaluation.marketAnalysis}</p>
                     </div>
                   )}
@@ -348,7 +351,7 @@ export default function ProjectDetail() {
                   {/* Risk Assessment */}
                   {evaluation.riskAssessment && (
                     <div>
-                      <h4 className="text-white font-semibold mb-2">تقييم المخاطر</h4>
+                      <h4 className="text-white font-semibold mb-2">{isAr ? "تقييم المخاطر" : "تقييم الRisks"}</h4>
                       <p className="text-slate-300 text-sm">{evaluation.riskAssessment}</p>
                     </div>
                   )}
@@ -362,11 +365,11 @@ export default function ProjectDetail() {
             {/* Quick Info */}
             <Card className="bg-slate-800/50 border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white text-lg">معلومات سريعة</CardTitle>
+                <CardTitle className="text-white text-lg">{isAr ? "معلومات سريعة" : "Information سريعة"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">المرحلة</span>
+                  <span className="text-slate-400">{isAr ? "المرحلة" : "[المرحلة]"}</span>
                   <span className="text-white">
                     {project.stage === "idea" && "فكرة"}
                     {project.stage === "prototype" && "نموذج أولي"}
@@ -377,18 +380,18 @@ export default function ProjectDetail() {
                 </div>
                 {project.teamSize && (
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400">حجم الفريق</span>
+                    <span className="text-slate-400">{isAr ? "حجم الفريق" : "حجم Team"}</span>
                     <span className="text-white">{project.teamSize} أعضاء</span>
                   </div>
                 )}
                 {project.fundingNeeded && (
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400">التمويل المطلوب</span>
+                    <span className="text-slate-400">{isAr ? "التمويل المطلوب" : "الDoneويل المطلوب"}</span>
                     <span className="text-white">{Number(project.fundingNeeded).toLocaleString()} ريال</span>
                   </div>
                 )}
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">تاريخ الإنشاء</span>
+                  <span className="text-slate-400">{isAr ? "تاريخ الإنشاء" : "[تاريخ الإنشاء]"}</span>
                   <span className="text-white">{new Date(project.createdAt).toLocaleDateString("ar-SA")}</span>
                 </div>
               </CardContent>
@@ -397,7 +400,7 @@ export default function ProjectDetail() {
             {/* Actions */}
             <Card className="bg-slate-800/50 border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white text-lg">الإجراءات</CardTitle>
+                <CardTitle className="text-white text-lg">{isAr ? "الإجراءات" : "Procedures"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Link href="/ip/register">

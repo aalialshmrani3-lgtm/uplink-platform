@@ -12,6 +12,7 @@ import {
   Lightbulb, Handshake, Star, Shield, ChevronRight
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const impactStats = [
   { title: "إجمالي الأفكار المقدمة", value: "2,847", change: "+18.3%", icon: Lightbulb, color: "text-cyan-400", bgColor: "bg-cyan-500/10", borderColor: "border-cyan-500/20" },
@@ -56,6 +57,8 @@ const topInnovations = [
 const maxIdeas = Math.max(...monthlyData.map(d => d.ideas));
 
 export default function ValueFootprints() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [activeTab, setActiveTab] = useState<"overview" | "sectors" | "sdg" | "top">("overview");
 
   return (
@@ -74,7 +77,7 @@ export default function ValueFootprints() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
                   <BarChart3 className="w-5 h-5 text-white" />
                 </div>
-                <h1 className="text-3xl font-bold text-foreground">قياس الأثر</h1>
+                <h1 className="text-3xl font-bold text-foreground">{isAr ? "قياس الأثر" : "Impact Measurement"}</h1>
               </div>
               <p className="text-muted-foreground max-w-xl">
                 تتبع الأثر الاقتصادي والاجتماعي لمنصة نقلة 5.0 على مستوى المملكة والعالم
@@ -85,7 +88,7 @@ export default function ValueFootprints() {
                 <div className="w-2 h-2 rounded-full bg-emerald-400 ml-1 animate-pulse" />
                 مباشر
               </Badge>
-              <Badge variant="outline" className="text-muted-foreground">آخر تحديث: اليوم</Badge>
+              <Badge variant="outline" className="text-muted-foreground">{isAr ? "آخر تحديث: اليوم" : "آخر تحديث: Today"}</Badge>
             </div>
           </div>
         </div>
@@ -150,7 +153,7 @@ export default function ValueFootprints() {
                   <TrendingUp className="w-5 h-5 text-cyan-400" />
                   الأفكار المقدمة شهرياً
                 </CardTitle>
-                <CardDescription>النمو التراكمي خلال النصف الأول من 2025</CardDescription>
+                <CardDescription>{isAr ? "النمو التراكمي خلال النصف الأول من 2025" : "النمو التراكمي خNoل النصف الأول من 2025"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -177,7 +180,7 @@ export default function ValueFootprints() {
                   <Target className="w-5 h-5 text-purple-400" />
                   توزيع الأفكار حسب المسار
                 </CardTitle>
-                <CardDescription>تصنيف الأفكار عبر المحركات الثلاثة</CardDescription>
+                <CardDescription>{isAr ? "تصنيف الأفكار عبر المحركات الثلاثة" : "تصنيف الأفكار عبر المحركات الثNoثة"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {[
@@ -198,10 +201,10 @@ export default function ValueFootprints() {
                 <div className="mt-4 p-4 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
                   <div className="flex items-center gap-2 mb-1">
                     <Zap className="w-4 h-4 text-cyan-400" />
-                    <span className="text-sm font-medium text-foreground">معدل التحويل الإجمالي</span>
+                    <span className="text-sm font-medium text-foreground">{isAr ? "معدل التحويل الإجمالي" : "معدل التحويل الTotal"}</span>
                   </div>
                   <div className="text-3xl font-bold text-cyan-400">90%</div>
-                  <div className="text-xs text-muted-foreground mt-1">من الأفكار المقدمة تنتقل إلى مرحلة التطوير</div>
+                  <div className="text-xs text-muted-foreground mt-1">{isAr ? "من الأفكار المقدمة تنتقل إلى مرحلة التطوير" : "من الأفكار المقدمة تنتقل إلى مرحلة Development"}</div>
                 </div>
               </CardContent>
             </Card>
@@ -212,7 +215,7 @@ export default function ValueFootprints() {
                   <Globe className="w-5 h-5 text-blue-400" />
                   الأثر الجغرافي
                 </CardTitle>
-                <CardDescription>توزيع المبتكرين والشركاء حول العالم</CardDescription>
+                <CardDescription>{isAr ? "توزيع المبتكرين والشركاء حول العالم" : "توزيع المبتكرين وPartners حول العالم"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -243,8 +246,8 @@ export default function ValueFootprints() {
           <div className="grid lg:grid-cols-2 gap-6">
             <Card className="border-border/50">
               <CardHeader>
-                <CardTitle>توزيع الأفكار حسب القطاع</CardTitle>
-                <CardDescription>أبرز القطاعات الاستراتيجية في المنصة</CardDescription>
+                <CardTitle>{isAr ? "توزيع الأفكار حسب القطاع" : "[توزيع الأفكار حسب القطاع]"}</CardTitle>
+                <CardDescription>{isAr ? "أبرز القطاعات الاستراتيجية في المنصة" : "أبرز القطاعات اNoستراتيجية في المنصة"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {sectorBreakdown.map((sector, i) => (
@@ -263,8 +266,8 @@ export default function ValueFootprints() {
 
             <Card className="border-border/50">
               <CardHeader>
-                <CardTitle>الأثر الاقتصادي بالقطاع</CardTitle>
-                <CardDescription>حجم الاستثمارات المُستقطبة لكل قطاع</CardDescription>
+                <CardTitle>{isAr ? "الأثر الاقتصادي بالقطاع" : "الأثر اNoقتصادي بالقطاع"}</CardTitle>
+                <CardDescription>{isAr ? "حجم الاستثمارات المُستقطبة لكل قطاع" : "حجم اNoستثمارات المُستقطبة لكل قطاع"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -305,7 +308,7 @@ export default function ValueFootprints() {
                         </div>
                         <div className="mt-3 space-y-1">
                           <div className="flex justify-between text-xs text-muted-foreground">
-                            <span>مستوى التأثير</span>
+                            <span>{isAr ? "مستوى التأثير" : "مستوى الEffect"}</span>
                             <span className="font-bold text-foreground">{sdg.progress}%</span>
                           </div>
                           <div className="h-2 bg-secondary/30 rounded-full overflow-hidden">
@@ -323,7 +326,7 @@ export default function ValueFootprints() {
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Leaf className="w-6 h-6 text-emerald-400" />
-                  <h3 className="text-lg font-bold text-foreground">الأثر البيئي والمناخي</h3>
+                  <h3 className="text-lg font-bold text-foreground">{isAr ? "الأثر البيئي والمناخي" : "[الأثر البيئي والمناخي]"}</h3>
                 </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   {[
@@ -347,7 +350,7 @@ export default function ValueFootprints() {
         {activeTab === "top" && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-foreground">أبرز الابتكارات المؤثرة</h3>
+              <h3 className="text-lg font-bold text-foreground">{isAr ? "أبرز الابتكارات المؤثرة" : "أبرز اNoبتكارات المؤثرة"}</h3>
               <Button variant="outline" size="sm">
                 عرض الكل
                 <ChevronRight className="w-4 h-4 mr-1" />
@@ -391,8 +394,8 @@ export default function ValueFootprints() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="text-3xl">🇸🇦</div>
                   <div>
-                    <h3 className="text-lg font-bold text-foreground">التوافق مع رؤية 2030</h3>
-                    <p className="text-sm text-muted-foreground">مساهمة منصة نقلة في تحقيق أهداف رؤية المملكة</p>
+                    <h3 className="text-lg font-bold text-foreground">{isAr ? "التوافق مع رؤية 2030" : "التوافق مع Vision 2030"}</h3>
+                    <p className="text-sm text-muted-foreground">{isAr ? "مساهمة منصة نقلة في تحقيق أهداف رؤية المملكة" : "مساهمة منصة نقلة في تحقيق أهداف Vision المملكة"}</p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-4 gap-4">
@@ -421,12 +424,12 @@ export default function ValueFootprints() {
               <Globe className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-foreground">مؤشرات الأثر والابتكار</h3>
-              <p className="text-sm text-muted-foreground">منصة نقلة — أهداف الابتكار الوطنية والدولية</p>
+              <h3 className="text-lg font-bold text-foreground">{isAr ? "مؤشرات الأثر والابتكار" : "مؤشرات الأثر واNoبتكار"}</h3>
+              <p className="text-sm text-muted-foreground">{isAr ? "منصة نقلة — أهداف الابتكار الوطنية والدولية" : "منصة نقلة — أهداف اNoبتكار الوطنية والدولية"}</p>
             </div>
             <a href="/admin"
               className="mr-auto flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors">
-              <span>برامج دولية</span>
+              <span>{isAr ? "برامج دولية" : "[برامج دولية]"}</span>
               <ArrowUpRight className="w-3 h-3" />
             </a>
           </div>

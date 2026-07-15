@@ -10,8 +10,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ChallengeLibrary() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
@@ -32,10 +36,10 @@ export default function ChallengeLibrary() {
   const challenges = [
     {
       id: 1,
-      title: "تحسين تجربة العملاء الرقمية",
-      description: "انخفاض رضا العملاء بنسبة 15% في Q3 بسبب بطء المنصة الرقمية",
-      businessImpact: "خسارة محتملة $2M من الإيرادات السنوية",
-      stakeholders: ["فريق المنتج", "خدمة العملاء", "التسويق"],
+      title: isAr ? "تحسين تجربة العملاء الرقمية" : "Improve Digital Customer Experience",
+      description: isAr ? "انخفاض رضا العملاء بنسبة 15% في Q3 بسبب بطء المنصة الرقمية" : "Customer satisfaction dropped 15% in Q3 due to slow digital platform",
+      businessImpact: isAr ? "خسارة محتملة $2M من الإيرادات السنوية" : "Potential loss of $2M in annual revenue",
+      stakeholders: isAr ? ["فريق المنتج", "خدمة العملاء", "التسويق"] : ["Product Team", "Customer Service", "Marketing"],
       priority: "high" as const,
       status: "active" as const,
       linkedInnovations: 5,
@@ -43,10 +47,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 2,
-      title: "تقليل تكلفة سلسلة التوريد",
-      description: "ارتفاع تكاليف الشحن والتخزين بنسبة 25% خلال العام الماضي",
-      businessImpact: "توفير محتمل $1.5M سنوياً",
-      stakeholders: ["العمليات", "المشتريات", "المالية"],
+      title: isAr ? "تقليل تكلفة سلسلة التوريد" : "Reduce Supply Chain Costs",
+      description: isAr ? "ارتفاع تكاليف الشحن والتخزين بنسبة 25% خلال العام الماضي" : "Shipping and storage costs increased by 25% over the past year",
+      businessImpact: isAr ? "توفير محتمل $1.5M سنوياً" : "Potential savings of $1.5M annually",
+      stakeholders: isAr ? ["العمليات", "المشتريات", "المالية"] : ["Operations", "Procurement", "Finance"],
       priority: "high" as const,
       status: "in_progress" as const,
       linkedInnovations: 8,
@@ -54,10 +58,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 3,
-      title: "زيادة إنتاجية الموظفين",
-      description: "متوسط الوقت المستغرق في المهام الإدارية 3 ساعات يومياً",
-      businessImpact: "زيادة محتملة 20% في الإنتاجية",
-      stakeholders: ["الموارد البشرية", "IT", "جميع الأقسام"],
+      title: isAr ? "زيادة إنتاجية الموظفين" : "Increase Employee Productivity",
+      description: isAr ? "متوسط الوقت المستغرق في المهام الإدارية 3 ساعات يومياً" : "Average time spent on administrative tasks is 3 hours daily",
+      businessImpact: isAr ? "زيادة محتملة 20% في الإنتاجية" : "Potential 20% increase in productivity",
+      stakeholders: isAr ? ["الموارد البشرية", "IT", "جميع الأقسام"] : ["Human Resources", "IT", "All Departments"],
       priority: "medium" as const,
       status: "active" as const,
       linkedInnovations: 3,
@@ -65,10 +69,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 4,
-      title: "تحسين استدامة العمليات",
-      description: "الحاجة لتقليل البصمة الكربونية بنسبة 30% بحلول 2027",
-      businessImpact: "الامتثال للمعايير البيئية + تحسين السمعة",
-      stakeholders: ["الاستدامة", "العمليات", "الإدارة العليا"],
+      title: isAr ? "تحسين استدامة العمليات" : "Improve Operations Sustainability",
+      description: isAr ? "الحاجة لتقليل البصمة الكربونية بنسبة 30% بحلول 2027" : "Need to reduce carbon footprint by 30% by 2027",
+      businessImpact: isAr ? "الامتثال للمعايير البيئية + تحسين السمعة" : "Compliance with environmental standards + reputation improvement",
+      stakeholders: isAr ? ["الاستدامة", "العمليات", "الإدارة العليا"] : ["Sustainability", "Operations", "Senior Management"],
       priority: "medium" as const,
       status: "active" as const,
       linkedInnovations: 2,
@@ -76,10 +80,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 5,
-      title: "تطوير منتجات جديدة للسوق الناشئة",
-      description: "فرصة دخول سوق بقيمة $500M مع منافسة محدودة",
-      businessImpact: "إيرادات محتملة $50M في السنة الأولى",
-      stakeholders: ["R&D", "التسويق", "المبيعات"],
+      title: isAr ? "تطوير منتجات جديدة للسوق الناشئة" : "Develop New Products for Emerging Markets",
+      description: isAr ? "فرصة دخول سوق بقيمة $500M مع منافسة محدودة" : "Opportunity to enter a $500M market with limited competition",
+      businessImpact: isAr ? "إيرادات محتملة $50M في السنة الأولى" : "Potential revenue of $50M in the first year",
+      stakeholders: isAr ? ["R&D", "التسويق", "المبيعات"] : ["R&D", "Marketing", "Sales"],
       priority: "high" as const,
       status: "active" as const,
       linkedInnovations: 12,
@@ -87,10 +91,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 6,
-      title: "تحسين أمن البيانات",
-      description: "زيادة التهديدات السيبرانية وضرورة تعزيز الحماية",
-      businessImpact: "تجنب خسائر محتملة $10M من الاختراقات",
-      stakeholders: ["IT Security", "القانونية", "جميع الأقسام"],
+      title: isAr ? "تحسين أمن البيانات" : "Improve Data Security",
+      description: isAr ? "زيادة التهديدات السيبرانية وضرورة تعزيز الحماية" : "Increased cyber threats and need to enhance protection",
+      businessImpact: isAr ? "تجنب خسائر محتملة $10M من الاختراقات" : "Avoid potential losses of $10M from breaches",
+      stakeholders: isAr ? ["IT Security", "القانونية", "جميع الأقسام"] : ["IT Security", "Legal", "All Departments"],
       priority: "high" as const,
       status: "solved" as const,
       linkedInnovations: 4,
@@ -118,12 +122,12 @@ export default function ChallengeLibrary() {
   const handleCreateChallenge = () => {
     // Validation
     if (!formData.title || !formData.description) {
-      toast.error("الرجاء ملء جميع الحقول المطلوبة");
+      toast.error(isAr ? "الرجاء ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
       return;
     }
 
     // TODO: Call API to create challenge
-    toast.success(`تم إنشاء التحدي "${formData.title}" بنجاح`);
+    toast.success(isAr ? `تم إنشاء التحدي "${formData.title}" بنجاح` : `Challenge "${formData.title}" created successfully`);
 
     // Reset form
     setFormData({
@@ -169,13 +173,13 @@ export default function ChallengeLibrary() {
   const getStatusLabel = (status: string) => {
     switch (status) {
       case "active":
-        return "نشط";
+        return isAr ? "نشط" : "Active";
       case "in_progress":
-        return "قيد التنفيذ";
+        return isAr ? "قيد التنفيذ" : "In Progress";
       case "solved":
-        return "محلول";
+        return isAr ? "محلول" : "Solved";
       case "archived":
-        return "مؤرشف";
+        return isAr ? "مؤرشف" : "Archived";
       default:
         return status;
     }
@@ -188,42 +192,42 @@ export default function ChallengeLibrary() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              مكتبة التحديات الاستراتيجية
+              {isAr ? "مكتبة التحديات الاستراتيجية" : "Strategic Challenges Library"}
             </h1>
             <p className="text-gray-600 mt-2">
-              حدد التحديات الحقيقية لتوجيه الابتكار نحو حلول فعّالة
+              {isAr ? "حدد التحديات الحقيقية لتوجيه الابتكار نحو حلول فعّالة" : "Identify real challenges to guide innovation towards effective solutions"}
             </p>
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
               <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
                 <Plus className="h-5 w-5 ml-2" />
-                تحدٍ جديد
+                {isAr ? "تحدٍ جديد" : "New Challenge"}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>إنشاء تحدٍ استراتيجي جديد</DialogTitle>
+                <DialogTitle>{isAr ? "إنشاء تحدٍ استراتيجي جديد" : "Create New Strategic Challenge"}</DialogTitle>
                 <DialogDescription>
-                  حدد التحدي الذي تواجهه المؤسسة لتوجيه الابتكارات نحو حلول فعّالة
+                  {isAr ? "حدد التحدي الذي تواجهه المؤسسة لتوجيه الابتكارات نحو حلول فعّالة" : "Define the challenge your organization faces to guide innovations towards effective solutions"}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title">عنوان التحدي *</Label>
+                  <Label htmlFor="title">{isAr ? "عنوان التحدي *" : "Challenge Title *"}</Label>
                   <Input
                     id="title"
-                    placeholder="مثال: تحسين تجربة العملاء الرقمية"
+                    placeholder={isAr ? "مثال: تحسين تجربة العملاء الرقمية" : "Example: Improve digital customer experience"}
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description">وصف المشكلة *</Label>
+                  <Label htmlFor="description">{isAr ? "وصف المشكلة *" : "Problem Description *"}</Label>
                   <Textarea
                     id="description"
-                    placeholder="صف المشكلة بالتفصيل..."
+                    placeholder={isAr ? "صف المشكلة بالتفصيل..." : "Describe the problem in detail..."}
                     rows={4}
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -231,10 +235,10 @@ export default function ChallengeLibrary() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="businessImpact">تأثير الأعمال</Label>
+                  <Label htmlFor="businessImpact">{isAr ? "تأثير الأعمال" : "Business Impact"}</Label>
                   <Textarea
                     id="businessImpact"
-                    placeholder="ما هو التأثير المالي أو الاستراتيجي؟ (كمي إن أمكن)"
+                    placeholder={isAr ? "ما هو التأثير المالي أو الاستراتيجي؟ (كمي إن أمكن)" : "What is the financial or strategic impact? (quantify if possible)"}
                     rows={3}
                     value={formData.businessImpact}
                     onChange={(e) => setFormData({ ...formData, businessImpact: e.target.value })}
@@ -242,20 +246,20 @@ export default function ChallengeLibrary() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="stakeholders">أصحاب المصلحة المتأثرين</Label>
+                  <Label htmlFor="stakeholders">{isAr ? "أصحاب المصلحة المتأثرين" : "Affected Stakeholders"}</Label>
                   <Input
                     id="stakeholders"
-                    placeholder="مثال: فريق المنتج، خدمة العملاء، التسويق"
+                    placeholder={isAr ? "مثال: فريق المنتج، خدمة العملاء، التسويق" : "Example: Product team, Customer service, Marketing"}
                     value={formData.stakeholders}
                     onChange={(e) => setFormData({ ...formData, stakeholders: e.target.value })}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="constraints">القيود والموارد</Label>
+                  <Label htmlFor="constraints">{isAr ? "القيود والموارد" : "Constraints and Resources"}</Label>
                   <Textarea
                     id="constraints"
-                    placeholder="ما هي القيود (الميزانية، الوقت، الموارد)؟"
+                    placeholder={isAr ? "ما هي القيود (الميزانية، الوقت، الموارد)؟" : "What are the constraints (budget, time, resources)?"}
                     rows={3}
                     value={formData.constraints}
                     onChange={(e) => setFormData({ ...formData, constraints: e.target.value })}
@@ -263,10 +267,10 @@ export default function ChallengeLibrary() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="successCriteria">معايير النجاح</Label>
+                  <Label htmlFor="successCriteria">{isAr ? "معايير النجاح" : "Success Criteria"}</Label>
                   <Textarea
                     id="successCriteria"
-                    placeholder="كيف سنعرف أننا حللنا التحدي؟"
+                    placeholder={isAr ? "كيف سنعرف أننا حللنا التحدي؟" : "How will we know we've solved the challenge?"}
                     rows={3}
                     value={formData.successCriteria}
                     onChange={(e) => setFormData({ ...formData, successCriteria: e.target.value })}
@@ -274,7 +278,7 @@ export default function ChallengeLibrary() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="priority">الأولوية</Label>
+                  <Label htmlFor="priority">{isAr ? "الأولوية" : "Priority"}</Label>
                   <Select
                     value={formData.priority}
                     onValueChange={(value: "high" | "medium" | "low") =>
@@ -285,18 +289,18 @@ export default function ChallengeLibrary() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="high">عالية</SelectItem>
-                      <SelectItem value="medium">متوسطة</SelectItem>
-                      <SelectItem value="low">منخفضة</SelectItem>
+                      <SelectItem value="high">{isAr ? "عالية" : "High"}</SelectItem>
+                      <SelectItem value="medium">{isAr ? "متوسطة" : "Medium"}</SelectItem>
+                      <SelectItem value="low">{isAr ? "منخفضة" : "Low"}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               <div className="flex justify-end gap-3">
                 <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-                  إلغاء
+                  {isAr ? "إلغاء" : "Cancel"}
                 </Button>
-                <Button onClick={handleCreateChallenge}>إنشاء التحدي</Button>
+                <Button onClick={handleCreateChallenge}>{isAr ? "إنشاء التحدي" : "Create Challenge"}</Button>
               </div>
             </DialogContent>
           </Dialog>
@@ -306,7 +310,7 @@ export default function ChallengeLibrary() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">إجمالي التحديات</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "إجمالي التحديات" : "Total Challenges"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-blue-600">{stats.total}</div>
@@ -315,7 +319,7 @@ export default function ChallengeLibrary() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">نشط</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "نشط" : "Active"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-green-600">{stats.active}</div>
@@ -324,7 +328,7 @@ export default function ChallengeLibrary() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">قيد التنفيذ</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "قيد التنفيذ" : "In Progress"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-yellow-600">{stats.inProgress}</div>
@@ -333,7 +337,7 @@ export default function ChallengeLibrary() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">محلول</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "محلول" : "Solved"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-purple-600">{stats.solved}</div>
@@ -342,7 +346,7 @@ export default function ChallengeLibrary() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">الابتكارات المرتبطة</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "الابتكارات المرتبطة" : "Linked Innovations"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-indigo-600">{stats.totalInnovations}</div>
@@ -357,7 +361,7 @@ export default function ChallengeLibrary() {
               <div className="flex-1 relative">
                 <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <Input
-                  placeholder="ابحث في التحديات..."
+                  placeholder={isAr ? "ابحث في التحديات..." : "Search challenges..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pr-10"
@@ -367,27 +371,27 @@ export default function ChallengeLibrary() {
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-full md:w-48">
                   <Filter className="h-4 w-4 ml-2" />
-                  <SelectValue placeholder="الحالة" />
+                  <SelectValue placeholder={isAr ? "الحالة" : "Status"} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">جميع الحالات</SelectItem>
-                  <SelectItem value="active">نشط</SelectItem>
-                  <SelectItem value="in_progress">قيد التنفيذ</SelectItem>
-                  <SelectItem value="solved">محلول</SelectItem>
-                  <SelectItem value="archived">مؤرشف</SelectItem>
+                  <SelectItem value="all">{isAr ? "جميع الحالات" : "All Statuses"}</SelectItem>
+                  <SelectItem value="active">{isAr ? "نشط" : "Active"}</SelectItem>
+                  <SelectItem value="in_progress">{isAr ? "قيد التنفيذ" : "In Progress"}</SelectItem>
+                  <SelectItem value="solved">{isAr ? "محلول" : "Solved"}</SelectItem>
+                  <SelectItem value="archived">{isAr ? "مؤرشف" : "Archived"}</SelectItem>
                 </SelectContent>
               </Select>
 
               <Select value={priorityFilter} onValueChange={setPriorityFilter}>
                 <SelectTrigger className="w-full md:w-48">
                   <TrendingUp className="h-4 w-4 ml-2" />
-                  <SelectValue placeholder="الأولوية" />
+                  <SelectValue placeholder={isAr ? "الأولوية" : "Priority"} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">جميع الأولويات</SelectItem>
-                  <SelectItem value="high">عالية</SelectItem>
-                  <SelectItem value="medium">متوسطة</SelectItem>
-                  <SelectItem value="low">منخفضة</SelectItem>
+                  <SelectItem value="all">{isAr ? "جميع الأولويات" : "All Priorities"}</SelectItem>
+                  <SelectItem value="high">{isAr ? "عالية" : "High"}</SelectItem>
+                  <SelectItem value="medium">{isAr ? "متوسطة" : "Medium"}</SelectItem>
+                  <SelectItem value="low">{isAr ? "منخفضة" : "Low"}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -416,10 +420,10 @@ export default function ChallengeLibrary() {
                       <CardTitle className="text-xl">{challenge.title}</CardTitle>
                       <Badge className={getPriorityColor(challenge.priority)}>
                         {challenge.priority === "high"
-                          ? "عالية"
+                          ? (isAr ? "عالية" : "High")
                           : challenge.priority === "medium"
-                          ? "متوسطة"
-                          : "منخفضة"}
+                          ? (isAr ? "متوسطة" : "Medium")
+                          : (isAr ? "منخفضة" : "Low")}
                       </Badge>
                       <Badge variant="outline" className="gap-1">
                         {getStatusIcon(challenge.status)}
@@ -435,7 +439,7 @@ export default function ChallengeLibrary() {
                   <div className="flex items-start gap-2">
                     <TrendingUp className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-sm font-medium text-gray-700">تأثير الأعمال</div>
+                      <div className="text-sm font-medium text-gray-700">{isAr ? "تأثير الأعمال" : "Business Impact"}</div>
                       <div className="text-sm text-gray-600">{challenge.businessImpact}</div>
                     </div>
                   </div>
@@ -443,7 +447,7 @@ export default function ChallengeLibrary() {
                   <div className="flex items-start gap-2">
                     <Users className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-sm font-medium text-gray-700">أصحاب المصلحة</div>
+                      <div className="text-sm font-medium text-gray-700">{isAr ? "أصحاب المصلحة" : "Stakeholders"}</div>
                       <div className="flex flex-wrap gap-2 mt-1">
                         {challenge.stakeholders.map((stakeholder, idx) => (
                           <Badge key={idx} variant="secondary">
@@ -456,11 +460,11 @@ export default function ChallengeLibrary() {
 
                   <div className="flex items-center justify-between pt-3 border-t">
                     <div className="text-sm text-gray-500">
-                      تم الإنشاء: {new Date(challenge.createdAt).toLocaleDateString("ar-SA")}
+                      {isAr ? "تم الإنشاء:" : "Created:"} {new Date(challenge.createdAt).toLocaleDateString(isAr ? "ar-SA" : "en-US")}
                     </div>
                     <Badge variant="outline" className="gap-1">
                       <Target className="h-3 w-3" />
-                      {challenge.linkedInnovations} ابتكار مرتبط
+                      {challenge.linkedInnovations} {isAr ? "ابتكار مرتبط" : "linked innovations"}
                     </Badge>
                   </div>
                 </div>
@@ -473,14 +477,14 @@ export default function ChallengeLibrary() {
           <Card>
             <CardContent className="py-12 text-center">
               <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">لا توجد تحديات</h3>
-              <p className="text-gray-500 mb-4">لم يتم العثور على تحديات تطابق معايير البحث</p>
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "لا توجد تحديات" : "No Challenges"}</h3>
+              <p className="text-gray-500 mb-4">{isAr ? "لم يتم العثور على تحديات تطابق معايير البحث" : "No challenges found matching the search criteria"}</p>
               <Button variant="outline" onClick={() => {
                 setSearchQuery("");
                 setStatusFilter("all");
                 setPriorityFilter("all");
               }}>
-                إعادة تعيين الفلاتر
+                {isAr ? "إعادة تعيين الفلاتر" : "Reset Filters"}
               </Button>
             </CardContent>
           </Card>

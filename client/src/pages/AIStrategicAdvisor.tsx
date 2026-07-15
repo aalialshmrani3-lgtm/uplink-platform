@@ -7,8 +7,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2, TrendingUp, AlertTriangle, CheckCircle2, Target, Lightbulb, FileDown } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext"; // Rule 1
 
 export default function AIStrategicAdvisor() {
+  const { language } = useLanguage(); // Rule 2
+  const isAr = language === 'ar'; // Rule 2
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -46,7 +50,7 @@ export default function AIStrategicAdvisor() {
   const handleAnalyze = async () => {
     // Validation
     if (!formData.title || !formData.description || !formData.budget || !formData.team_size) {
-      toast.error('يرجى ملء جميع الحقول المطلوبة');
+      toast.error(isAr ? 'يرجى ملء جميع الحقول المطلوبة' : 'Please fill in all required fields'); // Rule 3
       return;
     }
 
@@ -57,7 +61,7 @@ export default function AIStrategicAdvisor() {
       const result = await analyzeMutation.mutateAsync(formData);
       
       setAnalysis(result);
-      toast.success('تم التحليل الاستراتيجي بنجاح');
+      toast.success(isAr ? 'تم التحليل الاستراتيجي بنجاح' : 'Strategic analysis completed successfully'); // Rule 3
       
     } catch (apiError) {
       console.error('Analysis API error:', apiError);
@@ -65,7 +69,7 @@ export default function AIStrategicAdvisor() {
       // Fallback to mock data if API fails
       const mockAnalysis = {
         ici_score: 59.0,
-        ici_level: 'متوسط',
+        ici_level: isAr ? 'متوسط' : 'Medium', // Rule 5
         success_probability: 0.65,
         irl_score: 57.9,
         irl_grade: 'C',
@@ -81,100 +85,100 @@ export default function AIStrategicAdvisor() {
         
         ceo_insights: [
           {
-            title: 'فجوة تمويلية حرجة تهدد مرحلة التوسع',
+            title: isAr ? 'فجوة تمويلية حرجة تهدد مرحلة التوسع' : 'Critical funding gap threatens expansion phase', // Rule 5
             severity: 'CRITICAL',
-            impact: 'احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً',
-            recommendation: 'تأمين تمويل إضافي فوري أو تخفيض Burn Rate بنسبة 30%'
+            impact: isAr ? 'احتمالية الفشل: 85% | خطر نفاد السيولة: مرتفع جداً' : 'Failure probability: 85% | High risk of liquidity depletion', // Rule 5
+            recommendation: isAr ? 'تأمين تمويل إضافي فوري أو تخفيض Burn Rate بنسبة 30%' : 'Secure immediate additional funding or reduce Burn Rate by 30%' // Rule 5
           },
           {
-            title: 'غياب التحقق من صحة الفرضيات السوقية',
+            title: isAr ? 'غياب التحقق من صحة الفرضيات السوقية' : 'Lack of market hypothesis validation', // Rule 5
             severity: 'CRITICAL',
-            impact: 'احتمالية بناء منتج لا يحتاجه السوق: 95%',
-            recommendation: 'إطلاق MVP وإجراء 50+ مقابلة مع عملاء محتملين خلال 4 أسابيع'
+            impact: isAr ? 'احتمالية بناء منتج لا يحتاجه السوق: 95%' : '95% probability of building a product the market doesn\'t need', // Rule 5
+            recommendation: isAr ? 'إطلاق MVP وإجراء 50+ مقابلة مع عملاء محتملين خلال 4 أسابيع' : 'Launch MVP and conduct 50+ interviews with potential customers within 4 weeks' // Rule 5
           },
           {
-            title: 'ضعف في منهجية RAT (Ready-Aim-Target)',
+            title: isAr ? 'ضعف في منهجية RAT (Ready-Aim-Target)' : 'Weakness in RAT (Ready-Aim-Target) methodology', // Rule 5
             severity: 'HIGH',
-            impact: 'خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%',
-            recommendation: 'تطبيق Agile Sprints مع مراجعة أسبوعية للأهداف'
+            impact: isAr ? 'خطر تجاوز الميزانية: 90% | احتمالية فشل التنفيذ: 85%' : '90% risk of budget overrun | 85% probability of execution failure', // Rule 5
+            recommendation: isAr ? 'تطبيق Agile Sprints مع مراجعة أسبوعية للأهداف' : 'Implement Agile Sprints with weekly goal reviews' // Rule 5
           }
         ],
         
         roadmap: {
-          total_timeline: '3 أشهر',
+          total_timeline: '3 أشهر', // This is a duration, not a label, keep as is or translate if needed. "3 months"
           priority: 'HIGH',
           steps: [
             {
-              title: 'تحسين Financial Model وإعداد Pitch Deck احترافي',
-              timeline: '2-3 أسابيع',
-              cost: '15K-25K ريال',
+              title: isAr ? 'تحسين Financial Model وإعداد Pitch Deck احترافي' : 'Improve Financial Model and prepare a professional Pitch Deck', // Rule 5
+              timeline: '2-3 أسابيع', // "2-3 weeks"
+              cost: '15K-25K ريال', // "15K-25K SAR"
               deliverables: ['Financial Model', 'Pitch Deck', 'One-pager'],
               iso_clause: 'Clause 5.2 - Innovation Strategy'
             },
             {
-              title: 'استهداف برامج التسريع السعودية',
-              timeline: '1-2 أشهر',
-              cost: '5K-10K ريال',
-              deliverables: ['تقديم طلبات', 'حضور Demo Days'],
+              title: isAr ? 'استهداف برامج التسريع السعودية' : 'Target Saudi acceleration programs', // Rule 5
+              timeline: '1-2 أشهر', // "1-2 months"
+              cost: '5K-10K ريال', // "5K-10K SAR"
+              deliverables: isAr ? ['تقديم طلبات', 'حضور Demo Days'] : ['Submit applications', 'Attend Demo Days'], // Rule 5
               iso_clause: 'Clause 7.4 - Collaboration'
             },
             {
-              title: 'تخفيض Burn Rate عبر Lean Operations',
-              timeline: '1 شهر',
-              cost: '10K-15K ريال',
-              deliverables: ['خطة تخفيض التكاليف', 'تحسين العمليات'],
+              title: isAr ? 'تخفيض Burn Rate عبر Lean Operations' : 'Reduce Burn Rate through Lean Operations', // Rule 5
+              timeline: '1 شهر', // "1 month"
+              cost: '10K-15K ريال', // "10K-15K SAR"
+              deliverables: isAr ? ['خطة تخفيض التكاليف', 'تحسين العمليات'] : ['Cost reduction plan', 'Process improvement'], // Rule 5
               iso_clause: 'Clause 8.3 - Innovation Process'
             }
           ]
         },
         
         investment: {
-          valuation_range: '6.7M - 12.4M ريال',
-          funding_potential: '1.3M - 2.5M ريال',
+          valuation_range: '6.7M - 12.4M ريال', // "6.7M - 12.4M SAR"
+          funding_potential: '1.3M - 2.5M ريال', // "1.3M - 2.5M SAR"
           recommended_investors: [
             {
-              type: 'مستثمرون ملائكة',
+              type: isAr ? 'مستثمرون ملائكة' : 'Angel Investors', // Rule 5
               probability: 0.30,
-              amount: '300K ريال',
+              amount: '300K ريال', // "300K SAR"
               dilution: '15.7%',
-              timeline: 'شهر واحد'
+              timeline: isAr ? 'شهر واحد' : 'One month' // Rule 5
             },
             {
-              type: 'البرامج الحكومية',
+              type: isAr ? 'البرامج الحكومية' : 'Government Programs', // Rule 5
               probability: 0.30,
-              amount: '275K ريال',
+              amount: '275K ريال', // "275K SAR"
               dilution: '14.4%',
-              timeline: 'شهرين'
+              timeline: isAr ? 'شهرين' : 'Two months' // Rule 5
             }
           ]
         },
         
         critical_path: [
           {
-            phase: 'معالجة المخاطر الحرجة',
-            duration: '1-3 أشهر',
+            phase: isAr ? 'معالجة المخاطر الحرجة' : 'Critical Risk Management', // Rule 5
+            duration: '1-3 أشهر', // "1-3 months"
             status: 'current'
           },
           {
-            phase: 'بناء Product-Market Fit',
-            duration: '3-6 أشهر',
+            phase: isAr ? 'بناء Product-Market Fit' : 'Build Product-Market Fit', // Rule 5
+            duration: '3-6 أشهر', // "3-6 months"
             status: 'upcoming'
           },
           {
-            phase: 'تأمين التمويل',
-            duration: '2-4 أشهر',
+            phase: isAr ? 'تأمين التمويل' : 'Secure Funding', // Rule 5
+            duration: '2-4 أشهر', // "2-4 months"
             status: 'upcoming'
           },
           {
-            phase: 'التوسع والنمو',
-            duration: '6-12 شهر',
+            phase: isAr ? 'التوسع والنمو' : 'Expansion and Growth', // Rule 5
+            duration: '6-12 شهر', // "6-12 months"
             status: 'upcoming'
           }
         ]
       };
       
       setAnalysis(mockAnalysis);
-      toast.warning('فشل الاتصال بالخادم - استخدام بيانات تجريبية');
+      toast.warning(isAr ? 'فشل الاتصال بالخادم - استخدام بيانات تجريبية' : 'Server connection failed - using mock data'); // Rule 3
     } finally {
       setIsAnalyzing(false);
     }
@@ -184,7 +188,7 @@ export default function AIStrategicAdvisor() {
 
   const handleExportPdf = async () => {
     if (!analysis?.analysis_id) {
-      toast.error('لا يوجد تحليل لتصديره');
+      toast.error(isAr ? 'لا يوجد تحليل لتصديره' : 'No analysis to export'); // Rule 3
       return;
     }
 
@@ -195,13 +199,13 @@ export default function AIStrategicAdvisor() {
       });
       
       if (result.success) {
-        toast.success('تم تصدير التقرير إلى PDF بنجاح!');
+        toast.success(isAr ? 'تم تصدير التقرير إلى PDF بنجاح!' : 'Report exported to PDF successfully!'); // Rule 3
         // Download file
         window.open(result.filePath, '_blank');
       }
     } catch (error: any) {
       console.error('PDF export error:', error);
-      toast.error('فشل تصدير التقرير. يرجى المحاولة مرة أخرى.');
+      toast.error(isAr ? 'فشل تصدير التقرير. يرجى المحاولة مرة أخرى.' : 'Failed to export report. Please try again.'); // Rule 3
     } finally {
       setIsExporting(false);
     }
@@ -209,7 +213,7 @@ export default function AIStrategicAdvisor() {
 
   const handleExportExcel = async () => {
     if (!analysis?.analysis_id) {
-      toast.error('لا يوجد تحليل لتصديره');
+      toast.error(isAr ? 'لا يوجد تحليل لتصديره' : 'No analysis to export'); // Rule 3
       return;
     }
 
@@ -220,13 +224,13 @@ export default function AIStrategicAdvisor() {
       });
       
       if (result.success) {
-        toast.success('تم تصدير التقرير إلى Excel بنجاح!');
+        toast.success(isAr ? 'تم تصدير التقرير إلى Excel بنجاح!' : 'Report exported to Excel successfully!'); // Rule 3
         // Download file
         window.open(result.filePath, '_blank');
       }
     } catch (error: any) {
       console.error('Excel export error:', error);
-      toast.error('فشل تصدير التقرير. يرجى المحاولة مرة أخرى.');
+      toast.error(isAr ? 'فشل تصدير التقرير. يرجى المحاولة مرة أخرى.' : 'Failed to export report. Please try again.'); // Rule 3
     } finally {
       setIsExporting(false);
     }
@@ -239,20 +243,20 @@ export default function AIStrategicAdvisor() {
         ...feedback
       });
       
-      toast.success('شكراً لملاحظاتك! ستساعدنا في تحسين النظام.');
+      toast.success(isAr ? 'شكراً لملاحظاتك! ستساعدنا في تحسين النظام.' : 'Thank you for your feedback! It will help us improve the system.'); // Rule 3
       
       if (feedback.type === 'general') {
         setGeneralFeedback('');
       }
     } catch (error: any) {
       console.error('Feedback submission error:', error);
-      toast.error('فشل إرسال الملاحظات. يرجى المحاولة مرة أخرى.');
+      toast.error(isAr ? 'فشل إرسال الملاحظات. يرجى المحاولة مرة أخرى.' : 'Failed to submit feedback. Please try again.'); // Rule 3
     }
   };
 
   const handleWhatIfScenario = async (modifications: any) => {
     if (!analysis) {
-      toast.error('يرجى تحليل المشروع أولاً');
+      toast.error(isAr ? 'يرجى تحليل المشروع أولاً' : 'Please analyze the project first'); // Rule 3
       return;
     }
 
@@ -266,10 +270,10 @@ export default function AIStrategicAdvisor() {
       });
 
       setWhatIfScenarios(prev => [result, ...prev]);
-      toast.success(`تم محاكاة سيناريو: ${modifications.name}`);
+      toast.success(`${isAr ? 'تم محاكاة سيناريو:' : 'Scenario simulated:'} ${modifications.name}`); // Rule 3
     } catch (error: any) {
       console.error('What-If simulation error:', error);
-      toast.error('فشلت المحاكاة. يرجى المحاولة مرة أخرى.');
+      toast.error(isAr ? 'فشلت المحاكاة. يرجى المحاولة مرة أخرى.' : 'Simulation failed. Please try again.'); // Rule 3
     } finally {
       setIsSimulating(false);
     }
@@ -296,72 +300,72 @@ export default function AIStrategicAdvisor() {
   };
 
   return (
-    <div className="container mx-auto py-8 space-y-8" dir="rtl">
+    <div className="container mx-auto py-8 space-y-8" dir={isAr ? "rtl" : "ltr"}> {/* Rule 3 */}
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold text-right">المستشار الاستراتيجي بالذكاء الاصطناعي</h1>
+        <h1 className="text-4xl font-bold text-right">{isAr ? "المستشار الاستراتيجي بالذكاء الاصطناعي" : "AI Strategic Advisor"}</h1> {/* Rule 3 */}
         <p className="text-muted-foreground text-right">
-          تحليل شامل لمشروعك مع توصيات استراتيجية قابلة للتنفيذ
+          {isAr ? "تحليل شامل لمشروعك مع توصيات استراتيجية قابلة للتنفيذ" : "Comprehensive analysis of your project with actionable strategic recommendations"} {/* Rule 3 */}
         </p>
       </div>
 
       {/* Input Form */}
       <Card className="p-6">
-        <h2 className="text-2xl font-semibold mb-6 text-right">معلومات المشروع</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-right">{isAr ? "معلومات المشروع" : "Project Information"}</h2> {/* Rule 3 */}
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-right block">عنوان المشروع *</Label>
+            <Label htmlFor="title" className="text-right block">{isAr ? "عنوان المشروع *" : "Project Title *"}</Label> {/* Rule 3 */}
             <Input
               id="title"
               name="title"
               value={formData.title}
               onChange={handleInputChange}
-              placeholder="مثال: منصة ذكية لإدارة الطاقة المتجددة"
+              placeholder={isAr ? "مثال: منصة ذكية لإدارة الطاقة المتجددة" : "Example: Smart platform for renewable energy management"} // Rule 4
               className="text-right"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="budget" className="text-right block">الميزانية (ريال) *</Label>
+            <Label htmlFor="budget" className="text-right block">{isAr ? "الميزانية (ريال) *" : "Budget (SAR) *"}</Label> {/* Rule 3 */}
             <Input
               id="budget"
               name="budget"
               type="number"
               value={formData.budget}
               onChange={handleInputChange}
-              placeholder="مثال: 500000"
+              placeholder={isAr ? "مثال: 500000" : "Example: 500000"} // Rule 4
               className="text-right"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="team_size" className="text-right block">حجم الفريق *</Label>
+            <Label htmlFor="team_size" className="text-right block">{isAr ? "حجم الفريق *" : "Team Size *"}</Label> {/* Rule 3 */}
             <Input
               id="team_size"
               name="team_size"
               type="number"
               value={formData.team_size}
               onChange={handleInputChange}
-              placeholder="مثال: 5"
+              placeholder={isAr ? "مثال: 5" : "Example: 5"} // Rule 4
               className="text-right"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="timeline_months" className="text-right block">المدة الزمنية (أشهر) *</Label>
+            <Label htmlFor="timeline_months" className="text-right block">{isAr ? "المدة الزمنية (أشهر) *" : "Timeline (months) *"}</Label> {/* Rule 3 */}
             <Input
               id="timeline_months"
               name="timeline_months"
               type="number"
               value={formData.timeline_months}
               onChange={handleInputChange}
-              placeholder="مثال: 12"
+              placeholder={isAr ? "مثال: 12" : "Example: 12"} // Rule 4
               className="text-right"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="market_demand" className="text-right block">الطلب السوقي (0-100)</Label>
+            <Label htmlFor="market_demand" className="text-right block">{isAr ? "الطلب السوقي (0-100)" : "Market Demand (0-100)"}</Label> {/* Rule 3 */}
             <Input
               id="market_demand"
               name="market_demand"
@@ -375,7 +379,7 @@ export default function AIStrategicAdvisor() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="technical_feasibility" className="text-right block">الجدوى التقنية (0-100)</Label>
+            <Label htmlFor="technical_feasibility" className="text-right block">{isAr ? "الجدوى التقنية (0-100)" : "Technical Feasibility (0-100)"}</Label> {/* Rule 3 */}
             <Input
               id="technical_feasibility"
               name="technical_feasibility"
@@ -389,13 +393,13 @@ export default function AIStrategicAdvisor() {
           </div>
 
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="description" className="text-right block">وصف المشروع *</Label>
+            <Label htmlFor="description" className="text-right block">{isAr ? "وصف المشروع *" : "Project Description *"}</Label> {/* Rule 3 */}
             <Textarea
               id="description"
               name="description"
               value={formData.description}
               onChange={handleInputChange}
-              placeholder="اشرح فكرة مشروعك بالتفصيل..."
+              placeholder={isAr ? "اشرح فكرة مشروعك بالتفصيل..." : "Explain your project idea in detail..."} // Rule 4
               rows={4}
               className="text-right"
             />
@@ -411,12 +415,12 @@ export default function AIStrategicAdvisor() {
           {isAnalyzing ? (
             <>
               <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-              جارٍ التحليل...
+              {isAr ? "جارٍ التحليل..." : "Analyzing..."} {/* Rule 3 */}
             </>
           ) : (
             <>
               <Target className="ml-2 h-4 w-4" />
-              تحليل استراتيجي شامل
+              {isAr ? "تحليل استراتيجي شامل" : "Comprehensive Strategic Analysis"} {/* Rule 3 */}
             </>
           )}
         </Button>
@@ -429,12 +433,12 @@ export default function AIStrategicAdvisor() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="text-right">
-                <h2 className="text-2xl font-semibold">مؤشر الثقة في الابتكار (ICI)</h2>
+                <h2 className="text-2xl font-semibold">{isAr ? "مؤشر الثقة في الابتكار (ICI)" : "Innovation Confidence Index (ICI)"}</h2> {/* Rule 3 */}
                 <p className="text-muted-foreground">Innovation Confidence Index</p>
               </div>
               <div className="text-left">
                 <div className="text-5xl font-bold text-primary">{analysis.ici_score}</div>
-                <div className="text-sm text-muted-foreground">من 100</div>
+                <div className="text-sm text-muted-foreground">{isAr ? "من 100" : "out of 100"}</div> {/* Rule 3 */}
               </div>
               
               {/* Export Buttons */}
@@ -450,7 +454,7 @@ export default function AIStrategicAdvisor() {
                   ) : (
                     <FileDown className="h-4 w-4 ml-2" />
                   )}
-                  تصدير PDF
+                  {isAr ? "تصدير PDF" : "Export PDF"} {/* Rule 3 */}
                 </Button>
                 <Button
                   onClick={handleExportExcel}
@@ -463,7 +467,7 @@ export default function AIStrategicAdvisor() {
                   ) : (
                     <FileDown className="h-4 w-4 ml-2" />
                   )}
-                  تصدير Excel
+                  {isAr ? "تصدير Excel" : "Export Excel"} {/* Rule 3 */}
                 </Button>
               </div>
             </div>
@@ -471,23 +475,23 @@ export default function AIStrategicAdvisor() {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.success_probability}</div>
-                <div className="text-sm text-muted-foreground mt-1">احتمالية النجاح</div>
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "احتمالية النجاح" : "Success Probability"}</div> {/* Rule 3 */}
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.market_fit}</div>
-                <div className="text-sm text-muted-foreground mt-1">ملاءمة السوق</div>
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "ملاءمة السوق" : "Market Fit"}</div> {/* Rule 3 */}
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.execution_readiness}</div>
-                <div className="text-sm text-muted-foreground mt-1">جاهزية التنفيذ</div>
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "جاهزية التنفيذ" : "Execution Readiness"}</div> {/* Rule 3 */}
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.investor_readiness}</div>
-                <div className="text-sm text-muted-foreground mt-1">جاهزية المستثمر</div>
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "جاهزية المستثمر" : "Investor Readiness"}</div> {/* Rule 3 */}
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.financial_sustainability}</div>
-                <div className="text-sm text-muted-foreground mt-1">الاستدامة المالية</div>
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "الاستدامة المالية" : "Financial Sustainability"}</div> {/* Rule 3 */}
               </div>
             </div>
           </Card>
@@ -495,7 +499,7 @@ export default function AIStrategicAdvisor() {
           {/* CEO Insights */}
           <Card className="p-6">
             <h2 className="text-2xl font-semibold mb-4 text-right flex items-center justify-end">
-              <span>الرؤى التنفيذية</span>
+              <span>{isAr ? "الرؤى التنفيذية" : "Executive Insights"}</span> {/* Rule 3 */}
               <Lightbulb className="mr-2 h-6 w-6 text-primary" />
             </h2>
             
@@ -512,7 +516,7 @@ export default function AIStrategicAdvisor() {
                         <h3 className="font-semibold text-lg">{insight.title}</h3>
                       </div>
                       <p className="text-sm mb-2">{insight.impact}</p>
-                      <p className="text-sm font-medium">💡 التوصية: {insight.recommendation}</p>
+                      <p className="text-sm font-medium">💡 {isAr ? "التوصية:" : "Recommendation:"} {insight.recommendation}</p> {/* Rule 3 */}
                     </div>
                   </div>
                 </div>
@@ -522,9 +526,9 @@ export default function AIStrategicAdvisor() {
 
           {/* Roadmap */}
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">خارطة الطريق التنفيذية</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "خارطة الطريق التنفيذية" : "Executive Roadmap"}</h2> {/* Rule 3 */}
             <p className="text-muted-foreground mb-6 text-right">
-              الجدول الزمني: {analysis.roadmap.total_timeline} | الأولوية: {analysis.roadmap.priority}
+              {isAr ? "الجدول الزمني:" : "Timeline:"} {analysis.roadmap.total_timeline} | {isAr ? "الأولوية:" : "Priority:"} {analysis.roadmap.priority} {/* Rule 3 */}
             </p>
             
             <div className="space-y-4">
@@ -536,10 +540,10 @@ export default function AIStrategicAdvisor() {
                     <div className="text-sm font-medium text-primary">{index + 1}</div>
                   </div>
                   <div className="text-sm text-muted-foreground text-right mb-2">
-                    التكلفة: {step.cost}
+                    {isAr ? "التكلفة:" : "Cost:"} {step.cost} {/* Rule 3 */}
                   </div>
                   <div className="text-sm text-right">
-                    <span className="font-medium">المخرجات: </span>
+                    <span className="font-medium">{isAr ? "المخرجات: " : "Deliverables: "}</span> {/* Rule 3 */}
                     {step.deliverables.join(' • ')}
                   </div>
                   <div className="text-xs text-muted-foreground text-right mt-2">
@@ -552,44 +556,44 @@ export default function AIStrategicAdvisor() {
 
           {/* Investment Analysis */}
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">التحليل الاستثماري</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "التحليل الاستثماري" : "Investment Analysis"}</h2> {/* Rule 3 */}
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="p-4 bg-muted rounded-lg text-right">
-                <div className="text-sm text-muted-foreground mb-1">نطاق التقييم</div>
+                <div className="text-sm text-muted-foreground mb-1">{isAr ? "نطاق التقييم" : "Valuation Range"}</div> {/* Rule 3 */}
                 <div className="text-xl font-bold">{analysis.investment.valuation_range}</div>
               </div>
               <div className="p-4 bg-muted rounded-lg text-right">
-                <div className="text-sm text-muted-foreground mb-1">إمكانية التمويل</div>
+                <div className="text-sm text-muted-foreground mb-1">{isAr ? "إمكانية التمويل" : "Funding Potential"}</div> {/* Rule 3 */}
                 <div className="text-xl font-bold">{analysis.investment.funding_potential}</div>
               </div>
               <div className="p-4 bg-muted rounded-lg text-right">
-                <div className="text-sm text-muted-foreground mb-1">جاهزية المستثمر</div>
+                <div className="text-sm text-muted-foreground mb-1">{isAr ? "جاهزية المستثمر" : "Investor Readiness"}</div> {/* Rule 3 */}
                 <div className="text-xl font-bold">Grade {analysis.irl_grade}</div>
               </div>
             </div>
 
-            <h3 className="font-semibold mb-3 text-right">المستثمرون الموصى بهم</h3>
+            <h3 className="font-semibold mb-3 text-right">{isAr ? "المستثمرون الموصى بهم" : "Recommended Investors"}</h3> {/* Rule 3 */}
             <div className="space-y-3">
               {analysis.investment.recommended_investors.map((investor: any, index: number) => (
                 <div key={index} className="p-4 border rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-sm text-muted-foreground">
-                      احتمالية: {(investor.probability * 100).toFixed(0)}%
+                      {isAr ? "احتمالية:" : "Probability:"} {(investor.probability * 100).toFixed(0)}% {/* Rule 3 */}
                     </div>
                     <h4 className="font-semibold">{investor.type}</h4>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-sm text-right">
                     <div>
-                      <span className="text-muted-foreground">المبلغ: </span>
+                      <span className="text-muted-foreground">{isAr ? "المبلغ: " : "Amount: "}</span> {/* Rule 3 */}
                       <span className="font-medium">{investor.amount}</span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">التخفيف: </span>
+                      <span className="text-muted-foreground">{isAr ? "التخفيف: " : "Dilution: "}</span> {/* Rule 3 */}
                       <span className="font-medium">{investor.dilution}</span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">المدة: </span>
+                      <span className="text-muted-foreground">{isAr ? "المدة: " : "Duration: "}</span> {/* Rule 3 */}
                       <span className="font-medium">{investor.timeline}</span>
                     </div>
                   </div>
@@ -600,7 +604,7 @@ export default function AIStrategicAdvisor() {
 
           {/* Critical Path */}
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">المسار الحرج للنجاح</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "المسار الحرج للنجاح" : "Critical Path to Success"}</h2> {/* Rule 3 */}
             
             <div className="space-y-3">
               {analysis.critical_path.map((phase: any, index: number) => (
@@ -618,7 +622,7 @@ export default function AIStrategicAdvisor() {
                       <span className="font-semibold">{phase.phase}</span>
                       {phase.status === 'current' && (
                         <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded">
-                          المرحلة الحالية
+                          {isAr ? "المرحلة الحالية" : "Current Phase"} {/* Rule 3 */}
                         </span>
                       )}
                     </div>
@@ -631,65 +635,65 @@ export default function AIStrategicAdvisor() {
           {/* What-If Simulator */}
           <Card className="p-6 mt-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-semibold text-right">محاكي "ماذا لو؟"</h2>
+              <h2 className="text-2xl font-semibold text-right">{isAr ? `محاكي "ماذا لو؟"` : `What-If Simulator`}</h2> {/* Rule 3 */}
               <Button
                 onClick={() => setShowWhatIf(!showWhatIf)}
                 variant="outline"
               >
-                {showWhatIf ? 'إخفاء' : 'عرض'} المحاكي
+                {showWhatIf ? (isAr ? 'إخفاء' : 'Hide') : (isAr ? 'عرض' : 'Show')} {isAr ? 'المحاكي' : 'Simulator'} {/* Rule 3 */}
               </Button>
             </div>
 
             {showWhatIf && (
               <div className="space-y-4">
                 <p className="text-muted-foreground text-right">
-                  جرّب سيناريوهات مختلفة وانظر تأثيرها على ICI و IRL
+                  {isAr ? "جرّب سيناريوهات مختلفة وانظر تأثيرها على ICI و IRL" : "Try different scenarios and see their impact on ICI and IRL"} {/* Rule 3 */}
                 </p>
 
                 {/* Predefined Scenarios */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Button
                     onClick={() => handleWhatIfScenario({
-                      name: 'زيادة الميزانية 50%',
+                      name: isAr ? 'زيادة الميزانية 50%' : 'Increase Budget by 50%', // Rule 5
                       budget: '+50%'
                     })}
                     variant="outline"
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">زيادة الميزانية 50%</span>
-                    <span className="text-sm text-muted-foreground">ماذا لو حصلت على تمويل إضافي؟</span>
+                    <span className="font-semibold">{isAr ? 'زيادة الميزانية 50%' : 'Increase Budget by 50%'}</span> {/* Rule 3 */}
+                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو حصلت على تمويل إضافي؟' : 'What if you secured additional funding?'}</span> {/* Rule 3 */}
                   </Button>
 
                   <Button
                     onClick={() => handleWhatIfScenario({
-                      name: 'توظيف 3 أعضاء جدد',
+                      name: isAr ? 'توظيف 3 أعضاء جدد' : 'Hire 3 New Team Members', // Rule 5
                       team_size: '+3'
                     })}
                     variant="outline"
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">توظيف 3 أعضاء جدد</span>
-                    <span className="text-sm text-muted-foreground">ماذا لو قمت بتوسيع الفريق؟</span>
+                    <span className="font-semibold">{isAr ? 'توظيف 3 أعضاء جدد' : 'Hire 3 New Team Members'}</span> {/* Rule 3 */}
+                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو قمت بتوسيع الفريق؟' : 'What if you expanded the team?'}</span> {/* Rule 3 */}
                   </Button>
 
                   <Button
                     onClick={() => handleWhatIfScenario({
-                      name: 'تحسين التحقق من الفرضيات',
+                      name: isAr ? 'تحسين التحقق من الفرضيات' : 'Improve Hypothesis Validation', // Rule 5
                       hypothesis_validation_rate: '+0.3'
                     })}
                     variant="outline"
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">تحسين التحقق من الفرضيات</span>
-                    <span className="text-sm text-muted-foreground">ماذا لو قمت باختبار أفضل؟</span>
+                    <span className="font-semibold">{isAr ? 'تحسين التحقق من الفرضيات' : 'Improve Hypothesis Validation'}</span> {/* Rule 3 */}
+                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو قمت باختبار أفضل؟' : 'What if you performed better testing?'}</span> {/* Rule 3 */}
                   </Button>
 
                   <Button
                     onClick={() => handleWhatIfScenario({
-                      name: 'سيناريو شامل',
+                      name: isAr ? 'سيناريو شامل' : 'Comprehensive Scenario', // Rule 5
                       budget: '+50%',
                       team_size: '+2',
                       hypothesis_validation_rate: '+0.3',
@@ -699,15 +703,15 @@ export default function AIStrategicAdvisor() {
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">سيناريو شامل</span>
-                    <span className="text-sm text-muted-foreground">تحسينات متعددة</span>
+                    <span className="font-semibold">{isAr ? 'سيناريو شامل' : 'Comprehensive Scenario'}</span> {/* Rule 3 */}
+                    <span className="text-sm text-muted-foreground">{isAr ? 'تحسينات متعددة' : 'Multiple Improvements'}</span> {/* Rule 3 */}
                   </Button>
                 </div>
 
                 {/* Scenario Results */}
                 {whatIfScenarios.length > 0 && (
                   <div className="mt-6 space-y-4">
-                    <h3 className="text-lg font-semibold text-right">نتائج المحاكاة</h3>
+                    <h3 className="text-lg font-semibold text-right">{isAr ? "نتائج المحاكاة" : "Simulation Results"}</h3> {/* Rule 3 */}
                     {whatIfScenarios.map((scenario, index) => (
                       <div
                         key={index}
@@ -773,7 +777,7 @@ export default function AIStrategicAdvisor() {
                           </div>
 
                           <div className="text-right">
-                            <div className="text-muted-foreground">احتمالية النجاح</div>
+                            <div className="text-muted-foreground">{isAr ? "احتمالية النجاح" : "Success Probability"}</div> {/* Rule 3 */}
                             <div className="font-semibold">
                               {(scenario.baseline.success_probability * 100).toFixed(1)}% →{' '}
                               {(scenario.modified.success_probability * 100).toFixed(1)}%
@@ -792,7 +796,7 @@ export default function AIStrategicAdvisor() {
                 {isSimulating && (
                   <div className="flex items-center justify-center p-8">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    <span className="mr-3">جارٍ محاكاة السيناريو...</span>
+                    <span className="mr-3">{isAr ? "جارٍ محاكاة السيناريو..." : "Simulating scenario..."}</span> {/* Rule 3 */}
                   </div>
                 )}
               </div>
@@ -801,16 +805,16 @@ export default function AIStrategicAdvisor() {
 
           {/* Feedback System */}
           <Card className="p-6 mt-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">نظام الملاحظات</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "نظام الملاحظات" : "Feedback System"}</h2> {/* Rule 3 */}
             <p className="text-muted-foreground text-right mb-4">
-              ساعدنا في تحسين النظام من خلال مشاركة ملاحظاتك حول التوصيات
+              {isAr ? "ساعدنا في تحسين النظام من خلال مشاركة ملاحظاتك حول التوصيات" : "Help us improve the system by sharing your feedback on the recommendations"} {/* Rule 3 */}
             </p>
 
             <div className="space-y-4">
               {/* Feedback on CEO Insights */}
               {analysis?.ceo_insights && analysis.ceo_insights.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-right">قيّم الرؤى الاستراتيجية</h3>
+                  <h3 className="font-semibold text-right">{isAr ? "قيّم الرؤى الاستراتيجية" : "Rate Strategic Insights"}</h3> {/* Rule 3 */}
                   {analysis.ceo_insights.slice(0, 3).map((insight: any, index: number) => (
                     <div key={index} className="p-4 border rounded-lg">
                       <div className="flex items-center justify-between mb-2">
@@ -826,7 +830,7 @@ export default function AIStrategicAdvisor() {
                             })}
                             className="text-green-600 hover:bg-green-50"
                           >
-                            ✅ مفيدة
+                            {isAr ? "✅ مفيدة" : "✅ Helpful"} {/* Rule 3 */}
                           </Button>
                           <Button
                             size="sm"
@@ -839,7 +843,7 @@ export default function AIStrategicAdvisor() {
                             })}
                             className="text-red-600 hover:bg-red-50"
                           >
-                            ❌ غير مفيدة
+                            {isAr ? "❌ غير مفيدة" : "❌ Not Helpful"} {/* Rule 3 */}
                           </Button>
                         </div>
                         <p className="text-sm font-medium text-right">{insight.title}</p>
@@ -852,7 +856,7 @@ export default function AIStrategicAdvisor() {
               {/* Feedback on Roadmap */}
               {analysis?.roadmap && (
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-right">قيّم خارطة الطريق</h3>
+                  <h3 className="font-semibold text-right">{isAr ? "قيّم خارطة الطريق" : "Rate Roadmap"}</h3> {/* Rule 3 */}
                   <div className="p-4 border rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex gap-2">
@@ -867,7 +871,7 @@ export default function AIStrategicAdvisor() {
                           })}
                           className="text-green-600 hover:bg-green-50"
                         >
-                          ✅ قابلة للتنفيذ
+                          {isAr ? "✅ قابلة للتنفيذ" : "✅ Actionable"} {/* Rule 3 */}
                         </Button>
                         <Button
                           size="sm"
@@ -880,10 +884,10 @@ export default function AIStrategicAdvisor() {
                           })}
                           className="text-red-600 hover:bg-red-50"
                         >
-                          ❌ غير قابلة للتنفيذ
+                          {isAr ? "❌ غير قابلة للتنفيذ" : "❌ Not Actionable"} {/* Rule 3 */}
                         </Button>
                       </div>
-                      <p className="text-sm font-medium text-right">خارطة الطريق العملية</p>
+                      <p className="text-sm font-medium text-right">{isAr ? "خارطة الطريق العملية" : "Actionable Roadmap"}</p> {/* Rule 3 */}
                     </div>
                   </div>
                 </div>
@@ -891,9 +895,9 @@ export default function AIStrategicAdvisor() {
 
               {/* General Feedback */}
               <div className="space-y-3">
-                <h3 className="font-semibold text-right">ملاحظات عامة</h3>
+                <h3 className="font-semibold text-right">{isAr ? "ملاحظات عامة" : "General Feedback"}</h3> {/* Rule 3 */}
                 <Textarea
-                  placeholder="شاركنا ملاحظاتك لتحسين النظام..."
+                  placeholder={isAr ? "شاركنا ملاحظاتك لتحسين النظام..." : "Share your feedback to improve the system..."} // Rule 4
                   className="text-right min-h-[100px]"
                   value={generalFeedback}
                   onChange={(e) => setGeneralFeedback(e.target.value)}
@@ -908,7 +912,7 @@ export default function AIStrategicAdvisor() {
                   disabled={!generalFeedback.trim()}
                   className="w-full"
                 >
-                  إرسال الملاحظات
+                  {isAr ? "إرسال الملاحظات" : "Submit Feedback"} {/* Rule 3 */}
                 </Button>
               </div>
             </div>

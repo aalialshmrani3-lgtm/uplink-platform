@@ -8,6 +8,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Rocket, User, Mail, Phone, Building, MapPin,
   Globe, Linkedin, Twitter, Save, Shield, Award,
@@ -15,6 +16,8 @@ import {
 } from "lucide-react";
 
 export default function Profile() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const { data: profile, refetch } = trpc.user.getProfile.useQuery(undefined, { enabled: !!user });
   
@@ -130,28 +133,28 @@ export default function Profile() {
             <CardContent className="pt-6 text-center">
               <Lightbulb className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{stats.projects}</div>
-              <div className="text-slate-400 text-sm">مشاريع</div>
+              <div className="text-slate-400 text-sm">{isAr ? "مشاريع" : "[مشاريع]"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="pt-6 text-center">
               <Shield className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{stats.ips}</div>
-              <div className="text-slate-400 text-sm">ملكيات فكرية</div>
+              <div className="text-slate-400 text-sm">{isAr ? "ملكيات فكرية" : "[ملكيات فكرية]"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="pt-6 text-center">
               <TrendingUp className="w-8 h-8 text-purple-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{stats.score}%</div>
-              <div className="text-slate-400 text-sm">متوسط التقييم</div>
+              <div className="text-slate-400 text-sm">{isAr ? "متوسط التقييم" : "متوسط Evaluation"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="pt-6 text-center">
               <Award className="w-8 h-8 text-amber-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">3</div>
-              <div className="text-slate-400 text-sm">إنجازات</div>
+              <div className="text-slate-400 text-sm">{isAr ? "إنجازات" : "Achievements"}</div>
             </CardContent>
           </Card>
         </div>
@@ -168,7 +171,7 @@ export default function Profile() {
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label className="text-slate-300">الاسم الكامل</Label>
+                  <Label className="text-slate-300">{isAr ? "الاسم الكامل" : "Full Name"}</Label>
                   <Input
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -177,7 +180,7 @@ export default function Profile() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-slate-300">رقم الجوال</Label>
+                  <Label className="text-slate-300">{isAr ? "رقم الجوال" : "[رقم الجوال]"}</Label>
                   <Input
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -190,7 +193,7 @@ export default function Profile() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label className="text-slate-300">الجهة / الشركة</Label>
+                  <Label className="text-slate-300">{isAr ? "الجهة / الشركة" : "[الجهة / الشركة]"}</Label>
                   <Input
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
@@ -199,7 +202,7 @@ export default function Profile() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-slate-300">المسمى الوظيفي</Label>
+                  <Label className="text-slate-300">{isAr ? "المسمى الوظيفي" : "[المسمى الوظيفي]"}</Label>
                   <Input
                     value={formData.position}
                     onChange={(e) => setFormData({ ...formData, position: e.target.value })}
@@ -210,7 +213,7 @@ export default function Profile() {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-slate-300">المدينة</Label>
+                <Label className="text-slate-300">{isAr ? "المدينة" : "City"}</Label>
                 <Input
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
@@ -220,7 +223,7 @@ export default function Profile() {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-slate-300">نبذة شخصية</Label>
+                <Label className="text-slate-300">{isAr ? "نبذة شخصية" : "[نبذة شخصية]"}</Label>
                 <Textarea
                   value={formData.bio}
                   onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
@@ -240,7 +243,7 @@ export default function Profile() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label className="text-slate-300">الموقع الإلكتروني</Label>
+                <Label className="text-slate-300">{isAr ? "الموقع الإلكتروني" : "Website الإلكتروني"}</Label>
                 <Input
                   value={formData.website}
                   onChange={(e) => setFormData({ ...formData, website: e.target.value })}

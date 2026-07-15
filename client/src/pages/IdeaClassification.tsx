@@ -14,8 +14,11 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { CheckCircle2, XCircle, Clock, TrendingUp, TrendingDown, BarChart3, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLocation } from 'wouter';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function IdeaClassification() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [, navigate] = useLocation();
   const [selectedIdea, setSelectedIdea] = useState<any>(null);
@@ -88,7 +91,7 @@ export default function IdeaClassification() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">تصنيف الأفكار</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? "تصنيف الأفكار" : "Idea Classification"}</h1>
         <p className="text-muted-foreground">
           قم بمراجعة وتصنيف الأفكار المقدمة لتحسين دقة نموذج التنبؤ
         </p>
@@ -99,7 +102,7 @@ export default function IdeaClassification() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">إجمالي الأفكار</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "إجمالي الأفكار" : "Total الأفكار"}</CardTitle>
               <BarChart3 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -109,7 +112,7 @@ export default function IdeaClassification() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">أفكار ناجحة</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "أفكار ناجحة" : "[أفكار ناجحة]"}</CardTitle>
               <TrendingUp className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
@@ -122,7 +125,7 @@ export default function IdeaClassification() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">أفكار فاشلة</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "أفكار فاشلة" : "[أفكار فاشلة]"}</CardTitle>
               <TrendingDown className="h-4 w-4 text-red-500" />
             </CardHeader>
             <CardContent>
@@ -135,7 +138,7 @@ export default function IdeaClassification() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">قيد المراجعة</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? "قيد المراجعة" : "قيد Audit"}</CardTitle>
               <Clock className="h-4 w-4 text-yellow-500" />
             </CardHeader>
             <CardContent>
@@ -177,7 +180,7 @@ export default function IdeaClassification() {
           <Card>
             <CardContent className="py-12 text-center">
               <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-3" />
-              <p className="text-muted-foreground">لا توجد أفكار معلقة للمراجعة</p>
+              <p className="text-muted-foreground">{isAr ? "لا توجد أفكار معلقة للمراجعة" : "No توجد أفكار معلقة للمراجعة"}</p>
             </CardContent>
           </Card>
         ) : (
@@ -201,25 +204,25 @@ export default function IdeaClassification() {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
                     {idea.budget && (
                       <div>
-                        <span className="text-muted-foreground">الميزانية:</span>
+                        <span className="text-muted-foreground">{isAr ? "الميزانية:" : "Budget:"}</span>
                         <p className="font-medium">${parseFloat(idea.budget).toLocaleString()}</p>
                       </div>
                     )}
                     {idea.teamSize && (
                       <div>
-                        <span className="text-muted-foreground">حجم الفريق:</span>
+                        <span className="text-muted-foreground">{isAr ? "حجم الفريق:" : "حجم Team:"}</span>
                         <p className="font-medium">{idea.teamSize}</p>
                       </div>
                     )}
                     {idea.timelineMonths && (
                       <div>
-                        <span className="text-muted-foreground">المدة:</span>
+                        <span className="text-muted-foreground">{isAr ? "المدة:" : "[المدة:]"}</span>
                         <p className="font-medium">{idea.timelineMonths} شهر</p>
                       </div>
                     )}
                     {idea.predictedSuccessRate && (
                       <div>
-                        <span className="text-muted-foreground">التنبؤ:</span>
+                        <span className="text-muted-foreground">{isAr ? "التنبؤ:" : "[التنبؤ:]"}</span>
                         <p className="font-medium">
                           {(parseFloat(idea.predictedSuccessRate) * 100).toFixed(1)}%
                         </p>

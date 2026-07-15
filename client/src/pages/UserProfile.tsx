@@ -9,8 +9,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { User, Mail, Building, Globe, Phone, MapPin, Edit, Save, X } from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function UserProfile() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -55,8 +58,8 @@ export default function UserProfile() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>يجب تسجيل الدخول</CardTitle>
-            <CardDescription>الرجاء تسجيل الدخول لعرض ملفك الشخصي</CardDescription>
+            <CardTitle>{isAr ? "يجب تسجيل الدخول" : "يجب Login"}</CardTitle>
+            <CardDescription>{isAr ? "الرجاء تسجيل الدخول لعرض ملفك الشخصي" : "الرجاء Login لعرض ملفك الشخصي"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -101,9 +104,9 @@ export default function UserProfile() {
           <CardContent>
             <Tabs defaultValue="info" className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-slate-800/50">
-                <TabsTrigger value="info">المعلومات الشخصية</TabsTrigger>
-                <TabsTrigger value="activity">النشاط</TabsTrigger>
-                <TabsTrigger value="stats">الإحصائيات</TabsTrigger>
+                <TabsTrigger value="info">{isAr ? "المعلومات الشخصية" : "الInformation الشخصية"}</TabsTrigger>
+                <TabsTrigger value="activity">{isAr ? "النشاط" : "[النشاط]"}</TabsTrigger>
+                <TabsTrigger value="stats">{isAr ? "الإحصائيات" : "Statistics"}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="info" className="space-y-6 mt-6">
@@ -195,7 +198,7 @@ export default function UserProfile() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="bio" className="text-white">نبذة تعريفية</Label>
+                  <Label htmlFor="bio" className="text-white">{isAr ? "نبذة تعريفية" : "[نبذة تعريفية]"}</Label>
                   <textarea
                     id="bio"
                     value={formData.bio}
@@ -209,7 +212,7 @@ export default function UserProfile() {
 
               <TabsContent value="activity" className="mt-6">
                 <div className="text-center py-12 text-slate-400">
-                  <p>لا توجد أنشطة حالياً</p>
+                  <p>{isAr ? "لا توجد أنشطة حالياً" : "No توجد أنشطة حالياً"}</p>
                 </div>
               </TabsContent>
 
@@ -217,7 +220,7 @@ export default function UserProfile() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">الأفكار المقدمة</CardTitle>
+                      <CardTitle className="text-white text-lg">{isAr ? "الأفكار المقدمة" : "[الأفكار المقدمة]"}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-4xl font-bold text-blue-400">0</p>
@@ -226,7 +229,7 @@ export default function UserProfile() {
 
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">التحديات المشاركة</CardTitle>
+                      <CardTitle className="text-white text-lg">{isAr ? "التحديات المشاركة" : "التحديات الShare"}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-4xl font-bold text-cyan-400">0</p>
@@ -235,7 +238,7 @@ export default function UserProfile() {
 
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">العقود النشطة</CardTitle>
+                      <CardTitle className="text-white text-lg">{isAr ? "العقود النشطة" : "Contracts النشطة"}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-4xl font-bold text-green-400">0</p>

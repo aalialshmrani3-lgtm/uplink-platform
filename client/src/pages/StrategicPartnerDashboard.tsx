@@ -23,8 +23,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function StrategicPartnerDashboard() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { toast } = useToast();
   const [selectedTab, setSelectedTab] = useState("all");
 
@@ -90,8 +93,8 @@ export default function StrategicPartnerDashboard() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold">لوحة تحكم الشريك الاستراتيجي</h1>
-        <p className="text-muted-foreground">إدارة الأفكار المُوجّهة إليك من NAQLA 1</p>
+        <h1 className="text-3xl font-bold">{isAr ? "لوحة تحكم الشريك الاستراتيجي" : "لوحة تحكم الشريك اNoستراتيجي"}</h1>
+        <p className="text-muted-foreground">{isAr ? "إدارة الأفكار المُوجّهة إليك من NAQLA 1" : "[إدارة الأفكار المُوجّهة إليك من NAQLA 1]"}</p>
       </div>
 
       {/* Stats Cards */}
@@ -148,8 +151,8 @@ export default function StrategicPartnerDashboard() {
       {/* Ideas Table */}
       <Card>
         <CardHeader>
-          <CardTitle>الأفكار المُوجّهة</CardTitle>
-          <CardDescription>قم بمراجعة الأفكار وإرسال feedback للمبتكرين</CardDescription>
+          <CardTitle>{isAr ? "الأفكار المُوجّهة" : "[الأفكار المُوجّهة]"}</CardTitle>
+          <CardDescription>{isAr ? "قم بمراجعة الأفكار وإرسال feedback للمبتكرين" : "قم بمراجعة الأفكار وSubmit feedback للمبتكرين"}</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={selectedTab} onValueChange={setSelectedTab}>
@@ -165,12 +168,12 @@ export default function StrategicPartnerDashboard() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>العنوان</TableHead>
-                      <TableHead>الفئة</TableHead>
-                      <TableHead>الدرجة</TableHead>
-                      <TableHead>المسار</TableHead>
-                      <TableHead>الحالة</TableHead>
-                      <TableHead>الإجراءات</TableHead>
+                      <TableHead>{isAr ? "العنوان" : "Title"}</TableHead>
+                      <TableHead>{isAr ? "الفئة" : "Category"}</TableHead>
+                      <TableHead>{isAr ? "الدرجة" : "[الدرجة]"}</TableHead>
+                      <TableHead>{isAr ? "المسار" : "[المسار]"}</TableHead>
+                      <TableHead>{isAr ? "الحالة" : "Status"}</TableHead>
+                      <TableHead>{isAr ? "الإجراءات" : "Procedures"}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>

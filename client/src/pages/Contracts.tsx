@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Rocket, FileText, CheckCircle, Clock, AlertCircle,
   Shield, Users, DollarSign, Calendar, ArrowLeft
 } from "lucide-react";
 
 export default function Contracts() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const { data: contracts, isLoading } = trpc.contract.getMyContracts.useQuery(undefined, { enabled: !!user });
 
@@ -126,10 +129,10 @@ export default function Contracts() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/30 rounded-full mb-4">
             <FileText className="w-4 h-4 text-indigo-400" />
-            <span className="text-indigo-400 text-sm">NAQLA4 - العقود الذكية</span>
+            <span className="text-indigo-400 text-sm">{isAr ? "NAQLA4 - العقود الذكية" : "NAQLA4 - Contracts الذكية"}</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">عقودي</h1>
-          <p className="text-slate-400">إدارة العقود الذكية والاتفاقيات</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "عقودي" : "[عقودي]"}</h1>
+          <p className="text-slate-400">{isAr ? "إدارة العقود الذكية والاتفاقيات" : "إدارة العقود الذكية واNoتفاقيات"}</p>
         </div>
 
         {/* Stats */}
@@ -138,7 +141,7 @@ export default function Contracts() {
             <CardContent className="pt-6 text-center">
               <FileText className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{displayContracts.length}</div>
-              <div className="text-slate-400 text-sm">إجمالي العقود</div>
+              <div className="text-slate-400 text-sm">{isAr ? "إجمالي العقود" : "إجمالي Contracts"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
@@ -147,7 +150,7 @@ export default function Contracts() {
               <div className="text-2xl font-bold text-white">
                 {displayContracts.filter((c: any) => c.status === "active").length}
               </div>
-              <div className="text-slate-400 text-sm">عقود نشطة</div>
+              <div className="text-slate-400 text-sm">{isAr ? "عقود نشطة" : "عقود Activeة"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
@@ -156,14 +159,14 @@ export default function Contracts() {
               <div className="text-2xl font-bold text-white">
                 {(displayContracts.reduce((sum: number, c: any) => sum + Number(c.value || 0), 0) / 1000000).toFixed(1)}M
               </div>
-              <div className="text-slate-400 text-sm">إجمالي القيمة</div>
+              <div className="text-slate-400 text-sm">{isAr ? "إجمالي القيمة" : "إجمالي الValuesة"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="pt-6 text-center">
               <Shield className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">100%</div>
-              <div className="text-slate-400 text-sm">محمية بالبلوكتشين</div>
+              <div className="text-slate-400 text-sm">{isAr ? "محمية بالبلوكتشين" : "[محمية بالبلوكتشين]"}</div>
             </CardContent>
           </Card>
         </div>
@@ -209,7 +212,7 @@ export default function Contracts() {
                         {contract.milestones > 0 && (
                           <div className="mb-3">
                             <div className="flex items-center justify-between text-sm mb-1">
-                              <span className="text-slate-400">التقدم</span>
+                              <span className="text-slate-400">{isAr ? "التقدم" : "[التقدم]"}</span>
                               <span className="text-white">
                                 {contract.completedMilestones}/{contract.milestones} مراحل
                               </span>
@@ -259,7 +262,7 @@ export default function Contracts() {
                         <div className="text-xl font-bold text-white">
                           {Number(contract.value).toLocaleString()}
                         </div>
-                        <div className="text-slate-400 text-xs">ريال</div>
+                        <div className="text-slate-400 text-xs">{isAr ? "ريال" : "SAR"}</div>
                       </div>
                       <Button variant="outline" className="border-slate-700 text-slate-300">
                         عرض التفاصيل
@@ -275,8 +278,8 @@ export default function Contracts() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <FileText className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">لا توجد عقود</h3>
-              <p className="text-slate-400 mb-6">ستظهر عقودك هنا عند إنشائها</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد عقود" : "No توجد عقود"}</h3>
+              <p className="text-slate-400 mb-6">{isAr ? "ستظهر عقودك هنا عند إنشائها" : "[ستظهر عقودك هنا عند إنشائها]"}</p>
             </CardContent>
           </Card>
         )}
@@ -287,7 +290,7 @@ export default function Contracts() {
             <div className="flex items-start gap-6">
               <Shield className="w-16 h-16 text-indigo-400" />
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">عقود ذكية آمنة</h3>
+                <h3 className="text-xl font-bold text-white mb-2">{isAr ? "عقود ذكية آمنة" : "[عقود ذكية آمنة]"}</h3>
                 <p className="text-slate-300 mb-4">
                   جميع العقود في NAQLA مؤمنة بتقنية البلوكتشين مع نظام ضمان (Escrow) لحماية جميع الأطراف.
                   يتم تنفيذ المدفوعات تلقائياً عند إتمام كل مرحلة.

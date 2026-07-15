@@ -10,6 +10,8 @@ import { toast } from "sonner";
 import { useState } from "react";
 
 export default function Naqla2ChallengeDetails() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { id } = useParams<{ id: string }>();
   const { t } = useLanguage();
   const challengeId = parseInt(id || "0");
@@ -48,7 +50,7 @@ export default function Naqla2ChallengeDetails() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">جاري تحميل التحدي...</p>
+          <p className="text-muted-foreground">{isAr ? "جاري تحميل التحدي..." : "جاري Download التحدي..."}</p>
         </div>
       </div>
     );
@@ -59,8 +61,8 @@ export default function Naqla2ChallengeDetails() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>التحدي غير موجود</CardTitle>
-            <CardDescription>لم يتم العثور على التحدي المطلوب</CardDescription>
+            <CardTitle>{isAr ? "التحدي غير موجود" : "التBorderي غير موجود"}</CardTitle>
+            <CardDescription>{isAr ? "لم يتم العثور على التحدي المطلوب" : "لم يDone العثور على التحدي المطلوب"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/naqla2/challenges">
@@ -171,7 +173,7 @@ export default function Naqla2ChallengeDetails() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h3 className="font-semibold mb-2">الوصف الكامل:</h3>
+                  <h3 className="font-semibold mb-2">{isAr ? "الوصف الكامل:" : "Description الكامل:"}</h3>
                   <p className="text-muted-foreground leading-relaxed">{challenge.description}</p>
                 </div>
 
@@ -179,7 +181,7 @@ export default function Naqla2ChallengeDetails() {
                   const reqs = challenge.requirements;
                   return reqs && (
                     <div>
-                      <h3 className="font-semibold mb-2">المتطلبات:</h3>
+                      <h3 className="font-semibold mb-2">{isAr ? "المتطلبات:" : "[المتطلبات:]"}</h3>
                       <p className="text-muted-foreground leading-relaxed">{String(reqs)}</p>
                     </div>
                   );
@@ -189,7 +191,7 @@ export default function Naqla2ChallengeDetails() {
                   const crit = challenge.criteria;
                   return crit && (
                     <div>
-                      <h3 className="font-semibold mb-2">معايير التقييم:</h3>
+                      <h3 className="font-semibold mb-2">{isAr ? "معايير التقييم:" : "معايير Evaluation:"}</h3>
                       <p className="text-muted-foreground leading-relaxed">{String(crit)}</p>
                     </div>
                   );
@@ -205,7 +207,7 @@ export default function Naqla2ChallengeDetails() {
                     <Lightbulb className="w-5 h-5" />
                     الأفكار المشاركة ({relatedIdeas.length})
                   </CardTitle>
-                  <CardDescription>الأفكار التي تم تقديمها لهذا التحدي</CardDescription>
+                  <CardDescription>{isAr ? "الأفكار التي تم تقديمها لهذا التحدي" : "الأفكار التي Done تقديمها لهذا التحدي"}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -241,30 +243,30 @@ export default function Naqla2ChallengeDetails() {
             {/* Challenge Info */}
             <Card>
               <CardHeader>
-                <CardTitle>معلومات التحدي</CardTitle>
+                <CardTitle>{isAr ? "معلومات التحدي" : "Information التحدي"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">الفئة</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "الفئة" : "Category"}</p>
                   <Badge variant="outline">{challenge.category}</Badge>
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">الحالة</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "الحالة" : "Status"}</p>
                   <Badge variant={challenge.status === 'active' ? 'default' : 'secondary'}>
                     {challenge.status === 'active' ? 'نشط' : challenge.status === 'upcoming' ? 'قريباً' : 'منتهي'}
                   </Badge>
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">الجائزة</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "الجائزة" : "[الجائزة]"}</p>
                   <p className="text-2xl font-bold text-yellow-600">
                     {challenge.reward?.toLocaleString()} ريال
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">الموعد النهائي</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "الموعد النهائي" : "[الموعد النهائي]"}</p>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4" />
                     <span className="font-medium">
@@ -274,7 +276,7 @@ export default function Naqla2ChallengeDetails() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">المشاركون</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "المشاركون" : "[المشاركون]"}</p>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
                     <span className="font-medium">{challenge.participants || 0} مشارك</span>
@@ -286,7 +288,7 @@ export default function Naqla2ChallengeDetails() {
             {/* CTA */}
             <Card className="bg-gradient-to-br from-blue-950/50 to-indigo-950/30 border-blue-500/30">
               <CardHeader>
-                <CardTitle>جاهز للمشاركة؟</CardTitle>
+                <CardTitle>{isAr ? "جاهز للمشاركة؟" : "جاهز للShare؟"}</CardTitle>
                 <CardDescription className="text-muted-foreground">
                   قدّم فكرتك الآن واحصل على فرصة للفوز بالجائزة
                 </CardDescription>

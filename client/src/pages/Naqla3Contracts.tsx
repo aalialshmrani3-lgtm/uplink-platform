@@ -9,8 +9,12 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { FileText, Plus, CheckCircle, XCircle, Clock, DollarSign } from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext"; // Rule 1: Added import
 
 export default function Naqla3Contracts() {
+  const { language } = useLanguage(); // Rule 2: Added language context
+  const isAr = language === 'ar'; // Rule 2: Added isAr flag
+
   const { user } = useAuth();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [milestones, setMilestones] = useState([{ title: '', amount: '', dueDate: '' }]);
@@ -21,21 +25,21 @@ export default function Naqla3Contracts() {
 
   const createMutation = trpc.naqla3.contracts.create.useMutation({
     onSuccess: () => {
-      toast.success('تم إنشاء العقد بنجاح');
+      toast.success(isAr ? 'تم إنشاء العقد بنجاح' : 'Contract created successfully'); // Rule 3: Translated
       setShowCreateForm(false);
       setMilestones([{ title: '', amount: '', dueDate: '' }]);
     },
     onError: (error) => {
-      toast.error('فشل إنشاء العقد: ' + error.message);
+      toast.error((isAr ? 'فشل إنشاء العقد: ' : 'Failed to create contract: ') + error.message); // Rule 3: Translated
     }
   });
 
   const signMutation = trpc.naqla3.contracts.sign.useMutation({
     onSuccess: () => {
-      toast.success('تم توقيع العقد بنجاح');
+      toast.success(isAr ? 'تم توقيع العقد بنجاح' : 'Contract signed successfully'); // Rule 3: Translated
     },
     onError: (error) => {
-      toast.error('فشل توقيع العقد: ' + error.message);
+      toast.error((isAr ? 'فشل توقيع العقد: ' : 'Failed to sign contract: ') + error.message); // Rule 3: Translated
     }
   });
 
@@ -93,14 +97,37 @@ export default function Naqla3Contracts() {
     }
   };
 
+  // Rule 5: Helper for status translation
+  const translateStatus = (status: string) => {
+    if (isAr) {
+      switch (status) {
+        case 'active': return 'نشط';
+        case 'draft': return 'مسودة';
+        case 'completed': return 'مكتمل';
+        case 'cancelled': return 'ملغى';
+        case 'pending': return 'معلق';
+        default: return status;
+      }
+    } else {
+      switch (status) {
+        case 'active': return 'Active';
+        case 'draft': return 'Draft';
+        case 'completed': return 'Completed';
+        case 'cancelled': return 'Cancelled';
+        case 'pending': return 'Pending';
+        default: return status;
+      }
+    }
+  };
+
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="w-full max-w-md bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">يجب تسجيل الدخول</CardTitle>
+            <CardTitle className="text-white">{isAr ? 'يجب تسجيل الدخول' : 'Login Required'}</CardTitle> {/* Rule 3: Translated */}
             <CardDescription className="text-slate-400">
-              الرجاء تسجيل الدخول للوصول إلى العقود الذكية
+              {isAr ? 'الرجاء تسجيل الدخول للوصول إلى العقود الذكية' : 'Please log in to access smart contracts'} {/* Rule 3: Translated */}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -117,10 +144,10 @@ export default function Naqla3Contracts() {
             <div>
               <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3">
                 <FileText className="w-10 h-10 text-purple-400" />
-                العقود الذكية
+                {isAr ? 'العقود الذكية' : 'Smart Contracts'} {/* Rule 3: Translated */}
               </h1>
               <p className="text-slate-400 text-lg">
-                إدارة العقود والمعاملات بشكل آمن وشفاف
+                {isAr ? 'إدارة العقود والمعاملات بشكل آمن وشفاف' : 'Manage contracts and transactions securely and transparently'} {/* Rule 3: Translated */}
               </p>
             </div>
             <Button
@@ -128,7 +155,7 @@ export default function Naqla3Contracts() {
               className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
             >
               <Plus className="w-4 h-4 mr-2" />
-              إنشاء عقد جديد
+              {isAr ? 'إنشاء عقد جديد' : 'Create New Contract'} {/* Rule 3: Translated */}
             </Button>
           </div>
         </div>
@@ -137,37 +164,37 @@ export default function Naqla3Contracts() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-lg">ما هي العقود الذكية؟</CardTitle>
+              <CardTitle className="text-white text-lg">{isAr ? 'ما هي العقود الذكية؟' : 'What are Smart Contracts?'}</CardTitle> {/* Rule 3: Translated */}
             </CardHeader>
             <CardContent className="text-slate-400 text-sm space-y-2">
-              <p>عقود رقمية آمنة تُنفذ تلقائياً عند استيفاء الشروط</p>
-              <p>• شفافية كاملة</p>
-              <p>• أمان عالي</p>
-              <p>• تنفيذ تلقائي</p>
+              <p>{isAr ? 'عقود رقمية آمنة تُنفذ تلقائياً عند استيفاء الشروط' : 'Secure digital contracts that execute automatically upon meeting conditions'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• شفافية كاملة' : '• Full transparency'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• أمان عالي' : '• High security'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• تنفيذ تلقائي' : '• Automatic execution'}</p> {/* Rule 3: Translated */}
             </CardContent>
           </Card>
 
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-lg">المراحل (Milestones)</CardTitle>
+              <CardTitle className="text-white text-lg">{isAr ? 'المراحل (Milestones)' : 'Milestones'}</CardTitle> {/* Rule 3: Translated */}
             </CardHeader>
             <CardContent className="text-slate-400 text-sm space-y-2">
-              <p>قسّم العقد إلى مراحل قابلة للتتبع</p>
-              <p>• دفعات مجزأة</p>
-              <p>• تتبع التقدم</p>
-              <p>• حماية الطرفين</p>
+              <p>{isAr ? 'قسّم العقد إلى مراحل قابلة للتتبع' : 'Divide the contract into trackable stages'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• دفعات مجزأة' : '• Partial payments'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• تتبع التقدم' : '• Progress tracking'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• حماية الطرفين' : '• Party protection'}</p> {/* Rule 3: Translated */}
             </CardContent>
           </Card>
 
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-lg">نظام Escrow</CardTitle>
+              <CardTitle className="text-white text-lg">{isAr ? 'نظام Escrow' : 'Escrow System'}</CardTitle> {/* Rule 3: Translated */}
             </CardHeader>
             <CardContent className="text-slate-400 text-sm space-y-2">
-              <p>حماية الأموال حتى إتمام العمل</p>
-              <p>• أمان الدفع</p>
-              <p>• ضمان التنفيذ</p>
-              <p>• تحرير تلقائي</p>
+              <p>{isAr ? 'حماية الأموال حتى إتمام العمل' : 'Protect funds until work completion'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• أمان الدفع' : '• Payment security'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• ضمان التنفيذ' : '• Execution guarantee'}</p> {/* Rule 3: Translated */}
+              <p>{isAr ? '• تحرير تلقائي' : '• Automatic release'}</p> {/* Rule 3: Translated */}
             </CardContent>
           </Card>
         </div>
@@ -176,16 +203,16 @@ export default function Naqla3Contracts() {
         {showCreateForm && (
           <Card className="mb-8 bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">إنشاء عقد ذكي جديد</CardTitle>
+              <CardTitle className="text-white">{isAr ? 'إنشاء عقد ذكي جديد' : 'Create New Smart Contract'}</CardTitle> {/* Rule 3: Translated */}
               <CardDescription className="text-slate-400">
-                املأ التفاصيل لإنشاء عقد آمن
+                {isAr ? 'املأ التفاصيل لإنشاء عقد آمن' : 'Fill in the details to create a secure contract'} {/* Rule 3: Translated */}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCreateContract} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="title" className="text-white">عنوان العقد *</Label>
+                    <Label htmlFor="title" className="text-white">{isAr ? 'عنوان العقد *' : 'Contract Title *'}</Label> {/* Rule 3: Translated */}
                     <Input
                       id="title"
                       name="title"
@@ -194,7 +221,7 @@ export default function Naqla3Contracts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="partyB" className="text-white">الطرف الثاني (User ID) *</Label>
+                    <Label htmlFor="partyB" className="text-white">{isAr ? 'الطرف الثاني (User ID) *' : 'Second Party (User ID) *'}</Label> {/* Rule 3: Translated */}
                     <Input
                       id="partyB"
                       name="partyB"
@@ -206,7 +233,7 @@ export default function Naqla3Contracts() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description" className="text-white">الوصف *</Label>
+                  <Label htmlFor="description" className="text-white">{isAr ? 'الوصف *' : 'Description *'}</Label> {/* Rule 3: Translated */}
                   <Textarea
                     id="description"
                     name="description"
@@ -218,7 +245,7 @@ export default function Naqla3Contracts() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="totalAmount" className="text-white">المبلغ الإجمالي (ريال) *</Label>
+                    <Label htmlFor="totalAmount" className="text-white">{isAr ? 'المبلغ الإجمالي (ريال) *' : 'Total Amount (SAR) *'}</Label> {/* Rule 3: Translated */}
                     <Input
                       id="totalAmount"
                       name="totalAmount"
@@ -228,7 +255,7 @@ export default function Naqla3Contracts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="startDate" className="text-white">تاريخ البداية</Label>
+                    <Label htmlFor="startDate" className="text-white">{isAr ? 'تاريخ البداية' : 'Start Date'}</Label> {/* Rule 3: Translated */}
                     <Input
                       id="startDate"
                       name="startDate"
@@ -237,7 +264,7 @@ export default function Naqla3Contracts() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="endDate" className="text-white">تاريخ النهاية</Label>
+                    <Label htmlFor="endDate" className="text-white">{isAr ? 'تاريخ النهاية' : 'End Date'}</Label> {/* Rule 3: Translated */}
                     <Input
                       id="endDate"
                       name="endDate"
@@ -250,7 +277,7 @@ export default function Naqla3Contracts() {
                 {/* Milestones */}
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <Label className="text-white text-lg">المراحل (Milestones)</Label>
+                    <Label className="text-white text-lg">{isAr ? 'المراحل (Milestones)' : 'Milestones'}</Label> {/* Rule 3: Translated */}
                     <Button
                       type="button"
                       variant="outline"
@@ -258,7 +285,7 @@ export default function Naqla3Contracts() {
                       onClick={handleAddMilestone}
                     >
                       <Plus className="w-4 h-4 mr-2" />
-                      إضافة مرحلة
+                      {isAr ? 'إضافة مرحلة' : 'Add Milestone'} {/* Rule 3: Translated */}
                     </Button>
                   </div>
 
@@ -267,7 +294,7 @@ export default function Naqla3Contracts() {
                       <CardContent className="pt-4">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div className="space-y-2">
-                            <Label className="text-white text-sm">عنوان المرحلة</Label>
+                            <Label className="text-white text-sm">{isAr ? 'عنوان المرحلة' : 'Milestone Title'}</Label> {/* Rule 3: Translated */}
                             <Input
                               value={milestone.title}
                               onChange={(e) => handleMilestoneChange(index, 'title', e.target.value)}
@@ -275,7 +302,7 @@ export default function Naqla3Contracts() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-white text-sm">المبلغ (ريال)</Label>
+                            <Label className="text-white text-sm">{isAr ? 'المبلغ (ريال)' : 'Amount (SAR)'}</Label> {/* Rule 3: Translated */}
                             <Input
                               type="number"
                               value={milestone.amount}
@@ -284,7 +311,7 @@ export default function Naqla3Contracts() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-white text-sm">تاريخ الاستحقاق</Label>
+                            <Label className="text-white text-sm">{isAr ? 'تاريخ الاستحقاق' : 'Due Date'}</Label> {/* Rule 3: Translated */}
                             <div className="flex gap-2">
                               <Input
                                 type="date"
@@ -311,7 +338,7 @@ export default function Naqla3Contracts() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="terms" className="text-white">الشروط والأحكام</Label>
+                  <Label htmlFor="terms" className="text-white">{isAr ? 'الشروط والأحكام' : 'Terms and Conditions'}</Label> {/* Rule 3: Translated */}
                   <Textarea
                     id="terms"
                     name="terms"
@@ -322,14 +349,14 @@ export default function Naqla3Contracts() {
 
                 <div className="flex gap-2">
                   <Button type="submit" disabled={createMutation.isPending}>
-                    إنشاء العقد
+                    {isAr ? 'إنشاء العقد' : 'Create Contract'} {/* Rule 3: Translated */}
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setShowCreateForm(false)}
                   >
-                    إلغاء
+                    {isAr ? 'إلغاء' : 'Cancel'} {/* Rule 3: Translated */}
                   </Button>
                 </div>
               </form>
@@ -339,10 +366,10 @@ export default function Naqla3Contracts() {
 
         {/* Contracts List */}
         <div>
-          <h2 className="text-2xl font-bold text-white mb-6">عقودي</h2>
+          <h2 className="text-2xl font-bold text-white mb-6">{isAr ? 'عقودي' : 'My Contracts'}</h2> {/* Rule 3: Translated */}
           
           {isLoading ? (
-            <div className="text-center py-12 text-slate-400">جاري التحميل...</div>
+            <div className="text-center py-12 text-slate-400">{isAr ? 'جاري التحميل...' : 'Loading...'}</div> // Rule 3: Translated
           ) : contracts && contracts.length > 0 ? (
             <div className="grid grid-cols-1 gap-6">
               {contracts.map((contract: any) => (
@@ -357,31 +384,31 @@ export default function Naqla3Contracts() {
                       </div>
                       <div className={`flex items-center gap-2 ${getStatusColor(contract.status)}`}>
                         {getStatusIcon(contract.status)}
-                        <span className="text-sm font-medium">{contract.status}</span>
+                        <span className="text-sm font-medium">{translateStatus(contract.status)}</span> {/* Rule 5: Used helper */}
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
-                        <p className="text-slate-500">المبلغ الإجمالي</p>
+                        <p className="text-slate-500">{isAr ? 'المبلغ الإجمالي' : 'Total Amount'}</p> {/* Rule 3: Translated */}
                         <p className="text-white font-bold flex items-center gap-1">
                           <DollarSign className="w-4 h-4" />
                           {contract.totalAmount} {contract.currency}
                         </p>
                       </div>
                       <div>
-                        <p className="text-slate-500">تاريخ البداية</p>
-                        <p className="text-white">{contract.startDate || 'غير محدد'}</p>
+                        <p className="text-slate-500">{isAr ? 'تاريخ البداية' : 'Start Date'}</p> {/* Rule 3: Translated */}
+                        <p className="text-white">{contract.startDate || (isAr ? 'غير محدد' : 'Not specified')}</p> {/* Rule 3: Translated */}
                       </div>
                       <div>
-                        <p className="text-slate-500">تاريخ النهاية</p>
-                        <p className="text-white">{contract.endDate || 'غير محدد'}</p>
+                        <p className="text-slate-500">{isAr ? 'تاريخ النهاية' : 'End Date'}</p> {/* Rule 3: Translated */}
+                        <p className="text-white">{contract.endDate || (isAr ? 'غير محدد' : 'Not specified')}</p> {/* Rule 3: Translated */}
                       </div>
                       <div>
-                        <p className="text-slate-500">المراحل</p>
+                        <p className="text-slate-500">{isAr ? 'المراحل' : 'Milestones'}</p> {/* Rule 3: Translated */}
                         <p className="text-white">
-                          {contract.milestones ? JSON.parse(contract.milestones).length : 0} مرحلة
+                          {contract.milestones ? `${JSON.parse(contract.milestones).length} ${isAr ? 'مرحلة' : 'milestone(s)'}` : `0 ${isAr ? 'مرحلة' : 'milestone(s)'}`} {/* Rule 3: Translated */}
                         </p>
                       </div>
                     </div>
@@ -399,10 +426,10 @@ export default function Naqla3Contracts() {
                           className="bg-green-600 hover:bg-green-700"
                         >
                           <CheckCircle className="w-4 h-4 mr-2" />
-                          توقيع العقد
+                          {isAr ? 'توقيع العقد' : 'Sign Contract'} {/* Rule 3: Translated */}
                         </Button>
                         <Button variant="outline">
-                          عرض التفاصيل
+                          {isAr ? 'عرض التفاصيل' : 'View Details'} {/* Rule 3: Translated */}
                         </Button>
                       </div>
                     )}
@@ -410,10 +437,10 @@ export default function Naqla3Contracts() {
                     {contract.status === 'active' && (
                       <div className="flex gap-2 pt-2">
                         <Button>
-                          إدارة المراحل
+                          {isAr ? 'إدارة المراحل' : 'Manage Milestones'} {/* Rule 3: Translated */}
                         </Button>
                         <Button variant="outline">
-                          عرض Escrow
+                          {isAr ? 'عرض Escrow' : 'View Escrow'} {/* Rule 3: Translated */}
                         </Button>
                       </div>
                     )}
@@ -425,9 +452,9 @@ export default function Naqla3Contracts() {
             <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
               <CardContent className="text-center py-12">
                 <FileText className="w-16 h-16 mx-auto mb-4 text-slate-600" />
-                <p className="text-slate-400 mb-4">لا توجد عقود حالياً</p>
+                <p className="text-slate-400 mb-4">{isAr ? 'لا توجد عقود حالياً' : 'No contracts currently'}</p> {/* Rule 3: Translated */}
                 <Button onClick={() => setShowCreateForm(true)}>
-                  إنشاء عقد جديد
+                  {isAr ? 'إنشاء عقد جديد' : 'Create New Contract'} {/* Rule 3: Translated */}
                 </Button>
               </CardContent>
             </Card>

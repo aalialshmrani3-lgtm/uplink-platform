@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Search, Book, Video, MessageCircle, FileText, ChevronDown, ChevronUp } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function HelpCenter() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
 
@@ -143,7 +146,7 @@ export default function HelpCenter() {
 
         {/* Quick Start Guides */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">أدلة البدء السريع</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "أدلة البدء السريع" : "[أدلة البدء السريع]"}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
               <Card key={category.title} className="p-6 hover:shadow-xl transition-all hover:-translate-y-1">
@@ -165,7 +168,7 @@ export default function HelpCenter() {
 
         {/* Resources */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">موارد التعلم</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "موارد التعلم" : "[موارد التعلم]"}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {resources.map((resource) => (
               <Card key={resource.title} className="p-6 text-center hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
@@ -180,7 +183,7 @@ export default function HelpCenter() {
 
         {/* FAQs */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">الأسئلة الشائعة</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "الأسئلة الشائعة" : "[الأسئلة الشائعة]"}</h2>
           <div className="max-w-4xl mx-auto space-y-4">
             {faqs.map((faq, index) => (
               <Card key={index} className="overflow-hidden">
@@ -208,7 +211,7 @@ export default function HelpCenter() {
         {/* Contact Support */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">💬</div>
-          <h2 className="text-3xl font-bold mb-4">لم تجد ما تبحث عنه؟</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? "لم تجد ما تبحث عنه؟" : "لم تجد ما تSearch عنه؟"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             فريق الدعم الفني متاح على مدار الساعة لمساعدتك
           </p>

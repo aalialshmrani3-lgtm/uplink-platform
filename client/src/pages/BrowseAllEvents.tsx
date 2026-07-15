@@ -13,8 +13,11 @@ import {
 } from "../components/ui/select";
 import { Calendar, MapPin, Users, Search, Filter, Sparkles, Clock } from "lucide-react";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function BrowseAllEvents() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [searchQuery, setSearchQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<string | undefined>(undefined);
   const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
@@ -74,7 +77,7 @@ export default function BrowseAllEvents() {
         <div className="mb-8 text-center">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
             <Sparkles className="w-4 h-4" />
-            <span>نقلة 2 - جميع الفعاليات</span>
+            <span>{isAr ? "نقلة 2 - جميع الفعاليات" : "NAQLA 2 - جميع الفعاليات"}</span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             استعرض الفعاليات
@@ -152,7 +155,7 @@ export default function BrowseAllEvents() {
         {isLoading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <p className="mt-4 text-gray-600">جارٍ تحميل الفعاليات...</p>
+            <p className="mt-4 text-gray-600">{isAr ? "جارٍ تحميل الفعاليات..." : "جارٍ Download الفعاليات..."}</p>
           </div>
         ) : filteredEvents && filteredEvents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -257,7 +260,7 @@ export default function BrowseAllEvents() {
             <p className="text-gray-600">
               عرض <span className="font-bold text-blue-600">{filteredEvents.length}</span> فعالية
               {events && events.length !== filteredEvents.length && (
-                <span> من أصل <span className="font-bold">{events.length}</span></span>
+                <span>{isAr ? " من أصل " : "[من أصل]"}< span className="font-bold">{events.length}</span></span>
               )}
             </p>
           </div>

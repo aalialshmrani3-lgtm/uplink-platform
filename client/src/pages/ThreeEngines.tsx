@@ -2,8 +2,11 @@ import { Shield, Brain, Globe, ArrowRight, Check, Zap, Users, TrendingUp } from 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ThreeEngines() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const engines = [
     {
       id: 1,
@@ -254,7 +257,7 @@ export default function ThreeEngines() {
         {/* Integration Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">🔗</div>
-          <h2 className="text-3xl font-bold mb-4">المحركات الثلاثة تعمل معاً</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? "المحركات الثلاثة تعمل معاً" : "المحركات الثNoثة تعمل معاً"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             التكامل السلس بين المحركات الثلاثة يخلق نظاماً بيئياً متكاملاً يغطي دورة حياة الابتكار بالكامل - من الفكرة إلى التسويق
           </p>
@@ -264,19 +267,19 @@ export default function ThreeEngines() {
               <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
                 <Shield className="text-emerald-600" size={24} />
               </div>
-              <p className="text-sm font-semibold">احمِ فكرتك</p>
+              <p className="text-sm font-semibold">{isAr ? "احمِ فكرتك" : "[احمِ فكرتك]"}</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
                 <Brain className="text-blue-600" size={24} />
               </div>
-              <p className="text-sm font-semibold">اعثر على شركاء</p>
+              <p className="text-sm font-semibold">{isAr ? "اعثر على شركاء" : "[اعثر على شركاء]"}</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
                 <Globe className="text-purple-600" size={24} />
               </div>
-              <p className="text-sm font-semibold">سوّق ابتكارك</p>
+              <p className="text-sm font-semibold">{isAr ? "سوّق ابتكارك" : "[سوّق ابتكارك]"}</p>
             </div>
           </div>
 

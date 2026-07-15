@@ -1,6 +1,7 @@
 // Added for Flowchart Match - User Settings Page
 import { useState } from 'react';
 import { useAuth } from '@/_core/hooks/useAuth';
+import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,8 @@ import { toast } from 'sonner';
 import { Settings, Globe, Lock, Bell, Eye, EyeOff } from 'lucide-react';
 
 export default function UserSettings() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [settings, setSettings] = useState({
@@ -36,10 +39,10 @@ export default function UserSettings() {
 
   const updateSettingsMutation = trpc.user.updateSettings.useMutation({
     onSuccess: () => {
-      toast.success('تم تحديث الإعدادات بنجاح');
+      toast.success(isAr ? 'تم تحديث الإعدادات بنجاح' : 'Settings updated successfully');
     },
     onError: (error) => {
-      toast.error('فشل تحديث الإعدادات: ' + error.message);
+      toast.error((isAr ? 'فشل تحديث الإعدادات: ' : 'Failed to update settings: ') + error.message);
     }
   });
 
@@ -49,11 +52,11 @@ export default function UserSettings() {
 
   const handlePasswordChange = () => {
     if (settings.security.newPassword !== settings.security.confirmPassword) {
-      toast.error('كلمة المرور الجديدة غير متطابقة');
+      toast.error(isAr ? 'كلمة المرور الجديدة غير متطابقة' : 'New password does not match');
       return;
     }
     if (settings.security.newPassword.length < 8) {
-      toast.error('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+      toast.error(isAr ? 'كلمة المرور يجب أن تكون 8 أحرف على الأقل' : 'Password must be at least 8 characters');
       return;
     }
     updateSettingsMutation.mutate({ password: settings.security });
@@ -64,8 +67,8 @@ export default function UserSettings() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>يجب تسجيل الدخول</CardTitle>
-            <CardDescription>الرجاء تسجيل الدخول لعرض الإعدادات</CardDescription>
+            <CardTitle>{isAr ? "يجب تسجيل الدخول" : "Login Required"}</CardTitle>
+            <CardDescription>{isAr ? "الرجاء تسجيل الدخول لعرض الإعدادات" : "Please login to view settings"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -80,8 +83,8 @@ export default function UserSettings() {
             <div className="flex items-center gap-3">
               <Settings className="w-8 h-8 text-blue-400" />
               <div>
-                <CardTitle className="text-2xl text-white">الإعدادات</CardTitle>
-                <CardDescription className="text-slate-400">إدارة تفضيلاتك وإعدادات الحساب</CardDescription>
+                <CardTitle className="text-2xl text-white">{isAr ? "الإعدادات" : "Settings"}</CardTitle>
+                <CardDescription className="text-slate-400">{isAr ? "إدارة تفضيلاتك وإعدادات الحساب" : "Manage your preferences and account settings"}</CardDescription>
               </div>
             </div>
           </CardHeader>
@@ -89,10 +92,10 @@ export default function UserSettings() {
           <CardContent>
             <Tabs defaultValue="language" className="w-full">
               <TabsList className="grid w-full grid-cols-4 bg-slate-800/50">
-                <TabsTrigger value="language">اللغة</TabsTrigger>
-                <TabsTrigger value="notifications">الإشعارات</TabsTrigger>
-                <TabsTrigger value="privacy">الخصوصية</TabsTrigger>
-                <TabsTrigger value="security">الأمان</TabsTrigger>
+                <TabsTrigger value="language">{isAr ? "اللغة" : "Language"}</TabsTrigger>
+                <TabsTrigger value="notifications">{isAr ? "الإشعارات" : "Notifications"}</TabsTrigger>
+                <TabsTrigger value="privacy">{isAr ? "الخصوصية" : "Privacy"}</TabsTrigger>
+                <TabsTrigger value="security">{isAr ? "الأمان" : "Security"}</TabsTrigger>
               </TabsList>
 
               {/* Language Settings */}
@@ -100,7 +103,7 @@ export default function UserSettings() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <Globe className="w-5 h-5 text-blue-400" />
-                    <Label htmlFor="language" className="text-white text-lg">اللغة المفضلة</Label>
+                    <Label htmlFor="language" className="text-white text-lg">{isAr ? "اللغة المفضلة" : "Preferred Language"}</Label>
                   </div>
                   <Select
                     value={settings.language}
@@ -110,7 +113,7 @@ export default function UserSettings() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-slate-800 border-slate-700">
-                      <SelectItem value="ar">العربية</SelectItem>
+                      <SelectItem value="ar">{isAr ? "العربية" : "Arabic"}</SelectItem>
                       <SelectItem value="en">English</SelectItem>
                       <SelectItem value="fr">Français</SelectItem>
                       <SelectItem value="es">Español</SelectItem>
@@ -118,11 +121,11 @@ export default function UserSettings() {
                     </SelectContent>
                   </Select>
                   <p className="text-sm text-slate-400">
-                    اختر اللغة التي تريد استخدامها في المنصة
+                    {isAr ? "اختر اللغة التي تريد استخدامها في المنصة" : "Choose the language you want to use on the platform"}
                   </p>
                 </div>
                 <Button onClick={handleSaveSettings} className="w-full" disabled={updateSettingsMutation.isPending}>
-                  حفظ التغييرات
+                  {isAr ? "حفظ التغييرات" : "Save Changes"}
                 </Button>
               </TabsContent>
 
@@ -131,13 +134,13 @@ export default function UserSettings() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 mb-4">
                     <Bell className="w-5 h-5 text-blue-400" />
-                    <Label className="text-white text-lg">إعدادات الإشعارات</Label>
+                    <Label className="text-white text-lg">{isAr ? "إعدادات الإشعارات" : "Notification Settings"}</Label>
                   </div>
 
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
-                      <p className="text-white font-medium">إشعارات البريد الإلكتروني</p>
-                      <p className="text-sm text-slate-400">تلقي التحديثات عبر البريد الإلكتروني</p>
+                      <p className="text-white font-medium">{isAr ? "إشعارات البريد الإلكتروني" : "Email Notifications"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "تلقي التحديثات عبر البريد الإلكتروني" : "Receive updates via email"}</p>
                     </div>
                     <Switch
                       checked={settings.notifications.email}
@@ -152,8 +155,8 @@ export default function UserSettings() {
 
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
-                      <p className="text-white font-medium">الإشعارات الفورية</p>
-                      <p className="text-sm text-slate-400">تلقي إشعارات فورية في المتصفح</p>
+                      <p className="text-white font-medium">{isAr ? "الإشعارات الفورية" : "Push Notifications"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "تلقي إشعارات فورية في المتصفح" : "Receive instant notifications in your browser"}</p>
                     </div>
                     <Switch
                       checked={settings.notifications.push}
@@ -168,8 +171,8 @@ export default function UserSettings() {
 
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
-                      <p className="text-white font-medium">رسائل SMS</p>
-                      <p className="text-sm text-slate-400">تلقي تنبيهات عبر الرسائل النصية</p>
+                      <p className="text-white font-medium">{isAr ? "رسائل SMS" : "SMS Messages"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "تلقي تنبيهات عبر الرسائل النصية" : "Receive alerts via text messages"}</p>
                     </div>
                     <Switch
                       checked={settings.notifications.sms}
@@ -183,7 +186,7 @@ export default function UserSettings() {
                   </div>
                 </div>
                 <Button onClick={handleSaveSettings} className="w-full" disabled={updateSettingsMutation.isPending}>
-                  حفظ التغييرات
+                  {isAr ? "حفظ التغييرات" : "Save Changes"}
                 </Button>
               </TabsContent>
 
@@ -192,13 +195,13 @@ export default function UserSettings() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 mb-4">
                     <Eye className="w-5 h-5 text-blue-400" />
-                    <Label className="text-white text-lg">إعدادات الخصوصية</Label>
+                    <Label className="text-white text-lg">{isAr ? "إعدادات الخصوصية" : "Privacy Settings"}</Label>
                   </div>
 
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
-                      <p className="text-white font-medium">الملف الشخصي مرئي</p>
-                      <p className="text-sm text-slate-400">السماح للآخرين بمشاهدة ملفك الشخصي</p>
+                      <p className="text-white font-medium">{isAr ? "الملف الشخصي مرئي" : "Profile Visible"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "السماح للآخرين بمشاهدة ملفك الشخصي" : "Allow others to view your profile"}</p>
                     </div>
                     <Switch
                       checked={settings.privacy.profileVisible}
@@ -213,8 +216,8 @@ export default function UserSettings() {
 
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
-                      <p className="text-white font-medium">إظهار البريد الإلكتروني</p>
-                      <p className="text-sm text-slate-400">عرض بريدك الإلكتروني في الملف العام</p>
+                      <p className="text-white font-medium">{isAr ? "إظهار البريد الإلكتروني" : "Show Email"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "عرض بريدك الإلكتروني في الملف العام" : "Display your email on public profile"}</p>
                     </div>
                     <Switch
                       checked={settings.privacy.showEmail}
@@ -229,8 +232,8 @@ export default function UserSettings() {
 
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
-                      <p className="text-white font-medium">إظهار رقم الهاتف</p>
-                      <p className="text-sm text-slate-400">عرض رقم هاتفك في الملف العام</p>
+                      <p className="text-white font-medium">{isAr ? "إظهار رقم الهاتف" : "Show Phone Number"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "عرض رقم هاتفك في الملف العام" : "Display your phone number on public profile"}</p>
                     </div>
                     <Switch
                       checked={settings.privacy.showPhone}
@@ -244,7 +247,7 @@ export default function UserSettings() {
                   </div>
                 </div>
                 <Button onClick={handleSaveSettings} className="w-full" disabled={updateSettingsMutation.isPending}>
-                  حفظ التغييرات
+                  {isAr ? "حفظ التغييرات" : "Save Changes"}
                 </Button>
               </TabsContent>
 
@@ -253,11 +256,11 @@ export default function UserSettings() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 mb-4">
                     <Lock className="w-5 h-5 text-blue-400" />
-                    <Label className="text-white text-lg">تغيير كلمة المرور</Label>
+                    <Label className="text-white text-lg">{isAr ? "تغيير كلمة المرور" : "Change Password"}</Label>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="currentPassword" className="text-white">كلمة المرور الحالية</Label>
+                    <Label htmlFor="currentPassword" className="text-white">{isAr ? "كلمة المرور الحالية" : "Current Password"}</Label>
                     <div className="relative">
                       <Input
                         id="currentPassword"
@@ -282,7 +285,7 @@ export default function UserSettings() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="newPassword" className="text-white">كلمة المرور الجديدة</Label>
+                    <Label htmlFor="newPassword" className="text-white">{isAr ? "كلمة المرور الجديدة" : "New Password"}</Label>
                     <Input
                       id="newPassword"
                       type={showPassword ? 'text' : 'password'}
@@ -298,7 +301,7 @@ export default function UserSettings() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-white">تأكيد كلمة المرور</Label>
+                    <Label htmlFor="confirmPassword" className="text-white">{isAr ? "تأكيد كلمة المرور" : "Confirm Password"}</Label>
                     <Input
                       id="confirmPassword"
                       type={showPassword ? 'text' : 'password'}
@@ -314,11 +317,11 @@ export default function UserSettings() {
                   </div>
 
                   <p className="text-sm text-slate-400">
-                    كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل
+                    {isAr ? "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل" : "Password must contain at least 8 characters"}
                   </p>
                 </div>
                 <Button onClick={handlePasswordChange} className="w-full" disabled={updateSettingsMutation.isPending}>
-                  تحديث كلمة المرور
+                  {isAr ? "تحديث كلمة المرور" : "Update Password"}
                 </Button>
               </TabsContent>
             </Tabs>

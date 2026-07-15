@@ -1,12 +1,15 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Rocket, Code, Terminal, Database, Cloud, 
   Key, BookOpen, Zap, Globe, Shield
 } from "lucide-react";
 
 export default function Developers() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const apiEndpoints = [
     {
       method: "POST",
@@ -81,7 +84,7 @@ export default function Developers() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full mb-4">
             <Code className="w-4 h-4 text-green-400" />
-            <span className="text-green-400 text-sm">بوابة المطورين</span>
+            <span className="text-green-400 text-sm">{isAr ? "بوابة المطورين" : "بوابة المDevelopين"}</span>
           </div>
           <h1 className="text-4xl font-bold text-white mb-4">NAQLA API</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
@@ -97,10 +100,10 @@ export default function Developers() {
               البدء السريع
             </h2>
             <div className="bg-slate-900 rounded-xl p-4 font-mono text-sm">
-              <div className="text-slate-400 mb-2"># تثبيت SDK</div>
+              <div className="text-slate-400 mb-2">{isAr ? "# تثبيت SDK" : "[# تثبيت SDK]"}</div>
               <div className="text-green-400 mb-4">pip install naqla-sdk</div>
               
-              <div className="text-slate-400 mb-2"># استخدام API</div>
+              <div className="text-slate-400 mb-2">{isAr ? "# استخدام API" : "[# استخدام API]"}</div>
               <div className="text-cyan-400">
                 <span className="text-purple-400">from</span> naqla <span className="text-purple-400">import</span> NaqlaClient
               </div>
@@ -161,7 +164,7 @@ export default function Developers() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="p-6">
               <Database className="w-10 h-10 text-cyan-400 mb-4" />
-              <h3 className="text-lg font-bold text-white mb-2">قاعدة بيانات موحدة</h3>
+              <h3 className="text-lg font-bold text-white mb-2">{isAr ? "قاعدة بيانات موحدة" : "قاعدة بيانات موBorderة"}</h3>
               <p className="text-slate-400 text-sm">
                 وصول مباشر لقاعدة بيانات الابتكارات والملكيات الفكرية
               </p>
@@ -171,7 +174,7 @@ export default function Developers() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="p-6">
               <Cloud className="w-10 h-10 text-purple-400 mb-4" />
-              <h3 className="text-lg font-bold text-white mb-2">تقييم AI سحابي</h3>
+              <h3 className="text-lg font-bold text-white mb-2">{isAr ? "تقييم AI سحابي" : "[تقييم AI سحابي]"}</h3>
               <p className="text-slate-400 text-sm">
                 استخدم محرك التقييم الذكي مباشرة من تطبيقاتك
               </p>
@@ -181,7 +184,7 @@ export default function Developers() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="p-6">
               <Shield className="w-10 h-10 text-emerald-400 mb-4" />
-              <h3 className="text-lg font-bold text-white mb-2">أمان متقدم</h3>
+              <h3 className="text-lg font-bold text-white mb-2">{isAr ? "أمان متقدم" : "[أمان متقدم]"}</h3>
               <p className="text-slate-400 text-sm">
                 تشفير كامل وتوثيق OAuth 2.0 لحماية بياناتك
               </p>
@@ -193,7 +196,7 @@ export default function Developers() {
         <Card className="bg-gradient-to-r from-green-950/50 to-slate-900 border-green-800/50">
           <CardContent className="p-8 text-center">
             <BookOpen className="w-16 h-16 text-green-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-white mb-4">التوثيق الكامل</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "التوثيق الكامل" : "Documentation الكامل"}</h2>
             <p className="text-slate-300 mb-6 max-w-xl mx-auto">
               استكشف التوثيق التفصيلي مع أمثلة عملية لكل نقطة نهاية
             </p>
@@ -212,19 +215,19 @@ export default function Developers() {
 
         {/* Rate Limits */}
         <div className="mt-8 p-6 bg-slate-800/30 rounded-xl border border-slate-700">
-          <h3 className="text-white font-semibold mb-4">حدود الاستخدام</h3>
+          <h3 className="text-white font-semibold mb-4">{isAr ? "حدود الاستخدام" : "حدود اNoستخدام"}</h3>
           <div className="grid md:grid-cols-3 gap-4 text-sm">
             <div className="flex justify-between">
               <span className="text-slate-400">Free Tier</span>
-              <span className="text-white">100 طلب/يوم</span>
+              <span className="text-white">{isAr ? "100 طلب/يوم" : "[100 طلب/يوم]"}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-slate-400">Pro Tier</span>
-              <span className="text-white">10,000 طلب/يوم</span>
+              <span className="text-white">{isAr ? "10,000 طلب/يوم" : "[10,000 طلب/يوم]"}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-slate-400">Enterprise</span>
-              <span className="text-white">غير محدود</span>
+              <span className="text-white">{isAr ? "غير محدود" : "غير مBorderود"}</span>
             </div>
           </div>
         </div>

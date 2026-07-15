@@ -11,8 +11,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Calendar, MapPin, Users, Globe, Plus, Search, Building } from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2Events() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -23,20 +26,20 @@ export default function Naqla2Events() {
 
   const createMutation = trpc.naqla2.events.create.useMutation({
     onSuccess: () => {
-      toast.success('تم إنشاء الفعالية بنجاح');
+      toast.success(isAr ? 'تم إنشاء الفعالية بنجاح' : 'Event created successfully');
       setShowCreateForm(false);
     },
     onError: (error) => {
-      toast.error('فشل إنشاء الفعالية: ' + error.message);
+      toast.error((isAr ? 'فشل إنشاء الفعالية: ' : 'Failed to create event: ') + error.message);
     }
   });
 
   const registerMutation = trpc.naqla2.events.register.useMutation({
     onSuccess: () => {
-      toast.success('تم التسجيل بنجاح');
+      toast.success(isAr ? 'تم التسجيل بنجاح' : 'Registration successful');
     },
     onError: (error) => {
-      toast.error('فشل التسجيل: ' + error.message);
+      toast.error((isAr ? 'فشل التسجيل: ' : 'Registration failed: ') + error.message);
     }
   });
 
@@ -71,10 +74,10 @@ export default function Naqla2Events() {
             <div>
               <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3">
                 <Calendar className="w-10 h-10 text-blue-400" />
-                الفعاليات
+                {isAr ? 'الفعاليات' : 'Events'}
               </h1>
               <p className="text-slate-400 text-lg">
-                اكتشف وشارك في فعاليات الابتكار والتواصل
+                {isAr ? 'اكتشف وشارك في فعاليات الابتكار والتواصل' : 'Discover and participate in innovation and networking events'}
               </p>
             </div>
             {user && (
@@ -83,7 +86,7 @@ export default function Naqla2Events() {
                 className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                إنشاء فعالية
+                {isAr ? 'إنشاء فعالية' : 'Create Event'}
               </Button>
             )}
           </div>
@@ -93,13 +96,13 @@ export default function Naqla2Events() {
         {showCreateForm && (
           <Card className="mb-8 bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">إنشاء فعالية جديدة</CardTitle>
+              <CardTitle className="text-white">{isAr ? 'إنشاء فعالية جديدة' : 'Create New Event'}</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCreateEvent} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="title" className="text-white">عنوان الفعالية</Label>
+                    <Label htmlFor="title" className="text-white">{isAr ? 'عنوان الفعالية' : 'Event Title'}</Label>
                     <Input
                       id="title"
                       name="title"
@@ -108,24 +111,24 @@ export default function Naqla2Events() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="eventType" className="text-white">نوع الفعالية</Label>
+                    <Label htmlFor="eventType" className="text-white">{isAr ? 'نوع الفعالية' : 'Event Type'}</Label>
                     <Select name="eventType" required>
                       <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
-                        <SelectValue placeholder="اختر النوع" />
+                        <SelectValue placeholder={isAr ? "اختر النوع" : "Select Type"} />
                       </SelectTrigger>
                       <SelectContent className="bg-slate-800 border-slate-700">
-                        <SelectItem value="conference">مؤتمر</SelectItem>
-                        <SelectItem value="workshop">ورشة عمل</SelectItem>
-                        <SelectItem value="networking">تواصل</SelectItem>
-                        <SelectItem value="demo_day">يوم العروض</SelectItem>
-                        <SelectItem value="pitch_event">عروض تقديمية</SelectItem>
+                        <SelectItem value="conference">{isAr ? 'مؤتمر' : 'Conference'}</SelectItem>
+                        <SelectItem value="workshop">{isAr ? 'ورشة عمل' : 'Workshop'}</SelectItem>
+                        <SelectItem value="networking">{isAr ? 'تواصل' : 'Networking'}</SelectItem>
+                        <SelectItem value="demo_day">{isAr ? 'يوم العروض' : 'Demo Day'}</SelectItem>
+                        <SelectItem value="pitch_event">{isAr ? 'عروض تقديمية' : 'Pitch Event'}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description" className="text-white">الوصف</Label>
+                  <Label htmlFor="description" className="text-white">{isAr ? 'الوصف' : 'Description'}</Label>
                   <Textarea
                     id="description"
                     name="description"
@@ -137,7 +140,7 @@ export default function Naqla2Events() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="startDate" className="text-white">تاريخ البداية</Label>
+                    <Label htmlFor="startDate" className="text-white">{isAr ? 'تاريخ البداية' : 'Start Date'}</Label>
                     <Input
                       id="startDate"
                       name="startDate"
@@ -147,7 +150,7 @@ export default function Naqla2Events() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="endDate" className="text-white">تاريخ النهاية</Label>
+                    <Label htmlFor="endDate" className="text-white">{isAr ? 'تاريخ النهاية' : 'End Date'}</Label>
                     <Input
                       id="endDate"
                       name="endDate"
@@ -160,7 +163,7 @@ export default function Naqla2Events() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="location" className="text-white">الموقع</Label>
+                    <Label htmlFor="location" className="text-white">{isAr ? 'الموقع' : 'Location'}</Label>
                     <Input
                       id="location"
                       name="location"
@@ -168,7 +171,7 @@ export default function Naqla2Events() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="maxAttendees" className="text-white">الحد الأقصى للحضور</Label>
+                    <Label htmlFor="maxAttendees" className="text-white">{isAr ? 'الحد الأقصى للحضور' : 'Max Attendees'}</Label>
                     <Input
                       id="maxAttendees"
                       name="maxAttendees"
@@ -185,19 +188,19 @@ export default function Naqla2Events() {
                     name="isOnline"
                     className="w-4 h-4"
                   />
-                  <Label htmlFor="isOnline" className="text-white">فعالية أونلاين</Label>
+                  <Label htmlFor="isOnline" className="text-white">{isAr ? 'فعالية أونلاين' : 'Online Event'}</Label>
                 </div>
 
                 <div className="flex gap-2">
                   <Button type="submit" disabled={createMutation.isPending}>
-                    إنشاء الفعالية
+                    {isAr ? 'إنشاء الفعالية' : 'Create Event'}
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setShowCreateForm(false)}
                   >
-                    إلغاء
+                    {isAr ? 'إلغاء' : 'Cancel'}
                   </Button>
                 </div>
               </form>
@@ -209,16 +212,16 @@ export default function Naqla2Events() {
         {showSponsorForm && selectedEvent && (
           <Card className="mb-8 bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">طلب رعاية</CardTitle>
+              <CardTitle className="text-white">{isAr ? 'طلب رعاية' : 'Sponsorship Request'}</CardTitle>
               <CardDescription className="text-slate-400">
-                قدم طلب لرعاية هذه الفعالية
+                {isAr ? 'قدم طلب لرعاية هذه الفعالية' : 'Submit a request to sponsor this event'}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="companyName" className="text-white">اسم الشركة</Label>
+                    <Label htmlFor="companyName" className="text-white">{isAr ? 'اسم الشركة' : 'Company Name'}</Label>
                     <Input
                       id="companyName"
                       required
@@ -226,7 +229,7 @@ export default function Naqla2Events() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="contactPerson" className="text-white">الشخص المسؤول</Label>
+                    <Label htmlFor="contactPerson" className="text-white">{isAr ? 'الشخص المسؤول' : 'Contact Person'}</Label>
                     <Input
                       id="contactPerson"
                       required
@@ -237,7 +240,7 @@ export default function Naqla2Events() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-white">البريد الإلكتروني</Label>
+                    <Label htmlFor="email" className="text-white">{isAr ? 'البريد الإلكتروني' : 'Email'}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -246,7 +249,7 @@ export default function Naqla2Events() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-white">رقم الهاتف</Label>
+                    <Label htmlFor="phone" className="text-white">{isAr ? 'رقم الهاتف' : 'Phone Number'}</Label>
                     <Input
                       id="phone"
                       required
@@ -256,7 +259,7 @@ export default function Naqla2Events() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message" className="text-white">رسالة (اختياري)</Label>
+                  <Label htmlFor="message" className="text-white">{isAr ? 'رسالة (اختياري)' : 'Message (optional)'}</Label>
                   <Textarea
                     id="message"
                     rows={3}
@@ -268,18 +271,18 @@ export default function Naqla2Events() {
                   <Button
                     type="button"
                     onClick={() => {
-                      toast.success('تم إرسال طلب الرعاية');
+                      toast.success(isAr ? 'تم إرسال طلب الرعاية' : 'Sponsorship request sent');
                       setShowSponsorForm(false);
                     }}
                   >
-                    إرسال الطلب
+                    {isAr ? 'إرسال الطلب' : 'Submit Request'}
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setShowSponsorForm(false)}
                   >
-                    إلغاء
+                    {isAr ? 'إلغاء' : 'Cancel'}
                   </Button>
                 </div>
               </form>
@@ -293,7 +296,7 @@ export default function Naqla2Events() {
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
               type="search"
-              placeholder="ابحث عن فعالية..."
+              placeholder={isAr ? "ابحث عن فعالية..." : "Search for an event..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10 bg-slate-900/50 border-slate-800 text-white"
@@ -304,15 +307,15 @@ export default function Naqla2Events() {
         {/* Tabs */}
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-slate-800/50">
-            <TabsTrigger value="all">الكل</TabsTrigger>
-            <TabsTrigger value="upcoming">قادمة</TabsTrigger>
-            <TabsTrigger value="ongoing">جارية</TabsTrigger>
-            <TabsTrigger value="sponsors">للرعاة</TabsTrigger>
+            <TabsTrigger value="all">{isAr ? 'الكل' : 'All'}</TabsTrigger>
+            <TabsTrigger value="upcoming">{isAr ? 'قادمة' : 'Upcoming'}</TabsTrigger>
+            <TabsTrigger value="ongoing">{isAr ? 'جارية' : 'Ongoing'}</TabsTrigger>
+            <TabsTrigger value="sponsors">{isAr ? 'للرعاة' : 'For Sponsors'}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="mt-6">
             {isLoading ? (
-              <div className="text-center py-12 text-slate-400">جاري التحميل...</div>
+              <div className="text-center py-12 text-slate-400">{isAr ? 'جاري التحميل...' : 'Loading...'}</div>
             ) : events && events.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {events.map((event: any) => (
@@ -332,7 +335,7 @@ export default function Naqla2Events() {
                         {event.isOnline ? (
                           <>
                             <Globe className="w-4 h-4" />
-                            <span className="text-sm">أونلاين</span>
+                            <span className="text-sm">{isAr ? 'أونلاين' : 'Online'}</span>
                           </>
                         ) : (
                           <>
@@ -344,7 +347,7 @@ export default function Naqla2Events() {
                       {event.maxAttendees && (
                         <div className="flex items-center gap-2 text-slate-300">
                           <Users className="w-4 h-4" />
-                          <span className="text-sm">حتى {event.maxAttendees} حاضر</span>
+                          <span className="text-sm">{isAr ? `حتى ${event.maxAttendees} حاضر` : `Up to ${event.maxAttendees} attendees`}</span>
                         </div>
                       )}
                       {user && (
@@ -353,7 +356,7 @@ export default function Naqla2Events() {
                             className="flex-1"
                             onClick={() => handleRegister(event.id, 'attendee')}
                           >
-                            سجل الآن
+                            {isAr ? 'سجل الآن' : 'Register Now'}
                           </Button>
                           <Button
                             variant="outline"
@@ -372,28 +375,28 @@ export default function Naqla2Events() {
               </div>
             ) : (
               <div className="text-center py-12 text-slate-400">
-                لا توجد فعاليات حالياً
+                {isAr ? 'لا توجد فعاليات حالياً' : 'No events available currently'}
               </div>
             )}
           </TabsContent>
 
           <TabsContent value="upcoming">
             <div className="text-center py-12 text-slate-400">
-              لا توجد فعاليات قادمة
+              {isAr ? 'لا توجد فعاليات قادمة' : 'No upcoming events'}
             </div>
           </TabsContent>
 
           <TabsContent value="ongoing">
             <div className="text-center py-12 text-slate-400">
-              لا توجد فعاليات جارية
+              {isAr ? 'لا توجد فعاليات جارية' : 'No ongoing events'}
             </div>
           </TabsContent>
 
           <TabsContent value="sponsors">
             <div className="text-center py-12 text-slate-400">
               <Building className="w-16 h-16 mx-auto mb-4 text-slate-600" />
-              <p className="mb-4">هل تبحث عن فرص رعاية؟</p>
-              <p className="text-sm">تواصل مع منظمي الفعاليات للحصول على فرص رعاية مميزة</p>
+              <p className="mb-4">{isAr ? 'هل تبحث عن فرص رعاية؟' : 'Looking for sponsorship opportunities?'}</p>
+              <p className="text-sm">{isAr ? 'تواصل مع منظمي الفعاليات للحصول على فرص رعاية مميزة' : 'Contact event organizers for unique sponsorship opportunities'}</p>
             </div>
           </TabsContent>
         </Tabs>

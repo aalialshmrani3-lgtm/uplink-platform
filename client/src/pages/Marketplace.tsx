@@ -6,20 +6,23 @@ import { Slider } from "@/components/ui/slider";
 import { trpc } from "@/lib/trpc";
 import { useState, useMemo } from "react";
 import { 
-  Rocket, Globe, Search, Filter, Lightbulb, 
-  TrendingUp, Shield, Eye, Heart, MessageSquare,
-  X, SlidersHorizontal, ArrowUpDown, Grid3X3, List,
-  Sparkles, Target, DollarSign, Star, ChevronDown,
+  Rocket, Globe, Search, Lightbulb, 
+  TrendingUp, Shield, Eye, Heart, 
+  X, SlidersHorizontal, Grid3X3, List,
+  Sparkles, Target, DollarSign,
   Building2, Users, MapPin, Calendar
 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Marketplace() {
+  const { t, language } = useLanguage();
+  const isAr = language === 'ar';
+
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("newest");
   
-  // Advanced Filters
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStage, setSelectedStage] = useState("all");
   const [selectedScore, setSelectedScore] = useState("all");
@@ -29,12 +32,11 @@ export default function Marketplace() {
 
   const { data: projects, isLoading } = trpc.project.getAll.useQuery();
 
-  // Demo projects for marketplace
   const demoProjects = [
     {
       id: 1,
-      title: "نظام ذكاء اصطناعي للتشخيص الطبي",
-      description: "منصة AI متقدمة لتحليل الصور الطبية وتقديم تشخيصات دقيقة باستخدام أحدث تقنيات التعلم العميق",
+      title: isAr ? "نظام ذكاء اصطناعي للتشخيص الطبي" : "AI Medical Diagnosis System",
+      description: isAr ? "منصة AI متقدمة لتحليل الصور الطبية وتقديم تشخيصات دقيقة باستخدام أحدث تقنيات التعلم العميق" : "Advanced AI platform for medical image analysis and accurate diagnostics using deep learning",
       category: "healthcare",
       stage: "mvp",
       fundingNeeded: "2000000",
@@ -43,14 +45,14 @@ export default function Marketplace() {
       score: 85,
       hasIP: true,
       verified: true,
-      location: "الرياض",
+      location: isAr ? "الرياض" : "Riyadh",
       teamSize: 8,
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     },
     {
       id: 2,
-      title: "منصة إدارة الطاقة الذكية",
-      description: "حل متكامل لمراقبة وتحسين استهلاك الطاقة في المباني التجارية والسكنية",
+      title: isAr ? "منصة إدارة الطاقة الذكية" : "Smart Energy Management Platform",
+      description: isAr ? "حل متكامل لمراقبة وتحسين استهلاك الطاقة في المباني التجارية والسكنية" : "Integrated solution for monitoring and optimizing energy consumption in commercial and residential buildings",
       category: "energy",
       stage: "prototype",
       fundingNeeded: "1500000",
@@ -59,14 +61,14 @@ export default function Marketplace() {
       score: 78,
       hasIP: true,
       verified: true,
-      location: "جدة",
+      location: isAr ? "جدة" : "Jeddah",
       teamSize: 5,
       createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
     },
     {
       id: 3,
-      title: "تطبيق التعليم التفاعلي",
-      description: "منصة تعليمية تستخدم الواقع المعزز والذكاء الاصطناعي لتحسين تجربة التعلم",
+      title: isAr ? "تطبيق التعليم التفاعلي" : "Interactive Learning App",
+      description: isAr ? "منصة تعليمية تستخدم الواقع المعزز والذكاء الاصطناعي لتحسين تجربة التعلم" : "Educational platform using augmented reality and AI to enhance the learning experience",
       category: "education",
       stage: "growth",
       fundingNeeded: "3000000",
@@ -75,14 +77,14 @@ export default function Marketplace() {
       score: 92,
       hasIP: false,
       verified: true,
-      location: "الرياض",
+      location: isAr ? "الرياض" : "Riyadh",
       teamSize: 12,
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     },
     {
       id: 4,
-      title: "نظام اللوجستيات الذكي",
-      description: "حل لتحسين سلاسل التوريد باستخدام الذكاء الاصطناعي والتحليلات التنبؤية",
+      title: isAr ? "نظام اللوجستيات الذكي" : "Smart Logistics System",
+      description: isAr ? "حل لتحسين سلاسل التوريد باستخدام الذكاء الاصطناعي والتحليلات التنبؤية" : "Solution for optimizing supply chains using AI and predictive analytics",
       category: "logistics",
       stage: "mvp",
       fundingNeeded: "2500000",
@@ -91,14 +93,14 @@ export default function Marketplace() {
       score: 74,
       hasIP: true,
       verified: false,
-      location: "الدمام",
+      location: isAr ? "الدمام" : "Dammam",
       teamSize: 6,
       createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
     },
     {
       id: 5,
-      title: "محفظة رقمية للعملات المشفرة",
-      description: "محفظة آمنة ومتوافقة مع الأنظمة السعودية لإدارة الأصول الرقمية",
+      title: isAr ? "محفظة رقمية للعملات المشفرة" : "Digital Cryptocurrency Wallet",
+      description: isAr ? "محفظة آمنة ومتوافقة مع الأنظمة السعودية لإدارة الأصول الرقمية" : "Secure wallet compliant with Saudi regulations for managing digital assets",
       category: "fintech",
       stage: "idea",
       fundingNeeded: "1000000",
@@ -107,14 +109,14 @@ export default function Marketplace() {
       score: 68,
       hasIP: false,
       verified: false,
-      location: "الرياض",
+      location: isAr ? "الرياض" : "Riyadh",
       teamSize: 3,
       createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
     },
     {
       id: 6,
-      title: "روبوت الزراعة الذكية",
-      description: "روبوت آلي لمراقبة المحاصيل والري الذكي باستخدام تقنيات IoT",
+      title: isAr ? "روبوت الزراعة الذكية" : "Smart Agriculture Robot",
+      description: isAr ? "روبوت آلي لمراقبة المحاصيل والري الذكي باستخدام تقنيات IoT" : "Automated robot for crop monitoring and smart irrigation using IoT technologies",
       category: "agriculture",
       stage: "prototype",
       fundingNeeded: "4000000",
@@ -123,14 +125,14 @@ export default function Marketplace() {
       score: 81,
       hasIP: true,
       verified: true,
-      location: "القصيم",
+      location: isAr ? "القصيم" : "Al-Qassim",
       teamSize: 7,
       createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
     },
     {
       id: 7,
-      title: "منصة التجارة الإلكترونية B2B",
-      description: "سوق إلكتروني متخصص لربط الموردين بالشركات في قطاع التجزئة",
+      title: isAr ? "منصة التجارة الإلكترونية B2B" : "B2B E-Commerce Platform",
+      description: isAr ? "سوق إلكتروني متخصص لربط الموردين بالشركات في قطاع التجزئة" : "Specialized online marketplace connecting suppliers with companies in the retail sector",
       category: "ecommerce",
       stage: "growth",
       fundingNeeded: "5000000",
@@ -139,14 +141,14 @@ export default function Marketplace() {
       score: 88,
       hasIP: false,
       verified: true,
-      location: "جدة",
+      location: isAr ? "جدة" : "Jeddah",
       teamSize: 15,
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
     },
     {
       id: 8,
-      title: "تطبيق الصحة النفسية",
-      description: "منصة رقمية لتقديم خدمات الدعم النفسي والاستشارات عن بُعد",
+      title: isAr ? "تطبيق الصحة النفسية" : "Mental Health App",
+      description: isAr ? "منصة رقمية لتقديم خدمات الدعم النفسي والاستشارات عن بُعد" : "Digital platform for providing mental health support and remote consultations",
       category: "healthcare",
       stage: "mvp",
       fundingNeeded: "1200000",
@@ -155,7 +157,7 @@ export default function Marketplace() {
       score: 76,
       hasIP: false,
       verified: true,
-      location: "الرياض",
+      location: isAr ? "الرياض" : "Riyadh",
       teamSize: 4,
       createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000),
     },
@@ -163,87 +165,65 @@ export default function Marketplace() {
 
   const displayProjects = projects && projects.length > 0 ? projects : demoProjects;
 
-  // Categories
   const categories = [
-    { value: "all", label: "جميع الفئات", icon: Grid3X3 },
-    { value: "healthcare", label: "الرعاية الصحية", icon: Heart },
-    { value: "energy", label: "الطاقة", icon: Sparkles },
-    { value: "education", label: "التعليم", icon: Target },
-    { value: "logistics", label: "اللوجستيات", icon: Building2 },
-    { value: "fintech", label: "التقنية المالية", icon: DollarSign },
-    { value: "agriculture", label: "الزراعة", icon: Globe },
-    { value: "ecommerce", label: "التجارة الإلكترونية", icon: TrendingUp },
-    { value: "technology", label: "التقنية", icon: Lightbulb },
+    { value: "all", label: isAr ? "جميع الفئات" : "All Categories", icon: Grid3X3 },
+    { value: "healthcare", label: isAr ? "الرعاية الصحية" : "Healthcare", icon: Heart },
+    { value: "energy", label: isAr ? "الطاقة" : "Energy", icon: Sparkles },
+    { value: "education", label: isAr ? "التعليم" : "Education", icon: Target },
+    { value: "logistics", label: isAr ? "اللوجستيات" : "Logistics", icon: Building2 },
+    { value: "fintech", label: isAr ? "التقنية المالية" : "FinTech", icon: DollarSign },
+    { value: "agriculture", label: isAr ? "الزراعة" : "Agriculture", icon: Globe },
+    { value: "ecommerce", label: isAr ? "التجارة الإلكترونية" : "E-Commerce", icon: TrendingUp },
+    { value: "technology", label: isAr ? "التقنية" : "Technology", icon: Lightbulb },
   ];
 
   const stages = [
-    { value: "all", label: "جميع المراحل" },
-    { value: "idea", label: "فكرة" },
-    { value: "prototype", label: "نموذج أولي" },
+    { value: "all", label: isAr ? "جميع المراحل" : "All Stages" },
+    { value: "idea", label: isAr ? "فكرة" : "Idea" },
+    { value: "prototype", label: isAr ? "نموذج أولي" : "Prototype" },
     { value: "mvp", label: "MVP" },
-    { value: "growth", label: "نمو" },
-    { value: "scale", label: "توسع" },
+    { value: "growth", label: isAr ? "نمو" : "Growth" },
+    { value: "scale", label: isAr ? "توسع" : "Scale" },
   ];
 
   const scoreFilters = [
-    { value: "all", label: "جميع التقييمات" },
-    { value: "high", label: "ابتكار (80%+)" },
-    { value: "medium", label: "تجاري (60-79%)" },
-    { value: "low", label: "إرشاد (<60%)" },
+    { value: "all", label: isAr ? "جميع التقييمات" : "All Ratings" },
+    { value: "high", label: isAr ? "ابتكار (80%+)" : "Innovation (80%+)" },
+    { value: "medium", label: isAr ? "تجاري (60-79%)" : "Commercial (60-79%)" },
+    { value: "low", label: isAr ? "إرشاد (<60%)" : "Guidance (<60%)" },
   ];
 
   const sortOptions = [
-    { value: "newest", label: "الأحدث" },
-    { value: "popular", label: "الأكثر مشاهدة" },
-    { value: "score", label: "أعلى تقييم" },
-    { value: "funding", label: "أعلى تمويل" },
+    { value: "newest", label: isAr ? "الأحدث" : "Newest" },
+    { value: "popular", label: isAr ? "الأكثر مشاهدة" : "Most Viewed" },
+    { value: "score", label: isAr ? "أعلى تقييم" : "Highest Rated" },
+    { value: "funding", label: isAr ? "أعلى تمويل" : "Highest Funding" },
   ];
 
-  // Filter and sort projects
   const filteredProjects = useMemo(() => {
     let result = displayProjects.filter((project: any) => {
-      // Search
       const matchesSearch = searchQuery === "" || 
         project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      // Category
       const matchesCategory = selectedCategory === "all" || project.category === selectedCategory;
-      
-      // Stage
       const matchesStage = selectedStage === "all" || project.stage === selectedStage;
-      
-      // Score
       let matchesScore = true;
       if (selectedScore === "high") matchesScore = (project.score || 0) >= 80;
       else if (selectedScore === "medium") matchesScore = (project.score || 0) >= 60 && (project.score || 0) < 80;
       else if (selectedScore === "low") matchesScore = (project.score || 0) < 60;
-      
-      // Funding Range
       const funding = Number(project.fundingNeeded) || 0;
       const matchesFunding = funding >= fundingRange[0] && funding <= fundingRange[1];
-      
-      // IP
       const matchesIP = !hasIP || project.hasIP;
-      
-      // Verified
       const matchesVerified = !verifiedOnly || project.verified;
-
       return matchesSearch && matchesCategory && matchesStage && matchesScore && matchesFunding && matchesIP && matchesVerified;
     });
 
-    // Sort
     result.sort((a: any, b: any) => {
       switch (sortBy) {
-        case "popular":
-          return (b.views || 0) - (a.views || 0);
-        case "score":
-          return (b.score || 0) - (a.score || 0);
-        case "funding":
-          return Number(b.fundingNeeded || 0) - Number(a.fundingNeeded || 0);
-        case "newest":
-        default:
-          return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+        case "popular": return (b.views || 0) - (a.views || 0);
+        case "score": return (b.score || 0) - (a.score || 0);
+        case "funding": return Number(b.fundingNeeded || 0) - Number(a.fundingNeeded || 0);
+        default: return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
       }
     });
 
@@ -252,12 +232,12 @@ export default function Marketplace() {
 
   const getCategoryText = (category: string | null) => {
     const cat = categories.find(c => c.value === category);
-    return cat?.label || category || "عام";
+    return cat?.label || category || (isAr ? "عام" : "General");
   };
 
   const getStageText = (stage: string | null) => {
     const stg = stages.find(s => s.value === stage);
-    return stg?.label || stage || "فكرة";
+    return stg?.label || stage || (isAr ? "فكرة" : "Idea");
   };
 
   const getStageColor = (stage: string | null) => {
@@ -307,14 +287,14 @@ export default function Marketplace() {
           </Link>
           <Link href="/dashboard">
             <Button variant="outline" className="border-slate-700 text-slate-300">
-              لوحة التحكم
+              {t.sidebar.dashboard}
             </Button>
           </Link>
         </div>
       </header>
 
       <div className="container mx-auto px-6 py-8">
-        {/* Hero Section - Enhanced */}
+        {/* Hero Section */}
         <div className="relative mb-12">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-cyan-600/20 rounded-3xl blur-3xl"></div>
           <div className="relative bg-gradient-to-br from-purple-900/40 to-slate-900 rounded-3xl p-10 border border-purple-500/20">
@@ -322,29 +302,32 @@ export default function Marketplace() {
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full mb-4">
                   <Globe className="w-4 h-4 text-purple-400" />
-                  <span className="text-purple-400 text-sm">NAQLA3 - السوق والتبادل</span>
+                  <span className="text-purple-400 text-sm">{isAr ? "NAQLA3 - السوق والتبادل" : "NAQLA3 - Market & Exchange"}</span>
                 </div>
-                <h1 className="text-4xl font-bold text-white mb-4">سوق الابتكارات</h1>
+                <h1 className="text-4xl font-bold text-white mb-4">{isAr ? "سوق الابتكارات" : "Innovation Marketplace"}</h1>
                 <p className="text-slate-300 text-lg max-w-xl">
-                  اكتشف أفضل الابتكارات السعودية واستثمر في المستقبل مع نظام حماية متكامل
+                  {isAr
+                    ? "اكتشف أفضل الابتكارات السعودية واستثمر في المستقبل مع نظام حماية متكامل"
+                    : "Discover the best Saudi innovations and invest in the future with a comprehensive protection system"
+                  }
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl">
                   <div className="text-3xl font-bold text-white">{displayProjects.length}</div>
-                  <div className="text-slate-400 text-sm">مشروع</div>
+                  <div className="text-slate-400 text-sm">{isAr ? "مشروع" : "Projects"}</div>
                 </div>
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl">
                   <div className="text-3xl font-bold text-white">
                     {(displayProjects.reduce((sum: number, p: any) => sum + Number(p.fundingNeeded || 0), 0) / 1000000).toFixed(0)}M
                   </div>
-                  <div className="text-slate-400 text-sm">تمويل مطلوب</div>
+                  <div className="text-slate-400 text-sm">{isAr ? "تمويل مطلوب" : "Funding Needed"}</div>
                 </div>
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl">
                   <div className="text-3xl font-bold text-white">
                     {displayProjects.filter((p: any) => p.verified).length}
                   </div>
-                  <div className="text-slate-400 text-sm">موثق</div>
+                  <div className="text-slate-400 text-sm">{isAr ? "موثق" : "Verified"}</div>
                 </div>
               </div>
             </div>
@@ -354,18 +337,16 @@ export default function Marketplace() {
         {/* Search & Filter Bar */}
         <div className="mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
             <div className="relative flex-1">
               <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="ابحث عن ابتكار بالاسم أو الوصف..."
+                placeholder={isAr ? "ابحث عن ابتكار بالاسم أو الوصف..." : "Search for an innovation by name or description..."}
                 className="bg-slate-800/50 border-slate-700 text-white pr-12 h-12 text-base"
               />
             </div>
 
-            {/* Quick Filters */}
             <div className="flex gap-3 flex-wrap">
               <select
                 value={selectedCategory}
@@ -393,7 +374,7 @@ export default function Marketplace() {
                 onClick={() => setShowFilters(!showFilters)}
               >
                 <SlidersHorizontal className="w-4 h-4 ml-2" />
-                فلاتر متقدمة
+                {isAr ? "فلاتر متقدمة" : "Advanced Filters"}
                 {activeFiltersCount > 0 && (
                   <span className="mr-2 px-2 py-0.5 bg-purple-500 text-white text-xs rounded-full">
                     {activeFiltersCount}
@@ -401,7 +382,6 @@ export default function Marketplace() {
                 )}
               </Button>
 
-              {/* Sort */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -412,7 +392,6 @@ export default function Marketplace() {
                 ))}
               </select>
 
-              {/* View Mode */}
               <div className="flex border border-slate-700 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setViewMode("grid")}
@@ -430,21 +409,19 @@ export default function Marketplace() {
             </div>
           </div>
 
-          {/* Advanced Filters Panel */}
           {showFilters && (
             <div className="mt-4 p-6 bg-slate-800/50 rounded-xl border border-slate-700">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-white font-semibold">فلاتر متقدمة</h3>
+                <h3 className="text-white font-semibold">{isAr ? "فلاتر متقدمة" : "Advanced Filters"}</h3>
                 <Button variant="ghost" size="sm" onClick={clearFilters} className="text-slate-400 hover:text-white">
                   <X className="w-4 h-4 ml-1" />
-                  مسح الكل
+                  {isAr ? "مسح الكل" : "Clear All"}
                 </Button>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* Score Filter */}
                 <div>
-                  <label className="text-slate-300 text-sm mb-2 block">تصنيف التقييم</label>
+                  <label className="text-slate-300 text-sm mb-2 block">{isAr ? "تصنيف التقييم" : "Rating Classification"}</label>
                   <select
                     value={selectedScore}
                     onChange={(e) => setSelectedScore(e.target.value)}
@@ -456,10 +433,12 @@ export default function Marketplace() {
                   </select>
                 </div>
 
-                {/* Funding Range */}
                 <div className="lg:col-span-2">
                   <label className="text-slate-300 text-sm mb-2 block">
-                    نطاق التمويل: {(fundingRange[0] / 1000000).toFixed(1)}M - {(fundingRange[1] / 1000000).toFixed(1)}M ريال
+                    {isAr
+                      ? `نطاق التمويل: ${(fundingRange[0] / 1000000).toFixed(1)}M - ${(fundingRange[1] / 1000000).toFixed(1)}M ريال`
+                      : `Funding Range: ${(fundingRange[0] / 1000000).toFixed(1)}M - ${(fundingRange[1] / 1000000).toFixed(1)}M SAR`
+                    }
                   </label>
                   <Slider
                     value={fundingRange}
@@ -471,7 +450,6 @@ export default function Marketplace() {
                   />
                 </div>
 
-                {/* Checkboxes */}
                 <div className="space-y-3">
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
@@ -480,7 +458,7 @@ export default function Marketplace() {
                       onChange={(e) => setHasIP(e.target.checked)}
                       className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-purple-500 focus:ring-purple-500"
                     />
-                    <span className="text-slate-300">لديه ملكية فكرية</span>
+                    <span className="text-slate-300">{isAr ? "لديه ملكية فكرية" : "Has Intellectual Property"}</span>
                   </label>
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
@@ -489,21 +467,23 @@ export default function Marketplace() {
                       onChange={(e) => setVerifiedOnly(e.target.checked)}
                       className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-purple-500 focus:ring-purple-500"
                     />
-                    <span className="text-slate-300">موثق فقط</span>
+                    <span className="text-slate-300">{isAr ? "موثق فقط" : "Verified Only"}</span>
                   </label>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Results Count */}
           <div className="mt-4 flex items-center justify-between text-sm">
             <span className="text-slate-400">
-              عرض {filteredProjects.length} مشروع من أصل {displayProjects.length}
+              {isAr
+                ? `عرض ${filteredProjects.length} مشروع من أصل ${displayProjects.length}`
+                : `Showing ${filteredProjects.length} projects out of ${displayProjects.length}`
+              }
             </span>
             {activeFiltersCount > 0 && (
               <button onClick={clearFilters} className="text-purple-400 hover:text-purple-300">
-                مسح الفلاتر ({activeFiltersCount})
+                {isAr ? `مسح الفلاتر (${activeFiltersCount})` : `Clear Filters (${activeFiltersCount})`}
               </button>
             )}
           </div>
@@ -535,10 +515,10 @@ export default function Marketplace() {
         ) : filteredProjects.length === 0 ? (
           <div className="text-center py-20">
             <Lightbulb className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">لا توجد نتائج</h3>
-            <p className="text-slate-400 mb-4">جرب تغيير معايير البحث أو الفلاتر</p>
+            <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد نتائج" : "No Results"}</h3>
+            <p className="text-slate-400 mb-4">{isAr ? "جرب تغيير معايير البحث أو الفلاتر" : "Try changing the search criteria or filters"}</p>
             <Button variant="outline" onClick={clearFilters} className="border-slate-700 text-slate-300">
-              مسح جميع الفلاتر
+              {isAr ? "مسح جميع الفلاتر" : "Clear All Filters"}
             </Button>
           </div>
         ) : viewMode === "grid" ? (
@@ -548,14 +528,13 @@ export default function Marketplace() {
                 key={project.id} 
                 className="bg-slate-800/50 border-slate-700 hover:border-purple-500/50 transition-all group overflow-hidden"
               >
-                {/* Card Header with gradient */}
                 <div className="h-32 bg-gradient-to-br from-purple-900/50 to-slate-800 relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
                   <div className="absolute top-4 right-4 flex gap-2">
                     {project.verified && (
                       <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded text-xs flex items-center gap-1">
                         <Shield className="w-3 h-3" />
-                        موثق
+                        {isAr ? "موثق" : "Verified"}
                       </span>
                     )}
                     {project.hasIP && (
@@ -581,7 +560,6 @@ export default function Marketplace() {
                 </div>
 
                 <CardContent className="p-5">
-                  {/* Tags */}
                   <div className="flex items-center gap-2 mb-3">
                     <span className="px-2.5 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs font-medium">
                       {getCategoryText(project.category)}
@@ -591,13 +569,11 @@ export default function Marketplace() {
                     </span>
                   </div>
 
-                  {/* Title & Description */}
                   <h3 className="text-lg font-bold text-white mb-2 line-clamp-1 group-hover:text-purple-300 transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-slate-400 text-sm mb-4 line-clamp-2">{project.description}</p>
 
-                  {/* Location & Team */}
                   <div className="flex items-center gap-4 text-sm text-slate-500 mb-4">
                     {project.location && (
                       <div className="flex items-center gap-1">
@@ -608,25 +584,23 @@ export default function Marketplace() {
                     {project.teamSize && (
                       <div className="flex items-center gap-1">
                         <Users className="w-4 h-4" />
-                        <span>{project.teamSize} أعضاء</span>
+                        <span>{project.teamSize} {isAr ? "أعضاء" : "members"}</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Funding */}
                   {project.fundingNeeded && (
                     <div className="flex items-center gap-3 mb-4 p-3 bg-gradient-to-r from-purple-900/30 to-slate-800/50 rounded-lg border border-purple-500/20">
                       <DollarSign className="w-5 h-5 text-purple-400" />
                       <div>
                         <div className="text-white font-bold">
-                          {Number(project.fundingNeeded).toLocaleString()} ريال
+                          {Number(project.fundingNeeded).toLocaleString()} {isAr ? "ريال" : "SAR"}
                         </div>
-                        <div className="text-slate-400 text-xs">التمويل المطلوب</div>
+                        <div className="text-slate-400 text-xs">{isAr ? "التمويل المطلوب" : "Funding Needed"}</div>
                       </div>
                     </div>
                   )}
 
-                  {/* Stats */}
                   <div className="flex items-center justify-between text-sm text-slate-400 mb-4 pb-4 border-b border-slate-700">
                     <div className="flex items-center gap-1">
                       <Eye className="w-4 h-4" />
@@ -638,15 +612,14 @@ export default function Marketplace() {
                     </div>
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
-                      <span>{project.createdAt ? new Date(project.createdAt).toLocaleDateString("ar-SA") : "-"}</span>
+                      <span>{project.createdAt ? new Date(project.createdAt).toLocaleDateString(isAr ? "ar-SA" : "en-US") : "-"}</span>
                     </div>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex gap-2">
                     <Link href={`/projects/${project.id}`} className="flex-1">
                       <Button className="w-full bg-purple-500 hover:bg-purple-600">
-                        عرض التفاصيل
+                        {isAr ? "عرض التفاصيل" : "View Details"}
                       </Button>
                     </Link>
                     <Button variant="outline" className="border-slate-700 text-slate-300 hover:text-red-400 hover:border-red-500/50">
@@ -658,18 +631,15 @@ export default function Marketplace() {
             ))}
           </div>
         ) : (
-          // List View
           <div className="space-y-4">
             {filteredProjects.map((project: any) => (
               <Card key={project.id} className="bg-slate-800/50 border-slate-700 hover:border-purple-500/50 transition-all">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-6">
-                    {/* Icon */}
                     <div className="w-16 h-16 bg-purple-500/20 rounded-xl flex items-center justify-center shrink-0">
                       <Lightbulb className="w-8 h-8 text-purple-400" />
                     </div>
 
-                    {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -683,7 +653,7 @@ export default function Marketplace() {
                             {project.verified && (
                               <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded text-xs flex items-center gap-1">
                                 <Shield className="w-3 h-3" />
-                                موثق
+                                {isAr ? "موثق" : "Verified"}
                               </span>
                             )}
                           </div>
@@ -696,7 +666,7 @@ export default function Marketplace() {
                             </div>
                             <div className="flex items-center gap-1">
                               <Users className="w-4 h-4" />
-                              <span>{project.teamSize || 0} أعضاء</span>
+                              <span>{project.teamSize || 0} {isAr ? "أعضاء" : "members"}</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Eye className="w-4 h-4" />
@@ -722,21 +692,20 @@ export default function Marketplace() {
                           <div className="text-white font-bold text-lg">
                             {Number(project.fundingNeeded || 0).toLocaleString()}
                           </div>
-                          <div className="text-slate-400 text-xs">ريال</div>
+                          <div className="text-slate-400 text-xs">{isAr ? "ريال" : "SAR"}</div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Actions */}
                     <div className="flex flex-col gap-2 shrink-0">
                       <Link href={`/projects/${project.id}`}>
                         <Button className="bg-purple-500 hover:bg-purple-600">
-                          عرض التفاصيل
+                          {isAr ? "عرض التفاصيل" : "View Details"}
                         </Button>
                       </Link>
                       <Button variant="outline" className="border-slate-700 text-slate-300">
                         <Heart className="w-4 h-4 ml-2" />
-                        حفظ
+                        {isAr ? "حفظ" : "Save"}
                       </Button>
                     </div>
                   </div>
@@ -752,12 +721,15 @@ export default function Marketplace() {
             <div className="absolute top-0 left-0 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl"></div>
             <CardContent className="p-8 relative">
               <Shield className="w-14 h-14 text-purple-400 mb-4" />
-              <h3 className="text-2xl font-bold text-white mb-3">للمستثمرين</h3>
+              <h3 className="text-2xl font-bold text-white mb-3">{isAr ? "للمستثمرين" : "For Investors"}</h3>
               <p className="text-slate-300 mb-6 leading-relaxed">
-                اكتشف فرص استثمارية مميزة في أفضل الابتكارات السعودية مع حماية كاملة عبر نظام الضمان الذكي
+                {isAr
+                  ? "اكتشف فرص استثمارية مميزة في أفضل الابتكارات السعودية مع حماية كاملة عبر نظام الضمان الذكي"
+                  : "Discover distinctive investment opportunities in the best Saudi innovations with full protection through the smart guarantee system"
+                }
               </p>
               <Button className="bg-purple-500 hover:bg-purple-600">
-                سجّل كمستثمر
+                {isAr ? "سجّل كمستثمر" : "Register as Investor"}
               </Button>
             </CardContent>
           </Card>
@@ -766,13 +738,16 @@ export default function Marketplace() {
             <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl"></div>
             <CardContent className="p-8 relative">
               <Lightbulb className="w-14 h-14 text-cyan-400 mb-4" />
-              <h3 className="text-2xl font-bold text-white mb-3">للمبتكرين</h3>
+              <h3 className="text-2xl font-bold text-white mb-3">{isAr ? "للمبتكرين" : "For Innovators"}</h3>
               <p className="text-slate-300 mb-6 leading-relaxed">
-                اعرض ابتكارك أمام آلاف المستثمرين والشركات واحصل على التمويل والدعم الذي تحتاجه
+                {isAr
+                  ? "اعرض ابتكارك أمام آلاف المستثمرين والشركات واحصل على التمويل والدعم الذي تحتاجه"
+                  : "Present your innovation to thousands of investors and companies and get the funding and support you need"
+                }
               </p>
               <Link href="/projects/new">
                 <Button className="bg-cyan-500 hover:bg-cyan-600">
-                  سجّل ابتكارك
+                  {isAr ? "سجّل ابتكارك" : "Register Your Innovation"}
                 </Button>
               </Link>
             </CardContent>

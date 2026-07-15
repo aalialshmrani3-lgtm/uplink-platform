@@ -1,8 +1,11 @@
 import { Link } from "wouter";
 import { FileText, ArrowRight, CheckCircle, AlertTriangle, Scale, Users, Zap, Globe } from "lucide-react";
 import ImprovedFooter from "@/components/ImprovedFooter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Terms() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const sections = [
     {
       icon: CheckCircle,
@@ -78,11 +81,11 @@ export default function Terms() {
           <Link href="/">
             <div className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
               <ArrowRight className="w-4 h-4" />
-              <span className="text-sm">العودة للرئيسية</span>
+              <span className="text-sm">{isAr ? "العودة للرئيسية" : "[العودة للرئيسية]"}</span>
             </div>
           </Link>
           <span className="text-border/50">|</span>
-          <span className="text-sm font-medium">الشروط والأحكام</span>
+          <span className="text-sm font-medium">{isAr ? "الشروط والأحكام" : "Terms & Conditions"}</span>
         </div>
       </div>
 
@@ -92,11 +95,11 @@ export default function Terms() {
           <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <FileText className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">الشروط والأحكام</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? "الشروط والأحكام" : "Terms & Conditions"}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             يرجى قراءة هذه الشروط والأحكام بعناية قبل استخدام منصة نقلة. استخدامك للمنصة يعني موافقتك على هذه الشروط.
           </p>
-          <p className="text-sm text-muted-foreground mt-4">آخر تحديث: يناير 2025</p>
+          <p className="text-sm text-muted-foreground mt-4">{isAr ? "آخر تحديث: يناير 2025" : "آخر تBorderيث: يناير 2025"}</p>
         </div>
       </div>
 

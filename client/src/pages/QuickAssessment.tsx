@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, TrendingUp, Lightbulb, Users, Cog, DollarSign } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // 15 أسئلة (3 لكل بُعد من أبعاد الابتكار الخمسة)
 const questions = [
@@ -209,6 +210,8 @@ const dimensionLabels = {
 };
 
 export default function QuickAssessment() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -310,8 +313,8 @@ export default function QuickAssessment() {
               <div className="flex justify-center mb-4">
                 <CheckCircle2 className="h-16 w-16 text-green-600" />
               </div>
-              <CardTitle className="text-3xl">نتائج التقييم السريع</CardTitle>
-              <CardDescription>تحليل فوري لقدرات الابتكار في مؤسستك</CardDescription>
+              <CardTitle className="text-3xl">{isAr ? "نتائج التقييم السريع" : "نتائج Evaluation السريع"}</CardTitle>
+              <CardDescription>{isAr ? "تحليل فوري لقدرات الابتكار في مؤسستك" : "تحليل فوري لقدرات اNoبتكار في مؤسستك"}</CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-8 pt-8">
@@ -325,7 +328,7 @@ export default function QuickAssessment() {
 
               {/* درجات الأبعاد */}
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold">درجات الأبعاد الخمسة:</h3>
+                <h3 className="text-xl font-semibold">{isAr ? "درجات الأبعاد الخمسة:" : "[درجات الأبعاد الخمسة:]"}</h3>
                 {Object.entries(results.dimensionPercentages).map(([dim, score]) => (
                   <div key={dim} className="space-y-2">
                     <div className="flex justify-between text-sm">
@@ -339,7 +342,7 @@ export default function QuickAssessment() {
 
               {/* التوصيات */}
               <div className="space-y-4 bg-blue-50 p-6 rounded-lg border border-blue-200">
-                <h3 className="text-xl font-semibold text-blue-900">توصيات فورية:</h3>
+                <h3 className="text-xl font-semibold text-blue-900">{isAr ? "توصيات فورية:" : "[توصيات فورية:]"}</h3>
                 <ul className="space-y-2">
                   {getRecommendations(results.weakestDimensions).map((rec, idx) => (
                     <li key={idx} className="flex items-start gap-2">
@@ -352,7 +355,7 @@ export default function QuickAssessment() {
 
               {/* CTA */}
               <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-8 rounded-lg text-center space-y-4">
-                <h3 className="text-2xl font-bold">هل تريد تقييماً شاملاً؟</h3>
+                <h3 className="text-2xl font-bold">{isAr ? "هل تريد تقييماً شاملاً؟" : "هل تريد تقييماً شامNoً؟"}</h3>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   سجّل في NAQLA للحصول على تقييم كامل (60 سؤال) مع تقرير مفصل ومقارنة معيارية مع الشركات السعودية
                 </p>
@@ -380,7 +383,7 @@ export default function QuickAssessment() {
             <div className="flex items-center gap-3 mb-4">
               {currentQuestion && <currentQuestion.icon className="h-8 w-8 text-primary" />}
               <div>
-                <CardTitle>التقييم السريع لقدرات الابتكار</CardTitle>
+                <CardTitle>{isAr ? "التقييم السريع لقدرات الابتكار" : "التقييم السريع لقدرات اNoبتكار"}</CardTitle>
                 <CardDescription>
                   السؤال {currentStep + 1} من {questions.length} - {dimensionLabels[currentQuestion?.dimension as keyof typeof dimensionLabels]}
                 </CardDescription>

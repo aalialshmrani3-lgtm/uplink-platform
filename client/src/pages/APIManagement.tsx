@@ -22,8 +22,11 @@ import {
 } from '@/components/ui/dialog';
 import { Key, Copy, Trash2, AlertCircle, CheckCircle2, Code } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function APIManagement() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [newKeyName, setNewKeyName] = useState('');
@@ -85,7 +88,7 @@ export default function APIManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">إدارة API Keys</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? "إدارة API Keys" : "API Management Keys"}</h1>
           <p className="text-muted-foreground">
             إنشاء وإدارة مفاتيح API للوصول البرمجي إلى خدمات NAQLA
           </p>
@@ -137,7 +140,7 @@ export default function APIManagement() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Code className="w-5 h-5" />
-            <CardTitle>كيفية استخدام API</CardTitle>
+            <CardTitle>{isAr ? "كيفية استخدام API" : "[كيفية استخدام API]"}</CardTitle>
           </div>
           <CardDescription>
             استخدم API Keys للوصول إلى نموذج التنبؤ بنجاح الأفكار
@@ -146,7 +149,7 @@ export default function APIManagement() {
         <CardContent>
           <div className="space-y-4">
             <div>
-              <h3 className="font-semibold mb-2">1. التنبؤ بنجاح فكرة</h3>
+              <h3 className="font-semibold mb-2">{isAr ? "1. التنبؤ بنجاح فكرة" : "1. التنبؤ بSuccess فكرة"}</h3>
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`POST https://your-domain.com/api/public/v1/predict
@@ -167,7 +170,7 @@ Content-Type: application/json
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">2. الاستجابة</h3>
+              <h3 className="font-semibold mb-2">{isAr ? "2. الاستجابة" : "2. اNoستجابة"}</h3>
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`{
@@ -184,7 +187,7 @@ Content-Type: application/json
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">3. التنبؤ الجماعي (Batch Prediction)</h3>
+              <h3 className="font-semibold mb-2">{isAr ? "3. التنبؤ الجماعي (Batch Prediction)" : "[3. التنبؤ الجماعي (Batch Prediction)]"}</h3>
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`POST https://your-domain.com/api/public/v1/batch-predict
@@ -244,7 +247,7 @@ Content-Type: application/json
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">4. فحص الاستخدام</h3>
+              <h3 className="font-semibold mb-2">{isAr ? "4. فحص الاستخدام" : "4. فحص اNoستخدام"}</h3>
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
 {`GET https://your-domain.com/api/public/v1/usage
@@ -259,7 +262,7 @@ Authorization: Bearer naqla_your_api_key`}
       {/* API Keys List */}
       <Card>
         <CardHeader>
-          <CardTitle>مفاتيح API الخاصة بك</CardTitle>
+          <CardTitle>{isAr ? "مفاتيح API الخاصة بك" : "[مفاتيح API الخاصة بك]"}</CardTitle>
           <CardDescription>
             {apiKeys?.length || 0} مفتاح API نشط
           </CardDescription>
@@ -326,14 +329,14 @@ Authorization: Bearer naqla_your_api_key`}
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>إنشاء API Key جديد</DialogTitle>
+            <DialogTitle>{isAr ? "إنشاء API Key جديد" : "إنشاء API Key New"}</DialogTitle>
             <DialogDescription>
               أنشئ مفتاح API للوصول البرمجي إلى خدمات NAQLA
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div>
-              <Label htmlFor="keyName">اسم المفتاح</Label>
+              <Label htmlFor="keyName">{isAr ? "اسم المفتاح" : "[اسم المفتاح]"}</Label>
               <Input
                 id="keyName"
                 placeholder="مثال: تطبيق الويب الرئيسي"
@@ -350,9 +353,9 @@ Authorization: Bearer naqla_your_api_key`}
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="text-sm">
                 <ul className="list-disc list-inside space-y-1">
-                  <li>الحد الافتراضي: 1000 طلب/ساعة</li>
-                  <li>سيتم عرض المفتاح مرة واحدة فقط</li>
-                  <li>احفظ المفتاح في مكان آمن</li>
+                  <li>{isAr ? "الحد الافتراضي: 1000 طلب/ساعة" : "الحد اNoفتراضي: 1000 طلب/ساعة"}</li>
+                  <li>{isAr ? "سيتم عرض المفتاح مرة واحدة فقط" : "سيDone عرض المفتاح مرة واحدة فقط"}</li>
+                  <li>{isAr ? "احفظ المفتاح في مكان آمن" : "اSave المفتاح في مكان آمن"}</li>
                 </ul>
               </AlertDescription>
             </Alert>

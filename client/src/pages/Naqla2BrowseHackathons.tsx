@@ -6,12 +6,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Trophy, MapPin, Calendar, Users, DollarSign,
   Search, Filter, Zap, Globe, Building
 } from 'lucide-react';
 
 export default function Naqla2BrowseHackathons() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [, navigate] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'draft' | 'open' | 'closed' | 'judging' | 'completed' | 'cancelled' | undefined>();
@@ -70,10 +73,10 @@ export default function Naqla2BrowseHackathons() {
               <SelectValue placeholder="الحالة" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">الكل</SelectItem>
-              <SelectItem value="published">منشور</SelectItem>
-              <SelectItem value="ongoing">جاري</SelectItem>
-              <SelectItem value="completed">مكتمل</SelectItem>
+              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
+              <SelectItem value="published">{isAr ? "منشور" : "Published"}</SelectItem>
+              <SelectItem value="ongoing">{isAr ? "جاري" : "[جاري]"}</SelectItem>
+              <SelectItem value="completed">{isAr ? "مكتمل" : "Completed"}</SelectItem>
             </SelectContent>
           </Select>
           <Select value={virtualFilter?.toString()} onValueChange={(v) => setVirtualFilter(v === 'true' ? true : v === 'false' ? false : undefined)}>
@@ -82,9 +85,9 @@ export default function Naqla2BrowseHackathons() {
               <SelectValue placeholder="النوع" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">الكل</SelectItem>
-              <SelectItem value="true">افتراضي</SelectItem>
-              <SelectItem value="false">حضوري</SelectItem>
+              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
+              <SelectItem value="true">{isAr ? "افتراضي" : "[افتراضي]"}</SelectItem>
+              <SelectItem value="false">{isAr ? "حضوري" : "[حضوري]"}</SelectItem>
             </SelectContent>
           </Select>
           <Button 
@@ -141,7 +144,7 @@ export default function Naqla2BrowseHackathons() {
                       {hackathon.isVirtual ? (
                         <>
                           <Globe className="w-4 h-4 text-blue-500" />
-                          <span>افتراضي</span>
+                          <span>{isAr ? "افتراضي" : "[افتراضي]"}</span>
                         </>
                       ) : (
                         <>
@@ -180,7 +183,7 @@ export default function Naqla2BrowseHackathons() {
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardContent className="py-20 text-center">
               <Trophy className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">لا توجد هاكاثونات حالياً</p>
+              <p className="text-slate-400 text-lg">{isAr ? "لا توجد هاكاثونات حالياً" : "No توجد هاكاثونات حالياً"}</p>
               <Button 
                 onClick={() => navigate('/naqla2/hackathons/create')}
                 className="mt-6 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"

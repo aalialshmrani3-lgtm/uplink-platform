@@ -1,12 +1,15 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Rocket, Crown, Star, Trophy, Users, 
   TrendingUp, Award, Zap, Shield, Globe
 } from "lucide-react";
 
 export default function Elite() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   // Demo elite innovators
   const eliteInnovators = [
     {
@@ -105,7 +108,7 @@ export default function Elite() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-full mb-4">
             <Crown className="w-4 h-4 text-amber-400" />
-            <span className="text-amber-400 text-sm">نخبة المبتكرين</span>
+            <span className="text-amber-400 text-sm">{isAr ? "نخبة المبتكرين" : "نخبة الInnovatorين"}</span>
           </div>
           <h1 className="text-4xl font-bold text-white mb-4">NAQLA Elite</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
@@ -156,7 +159,7 @@ export default function Elite() {
         </div>
 
         {/* Elite Innovators */}
-        <h2 className="text-2xl font-bold text-white mb-6">قادة الابتكار</h2>
+        <h2 className="text-2xl font-bold text-white mb-6">{isAr ? "قادة الابتكار" : "قادة اNoبتكار"}</h2>
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {eliteInnovators.map((innovator) => (
             <Card key={innovator.id} className="bg-slate-800/50 border-slate-700 hover:border-amber-600/50 transition-all">
@@ -183,19 +186,19 @@ export default function Elite() {
                     <div className="grid grid-cols-4 gap-4 mb-3">
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.score}</div>
-                        <div className="text-slate-500 text-xs">النقاط</div>
+                        <div className="text-slate-500 text-xs">{isAr ? "النقاط" : "[النقاط]"}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.projects}</div>
-                        <div className="text-slate-500 text-xs">مشروع</div>
+                        <div className="text-slate-500 text-xs">{isAr ? "مشروع" : "[مشروع]"}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.patents}</div>
-                        <div className="text-slate-500 text-xs">براءة</div>
+                        <div className="text-slate-500 text-xs">{isAr ? "براءة" : "[براءة]"}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.funding}</div>
-                        <div className="text-slate-500 text-xs">تمويل</div>
+                        <div className="text-slate-500 text-xs">{isAr ? "تمويل" : "Doneويل"}</div>
                       </div>
                     </div>
 
@@ -220,8 +223,8 @@ export default function Elite() {
           <CardContent className="p-8">
             <div className="text-center mb-8">
               <Crown className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white mb-2">كيف تنضم إلى النخبة؟</h2>
-              <p className="text-slate-300">حقق الإنجازات التالية للترقية في برنامج Elite</p>
+              <h2 className="text-2xl font-bold text-white mb-2">{isAr ? "كيف تنضم إلى النخبة؟" : "كيف تنضم إلى Elite؟"}</h2>
+              <p className="text-slate-300">{isAr ? "حقق الإنجازات التالية للترقية في برنامج Elite" : "حقق الإنجازات Nextة للترقية في برنامج Elite"}</p>
             </div>
 
             <div className="grid md:grid-cols-4 gap-6">

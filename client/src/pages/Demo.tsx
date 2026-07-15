@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLocation } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Lightbulb, 
   Target, 
@@ -18,30 +19,32 @@ import {
 
 export default function Demo() {
   const [, setLocation] = useLocation();
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
 
   const scenarios = [
     {
       id: 1,
-      title: "مسار الابتكار الحقيقي",
+      title: isAr ? "مسار الابتكار الحقيقي" : "True Innovation Path",
       subtitle: "Innovation Path (≥70%)",
       icon: Lightbulb,
       color: "text-green-500",
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/20",
       score: "88%",
-      classification: "ابتكار حقيقي",
-      description: "فكرة مبتكرة بتقييم عالٍ (≥70%) تمثل ابتكاراً حقيقياً مع إمكانات كبيرة",
+      classification: isAr ? "ابتكار حقيقي" : "True Innovation",
+      description: isAr ? "فكرة مبتكرة بتقييم عالٍ (≥70%) تمثل ابتكاراً حقيقياً مع إمكانات كبيرة" : "Innovative idea with high rating (≥70%) representing true innovation with great potential",
       steps: [
-        { icon: Lightbulb, text: "تقديم الفكرة في NAQLA 1", status: "done" },
-        { icon: CheckCircle2, text: "تحليل بالذكاء الاصطناعي (88%)", status: "done" },
-        { icon: AlertCircle, text: "تصنيف: ابتكار حقيقي", status: "done" },
-        { icon: ArrowRight, text: "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)", status: "option" },
-        { icon: ArrowRight, text: "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)", status: "option" },
+        { icon: Lightbulb, text: isAr ? "تقديم الفكرة في NAQLA 1" : "Submit idea in NAQLA 1", status: "done" },
+        { icon: CheckCircle2, text: isAr ? "تحليل بالذكاء الاصطناعي (88%)" : "AI Analysis (88%)", status: "done" },
+        { icon: AlertCircle, text: isAr ? "تصنيف: ابتكار حقيقي" : "Classification: True Innovation", status: "done" },
+        { icon: ArrowRight, text: isAr ? "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)" : "Option 1: Go to NAQLA 2 (Challenge Matching)", status: "option" },
+        { icon: ArrowRight, text: isAr ? "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)" : "Option 2: Go directly to NAQLA 3 (Marketplace)", status: "option" },
       ],
       demoUrl: "/uplink1/ideas/120002/analysis",
       exampleIdea: {
-        title: "نظام ذكاء اصطناعي متقدم",
-        description: "نظام ذكاء اصطناعي متقدم لتحليل البيانات الضخمة في الوقت الفعلي باستخدام تقنيات التعلم العميق والحوسبة الكمومية",
+        title: isAr ? "نظام ذكاء اصطناعي متقدم" : "Advanced AI System",
+        description: isAr ? "نظام ذكاء اصطناعي متقدم لتحليل البيانات الضخمة في الوقت الفعلي باستخدام تقنيات التعلم العميق والحوسبة الكمومية" : "Advanced AI system for real-time big data analysis using deep learning and quantum computing technologies",
         scores: {
           novelty: 92,
           impact: 88,
@@ -50,33 +53,33 @@ export default function Demo() {
         }
       },
       comparisonData: {
-        time: "2-4 أسابيع",
-        steps: "5 خطوات",
+        time: isAr ? "2-4 أسابيع" : "2-4 weeks",
+        steps: isAr ? "5 خطوات" : "5 steps",
         successRate: "85%"
       }
     },
     {
       id: 2,
-      title: "مسار الحل التجاري",
+      title: isAr ? "مسار الحل التجاري" : "Commercial Solution Path",
       subtitle: "Commercial Path (50-70%)",
       icon: Store,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/20",
       score: "60%",
-      classification: "حل تجاري",
-      description: "فكرة تجارية بتقييم متوسط (50-70%) تمثل حلاً تجارياً قابلاً للتطبيق",
+      classification: isAr ? "حل تجاري" : "Commercial Solution",
+      description: isAr ? "فكرة تجارية بتقييم متوسط (50-70%) تمثل حلاً تجارياً قابلاً للتطبيق" : "Commercial idea with medium rating (50-70%) representing a viable commercial solution",
       steps: [
-        { icon: Store, text: "تقديم الفكرة في NAQLA 1", status: "done" },
-        { icon: CheckCircle2, text: "تحليل بالذكاء الاصطناعي (60%)", status: "done" },
-        { icon: AlertCircle, text: "تصنيف: حل تجاري", status: "done" },
-        { icon: ArrowRight, text: "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)", status: "option" },
-        { icon: ArrowRight, text: "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)", status: "option" },
+        { icon: Store, text: isAr ? "تقديم الفكرة في NAQLA 1" : "Submit idea in NAQLA 1", status: "done" },
+        { icon: CheckCircle2, text: isAr ? "تحليل بالذكاء الاصطناعي (60%)" : "AI Analysis (60%)", status: "done" },
+        { icon: AlertCircle, text: isAr ? "تصنيف: حل تجاري" : "Classification: Commercial Solution", status: "done" },
+        { icon: ArrowRight, text: isAr ? "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)" : "Option 1: Go to NAQLA 2 (Challenge Matching)", status: "option" },
+        { icon: ArrowRight, text: isAr ? "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)" : "Option 2: Go directly to NAQLA 3 (Marketplace)", status: "option" },
       ],
       demoUrl: "/naqla1/browse",
       exampleIdea: {
-        title: "تطبيق توصيل طعام صحي",
-        description: "تطبيق جوال لتوصيل الطعام الصحي مع نظام توصيات غذائية مخصصة",
+        title: isAr ? "تطبيق توصيل طعام صحي" : "Healthy Food Delivery App",
+        description: isAr ? "تطبيق جوال لتوصيل الطعام الصحي مع نظام توصيات غذائية مخصصة" : "Mobile app for healthy food delivery with personalized dietary recommendations",
         scores: {
           novelty: 50,
           impact: 65,
@@ -85,33 +88,33 @@ export default function Demo() {
         }
       },
       comparisonData: {
-        time: "1-2 أسابيع",
-        steps: "4 خطوات",
+        time: isAr ? "1-2 أسابيع" : "1-2 weeks",
+        steps: isAr ? "4 خطوات" : "4 steps",
         successRate: "70%"
       }
     },
     {
       id: 3,
-      title: "مسار التطوير والإرشاد",
+      title: isAr ? "مسار التطوير والإرشاد" : "Development & Guidance Path",
       subtitle: "Guidance Path (<50%)",
       icon: XCircle,
       color: "text-red-500",
       bgColor: "bg-red-500/10",
       borderColor: "border-red-500/20",
       score: "35%",
-      classification: "تحتاج تطوير",
-      description: "فكرة ضعيفة بتقييم منخفض (<50%) تحتاج إلى تطوير وتحسين",
+      classification: isAr ? "تحتاج تطوير" : "Needs Development",
+      description: isAr ? "فكرة ضعيفة بتقييم منخفض (<50%) تحتاج إلى تطوير وتحسين" : "Weak idea with low rating (<50%) that needs development and improvement",
       steps: [
-        { icon: XCircle, text: "تقديم الفكرة في NAQLA 1", status: "done" },
-        { icon: CheckCircle2, text: "تحليل بالذكاء الاصطناعي (35%)", status: "done" },
-        { icon: AlertCircle, text: "تصنيف: تحتاج تطوير", status: "done" },
-        { icon: XCircle, text: "رفض مؤقت مع توصيات تفصيلية", status: "reject" },
-        { icon: ArrowRight, text: "إعادة تقديم الفكرة بعد التحسين", status: "retry" },
+        { icon: XCircle, text: isAr ? "تقديم الفكرة في NAQLA 1" : "Submit idea in NAQLA 1", status: "done" },
+        { icon: CheckCircle2, text: isAr ? "تحليل بالذكاء الاصطناعي (35%)" : "AI Analysis (35%)", status: "done" },
+        { icon: AlertCircle, text: isAr ? "تصنيف: تحتاج تطوير" : "Classification: Needs Development", status: "done" },
+        { icon: XCircle, text: isAr ? "رفض مؤقت مع توصيات تفصيلية" : "Temporary rejection with detailed recommendations", status: "reject" },
+        { icon: ArrowRight, text: isAr ? "إعادة تقديم الفكرة بعد التحسين" : "Resubmit idea after improvement", status: "retry" },
       ],
       demoUrl: "/naqla1/browse",
       exampleIdea: {
-        title: "تطبيق دردشة بسيط",
-        description: "فكرة بسيطة لتطبيق دردشة عادي بدون ميزات مميزة",
+        title: isAr ? "تطبيق دردشة بسيط" : "Simple Chat App",
+        description: isAr ? "فكرة بسيطة لتطبيق دردشة عادي بدون ميزات مميزة" : "Simple idea for a regular chat app without distinctive features",
         scores: {
           novelty: 15,
           impact: 25,
@@ -120,8 +123,8 @@ export default function Demo() {
         }
       },
       comparisonData: {
-        time: "فوري",
-        steps: "3 خطوات",
+        time: isAr ? "فوري" : "Immediate",
+        steps: isAr ? "3 خطوات" : "3 steps",
         successRate: "40%"
       }
     }
@@ -135,10 +138,10 @@ export default function Demo() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-white mb-2">
-                🎬 عرض توضيحي - مسارات الأفكار
+                {isAr ? "🎬 عرض توضيحي - مسارات الأفكار" : "🎬 Demo - Idea Paths"}
               </h1>
               <p className="text-slate-400">
-                شرح تفصيلي لجميع السيناريوهات الممكنة في NAQLA 1, 2, 3
+                {isAr ? "شرح تفصيلي لجميع السيناريوهات الممكنة في NAQLA 1, 2, 3" : "Detailed explanation of all possible scenarios in NAQLA 1, 2, 3"}
               </p>
             </div>
             <Button 
@@ -146,7 +149,7 @@ export default function Demo() {
               variant="outline"
               className="border-slate-700 hover:bg-slate-800"
             >
-              العودة إلى NAQLA 1
+              {isAr ? "العودة إلى NAQLA 1" : "Return to NAQLA 1"}
             </Button>
           </div>
         </div>
@@ -158,10 +161,14 @@ export default function Demo() {
         <Card className="bg-slate-900/50 border-slate-800 p-8 mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-4">
-              كيف تعمل منصة NAQLA 5.0؟
+              {isAr ? "كيف تعمل منصة NAQLA 5.0؟" : "How does NAQLA 5.0 platform work?"}
             </h2>
             <p className="text-slate-300 text-lg leading-relaxed">
-              بعد تقديم فكرتك في <strong>NAQLA 1</strong>، يقوم نظام الذكاء الاصطناعي بتحليلها وتصنيفها إلى أحد المسارات الثلاثة التالية بناءً على التقييم الشامل. كل مسار له خيارات مختلفة تساعدك على المضي قدماً بفكرتك.
+              {isAr ? (
+                <>بعد تقديم فكرتك في <strong>NAQLA 1</strong>، يقوم نظام الذكاء الاصطناعي بتحليلها وتصنيفها إلى أحد المسارات الثلاثة التالية بناءً على التقييم الشامل. كل مسار له خيارات مختلفة تساعدك على المضي قدماً بفكرتك.</>
+              ) : (
+                <>After submitting your idea in <strong>NAQLA 1</strong>, the AI system analyzes and classifies it into one of the following three paths based on comprehensive evaluation. Each path has different options to help you move forward with your idea.</>
+              )}
             </p>
           </div>
         </Card>
@@ -169,31 +176,31 @@ export default function Demo() {
         {/* Visual Comparison Table */}
         <Card className="bg-slate-900/50 border-slate-800 p-8 mb-12">
           <h2 className="text-2xl font-bold text-white mb-6 text-center">
-            📊 مقارنة بصرية للمسارات الثلاثة
+            {isAr ? "📊 مقارنة بصرية للمسارات الثلاثة" : "📊 Visual Comparison of the Three Paths"}
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-700">
-                  <th className="text-right p-4 text-slate-400 font-semibold">المعيار</th>
+                  <th className="text-right p-4 text-slate-400 font-semibold">{isAr ? "المعيار" : "Criteria"}</th>
                   <th className="text-center p-4">
                     <div className="flex flex-col items-center gap-2">
                       <Lightbulb className="w-6 h-6 text-green-500" />
-                      <span className="text-white font-semibold">ابتكار</span>
+                      <span className="text-white font-semibold">{isAr ? "ابتكار" : "Innovation"}</span>
                       <Badge className="bg-green-500/10 text-green-500">≥70%</Badge>
                     </div>
                   </th>
                   <th className="text-center p-4">
                     <div className="flex flex-col items-center gap-2">
                       <Store className="w-6 h-6 text-blue-500" />
-                      <span className="text-white font-semibold">تجاري</span>
+                      <span className="text-white font-semibold">{isAr ? "تجاري" : "Commercial"}</span>
                       <Badge className="bg-blue-500/10 text-blue-500">50-70%</Badge>
                     </div>
                   </th>
                   <th className="text-center p-4">
                     <div className="flex flex-col items-center gap-2">
                       <XCircle className="w-6 h-6 text-red-500" />
-                      <span className="text-white font-semibold">ضعيف</span>
+                      <span className="text-white font-semibold">{isAr ? "ضعيف" : "Weak"}</span>
                       <Badge className="bg-red-500/10 text-red-500">&lt;50%</Badge>
                     </div>
                   </th>
@@ -203,25 +210,25 @@ export default function Demo() {
                 <tr className="border-b border-slate-800">
                   <td className="p-4 text-slate-300 flex items-center gap-2">
                     <Clock className="w-4 h-4" />
-                    الوقت المتوقع
+                    {isAr ? "الوقت المتوقع" : "Expected Time"}
                   </td>
-                  <td className="text-center p-4 text-white font-semibold">2-4 أسابيع</td>
-                  <td className="text-center p-4 text-white font-semibold">1-2 أسابيع</td>
-                  <td className="text-center p-4 text-white font-semibold">فوري</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "2-4 أسابيع" : "2-4 weeks"}</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "1-2 أسابيع" : "1-2 weeks"}</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "فوري" : "Immediate"}</td>
                 </tr>
                 <tr className="border-b border-slate-800">
                   <td className="p-4 text-slate-300 flex items-center gap-2">
                     <Target className="w-4 h-4" />
-                    عدد الخطوات
+                    {isAr ? "عدد الخطوات" : "Number of Steps"}
                   </td>
-                  <td className="text-center p-4 text-white font-semibold">5 خطوات</td>
-                  <td className="text-center p-4 text-white font-semibold">4 خطوات</td>
-                  <td className="text-center p-4 text-white font-semibold">3 خطوات</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "5 خطوات" : "5 steps"}</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "4 خطوات" : "4 steps"}</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "3 خطوات" : "3 steps"}</td>
                 </tr>
                 <tr className="border-b border-slate-800">
                   <td className="p-4 text-slate-300 flex items-center gap-2">
                     <TrendingUp className="w-4 h-4" />
-                    معدل النجاح
+                    {isAr ? "معدل النجاح" : "Success Rate"}
                   </td>
                   <td className="text-center p-4">
                     <Badge className="bg-green-500/20 text-green-400 font-bold">85%</Badge>
@@ -236,16 +243,16 @@ export default function Demo() {
                 <tr>
                   <td className="p-4 text-slate-300 flex items-center gap-2">
                     <Award className="w-4 h-4" />
-                    الخيارات المتاحة
+                    {isAr ? "الخيارات المتاحة" : "Available Options"}
                   </td>
                   <td className="text-center p-4 text-sm text-slate-300">
-                    NAQLA 2 أو 3
+                    {isAr ? "NAQLA 2 أو 3" : "NAQLA 2 or 3"}
                   </td>
                   <td className="text-center p-4 text-sm text-slate-300">
-                    NAQLA 2 أو 3
+                    {isAr ? "NAQLA 2 أو 3" : "NAQLA 2 or 3"}
                   </td>
                   <td className="text-center p-4 text-sm text-slate-300">
-                    إعادة تقديم
+                    {isAr ? "إعادة تقديم" : "Resubmit"}
                   </td>
                 </tr>
               </tbody>
@@ -290,7 +297,7 @@ export default function Demo() {
               {/* Animated Flow Diagram */}
               <div className={`${scenario.bgColor} p-6 border-b ${scenario.borderColor}`}>
                 <h4 className="text-lg font-semibold text-white mb-4 text-center">
-                  🔄 مخطط تدفق المسار (متحرك)
+                  {isAr ? "🔄 مخطط تدفق المسار (متحرك)" : "🔄 Path Flow Diagram (Animated)"}
                 </h4>
                 <div className="flex items-center justify-center gap-2 flex-wrap">
                   {scenario.steps.map((step, stepIndex) => (
@@ -331,7 +338,7 @@ export default function Demo() {
                   <div>
                     <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <Play className="w-5 h-5" />
-                      خطوات المسار التفصيلية
+                      {isAr ? "خطوات المسار التفصيلية" : "Detailed Path Steps"}
                     </h4>
                     <div className="space-y-3">
                       {scenario.steps.map((step, stepIndex) => (
@@ -363,7 +370,7 @@ export default function Demo() {
                   {/* Example Idea (Interactive) */}
                   <div>
                     <h4 className="text-lg font-semibold text-white mb-4">
-                      💡 مثال حي قابل للنقر
+                      {isAr ? "💡 مثال حي قابل للنقر" : "💡 Interactive Live Example"}
                     </h4>
                     <Card className="bg-slate-800/50 border-slate-700 p-4 transition-all duration-300 hover:scale-105 hover:border-slate-600 cursor-pointer">
                       <h5 className="font-semibold text-white mb-2">
@@ -376,9 +383,9 @@ export default function Demo() {
                         {Object.entries(scenario.exampleIdea.scores).map(([key, value]) => (
                           <div key={key} className="bg-slate-900/50 p-2 rounded hover:bg-slate-900 transition-colors">
                             <div className="text-xs text-slate-400 mb-1">
-                              {key === 'novelty' ? 'الجدة' :
-                               key === 'impact' ? 'التأثير' :
-                               key === 'feasibility' ? 'الجدوى' : 'السوق'}
+                              {key === 'novelty' ? (isAr ? 'الجدة' : 'Novelty') :
+                               key === 'impact' ? (isAr ? 'التأثير' : 'Impact') :
+                               key === 'feasibility' ? (isAr ? 'الجدوى' : 'Feasibility') : (isAr ? 'السوق' : 'Market')}
                             </div>
                             <div className={`text-lg font-bold ${scenario.color}`}>
                               {value}%
@@ -398,7 +405,7 @@ export default function Demo() {
                     size="lg"
                   >
                     <Play className="w-5 h-5 ml-2" />
-                    جرب هذا السيناريو الآن (تفاعلي)
+                    {isAr ? "جرب هذا السيناريو الآن (تفاعلي)" : "Try this scenario now (Interactive)"}
                   </Button>
                 </div>
               </div>
@@ -411,22 +418,26 @@ export default function Demo() {
           <div className="text-center">
             <Target className="w-12 h-12 text-purple-400 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-white mb-4">
-              مسار NAQLA 2 → NAQLA 3
+              {isAr ? "مسار NAQLA 2 → NAQLA 3" : "NAQLA 2 → NAQLA 3 Path"}
             </h3>
             <p className="text-slate-300 text-lg mb-6 max-w-2xl mx-auto">
-              عند اختيار <strong>NAQLA 2</strong> (مطابقة مع التحديات)، إذا وجد النظام توافقاً بين فكرتك وأحد التحديات المطروحة، سيظهر لك زر <strong>"انتقل إلى NAQLA 3"</strong> لإكمال الصفقة مباشرة في سوق الابتكارات.
+              {isAr ? (
+                <>عند اختيار <strong>NAQLA 2</strong> (مطابقة مع التحديات)، إذا وجد النظام توافقاً بين فكرتك وأحد التحديات المطروحة، سيظهر لك زر <strong>&quot;انتقل إلى NAQLA 3&quot;</strong> لإكمال الصفقة مباشرة في سوق الابتكارات.</>
+              ) : (
+                <>When choosing <strong>NAQLA 2</strong> (Challenge Matching), if the system finds a match between your idea and one of the posted challenges, a <strong>"Go to NAQLA 3"</strong> button will appear to complete the deal directly in the innovation marketplace.</>
+              )}
             </p>
             <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
               <Badge variant="outline" className="bg-purple-500/10 text-purple-300 border-purple-500/30 animate-pulse">
-                NAQLA 2: مطابقة التحديات
+                {isAr ? "NAQLA 2: مطابقة التحديات" : "NAQLA 2: Challenge Matching"}
               </Badge>
               <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
               <Badge variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30 animate-pulse">
-                توافق مع تحدي
+                {isAr ? "توافق مع تحدي" : "Match with Challenge"}
               </Badge>
               <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
               <Badge variant="outline" className="bg-green-500/10 text-green-300 border-green-500/30 animate-pulse">
-                NAQLA 3: إكمال الصفقة
+                {isAr ? "NAQLA 3: إكمال الصفقة" : "NAQLA 3: Complete Deal"}
               </Badge>
             </div>
             <Button
@@ -434,7 +445,7 @@ export default function Demo() {
               className="mt-6 bg-purple-600 hover:bg-purple-700 transition-all duration-300 hover:scale-105"
               size="lg"
             >
-              استكشف NAQLA 2
+              {isAr ? "استكشف NAQLA 2" : "Explore NAQLA 2"}
             </Button>
           </div>
         </Card>
@@ -442,7 +453,11 @@ export default function Demo() {
         {/* Footer Note */}
         <div className="mt-12 text-center text-slate-400">
           <p className="text-sm">
-            💡 <strong>ملاحظة:</strong> جميع السيناريوهات أعلاه تعمل بشكل فعلي في المنصة. جرّب أي سيناريو لترى كيف يعمل النظام!
+            {isAr ? (
+              <>💡 <strong>{isAr ? "ملاحظة:" : "مNoحظة:"}</strong>{isAr ? " جميع السيناريوهات أعلاه تعمل بشكل فعلي في المنصة. جرّب أي سيناريو لترى كيف يعمل النظام!" : "جميع السيناريوهات أعNoه تعمل بشكل فعلي في المنصة. جرّب أي سيناريو لترى كيف يعمل النظام!"}</>
+            ) : (
+              <>💡 <strong>Note:</strong> All scenarios above work effectively on the platform. Try any scenario to see how the system works!</>
+            )}
           </p>
         </div>
       </div>

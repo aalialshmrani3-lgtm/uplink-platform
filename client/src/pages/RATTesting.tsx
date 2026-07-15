@@ -10,8 +10,12 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function RATTesting() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   const [selectedHypothesis, setSelectedHypothesis] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState("plan");
 
@@ -37,69 +41,69 @@ export default function RATTesting() {
   const hypotheses = [
     {
       id: 1,
-      innovationTitle: "منصة التعليم الذكية",
-      statement: "الطلاب مستعدون لدفع 50 ريال شهرياً مقابل محتوى تعليمي مخصص",
+      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Education Platform",
+      statement: isAr ? "الطلاب مستعدون لدفع 50 ريال شهرياً مقابل محتوى تعليمي مخصص" : "Students are willing to pay 50 SAR monthly for personalized educational content",
       ratScore: 9.0,
       status: "testing" as const,
       tests: [
         {
           id: 1,
-          testName: "Landing Page + تجربة مجانية",
+          testName: isAr ? "Landing Page + تجربة مجانية" : "Landing Page + Free Trial",
           status: "in_progress" as const,
           plannedDate: "2026-01-25",
           completedDate: null,
           budget: 5000,
           progress: 65,
-          result: "15 من 100 مستخدم اشتركوا بعد التجربة (15%)",
-          learnings: "السعر ليس العائق الأساسي، بل جودة المحتوى",
+          result: isAr ? "15 من 100 مستخدم اشتركوا بعد التجربة (15%)" : "15 out of 100 users subscribed after trial (15%)",
+          learnings: isAr ? "السعر ليس العائق الأساسي، بل جودة المحتوى" : "Price is not the main barrier, but content quality",
         },
       ],
     },
     {
       id: 2,
-      innovationTitle: "منصة التعليم الذكية",
-      statement: "المعلمون سيستخدمون أدوات AI لإنشاء المحتوى",
+      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Education Platform",
+      statement: isAr ? "المعلمون سيستخدمون أدوات AI لإنشاء المحتوى" : "Teachers will use AI tools to create content",
       ratScore: 6.5,
       status: "validated" as const,
       tests: [
         {
           id: 2,
-          testName: "Wizard of Oz - دعم بشري",
+          testName: isAr ? "Wizard of Oz - دعم بشري" : "Wizard of Oz - Human Support",
           status: "completed" as const,
           plannedDate: "2026-01-18",
           completedDate: "2026-01-24",
           budget: 3000,
           progress: 100,
-          result: "72% من المعلمين استخدموا الأدوات بنشاط",
-          learnings: "المعلمون يحتاجون لتدريب أولي بسيط (30 دقيقة)",
+          result: isAr ? "72% من المعلمين استخدموا الأدوات بنشاط" : "72% of teachers actively used the tools",
+          learnings: isAr ? "المعلمون يحتاجون لتدريب أولي بسيط (30 دقيقة)" : "Teachers need simple initial training (30 minutes)",
         },
       ],
     },
     {
       id: 3,
-      innovationTitle: "نظام إدارة المخزون الذكي",
-      statement: "الشركات الصغيرة ستدفع $200/شهر لنظام إدارة مخزون متقدم",
+      innovationTitle: isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System",
+      statement: isAr ? "الشركات الصغيرة ستدفع $200/شهر لنظام إدارة مخزون متقدم" : "Small businesses will pay $200/month for an advanced inventory management system",
       ratScore: 7.5,
       status: "pending" as const,
       tests: [],
     },
     {
       id: 5,
-      innovationTitle: "تطبيق الصحة الوقائية",
-      statement: "المستخدمون سيشاركون بياناتهم الصحية مقابل توصيات مخصصة",
+      innovationTitle: isAr ? "تطبيق الصحة الوقائية" : "Preventive Health App",
+      statement: isAr ? "المستخدمون سيشاركون بياناتهم الصحية مقابل توصيات مخصصة" : "Users will share their health data in exchange for personalized recommendations",
       ratScore: 9.0,
       status: "testing" as const,
       tests: [
         {
           id: 3,
-          testName: "Concierge - توصيات يدوية",
+          testName: isAr ? "Concierge - توصيات يدوية" : "Concierge - Manual Recommendations",
           status: "in_progress" as const,
           plannedDate: "2026-01-23",
           completedDate: null,
           budget: 2000,
           progress: 45,
-          result: "65 من 100 مستخدم أكملوا الملف الصحي",
-          learnings: "الشفافية حول استخدام البيانات تزيد الثقة",
+          result: isAr ? "65 من 100 مستخدم أكملوا الملف الصحي" : "65 out of 100 users completed the health profile",
+          learnings: isAr ? "الشفافية حول استخدام البيانات تزيد الثقة" : "Transparency about data usage increases trust",
         },
       ],
     },
@@ -126,11 +130,11 @@ export default function RATTesting() {
 
   const handleCreateTest = () => {
     if (!testData.testName || !testData.plannedDate) {
-      toast.error("الرجاء ملء جميع الحقول المطلوبة");
+      toast.error(isAr ? "الرجاء ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
       return;
     }
 
-    toast.success("تم إنشاء خطة الاختبار بنجاح");
+    toast.success(isAr ? "تم إنشاء خطة الاختبار بنجاح" : "Test plan created successfully");
 
     setTestData({
       testName: "",
@@ -145,11 +149,11 @@ export default function RATTesting() {
 
   const handleSubmitResults = () => {
     if (!resultData.result) {
-      toast.error("الرجاء إدخال نتائج الاختبار");
+      toast.error(isAr ? "الرجاء إدخال نتائج الاختبار" : "Please enter test results");
       return;
     }
 
-    toast.success("تم تسجيل نتائج الاختبار بنجاح");
+    toast.success(isAr ? "تم تسجيل نتائج الاختبار بنجاح" : "Test results recorded successfully");
 
     setResultData({
       result: "",
@@ -181,11 +185,11 @@ export default function RATTesting() {
   const getStatusLabel = (status: string) => {
     switch (status) {
       case "completed":
-        return "مكتمل";
+        return isAr ? "مكتمل" : "Completed";
       case "in_progress":
-        return "قيد التنفيذ";
+        return isAr ? "قيد التنفيذ" : "In Progress";
       case "planned":
-        return "مخطط";
+        return isAr ? "مخطط" : "Planned";
       default:
         return status;
     }
@@ -210,10 +214,10 @@ export default function RATTesting() {
         {/* Header */}
         <div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-            اختبار الافتراضات الخطرة (RAT Testing)
+            {isAr ? "اختبار الافتراضات الخطرة (RAT Testing)" : "Riskiest Assumption Testing (RAT Testing)"}
           </h1>
           <p className="text-gray-600 mt-2">
-            اختبر الافتراضات الأكثر خطورة أولاً لتقليل المخاطر وتوفير الموارد
+            {isAr ? "اختبر الافتراضات الأكثر خطورة أولاً لتقليل المخاطر وتوفير الموارد" : "Test the riskiest assumptions first to reduce risks and save resources"}
           </p>
         </div>
 
@@ -221,7 +225,7 @@ export default function RATTesting() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">إجمالي الاختبارات</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "إجمالي الاختبارات" : "Total Tests"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-orange-600">{stats.totalTests}</div>
@@ -230,7 +234,7 @@ export default function RATTesting() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">مخطط لها</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "مخطط لها" : "Planned"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-gray-600">{stats.planned}</div>
@@ -239,7 +243,7 @@ export default function RATTesting() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">قيد التنفيذ</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "قيد التنفيذ" : "In Progress"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-blue-600">{stats.inProgress}</div>
@@ -248,7 +252,7 @@ export default function RATTesting() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">مكتملة</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "مكتملة" : "Completed"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-green-600">{stats.completed}</div>
@@ -257,7 +261,7 @@ export default function RATTesting() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">إجمالي الميزانية</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "إجمالي الميزانية" : "Total Budget"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-purple-600">
@@ -274,9 +278,9 @@ export default function RATTesting() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-orange-600" />
-                الفرضيات حسب الأولوية
+                {isAr ? "الفرضيات حسب الأولوية" : "Hypotheses by Priority"}
               </CardTitle>
-              <CardDescription>مرتبة حسب درجة RAT (الأعلى أولاً)</CardDescription>
+              <CardDescription>{isAr ? "مرتبة حسب درجة RAT (الأعلى أولاً)" : "Sorted by RAT score (highest first)"}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -310,7 +314,7 @@ export default function RATTesting() {
                             RAT: {hypothesis.ratScore.toFixed(1)}
                           </Badge>
                           <Badge variant="outline" className="text-xs">
-                            {hypothesis.tests.length} اختبار
+                            {hypothesis.tests.length} {isAr ? "اختبار" : "test(s)"}
                           </Badge>
                         </div>
                       </CardContent>
@@ -325,8 +329,8 @@ export default function RATTesting() {
             {!selectedHypothesisData ? (
               <CardContent className="py-12 text-center">
                 <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">اختر فرضية</h3>
-                <p className="text-gray-500">اختر فرضية من القائمة لعرض التفاصيل وإدارة الاختبارات</p>
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "اختر فرضية" : "Select a Hypothesis"}</h3>
+                <p className="text-gray-500">{isAr ? "اختر فرضية من القائمة لعرض التفاصيل وإدارة الاختبارات" : "Select a hypothesis from the list to view details and manage tests"}</p>
               </CardContent>
             ) : (
               <>
@@ -348,28 +352,28 @@ export default function RATTesting() {
                 <CardContent>
                   <Tabs value={activeTab} onValueChange={setActiveTab}>
                     <TabsList className="grid w-full grid-cols-3">
-                      <TabsTrigger value="plan">خطة الاختبار</TabsTrigger>
-                      <TabsTrigger value="progress">التقدم</TabsTrigger>
-                      <TabsTrigger value="results">النتائج</TabsTrigger>
+                      <TabsTrigger value="plan">{isAr ? "خطة الاختبار" : "Test Plan"}</TabsTrigger>
+                      <TabsTrigger value="progress">{isAr ? "التقدم" : "Progress"}</TabsTrigger>
+                      <TabsTrigger value="results">{isAr ? "النتائج" : "Results"}</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="plan" className="space-y-4 mt-4">
                       <div className="space-y-4">
                         <div className="space-y-2">
-                          <Label htmlFor="testName">اسم الاختبار *</Label>
+                          <Label htmlFor="testName">{isAr ? "اسم الاختبار *" : "Test Name *"}</Label>
                           <Input
                             id="testName"
-                            placeholder="مثال: Landing Page + تجربة مجانية"
+                            placeholder={isAr ? "مثال: Landing Page + تجربة مجانية" : "Example: Landing Page + Free Trial"}
                             value={testData.testName}
                             onChange={(e) => setTestData({ ...testData, testName: e.target.value })}
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="testDescription">وصف الاختبار</Label>
+                          <Label htmlFor="testDescription">{isAr ? "وصف الاختبار" : "Test Description"}</Label>
                           <Textarea
                             id="testDescription"
-                            placeholder="صف كيف ستختبر هذه الفرضية..."
+                            placeholder={isAr ? "صف كيف ستختبر هذه الفرضية..." : "Describe how you will test this hypothesis..."}
                             rows={4}
                             value={testData.testDescription}
                             onChange={(e) =>
@@ -380,7 +384,7 @@ export default function RATTesting() {
 
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-2">
-                            <Label htmlFor="plannedDate">تاريخ البدء المخطط *</Label>
+                            <Label htmlFor="plannedDate">{isAr ? "تاريخ البدء المخطط *" : "Planned Start Date *"}</Label>
                             <Input
                               id="plannedDate"
                               type="date"
@@ -392,7 +396,7 @@ export default function RATTesting() {
                           </div>
 
                           <div className="space-y-2">
-                            <Label htmlFor="budget">الميزانية (ريال)</Label>
+                            <Label htmlFor="budget">{isAr ? "الميزانية (ريال)" : "Budget (SAR)"}</Label>
                             <Input
                               id="budget"
                               type="number"
@@ -404,10 +408,10 @@ export default function RATTesting() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="resources">الموارد المطلوبة</Label>
+                          <Label htmlFor="resources">{isAr ? "الموارد المطلوبة" : "Required Resources"}</Label>
                           <Textarea
                             id="resources"
-                            placeholder="مثال: مصمم UI، مطور frontend، 100 مستخدم تجريبي"
+                            placeholder={isAr ? "مثال: مصمم UI، مطور frontend، 100 مستخدم تجريبي" : "Example: UI designer, frontend developer, 100 test users"}
                             rows={3}
                             value={testData.resources}
                             onChange={(e) => setTestData({ ...testData, resources: e.target.value })}
@@ -415,10 +419,10 @@ export default function RATTesting() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="methodology">المنهجية والخطوات</Label>
+                          <Label htmlFor="methodology">{isAr ? "المنهجية والخطوات" : "Methodology and Steps"}</Label>
                           <Textarea
                             id="methodology"
-                            placeholder="1. إنشاء landing page&#10;2. إطلاق حملة إعلانية&#10;3. قياس معدل التحويل"
+                            placeholder={isAr ? "1. إنشاء landing page\n2. إطلاق حملة إعلانية\n3. قياس معدل التحويل" : "1. Create landing page\n2. Launch ad campaign\n3. Measure conversion rate"}
                             rows={5}
                             value={testData.methodology}
                             onChange={(e) =>
@@ -429,7 +433,7 @@ export default function RATTesting() {
 
                         <Button onClick={handleCreateTest} className="w-full">
                           <Beaker className="h-4 w-4 ml-2" />
-                          إنشاء خطة الاختبار
+                          {isAr ? "إنشاء خطة الاختبار" : "Create Test Plan"}
                         </Button>
                       </div>
                     </TabsContent>
@@ -438,13 +442,13 @@ export default function RATTesting() {
                       {selectedHypothesisData.tests.length === 0 ? (
                         <div className="text-center py-8">
                           <Clock className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                          <p className="text-gray-500">لا توجد اختبارات بعد</p>
+                          <p className="text-gray-500">{isAr ? "لا توجد اختبارات بعد" : "No tests yet"}</p>
                           <Button
                             variant="outline"
                             className="mt-4"
                             onClick={() => setActiveTab("plan")}
                           >
-                            إنشاء خطة اختبار
+                            {isAr ? "إنشاء خطة اختبار" : "Create Test Plan"}
                           </Button>
                         </div>
                       ) : (
@@ -468,24 +472,24 @@ export default function RATTesting() {
                                 <div className="space-y-4">
                                   <div className="grid grid-cols-2 gap-4 text-sm">
                                     <div>
-                                      <div className="text-gray-600 mb-1">تاريخ البدء</div>
+                                      <div className="text-gray-600 mb-1">{isAr ? "تاريخ البدء" : "Start Date"}</div>
                                       <div className="font-medium">
-                                        {new Date(test.plannedDate).toLocaleDateString("ar-SA")}
+                                        {new Date(test.plannedDate).toLocaleDateString(isAr ? "ar-SA" : "en-US")}
                                       </div>
                                     </div>
                                     {test.completedDate && (
                                       <div>
-                                        <div className="text-gray-600 mb-1">تاريخ الإكمال</div>
+                                        <div className="text-gray-600 mb-1">{isAr ? "تاريخ الإكمال" : "Completion Date"}</div>
                                         <div className="font-medium">
-                                          {new Date(test.completedDate).toLocaleDateString("ar-SA")}
+                                          {new Date(test.completedDate).toLocaleDateString(isAr ? "ar-SA" : "en-US")}
                                         </div>
                                       </div>
                                     )}
                                     <div>
-                                      <div className="text-gray-600 mb-1">الميزانية</div>
+                                      <div className="text-gray-600 mb-1">{isAr ? "الميزانية" : "Budget"}</div>
                                       <div className="font-medium flex items-center gap-1">
                                         <DollarSign className="h-4 w-4" />
-                                        {test.budget.toLocaleString()} ريال
+                                        {test.budget.toLocaleString()} {isAr ? "ريال" : "SAR"}
                                       </div>
                                     </div>
                                   </div>
@@ -493,7 +497,7 @@ export default function RATTesting() {
                                   {test.status !== "completed" && (
                                     <div className="space-y-2">
                                       <div className="flex items-center justify-between text-sm">
-                                        <span className="text-gray-600">التقدم</span>
+                                        <span className="text-gray-600">{isAr ? "التقدم" : "Progress"}</span>
                                         <span className="font-medium">{test.progress}%</span>
                                       </div>
                                       <Progress value={test.progress} className="h-2" />
@@ -503,7 +507,7 @@ export default function RATTesting() {
                                   {test.result && (
                                     <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                                       <div className="text-sm font-medium text-blue-900 mb-1">
-                                        النتيجة الحالية
+                                        {isAr ? "النتيجة الحالية" : "Current Result"}
                                       </div>
                                       <div className="text-sm text-blue-700">{test.result}</div>
                                     </div>
@@ -512,7 +516,7 @@ export default function RATTesting() {
                                   {test.learnings && (
                                     <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
                                       <div className="text-sm font-medium text-green-900 mb-1">
-                                        الدروس المستفادة
+                                        {isAr ? "الدروس المستفادة" : "Lessons Learned"}
                                       </div>
                                       <div className="text-sm text-green-700">{test.learnings}</div>
                                     </div>
@@ -528,10 +532,10 @@ export default function RATTesting() {
                     <TabsContent value="results" className="space-y-4 mt-4">
                       <div className="space-y-4">
                         <div className="space-y-2">
-                          <Label htmlFor="result">نتائج الاختبار *</Label>
+                          <Label htmlFor="result">{isAr ? "نتائج الاختبار *" : "Test Results *"}</Label>
                           <Textarea
                             id="result"
-                            placeholder="صف النتائج بالتفصيل مع الأرقام والبيانات..."
+                            placeholder={isAr ? "صف النتائج بالتفصيل مع الأرقام والبيانات..." : "Describe the results in detail with numbers and data..."}
                             rows={5}
                             value={resultData.result}
                             onChange={(e) => setResultData({ ...resultData, result: e.target.value })}
@@ -539,7 +543,7 @@ export default function RATTesting() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="outcome">الخلاصة</Label>
+                          <Label htmlFor="outcome">{isAr ? "الخلاصة" : "Outcome"}</Label>
                           <Select
                             value={resultData.outcome}
                             onValueChange={(value: "supports" | "rejects" | "inconclusive" | "pending") =>
@@ -550,19 +554,19 @@ export default function RATTesting() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="pending">معلق</SelectItem>
-                              <SelectItem value="supports">يدعم الفرضية ✅</SelectItem>
-                              <SelectItem value="rejects">يدحض الفرضية ❌</SelectItem>
-                              <SelectItem value="inconclusive">غير حاسم 🤔</SelectItem>
+                              <SelectItem value="pending">{isAr ? "معلق" : "Pending"}</SelectItem>
+                              <SelectItem value="supports">{isAr ? "يدعم الفرضية ✅" : "Supports Hypothesis ✅"}</SelectItem>
+                              <SelectItem value="rejects">{isAr ? "يدحض الفرضية ❌" : "Rejects Hypothesis ❌"}</SelectItem>
+                              <SelectItem value="inconclusive">{isAr ? "غير حاسم 🤔" : "Inconclusive 🤔"}</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="learnings">الدروس المستفادة</Label>
+                          <Label htmlFor="learnings">{isAr ? "الدروس المستفادة" : "Lessons Learned"}</Label>
                           <Textarea
                             id="learnings"
-                            placeholder="ما الذي تعلمته من هذا الاختبار؟"
+                            placeholder={isAr ? "ما الذي تعلمته من هذا الاختبار؟" : "What did you learn from this test?"}
                             rows={4}
                             value={resultData.learnings}
                             onChange={(e) =>
@@ -572,10 +576,10 @@ export default function RATTesting() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="nextSteps">الخطوات التالية</Label>
+                          <Label htmlFor="nextSteps">{isAr ? "الخطوات التالية" : "Next Steps"}</Label>
                           <Textarea
                             id="nextSteps"
-                            placeholder="ما هي الخطوات التالية بناءً على هذه النتائج؟"
+                            placeholder={isAr ? "ما هي الخطوات التالية بناءً على هذه النتائج؟" : "What are the next steps based on these results?"}
                             rows={4}
                             value={resultData.nextSteps}
                             onChange={(e) =>
@@ -586,7 +590,7 @@ export default function RATTesting() {
 
                         <Button onClick={handleSubmitResults} className="w-full">
                           <CheckCircle2 className="h-4 w-4 ml-2" />
-                          تسجيل النتائج
+                          {isAr ? "تسجيل النتائج" : "Record Results"}
                         </Button>
                       </div>
                     </TabsContent>

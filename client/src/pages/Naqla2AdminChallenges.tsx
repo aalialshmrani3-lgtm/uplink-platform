@@ -5,8 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Trophy, Users, FileText, Award, Eye, CheckCircle2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2AdminChallenges() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { data: user } = trpc.auth.me.useQuery();
   const { data: challenges, isLoading } = trpc.naqla2.challenges.getAll.useQuery();
 
@@ -15,7 +18,7 @@ export default function Naqla2AdminChallenges() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto mb-4"></div>
-          <p className="text-gray-400">جاري تحميل لوحة التحكم...</p>
+          <p className="text-gray-400">{isAr ? "جاري تحميل لوحة التحكم..." : "جاري تحميل Dashboard..."}</p>
         </div>
       </div>
     );
@@ -26,12 +29,12 @@ export default function Naqla2AdminChallenges() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle className="text-red-500">غير مصرح</CardTitle>
-            <CardDescription>ليس لديك صلاحية الوصول إلى هذه الصفحة</CardDescription>
+            <CardTitle className="text-red-500">{isAr ? "غير مصرح" : "[غير مصرح]"}</CardTitle>
+            <CardDescription>{isAr ? "ليس لديك صلاحية الوصول إلى هذه الصفحة" : "ليس لديك صNoحية الوصول إلى هذه الصفحة"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/naqla2/challenges">
-              <Button variant="outline" className="w-full">العودة إلى التحديات</Button>
+              <Button variant="outline" className="w-full">{isAr ? "العودة إلى التحديات" : "العودة إلى Challenges"}</Button>
             </Link>
           </CardContent>
         </Card>
@@ -49,15 +52,15 @@ export default function Naqla2AdminChallenges() {
               ← العودة إلى التحديات
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-2">لوحة تحكم المنظمين</h1>
-          <p className="text-gray-400">إدارة التحديات ومراجعة الحلول المقدمة</p>
+          <h1 className="text-4xl font-bold mb-2">{isAr ? "لوحة تحكم المنظمين" : "Panel تحكم المنظمين"}</h1>
+          <p className="text-gray-400">{isAr ? "إدارة التحديات ومراجعة الحلول المقدمة" : "إدارة Challenges ومراجعة الحلول المقدمة"}</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">إجمالي التحديات</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "إجمالي التحديات" : "إجمالي Challenges"}</CardTitle>
               <Trophy className="h-4 w-4 text-amber-500" />
             </CardHeader>
             <CardContent>
@@ -67,7 +70,7 @@ export default function Naqla2AdminChallenges() {
 
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">التحديات النشطة</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "التحديات النشطة" : "Challenges النشطة"}</CardTitle>
               <CheckCircle2 className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
@@ -79,7 +82,7 @@ export default function Naqla2AdminChallenges() {
 
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">إجمالي المشاركين</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "إجمالي المشاركين" : "Total المشاركين"}</CardTitle>
               <Users className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
@@ -91,7 +94,7 @@ export default function Naqla2AdminChallenges() {
 
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">الحلول المقدمة</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "الحلول المقدمة" : "الSolutions المقدمة"}</CardTitle>
               <FileText className="h-4 w-4 text-purple-500" />
             </CardHeader>
             <CardContent>
@@ -103,9 +106,9 @@ export default function Naqla2AdminChallenges() {
         {/* Challenges List */}
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="bg-gray-800/50">
-            <TabsTrigger value="all">جميع التحديات</TabsTrigger>
-            <TabsTrigger value="open">النشطة</TabsTrigger>
-            <TabsTrigger value="closed">المنتهية</TabsTrigger>
+            <TabsTrigger value="all">{isAr ? "جميع التحديات" : "جميع Challenges"}</TabsTrigger>
+            <TabsTrigger value="open">{isAr ? "النشطة" : "الActiveة"}</TabsTrigger>
+            <TabsTrigger value="closed">{isAr ? "المنتهية" : "[المنتهية]"}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="mt-6">
@@ -139,7 +142,7 @@ export default function Naqla2AdminChallenges() {
                         </div>
                         <div className="flex items-center gap-2">
                           <FileText className="h-4 w-4" />
-                          <span>0 حل</span>
+                          <span>{isAr ? "0 حل" : "[0 حل]"}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Award className="h-4 w-4 text-amber-500" />
@@ -178,10 +181,10 @@ export default function Naqla2AdminChallenges() {
                     <div className="flex items-center justify-between">
                       <div className="flex gap-4 text-sm text-gray-400">
                         <span>{challenge.participants || 0} مشارك</span>
-                        <span>0 حل</span>
+                        <span>{isAr ? "0 حل" : "[0 حل]"}</span>
                       </div>
                       <Link href={`/admin/challenges/${challenge.id}/submissions`}>
-                        <Button size="sm">مراجعة الحلول</Button>
+                        <Button size="sm">{isAr ? "مراجعة الحلول" : "مراجعة الSolutions"}</Button>
                       </Link>
                     </div>
                   </CardContent>
@@ -202,10 +205,10 @@ export default function Naqla2AdminChallenges() {
                     <div className="flex items-center justify-between">
                       <div className="flex gap-4 text-sm text-gray-400">
                         <span>{challenge.participants || 0} مشارك</span>
-                        <span>0 حل</span>
+                        <span>{isAr ? "0 حل" : "[0 حل]"}</span>
                       </div>
                       <Link href={`/admin/challenges/${challenge.id}/submissions`}>
-                        <Button size="sm" variant="outline">عرض الحلول</Button>
+                        <Button size="sm" variant="outline">{isAr ? "عرض الحلول" : "عرض الSolutions"}</Button>
                       </Link>
                     </div>
                   </CardContent>

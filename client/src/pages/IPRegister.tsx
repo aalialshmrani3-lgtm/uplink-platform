@@ -9,19 +9,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { 
-  Rocket, Shield, ArrowRight, ArrowLeft, Check, 
+import {
+  Rocket, Shield, ArrowRight, ArrowLeft, Check,
   FileText, Users, Globe, Lock, Zap
 } from "lucide-react";
-
-const steps = [
-  { id: 1, title: "نوع الملكية", icon: FileText },
-  { id: 2, title: "المعلومات الأساسية", icon: Shield },
-  { id: 3, title: "المخترعين", icon: Users },
-  { id: 4, title: "المراجعة والتقديم", icon: Check },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function IPRegister() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
@@ -41,13 +38,13 @@ export default function IPRegister() {
 
   const createIPMutation = trpc.ip.create.useMutation({
     onSuccess: (data) => {
-      toast.success("تم تسجيل الملكية الفكرية بنجاح!", {
-        description: `رقم التوثيق: ${data.blockchainHash.substring(0, 16)}...`,
+      toast.success(isAr ? "تم تسجيل الملكية الفكرية بنجاح!" : "IP registered successfully!", {
+        description: `${isAr ? "رقم التوثيق" : "Blockchain Hash"}: ${data.blockchainHash.substring(0, 16)}...`,
       });
       setLocation("/ip/list");
     },
     onError: (error) => {
-      toast.error("حدث خطأ", { description: error.message });
+      toast.error(isAr ? "حدث خطأ" : "An error occurred", { description: error.message });
     },
   });
 
@@ -92,7 +89,7 @@ export default function IPRegister() {
 
   const handleSubmit = () => {
     if (!formData.type || !formData.title || !formData.description) {
-      toast.error("يرجى ملء جميع الحقول المطلوبة");
+      toast.error(isAr ? "يرجى ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
       return;
     }
 
@@ -106,11 +103,41 @@ export default function IPRegister() {
       subCategory: formData.subCategory || undefined,
       keywords: formData.keywords.length > 0 ? formData.keywords : undefined,
       applicantType: formData.applicantType as any || undefined,
-      inventors: formData.inventors.filter(i => i.name).length > 0 
-        ? formData.inventors.filter(i => i.name) 
+      inventors: formData.inventors.filter(i => i.name).length > 0
+        ? formData.inventors.filter(i => i.name)
         : undefined,
     });
   };
+
+  const steps = [
+    { id: 1, title: isAr ? "نوع الملكية" : "IP Type", icon: FileText },
+    { id: 2, title: isAr ? "المعلومات الأساسية" : "Basic Info", icon: Shield },
+    { id: 3, title: isAr ? "المخترعين" : "Inventors", icon: Users },
+    { id: 4, title: isAr ? "المراجعة والتقديم" : "Review & Submit", icon: Check },
+  ];
+
+  const ipTypes = [
+    { value: "patent", label: isAr ? "براءة اختراع" : "Patent", desc: isAr ? "اختراع تقني جديد" : "New technical invention", icon: Zap },
+    { value: "trademark", label: isAr ? "علامة تجارية" : "Trademark", desc: isAr ? "شعار أو اسم تجاري" : "Logo or trade name", icon: Shield },
+    { value: "copyright", label: isAr ? "حقوق نشر" : "Copyright", desc: isAr ? "محتوى إبداعي أو برمجي" : "Creative or software content", icon: FileText },
+    { value: "industrial_design", label: isAr ? "تصميم صناعي" : "Industrial Design", desc: isAr ? "تصميم منتج فريد" : "Unique product design", icon: Globe },
+  ];
+
+  const categories = [
+    { value: "technology", label: isAr ? "تقنية" : "Technology" },
+    { value: "healthcare", label: isAr ? "رعاية صحية" : "Healthcare" },
+    { value: "energy", label: isAr ? "طاقة" : "Energy" },
+    { value: "agriculture", label: isAr ? "زراعة" : "Agriculture" },
+    { value: "manufacturing", label: isAr ? "تصنيع" : "Manufacturing" },
+    { value: "software", label: isAr ? "برمجيات" : "Software" },
+  ];
+
+  const applicantTypes = [
+    { value: "individual", label: isAr ? "فرد" : "Individual" },
+    { value: "company", label: isAr ? "شركة" : "Company" },
+    { value: "university", label: isAr ? "جامعة" : "University" },
+    { value: "government", label: isAr ? "جهة حكومية" : "Government Entity" },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -129,7 +156,7 @@ export default function IPRegister() {
           </Link>
           <Link href="/dashboard">
             <Button variant="outline" className="border-slate-700 text-slate-300">
-              العودة للوحة التحكم
+              {isAr ? "العودة للوحة التحكم" : "Back to Dashboard"}
             </Button>
           </Link>
         </div>
@@ -140,10 +167,10 @@ export default function IPRegister() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full mb-4">
             <Shield className="w-4 h-4 text-emerald-400" />
-            <span className="text-emerald-400 text-sm">NAQLA1 - توليد الملكية الفكرية</span>
+            <span className="text-emerald-400 text-sm">{isAr ? "NAQLA1 - توليد الملكية الفكرية" : "NAQLA1 - IP Generation"}</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">تسجيل ملكية فكرية جديدة</h1>
-          <p className="text-slate-400">سجّل ابتكارك واحصل على حماية فورية مع توثيق البلوكتشين</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "تسجيل ملكية فكرية جديدة" : "Register New Intellectual Property"}</h1>
+          <p className="text-slate-400">{isAr ? "سجّل ابتكارك واحصل على حماية فورية مع توثيق البلوكتشين" : "Register your innovation and get instant protection with blockchain notarization"}</p>
         </div>
 
         {/* Progress Steps */}
@@ -151,8 +178,8 @@ export default function IPRegister() {
           {steps.map((step, index) => (
             <div key={step.id} className="flex items-center">
               <div className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
-                currentStep >= step.id 
-                  ? "bg-emerald-500/20 border border-emerald-500/50" 
+                currentStep >= step.id
+                  ? "bg-emerald-500/20 border border-emerald-500/50"
                   : "bg-slate-800/50 border border-slate-700"
               }`}>
                 <step.icon className={`w-4 h-4 ${currentStep >= step.id ? "text-emerald-400" : "text-slate-500"}`} />
@@ -174,16 +201,11 @@ export default function IPRegister() {
             {currentStep === 1 && (
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-white mb-2">اختر نوع الملكية الفكرية</h2>
-                  <p className="text-slate-400">حدد نوع الحماية المناسب لابتكارك</p>
+                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "اختر نوع الملكية الفكرية" : "Choose IP Type"}</h2>
+                  <p className="text-slate-400">{isAr ? "حدد نوع الحماية المناسب لابتكارك" : "Select the appropriate protection type for your innovation"}</p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {[
-                    { value: "patent", label: "براءة اختراع", desc: "اختراع تقني جديد", icon: Zap },
-                    { value: "trademark", label: "علامة تجارية", desc: "شعار أو اسم تجاري", icon: Shield },
-                    { value: "copyright", label: "حقوق نشر", desc: "محتوى إبداعي أو برمجي", icon: FileText },
-                    { value: "industrial_design", label: "تصميم صناعي", desc: "تصميم منتج فريد", icon: Globe },
-                  ].map((type) => (
+                  {ipTypes.map((type) => (
                     <div
                       key={type.value}
                       onClick={() => setFormData({ ...formData, type: type.value as any })}
@@ -206,93 +228,89 @@ export default function IPRegister() {
             {currentStep === 2 && (
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-white mb-2">المعلومات الأساسية</h2>
-                  <p className="text-slate-400">أدخل تفاصيل ملكيتك الفكرية</p>
+                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "المعلومات الأساسية" : "Basic Information"}</h2>
+                  <p className="text-slate-400">{isAr ? "أدخل تفاصيل ملكيتك الفكرية" : "Enter details of your intellectual property"}</p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label className="text-slate-300">العنوان (عربي) *</Label>
+                    <Label className="text-slate-300">{isAr ? "العنوان (عربي) *" : "Title (Arabic) *"}</Label>
                     <Input
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      placeholder="عنوان الملكية الفكرية"
+                      placeholder={isAr ? "عنوان الملكية الفكرية" : "IP Title"}
                       className="bg-slate-900 border-slate-700 text-white"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-slate-300">العنوان (إنجليزي)</Label>
+                    <Label className="text-slate-300">{isAr ? "العنوان (إنجليزي)" : "Title (English)"}</Label>
                     <Input
                       value={formData.titleEn}
                       onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
-                      placeholder="Title in English"
+                      placeholder={isAr ? "Title in English" : "Title in English"}
                       className="bg-slate-900 border-slate-700 text-white"
                       dir="ltr"
                     />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-slate-300">الوصف التفصيلي (عربي) *</Label>
+                  <Label className="text-slate-300">{isAr ? "الوصف التفصيلي (عربي) *" : "Detailed Description (Arabic) *"}</Label>
                   <Textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder="اشرح ملكيتك الفكرية بالتفصيل..."
+                    placeholder={isAr ? "اشرح ملكيتك الفكرية بالتفصيل..." : "Describe your intellectual property in detail..."}
                     className="bg-slate-900 border-slate-700 text-white min-h-32"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-slate-300">الوصف (إنجليزي)</Label>
+                  <Label className="text-slate-300">{isAr ? "الوصف (إنجليزي)" : "Description (English)"}</Label>
                   <Textarea
                     value={formData.descriptionEn}
                     onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
-                    placeholder="Detailed description in English..."
+                    placeholder={isAr ? "Detailed description in English..." : "Detailed description in English..."}
                     className="bg-slate-900 border-slate-700 text-white min-h-32"
                     dir="ltr"
                   />
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label className="text-slate-300">التصنيف</Label>
+                    <Label className="text-slate-300">{isAr ? "التصنيف" : "Category"}</Label>
                     <Select value={formData.category} onValueChange={(v) => setFormData({ ...formData, category: v })}>
                       <SelectTrigger className="bg-slate-900 border-slate-700 text-white">
-                        <SelectValue placeholder="اختر التصنيف" />
+                        <SelectValue placeholder={isAr ? "اختر التصنيف" : "Select Category"} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="technology">تقنية</SelectItem>
-                        <SelectItem value="healthcare">رعاية صحية</SelectItem>
-                        <SelectItem value="energy">طاقة</SelectItem>
-                        <SelectItem value="agriculture">زراعة</SelectItem>
-                        <SelectItem value="manufacturing">تصنيع</SelectItem>
-                        <SelectItem value="software">برمجيات</SelectItem>
+                        {categories.map(cat => (
+                          <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-slate-300">نوع مقدم الطلب</Label>
+                    <Label className="text-slate-300">{isAr ? "نوع مقدم الطلب" : "Applicant Type"}</Label>
                     <Select value={formData.applicantType} onValueChange={(v) => setFormData({ ...formData, applicantType: v as any })}>
                       <SelectTrigger className="bg-slate-900 border-slate-700 text-white">
-                        <SelectValue placeholder="اختر النوع" />
+                        <SelectValue placeholder={isAr ? "اختر النوع" : "Select Type"} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="individual">فرد</SelectItem>
-                        <SelectItem value="company">شركة</SelectItem>
-                        <SelectItem value="university">جامعة</SelectItem>
-                        <SelectItem value="government">جهة حكومية</SelectItem>
+                        {applicantTypes.map(appType => (
+                          <SelectItem key={appType.value} value={appType.value}>{appType.label}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-slate-300">الكلمات المفتاحية</Label>
+                  <Label className="text-slate-300">{isAr ? "الكلمات المفتاحية" : "Keywords"}</Label>
                   <div className="flex gap-2">
                     <Input
                       value={formData.keywordInput}
                       onChange={(e) => setFormData({ ...formData, keywordInput: e.target.value })}
-                      placeholder="أضف كلمة مفتاحية"
+                      placeholder={isAr ? "أضف كلمة مفتاحية" : "Add a keyword"}
                       className="bg-slate-900 border-slate-700 text-white"
                       onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addKeyword())}
                     />
                     <Button type="button" onClick={addKeyword} variant="outline" className="border-slate-700">
-                      إضافة
+                      {isAr ? "إضافة" : "Add"}
                     </Button>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -310,24 +328,24 @@ export default function IPRegister() {
             {currentStep === 3 && (
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-white mb-2">المخترعين / المؤلفين</h2>
-                  <p className="text-slate-400">أضف معلومات المساهمين في هذه الملكية الفكرية</p>
+                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "المخترعين / المؤلفين" : "Inventors / Authors"}</h2>
+                  <p className="text-slate-400">{isAr ? "أضف معلومات المساهمين في هذه الملكية الفكرية" : "Add information about contributors to this IP"}</p>
                 </div>
                 {formData.inventors.map((inventor, index) => (
                   <Card key={index} className="bg-slate-900/50 border-slate-700">
                     <CardContent className="pt-4">
                       <div className="grid md:grid-cols-3 gap-4">
                         <div className="space-y-2">
-                          <Label className="text-slate-300">الاسم</Label>
+                          <Label className="text-slate-300">{isAr ? "الاسم" : "Name"}</Label>
                           <Input
                             value={inventor.name}
                             onChange={(e) => updateInventor(index, "name", e.target.value)}
-                            placeholder="اسم المخترع"
+                            placeholder={isAr ? "اسم المخترع" : "Inventor Name"}
                             className="bg-slate-800 border-slate-700 text-white"
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-slate-300">البريد الإلكتروني</Label>
+                          <Label className="text-slate-300">{isAr ? "البريد الإلكتروني" : "Email"}</Label>
                           <Input
                             value={inventor.email}
                             onChange={(e) => updateInventor(index, "email", e.target.value)}
@@ -337,11 +355,11 @@ export default function IPRegister() {
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-slate-300">نسبة المساهمة</Label>
+                          <Label className="text-slate-300">{isAr ? "نسبة المساهمة" : "Contribution Percentage"}</Label>
                           <Input
                             value={inventor.contribution}
                             onChange={(e) => updateInventor(index, "contribution", e.target.value)}
-                            placeholder="مثال: 50%"
+                            placeholder={isAr ? "مثال: 50%" : "e.g., 50%"}
                             className="bg-slate-800 border-slate-700 text-white"
                           />
                         </div>
@@ -351,7 +369,7 @@ export default function IPRegister() {
                 ))}
                 <Button type="button" onClick={addInventor} variant="outline" className="w-full border-slate-700 border-dashed">
                   <Users className="w-4 h-4 ml-2" />
-                  إضافة مخترع آخر
+                  {isAr ? "إضافة مخترع آخر" : "Add another inventor"}
                 </Button>
               </div>
             )}
@@ -360,48 +378,48 @@ export default function IPRegister() {
             {currentStep === 4 && (
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-white mb-2">مراجعة وتقديم</h2>
-                  <p className="text-slate-400">راجع المعلومات قبل التقديم</p>
+                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "مراجعة وتقديم" : "Review and Submit"}</h2>
+                  <p className="text-slate-400">{isAr ? "راجع المعلومات قبل التقديم" : "Review the information before submission"}</p>
                 </div>
-                
+
                 <div className="bg-slate-900/50 rounded-xl p-6 space-y-4">
                   <div className="flex items-center gap-3 pb-4 border-b border-slate-700">
                     <Lock className="w-6 h-6 text-emerald-400" />
                     <div>
-                      <p className="text-white font-medium">توثيق البلوكتشين</p>
-                      <p className="text-slate-400 text-sm">سيتم إنشاء توقيع رقمي فريد لحماية ملكيتك</p>
+                      <p className="text-white font-medium">{isAr ? "توثيق البلوكتشين" : "Blockchain Notarization"}</p>
+                      <p className="text-slate-400 text-sm">{isAr ? "سيتم إنشاء توقيع رقمي فريد لحماية ملكيتك" : "A unique digital signature will be created to protect your property"}</p>
                     </div>
                   </div>
-                  
+
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <p className="text-slate-400 text-sm">نوع الملكية</p>
+                      <p className="text-slate-400 text-sm">{isAr ? "نوع الملكية" : "IP Type"}</p>
                       <p className="text-white">
-                        {formData.type === "patent" && "براءة اختراع"}
-                        {formData.type === "trademark" && "علامة تجارية"}
-                        {formData.type === "copyright" && "حقوق نشر"}
-                        {formData.type === "industrial_design" && "تصميم صناعي"}
+                        {formData.type === "patent" && (isAr ? "براءة اختراع" : "Patent")}
+                        {formData.type === "trademark" && (isAr ? "علامة تجارية" : "Trademark")}
+                        {formData.type === "copyright" && (isAr ? "حقوق نشر" : "Copyright")}
+                        {formData.type === "industrial_design" && (isAr ? "تصميم صناعي" : "Industrial Design")}
                       </p>
                     </div>
                     <div>
-                      <p className="text-slate-400 text-sm">التصنيف</p>
-                      <p className="text-white">{formData.category || "غير محدد"}</p>
+                      <p className="text-slate-400 text-sm">{isAr ? "التصنيف" : "Category"}</p>
+                      <p className="text-white">{formData.category || (isAr ? "غير محدد" : "Not specified")}</p>
                     </div>
                   </div>
-                  
+
                   <div>
-                    <p className="text-slate-400 text-sm">العنوان</p>
+                    <p className="text-slate-400 text-sm">{isAr ? "العنوان" : "Title"}</p>
                     <p className="text-white">{formData.title}</p>
                   </div>
-                  
+
                   <div>
-                    <p className="text-slate-400 text-sm">الوصف</p>
+                    <p className="text-slate-400 text-sm">{isAr ? "الوصف" : "Description"}</p>
                     <p className="text-white text-sm">{formData.description.substring(0, 200)}...</p>
                   </div>
-                  
+
                   {formData.keywords.length > 0 && (
                     <div>
-                      <p className="text-slate-400 text-sm mb-2">الكلمات المفتاحية</p>
+                      <p className="text-slate-400 text-sm mb-2">{isAr ? "الكلمات المفتاحية" : "Keywords"}</p>
                       <div className="flex flex-wrap gap-2">
                         {formData.keywords.map((kw, i) => (
                           <span key={i} className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm">
@@ -411,10 +429,10 @@ export default function IPRegister() {
                       </div>
                     </div>
                   )}
-                  
+
                   {formData.inventors.filter(i => i.name).length > 0 && (
                     <div>
-                      <p className="text-slate-400 text-sm mb-2">المخترعين</p>
+                      <p className="text-slate-400 text-sm mb-2">{isAr ? "المخترعين" : "Inventors"}</p>
                       <div className="space-y-2">
                         {formData.inventors.filter(i => i.name).map((inv, i) => (
                           <div key={i} className="flex items-center gap-2">
@@ -432,9 +450,11 @@ export default function IPRegister() {
                   <div className="flex items-start gap-3">
                     <Shield className="w-6 h-6 text-emerald-400 mt-1" />
                     <div>
-                      <p className="text-emerald-400 font-medium">حماية فورية</p>
+                      <p className="text-emerald-400 font-medium">{isAr ? "حماية فورية" : "Instant Protection"}</p>
                       <p className="text-slate-300 text-sm">
-                        بمجرد التقديم، سيتم توثيق ملكيتك الفكرية على البلوكتشين وإرسال طلب إلى SAIP للمراجعة
+                        {isAr
+                          ? "بمجرد التقديم، سيتم توثيق ملكيتك الفكرية على البلوكتشين وإرسال طلب إلى SAIP للمراجعة"
+                          : "Upon submission, your intellectual property will be notarized on the blockchain and a request will be sent to SAIP for review"}
                       </p>
                     </div>
                   </div>
@@ -450,18 +470,18 @@ export default function IPRegister() {
                 disabled={currentStep === 1}
                 className="border-slate-700 text-slate-300"
               >
-                <ArrowRight className="w-4 h-4 ml-2" />
-                السابق
+                {isAr ? <ArrowRight className="w-4 h-4 ml-2" /> : <ArrowLeft className="w-4 h-4 mr-2" />}
+                {isAr ? "السابق" : "Previous"}
               </Button>
-              
+
               {currentStep < 4 ? (
                 <Button
                   onClick={handleNext}
                   disabled={currentStep === 1 && !formData.type}
                   className="bg-emerald-500 hover:bg-emerald-600"
                 >
-                  التالي
-                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  {isAr ? "التالي" : "Next"}
+                  {isAr ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
                 </Button>
               ) : (
                 <Button
@@ -472,12 +492,12 @@ export default function IPRegister() {
                   {createIPMutation.isPending ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin ml-2" />
-                      جاري التسجيل...
+                      {isAr ? "جاري التسجيل..." : "Registering..."}
                     </>
                   ) : (
                     <>
-                      <Check className="w-4 h-4 ml-2" />
-                      تقديم الطلب
+                      {isAr ? <Check className="w-4 h-4 ml-2" /> : <Check className="w-4 h-4 mr-2" />}
+                      {isAr ? "تقديم الطلب" : "Submit Application"}
                     </>
                   )}
                 </Button>

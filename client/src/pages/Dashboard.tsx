@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Rocket, Shield, Brain, FileText, Users, BarChart3, 
   Plus, ChevronRight, Bell, Settings, LogOut,
@@ -14,6 +15,8 @@ import {
 } from "lucide-react";
 
 export default function Dashboard() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user, logout, loading } = useAuth({ redirectOnUnauthenticated: true });
   const { data: stats } = trpc.dashboard.getStats.useQuery();
   const { data: myProjects } = trpc.project.getMyProjects.useQuery(undefined, { enabled: !!user });
@@ -96,7 +99,7 @@ export default function Dashboard() {
                 </AvatarFallback>
               </Avatar>
               <div className="text-right hidden sm:block">
-                <div className="font-medium text-sm">منصة نقلة 5.0</div>
+                <div className="font-medium text-sm">{isAr ? "منصة نقلة 5.0" : "[منصة نقلة 5.0]"}</div>
                 <div className="text-xs text-muted-foreground">{user.role === "admin" ? "مدير النظام" : "مبتكر"}</div>
               </div>
             </div>
@@ -113,10 +116,10 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-5 h-5 text-cyan-400" />
-            <span className="text-sm text-muted-foreground">لوحة التحكم</span>
+            <span className="text-sm text-muted-foreground">{isAr ? "لوحة التحكم" : "Dashboard"}</span>
           </div>
-          <h1 className="text-3xl font-bold mb-2">مرحباً بك في منصة نقلة 5.0!</h1>
-          <p className="text-muted-foreground">إليك نظرة عامة على نشاطك في منصة NAQLA</p>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? "مرحباً بك في منصة نقلة 5.0!" : "[مرحباً بك في منصة نقلة 5.0!]"}</h1>
+          <p className="text-muted-foreground">{isAr ? "إليك نظرة عامة على نشاطك في منصة NAQLA" : "[إليك نظرة عامة على نشاطك في منصة NAQLA]"}</p>
         </div>
 
         {/* Quick Stats */}
@@ -206,7 +209,7 @@ export default function Dashboard() {
                   <Lightbulb className="w-5 h-5 text-cyan-400" />
                   مشاريعي
                 </CardTitle>
-                <CardDescription>آخر المشاريع المسجلة</CardDescription>
+                <CardDescription>{isAr ? "آخر المشاريع المسجلة" : "آخر Projects المسجلة"}</CardDescription>
               </div>
               <Link href="/projects">
                 <Button variant="ghost" size="sm" className="text-cyan-400">
@@ -249,7 +252,7 @@ export default function Dashboard() {
                   <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mx-auto mb-4">
                     <Lightbulb className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <p className="text-muted-foreground mb-4">لم تسجل أي مشاريع بعد</p>
+                  <p className="text-muted-foreground mb-4">{isAr ? "لم تسجل أي مشاريع بعد" : "[لم تسجل أي مشاريع بعد]"}</p>
                   <Link href="/projects/new">
                     <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
                       <Plus className="w-4 h-4 ml-2" />
@@ -269,7 +272,7 @@ export default function Dashboard() {
                   <Shield className="w-5 h-5 text-emerald-400" />
                   ملكياتي الفكرية
                 </CardTitle>
-                <CardDescription>تسجيلات IP الخاصة بك</CardDescription>
+                <CardDescription>{isAr ? "تسجيلات IP الخاصة بك" : "Registerات IP الخاصة بك"}</CardDescription>
               </div>
               <Link href="/ip/list">
                 <Button variant="ghost" size="sm" className="text-emerald-400">
@@ -305,7 +308,7 @@ export default function Dashboard() {
                   <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mx-auto mb-4">
                     <Shield className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <p className="text-muted-foreground mb-4">لم تسجل أي ملكية فكرية بعد</p>
+                  <p className="text-muted-foreground mb-4">{isAr ? "لم تسجل أي ملكية فكرية بعد" : "[لم تسجل أي ملكية فكرية بعد]"}</p>
                   <Link href="/ip/register">
                     <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white">
                       <Plus className="w-4 h-4 ml-2" />

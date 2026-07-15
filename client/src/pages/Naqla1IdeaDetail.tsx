@@ -4,6 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Lightbulb, ArrowLeft, Star, TrendingUp, 
   CheckCircle, Target, AlertTriangle, Zap,
@@ -11,6 +12,8 @@ import {
 } from 'lucide-react';
 
 export default function Naqla1IdeaDetail() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { id } = useParams<{ id: string }>();
   const ideaId = parseInt(id || '0');
   const { user } = useAuth();
@@ -32,7 +35,7 @@ export default function Naqla1IdeaDetail() {
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardContent className="py-12 text-center">
-            <p className="text-slate-400 text-lg">الفكرة غير موجودة</p>
+            <p className="text-slate-400 text-lg">{isAr ? "الفكرة غير موجودة" : "الIdea غير موجودة"}</p>
             <Button onClick={() => navigate('/naqla1/browse')} className="mt-4">
               <ArrowLeft className="w-4 h-4 ml-2" />
               العودة
@@ -105,7 +108,7 @@ export default function Naqla1IdeaDetail() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-emerald-950/30 backdrop-blur-xl border-emerald-500/30">
             <CardHeader>
-              <CardTitle className="text-emerald-400 text-sm">الابتكار</CardTitle>
+              <CardTitle className="text-emerald-400 text-sm">{isAr ? "الابتكار" : "Innovation"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-emerald-400">
@@ -115,7 +118,7 @@ export default function Naqla1IdeaDetail() {
           </Card>
           <Card className="bg-blue-950/30 backdrop-blur-xl border-blue-500/30">
             <CardHeader>
-              <CardTitle className="text-blue-400 text-sm">السوق</CardTitle>
+              <CardTitle className="text-blue-400 text-sm">{isAr ? "السوق" : "Market"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-blue-400">
@@ -125,7 +128,7 @@ export default function Naqla1IdeaDetail() {
           </Card>
           <Card className="bg-purple-950/30 backdrop-blur-xl border-purple-500/30">
             <CardHeader>
-              <CardTitle className="text-purple-400 text-sm">الجدوى</CardTitle>
+              <CardTitle className="text-purple-400 text-sm">{isAr ? "الجدوى" : "[الجدوى]"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-purple-400">
@@ -135,7 +138,7 @@ export default function Naqla1IdeaDetail() {
           </Card>
           <Card className="bg-cyan-950/30 backdrop-blur-xl border-cyan-500/30">
             <CardHeader>
-              <CardTitle className="text-cyan-400 text-sm">الإجمالي</CardTitle>
+              <CardTitle className="text-cyan-400 text-sm">{isAr ? "الإجمالي" : "الTotal"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-cyan-400">
@@ -150,8 +153,8 @@ export default function Naqla1IdeaDetail() {
           <CardContent className="py-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-white text-lg font-semibold mb-2">فحص الفكرة بالذكاء الاصطناعي</h3>
-                <p className="text-slate-400">احصل على تحليل شامل لفكرتك مع توصيات مخصصة</p>
+                <h3 className="text-white text-lg font-semibold mb-2">{isAr ? "فحص الفكرة بالذكاء الاصطناعي" : "فحص الفكرة بالذكاء اNoصطناعي"}</h3>
+                <p className="text-slate-400">{isAr ? "احصل على تحليل شامل لفكرتك مع توصيات مخصصة" : "[احصل على تحليل شامل لفكرتك مع توصيات مخصصة]"}</p>
               </div>
               <Button 
                 onClick={() => navigate(`/naqla1/ideas/${ideaId}/analysis`)}

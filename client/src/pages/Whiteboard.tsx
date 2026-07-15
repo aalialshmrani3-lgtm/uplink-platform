@@ -14,6 +14,7 @@ import {
   Lightbulb, Sparkles, Link2, MessageSquare, Lock, Eye
 } from 'lucide-react';
 import { useAuth } from '@/_core/hooks/useAuth';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // أنواع العناصر
 type ElementType = 'pencil' | 'rectangle' | 'circle' | 'text' | 'sticky' | 'arrow' | 'line';
@@ -51,6 +52,8 @@ const colors = [
 ];
 
 export default function Whiteboard() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [tool, setTool] = useState<Tool>('pencil');
@@ -388,8 +391,8 @@ export default function Whiteboard() {
                 <Lightbulb className="w-4 h-4 text-white" />
               </div>
               <div>
-                <h1 className="text-sm font-bold text-white">لوحة الأفكار التفاعلية</h1>
-                <p className="text-xs text-white/50">تعاون في الوقت الحقيقي</p>
+                <h1 className="text-sm font-bold text-white">{isAr ? "لوحة الأفكار التفاعلية" : "Panel الأفكار التفاعلية"}</h1>
+                <p className="text-xs text-white/50">{isAr ? "تعاون في الوقت الحقيقي" : "تعاون في Time الحقيقي"}</p>
               </div>
             </div>
           </div>
@@ -571,7 +574,7 @@ export default function Whiteboard() {
           
           {/* Stroke Width */}
           <div>
-            <h3 className="text-sm font-medium text-white/70 mb-3">سمك الخط</h3>
+            <h3 className="text-sm font-medium text-white/70 mb-3">{isAr ? "سمك الخط" : "[سمك الخط]"}</h3>
             <div className="flex items-center gap-3">
               <Slider
                 value={[strokeWidth]}

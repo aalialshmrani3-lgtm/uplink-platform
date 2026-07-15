@@ -18,8 +18,11 @@ import {
 } from '@/components/ui/dialog';
 import { History, CheckCircle, Trash2, GitCompare, RotateCcw } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ModelHistory() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [compareDialogOpen, setCompareDialogOpen] = useState(false);
   const [selectedVersions, setSelectedVersions] = useState<string[]>([]);
 
@@ -102,7 +105,7 @@ export default function ModelHistory() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">سجل النماذج المدربة</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? "سجل النماذج المدربة" : "Model History المدربة"}</h1>
           <p className="text-muted-foreground">
             عرض ومقارنة إصدارات النماذج المختلفة
           </p>
@@ -118,7 +121,7 @@ export default function ModelHistory() {
       {/* Models List */}
       <Card>
         <CardHeader>
-          <CardTitle>الإصدارات المتاحة</CardTitle>
+          <CardTitle>{isAr ? "الإصدارات المتاحة" : "[الإصدارات المتاحة]"}</CardTitle>
           <CardDescription>
             {versions?.length || 0} إصدار محفوظ
           </CardDescription>
@@ -164,7 +167,7 @@ export default function ModelHistory() {
                         
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-3">
                           <div>
-                            <div className="text-xs text-muted-foreground">الدقة</div>
+                            <div className="text-xs text-muted-foreground">{isAr ? "الدقة" : "Accuracy"}</div>
                             <div className="font-semibold text-lg">
                               {formatPercentage(version.accuracy)}
                             </div>
@@ -241,7 +244,7 @@ export default function ModelHistory() {
       <Dialog open={compareDialogOpen} onOpenChange={setCompareDialogOpen}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle>مقارنة النماذج</DialogTitle>
+            <DialogTitle>{isAr ? "مقارنة النماذج" : "مقارنة Forms"}</DialogTitle>
             <DialogDescription>
               مقارنة تفصيلية بين نموذجين
             </DialogDescription>
@@ -253,28 +256,28 @@ export default function ModelHistory() {
               <div className="grid grid-cols-2 gap-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-sm">النموذج 1</CardTitle>
+                    <CardTitle className="text-sm">{isAr ? "النموذج 1" : "Growthذج 1"}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2 text-sm">
                       <div><strong>ID:</strong> {comparison.version_1.id}</div>
-                      <div><strong>النوع:</strong> {comparison.version_1.model_type}</div>
-                      <div><strong>التاريخ:</strong> {formatDate(comparison.version_1.timestamp)}</div>
-                      <div><strong>العينات:</strong> {comparison.version_1.training_samples.toLocaleString()}</div>
+                      <div><strong>{isAr ? "النوع:" : "[النوع:]"}</strong> {comparison.version_1.model_type}</div>
+                      <div><strong>{isAr ? "التاريخ:" : "Date:"}</strong> {formatDate(comparison.version_1.timestamp)}</div>
+                      <div><strong>{isAr ? "العينات:" : "[العينات:]"}</strong> {comparison.version_1.training_samples.toLocaleString()}</div>
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-sm">النموذج 2</CardTitle>
+                    <CardTitle className="text-sm">{isAr ? "النموذج 2" : "Growthذج 2"}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2 text-sm">
                       <div><strong>ID:</strong> {comparison.version_2.id}</div>
-                      <div><strong>النوع:</strong> {comparison.version_2.model_type}</div>
-                      <div><strong>التاريخ:</strong> {formatDate(comparison.version_2.timestamp)}</div>
-                      <div><strong>العينات:</strong> {comparison.version_2.training_samples.toLocaleString()}</div>
+                      <div><strong>{isAr ? "النوع:" : "[النوع:]"}</strong> {comparison.version_2.model_type}</div>
+                      <div><strong>{isAr ? "التاريخ:" : "Date:"}</strong> {formatDate(comparison.version_2.timestamp)}</div>
+                      <div><strong>{isAr ? "العينات:" : "[العينات:]"}</strong> {comparison.version_2.training_samples.toLocaleString()}</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -283,7 +286,7 @@ export default function ModelHistory() {
               {/* Metrics Comparison */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm">مقارنة المقاييس</CardTitle>
+                  <CardTitle className="text-sm">{isAr ? "مقارنة المقاييس" : "[مقارنة المقاييس]"}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">

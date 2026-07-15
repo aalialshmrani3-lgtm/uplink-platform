@@ -42,6 +42,8 @@ function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; d
 }
 
 export default function Home() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const { t } = useLanguage();
   const [activeEngine, setActiveEngine] = useState(0);
@@ -675,7 +677,7 @@ export default function Home() {
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-500/10 border border-violet-500/30 rounded-full mb-4">
               <Globe className="w-4 h-4 text-violet-400" />
-              <span className="text-violet-400 text-sm font-medium">شراكات دولية استراتيجية</span>
+              <span className="text-violet-400 text-sm font-medium">{isAr ? "شراكات دولية استراتيجية" : "شراكات دولية Strategy"}</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
               نقلة × الشركاء الدوليون
@@ -693,8 +695,8 @@ export default function Home() {
               </div>
               <div className="flex-1 text-center md:text-right">
                 <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
-                  <span className="text-white font-bold text-xl">شبكة الابتكار العالمية</span>
-                  <span className="text-xs bg-violet-600 text-white px-2 py-0.5 rounded-full">دولي</span>
+                  <span className="text-white font-bold text-xl">{isAr ? "شبكة الابتكار العالمية" : "شبكة اNoبتكار العالمية"}</span>
+                  <span className="text-xs bg-violet-600 text-white px-2 py-0.5 rounded-full">{isAr ? "دولي" : "[دولي]"}</span>
                 </div>
                 <p className="text-slate-300 text-sm mb-4 leading-relaxed">
                   شراكات استراتيجية مع أبرز مراكز الابتكار العالمية تتيح لمبتكري نقلة الوصول إلى صناديق رأس المال المخاطر، وبرامج التحضين والتسريع، وشبكة من أكثر من 500 شركة تقنية عالمية وبرامج تسريع دولية.

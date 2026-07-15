@@ -4,8 +4,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { getLoginUrl } from "@/const";
 import { useState } from "react";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Login() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSocialLogin = (provider: 'google' | 'facebook' | 'twitter' | 'linkedin' | 'github') => {
@@ -41,8 +44,8 @@ export default function Login() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <CardTitle className="text-2xl font-bold">تسجيل الدخول</CardTitle>
-          <CardDescription>مرحباً بك في منصة NAQLA 5.0</CardDescription>
+          <CardTitle className="text-2xl font-bold">{isAr ? "تسجيل الدخول" : "Login"}</CardTitle>
+          <CardDescription>{isAr ? "مرحباً بك في منصة NAQLA 5.0" : "[مرحباً بك في منصة NAQLA 5.0]"}</CardDescription>
         </CardHeader>
         
         <CardContent className="space-y-4">
@@ -60,7 +63,7 @@ export default function Login() {
               <span className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">أو استخدم</span>
+              <span className="bg-card px-2 text-muted-foreground">{isAr ? "أو استخدم" : "[أو استخدم]"}</span>
             </div>
           </div>
 

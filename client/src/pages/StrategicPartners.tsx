@@ -8,8 +8,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, Building2, ExternalLink, Mail, Phone } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function StrategicPartners() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   // جلب جميع الشركاء
   const { data: partners, isLoading } = trpc.strategicPartners.getAll.useQuery({
     activeOnly: true,
@@ -27,7 +30,7 @@ export default function StrategicPartners() {
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">الشركاء الاستراتيجيون</h1>
+        <h1 className="text-4xl font-bold mb-2">{isAr ? "الشركاء الاستراتيجيون" : "Strategic Partners"}</h1>
         <p className="text-muted-foreground">
           شركاؤنا في دعم الابتكار والريادة في المملكة العربية السعودية
         </p>
@@ -71,7 +74,7 @@ export default function StrategicPartners() {
                     const areas = partner.focusAreas;
                     return areas && Array.isArray(areas) && areas.length > 0 && (
                       <div>
-                        <strong className="text-sm">مجالات التركيز:</strong>
+                        <strong className="text-sm">{isAr ? "مجالات التركيز:" : "مجاNoت التركيز:"}</strong>
                         <div className="flex flex-wrap gap-1 mt-1">
                           {(areas as any[]).slice(0, 3).map((area: any, index: number) => (
                             <Badge key={index} variant="outline" className="text-xs">
@@ -87,7 +90,7 @@ export default function StrategicPartners() {
                     const types = partner.supportTypes;
                     return types && Array.isArray(types) && types.length > 0 && (
                       <div>
-                        <strong className="text-sm">أنواع الدعم:</strong>
+                        <strong className="text-sm">{isAr ? "أنواع الدعم:" : "أنواع Support:"}</strong>
                         <div className="flex flex-wrap gap-1 mt-1">
                           {(types as any[]).slice(0, 3).map((type: any, index: number) => (
                             <Badge key={index} variant="secondary" className="text-xs">

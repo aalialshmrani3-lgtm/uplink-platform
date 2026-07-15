@@ -16,8 +16,11 @@ import {
   ShoppingCart
 } from "lucide-react";
 import { toast } from 'sonner';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla2Marketplace() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedListing, setSelectedListing] = useState<number | null>(null);
@@ -55,7 +58,7 @@ export default function Naqla2Marketplace() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">جاري التحميل...</div>
+        <div className="text-white text-xl">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
       </div>
     );
   }
@@ -80,7 +83,7 @@ export default function Naqla2Marketplace() {
               <Award className="w-10 h-10 text-yellow-400" />
               <div>
                 <div className="text-3xl font-bold text-white">{listingsArray.length || 0}</div>
-                <div className="text-sm text-purple-200">ملكية معتمدة</div>
+                <div className="text-sm text-purple-200">{isAr ? "ملكية معتمدة" : "ملكية معDoneدة"}</div>
               </div>
             </div>
           </Card>
@@ -90,7 +93,7 @@ export default function Naqla2Marketplace() {
               <ShoppingCart className="w-10 h-10 text-green-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-purple-200">صفقة نشطة</div>
+                <div className="text-sm text-purple-200">{isAr ? "صفقة نشطة" : "صفقة Activeة"}</div>
               </div>
             </div>
           </Card>
@@ -100,7 +103,7 @@ export default function Naqla2Marketplace() {
               <DollarSign className="w-10 h-10 text-blue-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-purple-200">مليون ريال</div>
+                <div className="text-sm text-purple-200">{isAr ? "مليون ريال" : "مليون SAR"}</div>
               </div>
             </div>
           </Card>
@@ -110,7 +113,7 @@ export default function Naqla2Marketplace() {
               <TrendingUp className="w-10 h-10 text-purple-400" />
               <div>
                 <div className="text-3xl font-bold text-white">+25%</div>
-                <div className="text-sm text-purple-200">نمو شهري</div>
+                <div className="text-sm text-purple-200">{isAr ? "نمو شهري" : "Grow شهري"}</div>
               </div>
             </div>
           </Card>
@@ -176,8 +179,8 @@ export default function Naqla2Marketplace() {
         {filteredListings && filteredListings.length === 0 ? (
           <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-12 text-center">
             <Award className="w-20 h-20 text-purple-400 mx-auto mb-4" />
-            <p className="text-white text-xl mb-2">لا توجد ملكيات فكرية متاحة حالياً</p>
-            <p className="text-purple-200">تحقق مرة أخرى قريباً للحصول على فرص جديدة</p>
+            <p className="text-white text-xl mb-2">{isAr ? "لا توجد ملكيات فكرية متاحة حالياً" : "No توجد ملكيات فكرية متاحة حالياً"}</p>
+            <p className="text-purple-200">{isAr ? "تحقق مرة أخرى قريباً للحصول على فرص جديدة" : "تحقق مرة أخرى قريباً للحصول على فرص Newة"}</p>
           </Card>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

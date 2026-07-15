@@ -1,6 +1,7 @@
 // NAQLA2 - Host Event Dashboard (Hackathon/Workshop/Conference)
 import { useState } from 'react';
 import { useAuth } from '@/_core/hooks/useAuth';
+import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,8 @@ import { Calendar, Users, Building2, DollarSign, MapPin, Clock } from 'lucide-re
 import { toast } from 'sonner';
 
 export default function Naqla2HostEvent() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
   const { user } = useAuth();
   const [eventData, setEventData] = useState({
     title: '',
@@ -28,7 +31,7 @@ export default function Naqla2HostEvent() {
 
   const hostEventMutation = trpc.naqla2.events.host.useMutation({
     onSuccess: () => {
-      toast.success('تم إنشاء الفعالية بنجاح!');
+      toast.success(isAr ? 'تم إنشاء الفعالية بنجاح!' : 'Event created successfully!');
       setEventData({
         title: '',
         description: '',
@@ -42,14 +45,14 @@ export default function Naqla2HostEvent() {
       });
     },
     onError: (error) => {
-      toast.error('فشل إنشاء الفعالية: ' + error.message);
+      toast.error((isAr ? 'فشل إنشاء الفعالية: ' : 'Failed to create event: ') + error.message);
     }
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      toast.error('يرجى تسجيل الدخول أولاً');
+      toast.error(isAr ? 'يرجى تسجيل الدخول أولاً' : 'Please login first');
       return;
     }
 
@@ -61,7 +64,7 @@ export default function Naqla2HostEvent() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800 max-w-md">
           <CardContent className="p-8">
-            <p className="text-white text-center">يرجى تسجيل الدخول لإقامة فعالية</p>
+            <p className="text-white text-center">{isAr ? "يرجى تسجيل الدخول لإقامة فعالية" : "Please login to host an event"}</p>
           </CardContent>
         </Card>
       </div>
@@ -75,35 +78,35 @@ export default function Naqla2HostEvent() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3">
             <Calendar className="w-10 h-10 text-purple-400" />
-            أقم فعالية
+            {isAr ? "أقم فعالية" : "Host an Event"}
           </h1>
           <p className="text-slate-400 text-lg">
-            هاكاثون، ورشة عمل، أو مؤتمر - نساعدك في إيجاد الرعاة والمبتكرين
+            {isAr ? "هاكاثون، ورشة عمل، أو مؤتمر - نساعدك في إيجاد الرعاة والمبتكرين" : "Hackathon, workshop, or conference - we help you find sponsors and innovators"}
           </p>
         </div>
 
         <Tabs defaultValue="create" className="space-y-6">
           <TabsList className="bg-slate-900/50 border-slate-800">
-            <TabsTrigger value="create">إنشاء فعالية</TabsTrigger>
-            <TabsTrigger value="attendees">الحضور</TabsTrigger>
-            <TabsTrigger value="sponsors">الرعاة</TabsTrigger>
-            <TabsTrigger value="innovators">المبتكرين</TabsTrigger>
+            <TabsTrigger value="create">{isAr ? "إنشاء فعالية" : "Create Event"}</TabsTrigger>
+            <TabsTrigger value="attendees">{isAr ? "الحضور" : "Attendees"}</TabsTrigger>
+            <TabsTrigger value="sponsors">{isAr ? "الرعاة" : "Sponsors"}</TabsTrigger>
+            <TabsTrigger value="innovators">{isAr ? "المبتكرين" : "Innovators"}</TabsTrigger>
           </TabsList>
 
           {/* Create Event Tab */}
           <TabsContent value="create">
             <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
               <CardHeader>
-                <CardTitle className="text-white">تفاصيل الفعالية</CardTitle>
+                <CardTitle className="text-white">{isAr ? "تفاصيل الفعالية" : "Event Details"}</CardTitle>
                 <CardDescription className="text-slate-400">
-                  املأ التفاصيل التالية لإنشاء فعاليتك
+                  {isAr ? "املأ التفاصيل التالية لإنشاء فعاليتك" : "Fill in the following details to create your event"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Event Type */}
                   <div>
-                    <Label htmlFor="type" className="text-white">نوع الفعالية *</Label>
+                    <Label htmlFor="type" className="text-white">{isAr ? "نوع الفعالية *" : "Event Type *"}</Label>
                     <Select
                       value={eventData.type}
                       onValueChange={(value: 'hackathon' | 'workshop' | 'conference') => 
@@ -114,19 +117,19 @@ export default function Naqla2HostEvent() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="hackathon">هاكاثون</SelectItem>
-                        <SelectItem value="workshop">ورشة عمل</SelectItem>
-                        <SelectItem value="conference">مؤتمر</SelectItem>
+                        <SelectItem value="hackathon">{isAr ? "هاكاثون" : "Hackathon"}</SelectItem>
+                        <SelectItem value="workshop">{isAr ? "ورشة عمل" : "Workshop"}</SelectItem>
+                        <SelectItem value="conference">{isAr ? "مؤتمر" : "Conference"}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   {/* Title */}
                   <div>
-                    <Label htmlFor="title" className="text-white">عنوان الفعالية *</Label>
+                    <Label htmlFor="title" className="text-white">{isAr ? "عنوان الفعالية *" : "Event Title *"}</Label>
                     <Input
                       id="title"
-                      placeholder="مثال: هاكاثون الذكاء الاصطناعي 2024"
+                      placeholder={isAr ? "مثال: هاكاثون الذكاء الاصطناعي 2024" : "Example: AI Hackathon 2024"}
                       value={eventData.title}
                       onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
                       required
@@ -136,10 +139,10 @@ export default function Naqla2HostEvent() {
 
                   {/* Description */}
                   <div>
-                    <Label htmlFor="description" className="text-white">وصف الفعالية *</Label>
+                    <Label htmlFor="description" className="text-white">{isAr ? "وصف الفعالية *" : "Event Description *"}</Label>
                     <Textarea
                       id="description"
-                      placeholder="اشرح الهدف والأنشطة..."
+                      placeholder={isAr ? "اشرح الهدف والأنشطة..." : "Explain the goals and activities..."}
                       value={eventData.description}
                       onChange={(e) => setEventData({ ...eventData, description: e.target.value })}
                       required
@@ -153,7 +156,7 @@ export default function Naqla2HostEvent() {
                     <div>
                       <Label htmlFor="date" className="text-white flex items-center gap-2">
                         <Clock className="w-4 h-4 text-blue-400" />
-                        التاريخ *
+                        {isAr ? "التاريخ *" : "Date *"}
                       </Label>
                       <Input
                         id="date"
@@ -169,11 +172,11 @@ export default function Naqla2HostEvent() {
                     <div>
                       <Label htmlFor="location" className="text-white flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-red-400" />
-                        الموقع *
+                        {isAr ? "الموقع *" : "Location *"}
                       </Label>
                       <Input
                         id="location"
-                        placeholder="الرياض، السعودية"
+                        placeholder={isAr ? "الرياض، السعودية" : "Riyadh, Saudi Arabia"}
                         value={eventData.location}
                         onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
                         required
@@ -185,7 +188,7 @@ export default function Naqla2HostEvent() {
                     <div>
                       <Label htmlFor="capacity" className="text-white flex items-center gap-2">
                         <Users className="w-4 h-4 text-green-400" />
-                        السعة *
+                        {isAr ? "السعة *" : "Capacity *"}
                       </Label>
                       <Input
                         id="capacity"
@@ -202,11 +205,11 @@ export default function Naqla2HostEvent() {
                     <div>
                       <Label htmlFor="budget" className="text-white flex items-center gap-2">
                         <DollarSign className="w-4 h-4 text-yellow-400" />
-                        الميزانية المطلوبة *
+                        {isAr ? "الميزانية المطلوبة *" : "Required Budget *"}
                       </Label>
                       <Input
                         id="budget"
-                        placeholder="50,000 ريال"
+                        placeholder={isAr ? "50,000 ريال" : "50,000 SAR"}
                         value={eventData.budget}
                         onChange={(e) => setEventData({ ...eventData, budget: e.target.value })}
                         required
@@ -227,7 +230,7 @@ export default function Naqla2HostEvent() {
                       />
                       <Label htmlFor="needSponsors" className="text-white flex items-center gap-2">
                         <Building2 className="w-4 h-4 text-purple-400" />
-                        أبحث عن رعاة
+                        {isAr ? "أبحث عن رعاة" : "Looking for sponsors"}
                       </Label>
                     </div>
 
@@ -241,7 +244,7 @@ export default function Naqla2HostEvent() {
                       />
                       <Label htmlFor="needInnovators" className="text-white flex items-center gap-2">
                         <Users className="w-4 h-4 text-cyan-400" />
-                        أبحث عن مبتكرين
+                        {isAr ? "أبحث عن مبتكرين" : "Looking for innovators"}
                       </Label>
                     </div>
                   </div>
@@ -252,7 +255,7 @@ export default function Naqla2HostEvent() {
                     disabled={hostEventMutation.isPending}
                     className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white"
                   >
-                    {hostEventMutation.isPending ? 'جاري الإنشاء...' : 'إنشاء الفعالية'}
+                    {hostEventMutation.isPending ? (isAr ? 'جاري الإنشاء...' : 'Creating...') : (isAr ? 'إنشاء الفعالية' : 'Create Event')}
                   </Button>
                 </form>
               </CardContent>
@@ -263,14 +266,14 @@ export default function Naqla2HostEvent() {
           <TabsContent value="attendees">
             <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
               <CardHeader>
-                <CardTitle className="text-white">إدارة الحضور</CardTitle>
+                <CardTitle className="text-white">{isAr ? "إدارة الحضور" : "Manage Attendees"}</CardTitle>
                 <CardDescription className="text-slate-400">
-                  قائمة المسجلين في الفعالية
+                  {isAr ? "قائمة المسجلين في الفعالية" : "List of registered attendees"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center text-slate-400 py-12">
-                  سيتم عرض قائمة الحضور هنا بعد إنشاء الفعالية
+                  {isAr ? "سيتم عرض قائمة الحضور هنا بعد إنشاء الفعالية" : "Attendee list will be displayed here after creating the event"}
                 </div>
               </CardContent>
             </Card>
@@ -280,14 +283,14 @@ export default function Naqla2HostEvent() {
           <TabsContent value="sponsors">
             <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
               <CardHeader>
-                <CardTitle className="text-white">البحث عن رعاة</CardTitle>
+                <CardTitle className="text-white">{isAr ? "البحث عن رعاة" : "Find Sponsors"}</CardTitle>
                 <CardDescription className="text-slate-400">
-                  الرعاة المحتملين لفعاليتك
+                  {isAr ? "الرعاة المحتملين لفعاليتك" : "Potential sponsors for your event"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center text-slate-400 py-12">
-                  سنساعدك في إيجاد رعاة مناسبين لفعاليتك
+                  {isAr ? "سنساعدك في إيجاد رعاة مناسبين لفعاليتك" : "We will help you find suitable sponsors for your event"}
                 </div>
               </CardContent>
             </Card>
@@ -297,14 +300,14 @@ export default function Naqla2HostEvent() {
           <TabsContent value="innovators">
             <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
               <CardHeader>
-                <CardTitle className="text-white">البحث عن مبتكرين</CardTitle>
+                <CardTitle className="text-white">{isAr ? "البحث عن مبتكرين" : "Find Innovators"}</CardTitle>
                 <CardDescription className="text-slate-400">
-                  المبتكرين المهتمين بمجال فعاليتك
+                  {isAr ? "المبتكرين المهتمين بمجال فعاليتك" : "Innovators interested in your event field"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center text-slate-400 py-12">
-                  سنساعدك في إيجاد مبتكرين مناسبين لفعاليتك
+                  {isAr ? "سنساعدك في إيجاد مبتكرين مناسبين لفعاليتك" : "We will help you find suitable innovators for your event"}
                 </div>
               </CardContent>
             </Card>
