@@ -170,14 +170,14 @@ export default function Naqla2() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              <span className="text-sm text-muted-foreground">{isAr ? "NAQLA 2 - منظومة الفعاليات والتحديات" : "NAQLA 2 - منظومة الفعاليات وChallenges"}</span>
+              <span className="text-sm text-muted-foreground">{isAr ? isAr ? "NAQLA 2 - منظومة الفعاليات والتحديات" : "NAQLA 2 - Events & Challenges System" : "NAQLA 2 - Events & Challenges System"}</span>
             </div>
 
             {/* Heading */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">{isAr ? "حوّل أفكارك إلى" : "Transform أفكارك إلى"}</span>
+              <span className="text-foreground">{isAr ? isAr ? "حوّل أفكارك إلى" : "Transform your ideas into" : "Transform your ideas into"}</span>
               <br />
-              <span className="text-gradient-blue">{isAr ? "شراكات عالمية" : "[شراكات عالمية]"}</span>
+              <span className="text-gradient-blue">{isAr ? isAr ? "شراكات عالمية" : "Global Partnerships" : "[Global Partnerships]"}</span>
             </h1>
 
             {/* Description */}

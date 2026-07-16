@@ -34,26 +34,26 @@ export default function ProjectList() {
 
   const getStatusText = (status: string | null) => {
     switch (status) {
-      case "draft": return "مسودة";
-      case "submitted": return "مُقدّم";
-      case "evaluating": return "قيد التقييم";
-      case "approved": return "مُعتمد";
-      case "matched": return "تم المطابقة";
-      case "contracted": return "متعاقد";
-      case "completed": return "مكتمل";
-      case "rejected": return "مرفوض";
-      default: return "مسودة";
+      case "draft": return isAr ? "مسودة" : "Draft";
+      case "submitted": return isAr ? "مُقدّم" : "Submitted";
+      case "evaluating": return isAr ? "قيد التقييم" : "Under Review";
+      case "approved": return isAr ? "مُعتمد" : "Approved";
+      case "matched": return isAr ? "تم المطابقة" : "Matched";
+      case "contracted": return isAr ? "متعاقد" : "Contracted";
+      case "completed": return isAr ? "مكتمل" : "Completed";
+      case "rejected": return isAr ? "مرفوض" : "Rejected";
+      default: return isAr ? "مسودة" : "Draft";
     }
   };
 
   const getStageText = (stage: string | null) => {
     switch (stage) {
-      case "idea": return "فكرة";
-      case "prototype": return "نموذج أولي";
+      case "idea": return isAr ? "فكرة" : "Idea";
+      case "prototype": return isAr ? "نموذج أولي" : "Prototype";
       case "mvp": return "MVP";
-      case "growth": return "نمو";
-      case "scale": return "توسع";
-      default: return "فكرة";
+      case "growth": return isAr ? "نمو" : "Growth";
+      case "scale": return isAr ? "توسع" : "Scale";
+      default: return isAr ? "فكرة" : "Idea";
     }
   };
 
@@ -90,8 +90,8 @@ export default function ProjectList() {
 
       <div className="container mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "مشاريعي" : "[مشاريعي]"}</h1>
-          <p className="text-slate-400">{isAr ? "إدارة وتتبع مشاريعك الابتكارية" : "إدارة وتتبع مشاريعك اNoبتكارية"}</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? isAr ? "مشاريعي" : "My Projects" : "My Projects"}</h1>
+          <p className="text-slate-400">{isAr ? isAr ? "إدارة وتتبع مشاريعك الابتكارية" : "Manage and track your innovation projects" : "Manage and track your innovation projects"}</p>
         </div>
 
         {isLoading ? (
@@ -151,7 +151,7 @@ export default function ProjectList() {
                     {project.evaluationId && (
                       <div className="mt-4 pt-4 border-t border-slate-700 flex items-center gap-2 text-emerald-400">
                         <Brain className="w-4 h-4" />
-                        <span className="text-sm">{isAr ? "تم التقييم" : "Done التقييم"}</span>
+                        <span className="text-sm">{isAr ? isAr ? "تم التقييم" : "Evaluated" : "Evaluated"}</span>
                       </div>
                     )}
                   </CardContent>
@@ -163,8 +163,8 @@ export default function ProjectList() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <Lightbulb className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد مشاريع" : "No توجد مشاريع"}</h3>
-              <p className="text-slate-400 mb-6">{isAr ? "ابدأ بتسجيل مشروعك الأول" : "ابدأ بRegister مشروعك الأول"}</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? isAr ? "لا توجد مشاريع" : "No projects" : "No projects"}</h3>
+              <p className="text-slate-400 mb-6">{isAr ? isAr ? "ابدأ بتسجيل مشروعك الأول" : "Start by registering your first project" : "Start by registering your first project"}</p>
               <Link href="/projects/new">
                 <Button className="bg-cyan-500 hover:bg-cyan-600">
                   <Plus className="w-4 h-4 ml-2" />

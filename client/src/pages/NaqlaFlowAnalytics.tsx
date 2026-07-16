@@ -23,7 +23,7 @@ export default function NaqlaFlowAnalytics() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-white">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+        <div className="text-white">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Downloading..."}</div>
       </div>
     );
   }
@@ -60,7 +60,7 @@ export default function NaqlaFlowAnalytics() {
               </Badge>
             </div>
             <div className="text-4xl font-bold text-white mb-1">{totalIdeas}</div>
-            <div className="text-sm text-slate-400">{isAr ? "إجمالي الأفكار" : "Total الأفكار"}</div>
+            <div className="text-sm text-slate-400">{isAr ? isAr ? "إجمالي الأفكار" : "Total Ideas" : "Total Ideas"}</div>
           </Card>
 
           <Card className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 border-green-500/20 p-6">
@@ -71,7 +71,7 @@ export default function NaqlaFlowAnalytics() {
               </Badge>
             </div>
             <div className="text-4xl font-bold text-white mb-1">{stats?.innovation || 0}</div>
-            <div className="text-sm text-slate-400">{isAr ? "أفكار ابتكارية (≥70%)" : "[أفكار ابتكارية (≥70%)]"}</div>
+            <div className="text-sm text-slate-400">{isAr ? isAr ? "أفكار ابتكارية (≥70%)" : "Innovative Ideas (≥70%)" : "Innovative Ideas (≥70%)"}</div>
           </Card>
 
           <Card className="bg-gradient-to-br from-blue-900/20 to-indigo-900/20 border-blue-500/20 p-6">
@@ -82,7 +82,7 @@ export default function NaqlaFlowAnalytics() {
               </Badge>
             </div>
             <div className="text-4xl font-bold text-white mb-1">{stats?.commercial || 0}</div>
-            <div className="text-sm text-slate-400">{isAr ? "حلول تجارية (50-70%)" : "Solutions تجارية (50-70%)"}</div>
+            <div className="text-sm text-slate-400">{isAr ? isAr ? "حلول تجارية (50-70%)" : "Commercial Solutions (50-70%)" : "Commercial Solutions (50-70%)"}</div>
           </Card>
 
           <Card className="bg-gradient-to-br from-red-900/20 to-orange-900/20 border-red-500/20 p-6">
@@ -102,8 +102,8 @@ export default function NaqlaFlowAnalytics() {
           <div className="flex items-center gap-4 mb-6">
             <TrendingUp className="w-8 h-8 text-green-400" />
             <div>
-              <h2 className="text-2xl font-bold text-white">{isAr ? "معدل النجاح" : "معدل الSuccess"}</h2>
-              <p className="text-slate-400">{isAr ? "نسبة الأفكار المقبولة (ابتكار + تجاري)" : "Percentage الأفكار المقبولة (ابتكار + تجاري)"}</p>
+              <h2 className="text-2xl font-bold text-white">{isAr ? isAr ? "معدل النجاح" : "Success Rate" : "Success Rate"}</h2>
+              <p className="text-slate-400">{isAr ? isAr ? "نسبة الأفكار المقبولة (ابتكار + تجاري)" : "Accepted Ideas Ratio (Innovation + Commercial)" : "Accepted Ideas Ratio (Innovation + Commercial)"}</p>
             </div>
           </div>
           <div className="flex items-end gap-4">
@@ -132,7 +132,7 @@ export default function NaqlaFlowAnalytics() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <Lightbulb className="w-5 h-5 text-green-400" />
-                  <span className="text-white font-semibold">{isAr ? "ابتكار حقيقي" : "[ابتكار حقيقي]"}</span>
+                  <span className="text-white font-semibold">{isAr ? isAr ? "ابتكار حقيقي" : "True Innovation" : "True Innovation"}</span>
                 </div>
                 <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
                   {stats?.innovation || 0} ({totalIdeas > 0 ? ((stats?.innovation || 0) / totalIdeas * 100).toFixed(0) : 0}%)
@@ -155,7 +155,7 @@ export default function NaqlaFlowAnalytics() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <Store className="w-5 h-5 text-blue-400" />
-                  <span className="text-white font-semibold">{isAr ? "حل تجاري" : "[حل تجاري]"}</span>
+                  <span className="text-white font-semibold">{isAr ? isAr ? "حل تجاري" : "Commercial Solution" : "Commercial Solution"}</span>
                 </div>
                 <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
                   {stats?.commercial || 0} ({totalIdeas > 0 ? ((stats?.commercial || 0) / totalIdeas * 100).toFixed(0) : 0}%)
@@ -178,7 +178,7 @@ export default function NaqlaFlowAnalytics() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <XCircle className="w-5 h-5 text-red-400" />
-                  <span className="text-white font-semibold">{isAr ? "تحتاج تطوير" : "[تحتاج تطوير]"}</span>
+                  <span className="text-white font-semibold">{isAr ? isAr ? "تحتاج تطوير" : "Needs Development" : "Needs Development"}</span>
                 </div>
                 <Badge className="bg-red-500/20 text-red-300 border-red-500/30">
                   {stats?.guidance || 0} ({totalIdeas > 0 ? ((stats?.guidance || 0) / totalIdeas * 100).toFixed(0) : 0}%)
@@ -200,7 +200,7 @@ export default function NaqlaFlowAnalytics() {
 
         {/* Flow Visualization */}
         <Card className="bg-slate-900/50 border-slate-800 p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">{isAr ? "مسار رحلة الأفكار" : "[مسار رحلة الأفكار]"}</h2>
+          <h2 className="text-2xl font-bold text-white mb-6">{isAr ? isAr ? "مسار رحلة الأفكار" : "Idea Journey" : "Idea Journey"}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {/* NAQLA 1 */}
             <div className="space-y-4">
@@ -212,7 +212,7 @@ export default function NaqlaFlowAnalytics() {
                   <h3 className="text-xl font-bold text-white">NAQLA 1</h3>
                 </div>
                 <div className="text-3xl font-bold text-white mb-2">{totalIdeas}</div>
-                <div className="text-sm text-slate-400">{isAr ? "إجمالي الأفكار المقدمة" : "Total الأفكار المقدمة"}</div>
+                <div className="text-sm text-slate-400">{isAr ? isAr ? "إجمالي الأفكار المقدمة" : "Total Ideas Submitted" : "Total Ideas Submitted"}</div>
               </div>
 
               <div className="flex flex-col gap-2">
@@ -248,7 +248,7 @@ export default function NaqlaFlowAnalytics() {
                 <div className="text-3xl font-bold text-white mb-2">
                   {(stats?.innovation || 0) + (stats?.commercial || 0)}
                 </div>
-                <div className="text-sm text-slate-400">{isAr ? "أفكار مقبولة للمطابقة" : "[أفكار مقبولة للمطابقة]"}</div>
+                <div className="text-sm text-slate-400">{isAr ? isAr ? "أفكار مقبولة للمطابقة" : "Ideas Accepted for Matching" : "Ideas Accepted for Matching"}</div>
               </div>
 
               <div className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 border border-green-500/20 rounded-lg p-6">
@@ -261,7 +261,7 @@ export default function NaqlaFlowAnalytics() {
                 <div className="text-3xl font-bold text-white mb-2">
                   {(stats?.innovation || 0) + (stats?.commercial || 0)}
                 </div>
-                <div className="text-sm text-slate-400">{isAr ? "أفكار في السوق" : "أفكار في Market"}</div>
+                <div className="text-sm text-slate-400">{isAr ? isAr ? "أفكار في السوق" : "Ideas in Market" : "Ideas in Market"}</div>
               </div>
             </div>
           </div>

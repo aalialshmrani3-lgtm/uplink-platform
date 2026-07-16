@@ -40,7 +40,7 @@ export default function Naqla2Marketplace() {
     requestPurchase.mutate({
       listingId,
       offerPrice: 100000,
-      message: "أنا مهتم بهذه الملكية الفكرية",
+      message: "I'm interested in this IP",
     });
   };
 
@@ -58,7 +58,7 @@ export default function Naqla2Marketplace() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+        <div className="text-white text-xl">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Downloading..."}</div>
       </div>
     );
   }
@@ -83,7 +83,7 @@ export default function Naqla2Marketplace() {
               <Award className="w-10 h-10 text-yellow-400" />
               <div>
                 <div className="text-3xl font-bold text-white">{listingsArray.length || 0}</div>
-                <div className="text-sm text-purple-200">{isAr ? "ملكية معتمدة" : "ملكية معDoneدة"}</div>
+                <div className="text-sm text-purple-200">{isAr ? isAr ? "ملكية معتمدة" : "Approved IP" : "Completed IP"}</div>
               </div>
             </div>
           </Card>
@@ -93,7 +93,7 @@ export default function Naqla2Marketplace() {
               <ShoppingCart className="w-10 h-10 text-green-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-purple-200">{isAr ? "صفقة نشطة" : "صفقة Activeة"}</div>
+                <div className="text-sm text-purple-200">{isAr ? isAr ? "صفقة نشطة" : "Active Deal" : "Active Deal"}</div>
               </div>
             </div>
           </Card>
@@ -103,7 +103,7 @@ export default function Naqla2Marketplace() {
               <DollarSign className="w-10 h-10 text-blue-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-purple-200">{isAr ? "مليون ريال" : "مليون SAR"}</div>
+                <div className="text-sm text-purple-200">{isAr ? isAr ? "مليون ريال" : "Million SAR" : "Million SAR"}</div>
               </div>
             </div>
           </Card>
@@ -113,7 +113,7 @@ export default function Naqla2Marketplace() {
               <TrendingUp className="w-10 h-10 text-purple-400" />
               <div>
                 <div className="text-3xl font-bold text-white">+25%</div>
-                <div className="text-sm text-purple-200">{isAr ? "نمو شهري" : "Grow شهري"}</div>
+                <div className="text-sm text-purple-200">{isAr ? isAr ? "نمو شهري" : "Monthly Growth" : "Monthly Growth"}</div>
               </div>
             </div>
           </Card>
@@ -126,7 +126,7 @@ export default function Naqla2Marketplace() {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="ابحث عن ملكية فكرية..."
+              placeholder={isAr ? "ابحث عن ملكية فكرية..." : "Search IP..."}
               className="bg-white/10 backdrop-blur-lg border-white/20 text-white pr-12 h-12"
             />
           </div>
@@ -179,8 +179,8 @@ export default function Naqla2Marketplace() {
         {filteredListings && filteredListings.length === 0 ? (
           <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-12 text-center">
             <Award className="w-20 h-20 text-purple-400 mx-auto mb-4" />
-            <p className="text-white text-xl mb-2">{isAr ? "لا توجد ملكيات فكرية متاحة حالياً" : "No توجد ملكيات فكرية متاحة حالياً"}</p>
-            <p className="text-purple-200">{isAr ? "تحقق مرة أخرى قريباً للحصول على فرص جديدة" : "تحقق مرة أخرى قريباً للحصول على فرص Newة"}</p>
+            <p className="text-white text-xl mb-2">{isAr ? isAr ? "لا توجد ملكيات فكرية متاحة حالياً" : "No IP available" : "No IP available"}</p>
+            <p className="text-purple-200">{isAr ? isAr ? "تحقق مرة أخرى قريباً للحصول على فرص جديدة" : "Check back soon for new opportunities" : "Check back soon for new opportunities"}</p>
           </Card>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -193,34 +193,34 @@ export default function Naqla2Marketplace() {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <Badge className="bg-purple-600 text-white">
-                    {listing.ip_registrations?.type === "patent" ? "براءة اختراع" :
-                     listing.ip_registrations?.type === "trademark" ? "علامة تجارية" :
-                     listing.ip_registrations?.type === "copyright" ? "حقوق نشر" :
-                     listing.ip_registrations?.type === "trade_secret" ? "سر تجاري" : "تصميم صناعي"}
+                    {listing.ip_registrations?.type === "patent" ? isAr ? "براءة اختراع" : "Patent" :
+                     listing.ip_registrations?.type === "trademark" ? isAr ? "علامة تجارية" : "Trademark" :
+                     listing.ip_registrations?.type === "copyright" ? isAr ? "حقوق نشر" : "Copyright" :
+                     listing.ip_registrations?.type === "trade_secret" ? isAr ? "سر تجاري" : "Trade Secret" : "Industrial Design"}
                   </Badge>
 
                   <Badge variant="outline" className="text-green-400 border-green-400">
-                    {listing.listingType === "license" ? "ترخيص" :
-                     listing.listingType === "sale" ? "بيع" :
-                     listing.listingType === "partnership" ? "شراكة" : "مشروع مشترك"}
+                    {listing.listingType === "license" ? isAr ? "ترخيص" : "License" :
+                     listing.listingType === "sale" ? isAr ? "بيع" : "Sale" :
+                     listing.listingType === "partnership" ? isAr ? "شراكة" : "Partnership" : "Joint Venture"}
                   </Badge>
                 </div>
 
                 {/* Title */}
                 <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">
-                  {listing.ip_registrations?.title || "ملكية فكرية"}
+                  {listing.ip_registrations?.title || isAr ? "ملكية فكرية" : "Intellectual Property"}
                 </h3>
 
                 {/* Description */}
                 <p className="text-purple-100 text-sm mb-4 line-clamp-3">
-                  {listing.description || listing.ip_registrations?.description || "لا يوجد وصف"}
+                  {listing.description || listing.ip_registrations?.description || isAr ? "لا يوجد وصف" : "No description"}
                 </p>
 
                 {/* Price */}
                 <div className="flex items-center gap-2 mb-4">
                   <DollarSign className="w-5 h-5 text-yellow-400" />
                   <span className="text-2xl font-bold text-white">
-                    {listing.price ? `${Number(listing.price).toLocaleString()} ${listing.currency}` : "قابل للتفاوض"}
+                    {listing.price ? `${Number(listing.price).toLocaleString()} ${listing.currency}` : "Negotiable"}
                   </span>
                 </div>
 
@@ -238,7 +238,7 @@ export default function Naqla2Marketplace() {
 
                   <div className="flex items-center gap-1">
                     <Globe className="w-4 h-4" />
-                    <span>{listing.exclusivity === "exclusive" ? "حصري" : "غير حصري"}</span>
+                    <span>{listing.exclusivity === "exclusive" ? isAr ? "حصري" : "Exclusive" : "Non-exclusive"}</span>
                   </div>
                 </div>
 
@@ -251,8 +251,8 @@ export default function Naqla2Marketplace() {
                   disabled={requestPurchase.isPending}
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
                 >
-                  {listing.listingType === "license" ? "طلب ترخيص" :
-                   listing.listingType === "sale" ? "طلب شراء" : "طلب شراكة"}
+                  {listing.listingType === "license" ? isAr ? "طلب ترخيص" : "License Request" :
+                   listing.listingType === "sale" ? isAr ? "طلب شراء" : "Purchase Request" : "Partnership Request"}
                 </Button>
               </Card>
             ))}

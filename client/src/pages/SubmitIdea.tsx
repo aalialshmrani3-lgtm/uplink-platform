@@ -78,8 +78,8 @@ export default function SubmitIdea() {
           </div>
 
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">{isAr ? "نتائج التحليل" : "نتائج Analysis"}</h1>
-            <p className="text-gray-400">{isAr ? "تم تحليل فكرتك باستخدام الذكاء الاصطناعي" : "Done تحليل فكرتك باستخدام الذكاء الاصطناعي"}</p>
+            <h1 className="text-4xl font-bold text-white mb-2">{isAr ? isAr ? "نتائج التحليل" : "Analysis Results" : "Analysis Results"}</h1>
+            <p className="text-gray-400">{isAr ? isAr ? "تم تحليل فكرتك باستخدام الذكاء الاصطناعي" : "Your idea has been analyzed by AI" : "Your idea has been analyzed by AI"}</p>
           </div>
 
           <AIAnalysisResults analysis={analysisResult} />
@@ -97,8 +97,8 @@ export default function SubmitIdea() {
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">{isAr ? "قدّم فكرتك" : "[قدّم فكرتك]"}</h1>
-              <p className="text-gray-400">{isAr ? "سنحللها بالذكاء الاصطناعي خلال ثوانٍ" : "سنحللها بالذكاء اNoصطناعي خNoل ثوانٍ"}</p>
+              <h1 className="text-3xl font-bold text-white">{isAr ? isAr ? "قدّم فكرتك" : "Submit Your Idea" : "Submit Your Idea"}</h1>
+              <p className="text-gray-400">{isAr ? isAr ? "سنحللها بالذكاء الاصطناعي خلال ثوانٍ" : "We'll analyze it with AI in seconds" : "We'll analyze it with AI in seconds"}</p>
             </div>
           </div>
 
@@ -112,7 +112,7 @@ export default function SubmitIdea() {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 required
-                placeholder="مثال: منصة ذكية لإدارة الطاقة المنزلية"
+                placeholder={isAr ? "مثال: منصة ذكية لإدارة الطاقة المنزلية" : "Example: Smart home energy management platform"}
                 className="bg-slate-900 border-slate-700 text-white"
               />
             </div>
@@ -126,7 +126,7 @@ export default function SubmitIdea() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 required
-                placeholder="اشرح فكرتك بالتفصيل..."
+                placeholder={isAr ? "اشرح فكرتك بالتفصيل..." : "Describe your idea in detail..."}
                 rows={4}
                 className="bg-slate-900 border-slate-700 text-white"
               />
@@ -141,7 +141,7 @@ export default function SubmitIdea() {
                 value={formData.problem}
                 onChange={(e) => setFormData({ ...formData, problem: e.target.value })}
                 required
-                placeholder="ما المشكلة التي تعالجها فكرتك؟"
+                placeholder={isAr ? "ما المشكلة التي تعالجها فكرتك؟" : "What problem does your idea solve?"}
                 rows={3}
                 className="bg-slate-900 border-slate-700 text-white"
               />
@@ -156,7 +156,7 @@ export default function SubmitIdea() {
                 value={formData.solution}
                 onChange={(e) => setFormData({ ...formData, solution: e.target.value })}
                 required
-                placeholder="كيف تحل فكرتك هذه المشكلة؟"
+                placeholder={isAr ? "كيف تحل فكرتك هذه المشكلة؟" : "How does your idea solve this problem?"}
                 rows={3}
                 className="bg-slate-900 border-slate-700 text-white"
               />
@@ -170,7 +170,7 @@ export default function SubmitIdea() {
                 id="targetMarket"
                 value={formData.targetMarket}
                 onChange={(e) => setFormData({ ...formData, targetMarket: e.target.value })}
-                placeholder="مثال: الأسر في المدن الكبرى"
+                placeholder={isAr ? "مثال: الأسر في المدن الكبرى" : "Example: Families in major cities"}
                 className="bg-slate-900 border-slate-700 text-white"
               />
             </div>
@@ -183,7 +183,7 @@ export default function SubmitIdea() {
                 id="uniqueValue"
                 value={formData.uniqueValue}
                 onChange={(e) => setFormData({ ...formData, uniqueValue: e.target.value })}
-                placeholder="ما الذي يميز فكرتك عن الحلول الموجودة؟"
+                placeholder={isAr ? "ما الذي يميز فكرتك عن الحلول الموجودة؟" : "What makes your idea unique?"}
                 rows={3}
                 className="bg-slate-900 border-slate-700 text-white"
               />
@@ -204,10 +204,10 @@ export default function SubmitIdea() {
                 }}
               >
                 <SelectTrigger className="bg-slate-900 border-slate-700 text-white">
-                  <SelectValue placeholder="اختر تحدياً (اختياري)" />
+                  <SelectValue placeholder={isAr ? "اختر تحدياً (اختياري)" : "Select a Challenge (Optional)"} />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-900 border-slate-700">
-                  <SelectItem value="none" className="text-white">{isAr ? "لا يوجد تحدٍ محدد" : "No يوجد تحدٍ محدد"}</SelectItem>
+                  <SelectItem value="none" className="text-white">{isAr ? isAr ? "لا يوجد تحدٍ محدد" : "No specific challenge" : "No specific challenge"}</SelectItem>
                   {challenges?.map((challenge) => (
                     <SelectItem 
                       key={challenge.id} 
@@ -247,14 +247,14 @@ export default function SubmitIdea() {
             <div className="mt-8 p-6 bg-blue-500/10 border border-blue-500/30 rounded-lg">
               <div className="flex items-center gap-3 mb-4">
                 <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
-                <h3 className="text-lg font-semibold text-white">{isAr ? "جاري التحليل..." : "جاري Analysis..."}</h3>
+                <h3 className="text-lg font-semibold text-white">{isAr ? isAr ? "جاري التحليل..." : "Analyzing..." : "Analyzing..."}</h3>
               </div>
               <div className="space-y-2 text-sm text-gray-400">
-                <p>{isAr ? "✓ تحليل النص باستخدام NLP" : "[✓ تحليل النص باستخدام NLP]"}</p>
-                <p>{isAr ? "✓ مقارنة مع قاعدة البيانات" : "✓ مقارنة مع قاعدة Data"}</p>
-                <p>{isAr ? "✓ تقييم الجدة والابتكار" : "✓ تقييم الجدة واNoبتكار"}</p>
-                <p>{isAr ? "✓ حساب إمكانات السوق" : "✓ حساب إمكانات Market"}</p>
-                <p>{isAr ? "✓ إنشاء التوصيات..." : "✓ إنشاء Recommendations..."}</p>
+                <p>{isAr ? isAr ? "✓ تحليل النص باستخدام NLP" : "✓ Text analysis using NLP" : "✓ Text analysis using NLP"}</p>
+                <p>{isAr ? isAr ? "✓ مقارنة مع قاعدة البيانات" : "✓ Database comparison" : "✓ Database comparison"}</p>
+                <p>{isAr ? isAr ? "✓ تقييم الجدة والابتكار" : "✓ Novelty & innovation assessment" : "✓ Novelty & innovation assessment"}</p>
+                <p>{isAr ? isAr ? "✓ حساب إمكانات السوق" : "✓ Market potential calculation" : "✓ Market potential calculation"}</p>
+                <p>{isAr ? isAr ? "✓ إنشاء التوصيات..." : "✓ Generating recommendations..." : "✓ Generating recommendations..."}</p>
               </div>
             </div>
           )}

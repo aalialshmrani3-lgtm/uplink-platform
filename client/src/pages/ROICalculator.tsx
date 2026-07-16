@@ -35,14 +35,14 @@ export default function ROICalculator() {
             {isAr ? "حاسبة العائد على الاستثمار" : "ROI Calculator"}
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            {isAr ? "اكتشف كم ستوفر مؤسستك باستخدام NAQLA 5.0" : "Discover how much your organization will save using NAQLA 5.0"}
+            {isAr ? "اكتشف كم ستوفر مؤسستك باستخدام NAQLA 5.0" : "Discover your savings with NAQLA 5.0"}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Input Section */}
           <Card className="p-8">
-            <h2 className="text-2xl font-bold mb-6">{isAr ? "معلومات مؤسستك" : "Your Organization Info"}</h2>
+            <h2 className="text-2xl font-bold mb-6">{isAr ? "معلومات مؤسستك" : "Your Organization's Info"}</h2>
             
             <div className="space-y-8">
               {/* Employees */}
@@ -60,13 +60,13 @@ export default function ROICalculator() {
                   className="mb-2"
                 />
                 <p className="text-sm text-muted-foreground">
-                  {isAr ? "عدد الموظفين المشاركين في عملية الابتكار" : "Number of employees participating in the innovation process"}
+                  {isAr ? "عدد الموظفين المشاركين في عملية الابتكار" : "Employees in Innovation Process"}
                 </p>
               </div>
 
               {/* Average Salary */}
               <div>
-                <Label className="mb-2 block">{isAr ? "متوسط الراتب السنوي ($)" : "Average Annual Salary ($)"}</Label>
+                <Label className="mb-2 block">{isAr ? "متوسط الراتب السنوي ($)" : "Avg. Annual Salary ($)"}</Label>
                 <Input
                   type="number"
                   value={avgSalary}
@@ -76,14 +76,14 @@ export default function ROICalculator() {
                   step={5000}
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  {isAr ? "متوسط راتب الموظف المشارك في الابتكار" : "Average salary of employees participating in innovation"}
+                  {isAr ? "متوسط راتب الموظف المشارك في الابتكار" : "Avg. Salary of Innovation Employee"}
                 </p>
               </div>
 
               {/* Ideas Per Year */}
               <div>
                 <div className="flex justify-between mb-2">
-                  <Label>{isAr ? "عدد الأفكار سنوياً" : "Ideas Per Year"}</Label>
+                  <Label>{isAr ? "عدد الأفكار سنوياً" : "Ideas per Year"}</Label>
                   <span className="font-bold text-blue-600">{ideasPerYear}</span>
                 </div>
                 <Slider
@@ -95,14 +95,14 @@ export default function ROICalculator() {
                   className="mb-2"
                 />
                 <p className="text-sm text-muted-foreground">
-                  {isAr ? "عدد الأفكار المقدمة سنوياً" : "Number of ideas submitted annually"}
+                  {isAr ? "عدد الأفكار المقدمة سنوياً" : "Ideas Submitted Annually"}
                 </p>
               </div>
 
               {/* Time Per Idea */}
               <div>
                 <div className="flex justify-between mb-2">
-                  <Label>{isAr ? "ساعات التقييم لكل فكرة" : "Evaluation Hours Per Idea"}</Label>
+                  <Label>{isAr ? "ساعات التقييم لكل فكرة" : "Evaluation Hours per Idea"}</Label>
                   <span className="font-bold text-blue-600">{timePerIdea}</span>
                 </div>
                 <Slider
@@ -114,7 +114,7 @@ export default function ROICalculator() {
                   className="mb-2"
                 />
                 <p className="text-sm text-muted-foreground">
-                  {isAr ? "الوقت المستغرق لتقييم كل فكرة يدوياً" : "Time spent manually evaluating each idea"}
+                  {isAr ? "الوقت المستغرق لتقييم كل فكرة يدوياً" : "Manual Evaluation Time per Idea"}
                 </p>
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function ROICalculator() {
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      {isAr ? "تكلفة إدارة الابتكار بالطرق التقليدية" : "Cost of managing innovation using traditional methods"}
+                      {isAr ? "تكلفة إدارة الابتكار بالطرق التقليدية" : "Traditional Innovation Management Cost"}
                     </p>
                   </div>
                 </div>
@@ -168,7 +168,7 @@ export default function ROICalculator() {
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      {isAr ? "الاشتراك السنوي في المنصة" : "Annual platform subscription"}
+                      {isAr ? "الاشتراك السنوي في المنصة" : "Annual Platform Subscription"}
                     </p>
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export default function ROICalculator() {
                     <div className="flex justify-between items-center mb-1">
                       <span className="font-semibold">{isAr ? "توفير الوقت" : "Time Savings"}</span>
                       <span className="text-xl font-bold text-purple-600">
-                        {timeSaved.toLocaleString()} {isAr ? "ساعة" : "hours"}
+                        {timeSaved.toLocaleString()} {isAr ? "ساعة" : "hour"}
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
@@ -194,13 +194,13 @@ export default function ROICalculator() {
                   <Users className="text-green-600 mt-1" size={24} />
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="font-semibold">{isAr ? "تحسين الكفاءة" : "Efficiency Improvement"}</span>
+                      <span className="font-semibold">{isAr ? "تحسين الكفاءة" : "Improved Efficiency"}</span>
                       <span className="text-xl font-bold text-green-600">
                         ${efficiencyGain.toLocaleString()}
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      {isAr ? "زيادة 40% في إنتاجية الفريق" : "40% increase in team productivity"}
+                      {isAr ? "زيادة 40% في إنتاجية الفريق" : "40% Increase in Team Productivity"}
                     </p>
                   </div>
                 </div>
@@ -226,7 +226,7 @@ export default function ROICalculator() {
             {/* CTA */}
             <Card className="p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20 text-center">
               <p className="text-lg mb-4 font-semibold">
-                {isAr ? "جاهز لبدء التوفير؟" : "Ready to start saving?"}
+                {isAr ? "جاهز لبدء التوفير؟" : "Ready to Start Saving?"}
               </p>
               <button className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg transition-all">
                 {isAr ? "ابدأ تجربتك المجانية" : "Start Your Free Trial"}
@@ -241,23 +241,23 @@ export default function ROICalculator() {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="text-4xl mb-3">🚀</div>
-              <h3 className="font-bold mb-2">{isAr ? "تسريع الابتكار" : "Accelerate Innovation"}</h3>
+              <h3 className="font-bold mb-2">{isAr ? "تسريع الابتكار" : "Accelerated Innovation"}</h3>
               <p className="text-sm text-muted-foreground">
-                {isAr ? "تقليل وقت التسويق بنسبة 50%" : "Reduce time to market by 50%"}
+                {isAr ? "تقليل وقت التسويق بنسبة 50%" : "50% Reduction in Time-to-Market"}
               </p>
             </div>
             <div className="text-center">
               <div className="text-4xl mb-3">🎯</div>
               <h3 className="font-bold mb-2">{isAr ? "قرارات أفضل" : "Better Decisions"}</h3>
               <p className="text-sm text-muted-foreground">
-                {isAr ? "تقييمات AI دقيقة وموضوعية" : "Accurate and objective AI evaluations"}
+                {isAr ? "تقييمات AI دقيقة وموضوعية" : "Accurate & Objective AI Assessments"}
               </p>
             </div>
             <div className="text-center">
               <div className="text-4xl mb-3">🌟</div>
               <h3 className="font-bold mb-2">{isAr ? "رضا الموظفين" : "Employee Satisfaction"}</h3>
               <p className="text-sm text-muted-foreground">
-                {isAr ? "زيادة المشاركة والتحفيز" : "Increased engagement and motivation"}
+                {isAr ? "زيادة المشاركة والتحفيز" : "Boost Engagement & Motivation"}
               </p>
             </div>
           </div>

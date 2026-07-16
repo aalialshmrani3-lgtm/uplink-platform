@@ -28,25 +28,25 @@ export default function BrowseAllEvents() {
   });
 
   const eventTypes = [
-    { value: "all", label: "جميع الأنواع", icon: "🌐" },
-    { value: "hackathon", label: "هاكاثون", icon: "💻" },
-    { value: "workshop", label: "ورشة عمل", icon: "🛠️" },
-    { value: "conference", label: "مؤتمر", icon: "🎤" },
-    { value: "seminar", label: "ندوة", icon: "📢" },
-    { value: "webinar", label: "ويبينار", icon: "🌐" },
-    { value: "networking", label: "لقاء علمي", icon: "🤝" },
-    { value: "exhibition", label: "معرض", icon: "🏛️" },
-    { value: "competition", label: "مسابقة", icon: "🏆" },
-    { value: "training", label: "تدريب", icon: "📚" },
+    { value: "all", label: "All Types", icon: "🌐" },
+    { value: "hackathon", label: "Hackathon", icon: "💻" },
+    { value: "workshop", label: "Workshop", icon: "🛠️" },
+    { value: "conference", label: "Conference", icon: "🎤" },
+    { value: "seminar", label: "Seminar", icon: "📢" },
+    { value: "webinar", label: "Webinar", icon: "🌐" },
+    { value: "networking", label: "Scientific Meeting", icon: "🤝" },
+    { value: "exhibition", label: "Exhibition", icon: "🏛️" },
+    { value: "competition", label: "Competition", icon: "🏆" },
+    { value: "training", label: "Training", icon: "📚" },
   ];
 
   const statusOptions = [
-    { value: "all", label: "جميع الحالات", color: "bg-gray-500" },
-    { value: "draft", label: "مسودة", color: "bg-gray-500" },
-    { value: "published", label: "منشور", color: "bg-green-500" },
-    { value: "ongoing", label: "جارٍ", color: "bg-blue-500" },
-    { value: "completed", label: "مكتمل", color: "bg-purple-500" },
-    { value: "cancelled", label: "ملغي", color: "bg-red-500" },
+    { value: "all", label: "All Statuses", color: "bg-gray-500" },
+    { value: "draft", label: "Draft", color: "bg-gray-500" },
+    { value: "published", label: "Published", color: "bg-green-500" },
+    { value: "ongoing", label: "Ongoing", color: "bg-blue-500" },
+    { value: "completed", label: "Completed", color: "bg-purple-500" },
+    { value: "cancelled", label: "Cancelled", color: "bg-red-500" },
   ];
 
   const filteredEvents = events?.filter((event) => {
@@ -77,7 +77,7 @@ export default function BrowseAllEvents() {
         <div className="mb-8 text-center">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
             <Sparkles className="w-4 h-4" />
-            <span>{isAr ? "نقلة 2 - جميع الفعاليات" : "NAQLA 2 - جميع الفعاليات"}</span>
+            <span>{isAr ? isAr ? "نقلة 2 - جميع الفعاليات" : "NAQLA 2 - All Events" : "NAQLA 2 - All Events"}</span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             استعرض الفعاليات
@@ -101,7 +101,7 @@ export default function BrowseAllEvents() {
               <div className="relative">
                 <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
-                  placeholder="ابحث عن فعالية..."
+                  placeholder={isAr ? "ابحث عن فعالية..." : "Search for an event..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pr-10"
@@ -114,7 +114,7 @@ export default function BrowseAllEvents() {
                 onValueChange={(value) => setTypeFilter(value === "all" ? undefined : value)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="نوع الفعالية" />
+                  <SelectValue placeholder={isAr ? "نوع الفعالية" : "Event Type"} />
                 </SelectTrigger>
                 <SelectContent>
                   {eventTypes.map((type) => (
@@ -134,7 +134,7 @@ export default function BrowseAllEvents() {
                 onValueChange={(value) => setStatusFilter(value === "all" ? undefined : value)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="الحالة" />
+                  <SelectValue placeholder={isAr ? "الحالة" : "Status"} />
                 </SelectTrigger>
                 <SelectContent>
                   {statusOptions.map((status) => (
@@ -155,7 +155,7 @@ export default function BrowseAllEvents() {
         {isLoading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <p className="mt-4 text-gray-600">{isAr ? "جارٍ تحميل الفعاليات..." : "جارٍ Download الفعاليات..."}</p>
+            <p className="mt-4 text-gray-600">{isAr ? isAr ? "جارٍ تحميل الفعاليات..." : "Loading events..." : "Downloading events..."}</p>
           </div>
         ) : filteredEvents && filteredEvents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -207,10 +207,10 @@ export default function BrowseAllEvents() {
                     <Clock className="w-4 h-4 text-orange-600" />
                     <span>
                       {event.deliveryMode === "online"
-                        ? "أونلاين"
+                        ? isAr ? "أونلاين" : "Online"
                         : event.deliveryMode === "in_person"
-                        ? "حضوري"
-                        : "هجين"}
+                        ? isAr ? "حضوري" : "In-person"
+                        : "Hybrid"}
                     </span>
                   </div>
 
@@ -260,7 +260,7 @@ export default function BrowseAllEvents() {
             <p className="text-gray-600">
               عرض <span className="font-bold text-blue-600">{filteredEvents.length}</span> فعالية
               {events && events.length !== filteredEvents.length && (
-                <span>{isAr ? " من أصل " : "[من أصل]"}< span className="font-bold">{events.length}</span></span>
+                <span>{isAr ? isAr ? " من أصل " : " of " : "[of]"}< span className="font-bold">{events.length}</span></span>
               )}
             </p>
           </div>

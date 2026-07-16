@@ -38,7 +38,7 @@ export default function GlobalSearch() {
           <div className="relative">
             <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             <Input
-              placeholder="ابحث عن أي شيء..."
+              placeholder={isAr ? "ابحث عن أي شيء..." : "Search anything..."}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="pr-12 bg-slate-900/50 border-slate-700 text-white text-lg h-14"
@@ -49,10 +49,10 @@ export default function GlobalSearch() {
         {/* Results Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="bg-slate-900/50 border-slate-800 mb-6">
-            <TabsTrigger value="all">{isAr ? "الكل" : "[الكل]"}</TabsTrigger>
-            <TabsTrigger value="ideas">{isAr ? "الأفكار" : "[الأفكار]"}</TabsTrigger>
-            <TabsTrigger value="users">{isAr ? "المستخدمين" : "الUserين"}</TabsTrigger>
-            <TabsTrigger value="events">{isAr ? "الفعاليات" : "الEvents"}</TabsTrigger>
+            <TabsTrigger value="all">{isAr ? isAr ? "الكل" : "All" : "[All]"}</TabsTrigger>
+            <TabsTrigger value="ideas">{isAr ? isAr ? "الأفكار" : "Ideas" : "[Ideas]"}</TabsTrigger>
+            <TabsTrigger value="users">{isAr ? isAr ? "المستخدمين" : "Users" : "Users"}</TabsTrigger>
+            <TabsTrigger value="events">{isAr ? isAr ? "الفعاليات" : "Events" : "Events"}</TabsTrigger>
             <TabsTrigger value="contracts">{isAr ? "العقود" : "Contracts"}</TabsTrigger>
           </TabsList>
 

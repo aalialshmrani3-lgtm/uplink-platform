@@ -85,13 +85,13 @@ export default function Naqla2Hackathons() {
         {showCreateForm && (
           <Card className="mb-8 bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">{isAr ? "إنشاء هاكاثون جديد" : "إنشاء هاكاثون New"}</CardTitle>
+              <CardTitle className="text-white">{isAr ? isAr ? "إنشاء هاكاثون جديد" : "Create New Hackathon" : "Create New Hackathon"}</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCreateHackathon} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="title" className="text-white">{isAr ? "عنوان الهاكاثون" : "[عنوان الهاكاثون]"}</Label>
+                    <Label htmlFor="title" className="text-white">{isAr ? isAr ? "عنوان الهاكاثون" : "Hackathon Title" : "[Hackathon Title]"}</Label>
                     <Input
                       id="title"
                       name="title"
@@ -100,7 +100,7 @@ export default function Naqla2Hackathons() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="location" className="text-white">{isAr ? "الموقع" : "Website"}</Label>
+                    <Label htmlFor="location" className="text-white">{isAr ? "الموقع" : "Location"}</Label>
                     <Input
                       id="location"
                       name="location"
@@ -122,7 +122,7 @@ export default function Naqla2Hackathons() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="startDate" className="text-white">{isAr ? "تاريخ البداية" : "[تاريخ البداية]"}</Label>
+                    <Label htmlFor="startDate" className="text-white">{isAr ? isAr ? "تاريخ البداية" : "Start Date" : "[Start Date]"}</Label>
                     <Input
                       id="startDate"
                       name="startDate"
@@ -132,7 +132,7 @@ export default function Naqla2Hackathons() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="endDate" className="text-white">{isAr ? "تاريخ النهاية" : "[تاريخ النهاية]"}</Label>
+                    <Label htmlFor="endDate" className="text-white">{isAr ? isAr ? "تاريخ النهاية" : "End Date" : "[End Date]"}</Label>
                     <Input
                       id="endDate"
                       name="endDate"
@@ -145,7 +145,7 @@ export default function Naqla2Hackathons() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="maxTeams" className="text-white">{isAr ? "الحد الأقصى للفرق" : "الBorder الأقصى للفرق"}</Label>
+                    <Label htmlFor="maxTeams" className="text-white">{isAr ? isAr ? "الحد الأقصى للفرق" : "Max Teams" : "Max Teams"}</Label>
                     <Input
                       id="maxTeams"
                       name="maxTeams"
@@ -154,7 +154,7 @@ export default function Naqla2Hackathons() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="prizes" className="text-white">{isAr ? "الجوائز" : "الAwards"}</Label>
+                    <Label htmlFor="prizes" className="text-white">{isAr ? isAr ? "الجوائز" : "Prizes" : "Prizes"}</Label>
                     <Input
                       id="prizes"
                       name="prizes"
@@ -164,7 +164,7 @@ export default function Naqla2Hackathons() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="requirements" className="text-white">{isAr ? "المتطلبات" : "[المتطلبات]"}</Label>
+                  <Label htmlFor="requirements" className="text-white">{isAr ? isAr ? "المتطلبات" : "Requirements" : "[Requirements]"}</Label>
                   <Textarea
                     id="requirements"
                     name="requirements"
@@ -180,7 +180,7 @@ export default function Naqla2Hackathons() {
                     name="isOnline"
                     className="w-4 h-4"
                   />
-                  <Label htmlFor="isOnline" className="text-white">{isAr ? "هاكاثون أونلاين" : "هاكاثون أونNoين"}</Label>
+                  <Label htmlFor="isOnline" className="text-white">{isAr ? isAr ? "هاكاثون أونلاين" : "Online Hackathon" : "Online Hackathon"}</Label>
                 </div>
 
                 <div className="flex gap-2">
@@ -206,7 +206,7 @@ export default function Naqla2Hackathons() {
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
               type="search"
-              placeholder="ابحث عن هاكاثون..."
+              placeholder={isAr ? "ابحث عن هاكاثون..." : "Search for hackathon..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10 bg-slate-900/50 border-slate-800 text-white"
@@ -217,14 +217,14 @@ export default function Naqla2Hackathons() {
         {/* Tabs */}
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-slate-800/50">
-            <TabsTrigger value="all">{isAr ? "الكل" : "[الكل]"}</TabsTrigger>
-            <TabsTrigger value="upcoming">{isAr ? "قادمة" : "[قادمة]"}</TabsTrigger>
-            <TabsTrigger value="ongoing">{isAr ? "جارية" : "[جارية]"}</TabsTrigger>
+            <TabsTrigger value="all">{isAr ? isAr ? "الكل" : "All" : "[All]"}</TabsTrigger>
+            <TabsTrigger value="upcoming">{isAr ? isAr ? "قادمة" : "Upcoming" : "[Upcoming]"}</TabsTrigger>
+            <TabsTrigger value="ongoing">{isAr ? isAr ? "جارية" : "Ongoing" : "[Ongoing]"}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="mt-6">
             {isLoading ? (
-              <div className="text-center py-12 text-slate-400">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+              <div className="text-center py-12 text-slate-400">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Loading..."}</div>
             ) : hackathons && hackathons.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {hackathons.map((hackathon: any) => (
@@ -244,7 +244,7 @@ export default function Naqla2Hackathons() {
                         {hackathon.isOnline ? (
                           <>
                             <Globe className="w-4 h-4" />
-                            <span className="text-sm">{isAr ? "أونلاين" : "أونNoين"}</span>
+                            <span className="text-sm">{isAr ? isAr ? "أونلاين" : "Online" : "Online"}</span>
                           </>
                         ) : (
                           <>

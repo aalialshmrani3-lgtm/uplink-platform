@@ -34,7 +34,7 @@ export default function Naqla3Escrow() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="w-full max-w-md bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">{isAr ? "يجب تسجيل الدخول" : "يجب Login"}</CardTitle>
+            <CardTitle className="text-white">{isAr ? isAr ? "يجب تسجيل الدخول" : "Login Required" : "Login Required"}</CardTitle>
           </CardHeader>
         </Card>
       </div>
@@ -66,7 +66,7 @@ export default function Naqla3Escrow() {
           </Card>
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-sm">{isAr ? "المبالغ المحررة" : "[المبالغ المحررة]"}</CardTitle>
+              <CardTitle className="text-white text-sm">{isAr ? isAr ? "المبالغ المحررة" : "Released Funds" : "Released Funds"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-green-400">{stats?.totalReleased || '0'} ريال</p>
@@ -74,7 +74,7 @@ export default function Naqla3Escrow() {
           </Card>
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-sm">{isAr ? "Escrow نشط" : "Escrow Active"}</CardTitle>
+              <CardTitle className="text-white text-sm">{isAr ? "Escrow نشط" : "Active Escrow"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-blue-400">{stats?.activeEscrows || 0}</p>
@@ -82,7 +82,7 @@ export default function Naqla3Escrow() {
           </Card>
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-sm">{isAr ? "Escrow مكتمل" : "Escrow مكDoneل"}</CardTitle>
+              <CardTitle className="text-white text-sm">{isAr ? isAr ? "Escrow مكتمل" : "Completed Escrow" : "Completed Escrow"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-cyan-400">{stats?.completedEscrows || 0}</p>
@@ -92,7 +92,7 @@ export default function Naqla3Escrow() {
 
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">{isAr ? "إيداع في Escrow" : "[إيداع في Escrow]"}</CardTitle>
+            <CardTitle className="text-white">{isAr ? isAr ? "إيداع في Escrow" : "Deposit to Escrow" : "Deposit to Escrow"}</CardTitle>
             <CardDescription className="text-slate-400">
               قم بإيداع الأموال لبدء العقد
             </CardDescription>
@@ -101,7 +101,7 @@ export default function Naqla3Escrow() {
             <form className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="contractId" className="text-white">{isAr ? "رقم العقد" : "[رقم العقد]"}</Label>
+                  <Label htmlFor="contractId" className="text-white">{isAr ? isAr ? "رقم العقد" : "Contract Number" : "Contract Number"}</Label>
                   <Input
                     id="contractId"
                     type="number"
@@ -110,7 +110,7 @@ export default function Naqla3Escrow() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="amount" className="text-white">{isAr ? "المبلغ (ريال)" : "Amount (ريال)"}</Label>
+                  <Label htmlFor="amount" className="text-white">{isAr ? isAr ? "المبلغ (ريال)" : "Amount (SAR)" : "Amount (SAR)"}</Label>
                   <Input
                     id="amount"
                     type="number"
@@ -120,15 +120,15 @@ export default function Naqla3Escrow() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="paymentMethod" className="text-white">{isAr ? "طريقة الدفع" : "[طريقة الدفع]"}</Label>
+                <Label htmlFor="paymentMethod" className="text-white">{isAr ? isAr ? "طريقة الدفع" : "Payment Method" : "Payment Method"}</Label>
                 <Select name="paymentMethod" required>
                   <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
-                    <SelectValue placeholder="اختر الطريقة" />
+                    <SelectValue placeholder={isAr ? "اختر الطريقة" : "Select Method"} />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-700">
-                    <SelectItem value="bank_transfer">{isAr ? "تحويل بنكي" : "[تحويل بنكي]"}</SelectItem>
-                    <SelectItem value="credit_card">{isAr ? "بطاقة ائتمان" : "بطاقة ائDoneان"}</SelectItem>
-                    <SelectItem value="wallet">{isAr ? "محفظة إلكترونية" : "مSaveة إلكترونية"}</SelectItem>
+                    <SelectItem value="bank_transfer">{isAr ? isAr ? "تحويل بنكي" : "Bank Transfer" : "Bank Transfer"}</SelectItem>
+                    <SelectItem value="credit_card">{isAr ? isAr ? "بطاقة ائتمان" : "Credit Card" : "Credit Card"}</SelectItem>
+                    <SelectItem value="wallet">{isAr ? isAr ? "محفظة إلكترونية" : "E-wallet" : "E-wallet"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

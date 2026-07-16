@@ -60,15 +60,15 @@ export default function Naqla1Opportunities() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold">{challenges.length}</div>
-                <div className="text-sm text-blue-100">{isAr ? "تحديات نشطة" : "تحديات Activeة"}</div>
+                <div className="text-sm text-blue-100">{isAr ? isAr ? "تحديات نشطة" : "Active Challenges" : "Active Challenges"}</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold">{hackathons.length}</div>
-                <div className="text-sm text-blue-100">{isAr ? "هاكاثونات قادمة" : "Hackathons قادمة"}</div>
+                <div className="text-sm text-blue-100">{isAr ? isAr ? "هاكاثونات قادمة" : "Upcoming Hackathons" : "Upcoming Hackathons"}</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold">50+</div>
-                <div className="text-sm text-blue-100">{isAr ? "جهة شريكة" : "جهة Partnerة"}</div>
+                <div className="text-sm text-blue-100">{isAr ? isAr ? "جهة شريكة" : "Partner" : "Partner"}</div>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function Naqla1Opportunities() {
           <div className="flex-1 relative">
             <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
             <Input
-              placeholder="ابحث عن تحديات أو هاكاثونات..."
+              placeholder={isAr ? "ابحث عن تحديات أو هاكاثونات..." : "Search challenges or hackathons..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10"
@@ -90,7 +90,7 @@ export default function Naqla1Opportunities() {
           </div>
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
             <SelectTrigger className="w-full md:w-[200px]">
-              <SelectValue placeholder="الفئة" />
+              <SelectValue placeholder={isAr ? "الفئة" : "Category"} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{isAr ? "جميع الفئات" : "All Categories"}</SelectItem>
@@ -98,7 +98,7 @@ export default function Naqla1Opportunities() {
               <SelectItem value="health">{isAr ? "الصحة" : "Health"}</SelectItem>
               <SelectItem value="environment">{isAr ? "البيئة" : "Environment"}</SelectItem>
               <SelectItem value="education">{isAr ? "التعليم" : "Education"}</SelectItem>
-              <SelectItem value="finance">{isAr ? "المالية" : "[المالية]"}</SelectItem>
+              <SelectItem value="finance">{isAr ? isAr ? "المالية" : "Finance" : "Finance"}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -112,7 +112,7 @@ export default function Naqla1Opportunities() {
           {/* Challenges Tab */}
           <TabsContent value="challenges" className="mt-6">
             {loadingChallenges ? (
-              <div className="text-center py-12">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+              <div className="text-center py-12">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Loading..."}</div>
             ) : filteredChallenges.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center text-gray-500">
@@ -126,7 +126,7 @@ export default function Naqla1Opportunities() {
                     <CardHeader>
                       <div className="flex items-start justify-between mb-2">
                         <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                          {challenge.category || "عام"}
+                          {challenge.category || isAr ? "عام" : "General"}
                         </Badge>
                         {challenge.prize && (
                           <div className="flex items-center gap-1 text-green-600">
@@ -166,7 +166,7 @@ export default function Naqla1Opportunities() {
           {/* Hackathons Tab */}
           <TabsContent value="hackathons" className="mt-6">
             {loadingHackathons ? (
-              <div className="text-center py-12">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+              <div className="text-center py-12">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Loading..."}</div>
             ) : filteredHackathons.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center text-gray-500">
@@ -180,7 +180,7 @@ export default function Naqla1Opportunities() {
                     <CardHeader>
                       <div className="flex items-start justify-between mb-2">
                         <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
-                          {hackathon.eventType === "virtual" ? "افتراضي" : "حضوري"}
+                          {hackathon.eventType === "virtual" ? isAr ? "افتراضي" : "Virtual" : "In-person"}
                         </Badge>
                         {hackathon.prize && (
                           <div className="flex items-center gap-1 text-green-600">

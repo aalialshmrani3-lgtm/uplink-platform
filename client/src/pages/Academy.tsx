@@ -38,7 +38,7 @@ export default function Academy() {
 
   const enrollMutation = trpc.academy.enroll.useMutation({
     onSuccess: () => {
-      toast.success(isAr ? "تم التسجيل في الدورة بنجاح!" : "Successfully enrolled in the course!");
+      toast.success(isAr ? "تم التسجيل في الدورة بنجاح!" : "Course registration successful!");
     },
     onError: (error) => {
       toast.error(isAr ? "حدث خطأ" : "An error occurred", { description: error.message });
@@ -48,30 +48,30 @@ export default function Academy() {
   const demoCourses = [
     {
       id: 1,
-      title: isAr ? "أساسيات الابتكار وريادة الأعمال" : "Innovation & Entrepreneurship Fundamentals",
-      description: isAr ? "تعلم المفاهيم الأساسية للابتكار وكيفية تحويل الأفكار إلى مشاريع ناجحة" : "Learn the core concepts of innovation and how to transform ideas into successful projects",
+      title: "Innovation & Entrepreneurship Fundamentals",
+      description: "Learn core innovation concepts and how to turn ideas into successful ventures.",
       category: "innovation",
       level: "beginner",
       duration: 480,
-      instructor: isAr ? "د. أحمد الشمري" : "Dr. Ahmed Al-Shammari",
+      instructor: "Dr. Ahmed Al-Shammari",
       partner: "KAUST",
       enrollmentCount: 1250,
       rating: "4.8",
       reviewCount: 342,
       isFree: true,
       reviews: [
-        { user: isAr ? "محمد أ." : "Mohammed A.", rating: 5, text: isAr ? "دورة ممتازة وشاملة" : "Excellent and comprehensive course", date: "2024-01-15" },
-        { user: isAr ? "سارة ع." : "Sarah A.", rating: 4, text: isAr ? "محتوى رائع ومفيد جداً" : "Great and very useful content", date: "2024-01-10" },
+        { user: "Mohammed A.", rating: 5, text: "Excellent and comprehensive course", date: "2024-01-15" },
+        { user: "Sara A.", rating: 4, text: "Great and very useful content", date: "2024-01-10" },
       ],
     },
     {
       id: 2,
-      title: isAr ? "حماية الملكية الفكرية" : "Intellectual Property Protection",
-      description: isAr ? "دليل شامل لتسجيل وحماية براءات الاختراع والعلامات التجارية" : "A comprehensive guide to registering and protecting patents and trademarks",
+      title: "Intellectual Property Protection",
+      description: "A comprehensive guide to registering and protecting patents and trademarks.",
       category: "ip",
       level: "intermediate",
       duration: 720,
-      instructor: isAr ? "أ. سارة العتيبي" : "Ms. Sarah Al-Otaibi",
+      instructor: "Ms. Sara Al-Otaibi",
       partner: "SAIP",
       enrollmentCount: 890,
       rating: "4.9",
@@ -81,12 +81,12 @@ export default function Academy() {
     },
     {
       id: 3,
-      title: isAr ? "التمويل والاستثمار للشركات الناشئة" : "Funding & Investment for Startups",
-      description: isAr ? "كيفية جذب المستثمرين وإدارة التمويل في المراحل المبكرة" : "How to attract investors and manage funding in early stages",
+      title: "Funding & Investment for Startups",
+      description: "How to attract investors and manage early-stage funding.",
       category: "investment",
       level: "advanced",
       duration: 960,
-      instructor: isAr ? "م. خالد القحطاني" : "Eng. Khalid Al-Qahtani",
+      instructor: "Eng. Khalid Al-Qahtani",
       partner: "Monshaat",
       enrollmentCount: 650,
       rating: "4.7",
@@ -96,12 +96,12 @@ export default function Academy() {
     },
     {
       id: 4,
-      title: isAr ? "الذكاء الاصطناعي للمبتكرين" : "Artificial Intelligence for Innovators",
-      description: isAr ? "تطبيقات الذكاء الاصطناعي في تطوير المنتجات والخدمات" : "AI applications in product and service development",
+      title: "AI for Innovators",
+      description: "AI applications in product and service development.",
       category: "technology",
       level: "intermediate",
       duration: 1200,
-      instructor: isAr ? "د. نورة الدوسري" : "Dr. Noura Al-Dosari",
+      instructor: "Dr. Noura Al-Dossari",
       partner: "SDAIA",
       enrollmentCount: 1100,
       rating: "4.9",
@@ -111,12 +111,12 @@ export default function Academy() {
     },
     {
       id: 5,
-      title: isAr ? "القيادة الابتكارية" : "Innovative Leadership",
-      description: isAr ? "مهارات القيادة اللازمة لإدارة فرق الابتكار" : "Leadership skills needed to manage innovation teams",
+      title: "Innovative Leadership",
+      description: "Leadership skills for managing innovation teams.",
       category: "leadership",
       level: "advanced",
       duration: 600,
-      instructor: isAr ? "أ. فهد المالكي" : "Mr. Fahad Al-Malki",
+      instructor: "Mr. Fahad Al-Maliki",
       partner: "KACST",
       enrollmentCount: 420,
       rating: "4.6",
@@ -126,12 +126,12 @@ export default function Academy() {
     },
     {
       id: 6,
-      title: isAr ? "بناء نموذج العمل التجاري" : "Building a Business Model",
-      description: isAr ? "تصميم نماذج أعمال مستدامة وقابلة للتوسع" : "Designing sustainable and scalable business models",
+      title: "Building a Business Model",
+      description: "Designing sustainable and scalable business models.",
       category: "entrepreneurship",
       level: "beginner",
       duration: 540,
-      instructor: isAr ? "د. ريم السبيعي" : "Dr. Reem Al-Subaie",
+      instructor: "Dr. Reem Al-Subaie",
       partner: "MCIT",
       enrollmentCount: 780,
       rating: "4.8",
@@ -143,54 +143,54 @@ export default function Academy() {
 
   const faqData = [
     {
-      question: isAr ? "كيف يمكنني التسجيل في الدورات؟" : "How can I enroll in courses?",
-      answer: isAr ? "يمكنك التسجيل في أي دورة بالضغط على زر 'ابدأ التعلم' أو 'سجّل الآن'. يجب أن يكون لديك حساب في منصة NAQLA." : "You can enroll in any course by clicking the 'Start Learning' or 'Enroll Now' button. You need a NAQLA platform account."
+      question: "How do I register for courses?",
+      answer: "You can register for any course by clicking 'Start Learning' or 'Register Now'. You must have a NAQLA platform account."
     },
     {
-      question: isAr ? "هل الشهادات معتمدة؟" : "Are the certificates accredited?",
-      answer: isAr ? "نعم، جميع الشهادات الصادرة من أكاديمية NAQLA معتمدة من شركائنا الأكاديميين (KAUST, SAIP, SDAIA, Monshaat, MCIT, KACST)." : "Yes, all certificates issued by NAQLA Academy are accredited by our academic partners (KAUST, SAIP, SDAIA, Monshaat, MCIT, KACST)."
+      question: "Are certificates accredited?",
+      answer: "Yes, all certificates issued by NAQLA Academy are accredited by our academic partners (KAUST, SAIP, SDAIA, Monshaat, MCIT, KACST)."
     },
     {
-      question: isAr ? "ما هي مدة صلاحية الوصول للدورة؟" : "How long is course access valid?",
-      answer: isAr ? "بمجرد التسجيل في دورة، يكون لديك وصول مدى الحياة لمحتوى الدورة." : "Once enrolled in a course, you have lifetime access to the course content."
+      question: "How long is course access valid?",
+      answer: "Once registered, you have lifetime access to course content."
     },
     {
-      question: isAr ? "هل يمكنني الحصول على استرداد للمبلغ؟" : "Can I get a refund?",
-      answer: isAr ? "نعم، نوفر ضمان استرداد المبلغ خلال 14 يوماً من تاريخ الشراء إذا لم تكن راضياً عن الدورة." : "Yes, we provide a money-back guarantee within 14 days of purchase if you are not satisfied with the course."
+      question: "Can I get a refund?",
+      answer: "Yes, we offer a 14-day money-back guarantee if you're not satisfied with the course."
     },
     {
-      question: isAr ? "كيف أحصل على الشهادة؟" : "How do I get the certificate?",
-      answer: isAr ? "للحصول على الشهادة، يجب إكمال جميع الدروس واجتياز الاختبار النهائي بنسبة 70% على الأقل." : "To get the certificate, you must complete all lessons and pass the final exam with at least 70%."
+      question: "How do I get a certificate?",
+      answer: "To get a certificate, you must complete all lessons and pass the final exam with at least 70%."
     },
     {
-      question: isAr ? "هل يمكنني التعلم من الجوال؟" : "Can I learn from my mobile?",
-      answer: isAr ? "نعم، منصة NAQLA متوافقة تماماً مع جميع الأجهزة." : "Yes, the NAQLA platform is fully compatible with all devices."
+      question: "Can I learn on mobile?",
+      answer: "Yes, the NAQLA platform is fully compatible with all devices."
     },
     {
-      question: isAr ? "ما هي اللغات المتاحة؟" : "What languages are available?",
-      answer: isAr ? "معظم الدورات متاحة باللغة العربية مع ترجمة للمصطلحات التقنية. بعض الدورات المتقدمة متاحة باللغة الإنجليزية." : "Most courses are available in Arabic with translation of technical terms. Some advanced courses are available in English."
+      question: "What languages are available?",
+      answer: "Most courses are in Arabic with technical term translations. Some advanced courses are in English."
     },
     {
-      question: isAr ? "كيف يمكنني التواصل مع المدرب؟" : "How can I contact the instructor?",
-      answer: isAr ? "يمكنك طرح الأسئلة في قسم المناقشات الخاص بكل دورة. المدربون يردون عادة خلال 24-48 ساعة." : "You can ask questions in the discussion section of each course. Instructors usually respond within 24-48 hours."
+      question: "How can I contact the instructor?",
+      answer: "You can ask questions in the course's discussion section. Instructors usually reply within 24-48 hours."
     },
   ];
 
   const categories = [
-    { value: "all", label: isAr ? "جميع الفئات" : "All Categories" },
-    { value: "innovation", label: isAr ? "الابتكار" : "Innovation" },
-    { value: "entrepreneurship", label: isAr ? "ريادة الأعمال" : "Entrepreneurship" },
-    { value: "ip", label: isAr ? "الملكية الفكرية" : "Intellectual Property" },
-    { value: "investment", label: isAr ? "الاستثمار" : "Investment" },
-    { value: "technology", label: isAr ? "التقنية" : "Technology" },
-    { value: "leadership", label: isAr ? "القيادة" : "Leadership" },
+    { value: "all", label: "All Categories" },
+    { value: "innovation", label: "Innovation" },
+    { value: "entrepreneurship", label: "Entrepreneurship" },
+    { value: "ip", label: "Intellectual Property" },
+    { value: "investment", label: "Investment" },
+    { value: "technology", label: "Technology" },
+    { value: "leadership", label: "Leadership" },
   ];
 
   const levels = [
-    { value: "all", label: isAr ? "جميع المستويات" : "All Levels" },
-    { value: "beginner", label: isAr ? "مبتدئ" : "Beginner" },
-    { value: "intermediate", label: isAr ? "متوسط" : "Intermediate" },
-    { value: "advanced", label: isAr ? "متقدم" : "Advanced" },
+    { value: "all", label: "All Levels" },
+    { value: "beginner", label: "Beginner" },
+    { value: "intermediate", label: "Intermediate" },
+    { value: "advanced", label: "Advanced" },
   ];
 
   const displayCourses = courses && courses.length > 0 ? courses : demoCourses;
@@ -205,28 +205,28 @@ export default function Academy() {
 
   const getCategoryText = (category: string) => {
     const cats: Record<string, string> = {
-      innovation: isAr ? "الابتكار" : "Innovation",
-      entrepreneurship: isAr ? "ريادة الأعمال" : "Entrepreneurship",
-      ip: isAr ? "الملكية الفكرية" : "Intellectual Property",
-      investment: isAr ? "الاستثمار" : "Investment",
-      technology: isAr ? "التقنية" : "Technology",
-      leadership: isAr ? "القيادة" : "Leadership",
+      innovation: "Innovation",
+      entrepreneurship: "Entrepreneurship",
+      ip: "Intellectual Property",
+      investment: "Investment",
+      technology: "Technology",
+      leadership: "Leadership",
     };
     return cats[category] || category;
   };
 
   const getLevelText = (level: string | null) => {
     const lvls: Record<string, string> = {
-      beginner: isAr ? "مبتدئ" : "Beginner",
-      intermediate: isAr ? "متوسط" : "Intermediate",
-      advanced: isAr ? "متقدم" : "Advanced",
-      expert: isAr ? "خبير" : "Expert",
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced",
+      expert: "Expert",
     };
     return lvls[level || ""] || (isAr ? "مبتدئ" : "Beginner");
   };
 
   const formatDuration = (minutes: number | null) => {
-    if (!minutes) return isAr ? "غير محدد" : "Not specified";
+    if (!minutes) return isAr ? "غير محدد" : "Not Specified";
     const hours = Math.floor(minutes / 60);
     return isAr ? `${hours} ساعة` : `${hours} hours`;
   };
@@ -282,11 +282,11 @@ export default function Academy() {
                 </div>
                 <h1 className="text-5xl font-bold text-white mb-6 leading-tight">
                   {isAr ? "طوّر مهاراتك" : "Develop Your"}
-                  <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> {isAr ? "الابتكارية" : "Innovation Skills"}</span>
+                  <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> {isAr ? "الابتكارية" : "Innovative Skills"}</span>
                 </h1>
                 <p className="text-slate-300 text-lg mb-8 leading-relaxed">
                   {isAr
-                    ? "دورات تدريبية معتمدة من أفضل الجامعات والمؤسسات السعودية والعالمية. ابدأ رحلتك نحو الابتكار اليوم."
+                    ? isAr ? "دورات تدريبية معتمدة من أفضل الجامعات والمؤسسات السعودية والعالمية. ابدأ رحلتك نحو الابتكار اليوم." : "Certified training courses from top Saudi and international universities and institutions. Start your innovation journey today."
                     : "Accredited training courses from the best Saudi and international universities and institutions. Start your innovation journey today."
                   }
                 </p>
@@ -302,10 +302,10 @@ export default function Academy() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Sparkles, label: isAr ? "دورات حصرية" : "Exclusive Courses", value: "50+" },
-                  { icon: Users, label: isAr ? "متدرب نشط" : "Active Trainee", value: "10K+" },
-                  { icon: Award, label: isAr ? "شهادة معتمدة" : "Accredited Certificate", value: "5K+" },
-                  { icon: Globe, label: isAr ? "شريك أكاديمي" : "Academic Partner", value: "15+" },
+                  { icon: Sparkles, label: "Exclusive Courses", value: "50+" },
+                  { icon: Users, label: "Active Learner", value: "10K+" },
+                  { icon: Award, label: "Accredited Certificate", value: "5K+" },
+                  { icon: Globe, label: "Academic Partner", value: "15+" },
                 ].map((stat, i) => (
                   <div key={i} className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
                     <stat.icon className="w-8 h-8 text-purple-400 mx-auto mb-3" />
@@ -384,8 +384,8 @@ export default function Academy() {
         ) : filteredCourses.length === 0 ? (
           <div className="text-center py-20">
             <BookOpen className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد نتائج" : "No Results"}</h3>
-            <p className="text-slate-400">{isAr ? "جرب تغيير معايير البحث" : "Try changing the search criteria"}</p>
+            <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد نتائج" : "No results found"}</h3>
+            <p className="text-slate-400">{isAr ? "جرب تغيير معايير البحث" : "Try changing your search criteria"}</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
@@ -466,7 +466,7 @@ export default function Academy() {
                           </DialogTrigger>
                           <DialogContent className="bg-slate-900 border-slate-700">
                             <DialogHeader>
-                              <DialogTitle className="text-white">{isAr ? "تقييم الدورة" : "Rate the Course"}</DialogTitle>
+                              <DialogTitle className="text-white">{isAr ? "تقييم الدورة" : "Rate Course"}</DialogTitle>
                             </DialogHeader>
                             <div className="space-y-4 pt-4">
                               <div>
@@ -490,7 +490,7 @@ export default function Academy() {
                                 <Textarea
                                   value={reviewText}
                                   onChange={(e) => setReviewText(e.target.value)}
-                                  placeholder={isAr ? "شاركنا رأيك في الدورة..." : "Share your opinion about the course..."}
+                                  placeholder={isAr ? "شاركنا رأيك في الدورة..." : "Share your thoughts on the course..."}
                                   className="bg-slate-800 border-slate-700 text-white min-h-[100px]"
                                 />
                               </div>
@@ -498,7 +498,7 @@ export default function Academy() {
                                 className="w-full bg-purple-500 hover:bg-purple-600"
                                 onClick={handleSubmitReview}
                               >
-                                {isAr ? "إرسال التقييم" : "Submit Review"}
+                                {isAr ? "إرسال التقييم" : "Submit Rating"}
                               </Button>
                             </div>
                           </DialogContent>
@@ -517,7 +517,7 @@ export default function Academy() {
                         disabled={enrollMutation.isPending}
                       >
                         <Play className="w-4 h-4 ml-2" />
-                        {course.isFree ? (isAr ? "ابدأ التعلم مجاناً" : "Start Learning for Free") : (isAr ? "سجّل الآن" : "Enroll Now")}
+                        {course.isFree ? (isAr ? "ابدأ التعلم مجاناً" : "Start Learning for Free") : (isAr ? "سجّل الآن" : "Register Now")}
                       </Button>
                     )}
                   </div>
@@ -533,26 +533,26 @@ export default function Academy() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                title: isAr ? "مسار المبتكر" : "Innovator Path",
-                description: isAr ? "من الفكرة إلى براءة الاختراع" : "From idea to patent",
+                title: "Innovator Path",
+                description: "From Idea to Patent",
                 courses: 5,
-                duration: isAr ? "40 ساعة" : "40 hours",
+                duration: "40 hours",
                 color: "from-cyan-500 to-blue-500",
                 icon: Sparkles,
               },
               {
-                title: isAr ? "مسار رائد الأعمال" : "Entrepreneur Path",
-                description: isAr ? "بناء شركة ناشئة ناجحة" : "Building a successful startup",
+                title: "Entrepreneur Path",
+                description: "Building a Successful Startup",
                 courses: 7,
-                duration: isAr ? "60 ساعة" : "60 hours",
+                duration: "60 hours",
                 color: "from-purple-500 to-pink-500",
                 icon: Target,
               },
               {
-                title: isAr ? "مسار القائد التقني" : "Tech Leader Path",
-                description: isAr ? "قيادة فرق الابتكار والتقنية" : "Leading innovation and technology teams",
+                title: "Tech Leader Path",
+                description: "Leading Innovation & Tech Teams",
                 courses: 6,
-                duration: isAr ? "50 ساعة" : "50 hours",
+                duration: "50 hours",
                 color: "from-amber-500 to-orange-500",
                 icon: Zap,
               },
@@ -565,7 +565,7 @@ export default function Academy() {
                   <h3 className="text-xl font-bold text-white mb-2">{path.title}</h3>
                   <p className="text-slate-400 text-sm mb-4">{path.description}</p>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-500">{path.courses} {isAr ? "دورات" : "courses"}</span>
+                    <span className="text-slate-500">{path.courses} {isAr ? "دورات" : "Courses"}</span>
                     <span className="text-slate-500">{path.duration}</span>
                   </div>
                   <Button variant="outline" className="w-full mt-4 border-slate-700 text-slate-300 group-hover:border-purple-500 group-hover:text-purple-400">
@@ -585,9 +585,9 @@ export default function Academy() {
               <HelpCircle className="w-4 h-4 text-amber-400" />
               <span className="text-amber-400 text-sm">{isAr ? "الأسئلة الشائعة" : "FAQ"}</span>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-4">{isAr ? "هل لديك استفسار؟" : "Have a Question?"}</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">{isAr ? "هل لديك استفسار؟" : "Have a question?"}</h2>
             <p className="text-slate-400 max-w-xl mx-auto">
-              {isAr ? "إجابات على أكثر الأسئلة شيوعاً حول أكاديمية NAQLA" : "Answers to the most common questions about NAQLA Academy"}
+              {isAr ? "إجابات على أكثر الأسئلة شيوعاً حول أكاديمية NAQLA" : "Answers to common questions about NAQLA Academy"}
             </p>
           </div>
 
@@ -611,7 +611,7 @@ export default function Academy() {
           </div>
 
           <div className="text-center mt-8">
-            <p className="text-slate-400 mb-4">{isAr ? "لم تجد إجابة لسؤالك؟" : "Didn't find an answer to your question?"}</p>
+            <p className="text-slate-400 mb-4">{isAr ? "لم تجد إجابة لسؤالك؟" : "Didn't find your answer?"}</p>
             <Button variant="outline" className="border-purple-500/50 text-purple-400 hover:bg-purple-500/10">
               <MessageSquare className="w-4 h-4 ml-2" />
               {isAr ? "تواصل مع الدعم" : "Contact Support"}
@@ -624,10 +624,10 @@ export default function Academy() {
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-3xl blur-2xl"></div>
           <div className="relative bg-gradient-to-r from-purple-900/60 to-pink-900/60 rounded-3xl p-12 text-center border border-purple-500/20">
             <Award className="w-20 h-20 text-purple-400 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-white mb-4">{isAr ? "احصل على شهادة معتمدة" : "Get an Accredited Certificate"}</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">{isAr ? "احصل على شهادة معتمدة" : "Get Certified"}</h2>
             <p className="text-slate-300 mb-8 max-w-xl mx-auto text-lg">
               {isAr
-                ? "أكمل الدورات واحصل على شهادات معتمدة من شركائنا الأكاديميين لتعزيز ملفك المهني"
+                ? isAr ? "أكمل الدورات واحصل على شهادات معتمدة من شركائنا الأكاديميين لتعزيز ملفك المهني" : "Complete courses and earn accredited certificates from our academic partners to boost your professional profile"
                 : "Complete courses and get accredited certificates from our academic partners to enhance your professional profile"
               }
             </p>
@@ -636,7 +636,7 @@ export default function Academy() {
                 {isAr ? "استكشف جميع الدورات" : "Explore All Courses"}
               </Button>
               <Button variant="outline" className="border-white/30 text-white hover:bg-white/10">
-                {isAr ? "تعرف على الشركاء" : "Meet the Partners"}
+                {isAr ? "تعرف على الشركاء" : "Meet Partners"}
               </Button>
             </div>
           </div>

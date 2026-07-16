@@ -30,7 +30,7 @@ export default function Naqla2ChallengeDetails() {
 
   const registerMutation = trpc.naqla2.challenges.register.useMutation({
     onSuccess: () => {
-      toast.success("تم التسجيل بنجاح! يمكنك الآن تقديم حلك للتحدي");
+      toast.success(isAr ? "تم التسجيل بنجاح! يمكنك الآن تقديم حلك للتحدي" : "Registered successfully! You can now submit your solution.");
     },
     onError: (error) => {
       toast.error(`خطأ في التسجيل: ${error.message}`);
@@ -39,7 +39,7 @@ export default function Naqla2ChallengeDetails() {
 
   const handleRegister = () => {
     if (!user) {
-      toast.error("يجب تسجيل الدخول أولاً للتسجيل في التحدي");
+      toast.error(isAr ? "يجب تسجيل الدخول أولاً للتسجيل في التحدي" : "You must log in first to register for the challenge.");
       return;
     }
     registerMutation.mutate({ challengeId });
@@ -50,7 +50,7 @@ export default function Naqla2ChallengeDetails() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">{isAr ? "جاري تحميل التحدي..." : "جاري Download التحدي..."}</p>
+          <p className="text-muted-foreground">{isAr ? isAr ? "جاري تحميل التحدي..." : "Loading challenge..." : "Downloading challenge..."}</p>
         </div>
       </div>
     );
@@ -61,8 +61,8 @@ export default function Naqla2ChallengeDetails() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>{isAr ? "التحدي غير موجود" : "التBorderي غير موجود"}</CardTitle>
-            <CardDescription>{isAr ? "لم يتم العثور على التحدي المطلوب" : "لم يDone العثور على التحدي المطلوب"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "التحدي غير موجود" : "Challenge not found" : "Challenge not found"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "لم يتم العثور على التحدي المطلوب" : "Requested challenge not found" : "Requested challenge not found"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/naqla2/challenges">
@@ -149,7 +149,7 @@ export default function Naqla2ChallengeDetails() {
                   onClick={handleRegister}
                   disabled={registerMutation.isPending}
                 >
-                  {registerMutation.isPending ? "جاري التسجيل..." : "سجل الآن"}
+                  {registerMutation.isPending ? isAr ? "جاري التسجيل..." : "Registering..." : "Register Now"}
                   <ArrowRight className="w-5 h-5 mr-2" />
                 </Button>
               )}
@@ -173,7 +173,7 @@ export default function Naqla2ChallengeDetails() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h3 className="font-semibold mb-2">{isAr ? "الوصف الكامل:" : "Description الكامل:"}</h3>
+                  <h3 className="font-semibold mb-2">{isAr ? isAr ? "الوصف الكامل:" : "Full Description:" : "Full Description:"}</h3>
                   <p className="text-muted-foreground leading-relaxed">{challenge.description}</p>
                 </div>
 
@@ -181,7 +181,7 @@ export default function Naqla2ChallengeDetails() {
                   const reqs = challenge.requirements;
                   return reqs && (
                     <div>
-                      <h3 className="font-semibold mb-2">{isAr ? "المتطلبات:" : "[المتطلبات:]"}</h3>
+                      <h3 className="font-semibold mb-2">{isAr ? isAr ? "المتطلبات:" : "Requirements:" : "Requirements:"}</h3>
                       <p className="text-muted-foreground leading-relaxed">{String(reqs)}</p>
                     </div>
                   );
@@ -191,7 +191,7 @@ export default function Naqla2ChallengeDetails() {
                   const crit = challenge.criteria;
                   return crit && (
                     <div>
-                      <h3 className="font-semibold mb-2">{isAr ? "معايير التقييم:" : "معايير Evaluation:"}</h3>
+                      <h3 className="font-semibold mb-2">{isAr ? isAr ? "معايير التقييم:" : "Evaluation Criteria:" : "Evaluation Criteria:"}</h3>
                       <p className="text-muted-foreground leading-relaxed">{String(crit)}</p>
                     </div>
                   );
@@ -207,7 +207,7 @@ export default function Naqla2ChallengeDetails() {
                     <Lightbulb className="w-5 h-5" />
                     الأفكار المشاركة ({relatedIdeas.length})
                   </CardTitle>
-                  <CardDescription>{isAr ? "الأفكار التي تم تقديمها لهذا التحدي" : "الأفكار التي Done تقديمها لهذا التحدي"}</CardDescription>
+                  <CardDescription>{isAr ? isAr ? "الأفكار التي تم تقديمها لهذا التحدي" : "Ideas submitted for this challenge" : "Ideas submitted for this challenge"}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -243,7 +243,7 @@ export default function Naqla2ChallengeDetails() {
             {/* Challenge Info */}
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "معلومات التحدي" : "Information التحدي"}</CardTitle>
+                <CardTitle>{isAr ? isAr ? "معلومات التحدي" : "Challenge Info" : "Challenge Info"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -259,14 +259,14 @@ export default function Naqla2ChallengeDetails() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "الجائزة" : "[الجائزة]"}</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? isAr ? "الجائزة" : "Prize" : "Prize"}</p>
                   <p className="text-2xl font-bold text-yellow-600">
                     {challenge.reward?.toLocaleString()} ريال
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "الموعد النهائي" : "[الموعد النهائي]"}</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? isAr ? "الموعد النهائي" : "Deadline" : "Deadline"}</p>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4" />
                     <span className="font-medium">
@@ -276,7 +276,7 @@ export default function Naqla2ChallengeDetails() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">{isAr ? "المشاركون" : "[المشاركون]"}</p>
+                  <p className="text-sm text-muted-foreground mb-1">{isAr ? isAr ? "المشاركون" : "Participants" : "Participants"}</p>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
                     <span className="font-medium">{challenge.participants || 0} مشارك</span>
@@ -288,7 +288,7 @@ export default function Naqla2ChallengeDetails() {
             {/* CTA */}
             <Card className="bg-gradient-to-br from-blue-950/50 to-indigo-950/30 border-blue-500/30">
               <CardHeader>
-                <CardTitle>{isAr ? "جاهز للمشاركة؟" : "جاهز للShare؟"}</CardTitle>
+                <CardTitle>{isAr ? isAr ? "جاهز للمشاركة؟" : "Ready to participate?" : "Ready to share?"}</CardTitle>
                 <CardDescription className="text-muted-foreground">
                   قدّم فكرتك الآن واحصل على فرصة للفوز بالجائزة
                 </CardDescription>

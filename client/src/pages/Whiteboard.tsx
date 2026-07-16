@@ -391,8 +391,8 @@ export default function Whiteboard() {
                 <Lightbulb className="w-4 h-4 text-white" />
               </div>
               <div>
-                <h1 className="text-sm font-bold text-white">{isAr ? "لوحة الأفكار التفاعلية" : "Panel الأفكار التفاعلية"}</h1>
-                <p className="text-xs text-white/50">{isAr ? "تعاون في الوقت الحقيقي" : "تعاون في Time الحقيقي"}</p>
+                <h1 className="text-sm font-bold text-white">{isAr ? isAr ? "لوحة الأفكار التفاعلية" : "Interactive Idea Board" : "Interactive Idea Panel"}</h1>
+                <p className="text-xs text-white/50">{isAr ? isAr ? "تعاون في الوقت الحقيقي" : "Real-time Collaboration" : "Real-time Collaboration"}</p>
               </div>
             </div>
           </div>
@@ -574,7 +574,7 @@ export default function Whiteboard() {
           
           {/* Stroke Width */}
           <div>
-            <h3 className="text-sm font-medium text-white/70 mb-3">{isAr ? "سمك الخط" : "[سمك الخط]"}</h3>
+            <h3 className="text-sm font-medium text-white/70 mb-3">{isAr ? isAr ? "سمك الخط" : "Line Thickness" : "[Line Thickness]"}</h3>
             <div className="flex items-center gap-3">
               <Slider
                 value={[strokeWidth]}

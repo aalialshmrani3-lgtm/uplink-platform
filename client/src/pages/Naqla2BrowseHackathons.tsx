@@ -61,7 +61,7 @@ export default function Naqla2BrowseHackathons() {
           <div className="flex-1 relative">
             <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             <Input
-              placeholder="ابحث عن هاكاثون..."
+              placeholder={isAr ? "ابحث عن هاكاثون..." : "Search hackathons..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10 bg-slate-900/50 border-slate-800 text-white"
@@ -70,24 +70,24 @@ export default function Naqla2BrowseHackathons() {
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
             <SelectTrigger className="w-full md:w-48 bg-slate-900/50 border-slate-800 text-white">
               <Filter className="w-4 h-4 ml-2" />
-              <SelectValue placeholder="الحالة" />
+              <SelectValue placeholder={isAr ? "الحالة" : "Status"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
+              <SelectItem value="all">{isAr ? isAr ? "الكل" : "All" : "[All]"}</SelectItem>
               <SelectItem value="published">{isAr ? "منشور" : "Published"}</SelectItem>
-              <SelectItem value="ongoing">{isAr ? "جاري" : "[جاري]"}</SelectItem>
+              <SelectItem value="ongoing">{isAr ? isAr ? "جاري" : "Ongoing" : "[Ongoing]"}</SelectItem>
               <SelectItem value="completed">{isAr ? "مكتمل" : "Completed"}</SelectItem>
             </SelectContent>
           </Select>
           <Select value={virtualFilter?.toString()} onValueChange={(v) => setVirtualFilter(v === 'true' ? true : v === 'false' ? false : undefined)}>
             <SelectTrigger className="w-full md:w-48 bg-slate-900/50 border-slate-800 text-white">
               <Globe className="w-4 h-4 ml-2" />
-              <SelectValue placeholder="النوع" />
+              <SelectValue placeholder={isAr ? "النوع" : "Type"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
-              <SelectItem value="true">{isAr ? "افتراضي" : "[افتراضي]"}</SelectItem>
-              <SelectItem value="false">{isAr ? "حضوري" : "[حضوري]"}</SelectItem>
+              <SelectItem value="all">{isAr ? isAr ? "الكل" : "All" : "[All]"}</SelectItem>
+              <SelectItem value="true">{isAr ? isAr ? "افتراضي" : "Virtual" : "[Virtual]"}</SelectItem>
+              <SelectItem value="false">{isAr ? isAr ? "حضوري" : "In-person" : "[In-person]"}</SelectItem>
             </SelectContent>
           </Select>
           <Button 
@@ -144,7 +144,7 @@ export default function Naqla2BrowseHackathons() {
                       {hackathon.isVirtual ? (
                         <>
                           <Globe className="w-4 h-4 text-blue-500" />
-                          <span>{isAr ? "افتراضي" : "[افتراضي]"}</span>
+                          <span>{isAr ? isAr ? "افتراضي" : "Virtual" : "[Virtual]"}</span>
                         </>
                       ) : (
                         <>
@@ -183,7 +183,7 @@ export default function Naqla2BrowseHackathons() {
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardContent className="py-20 text-center">
               <Trophy className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">{isAr ? "لا توجد هاكاثونات حالياً" : "No توجد هاكاثونات حالياً"}</p>
+              <p className="text-slate-400 text-lg">{isAr ? isAr ? "لا توجد هاكاثونات حالياً" : "No hackathons available" : "No hackathons available"}</p>
               <Button 
                 onClick={() => navigate('/naqla2/hackathons/create')}
                 className="mt-6 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700"

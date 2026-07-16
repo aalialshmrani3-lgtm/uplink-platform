@@ -18,7 +18,7 @@ export default function Naqla2AdminChallenges() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto mb-4"></div>
-          <p className="text-gray-400">{isAr ? "جاري تحميل لوحة التحكم..." : "جاري تحميل Dashboard..."}</p>
+          <p className="text-gray-400">{isAr ? isAr ? "جاري تحميل لوحة التحكم..." : "Loading Dashboard..." : "Loading Dashboard..."}</p>
         </div>
       </div>
     );
@@ -29,12 +29,12 @@ export default function Naqla2AdminChallenges() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle className="text-red-500">{isAr ? "غير مصرح" : "[غير مصرح]"}</CardTitle>
-            <CardDescription>{isAr ? "ليس لديك صلاحية الوصول إلى هذه الصفحة" : "ليس لديك صNoحية الوصول إلى هذه الصفحة"}</CardDescription>
+            <CardTitle className="text-red-500">{isAr ? isAr ? "غير مصرح" : "Unauthorized" : "Unauthorized"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "ليس لديك صلاحية الوصول إلى هذه الصفحة" : "You do not have access to this page" : "You do not have access to this page"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/naqla2/challenges">
-              <Button variant="outline" className="w-full">{isAr ? "العودة إلى التحديات" : "العودة إلى Challenges"}</Button>
+              <Button variant="outline" className="w-full">{isAr ? isAr ? "العودة إلى التحديات" : "Back to Challenges" : "Back to Challenges"}</Button>
             </Link>
           </CardContent>
         </Card>
@@ -52,15 +52,15 @@ export default function Naqla2AdminChallenges() {
               ← العودة إلى التحديات
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-2">{isAr ? "لوحة تحكم المنظمين" : "Panel تحكم المنظمين"}</h1>
-          <p className="text-gray-400">{isAr ? "إدارة التحديات ومراجعة الحلول المقدمة" : "إدارة Challenges ومراجعة الحلول المقدمة"}</p>
+          <h1 className="text-4xl font-bold mb-2">{isAr ? isAr ? "لوحة تحكم المنظمين" : "Organizers Dashboard" : "Organizers Dashboard"}</h1>
+          <p className="text-gray-400">{isAr ? isAr ? "إدارة التحديات ومراجعة الحلول المقدمة" : "Manage challenges and review submitted solutions" : "Manage challenges and review submitted solutions"}</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "إجمالي التحديات" : "إجمالي Challenges"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? isAr ? "إجمالي التحديات" : "Total Challenges" : "Total Challenges"}</CardTitle>
               <Trophy className="h-4 w-4 text-amber-500" />
             </CardHeader>
             <CardContent>
@@ -70,7 +70,7 @@ export default function Naqla2AdminChallenges() {
 
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "التحديات النشطة" : "Challenges النشطة"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? isAr ? "التحديات النشطة" : "Active Challenges" : "Active Challenges"}</CardTitle>
               <CheckCircle2 className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
@@ -82,7 +82,7 @@ export default function Naqla2AdminChallenges() {
 
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "إجمالي المشاركين" : "Total المشاركين"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? isAr ? "إجمالي المشاركين" : "Total Participants" : "Total Participants"}</CardTitle>
               <Users className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
@@ -94,7 +94,7 @@ export default function Naqla2AdminChallenges() {
 
           <Card className="bg-gray-800/50 border-gray-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? "الحلول المقدمة" : "الSolutions المقدمة"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-400">{isAr ? isAr ? "الحلول المقدمة" : "Submitted Solutions" : "Submitted Solutions"}</CardTitle>
               <FileText className="h-4 w-4 text-purple-500" />
             </CardHeader>
             <CardContent>
@@ -106,9 +106,9 @@ export default function Naqla2AdminChallenges() {
         {/* Challenges List */}
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="bg-gray-800/50">
-            <TabsTrigger value="all">{isAr ? "جميع التحديات" : "جميع Challenges"}</TabsTrigger>
-            <TabsTrigger value="open">{isAr ? "النشطة" : "الActiveة"}</TabsTrigger>
-            <TabsTrigger value="closed">{isAr ? "المنتهية" : "[المنتهية]"}</TabsTrigger>
+            <TabsTrigger value="all">{isAr ? isAr ? "جميع التحديات" : "All Challenges" : "All Challenges"}</TabsTrigger>
+            <TabsTrigger value="open">{isAr ? isAr ? "النشطة" : "Active" : "Active"}</TabsTrigger>
+            <TabsTrigger value="closed">{isAr ? isAr ? "المنتهية" : "Ended" : "Ended"}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="mt-6">
@@ -124,7 +124,7 @@ export default function Naqla2AdminChallenges() {
                             variant={challenge.status === "open" ? "default" : "secondary"}
                             className={challenge.status === "open" ? "bg-green-500" : "bg-gray-500"}
                           >
-                            {challenge.status === "open" ? "نشط" : "منتهي"}
+                            {challenge.status === "open" ? isAr ? "نشط" : "Active" : "Ended"}
                           </Badge>
                         </div>
                         <CardDescription className="text-gray-400 line-clamp-2">
@@ -142,7 +142,7 @@ export default function Naqla2AdminChallenges() {
                         </div>
                         <div className="flex items-center gap-2">
                           <FileText className="h-4 w-4" />
-                          <span>{isAr ? "0 حل" : "[0 حل]"}</span>
+                          <span>{isAr ? isAr ? "0 حل" : "0 Solutions" : "0 Solutions"}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Award className="h-4 w-4 text-amber-500" />
@@ -181,10 +181,10 @@ export default function Naqla2AdminChallenges() {
                     <div className="flex items-center justify-between">
                       <div className="flex gap-4 text-sm text-gray-400">
                         <span>{challenge.participants || 0} مشارك</span>
-                        <span>{isAr ? "0 حل" : "[0 حل]"}</span>
+                        <span>{isAr ? isAr ? "0 حل" : "0 Solutions" : "0 Solutions"}</span>
                       </div>
                       <Link href={`/admin/challenges/${challenge.id}/submissions`}>
-                        <Button size="sm">{isAr ? "مراجعة الحلول" : "مراجعة الSolutions"}</Button>
+                        <Button size="sm">{isAr ? isAr ? "مراجعة الحلول" : "Review Solutions" : "Review Solutions"}</Button>
                       </Link>
                     </div>
                   </CardContent>
@@ -205,10 +205,10 @@ export default function Naqla2AdminChallenges() {
                     <div className="flex items-center justify-between">
                       <div className="flex gap-4 text-sm text-gray-400">
                         <span>{challenge.participants || 0} مشارك</span>
-                        <span>{isAr ? "0 حل" : "[0 حل]"}</span>
+                        <span>{isAr ? isAr ? "0 حل" : "0 Solutions" : "0 Solutions"}</span>
                       </div>
                       <Link href={`/admin/challenges/${challenge.id}/submissions`}>
-                        <Button size="sm" variant="outline">{isAr ? "عرض الحلول" : "عرض الSolutions"}</Button>
+                        <Button size="sm" variant="outline">{isAr ? isAr ? "عرض الحلول" : "View Solutions" : "View Solutions"}</Button>
                       </Link>
                     </div>
                   </CardContent>

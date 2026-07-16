@@ -19,171 +19,171 @@ interface Challenge {
   title: string;
   description: string;
   category: string;
-  difficulty: "متقدم" | "متوسط" | "مبتدئ";
+  difficulty: "Advanced" | "Intermediate" | "Beginner";
   reward: string;
   deadline: string;
   icon: React.ReactNode;
   tags: string[];
   details: string[];
 }
-
-const challenges: Challenge[] = [
-  {
-    id: "solar-cleaning-robots",
-    title: "روبوتات تنظيف الألواح الشمسية الذكية",
-    description: "تطوير روبوتات محلية الصنع لتنظيف الألواح الشمسية في البيئة الصحراوية مع مقاومة الغبار والحرارة العالية",
-    category: "الطاقة المتجددة",
-    difficulty: "متقدم",
-    reward: "500,000 ريال",
-    deadline: "6 أشهر",
-    icon: <Zap className="w-8 h-8" />,
-    tags: ["روبوتات", "طاقة شمسية", "أتمتة"],
-    details: [
-      "تصميم روبوت يعمل بالطاقة الشمسية",
-      "مقاومة درجات الحرارة حتى 55 درجة مئوية",
-      "تنظيف فعال بدون استهلاك مياه كبير",
-      "نظام ملاحة ذكي لتغطية المساحات الكبيرة",
-      "صيانة سهلة وقطع غيار محلية"
-    ]
-  },
-  {
-    id: "battery-cooling",
-    title: "أنظمة تبريد البطاريات المتقدمة",
-    description: "ابتكار حلول تبريد للبطاريات تعمل بكفاءة في درجات الحرارة العالية لضمان الأداء الأمثل وإطالة العمر الافتراضي",
-    category: "تخزين الطاقة",
-    difficulty: "متقدم",
-    reward: "400,000 ريال",
-    deadline: "8 أشهر",
-    icon: <Battery className="w-8 h-8" />,
-    tags: ["بطاريات", "تبريد", "كفاءة طاقة"],
-    details: [
-      "فهم السلوك الكيميائي للبطاريات في الحرارة العالية",
-      "تصميم نظام تبريد سلبي أو نشط",
-      "تقليل استهلاك الطاقة للتبريد",
-      "مواد عازلة محلية ومستدامة",
-      "اختبارات ميدانية في البيئة السعودية"
-    ]
-  },
-  {
-    id: "bipv-integration",
-    title: "دمج الطاقة الشمسية في واجهات المباني (BIPV)",
-    description: "تطوير حلول جمالية ومعمارية لدمج الألواح الشمسية في واجهات المباني دون التأثير على المظهر الحضري",
-    category: "العمارة المستدامة",
-    difficulty: "متوسط",
-    reward: "300,000 ريال",
-    deadline: "5 أشهر",
-    icon: <Building2 className="w-8 h-8" />,
-    tags: ["عمارة", "طاقة شمسية", "تصميم"],
-    details: [
-      "تصاميم تتماشى مع الطراز المعماري السعودي",
-      "ألواح شمسية شفافة أو ملونة",
-      "سهولة التركيب والصيانة",
-      "كفاءة طاقة عالية رغم التكامل المعماري",
-      "تطبيقات عملية في مشاريع كبرى (الدرعية، نيوم)"
-    ]
-  },
-  {
-    id: "ai-energy-optimization",
-    title: "الذكاء الاصطناعي لتحسين منظومة الطاقة",
-    description: "تطبيقات الذكاء الاصطناعي الفيزيائي (Physics-based AI) لفهم وتحسين أداء أنظمة الطاقة المتجددة",
-    category: "الذكاء الاصطناعي",
-    difficulty: "متقدم",
-    reward: "600,000 ريال",
-    deadline: "10 أشهر",
-    icon: <BrainCircuit className="w-8 h-8" />,
-    tags: ["ذكاء اصطناعي", "تحليل بيانات", "تحسين"],
-    details: [
-      "نماذج AI لفهم التفاعلات المعقدة في البطاريات",
-      "تحليل ثلاثي الأبعاد للمدن لتحديد أفضل مواقع الألواح الشمسية",
-      "لوحات تحكم تفاعلية مع Gamification",
-      "محاكاة تأثير مشاريع الطاقة المتجددة",
-      "تنبؤ بالأعطال والصيانة الاستباقية"
-    ]
-  },
-  {
-    id: "green-hydrogen",
-    title: "تقنيات إنتاج الهيدروجين الأخضر",
-    description: "تطوير حلول مبتكرة لإنتاج وتخزين الهيدروجين الأخضر بكفاءة عالية مع دمج طاقة الرياح والشمس",
-    category: "الطاقة المتجددة",
-    difficulty: "متقدم",
-    reward: "700,000 ريال",
-    deadline: "12 شهر",
-    icon: <Wind className="w-8 h-8" />,
-    tags: ["هيدروجين أخضر", "تخزين طاقة", "طاقة متجددة"],
-    details: [
-      "تحليل كهربائي فعال للماء",
-      "تكامل طاقة الرياح والشمس",
-      "حلول تخزين آمنة ومستدامة",
-      "تطبيقات في النقل والصناعة",
-      "خفض تكلفة الإنتاج"
-    ]
-  },
-  {
-    id: "water-energy-nexus",
-    title: "ترابط المياه والطاقة في البيئة الصحراوية",
-    description: "ابتكار حلول متكاملة لإدارة المياه والطاقة في المناطق الصحراوية مع التركيز على الاستدامة",
-    category: "الاستدامة",
-    difficulty: "متوسط",
-    reward: "350,000 ريال",
-    deadline: "7 أشهر",
-    icon: <Droplets className="w-8 h-8" />,
-    tags: ["مياه", "طاقة", "استدامة"],
-    details: [
-      "تحلية مياه بالطاقة الشمسية",
-      "إعادة استخدام المياه الرمادية",
-      "ري ذكي يعتمد على AI",
-      "تقليل الهدر في الشبكات",
-      "حلول منخفضة التكلفة"
-    ]
-  },
-  {
-    id: "carbon-capture",
-    title: "تقنيات احتجاز الكربون المبتكرة",
-    description: "تطوير حلول محلية لاحتجاز وتخزين الكربون من المصادر الصناعية والوقود التقليدي",
-    category: "الاستدامة",
-    difficulty: "متقدم",
-    reward: "550,000 ريال",
-    deadline: "12 شهر",
-    icon: <Leaf className="w-8 h-8" />,
-    tags: ["احتجاز كربون", "بيئة", "صناعة"],
-    details: [
-      "تقنيات احتجاز فعالة من حيث التكلفة",
-      "تخزين آمن طويل الأمد",
-      "إعادة استخدام الكربون المحتجز",
-      "تطبيقات صناعية في أرامكو وسابك",
-      "قياس وتوثيق الانبعاثات المخفضة"
-    ]
-  },
-  {
-    id: "smart-grid",
-    title: "الشبكات الذكية للطاقة المتجددة",
-    description: "تصميم شبكات ذكية تدمج مصادر الطاقة المتجددة المتعددة مع التخزين والتوزيع الفعال",
-    category: "البنية التحتية",
-    difficulty: "متقدم",
-    reward: "800,000 ريال",
-    deadline: "15 شهر",
-    icon: <Target className="w-8 h-8" />,
-    tags: ["شبكات ذكية", "توزيع طاقة", "IoT"],
-    details: [
-      "دمج مصادر طاقة متعددة (شمسية، رياح، هيدروجين)",
-      "نظام تخزين موزع",
-      "توزيع ذكي حسب الطلب",
-      "مرونة عالية وموثوقية",
-      "تكامل مع المدن الذكية"
-    ]
-  }
-];
-
 export default function NationalChallenges() {
   const { language } = useLanguage();
   const isAr = language === 'ar';
+
+  const challenges: Challenge[] = [
+    {
+      id: "solar-cleaning-robots",
+      title: "Smart Solar Panel Cleaning Robots",
+      description: "Develop local robots for solar panel cleaning in desert environments, resistant to dust and high temperatures.",
+      category: "Renewable Energy",
+      difficulty: "Advanced",
+      reward: "500,000 SAR",
+      deadline: "6 Months",
+      icon: <Zap className="w-8 h-8" />,
+      tags: [isAr ? "روبوتات" : "Robotics", isAr ? "طاقة شمسية" : "Solar Power", isAr ? "أتمتة" : "Automation"],
+      details: [
+        isAr ? "تصميم روبوت يعمل بالطاقة الشمسية" : "Solar-powered robot design",
+        isAr ? "مقاومة درجات الحرارة حتى 55 درجة مئوية" : "Temperature resistance up to 55°C",
+        isAr ? "تنظيف فعال بدون استهلاك مياه كبير" : "Efficient cleaning with minimal water consumption",
+        isAr ? "نظام ملاحة ذكي لتغطية المساحات الكبيرة" : "Smart navigation for large areas",
+        isAr ? "صيانة سهلة وقطع غيار محلية" : "Easy maintenance and local spare parts"
+      ]
+    },
+    {
+      id: "battery-cooling",
+      title: "Advanced Battery Cooling Systems",
+      description: "Innovate efficient battery cooling solutions for high temperatures to ensure optimal performance and extended lifespan.",
+      category: "Energy Storage",
+      difficulty: "Advanced",
+      reward: "400,000 SAR",
+      deadline: "8 Months",
+      icon: <Battery className="w-8 h-8" />,
+      tags: [isAr ? "بطاريات" : "Batteries", isAr ? "تبريد" : "Cooling", isAr ? "كفاءة طاقة" : "Energy Efficiency"],
+      details: [
+        isAr ? "فهم السلوك الكيميائي للبطاريات في الحرارة العالية" : "Understand battery chemical behavior in high heat",
+        isAr ? "تصميم نظام تبريد سلبي أو نشط" : "Design passive or active cooling system",
+        isAr ? "تقليل استهلاك الطاقة للتبريد" : "Reduce cooling energy consumption",
+        isAr ? "مواد عازلة محلية ومستدامة" : "Local and sustainable insulating materials",
+        isAr ? "اختبارات ميدانية في البيئة السعودية" : "Field tests in Saudi environment"
+      ]
+    },
+    {
+      id: "bipv-integration",
+      title: "Building-Integrated Photovoltaics (BIPV)",
+      description: "Develop aesthetic and architectural solutions for integrating solar panels into building facades without impacting urban appearance.",
+      category: "Sustainable Architecture",
+      difficulty: "Intermediate",
+      reward: "300,000 SAR",
+      deadline: "5 Months",
+      icon: <Building2 className="w-8 h-8" />,
+      tags: [isAr ? "عمارة" : "Architecture", isAr ? "طاقة شمسية" : "Solar Power", isAr ? "تصميم" : "Design"],
+      details: [
+        isAr ? "تصاميم تتماشى مع الطراز المعماري السعودي" : "Designs aligned with Saudi architectural style",
+        isAr ? "ألواح شمسية شفافة أو ملونة" : "Transparent or colored solar panels",
+        isAr ? "سهولة التركيب والصيانة" : "Easy installation and maintenance",
+        isAr ? "كفاءة طاقة عالية رغم التكامل المعماري" : "High energy efficiency despite architectural integration",
+        isAr ? "تطبيقات عملية في مشاريع كبرى (الدرعية، نيوم)" : "Practical applications in major projects (Diriyah, NEOM)"
+      ]
+    },
+    {
+      id: "ai-energy-optimization",
+      title: "AI for Energy System Optimization",
+      description: "Physics-based AI applications to understand and improve renewable energy system performance",
+      category: "Artificial Intelligence",
+      difficulty: "Advanced",
+      reward: "600,000 SAR",
+      deadline: "10 Months",
+      icon: <BrainCircuit className="w-8 h-8" />,
+      tags: [isAr ? "ذكاء اصطناعي" : "AI", isAr ? "تحليل بيانات" : "Data Analysis", isAr ? "تحسين" : "Optimization"],
+      details: [
+        isAr ? "نماذج AI لفهم التفاعلات المعقدة في البطاريات" : "AI models for understanding complex battery interactions",
+        isAr ? "تحليل ثلاثي الأبعاد للمدن لتحديد أفضل مواقع الألواح الشمسية" : "3D city analysis to identify optimal solar panel locations",
+        isAr ? "لوحات تحكم تفاعلية مع Gamification" : "Interactive dashboards with Gamification",
+        isAr ? "محاكاة تأثير مشاريع الطاقة المتجددة" : "Simulating the impact of renewable energy projects",
+        isAr ? "تنبؤ بالأعطال والصيانة الاستباقية" : "Fault prediction and proactive maintenance"
+      ]
+    },
+    {
+      id: "green-hydrogen",
+      title: "Green Hydrogen Production Technologies",
+      description: "Develop innovative solutions for high-efficiency green hydrogen production and storage, integrating wind and solar energy.",
+      category: "Renewable Energy",
+      difficulty: "Advanced",
+      reward: "700,000 SAR",
+      deadline: "12 Months",
+      icon: <Wind className="w-8 h-8" />,
+      tags: [isAr ? "هيدروجين أخضر" : "Green Hydrogen", isAr ? "تخزين طاقة" : "Energy Storage", isAr ? "طاقة متجددة" : "Renewable Energy"],
+      details: [
+        isAr ? "تحليل كهربائي فعال للماء" : "Efficient Water Electrolysis",
+        isAr ? "تكامل طاقة الرياح والشمس" : "Wind & Solar Integration",
+        isAr ? "حلول تخزين آمنة ومستدامة" : "Safe & Sustainable Storage Solutions",
+        isAr ? "تطبيقات في النقل والصناعة" : "Applications in Transport & Industry",
+        isAr ? "خفض تكلفة الإنتاج" : "Reduced Production Cost"
+      ]
+    },
+    {
+      id: "water-energy-nexus",
+      title: "Water-Energy Nexus in Desert Environments",
+      description: "Innovating integrated water and energy management solutions for desert regions with a focus on sustainability.",
+      category: "Sustainability",
+      difficulty: "Intermediate",
+      reward: "350,000 SAR",
+      deadline: "7 Months",
+      icon: <Droplets className="w-8 h-8" />,
+      tags: [isAr ? "مياه" : "Water", isAr ? "طاقة" : "Energy", isAr ? "استدامة" : "Sustainability"],
+      details: [
+        isAr ? "تحلية مياه بالطاقة الشمسية" : "Solar Desalination",
+        isAr ? "إعادة استخدام المياه الرمادية" : "Greywater Reuse",
+        isAr ? "ري ذكي يعتمد على AI" : "AI-Powered Smart Irrigation",
+        isAr ? "تقليل الهدر في الشبكات" : "Network Loss Reduction",
+        isAr ? "حلول منخفضة التكلفة" : "Low-Cost Solutions"
+      ]
+    },
+    {
+      id: "carbon-capture",
+      title: "Innovative Carbon Capture Technologies",
+      description: "Developing local solutions for carbon capture and storage from industrial sources and fossil fuels.",
+      category: "Sustainability",
+      difficulty: "Advanced",
+      reward: "550,000 SAR",
+      deadline: "12 Months",
+      icon: <Leaf className="w-8 h-8" />,
+      tags: [isAr ? "احتجاز كربون" : "Carbon Capture", isAr ? "بيئة" : "Environment", isAr ? "صناعة" : "Industry"],
+      details: [
+        isAr ? "تقنيات احتجاز فعالة من حيث التكلفة" : "Cost-Effective Capture Technologies",
+        isAr ? "تخزين آمن طويل الأمد" : "Safe Long-Term Storage",
+        isAr ? "إعادة استخدام الكربون المحتجز" : "Captured Carbon Reuse",
+        isAr ? "تطبيقات صناعية في أرامكو وسابك" : "Industrial Applications in Aramco & SABIC",
+        isAr ? "قياس وتوثيق الانبعاثات المخفضة" : "Measure & Document Reduced Emissions"
+      ]
+    },
+    {
+      id: "smart-grid",
+      title: "Smart Grids for Renewable Energy",
+      description: "Design smart grids integrating multiple renewable energy sources with efficient storage and distribution.",
+      category: "Infrastructure",
+      difficulty: "Advanced",
+      reward: "800,000 SAR",
+      deadline: "15 Months",
+      icon: <Target className="w-8 h-8" />,
+      tags: [isAr ? "شبكات ذكية" : "Smart Grids", isAr ? "توزيع طاقة" : "Energy Distribution", "IoT"],
+      details: [
+        isAr ? "دمج مصادر طاقة متعددة (شمسية، رياح، هيدروجين)" : "Integrate multiple energy sources (solar, wind, hydrogen)",
+        isAr ? "نظام تخزين موزع" : "Distributed Storage System",
+        isAr ? "توزيع ذكي حسب الطلب" : "Smart On-Demand Distribution",
+        isAr ? "مرونة عالية وموثوقية" : "High Flexibility & Reliability",
+        isAr ? "تكامل مع المدن الذكية" : "Smart City Integration"
+      ]
+    }
+  ];
+
   const getDifficultyColor = (difficulty: Challenge["difficulty"]) => {
     switch (difficulty) {
-      case "متقدم":
+      case isAr ? "متقدم" : "Advanced":
         return "bg-red-500/10 text-red-600 border-red-500/20";
-      case "متوسط":
+      case isAr ? "متوسط" : "Intermediate":
         return "bg-yellow-500/10 text-yellow-600 border-yellow-500/20";
-      case "مبتدئ":
+      case isAr ? "مبتدئ" : "Beginner":
         return "bg-green-500/10 text-green-600 border-green-500/20";
     }
   };
@@ -245,17 +245,17 @@ export default function NationalChallenges() {
 
               <div className="space-y-4 mb-6">
                 <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">{isAr ? "الجائزة" : "[الجائزة]"}</span>
+                  <span className="text-slate-600 font-medium">{isAr ? isAr ? "الجائزة" : "Award" : "[Award]"}</span>
                   <span className="text-2xl font-bold text-emerald-600">{challenge.reward}</span>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">{isAr ? "المدة المتوقعة" : "[المدة المتوقعة]"}</span>
+                  <span className="text-slate-600 font-medium">{isAr ? isAr ? "المدة المتوقعة" : "Expected Duration" : "[Expected Duration]"}</span>
                   <span className="text-lg font-semibold text-slate-900">{challenge.deadline}</span>
                 </div>
               </div>
 
               <div className="mb-6">
-                <h4 className="font-semibold text-slate-900 mb-3">{isAr ? "المتطلبات الأساسية:" : "[المتطلبات الأساسية:]"}</h4>
+                <h4 className="font-semibold text-slate-900 mb-3">{isAr ? isAr ? "المتطلبات الأساسية:" : "Prerequisites:" : "[Prerequisites:]"}</h4>
                 <ul className="space-y-2">
                   {challenge.details.map((detail, index) => (
                     <li key={index} className="flex items-start gap-2 text-slate-600">

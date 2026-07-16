@@ -10,30 +10,30 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const translations = {
   ar: {
-    title: "لوحة تحكم الجهات",
-    subtitle: "إحصائيات تفصيلية حول مساهمات الجهات المشاركة",
-    allOrganizations: "جميع الجهات",
-    filterByType: "تصفية حسب النوع",
-    filterByScope: "تصفية حسب النطاق",
-    government: "حكومية",
-    academic: "أكاديمية",
-    private: "قطاع خاص",
-    supporting: "داعمة",
-    local: "محلية",
-    global: "عالمية",
-    totalIdeas: "إجمالي الأفكار",
-    totalProjects: "إجمالي المشاريع",
-    activeOrganizations: "جهات نشطة",
-    avgIdeasPerOrg: "متوسط الأفكار لكل جهة",
-    organizationName: "اسم الجهة",
-    ideasCount: "عدد الأفكار",
-    projectsCount: "عدد المشاريع",
-    type: "النوع",
-    scope: "النطاق",
-    topContributors: "أكثر الجهات مساهمة",
-    distributionByType: "التوزيع حسب النوع",
-    contributionChart: "مخطط المساهمات",
-    backToDashboard: "العودة إلى لوحة التحكم",
+    title: "Entities Dashboard",
+    subtitle: "Detailed statistics on participating entities' contributions",
+    allOrganizations: "All Entities",
+    filterByType: "Filter by Type",
+    filterByScope: "Filter by Scope",
+    government: "Governmental",
+    academic: "Academic",
+    private: "Private Sector",
+    supporting: "Supporting",
+    local: "Local",
+    global: "Global",
+    totalIdeas: "Total Ideas",
+    totalProjects: "Total Projects",
+    activeOrganizations: "Active Entities",
+    avgIdeasPerOrg: "Avg. Ideas per Entity",
+    organizationName: "Entity Name",
+    ideasCount: "Number of Ideas",
+    projectsCount: "Number of Projects",
+    type: "Type",
+    scope: "Scope",
+    topContributors: "Top Contributing Entities",
+    distributionByType: "Distribution by Type",
+    contributionChart: "Contributions Chart",
+    backToDashboard: "Back to Dashboard",
   },
   en: {
     title: "Organizations Dashboard",
@@ -72,6 +72,8 @@ const COLORS = {
 
 export default function OrganizationsDashboard() {
   const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   const t = translations[language as keyof typeof translations] || translations.ar;
 
   const [typeFilter, setTypeFilter] = useState<string>('all');

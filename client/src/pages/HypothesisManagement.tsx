@@ -37,48 +37,48 @@ export default function HypothesisManagement() {
     {
       id: 1,
       innovationId: 1,
-      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Learning Platform",
-      statement: isAr ? "الطلاب مستعدون لدفع 50 ريال شهرياً مقابل محتوى تعليمي مخصص" : "Students are willing to pay 50 SAR monthly for personalized educational content",
-      assumption: isAr ? "الطلاب يقدّرون التخصيص أكثر من السعر المنخفض" : "Students value personalization more than low price",
-      metric: isAr ? "معدل التحويل من تجربة مجانية إلى اشتراك مدفوع" : "Conversion rate from free trial to paid subscription",
-      successCriterion: isAr ? "20% من المستخدمين يشتركون بعد التجربة المجانية" : "20% of users subscribe after the free trial",
-      testMethod: isAr ? "Landing page + تجربة مجانية 7 أيام" : "Landing page + 7-day free trial",
+      innovationTitle: "Smart Learning Platform",
+      statement: "Students willing to pay 50 SAR/month for personalized content",
+      assumption: "Students value personalization over low price",
+      metric: "Free trial to paid subscription conversion rate",
+      successCriterion: "20% of users subscribe after free trial",
+      testMethod: "Landing page + 7-day free trial",
       riskLevel: "high" as const,
       uncertaintyLevel: "high" as const,
       impactIfWrong: "critical" as const,
       ratScore: 9.0,
       status: "testing" as const,
-      testResult: isAr ? "جاري الاختبار - 45% من الهدف حالياً" : "Testing in progress - 45% of target currently",
-      evidence: isAr ? "15 من 100 مستخدم اشتركوا بعد التجربة" : "15 out of 100 users subscribed after the trial",
+      testResult: "Testing in progress - 45% of target achieved",
+      evidence: "15 out of 100 users subscribed after trial",
       createdAt: "2026-01-20",
     },
     {
       id: 2,
       innovationId: 1,
-      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Learning Platform",
-      statement: isAr ? "المعلمون سيستخدمون أدوات AI لإنشاء المحتوى" : "Teachers will use AI tools to create content",
-      assumption: isAr ? "المعلمون يثقون في AI ولديهم المهارات لاستخدامه" : "Teachers trust AI and have the skills to use it",
-      metric: isAr ? "نسبة المعلمين النشطين في استخدام أدوات AI" : "Percentage of active teachers using AI tools",
-      successCriterion: isAr ? "60% من المعلمين يستخدمون الأدوات أسبوعياً" : "60% of teachers use the tools weekly",
-      testMethod: isAr ? "Wizard of Oz - دعم بشري خلف الكواليس" : "Wizard of Oz - human support behind the scenes",
+      innovationTitle: "Smart Learning Platform",
+      statement: "Teachers will use AI tools for content creation",
+      assumption: "Teachers trust AI and have skills to use it",
+      metric: "Active teachers using AI tools (%)",
+      successCriterion: "60% of teachers use tools weekly",
+      testMethod: "Wizard of Oz - Human support behind the scenes",
       riskLevel: "medium" as const,
       uncertaintyLevel: "high" as const,
       impactIfWrong: "major" as const,
       ratScore: 6.5,
       status: "validated" as const,
-      testResult: isAr ? "تم التحقق - 72% من المعلمين استخدموا الأدوات" : "Validated - 72% of teachers used the tools",
-      evidence: isAr ? "مقابلات مع 25 معلم + بيانات استخدام" : "Interviews with 25 teachers + usage data",
+      testResult: "Validated - 72% of teachers used tools",
+      evidence: "Interviews with 25 teachers + usage data",
       createdAt: "2026-01-18",
     },
     {
       id: 3,
       innovationId: 2,
-      innovationTitle: isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System",
-      statement: isAr ? "الشركات الصغيرة ستدفع $200/شهر لنظام إدارة مخزون متقدم" : "Small businesses will pay $200/month for an advanced inventory management system",
-      assumption: isAr ? "الشركات الصغيرة تعاني من مشاكل مخزون تكلفها أكثر من $200/شهر" : "Small businesses suffer from inventory problems costing them more than $200/month",
-      metric: isAr ? "عدد الاشتراكات المدفوعة" : "Number of paid subscriptions",
-      successCriterion: isAr ? "50 شركة تشترك في أول 3 أشهر" : "50 companies subscribe in the first 3 months",
-      testMethod: isAr ? "MVP + حملة إعلانية مستهدفة" : "MVP + targeted advertising campaign",
+      innovationTitle: "Smart Inventory Management System",
+      statement: "SMBs will pay $200/month for advanced inventory system",
+      assumption: "SMBs face inventory issues costing over $200/month",
+      metric: "Number of paid subscriptions",
+      successCriterion: "50 companies subscribe in first 3 months",
+      testMethod: "MVP + targeted ad campaign",
       riskLevel: "high" as const,
       uncertaintyLevel: "medium" as const,
       impactIfWrong: "critical" as const,
@@ -91,45 +91,45 @@ export default function HypothesisManagement() {
     {
       id: 4,
       innovationId: 2,
-      innovationTitle: isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System",
-      statement: isAr ? "التكامل مع أنظمة المحاسبة الحالية ضروري للتبني" : "Integration with existing accounting systems is essential for adoption",
-      assumption: isAr ? "الشركات لن تغير أنظمة المحاسبة الخاصة بها" : "Companies will not change their accounting systems",
-      metric: isAr ? "نسبة العملاء الذين يطلبون التكامل" : "Percentage of customers requesting integration",
-      successCriterion: isAr ? "أكثر من 70% من العملاء المحتملين يطلبون التكامل" : "More than 70% of potential customers request integration",
-      testMethod: isAr ? "استبيان + مقابلات مع 30 شركة" : "Survey + interviews with 30 companies",
+      innovationTitle: "Smart Inventory Management System",
+      statement: "Integration with existing accounting systems is crucial for adoption",
+      assumption: "Companies will not change their accounting systems",
+      metric: "Customers requesting integration (%)",
+      successCriterion: "Over 70% of potential customers request integration",
+      testMethod: "Survey + interviews with 30 companies",
       riskLevel: "medium" as const,
       uncertaintyLevel: "low" as const,
       impactIfWrong: "major" as const,
       ratScore: 4.0,
       status: "invalidated" as const,
-      testResult: isAr ? "تم الدحض - فقط 35% يطلبون التكامل" : "Invalidated - only 35% request integration",
-      evidence: isAr ? "استبيان 50 شركة + 30 مقابلة" : "Survey of 50 companies + 30 interviews",
+      testResult: "Disproved - only 35% request integration",
+      evidence: "Survey 50 companies + 30 interviews",
       createdAt: "2026-01-22",
     },
     {
       id: 5,
       innovationId: 3,
-      innovationTitle: isAr ? "تطبيق الصحة الوقائية" : "Preventive Health App",
-      statement: isAr ? "المستخدمون سيشاركون بياناتهم الصحية مقابل توصيات مخصصة" : "Users will share their health data for personalized recommendations",
-      assumption: isAr ? "الخصوصية ليست عائقاً إذا كانت القيمة واضحة" : "Privacy is not a barrier if the value is clear",
-      metric: isAr ? "نسبة المستخدمين الذين يكملون ملفهم الصحي" : "Percentage of users who complete their health profile",
-      successCriterion: isAr ? "80% من المستخدمين يكملون الملف الصحي" : "80% of users complete their health profile",
-      testMethod: isAr ? "Concierge - توصيات يدوية لأول 100 مستخدم" : "Concierge - manual recommendations for the first 100 users",
+      innovationTitle: "Preventive Health App",
+      statement: "Users will share health data for personalized recommendations",
+      assumption: "Privacy isn't a barrier if value is clear",
+      metric: "Users completing health profile",
+      successCriterion: "80% of users complete health profile",
+      testMethod: "Concierge - Manual recommendations for first 100 users",
       riskLevel: "high" as const,
       uncertaintyLevel: "high" as const,
       impactIfWrong: "critical" as const,
       ratScore: 9.0,
       status: "testing" as const,
-      testResult: isAr ? "جاري الاختبار - 65% أكملوا الملف" : "Testing in progress - 65% completed the profile",
-      evidence: isAr ? "65 من 100 مستخدم أكملوا الملف الصحي" : "65 out of 100 users completed the health profile",
+      testResult: "Testing - 65% completed profile",
+      evidence: "65 of 100 users completed health profile",
       createdAt: "2026-01-23",
     },
   ];
 
   const innovations = [
-    { id: 1, title: isAr ? "منصة التعليم الذكية" : "Smart Learning Platform" },
-    { id: 2, title: isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System" },
-    { id: 3, title: isAr ? "تطبيق الصحة الوقائية" : "Preventive Health App" },
+    { id: 1, title: "Smart Learning Platform" },
+    { id: 2, title: "Smart Inventory Management System" },
+    { id: 3, title: "Preventive Health App" },
   ];
 
   const filteredHypotheses =
@@ -166,7 +166,7 @@ export default function HypothesisManagement() {
 
   const handleCreateHypothesis = () => {
     if (!formData.statement || !formData.assumption || !formData.innovationId) {
-      toast.error(isAr ? "الرجاء ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
+      toast.error(isAr ? "الرجاء ملء جميع الحقول المطلوبة" : "Please fill all required fields");
       return;
     }
 
@@ -224,9 +224,9 @@ export default function HypothesisManagement() {
       case "validated":
         return isAr ? "تم التحقق ✅" : "Validated ✅";
       case "invalidated":
-        return isAr ? "تم الدحض ❌" : "Invalidated ❌";
+        return isAr ? "تم الدحض ❌" : "Debunked ❌";
       case "testing":
-        return isAr ? "قيد الاختبار 🔄" : "Testing 🔄";
+        return isAr ? "قيد الاختبار 🔄" : "In Testing 🔄";
       case "pending":
         return isAr ? "معلق ⏸️" : "Pending ⏸️";
       default:
@@ -256,10 +256,10 @@ export default function HypothesisManagement() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              {isAr ? "إدارة الفرضيات واختبارات RAT" : "Hypothesis Management & RAT Testing"}
+              {isAr ? "إدارة الفرضيات واختبارات RAT" : "Manage Hypotheses & RATs"}
             </h1>
             <p className="text-gray-600 mt-2">
-              {isAr ? "صياغة واختبار الفرضيات الحرجة لتقليل المخاطر وتسريع التعلم" : "Formulate and test critical hypotheses to reduce risk and accelerate learning"}
+              {isAr ? "صياغة واختبار الفرضيات الحرجة لتقليل المخاطر وتسريع التعلم" : "Formulate & test critical hypotheses to reduce risk and accelerate learning"}
             </p>
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
@@ -273,12 +273,12 @@ export default function HypothesisManagement() {
               <DialogHeader>
                 <DialogTitle>{isAr ? "إنشاء فرضية جديدة" : "Create New Hypothesis"}</DialogTitle>
                 <DialogDescription>
-                  {isAr ? "حدد الافتراض الذي تريد اختباره وكيف ستقيس نجاحه" : "Define the assumption you want to test and how you will measure its success"}
+                  {isAr ? "حدد الافتراض الذي تريد اختباره وكيف ستقيس نجاحه" : "Define the assumption you want to test and how you'll measure its success"}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="innovationId">{isAr ? "الابتكار المرتبط *" : "Associated Innovation *"}</Label>
+                  <Label htmlFor="innovationId">{isAr ? "الابتكار المرتبط *" : "Related Innovation *"}</Label>
                   <Select
                     value={formData.innovationId}
                     onValueChange={(value) => setFormData({ ...formData, innovationId: value })}
@@ -330,10 +330,10 @@ export default function HypothesisManagement() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="successCriterion">{isAr ? "معيار النجاح" : "Success Criterion"}</Label>
+                    <Label htmlFor="successCriterion">{isAr ? "معيار النجاح" : "Success Criteria"}</Label>
                     <Input
                       id="successCriterion"
-                      placeholder={isAr ? "مثال: 20% معدل تحويل" : "Example: 20% conversion rate"}
+                      placeholder={isAr ? "مثال: 20% معدل تحويل" : "Example: 20% Conversion Rate"}
                       value={formData.successCriterion}
                       onChange={(e) => setFormData({ ...formData, successCriterion: e.target.value })}
                     />
@@ -341,7 +341,7 @@ export default function HypothesisManagement() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="testMethod">{isAr ? "طريقة الاختبار" : "Test Method"}</Label>
+                  <Label htmlFor="testMethod">{isAr ? "طريقة الاختبار" : "Testing Method"}</Label>
                   <Textarea
                     id="testMethod"
                     placeholder={isAr ? "كيف ستختبر هذه الفرضية؟" : "How will you test this hypothesis?"}
@@ -409,7 +409,7 @@ export default function HypothesisManagement() {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="critical">{isAr ? "حرج" : "Critical"}</SelectItem>
-                          <SelectItem value="major">{isAr ? "كبير" : "Major"}</SelectItem>
+                          <SelectItem value="major">{isAr ? "كبير" : "Significant"}</SelectItem>
                           <SelectItem value="minor">{isAr ? "صغير" : "Minor"}</SelectItem>
                         </SelectContent>
                       </Select>
@@ -434,7 +434,7 @@ export default function HypothesisManagement() {
                         formData.uncertaintyLevel,
                         formData.impactIfWrong
                       ) >= 7
-                        ? (isAr ? "⚠️ خطر عالي جداً - يجب اختبار هذه الفرضية فوراً" : "⚠️ Very High Risk - This hypothesis should be tested immediately")
+                        ? (isAr ? "⚠️ خطر عالي جداً - يجب اختبار هذه الفرضية فوراً" : "⚠️ Very High Risk - Test this hypothesis immediately")
                         : calculateRATScore(
                             formData.riskLevel,
                             formData.uncertaintyLevel,
@@ -478,7 +478,7 @@ export default function HypothesisManagement() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "قيد الاختبار" : "Testing"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "قيد الاختبار" : "In Testing"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-blue-600">{stats.testing}</div>
@@ -496,7 +496,7 @@ export default function HypothesisManagement() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "تم الدحض" : "Invalidated"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "تم الدحض" : "Debunked"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-red-600">{stats.invalidated}</div>
@@ -505,7 +505,7 @@ export default function HypothesisManagement() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "متوسط RAT" : "Avg RAT Score"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "متوسط RAT" : "Average RAT"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-orange-600">{stats.avgRATScore}</div>
@@ -591,7 +591,7 @@ export default function HypothesisManagement() {
                         <div className="text-sm text-gray-600">{hypothesis.metric}</div>
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-700 mb-1">{isAr ? "معيار النجاح" : "Success Criterion"}</div>
+                        <div className="text-sm font-medium text-gray-700 mb-1">{isAr ? "معيار النجاح" : "Success Criteria"}</div>
                         <div className="text-sm text-gray-600">{hypothesis.successCriterion}</div>
                       </div>
                     </div>
@@ -599,7 +599,7 @@ export default function HypothesisManagement() {
                     <div>
                       <div className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
                         <Beaker className="h-4 w-4" />
-                        {isAr ? "طريقة الاختبار" : "Test Method"}
+                        {isAr ? "طريقة الاختبار" : "Testing Method"}
                       </div>
                       <div className="text-sm text-gray-600">{hypothesis.testMethod}</div>
                     </div>
@@ -624,13 +624,13 @@ export default function HypothesisManagement() {
                         {hypothesis.status === "pending" && (
                           <Button size="sm" variant="outline">
                             <Beaker className="h-4 w-4 ml-1" />
-                            {isAr ? "بدء الاختبار" : "Start Testing"}
+                            {isAr ? "بدء الاختبار" : "Start Test"}
                           </Button>
                         )}
                         {hypothesis.status === "testing" && (
                           <Button size="sm" variant="outline">
                             <TrendingUp className="h-4 w-4 ml-1" />
-                            {isAr ? "تحديث النتائج" : "Update Results"}
+                            {isAr ? "تحديث النتائج" : "Refresh Results"}
                           </Button>
                         )}
                         <Button size="sm" variant="outline">
@@ -648,8 +648,8 @@ export default function HypothesisManagement() {
           <Card>
             <CardContent className="py-12 text-center">
               <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "لا توجد فرضيات" : "No Hypotheses Found"}</h3>
-              <p className="text-gray-500 mb-4">{isAr ? "ابدأ بإنشاء فرضيات لاختبار افتراضاتك الحرجة" : "Start by creating hypotheses to test your critical assumptions"}</p>
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "لا توجد فرضيات" : "No Hypotheses"}</h3>
+              <p className="text-gray-500 mb-4">{isAr ? "ابدأ بإنشاء فرضيات لاختبار افتراضاتك الحرجة" : "Start by creating hypotheses to test your critical assumptions."}</p>
               <Button onClick={() => setIsCreateDialogOpen(true)}>
                 <Plus className="h-4 w-4 ml-2" />
                 {isAr ? "إنشاء فرضية جديدة" : "Create New Hypothesis"}

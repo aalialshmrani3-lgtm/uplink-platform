@@ -23,7 +23,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      toast.error("يرجى ملء جميع الحقول المطلوبة");
+      toast.error(isAr ? "يرجى ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
       return;
     }
     setLoading(true);
@@ -31,51 +31,51 @@ export default function Contact() {
     await new Promise((r) => setTimeout(r, 1200));
     setLoading(false);
     setSubmitted(true);
-    toast.success("تم إرسال رسالتك بنجاح! سنرد عليك خلال 24 ساعة.");
+    toast.success(isAr ? "تم إرسال رسالتك بنجاح! سنرد عليك خلال 24 ساعة." : "Your message has been sent successfully! We will respond within 24 hours.");
   };
 
   const contactInfo = [
     {
       icon: Mail,
-      title: "البريد الإلكتروني",
+      title: "Email",
       value: "hello@naqla.sa",
-      sub: "للاستفسارات العامة",
+      sub: "For general inquiries",
       color: "text-cyan-400",
       bg: "bg-cyan-500/10",
     },
     {
       icon: Phone,
-      title: "الهاتف",
+      title: "Phone",
       value: "+966 11 XXX XXXX",
-      sub: "الأحد - الخميس، 9ص - 5م",
+      sub: "Sunday - Thursday, 9 AM - 5 PM",
       color: "text-blue-400",
       bg: "bg-blue-500/10",
     },
     {
       icon: MapPin,
-      title: "الموقع",
-      value: "الرياض، المملكة العربية السعودية",
-      sub: "حي العليا، برج الابتكار",
+      title: "Location",
+      value: "Riyadh, Saudi Arabia",
+      sub: "Olaya District, Innovation Tower",
       color: "text-violet-400",
       bg: "bg-violet-500/10",
     },
     {
       icon: Clock,
-      title: "وقت الاستجابة",
-      value: "خلال 24 ساعة",
-      sub: "أيام العمل الرسمية",
+      title: "Response Time",
+      value: "Within 24 hours",
+      sub: "Business Days",
       color: "text-emerald-400",
       bg: "bg-emerald-500/10",
     },
   ];
 
   const inquiryTypes = [
-    { value: "general", label: "استفسار عام" },
-    { value: "technical", label: "دعم تقني" },
-    { value: "partnership", label: "شراكة استراتيجية" },
-    { value: "investment", label: "استثمار وتمويل" },
-    { value: "media", label: "إعلام وصحافة" },
-    { value: "legal", label: "استفسار قانوني" },
+    { value: "general", label: "General Inquiry" },
+    { value: "technical", label: "Technical Support" },
+    { value: "partnership", label: "Strategic Partnership" },
+    { value: "investment", label: "Investment & Funding" },
+    { value: "media", label: "Media & Press" },
+    { value: "legal", label: "Legal Inquiry" },
   ];
 
   return (
@@ -86,11 +86,11 @@ export default function Contact() {
           <Link href="/">
             <div className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
               <ArrowRight className="w-4 h-4" />
-              <span className="text-sm">{isAr ? "العودة للرئيسية" : "[العودة للرئيسية]"}</span>
+              <span className="text-sm">{isAr ? isAr ? "العودة للرئيسية" : "Back to Home" : "[Back to Home]"}</span>
             </div>
           </Link>
           <span className="text-border/50">|</span>
-          <span className="text-sm font-medium">{isAr ? "اتصل بنا" : "[اتصل بنا]"}</span>
+          <span className="text-sm font-medium">{isAr ? isAr ? "اتصل بنا" : "Contact Us" : "[Contact Us]"}</span>
         </div>
       </div>
 
@@ -100,7 +100,7 @@ export default function Contact() {
           <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <MessageSquare className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? "اتصل بنا" : "[اتصل بنا]"}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? isAr ? "اتصل بنا" : "Contact Us" : "[Contact Us]"}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             فريقنا جاهز للإجابة على استفساراتك ومساعدتك في رحلة الابتكار. تواصل معنا بأي طريقة تناسبك.
           </p>
@@ -129,7 +129,7 @@ export default function Contact() {
           {/* Contact Form */}
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
-              <h2 className="text-2xl font-bold mb-3">{isAr ? "أرسل لنا رسالة" : "[أرسل لنا رسالة]"}</h2>
+              <h2 className="text-2xl font-bold mb-3">{isAr ? isAr ? "أرسل لنا رسالة" : "Send us a message" : "[Send us a message]"}</h2>
               <p className="text-muted-foreground mb-8">
                 سنرد على رسالتك خلال يوم عمل واحد. يمكنك أيضاً التواصل معنا عبر البريد الإلكتروني مباشرةً.
               </p>
@@ -139,7 +139,7 @@ export default function Contact() {
                   <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mb-4">
                     <CheckCircle className="w-8 h-8 text-emerald-400" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{isAr ? "تم الإرسال بنجاح!" : "تم الSubmit بنجاح!"}</h3>
+                  <h3 className="text-xl font-bold mb-2">{isAr ? isAr ? "تم الإرسال بنجاح!" : "Sent Successfully!" : "Submitted Successfully!"}</h3>
                   <p className="text-muted-foreground mb-6">
                     شكراً لتواصلك معنا. سنرد عليك خلال 24 ساعة على بريدك الإلكتروني.
                   </p>
@@ -154,7 +154,7 @@ export default function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Inquiry Type */}
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{isAr ? "نوع الاستفسار" : "نوع اNoستفسار"}</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "نوع الاستفسار" : "Inquiry Type" : "Inquiry Type"}</label>
                     <div className="grid grid-cols-2 gap-2">
                       {inquiryTypes.map((type) => (
                         <button
@@ -175,9 +175,9 @@ export default function Contact() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium mb-2 block">{isAr ? "الاسم *" : "اNoسم *"}</label>
+                      <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "الاسم *" : "Name *" : "Name *"}</label>
                       <Input
-                        placeholder="اسمك الكامل"
+                        placeholder={isAr ? "اسمك الكامل" : "Full Name"}
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         className="bg-card/30"
@@ -198,9 +198,9 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{isAr ? "الموضوع" : "الTheme"}</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "الموضوع" : "Subject" : "Theme"}</label>
                     <Input
-                      placeholder="موضوع رسالتك"
+                      placeholder={isAr ? "موضوع رسالتك" : "Your Message Subject"}
                       value={form.subject}
                       onChange={(e) => setForm({ ...form, subject: e.target.value })}
                       className="bg-card/30"
@@ -208,9 +208,9 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{isAr ? "الرسالة *" : "[الرسالة *]"}</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "الرسالة *" : "Message *" : "Message *"}</label>
                     <textarea
-                      placeholder="اكتب رسالتك هنا..."
+                      placeholder={isAr ? "اكتب رسالتك هنا..." : "Type your message here..."}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       rows={5}
@@ -242,17 +242,17 @@ export default function Contact() {
 
             {/* FAQ Quick Links */}
             <div>
-              <h2 className="text-2xl font-bold mb-3">{isAr ? "أسئلة شائعة" : "[أسئلة شائعة]"}</h2>
+              <h2 className="text-2xl font-bold mb-3">{isAr ? isAr ? "أسئلة شائعة" : "FAQ" : "FAQ"}</h2>
               <p className="text-muted-foreground mb-8">
                 قد تجد إجابتك في هذه الأسئلة الشائعة قبل التواصل معنا.
               </p>
               <div className="space-y-4">
                 {[
-                  { q: "كيف أسجل في منصة نقلة؟", a: "يمكنك التسجيل عبر صفحة التسجيل واختيار نوع حسابك المناسب." },
-                  { q: "هل التسجيل مجاني؟", a: "نعم، التسجيل الأساسي مجاني. توجد خطط متقدمة للمؤسسات والشركات." },
-                  { q: "كيف أحمي ملكيتي الفكرية؟", a: "توفر المنصة أدوات توثيق وتسجيل الملكية الفكرية وفق المعايير الدولية." },
-                  { q: "هل يمكن للمستثمرين الدوليين الانضمام؟", a: "نعم، المنصة مفتوحة للتسجيل الدولي وتدعم عدة لغات وعملات." },
-                  { q: "كيف أتواصل مع الجهات الحكومية؟", a: "بعد التسجيل، يمكنك تقديم مقترحاتك عبر بوابة التحديات الوطنية." },
+                  { q: "How do I register on Naqla platform?", a: "You can register via the registration page and choose your suitable account type." },
+                  { q: "Is registration free?", a: "Yes, basic registration is free. Advanced plans are available for institutions and companies." },
+                  { q: "How do I protect my intellectual property?", a: "The platform provides tools for documenting and registering intellectual property according to international standards." },
+                  { q: "Can international investors join?", a: "Yes, the platform is open for international registration and supports multiple languages and currencies." },
+                  { q: "How do I communicate with government entities?", a: "After registration, you can submit your proposals through the National Challenges portal." },
                 ].map((faq, i) => (
                   <div key={i} className="border border-border/50 rounded-xl p-4 bg-card/20">
                     <div className="font-medium text-sm mb-2">{faq.q}</div>

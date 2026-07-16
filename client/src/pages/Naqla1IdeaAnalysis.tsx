@@ -83,7 +83,7 @@ export default function Naqla1IdeaAnalysis() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <AlertTriangle className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
-          <p className="text-lg text-muted-foreground">{isAr ? "لم يتم العثور على تحليل للفكرة" : "No analysis found for the idea"}</p>
+          <p className="text-lg text-muted-foreground">{isAr ? "لم يتم العثور على تحليل للفكرة" : "No analysis found for idea"}</p>
           <Link href="/naqla1">
             <Button className="mt-4">{isAr ? "العودة إلى NAQLA 1" : "Back to NAQLA 1"}</Button>
           </Link>
@@ -157,7 +157,7 @@ export default function Naqla1IdeaAnalysis() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-2xl">{isAr ? "التقييم الشامل" : "Overall Assessment"}</CardTitle>
-                  <CardDescription>{isAr ? "تقييم شامل للفكرة بناءً على 10 معايير" : "Comprehensive assessment of the idea based on 10 criteria"}</CardDescription>
+                  <CardDescription>{isAr ? "تقييم شامل للفكرة بناءً على 10 معايير" : "Comprehensive idea assessment based on 10 criteria"}</CardDescription>
                 </div>
                 <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center`}>
                   <Zap className="w-12 h-12 text-white" />
@@ -180,7 +180,7 @@ export default function Naqla1IdeaAnalysis() {
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-2">
                 <Target className="w-6 h-6 text-cyan-400" />
-                {isAr ? "مستوى النضج التقني" : "Technology Readiness Level"}
+                {isAr ? "مستوى النضج التقني" : "Technical Maturity Level"}
               </CardTitle>
               <CardDescription>Technology Readiness Level & Stage Gate</CardDescription>
             </CardHeader>
@@ -364,7 +364,7 @@ export default function Naqla1IdeaAnalysis() {
                       <div>
                         <h3 className="font-semibold text-foreground mb-2">{isAr ? "الفكرة تحتاج إلى تطوير" : "Idea needs development"}</h3>
                         <p className="text-sm text-muted-foreground mb-3">
-                          {isAr ? "نقدر جهدك في تقديم هذه الفكرة، لكنها تحتاج إلى مزيد من التطوير قبل الانتقال للمراحل التالية." : "We appreciate your effort in submitting this idea, but it requires further development before moving to the next stages."}
+                          {isAr ? "نقدر جهدك في تقديم هذه الفكرة، لكنها تحتاج إلى مزيد من التطوير قبل الانتقال للمراحل التالية." : "We appreciate your effort in submitting this idea, but it requires further development before proceeding to the next stages."}
                         </p>
                         <div className="space-y-2">
                           <p className="text-sm font-semibold text-foreground">{isAr ? "التوصيات والتوجيهات:" : "Recommendations and Guidance:"}</p>
@@ -383,7 +383,7 @@ export default function Naqla1IdeaAnalysis() {
                   <Link href="/naqla1/submit">
                     <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white">
                       <Lightbulb className="w-4 h-4 ml-2" />
-                      {isAr ? "إعادة تقديم الفكرة بعد التحسين" : "Resubmit Idea After Improvement"}
+                      {isAr ? "إعادة تقديم الفكرة بعد التحسين" : "Resubmit idea after improvement"}
                     </Button>
                   </Link>
                 </div>
@@ -400,7 +400,7 @@ export default function Naqla1IdeaAnalysis() {
                           {isAr ? "مبروك! فكرتك تناسب أن تكون حل تجاري" : "Congratulations! Your idea is suitable as a commercial solution"}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          {isAr ? "فكرتك حصلت على تقييم 50-70%. هل ترغب في الذهاب إلى:" : "Your idea received a 50-70% rating. Would you like to proceed to:"}
+                          {isAr ? "فكرتك حصلت على تقييم 50-70%. هل ترغب في الذهاب إلى:" : "Your idea scored 50-70%. Would you like to go to:"}
                         </p>
                       </div>
                     </div>
@@ -421,7 +421,7 @@ export default function Naqla1IdeaAnalysis() {
                         <span className="font-semibold">NAQLA 2</span>
                       </div>
                       <span className="text-xs text-white/80 text-right">
-                        {isAr ? "مطابقة مع التحديات والفعاليات" : "Match with challenges and events"}
+                        {isAr ? "مطابقة مع التحديات والفعاليات" : "Match with Challenges & Events"}
                       </span>
                     </Button>
 
@@ -439,7 +439,7 @@ export default function Naqla1IdeaAnalysis() {
                         <span className="font-semibold">NAQLA 3</span>
                       </div>
                       <span className="text-xs text-white/80 text-right">
-                        {isAr ? "الذهاب مباشرة إلى سوق الابتكارات" : "Go directly to the innovation market"}
+                        {isAr ? "الذهاب مباشرة إلى سوق الابتكارات" : "Go to Innovation Marketplace"}
                       </span>
                     </Button>
                   </div>
@@ -454,10 +454,10 @@ export default function Naqla1IdeaAnalysis() {
                       <CheckCircle2 className="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="font-semibold text-foreground mb-2">
-                          {isAr ? "مبروك! فكرتك تناسب أن تكون ابتكار" : "Congratulations! Your idea is suitable as an innovation"}
+                          {isAr ? "مبروك! فكرتك تناسب أن تكون ابتكار" : "Congratulations! Your idea qualifies as an innovation."}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          {isAr ? "فكرتك حصلت على تقييم أعلى من 70%. هل ترغب في الذهاب إلى:" : "Your idea received a rating higher than 70%. Would you like to proceed to:"}
+                          {isAr ? "فكرتك حصلت على تقييم أعلى من 70%. هل ترغب في الذهاب إلى:" : "Your idea scored over 70%. Would you like to proceed to:"}
                         </p>
                       </div>
                     </div>
@@ -478,7 +478,7 @@ export default function Naqla1IdeaAnalysis() {
                         <span className="font-semibold">NAQLA 2</span>
                       </div>
                       <span className="text-xs text-white/80 text-right">
-                        {isAr ? "مطابقة مع التحديات والفعاليات" : "Match with challenges and events"}
+                        {isAr ? "مطابقة مع التحديات والفعاليات" : "Match with Challenges & Events"}
                       </span>
                     </Button>
 
@@ -496,7 +496,7 @@ export default function Naqla1IdeaAnalysis() {
                         <span className="font-semibold">NAQLA 3</span>
                       </div>
                       <span className="text-xs text-white/80 text-right">
-                        {isAr ? "الذهاب مباشرة إلى سوق الابتكارات" : "Go directly to the innovation market"}
+                        {isAr ? "الذهاب مباشرة إلى سوق الابتكارات" : "Go to Innovation Marketplace"}
                       </span>
                     </Button>
                   </div>
@@ -526,7 +526,7 @@ export default function Naqla1IdeaAnalysis() {
                           ) : (
                             isAr ? (
                               <>
-                                سيتم إنشاء <strong>{isAr ? "أصل جديد" : "أصل New"}</strong> في NAQLA 3 بناءً على هذه الفكرة.
+                                سيتم إنشاء <strong>{isAr ? isAr ? "أصل جديد" : "New Asset" : "New Asset"}</strong> في NAQLA 3 بناءً على هذه الفكرة.
                                 <br />
                                 سيتم عرض الأصل مباشرة في سوق الابتكارات للمستثمرين والشركاء.
                               </>
@@ -551,7 +551,7 @@ export default function Naqla1IdeaAnalysis() {
                         </Label>
                         <Textarea
                           id="userNotes"
-                          placeholder={isAr ? "اكتب سبب اختيارك لهذا المسار أو أي ملاحظات إضافية..." : "Write your reason for choosing this path or any additional notes..."}
+                          placeholder={isAr ? "اكتب سبب اختيارك لهذا المسار أو أي ملاحظات إضافية..." : "Enter reason for choosing this path or any additional notes..."}
                           value={userNotes}
                           onChange={(e) => setUserNotes(e.target.value)}
                           className="min-h-[100px] text-right"
@@ -564,7 +564,7 @@ export default function Naqla1IdeaAnalysis() {
                           {isPromoting ? (
                             <>
                               <Loader2 className="w-4 h-4 ml-2 animate-spin" />
-                              {isAr ? "جاري الانتقال..." : "Proceeding..."}
+                              {isAr ? "جاري الانتقال..." : "Redirecting..."}
                             </>
                           ) : (
                             isAr ? 'نعم، انتقل الآن' : 'Yes, proceed now'

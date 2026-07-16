@@ -19,7 +19,7 @@ export default function ForgotPassword() {
     e.preventDefault();
     
     if (!email) {
-      toast.error("يرجى إدخال البريد الإلكتروني");
+      toast.error(isAr ? "يرجى إدخال البريد الإلكتروني" : "Please enter your email");
       return;
     }
     
@@ -31,10 +31,10 @@ export default function ForgotPassword() {
       // Send reset link via SendGrid or AWS SES
       
       setResetSent(true);
-      toast.success("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني");
+      toast.success(isAr ? "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني" : "Password reset link sent to your email");
       
     } catch (error) {
-      toast.error("حدث خطأ. يرجى المحاولة مرة أخرى.");
+      toast.error(isAr ? "حدث خطأ. يرجى المحاولة مرة أخرى." : "An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -45,7 +45,7 @@ export default function ForgotPassword() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle className="text-2xl">{isAr ? "تم إرسال الرابط" : "تم Submit الرابط"}</CardTitle>
+            <CardTitle className="text-2xl">{isAr ? isAr ? "تم إرسال الرابط" : "Link sent" : "Link submitted"}</CardTitle>
             <CardDescription>
               تحقق من بريدك الإلكتروني
             </CardDescription>
@@ -76,7 +76,7 @@ export default function ForgotPassword() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">{isAr ? "استعادة كلمة المرور" : "استعادة Password"}</CardTitle>
+          <CardTitle className="text-2xl">{isAr ? isAr ? "استعادة كلمة المرور" : "Recover Password" : "Recover Password"}</CardTitle>
           <CardDescription>
             أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور
           </CardDescription>
@@ -103,7 +103,7 @@ export default function ForgotPassword() {
               className="w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "جارٍ الإرسال..." : "إرسال رابط إعادة التعيين"}
+              {isSubmitting ? isAr ? "جارٍ الإرسال..." : "Sending..." : "Send Reset Link"}
             </Button>
 
             <div className="text-center text-sm">

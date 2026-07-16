@@ -14,19 +14,19 @@ export default function Elite() {
   const eliteInnovators = [
     {
       id: 1,
-      name: "د. أحمد الشمري",
-      title: "مؤسس TechVision AI",
+      name: "Dr. Ahmed Al-Shammari",
+      title: "Founder, TechVision AI",
       avatar: null,
       tier: "platinum",
       score: 98,
       projects: 12,
       patents: 5,
       funding: "15M",
-      achievements: ["أفضل مبتكر 2024", "براءة اختراع دولية"],
+      achievements: [isAr ? "أفضل مبتكر 2024" : "Top Innovator 2024", isAr ? "براءة اختراع دولية" : "International Patent"],
     },
     {
       id: 2,
-      name: "م. سارة العتيبي",
+      name: "Eng. Sara Al-Otaibi",
       title: "CEO - GreenEnergy Solutions",
       avatar: null,
       tier: "gold",
@@ -34,31 +34,31 @@ export default function Elite() {
       projects: 8,
       patents: 3,
       funding: "8M",
-      achievements: ["جائزة الطاقة المتجددة", "تصدير دولي"],
+      achievements: [isAr ? "جائزة الطاقة المتجددة" : "Renewable Energy Award", isAr ? "تصدير دولي" : "International Export"],
     },
     {
       id: 3,
-      name: "أ. خالد القحطاني",
-      title: "مؤسس FinTech Arabia",
+      name: "Mr. Khalid Al-Qahtani",
+      title: "Founder, FinTech Arabia",
       avatar: null,
       tier: "gold",
       score: 91,
       projects: 6,
       patents: 2,
       funding: "12M",
-      achievements: ["أفضل شركة ناشئة", "شراكة بنكية"],
+      achievements: [isAr ? "أفضل شركة ناشئة" : "Best Startup", isAr ? "شراكة بنكية" : "Banking Partnership"],
     },
     {
       id: 4,
-      name: "د. نورة الدوسري",
-      title: "رئيسة HealthAI Labs",
+      name: "Dr. Noura Al-Dossary",
+      title: "Head, HealthAI Labs",
       avatar: null,
       tier: "silver",
       score: 87,
       projects: 5,
       patents: 4,
       funding: "6M",
-      achievements: ["براءة اختراع طبية", "شراكة مع وزارة الصحة"],
+      achievements: [isAr ? "براءة اختراع طبية" : "Medical Patent", isAr ? "شراكة مع وزارة الصحة" : "Partnership with Ministry of Health"],
     },
   ];
 
@@ -73,9 +73,9 @@ export default function Elite() {
 
   const getTierText = (tier: string) => {
     switch (tier) {
-      case "platinum": return "بلاتيني";
-      case "gold": return "ذهبي";
-      case "silver": return "فضي";
+      case "platinum": return isAr ? "بلاتيني" : "Platinum";
+      case "gold": return isAr ? "ذهبي" : "Gold";
+      case "silver": return isAr ? "فضي" : "Silver";
       default: return tier;
     }
   };
@@ -108,7 +108,7 @@ export default function Elite() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-full mb-4">
             <Crown className="w-4 h-4 text-amber-400" />
-            <span className="text-amber-400 text-sm">{isAr ? "نخبة المبتكرين" : "نخبة الInnovatorين"}</span>
+            <span className="text-amber-400 text-sm">{isAr ? isAr ? "نخبة المبتكرين" : "Innovator Elite" : "Innovator Elite"}</span>
           </div>
           <h1 className="text-4xl font-bold text-white mb-4">NAQLA Elite</h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
@@ -121,20 +121,20 @@ export default function Elite() {
           {[
             {
               tier: "platinum",
-              title: "البلاتيني",
-              benefits: ["أولوية في التمويل", "دعم مخصص 24/7", "شبكة حصرية", "تمثيل دولي"],
+              title: "Platinum",
+              benefits: [isAr ? "أولوية في التمويل" : "Funding Priority", isAr ? "دعم مخصص 24/7" : "24/7 Dedicated Support", isAr ? "شبكة حصرية" : "Exclusive Network", isAr ? "تمثيل دولي" : "International Representation"],
               icon: Crown,
             },
             {
               tier: "gold",
-              title: "الذهبي",
-              benefits: ["وصول مبكر للفرص", "إرشاد متقدم", "فعاليات VIP", "تسويق مجاني"],
+              title: "Gold",
+              benefits: [isAr ? "وصول مبكر للفرص" : "Early Access to Opportunities", isAr ? "إرشاد متقدم" : "Advanced Mentorship", isAr ? "فعاليات VIP" : "VIP Events", isAr ? "تسويق مجاني" : "Free Marketing"],
               icon: Trophy,
             },
             {
               tier: "silver",
-              title: "الفضي",
-              benefits: ["تقييم سريع", "دورات مجانية", "شبكة مبتكرين", "دعم فني"],
+              title: "Silver",
+              benefits: [isAr ? "تقييم سريع" : "Quick Rate", isAr ? "دورات مجانية" : "Free Courses", isAr ? "شبكة مبتكرين" : "Innovator Network", isAr ? "دعم فني" : "Tech Support"],
               icon: Award,
             },
           ].map((item, i) => (
@@ -159,7 +159,7 @@ export default function Elite() {
         </div>
 
         {/* Elite Innovators */}
-        <h2 className="text-2xl font-bold text-white mb-6">{isAr ? "قادة الابتكار" : "قادة اNoبتكار"}</h2>
+        <h2 className="text-2xl font-bold text-white mb-6">{isAr ? isAr ? "قادة الابتكار" : "Innovation Leaders" : "Innovation Leaders"}</h2>
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {eliteInnovators.map((innovator) => (
             <Card key={innovator.id} className="bg-slate-800/50 border-slate-700 hover:border-amber-600/50 transition-all">
@@ -186,19 +186,19 @@ export default function Elite() {
                     <div className="grid grid-cols-4 gap-4 mb-3">
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.score}</div>
-                        <div className="text-slate-500 text-xs">{isAr ? "النقاط" : "[النقاط]"}</div>
+                        <div className="text-slate-500 text-xs">{isAr ? isAr ? "النقاط" : "Points" : "[Points]"}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.projects}</div>
-                        <div className="text-slate-500 text-xs">{isAr ? "مشروع" : "[مشروع]"}</div>
+                        <div className="text-slate-500 text-xs">{isAr ? isAr ? "مشروع" : "Project" : "[Project]"}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.patents}</div>
-                        <div className="text-slate-500 text-xs">{isAr ? "براءة" : "[براءة]"}</div>
+                        <div className="text-slate-500 text-xs">{isAr ? isAr ? "براءة" : "Patent" : "[Patent]"}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-white">{innovator.funding}</div>
-                        <div className="text-slate-500 text-xs">{isAr ? "تمويل" : "Doneويل"}</div>
+                        <div className="text-slate-500 text-xs">{isAr ? isAr ? "تمويل" : "Funding" : "Funding"}</div>
                       </div>
                     </div>
 
@@ -223,16 +223,16 @@ export default function Elite() {
           <CardContent className="p-8">
             <div className="text-center mb-8">
               <Crown className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white mb-2">{isAr ? "كيف تنضم إلى النخبة؟" : "كيف تنضم إلى Elite؟"}</h2>
-              <p className="text-slate-300">{isAr ? "حقق الإنجازات التالية للترقية في برنامج Elite" : "حقق الإنجازات Nextة للترقية في برنامج Elite"}</p>
+              <h2 className="text-2xl font-bold text-white mb-2">{isAr ? isAr ? "كيف تنضم إلى النخبة؟" : "How to Join Elite?" : "How to Join Elite?"}</h2>
+              <p className="text-slate-300">{isAr ? isAr ? "حقق الإنجازات التالية للترقية في برنامج Elite" : "Achieve the following to upgrade in the Elite program" : "Achieve the following to upgrade in the Elite program"}</p>
             </div>
 
             <div className="grid md:grid-cols-4 gap-6">
               {[
-                { icon: TrendingUp, title: "تقييم عالي", desc: "احصل على 80%+ في تقييم AI" },
-                { icon: Shield, title: "ملكية فكرية", desc: "سجّل براءة اختراع واحدة على الأقل" },
-                { icon: Users, title: "مشاركة فعّالة", desc: "شارك في 3 تحديات أو أكثر" },
-                { icon: Globe, title: "تأثير مجتمعي", desc: "حقق إنجازاً ملموساً في مجالك" },
+                { icon: TrendingUp, title: "High Rating", desc: "Get 80%+ in AI rating" },
+                { icon: Shield, title: "Intellectual Property", desc: "Register at least one patent" },
+                { icon: Users, title: "Active Participation", desc: "Participate in 3+ challenges" },
+                { icon: Globe, title: "Community Impact", desc: "Achieve a tangible impact in your field" },
               ].map((item, i) => (
                 <div key={i} className="text-center">
                   <div className="w-16 h-16 bg-amber-500/20 rounded-2xl flex items-center justify-center mx-auto mb-3">

@@ -30,7 +30,7 @@ export default function Naqla2AdminSubmissions() {
 
   const submitReviewMutation = trpc.naqla2.challenges.submitReview.useMutation({
     onSuccess: () => {
-      toast.success("تم تقديم المراجعة بنجاح!");
+      toast.success(isAr ? "تم تقديم المراجعة بنجاح!" : "Review submitted successfully!");
       setSelectedSubmission(null);
       refetch();
     },
@@ -56,8 +56,8 @@ export default function Naqla2AdminSubmissions() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle className="text-red-500">{isAr ? "غير مصرح" : "[غير مصرح]"}</CardTitle>
-            <CardDescription>{isAr ? "ليس لديك صلاحية الوصول إلى هذه الصفحة" : "ليس لديك صNoحية الوصول إلى هذه الصفحة"}</CardDescription>
+            <CardTitle className="text-red-500">{isAr ? isAr ? "غير مصرح" : "Unauthorized" : "Unauthorized"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "ليس لديك صلاحية الوصول إلى هذه الصفحة" : "You do not have access to this page" : "You do not have access to this page"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -67,7 +67,7 @@ export default function Naqla2AdminSubmissions() {
   if (!challenge) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">{isAr ? "جاري تحميل..." : "جاري Download..."}</p>
+        <p className="text-gray-400">{isAr ? isAr ? "جاري تحميل..." : "Loading..." : "Downloading..."}</p>
       </div>
     );
   }
@@ -83,7 +83,7 @@ export default function Naqla2AdminSubmissions() {
               العودة إلى لوحة التحكم
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-2">{isAr ? "مراجعة الحلول" : "مراجعة الSolutions"}</h1>
+          <h1 className="text-4xl font-bold mb-2">{isAr ? isAr ? "مراجعة الحلول" : "Review Solutions" : "Review Solutions"}</h1>
           <p className="text-gray-400">{challenge.title}</p>
         </div>
 
@@ -112,9 +112,8 @@ export default function Naqla2AdminSubmissions() {
                         "bg-gray-500"
                       }
                     >
-                      {submission.status === "approved" ? "مقبول" : 
-                       submission.status === "rejected" ? "مرفوض" : 
-                       "قيد المراجعة"}
+                      {submission.status === "approved" ? isAr ? "مقبول" : "Accepted" : 
+                       submission.status === "rejected" ? isAr ? "مرفوض" : "Rejected" : "Under Review"}
                     </Badge>
                   </div>
                 </CardHeader>
@@ -122,14 +121,14 @@ export default function Naqla2AdminSubmissions() {
                   <div className="space-y-4">
                     {/* Solution Details */}
                     <div>
-                      <h3 className="font-semibold mb-2">{isAr ? "الحل المقترح:" : "Solution المقترح:"}</h3>
+                      <h3 className="font-semibold mb-2">{isAr ? isAr ? "الحل المقترح:" : "Proposed Solution:" : "Proposed Solution:"}</h3>
                       <p className="text-gray-400 text-sm">{submission.solution}</p>
                     </div>
 
                     {/* Impact */}
                     {submission.expectedImpact && (
                       <div>
-                        <h3 className="font-semibold mb-2">{isAr ? "التأثير المتوقع:" : "الEffect المتوقع:"}</h3>
+                        <h3 className="font-semibold mb-2">{isAr ? isAr ? "التأثير المتوقع:" : "Expected Impact:" : "Expected Impact:"}</h3>
                         <p className="text-gray-400 text-sm">{submission.expectedImpact}</p>
                       </div>
                     )}
@@ -157,10 +156,10 @@ export default function Naqla2AdminSubmissions() {
                     {/* Review Form */}
                     {selectedSubmission === submission.id ? (
                       <div className="mt-6 p-6 bg-gray-900/50 rounded-lg space-y-4">
-                        <h3 className="font-semibold text-lg">{isAr ? "تقديم مراجعة" : "[تقديم مراجعة]"}</h3>
+                        <h3 className="font-semibold text-lg">{isAr ? isAr ? "تقديم مراجعة" : "Submit Review" : "Submit Review"}</h3>
                         
                         <div>
-                          <Label>{isAr ? "الدرجة (من 100)" : "[الدرجة (من 100)]"}</Label>
+                          <Label>{isAr ? isAr ? "الدرجة (من 100)" : "Score (out of 100)" : "Score (out of 100)"}</Label>
                           <Input
                             type="number"
                             min="0"
@@ -176,7 +175,7 @@ export default function Naqla2AdminSubmissions() {
                           <Textarea
                             value={reviewData.feedback}
                             onChange={(e) => setReviewData({ ...reviewData, feedback: e.target.value })}
-                            placeholder="أضف تعليقاتك هنا..."
+                            placeholder={isAr ? "أضف تعليقاتك هنا..." : "Add your comments here..."}
                             className="bg-gray-800 border-gray-700 min-h-[100px]"
                           />
                         </div>
@@ -213,7 +212,7 @@ export default function Naqla2AdminSubmissions() {
 
                         <div className="flex gap-2">
                           <Button onClick={handleSubmitReview} disabled={submitReviewMutation.isPending}>
-                            {submitReviewMutation.isPending ? "جاري الحفظ..." : "حفظ المراجعة"}
+                            {submitReviewMutation.isPending ? isAr ? "جاري الحفظ..." : "Saving..." : "Save Review"}
                           </Button>
                           <Button variant="outline" onClick={() => setSelectedSubmission(null)}>
                             إلغاء
@@ -234,7 +233,7 @@ export default function Naqla2AdminSubmissions() {
             <Card className="bg-gray-800/50 border-gray-700">
               <CardContent className="py-12 text-center">
                 <FileText className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400">{isAr ? "لا توجد حلول مقدمة لهذا التحدي بعد" : "No توجد حلول مقدمة لهذا التحدي بعد"}</p>
+                <p className="text-gray-400">{isAr ? isAr ? "لا توجد حلول مقدمة لهذا التحدي بعد" : "No solutions submitted for this challenge yet" : "No solutions submitted for this challenge yet"}</p>
               </CardContent>
             </Card>
           )}

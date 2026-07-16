@@ -57,7 +57,7 @@ export default function Naqla2HackathonDetail() {
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardContent className="py-12 text-center">
-            <p className="text-slate-400 text-lg">{isAr ? "الهاكاثون غير موجود" : "[الهاكاثون غير موجود]"}</p>
+            <p className="text-slate-400 text-lg">{isAr ? isAr ? "الهاكاثون غير موجود" : "Hackathon not found" : "[Hackathon not found]"}</p>
             <Button onClick={() => navigate('/naqla2/hackathons')} className="mt-4">
               <ArrowLeft className="w-4 h-4 ml-2" />
               العودة
@@ -140,11 +140,11 @@ export default function Naqla2HackathonDetail() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <p className="text-sm text-slate-400">{isAr ? "تاريخ البداية" : "[تاريخ البداية]"}</p>
+                <p className="text-sm text-slate-400">{isAr ? isAr ? "تاريخ البداية" : "Start Date" : "[Start Date]"}</p>
                 <p className="text-white">{new Date(hackathon.startDate).toLocaleString('ar-SA')}</p>
               </div>
               <div>
-                <p className="text-sm text-slate-400">{isAr ? "تاريخ النهاية" : "[تاريخ النهاية]"}</p>
+                <p className="text-sm text-slate-400">{isAr ? isAr ? "تاريخ النهاية" : "End Date" : "[End Date]"}</p>
                 <p className="text-white">{new Date(hackathon.endDate).toLocaleString('ar-SA')}</p>
               </div>
             </CardContent>
@@ -161,7 +161,7 @@ export default function Naqla2HackathonDetail() {
               {hackathon.isVirtual ? (
                 <div className="flex items-center gap-2 text-blue-400">
                   <Globe className="w-5 h-5" />
-                  <span>{isAr ? "هاكاثون افتراضي (عبر الإنترنت)" : "[هاكاثون افتراضي (عبر الإنترنت)]"}</span>
+                  <span>{isAr ? isAr ? "هاكاثون افتراضي (عبر الإنترنت)" : "Virtual Hackathon (Online)" : "[Virtual Hackathon (Online)]"}</span>
                 </div>
               ) : (
                 <p className="text-white">{hackathon.location || 'غير محدد'}</p>
@@ -181,7 +181,7 @@ export default function Naqla2HackathonDetail() {
                 {hackathon.registrationsCount || 0}
                 {hackathon.capacity && ` / ${hackathon.capacity}`}
               </p>
-              <p className="text-sm text-slate-400 mt-1">{isAr ? "مشارك مسجل" : "[مشارك مسجل]"}</p>
+              <p className="text-sm text-slate-400 mt-1">{isAr ? isAr ? "مشارك مسجل" : "Registered Participant" : "[Registered Participant]"}</p>
             </CardContent>
           </Card>
 
@@ -195,7 +195,7 @@ export default function Naqla2HackathonDetail() {
               </CardHeader>
               <CardContent>
                 <p className="text-white text-2xl font-bold">{hackathon.budget} ريال</p>
-                <p className="text-sm text-slate-400 mt-1">{isAr ? "إجمالي الجوائز" : "إجمالي الAwards"}</p>
+                <p className="text-sm text-slate-400 mt-1">{isAr ? isAr ? "إجمالي الجوائز" : "Total Prizes" : "Total Awards"}</p>
               </CardContent>
             </Card>
           )}

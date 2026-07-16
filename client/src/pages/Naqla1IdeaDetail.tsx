@@ -35,7 +35,7 @@ export default function Naqla1IdeaDetail() {
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardContent className="py-12 text-center">
-            <p className="text-slate-400 text-lg">{isAr ? "الفكرة غير موجودة" : "الIdea غير موجودة"}</p>
+            <p className="text-slate-400 text-lg">{isAr ? isAr ? "الفكرة غير موجودة" : "Idea not found" : "Idea not found"}</p>
             <Button onClick={() => navigate('/naqla1/browse')} className="mt-4">
               <ArrowLeft className="w-4 h-4 ml-2" />
               العودة
@@ -128,7 +128,7 @@ export default function Naqla1IdeaDetail() {
           </Card>
           <Card className="bg-purple-950/30 backdrop-blur-xl border-purple-500/30">
             <CardHeader>
-              <CardTitle className="text-purple-400 text-sm">{isAr ? "الجدوى" : "[الجدوى]"}</CardTitle>
+              <CardTitle className="text-purple-400 text-sm">{isAr ? isAr ? "الجدوى" : "Feasibility" : "Feasibility"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-purple-400">
@@ -138,7 +138,7 @@ export default function Naqla1IdeaDetail() {
           </Card>
           <Card className="bg-cyan-950/30 backdrop-blur-xl border-cyan-500/30">
             <CardHeader>
-              <CardTitle className="text-cyan-400 text-sm">{isAr ? "الإجمالي" : "الTotal"}</CardTitle>
+              <CardTitle className="text-cyan-400 text-sm">{isAr ? isAr ? "الإجمالي" : "Total" : "Total"}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-cyan-400">
@@ -153,8 +153,8 @@ export default function Naqla1IdeaDetail() {
           <CardContent className="py-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-white text-lg font-semibold mb-2">{isAr ? "فحص الفكرة بالذكاء الاصطناعي" : "فحص الفكرة بالذكاء اNoصطناعي"}</h3>
-                <p className="text-slate-400">{isAr ? "احصل على تحليل شامل لفكرتك مع توصيات مخصصة" : "[احصل على تحليل شامل لفكرتك مع توصيات مخصصة]"}</p>
+                <h3 className="text-white text-lg font-semibold mb-2">{isAr ? isAr ? "فحص الفكرة بالذكاء الاصطناعي" : "AI Idea Analysis" : "AI Idea Analysis"}</h3>
+                <p className="text-slate-400">{isAr ? isAr ? "احصل على تحليل شامل لفكرتك مع توصيات مخصصة" : "Get a comprehensive analysis of your idea with tailored recommendations" : "Get a comprehensive analysis of your idea with tailored recommendations"}</p>
               </div>
               <Button 
                 onClick={() => navigate(`/naqla1/ideas/${ideaId}/analysis`)}

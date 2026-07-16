@@ -63,68 +63,63 @@ export default function LearningKnowledgeBase() {
   const learningLogs = [
     {
       id: 1,
-      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Learning Platform",
+      innovationTitle: "Smart Learning Platform",
       stage: "Validation",
       learningType: "success" as const,
-      title: isAr ? "المحتوى المرئي يزيد التفاعل بنسبة 40%" : "Visual content increases engagement by 40%",
-      description:
-        isAr ? "اكتشفنا أن الطلاب يفضلون المحتوى المرئي (فيديوهات، رسوم متحركة) على المحتوى النصي. بعد إضافة 50 فيديو تعليمي، ارتفع معدل التفاعل من 45% إلى 72%." : "We found that students prefer visual content (videos, animations) over text-based content. After adding 50 educational videos, engagement rates increased from 45% to 72%.",
+      title: "Visual Content Boosts Engagement by 40%",
+      description: "Students prefer visual content (videos, animations) over text. After adding 50 educational videos, engagement rose from 45% to 72%.",
       impact: "high" as const,
-      actionable: isAr ? "إعطاء أولوية للمحتوى المرئي في جميع المشاريع التعليمية المستقبلية" : "Prioritize visual content in all future educational projects",
+      actionable: "Prioritize visual content in all future educational projects.",
       date: "2026-01-24",
-      author: isAr ? "فريق المنتج" : "Product Team",
+      author: "Product Team",
     },
     {
       id: 2,
-      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Learning Platform",
+      innovationTitle: "Smart Learning Platform",
       stage: "Validation",
       learningType: "failure" as const,
-      title: isAr ? "السعر المنخفض لا يضمن معدل تحويل عالي" : "Low price does not guarantee high conversion rate",
-      description:
-        isAr ? "افترضنا أن تخفيض السعر من 50 إلى 30 ريال سيزيد معدل التحويل. النتيجة: معدل التحويل انخفض من 15% إلى 12%. السبب: السعر المنخفض أعطى انطباعاً بجودة منخفضة." : "We assumed that reducing the price from 50 to 30 SAR would increase the conversion rate. Result: Conversion rate dropped from 15% to 12%. Reason: The low price gave an impression of low quality.",
+      title: "Low Price Doesn't Guarantee High Conversion",
+      description: "We assumed reducing the price from 50 to 30 SAR would increase conversion. Result: Conversion dropped from 15% to 12%. Reason: Low price implied low quality.",
       impact: "high" as const,
-      actionable: isAr ? "التركيز على إظهار القيمة والجودة بدلاً من التنافس على السعر" : "Focus on demonstrating value and quality instead of competing on price",
+      actionable: "Focus on demonstrating value and quality instead of competing on price.",
       date: "2026-01-22",
-      author: isAr ? "فريق التسويق" : "Marketing Team",
+      author: "Marketing Team",
     },
     {
       id: 3,
-      innovationTitle: isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System",
+      innovationTitle: "Smart Inventory Management System",
       stage: "Ideation",
       learningType: "insight" as const,
-      title: isAr ? "الشركات الصغيرة ليست السوق المستهدف الصحيح" : "Small businesses are not the right target market",
-      description:
-        isAr ? "بعد 30 مقابلة مع شركات صغيرة، اكتشفنا أن إدارة المخزون ليست أولوية لهم. الشركات المتوسطة (50-200 موظف) هي السوق الأفضل." : "After 30 interviews with small businesses, we found that inventory management is not a priority for them. Medium-sized companies (50-200 employees) are a better market.",
+      title: "Small Businesses Are Not the Right Target Market",
+      description: "After 30 interviews with small businesses, we found inventory management isn't a priority for them. Mid-sized companies (50-200 employees) are a better market.",
       impact: "high" as const,
-      actionable: isAr ? "إعادة توجيه جميع جهود التسويق والتطوير نحو الشركات المتوسطة" : "Redirect all marketing and development efforts towards medium-sized companies",
+      actionable: "Redirect all marketing and development efforts towards mid-sized companies.",
       date: "2026-01-20",
-      author: isAr ? "فريق البحث" : "Research Team",
+      author: "Research Team",
     },
     {
       id: 4,
-      innovationTitle: isAr ? "تطبيق الصحة الوقائية" : "Preventive Health Application",
+      innovationTitle: "Preventive Health App",
       stage: "Validation",
       learningType: "success" as const,
-      title: isAr ? "الشفافية حول استخدام البيانات تزيد الثقة بنسبة 50%" : "Transparency about data usage increases trust by 50%",
-      description:
-        isAr ? "أضفنا صفحة شفافية توضح بالتفصيل كيف نستخدم البيانات الصحية. النتيجة: معدل إكمال الملف الصحي ارتفع من 45% إلى 65%." : "We added a transparency page detailing how we use health data. Result: Health profile completion rate increased from 45% to 65%.",
+      title: "Data Usage Transparency Increases Trust by 50%",
+      description: "We added a transparency page detailing how we use health data. Result: Health profile completion rate rose from 45% to 65%.",
       impact: "high" as const,
-      actionable: isAr ? "إضافة صفحات شفافية في جميع المشاريع التي تتعامل مع بيانات حساسة" : "Add transparency pages to all projects dealing with sensitive data",
+      actionable: "Add transparency pages to all projects handling sensitive data.",
       date: "2026-01-25",
-      author: isAr ? "فريق المنتج" : "Product Team",
+      author: "Product Team",
     },
     {
       id: 5,
-      innovationTitle: isAr ? "منصة التجارة الإلكترونية B2B" : "B2B E-commerce Platform",
+      innovationTitle: "B2B E-commerce Platform",
       stage: "Ideation",
       learningType: "risk" as const,
-      title: isAr ? "تكلفة اكتساب العميل B2B أعلى بـ 10 مرات من B2C" : "B2B customer acquisition cost is 10x higher than B2C",
-      description:
-        isAr ? "اكتشفنا أن تكلفة اكتساب عميل B2B واحد تتجاوز $5000، مقارنة بـ $50 في B2C. هذا يجعل نموذج الأعمال غير مستدام." : "We found that the cost of acquiring one B2B customer exceeds $5000, compared to $50 in B2C. This makes the business model unsustainable.",
+      title: "B2B Customer Acquisition Cost is 10x Higher Than B2C",
+      description: "We found B2B customer acquisition cost exceeds $5000, compared to $50 in B2C. This makes the business model unsustainable.",
       impact: "high" as const,
-      actionable: isAr ? "تجنب مشاريع B2B إلا إذا كان هناك نموذج ربحية واضح ومستدام" : "Avoid B2B projects unless there is a clear and sustainable profitability model",
+      actionable: "Avoid B2B projects unless there's a clear, sustainable profitability model.",
       date: "2026-01-18",
-      author: isAr ? "فريق الاستراتيجية" : "Strategy Team",
+      author: "Strategy Team",
     },
   ];
 
@@ -132,13 +127,10 @@ export default function LearningKnowledgeBase() {
     {
       id: 1,
       category: "Validation",
-      title: isAr ? "كيفية اختبار الفرضيات بفعالية" : "How to Effectively Test Hypotheses",
-      description:
-        isAr ? "دليل شامل لاختبار الفرضيات باستخدام منهجية Lean Startup، بما في ذلك MVP، Landing Pages، و Wizard of Oz." : "A comprehensive guide to testing hypotheses using the Lean Startup methodology, including MVP, Landing Pages, and Wizard of Oz.",
-      bestPractice:
-        isAr ? "ابدأ بالفرضيات الأكثر خطورة (RAT Score عالي)، استخدم أقل الموارد الممكنة، وحدد معايير نجاح واضحة قبل البدء." : "Start with the riskiest hypotheses (high RAT Score), use the fewest possible resources, and define clear success criteria before starting.",
-      pitfalls:
-        isAr ? "تجنب: الاختبار بدون معايير نجاح واضحة، الاستثمار الزائد في المرحلة المبكرة، تجاهل النتائج السلبية." : "Avoid: Testing without clear success criteria, over-investing in the early stage, ignoring negative results.",
+      title: "How to Effectively Test Hypotheses",
+      description: "A comprehensive guide to hypothesis testing using Lean Startup methodology, including MVP, Landing Pages, and Wizard of Oz.",
+      bestPractice: "Start with the riskiest hypotheses (high RAT Score), use minimal resources, and define clear success metrics before starting.",
+      pitfalls: "Avoid: Testing without clear success metrics, over-investing early, ignoring negative results.",
       resources: "Lean Startup by Eric Ries, Running Lean by Ash Maurya",
       tags: "validation, hypothesis, lean startup, mvp",
       rating: 4.8,
@@ -148,13 +140,10 @@ export default function LearningKnowledgeBase() {
     {
       id: 2,
       category: "Ideation",
-      title: isAr ? "تحديد السوق المستهدف الصحيح" : "Identifying the Right Target Market",
-      description:
-        isAr ? "منهجية لتحديد وتقييم الأسواق المستهدفة باستخدام TAM/SAM/SOM وتحليل الشخصيات (Personas)." : "A methodology for identifying and evaluating target markets using TAM/SAM/SOM and Persona analysis.",
-      bestPractice:
-        isAr ? "ابدأ بسوق محدد جداً (Niche)، تحدث مع 20-30 عميل محتمل قبل البناء، وتحقق من حجم السوق وإمكانية الوصول." : "Start with a very specific niche market, talk to 20-30 potential customers before building, and verify market size and accessibility.",
-      pitfalls:
-        isAr ? "تجنب: استهداف 'الجميع'، الاعتماد على بيانات السوق القديمة، تجاهل تكلفة اكتساب العميل." : "Avoid: Targeting 'everyone', relying on outdated market data, ignoring customer acquisition cost.",
+      title: "Identifying the Right Target Market",
+      description: "A methodology for identifying and evaluating target markets using TAM/SAM/SOM and Persona analysis.",
+      bestPractice: "Start with a very specific niche, talk to 20-30 potential customers before building, and verify market size and accessibility.",
+      pitfalls: "Avoid: Targeting 'everyone', relying on outdated market data, ignoring customer acquisition cost.",
       resources: "The Mom Test by Rob Fitzpatrick, Crossing the Chasm by Geoffrey Moore",
       tags: "market, target audience, personas, tam sam som",
       rating: 4.6,
@@ -164,13 +153,10 @@ export default function LearningKnowledgeBase() {
     {
       id: 3,
       category: "Prototyping",
-      title: isAr ? "بناء MVP فعال بأقل التكاليف" : "Building an Effective MVP at Minimal Cost",
-      description:
-        isAr ? "استراتيجيات لبناء Minimum Viable Product يحقق الهدف التعليمي بأقل الموارد والوقت." : "Strategies for building a Minimum Viable Product that achieves the learning objective with minimal resources and time.",
-      bestPractice:
-        isAr ? "ركز على الميزة الأساسية الواحدة، استخدم أدوات No-Code/Low-Code، واختبر مع 10-20 مستخدم حقيقي." : "Focus on the single core feature, use No-Code/Low-Code tools, and test with 10-20 real users.",
-      pitfalls:
-        isAr ? "تجنب: إضافة ميزات 'لطيفة' (Nice-to-have)، الكمالية في التصميم، التطوير بدون تغذية راجعة مستمرة." : "Avoid: Adding 'nice-to-have' features, perfectionism in design, developing without continuous feedback.",
+      title: "Build an Effective MVP at Minimal Cost",
+      description: "Strategies for building an MVP that achieves educational goals with minimal resources and time.",
+      bestPractice: "Focus on one core feature, use No-Code/Low-Code tools, and test with 10-20 real users.",
+      pitfalls: "Avoid: Adding 'nice-to-have' features, design perfectionism, development without continuous feedback.",
       resources: "The Lean Startup, Sprint by Jake Knapp",
       tags: "mvp, prototyping, no-code, lean",
       rating: 4.9,
@@ -180,13 +166,10 @@ export default function LearningKnowledgeBase() {
     {
       id: 4,
       category: "Business Model",
-      title: isAr ? "نماذج التسعير للمنتجات SaaS" : "Pricing Models for SaaS Products",
-      description:
-        isAr ? "دليل شامل لنماذج التسعير المختلفة (Freemium, Tiered, Usage-based) ومتى تستخدم كل منها." : "A comprehensive guide to different pricing models (Freemium, Tiered, Usage-based) and when to use each.",
-      bestPractice:
-        isAr ? "ابدأ بنموذج بسيط (مثلاً: خطة واحدة)، اختبر حساسية السعر مبكراً، وراقب معدل التحويل والـ LTV." : "Start with a simple model (e.g., one plan), test price sensitivity early, and monitor conversion rate and LTV.",
-      pitfalls:
-        isAr ? "تجنب: التسعير المنخفض جداً (يعطي انطباع جودة منخفضة)، الخطط المعقدة (تربك العميل)، عدم اختبار السعر." : "Avoid: Very low pricing (gives impression of low quality), complex plans (confuse the customer), not testing the price.",
+      title: "SaaS Pricing Models",
+      description: "A comprehensive guide to different pricing models (Freemium, Tiered, Usage-based) and when to use each.",
+      bestPractice: "Start with a simple model (e.g., one plan), test price sensitivity early, and monitor conversion rate and LTV.",
+      pitfalls: "Avoid: Very low pricing (implies low quality), complex plans (confuse customers), not testing prices.",
       resources: "Monetizing Innovation by Madhavan Ramanujam",
       tags: "pricing, saas, business model, monetization",
       rating: 4.7,
@@ -196,13 +179,10 @@ export default function LearningKnowledgeBase() {
     {
       id: 5,
       category: "Growth",
-      title: isAr ? "استراتيجيات النمو المستدام" : "Sustainable Growth Strategies",
-      description:
-        isAr ? "أساليب لتحقيق نمو مستدام دون حرق الميزانية، بما في ذلك Growth Hacking و Viral Loops." : "Methods for achieving sustainable growth without burning through the budget, including Growth Hacking and Viral Loops.",
-      bestPractice:
-        isAr ? "ركز على قناة واحدة حتى تتقنها، قس كل شيء، واستثمر في الاحتفاظ (Retention) قبل الاستحواذ (Acquisition)." : "Focus on one channel until you master it, measure everything, and invest in retention before acquisition.",
-      pitfalls:
-        isAr ? "تجنب: تجربة كل القنوات في وقت واحد، تجاهل معدل الاحتفاظ، الإنفاق الزائد على الإعلانات." : "Avoid: Trying all channels at once, ignoring retention rate, overspending on ads.",
+      title: "Sustainable Growth Strategies",
+      description: "Methods for achieving sustainable growth without burning budget, including Growth Hacking and Viral Loops.",
+      bestPractice: "Focus on one channel until mastered, measure everything, and invest in Retention before Acquisition.",
+      pitfalls: "Avoid: Trying all channels at once, ignoring retention rate, overspending on ads.",
       resources: "Traction by Gabriel Weinberg, Hacking Growth by Sean Ellis",
       tags: "growth, marketing, retention, viral loops",
       rating: 4.5,
@@ -214,25 +194,22 @@ export default function LearningKnowledgeBase() {
   const aiRecommendations = [
     {
       id: 1,
-      title: isAr ? "توصية بناءً على مشروعك الحالي" : "Recommendation based on your current project",
-      description:
-        isAr ? "بناءً على مشروع 'منصة التعليم الذكية' في مرحلة Validation، نوصي بقراءة: 'كيفية اختبار الفرضيات بفعالية'" : "Based on the 'Smart Learning Platform' project in the Validation phase, we recommend reading: 'How to Effectively Test Hypotheses'",
+      title: "Recommendation based on your current project",
+      description: "Based on the 'Smart Learning Platform' project in the Validation phase, we recommend reading: 'How to Effectively Test Hypotheses'",
       relevance: 95,
       knowledgeId: 1,
     },
     {
       id: 2,
-      title: isAr ? "درس من مشروع مشابه" : "Lesson from a similar project",
-      description:
-        isAr ? "مشروع 'نظام إدارة المخزون الذكي' واجه تحدياً مشابهاً في تحديد السوق المستهدف. راجع: 'تحديد السوق المستهدف الصحيح'" : "The 'Smart Inventory Management System' project faced a similar challenge in identifying the target market. Review: 'Identifying the Right Target Market'",
+      title: "Lesson from a similar project",
+      description: "The 'Smart Inventory Management System' project faced a similar challenge in defining its target market. See: 'Defining the Right Target Market'",
       relevance: 88,
       knowledgeId: 2,
     },
     {
       id: 3,
-      title: isAr ? "تجنب خطأ شائع" : "Avoid a common mistake",
-      description:
-        isAr ? "75% من المشاريع الفاشلة أنفقت أكثر من اللازم على MVP. راجع: 'بناء MVP فعال بأقل التكاليف'" : "75% of failed projects overspent on MVP. Review: 'Building an Effective MVP at Minimal Cost'",
+      title: "Avoid a common mistake",
+      description: "75% of failed projects overspent on their MVP. See: 'Build an Effective MVP at Minimal Cost'",
       relevance: 82,
       knowledgeId: 3,
     },
@@ -267,7 +244,7 @@ export default function LearningKnowledgeBase() {
       return;
     }
 
-    toast.success(isAr ? "تم إضافة الدرس المستفاد بنجاح" : "Learning log added successfully");
+    toast.success(isAr ? "تم إضافة الدرس المستفاد بنجاح" : "Lesson learned added successfully");
 
     setLogData({
       innovationId: "",
@@ -287,7 +264,7 @@ export default function LearningKnowledgeBase() {
       return;
     }
 
-    toast.success(isAr ? "تم إضافة المعرفة إلى قاعدة البيانات بنجاح" : "Knowledge added to the database successfully");
+    toast.success(isAr ? "تم إضافة المعرفة إلى قاعدة البيانات بنجاح" : "Knowledge added to database successfully");
 
     setKnowledgeData({
       category: "",
@@ -382,7 +359,7 @@ export default function LearningKnowledgeBase() {
               {isAr ? "حلقة التعلم المستمر وقاعدة المعرفة" : "Continuous Learning Loop & Knowledge Base"}
             </h1>
             <p className="text-gray-600 mt-2">
-              {isAr ? "وثّق الدروس المستفادة وابنِ قاعدة معرفة مؤسسية متنامية" : "Document lessons learned and build a growing institutional knowledge base"}
+              {isAr ? "وثّق الدروس المستفادة وابنِ قاعدة معرفة مؤسسية متنامية" : "Document lessons learned and build a growing organizational knowledge base"}
             </p>
           </div>
         </div>
@@ -409,7 +386,7 @@ export default function LearningKnowledgeBase() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "متوسط التقييم" : "Average Rating"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "متوسط التقييم" : "Avg. Rating"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-yellow-600 flex items-center gap-1">
@@ -421,7 +398,7 @@ export default function LearningKnowledgeBase() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "إجمالي المفيدة" : "Total Useful"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "إجمالي المفيدة" : "Total Helpful"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-green-600">{stats.totalUseful}</div>
@@ -478,14 +455,14 @@ export default function LearningKnowledgeBase() {
                 <DialogTrigger asChild>
                   <Button className="bg-gradient-to-r from-indigo-600 to-purple-600">
                     <Plus className="h-5 w-5 ml-2" />
-                    {isAr ? "إضافة درس مستفاد" : "Add Learning Log"}
+                    {isAr ? "إضافة درس مستفاد" : "Add Lesson Learned"}
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
-                    <DialogTitle>{isAr ? "إضافة درس مستفاد جديد" : "Add New Learning Log"}</DialogTitle>
+                    <DialogTitle>{isAr ? "إضافة درس مستفاد جديد" : "Add New Lesson Learned"}</DialogTitle>
                     <DialogDescription>
-                      {isAr ? "وثّق ما تعلمته من هذا المشروع لمساعدة الفريق في المستقبل" : "Document what you've learned from this project to help the team in the future"}
+                      {isAr ? "وثّق ما تعلمته من هذا المشروع لمساعدة الفريق في المستقبل" : "Document what you learned from this project to help the team in the future"}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
@@ -501,20 +478,20 @@ export default function LearningKnowledgeBase() {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="1">{isAr ? "منصة التعليم الذكية" : "Smart Learning Platform"}</SelectItem>
-                            <SelectItem value="2">{isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory System"}</SelectItem>
+                            <SelectItem value="2">{isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System"}</SelectItem>
                             <SelectItem value="3">{isAr ? "تطبيق الصحة الوقائية" : "Preventive Health App"}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="stage">{isAr ? "المرحلة" : "Stage"}</Label>
+                        <Label htmlFor="stage">{isAr ? "المرحلة" : "Phase"}</Label>
                         <Select
                           value={logData.stage}
                           onValueChange={(value) => setLogData({ ...logData, stage: value })}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder={isAr ? "اختر المرحلة" : "Select Stage"} />
+                            <SelectValue placeholder={isAr ? "اختر المرحلة" : "Select Phase"} />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="Ideation">Ideation</SelectItem>
@@ -528,7 +505,7 @@ export default function LearningKnowledgeBase() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="learningType">{isAr ? "نوع الدرس *" : "Learning Type *"}</Label>
+                        <Label htmlFor="learningType">{isAr ? "نوع الدرس *" : "Lesson Type *"}</Label>
                         <Select
                           value={logData.learningType}
                           onValueChange={(value: "success" | "failure" | "insight" | "risk") =>
@@ -655,7 +632,7 @@ export default function LearningKnowledgeBase() {
                         <div className="flex gap-2">
                           <Button size="sm" variant="outline">
                             <ThumbsUp className="h-4 w-4 ml-1" />
-                            {isAr ? "مفيد" : "Useful"}
+                            {isAr ? "مفيد" : "Helpful"}
                           </Button>
                           <Button size="sm" variant="outline">
                             {isAr ? "مشاركة" : "Share"}
@@ -733,7 +710,7 @@ export default function LearningKnowledgeBase() {
                       <Label htmlFor="knowledgeTitle">{isAr ? "العنوان *" : "Title *"}</Label>
                       <Input
                         id="knowledgeTitle"
-                        placeholder={isAr ? "مثال: كيفية اختبار الفرضيات بفعالية" : "Example: How to Effectively Test Hypotheses"}
+                        placeholder={isAr ? "مثال: كيفية اختبار الفرضيات بفعالية" : "Example: How to effectively test hypotheses"}
                         value={knowledgeData.title}
                         onChange={(e) =>
                           setKnowledgeData({ ...knowledgeData, title: e.target.value })
@@ -745,7 +722,7 @@ export default function LearningKnowledgeBase() {
                       <Label htmlFor="knowledgeDescription">{isAr ? "الوصف *" : "Description *"}</Label>
                       <Textarea
                         id="knowledgeDescription"
-                        placeholder={isAr ? "وصف موجز للمحتوى..." : "Brief description of the content..."}
+                        placeholder={isAr ? "وصف موجز للمحتوى..." : "Brief description of content..."}
                         rows={3}
                         value={knowledgeData.description}
                         onChange={(e) =>
@@ -758,7 +735,7 @@ export default function LearningKnowledgeBase() {
                       <Label htmlFor="bestPractice">{isAr ? "أفضل الممارسات" : "Best Practices"}</Label>
                       <Textarea
                         id="bestPractice"
-                        placeholder={isAr ? "ما هي أفضل الممارسات المتبعة؟" : "What are the best practices followed?"}
+                        placeholder={isAr ? "ما هي أفضل الممارسات المتبعة؟" : "What are the best practices?"}
                         rows={4}
                         value={knowledgeData.bestPractice}
                         onChange={(e) =>
@@ -771,7 +748,7 @@ export default function LearningKnowledgeBase() {
                       <Label htmlFor="pitfalls">{isAr ? "الأخطاء الشائعة" : "Common Pitfalls"}</Label>
                       <Textarea
                         id="pitfalls"
-                        placeholder={isAr ? "ما الذي يجب تجنبه؟" : "What should be avoided?"}
+                        placeholder={isAr ? "ما الذي يجب تجنبه؟" : "What to avoid?"}
                         rows={4}
                         value={knowledgeData.pitfalls}
                         onChange={(e) =>
@@ -781,7 +758,7 @@ export default function LearningKnowledgeBase() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="resources">{isAr ? "الموارد والمراجع" : "Resources and References"}</Label>
+                      <Label htmlFor="resources">{isAr ? "الموارد والمراجع" : "Resources & References"}</Label>
                       <Textarea
                         id="resources"
                         placeholder={isAr ? "كتب، مقالات، دورات، إلخ..." : "Books, articles, courses, etc..."}
@@ -862,7 +839,7 @@ export default function LearningKnowledgeBase() {
                         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                           <div className="text-sm font-semibold text-blue-900 mb-1 flex items-center gap-2">
                             <BookOpen className="h-4 w-4" />
-                            {isAr ? "الموارد والمراجع" : "Resources and References"}
+                            {isAr ? "الموارد والمراجع" : "Resources & References"}
                           </div>
                           <p className="text-sm text-blue-700">{knowledge.resources}</p>
                         </div>
@@ -879,7 +856,7 @@ export default function LearningKnowledgeBase() {
                         <div className="flex gap-2">
                           <Button size="sm" variant="outline">
                             <ThumbsUp className="h-4 w-4 ml-1" />
-                            {isAr ? "مفيد" : "Useful"}
+                            {isAr ? "مفيد" : "Helpful"}
                           </Button>
                           <Button size="sm" variant="outline">
                             {isAr ? "عرض التفاصيل" : "View Details"}
@@ -896,8 +873,8 @@ export default function LearningKnowledgeBase() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "لا توجد نتائج" : "No Results Found"}</h3>
-                  <p className="text-gray-500">{isAr ? "جرب تغيير معايير البحث أو الفلترة" : "Try changing your search or filter criteria"}</p>
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "لا توجد نتائج" : "No results found"}</h3>
+                  <p className="text-gray-500">{isAr ? "جرب تغيير معايير البحث أو الفلترة" : "Try changing search or filter criteria"}</p>
                 </CardContent>
               </Card>
             )}

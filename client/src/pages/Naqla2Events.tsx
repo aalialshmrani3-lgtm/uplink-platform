@@ -296,7 +296,7 @@ export default function Naqla2Events() {
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
               type="search"
-              placeholder={isAr ? "ابحث عن فعالية..." : "Search for an event..."}
+              placeholder={isAr ? "ابحث عن فعالية..." : "Search Event..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10 bg-slate-900/50 border-slate-800 text-white"

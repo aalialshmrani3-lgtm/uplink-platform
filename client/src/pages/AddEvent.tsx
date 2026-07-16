@@ -39,14 +39,14 @@ export default function AddEvent() {
   const createEventMutation = trpc.naqla2.events.create.useMutation({
     onSuccess: () => {
       toast({
-        title: "✅ تم إنشاء الفعالية بنجاح",
-        description: "سيتم مراجعة فعاليتك ونشرها قريباً",
+        title: "✅ Event created successfully",
+        description: "Your event will be reviewed and published soon",
       });
       setLocation("/naqla2");
     },
     onError: (error) => {
       toast({
-        title: "❌ حدث خطأ",
+        title: "❌ An error occurred",
         description: error.message,
         variant: "destructive",
       });
@@ -71,15 +71,15 @@ export default function AddEvent() {
   };
 
   const eventTypes = [
-    { value: "hackathon", label: "هاكاثون", icon: "💻" },
-    { value: "workshop", label: "ورشة عمل", icon: "🛠️" },
-    { value: "conference", label: "مؤتمر", icon: "🎤" },
-    { value: "seminar", label: "ندوة", icon: "📢" },
-    { value: "webinar", label: "ويبينار", icon: "🌐" },
-    { value: "networking", label: "لقاء علمي / تجمع علمي", icon: "🤝" },
-    { value: "exhibition", label: "معرض", icon: "🏛️" },
-    { value: "competition", label: "مسابقة", icon: "🏆" },
-    { value: "training", label: "تدريب", icon: "📚" },
+    { value: "hackathon", label: "Hackathon", icon: "💻" },
+    { value: "workshop", label: "Workshop", icon: "🛠️" },
+    { value: "conference", label: "Conference", icon: "🎤" },
+    { value: "seminar", label: "Seminar", icon: "📢" },
+    { value: "webinar", label: "Webinar", icon: "🌐" },
+    { value: "networking", label: "Scientific Meeting / Gathering", icon: "🤝" },
+    { value: "exhibition", label: "Exhibition", icon: "🏛️" },
+    { value: "competition", label: "Competition", icon: "🏆" },
+    { value: "training", label: "Training", icon: "📚" },
   ];
 
   return (
@@ -88,7 +88,7 @@ export default function AddEvent() {
         <div className="mb-8 text-center">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
             <Sparkles className="w-4 h-4" />
-            <span>{isAr ? "نقلة 2 - إضافة فعالية" : "نقلة 2 - Add فعالية"}</span>
+            <span>{isAr ? isAr ? "نقلة 2 - إضافة فعالية" : "Naqla 2 - Add Event" : "Naqla 2 - Add Event"}</span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             أضف فعاليتك الآن
@@ -114,7 +114,7 @@ export default function AddEvent() {
                 </Label>
                 <Input
                   id="title"
-                  placeholder="مثال: هاكاثون الابتكار الوطني 2026"
+                  placeholder={isAr ? "مثال: هاكاثون الابتكار الوطني 2026" : "Example: National Innovation Hackathon 2026"}
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   required
@@ -133,7 +133,7 @@ export default function AddEvent() {
                   required
                 >
                   <SelectTrigger className="text-lg">
-                    <SelectValue placeholder="اختر نوع الفعالية" />
+                    <SelectValue placeholder={isAr ? "اختر نوع الفعالية" : "Select Event Type"} />
                   </SelectTrigger>
                   <SelectContent>
                     {eventTypes.map((type) => (
@@ -155,7 +155,7 @@ export default function AddEvent() {
                 </Label>
                 <Textarea
                   id="description"
-                  placeholder="اشرح تفاصيل فعاليتك، الأهداف، والجمهور المستهدف..."
+                  placeholder={isAr ? "اشرح تفاصيل فعاليتك، الأهداف، والجمهور المستهدف..." : "Describe your event details, objectives, and target audience..."}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   required
@@ -217,7 +217,7 @@ export default function AddEvent() {
                     </Label>
                     <Input
                       id="location"
-                      placeholder="مثال: الرياض، مركز الملك عبدالله المالي"
+                      placeholder={isAr ? "مثال: الرياض، مركز الملك عبدالله المالي" : "Example: Riyadh, King Abdullah Financial District"}
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     />
@@ -235,7 +235,7 @@ export default function AddEvent() {
                   <Input
                     id="capacity"
                     type="number"
-                    placeholder="مثال: 500"
+                    placeholder={isAr ? "مثال: 500" : "Example: 500"}
                     value={formData.capacity}
                     onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                   />
@@ -247,7 +247,7 @@ export default function AddEvent() {
                   </Label>
                   <Input
                     id="budget"
-                    placeholder="مثال: 500000"
+                    placeholder={isAr ? "مثال: 500000" : "Example: 500,000"}
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                   />
@@ -294,7 +294,7 @@ export default function AddEvent() {
                   disabled={createEventMutation.isPending}
                   className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white text-lg py-6"
                 >
-                  {createEventMutation.isPending ? "جارٍ الإنشاء..." : "إنشاء الفعالية"}
+                  {createEventMutation.isPending ? isAr ? "جارٍ الإنشاء..." : "Creating..." : "Create Event"}
                 </Button>
                 <Button
                   type="button"
@@ -314,7 +314,7 @@ export default function AddEvent() {
           <Card className="border-blue-200 bg-blue-50">
             <CardContent className="p-6 text-center">
               <div className="text-4xl mb-3">🎯</div>
-              <h3 className="font-semibold text-blue-900 mb-2">{isAr ? "رعاة مؤهلين" : "[رعاة مؤهلين]"}</h3>
+              <h3 className="font-semibold text-blue-900 mb-2">{isAr ? isAr ? "رعاة مؤهلين" : "Qualified Sponsors" : "[Qualified Sponsors]"}</h3>
               <p className="text-sm text-blue-700">
                 احصل على رعاة من حاضنات وشركات مسجلة في المنصة
               </p>
@@ -323,7 +323,7 @@ export default function AddEvent() {
           <Card className="border-green-200 bg-green-50">
             <CardContent className="p-6 text-center">
               <div className="text-4xl mb-3">💡</div>
-              <h3 className="font-semibold text-green-900 mb-2">{isAr ? "مبتكرون موهوبون" : "Innovatorون موهوبون"}</h3>
+              <h3 className="font-semibold text-green-900 mb-2">{isAr ? isAr ? "مبتكرون موهوبون" : "Talented Innovators" : "Talented Innovators"}</h3>
               <p className="text-sm text-green-700">
                 اجذب أفضل المبتكرين والموهوبين في مجالك
               </p>
@@ -332,7 +332,7 @@ export default function AddEvent() {
           <Card className="border-purple-200 bg-purple-50">
             <CardContent className="p-6 text-center">
               <div className="text-4xl mb-3">🔒</div>
-              <h3 className="font-semibold text-purple-900 mb-2">{isAr ? "عقود آمنة" : "[عقود آمنة]"}</h3>
+              <h3 className="font-semibold text-purple-900 mb-2">{isAr ? isAr ? "عقود آمنة" : "Secure Contracts" : "[Secure Contracts]"}</h3>
               <p className="text-sm text-purple-700">
                 انتقل مباشرة لنقلة 3 لإبرام عقود الرعاية بأمان
               </p>

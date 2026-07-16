@@ -15,43 +15,43 @@ import SEOHead from "@/components/SEOHead";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const impactStats = [
-  { title: "إجمالي الأفكار المقدمة", value: "2,847", change: "+18.3%", icon: Lightbulb, color: "text-cyan-400", bgColor: "bg-cyan-500/10", borderColor: "border-cyan-500/20" },
-  { title: "الشركات الناشئة المنبثقة", value: "312", change: "+24.1%", icon: Building2, color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/20" },
-  { title: "الوظائف المُنشأة", value: "8,640", change: "+31.7%", icon: Users, color: "text-blue-400", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/20" },
-  { title: "حجم الاستثمارات (ريال)", value: "1.2B", change: "+42.5%", icon: DollarSign, color: "text-yellow-400", bgColor: "bg-yellow-500/10", borderColor: "border-yellow-500/20" },
-  { title: "براءات الاختراع المسجلة", value: "487", change: "+15.2%", icon: Shield, color: "text-purple-400", bgColor: "bg-purple-500/10", borderColor: "border-purple-500/20" },
-  { title: "شراكات استراتيجية", value: "94", change: "+8.9%", icon: Handshake, color: "text-pink-400", bgColor: "bg-pink-500/10", borderColor: "border-pink-500/20" },
+  { title: "Total Ideas Submitted", value: "2,847", change: "+18.3%", icon: Lightbulb, color: "text-cyan-400", bgColor: "bg-cyan-500/10", borderColor: "border-cyan-500/20" },
+  { title: "Spinoff Startups", value: "312", change: "+24.1%", icon: Building2, color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/20" },
+  { title: "Jobs Created", value: "8,640", change: "+31.7%", icon: Users, color: "text-blue-400", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/20" },
+  { title: "Investment Volume (SAR)", value: "1.2B", change: "+42.5%", icon: DollarSign, color: "text-yellow-400", bgColor: "bg-yellow-500/10", borderColor: "border-yellow-500/20" },
+  { title: "Patents Registered", value: "487", change: "+15.2%", icon: Shield, color: "text-purple-400", bgColor: "bg-purple-500/10", borderColor: "border-purple-500/20" },
+  { title: "Strategic Partnerships", value: "94", change: "+8.9%", icon: Handshake, color: "text-pink-400", bgColor: "bg-pink-500/10", borderColor: "border-pink-500/20" },
 ];
 
 const monthlyData = [
-  { month: "يناير", ideas: 180 },
-  { month: "فبراير", ideas: 210 },
-  { month: "مارس", ideas: 245 },
-  { month: "أبريل", ideas: 290 },
-  { month: "مايو", ideas: 320 },
-  { month: "يونيو", ideas: 380 },
+  { month: "January", ideas: 180 },
+  { month: "February", ideas: 210 },
+  { month: "March", ideas: 245 },
+  { month: "April", ideas: 290 },
+  { month: "May", ideas: 320 },
+  { month: "June", ideas: 380 },
 ];
 
 const sdgImpact = [
-  { goal: "SDG 8", title: "العمل اللائق والنمو الاقتصادي", progress: 78, color: "bg-amber-500", icon: "💼" },
-  { goal: "SDG 9", title: "الصناعة والابتكار والبنية التحتية", progress: 85, color: "bg-orange-500", icon: "🏭" },
-  { goal: "SDG 13", title: "العمل المناخي", progress: 62, color: "bg-green-500", icon: "🌱" },
-  { goal: "SDG 17", title: "الشراكات لتحقيق الأهداف", progress: 71, color: "bg-blue-500", icon: "🤝" },
+  { goal: "SDG 8", title: "Decent Work & Economic Growth", progress: 78, color: "bg-amber-500", icon: "💼" },
+  { goal: "SDG 9", title: "Industry, Innovation & Infrastructure", progress: 85, color: "bg-orange-500", icon: "🏭" },
+  { goal: "SDG 13", title: "Climate Action", progress: 62, color: "bg-green-500", icon: "🌱" },
+  { goal: "SDG 17", title: "Partnerships for Goals", progress: 71, color: "bg-blue-500", icon: "🤝" },
 ];
 
 const sectorBreakdown = [
-  { sector: "الطاقة المتجددة", count: 423, percentage: 28, color: "from-green-500 to-emerald-600" },
-  { sector: "التقنية والذكاء الاصطناعي", count: 387, percentage: 26, color: "from-blue-500 to-indigo-600" },
-  { sector: "الصحة والتقنية الحيوية", count: 298, percentage: 20, color: "from-pink-500 to-rose-600" },
-  { sector: "الزراعة الذكية", count: 195, percentage: 13, color: "from-yellow-500 to-amber-600" },
-  { sector: "المدن الذكية", count: 195, percentage: 13, color: "from-purple-500 to-violet-600" },
+  { sector: "Renewable Energy", count: 423, percentage: 28, color: "from-green-500 to-emerald-600" },
+  { sector: "Tech & AI", count: 387, percentage: 26, color: "from-blue-500 to-indigo-600" },
+  { sector: "Health & Biotech", count: 298, percentage: 20, color: "from-pink-500 to-rose-600" },
+  { sector: "Smart Agriculture", count: 195, percentage: 13, color: "from-yellow-500 to-amber-600" },
+  { sector: "Smart Cities", count: 195, percentage: 13, color: "from-purple-500 to-violet-600" },
 ];
 
 const topInnovations = [
-  { name: "نظام تبريد البطاريات بالطاقة الشمسية", sector: "الطاقة المتجددة", impact: "تخفيض 40% من تكاليف التشغيل", stage: "نقلة 3", rating: 4.9 },
-  { name: "منصة الذكاء الاصطناعي للتشخيص الطبي", sector: "الصحة", impact: "دقة تشخيص 94.7%", stage: "نقلة 2", rating: 4.8 },
-  { name: "روبوت تنظيف الألواح الشمسية الذاتي", sector: "الطاقة المتجددة", impact: "زيادة كفاءة 23%", stage: "نقلة 3", rating: 4.7 },
-  { name: "نظام الري الذكي بالحساسات", sector: "الزراعة الذكية", impact: "توفير 60% من المياه", stage: "نقلة 2", rating: 4.6 },
+  { name: "Solar-Powered Battery Cooling System", sector: "Renewable Energy", impact: "40% Reduction in Operating Costs", stage: "Naqla 3", rating: 4.9 },
+  { name: "AI Platform for Medical Diagnosis", sector: "Health", impact: "94.7% Diagnostic Accuracy", stage: "Naqla 2", rating: 4.8 },
+  { name: "Autonomous Solar Panel Cleaning Robot", sector: "Renewable Energy", impact: "23% Efficiency Increase", stage: "Naqla 3", rating: 4.7 },
+  { name: "Smart Sensor-Based Irrigation System", sector: "Smart Agriculture", impact: "60% Water Saving", stage: "Naqla 2", rating: 4.6 },
 ];
 
 const maxIdeas = Math.max(...monthlyData.map(d => d.ideas));
@@ -64,8 +64,8 @@ export default function ValueFootprints() {
   return (
     <div className="min-h-screen bg-background" dir="rtl">
       <SEOHead
-        title="قياس الأثر - منصة نقلة"
-        description="تتبع الأثر الاقتصادي والاجتماعي لمنصة نقلة 5.0"
+        title={isAr ? "قياس الأثر - منصة نقلة" : "Impact Measurement - Naqla Platform"}
+        description={isAr ? "تتبع الأثر الاقتصادي والاجتماعي لمنصة نقلة 5.0" : "Tracking Naqla 5.0's Socio-Economic Impact"}
       />
 
       {/* Header */}
@@ -88,7 +88,7 @@ export default function ValueFootprints() {
                 <div className="w-2 h-2 rounded-full bg-emerald-400 ml-1 animate-pulse" />
                 مباشر
               </Badge>
-              <Badge variant="outline" className="text-muted-foreground">{isAr ? "آخر تحديث: اليوم" : "آخر تحديث: Today"}</Badge>
+              <Badge variant="outline" className="text-muted-foreground">{isAr ? isAr ? "آخر تحديث: اليوم" : "Last updated: Today" : "Last updated: Today"}</Badge>
             </div>
           </div>
         </div>
@@ -121,10 +121,10 @@ export default function ValueFootprints() {
         {/* Tab Navigation */}
         <div className="flex gap-2 border-b border-border/50">
           {[
-            { id: "overview", label: "نظرة عامة", icon: BarChart3 },
-            { id: "sectors", label: "القطاعات", icon: Building2 },
-            { id: "sdg", label: "أهداف التنمية", icon: Globe },
-            { id: "top", label: "أبرز الابتكارات", icon: Star },
+            { id: "overview", label: "Overview", icon: BarChart3 },
+            { id: "sectors", label: "Sectors", icon: Building2 },
+            { id: "sdg", label: "Development Goals", icon: Globe },
+            { id: "top", label: "Key Innovations", icon: Star },
           ].map((tab) => {
             const Icon = tab.icon;
             return (
@@ -153,7 +153,7 @@ export default function ValueFootprints() {
                   <TrendingUp className="w-5 h-5 text-cyan-400" />
                   الأفكار المقدمة شهرياً
                 </CardTitle>
-                <CardDescription>{isAr ? "النمو التراكمي خلال النصف الأول من 2025" : "النمو التراكمي خNoل النصف الأول من 2025"}</CardDescription>
+                <CardDescription>{isAr ? isAr ? "النمو التراكمي خلال النصف الأول من 2025" : "Cumulative Growth H1 2025" : "Cumulative Growth H1 2025"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -180,13 +180,13 @@ export default function ValueFootprints() {
                   <Target className="w-5 h-5 text-purple-400" />
                   توزيع الأفكار حسب المسار
                 </CardTitle>
-                <CardDescription>{isAr ? "تصنيف الأفكار عبر المحركات الثلاثة" : "تصنيف الأفكار عبر المحركات الثNoثة"}</CardDescription>
+                <CardDescription>{isAr ? isAr ? "تصنيف الأفكار عبر المحركات الثلاثة" : "Idea Classification by Three Engines" : "Idea Classification by Three Engines"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {[
-                  { label: "مسار الابتكار (نقلة 1 → 2 → 3)", value: 68, count: "1,936", color: "from-emerald-500 to-teal-600", icon: "🚀" },
-                  { label: "مسار التجاري (نقلة 1 → 3)", value: 22, count: "626", color: "from-blue-500 to-indigo-600", icon: "💼" },
-                  { label: "قيد التطوير (إعادة للمبتكر)", value: 10, count: "285", color: "from-yellow-500 to-amber-600", icon: "🔄" },
+                  { label: "Innovation Path (Naqla 1 → 2 → 3)", value: 68, count: "1,936", color: "from-emerald-500 to-teal-600", icon: "🚀" },
+                  { label: "Commercial Path (Naqla 1 → 3)", value: 22, count: "626", color: "from-blue-500 to-indigo-600", icon: "💼" },
+                  { label: "In Development (Return to Innovator)", value: 10, count: "285", color: "from-yellow-500 to-amber-600", icon: "🔄" },
                 ].map((path, i) => (
                   <div key={i} className="space-y-1">
                     <div className="flex justify-between text-sm">
@@ -201,10 +201,10 @@ export default function ValueFootprints() {
                 <div className="mt-4 p-4 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
                   <div className="flex items-center gap-2 mb-1">
                     <Zap className="w-4 h-4 text-cyan-400" />
-                    <span className="text-sm font-medium text-foreground">{isAr ? "معدل التحويل الإجمالي" : "معدل التحويل الTotal"}</span>
+                    <span className="text-sm font-medium text-foreground">{isAr ? isAr ? "معدل التحويل الإجمالي" : "Total Conversion Rate" : "Total Conversion Rate"}</span>
                   </div>
                   <div className="text-3xl font-bold text-cyan-400">90%</div>
-                  <div className="text-xs text-muted-foreground mt-1">{isAr ? "من الأفكار المقدمة تنتقل إلى مرحلة التطوير" : "من الأفكار المقدمة تنتقل إلى مرحلة Development"}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{isAr ? isAr ? "من الأفكار المقدمة تنتقل إلى مرحلة التطوير" : "of submitted ideas move to development phase" : "of submitted ideas move to development phase"}</div>
                 </div>
               </CardContent>
             </Card>
@@ -215,15 +215,15 @@ export default function ValueFootprints() {
                   <Globe className="w-5 h-5 text-blue-400" />
                   الأثر الجغرافي
                 </CardTitle>
-                <CardDescription>{isAr ? "توزيع المبتكرين والشركاء حول العالم" : "توزيع المبتكرين وPartners حول العالم"}</CardDescription>
+                <CardDescription>{isAr ? isAr ? "توزيع المبتكرين والشركاء حول العالم" : "Distribution of Innovators & Partners Worldwide" : "Distribution of Innovators & Partners Worldwide"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
-                    { region: "المملكة العربية السعودية", count: "1,842", flag: "🇸🇦", percentage: 65 },
-                    { region: "دول الخليج", count: "512", flag: "🌍", percentage: 18 },
-                    { region: "الوطن العربي", count: "312", flag: "🌐", percentage: 11 },
-                    { region: "دولي", count: "181", flag: "🌏", percentage: 6 },
+                    { region: "Saudi Arabia", count: "1,842", flag: "🇸🇦", percentage: 65 },
+                    { region: "GCC Countries", count: "512", flag: "🌍", percentage: 18 },
+                    { region: "Arab World", count: "312", flag: "🌐", percentage: 11 },
+                    { region: "International", count: "181", flag: "🌏", percentage: 6 },
                   ].map((region, i) => (
                     <div key={i} className="p-4 rounded-xl border border-border/50 bg-card/50 text-center">
                       <div className="text-3xl mb-2">{region.flag}</div>
@@ -246,8 +246,8 @@ export default function ValueFootprints() {
           <div className="grid lg:grid-cols-2 gap-6">
             <Card className="border-border/50">
               <CardHeader>
-                <CardTitle>{isAr ? "توزيع الأفكار حسب القطاع" : "[توزيع الأفكار حسب القطاع]"}</CardTitle>
-                <CardDescription>{isAr ? "أبرز القطاعات الاستراتيجية في المنصة" : "أبرز القطاعات اNoستراتيجية في المنصة"}</CardDescription>
+                <CardTitle>{isAr ? isAr ? "توزيع الأفكار حسب القطاع" : "Idea Distribution by Sector" : "[Idea Distribution by Sector]"}</CardTitle>
+                <CardDescription>{isAr ? isAr ? "أبرز القطاعات الاستراتيجية في المنصة" : "Key Strategic Sectors on the Platform" : "Key Strategic Sectors on the Platform"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {sectorBreakdown.map((sector, i) => (
@@ -266,17 +266,17 @@ export default function ValueFootprints() {
 
             <Card className="border-border/50">
               <CardHeader>
-                <CardTitle>{isAr ? "الأثر الاقتصادي بالقطاع" : "الأثر اNoقتصادي بالقطاع"}</CardTitle>
-                <CardDescription>{isAr ? "حجم الاستثمارات المُستقطبة لكل قطاع" : "حجم اNoستثمارات المُستقطبة لكل قطاع"}</CardDescription>
+                <CardTitle>{isAr ? isAr ? "الأثر الاقتصادي بالقطاع" : "Economic Impact by Sector" : "Economic Impact by Sector"}</CardTitle>
+                <CardDescription>{isAr ? isAr ? "حجم الاستثمارات المُستقطبة لكل قطاع" : "Attracted Investments per Sector" : "Attracted Investments per Sector"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   {[
-                    { sector: "الطاقة المتجددة", investment: "450M", jobs: "2,840", color: "text-green-400" },
-                    { sector: "التقنية والذكاء الاصطناعي", investment: "380M", jobs: "2,210", color: "text-blue-400" },
-                    { sector: "الصحة والتقنية الحيوية", investment: "210M", jobs: "1,650", color: "text-pink-400" },
-                    { sector: "الزراعة الذكية", investment: "95M", jobs: "980", color: "text-yellow-400" },
-                    { sector: "المدن الذكية", investment: "65M", jobs: "960", color: "text-purple-400" },
+                    { sector: "Renewable Energy", investment: "450M", jobs: "2,840", color: "text-green-400" },
+                    { sector: "Tech & AI", investment: "380M", jobs: "2,210", color: "text-blue-400" },
+                    { sector: "Health & Biotech", investment: "210M", jobs: "1,650", color: "text-pink-400" },
+                    { sector: "Smart Agriculture", investment: "95M", jobs: "980", color: "text-yellow-400" },
+                    { sector: "Smart Cities", investment: "65M", jobs: "960", color: "text-purple-400" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between p-3 rounded-lg border border-border/50 bg-card/30">
                       <span className="text-sm font-medium text-foreground">{item.sector}</span>
@@ -308,7 +308,7 @@ export default function ValueFootprints() {
                         </div>
                         <div className="mt-3 space-y-1">
                           <div className="flex justify-between text-xs text-muted-foreground">
-                            <span>{isAr ? "مستوى التأثير" : "مستوى الEffect"}</span>
+                            <span>{isAr ? isAr ? "مستوى التأثير" : "Impact Level" : "Impact Level"}</span>
                             <span className="font-bold text-foreground">{sdg.progress}%</span>
                           </div>
                           <div className="h-2 bg-secondary/30 rounded-full overflow-hidden">
@@ -326,13 +326,13 @@ export default function ValueFootprints() {
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Leaf className="w-6 h-6 text-emerald-400" />
-                  <h3 className="text-lg font-bold text-foreground">{isAr ? "الأثر البيئي والمناخي" : "[الأثر البيئي والمناخي]"}</h3>
+                  <h3 className="text-lg font-bold text-foreground">{isAr ? isAr ? "الأثر البيئي والمناخي" : "Environmental & Climate Impact" : "Environmental & Climate Impact"}</h3>
                 </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   {[
-                    { label: "انبعاثات CO₂ المُخفضة", value: "124,000 طن", icon: "🌿" },
-                    { label: "طاقة متجددة مُضافة", value: "850 ميغاواط", icon: "☀️" },
-                    { label: "مياه محفوظة", value: "2.4M م³", icon: "💧" },
+                    { label: "Reduced CO₂ Emissions", value: "124,000 Tons", icon: "🌿" },
+                    { label: "Added Renewable Energy", value: "850 MW", icon: "☀️" },
+                    { label: "Water Saved", value: "2.4M m³", icon: "💧" },
                   ].map((item, i) => (
                     <div key={i} className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-center">
                       <div className="text-3xl mb-2">{item.icon}</div>
@@ -350,7 +350,7 @@ export default function ValueFootprints() {
         {activeTab === "top" && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-foreground">{isAr ? "أبرز الابتكارات المؤثرة" : "أبرز اNoبتكارات المؤثرة"}</h3>
+              <h3 className="text-lg font-bold text-foreground">{isAr ? isAr ? "أبرز الابتكارات المؤثرة" : "Key Impactful Innovations" : "Key Impactful Innovations"}</h3>
               <Button variant="outline" size="sm">
                 عرض الكل
                 <ChevronRight className="w-4 h-4 mr-1" />
@@ -394,16 +394,16 @@ export default function ValueFootprints() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="text-3xl">🇸🇦</div>
                   <div>
-                    <h3 className="text-lg font-bold text-foreground">{isAr ? "التوافق مع رؤية 2030" : "التوافق مع Vision 2030"}</h3>
-                    <p className="text-sm text-muted-foreground">{isAr ? "مساهمة منصة نقلة في تحقيق أهداف رؤية المملكة" : "مساهمة منصة نقلة في تحقيق أهداف Vision المملكة"}</p>
+                    <h3 className="text-lg font-bold text-foreground">{isAr ? isAr ? "التوافق مع رؤية 2030" : "Alignment with Vision 2030" : "Alignment with Vision 2030"}</h3>
+                    <p className="text-sm text-muted-foreground">{isAr ? isAr ? "مساهمة منصة نقلة في تحقيق أهداف رؤية المملكة" : "Naqla Platform's Contribution to Kingdom's Vision Goals" : "Naqla Platform's Contribution to Kingdom's Vision Goals"}</p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-4 gap-4">
                   {[
-                    { label: "رفع نسبة القطاع الخاص", target: "65%", current: "58%", color: "text-blue-400" },
-                    { label: "الاقتصاد الرقمي", target: "19.9%", current: "16.4%", color: "text-purple-400" },
-                    { label: "براءات الاختراع", target: "10,000", current: "7,240", color: "text-cyan-400" },
-                    { label: "الإنفاق على البحث والتطوير", target: "2.5%", current: "1.8%", color: "text-emerald-400" },
+                    { label: "Increase Private Sector Share", target: "65%", current: "58%", color: "text-blue-400" },
+                    { label: "Digital Economy", target: "19.9%", current: "16.4%", color: "text-purple-400" },
+                    { label: "Patents", target: "10,000", current: "7,240", color: "text-cyan-400" },
+                    { label: "R&D Spending", target: "2.5%", current: "1.8%", color: "text-emerald-400" },
                   ].map((item, i) => (
                     <div key={i} className="p-3 rounded-xl border border-border/50 bg-card/30 text-center">
                       <div className={`text-lg font-bold ${item.color}`}>{item.current}</div>
@@ -424,21 +424,21 @@ export default function ValueFootprints() {
               <Globe className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-foreground">{isAr ? "مؤشرات الأثر والابتكار" : "مؤشرات الأثر واNoبتكار"}</h3>
-              <p className="text-sm text-muted-foreground">{isAr ? "منصة نقلة — أهداف الابتكار الوطنية والدولية" : "منصة نقلة — أهداف اNoبتكار الوطنية والدولية"}</p>
+              <h3 className="text-lg font-bold text-foreground">{isAr ? isAr ? "مؤشرات الأثر والابتكار" : "Impact & Innovation Indicators" : "Impact & Innovation Indicators"}</h3>
+              <p className="text-sm text-muted-foreground">{isAr ? isAr ? "منصة نقلة — أهداف الابتكار الوطنية والدولية" : "Naqla Platform — National & International Innovation Goals" : "Naqla Platform — National & International Innovation Goals"}</p>
             </div>
             <a href="/admin"
               className="mr-auto flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors">
-              <span>{isAr ? "برامج دولية" : "[برامج دولية]"}</span>
+              <span>{isAr ? isAr ? "برامج دولية" : "International Programs" : "[International Programs]"}</span>
               <ArrowUpRight className="w-3 h-3" />
             </a>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {[
-              { label: "ابتكارات TRL 7-9 جاهزة للسوق", value: "127", target: "200", progress: 63, color: "bg-violet-500", icon: "🚀" },
-              { label: "شراكات مع مؤسسات دولية", value: "18", target: "30", progress: 60, color: "bg-blue-500", icon: "🌐" },
-              { label: "مشاريع التكنولوجيا الحيوية", value: "43", target: "80", progress: 54, color: "bg-pink-500", icon: "🧬" },
-              { label: "مشاريع المواد المتقدمة", value: "31", target: "60", progress: 52, color: "bg-amber-500", icon: "⚗️" },
+              { label: "Market-Ready TRL 7-9 Innovations", value: "127", target: "200", progress: 63, color: "bg-violet-500", icon: "🚀" },
+              { label: "Partnerships with International Institutions", value: "18", target: "30", progress: 60, color: "bg-blue-500", icon: "🌐" },
+              { label: "Biotech Projects", value: "43", target: "80", progress: 54, color: "bg-pink-500", icon: "🧬" },
+              { label: "Advanced Materials Projects", value: "31", target: "60", progress: 52, color: "bg-amber-500", icon: "⚗️" },
             ].map((kpi, i) => (
               <div key={i} className="p-4 rounded-xl border border-border/50 bg-card/30">
                 <div className="text-2xl mb-2">{kpi.icon}</div>
@@ -453,9 +453,9 @@ export default function ValueFootprints() {
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             {[
-              { title: "التكنولوجيا النظيفة (Clean Tech)", count: "89 مشروع", growth: "+34%", icon: "🌿", link: "/challenges" },
-              { title: "التكنولوجيا الحيوية (Biotech)", count: "43 مشروع", growth: "+28%", icon: "🧬", link: "/challenges" },
-              { title: "المواد المتقدمة (Advanced Materials)", count: "31 مشروع", growth: "+19%", icon: "⚗️", link: "/challenges" },
+              { title: "Clean Tech", count: "89 Projects", growth: "+34%", icon: "🌿", link: "/challenges" },
+              { title: "Biotech", count: "43 Projects", growth: "+28%", icon: "🧬", link: "/challenges" },
+              { title: "Advanced Materials", count: "31 Projects", growth: "+19%", icon: "⚗️", link: "/challenges" },
             ].map((sector, i) => (
               <a key={i} href={sector.link}
                 className="flex items-center gap-3 p-4 rounded-xl border border-border/50 bg-card/30 hover:border-blue-500/40 transition-colors group">

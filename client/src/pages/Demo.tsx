@@ -25,26 +25,26 @@ export default function Demo() {
   const scenarios = [
     {
       id: 1,
-      title: isAr ? "مسار الابتكار الحقيقي" : "True Innovation Path",
+      title: "True Innovation Track",
       subtitle: "Innovation Path (≥70%)",
       icon: Lightbulb,
       color: "text-green-500",
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/20",
       score: "88%",
-      classification: isAr ? "ابتكار حقيقي" : "True Innovation",
-      description: isAr ? "فكرة مبتكرة بتقييم عالٍ (≥70%) تمثل ابتكاراً حقيقياً مع إمكانات كبيرة" : "Innovative idea with high rating (≥70%) representing true innovation with great potential",
+      classification: "True Innovation",
+      description: "Highly-rated innovative idea (≥70%) representing true innovation with significant potential.",
       steps: [
-        { icon: Lightbulb, text: isAr ? "تقديم الفكرة في NAQLA 1" : "Submit idea in NAQLA 1", status: "done" },
-        { icon: CheckCircle2, text: isAr ? "تحليل بالذكاء الاصطناعي (88%)" : "AI Analysis (88%)", status: "done" },
-        { icon: AlertCircle, text: isAr ? "تصنيف: ابتكار حقيقي" : "Classification: True Innovation", status: "done" },
-        { icon: ArrowRight, text: isAr ? "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)" : "Option 1: Go to NAQLA 2 (Challenge Matching)", status: "option" },
-        { icon: ArrowRight, text: isAr ? "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)" : "Option 2: Go directly to NAQLA 3 (Marketplace)", status: "option" },
+        { icon: Lightbulb, text: "Submit idea to NAQLA 1", status: "done" },
+        { icon: CheckCircle2, text: "AI Analysis (88%)", status: "done" },
+        { icon: AlertCircle, text: "Category: True Innovation", status: "done" },
+        { icon: ArrowRight, text: "Option 1: Proceed to NAQLA 2 (Challenge Matching)", status: "option" },
+        { icon: ArrowRight, text: "Option 2: Proceed directly to NAQLA 3 (Market)", status: "option" },
       ],
       demoUrl: "/uplink1/ideas/120002/analysis",
       exampleIdea: {
-        title: isAr ? "نظام ذكاء اصطناعي متقدم" : "Advanced AI System",
-        description: isAr ? "نظام ذكاء اصطناعي متقدم لتحليل البيانات الضخمة في الوقت الفعلي باستخدام تقنيات التعلم العميق والحوسبة الكمومية" : "Advanced AI system for real-time big data analysis using deep learning and quantum computing technologies",
+        title: "Advanced AI System",
+        description: "Advanced AI system for real-time big data analysis using deep learning and quantum computing.",
         scores: {
           novelty: 92,
           impact: 88,
@@ -53,33 +53,33 @@ export default function Demo() {
         }
       },
       comparisonData: {
-        time: isAr ? "2-4 أسابيع" : "2-4 weeks",
-        steps: isAr ? "5 خطوات" : "5 steps",
+        time: "2-4 weeks",
+        steps: "5 steps",
         successRate: "85%"
       }
     },
     {
       id: 2,
-      title: isAr ? "مسار الحل التجاري" : "Commercial Solution Path",
+      title: "Commercial Solution Track",
       subtitle: "Commercial Path (50-70%)",
       icon: Store,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/20",
       score: "60%",
-      classification: isAr ? "حل تجاري" : "Commercial Solution",
-      description: isAr ? "فكرة تجارية بتقييم متوسط (50-70%) تمثل حلاً تجارياً قابلاً للتطبيق" : "Commercial idea with medium rating (50-70%) representing a viable commercial solution",
+      classification: "Commercial Solution",
+      description: "Business idea with medium rating (50-70%) representing a viable commercial solution.",
       steps: [
-        { icon: Store, text: isAr ? "تقديم الفكرة في NAQLA 1" : "Submit idea in NAQLA 1", status: "done" },
-        { icon: CheckCircle2, text: isAr ? "تحليل بالذكاء الاصطناعي (60%)" : "AI Analysis (60%)", status: "done" },
-        { icon: AlertCircle, text: isAr ? "تصنيف: حل تجاري" : "Classification: Commercial Solution", status: "done" },
-        { icon: ArrowRight, text: isAr ? "خيار 1: الذهاب لـ NAQLA 2 (مطابقة مع التحديات)" : "Option 1: Go to NAQLA 2 (Challenge Matching)", status: "option" },
-        { icon: ArrowRight, text: isAr ? "خيار 2: الذهاب مباشرة لـ NAQLA 3 (السوق)" : "Option 2: Go directly to NAQLA 3 (Marketplace)", status: "option" },
+        { icon: Store, text: "Submit idea to NAQLA 1", status: "done" },
+        { icon: CheckCircle2, text: "AI Analysis (60%)", status: "done" },
+        { icon: AlertCircle, text: "Category: Commercial Solution", status: "done" },
+        { icon: ArrowRight, text: "Option 1: Proceed to NAQLA 2 (Challenge Matching)", status: "option" },
+        { icon: ArrowRight, text: "Option 2: Proceed directly to NAQLA 3 (Market)", status: "option" },
       ],
       demoUrl: "/naqla1/browse",
       exampleIdea: {
-        title: isAr ? "تطبيق توصيل طعام صحي" : "Healthy Food Delivery App",
-        description: isAr ? "تطبيق جوال لتوصيل الطعام الصحي مع نظام توصيات غذائية مخصصة" : "Mobile app for healthy food delivery with personalized dietary recommendations",
+        title: "Healthy Food Delivery App",
+        description: "Mobile app for healthy food delivery with personalized dietary recommendations.",
         scores: {
           novelty: 50,
           impact: 65,
@@ -88,33 +88,33 @@ export default function Demo() {
         }
       },
       comparisonData: {
-        time: isAr ? "1-2 أسابيع" : "1-2 weeks",
-        steps: isAr ? "4 خطوات" : "4 steps",
+        time: "1-2 weeks",
+        steps: "4 steps",
         successRate: "70%"
       }
     },
     {
       id: 3,
-      title: isAr ? "مسار التطوير والإرشاد" : "Development & Guidance Path",
+      title: "Development & Mentorship Track",
       subtitle: "Guidance Path (<50%)",
       icon: XCircle,
       color: "text-red-500",
       bgColor: "bg-red-500/10",
       borderColor: "border-red-500/20",
       score: "35%",
-      classification: isAr ? "تحتاج تطوير" : "Needs Development",
-      description: isAr ? "فكرة ضعيفة بتقييم منخفض (<50%) تحتاج إلى تطوير وتحسين" : "Weak idea with low rating (<50%) that needs development and improvement",
+      classification: "Needs Development",
+      description: "Weak idea with low rating (<50%) requiring development and improvement.",
       steps: [
-        { icon: XCircle, text: isAr ? "تقديم الفكرة في NAQLA 1" : "Submit idea in NAQLA 1", status: "done" },
-        { icon: CheckCircle2, text: isAr ? "تحليل بالذكاء الاصطناعي (35%)" : "AI Analysis (35%)", status: "done" },
-        { icon: AlertCircle, text: isAr ? "تصنيف: تحتاج تطوير" : "Classification: Needs Development", status: "done" },
-        { icon: XCircle, text: isAr ? "رفض مؤقت مع توصيات تفصيلية" : "Temporary rejection with detailed recommendations", status: "reject" },
-        { icon: ArrowRight, text: isAr ? "إعادة تقديم الفكرة بعد التحسين" : "Resubmit idea after improvement", status: "retry" },
+        { icon: XCircle, text: "Submit idea to NAQLA 1", status: "done" },
+        { icon: CheckCircle2, text: "AI Analysis (35%)", status: "done" },
+        { icon: AlertCircle, text: "Category: Needs Development", status: "done" },
+        { icon: XCircle, text: "Temporary rejection with detailed recommendations", status: "reject" },
+        { icon: ArrowRight, text: "Resubmit idea after improvement", status: "retry" },
       ],
       demoUrl: "/naqla1/browse",
       exampleIdea: {
-        title: isAr ? "تطبيق دردشة بسيط" : "Simple Chat App",
-        description: isAr ? "فكرة بسيطة لتطبيق دردشة عادي بدون ميزات مميزة" : "Simple idea for a regular chat app without distinctive features",
+        title: "Simple Chat App",
+        description: "Simple idea for a basic chat app with no unique features.",
         scores: {
           novelty: 15,
           impact: 25,
@@ -123,8 +123,8 @@ export default function Demo() {
         }
       },
       comparisonData: {
-        time: isAr ? "فوري" : "Immediate",
-        steps: isAr ? "3 خطوات" : "3 steps",
+        time: "Instant",
+        steps: "3 Steps",
         successRate: "40%"
       }
     }
@@ -138,7 +138,7 @@ export default function Demo() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-white mb-2">
-                {isAr ? "🎬 عرض توضيحي - مسارات الأفكار" : "🎬 Demo - Idea Paths"}
+                {isAr ? "🎬 عرض توضيحي - مسارات الأفكار" : "🎬 Demo - Idea Pathways"}
               </h1>
               <p className="text-slate-400">
                 {isAr ? "شرح تفصيلي لجميع السيناريوهات الممكنة في NAQLA 1, 2, 3" : "Detailed explanation of all possible scenarios in NAQLA 1, 2, 3"}
@@ -149,7 +149,7 @@ export default function Demo() {
               variant="outline"
               className="border-slate-700 hover:bg-slate-800"
             >
-              {isAr ? "العودة إلى NAQLA 1" : "Return to NAQLA 1"}
+              {isAr ? "العودة إلى NAQLA 1" : "Back to NAQLA 1"}
             </Button>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function Demo() {
         <Card className="bg-slate-900/50 border-slate-800 p-8 mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-4">
-              {isAr ? "كيف تعمل منصة NAQLA 5.0؟" : "How does NAQLA 5.0 platform work?"}
+              {isAr ? "كيف تعمل منصة NAQLA 5.0؟" : "How does NAQLA 5.0 work?"}
             </h2>
             <p className="text-slate-300 text-lg leading-relaxed">
               {isAr ? (
@@ -176,13 +176,13 @@ export default function Demo() {
         {/* Visual Comparison Table */}
         <Card className="bg-slate-900/50 border-slate-800 p-8 mb-12">
           <h2 className="text-2xl font-bold text-white mb-6 text-center">
-            {isAr ? "📊 مقارنة بصرية للمسارات الثلاثة" : "📊 Visual Comparison of the Three Paths"}
+            {isAr ? "📊 مقارنة بصرية للمسارات الثلاثة" : "📊 Visual Comparison of the 3 Pathways"}
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-700">
-                  <th className="text-right p-4 text-slate-400 font-semibold">{isAr ? "المعيار" : "Criteria"}</th>
+                  <th className="text-right p-4 text-slate-400 font-semibold">{isAr ? "المعيار" : "Standard"}</th>
                   <th className="text-center p-4">
                     <div className="flex flex-col items-center gap-2">
                       <Lightbulb className="w-6 h-6 text-green-500" />
@@ -210,11 +210,11 @@ export default function Demo() {
                 <tr className="border-b border-slate-800">
                   <td className="p-4 text-slate-300 flex items-center gap-2">
                     <Clock className="w-4 h-4" />
-                    {isAr ? "الوقت المتوقع" : "Expected Time"}
+                    {isAr ? "الوقت المتوقع" : "Estimated Time"}
                   </td>
                   <td className="text-center p-4 text-white font-semibold">{isAr ? "2-4 أسابيع" : "2-4 weeks"}</td>
                   <td className="text-center p-4 text-white font-semibold">{isAr ? "1-2 أسابيع" : "1-2 weeks"}</td>
-                  <td className="text-center p-4 text-white font-semibold">{isAr ? "فوري" : "Immediate"}</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "فوري" : "Instant"}</td>
                 </tr>
                 <tr className="border-b border-slate-800">
                   <td className="p-4 text-slate-300 flex items-center gap-2">
@@ -223,7 +223,7 @@ export default function Demo() {
                   </td>
                   <td className="text-center p-4 text-white font-semibold">{isAr ? "5 خطوات" : "5 steps"}</td>
                   <td className="text-center p-4 text-white font-semibold">{isAr ? "4 خطوات" : "4 steps"}</td>
-                  <td className="text-center p-4 text-white font-semibold">{isAr ? "3 خطوات" : "3 steps"}</td>
+                  <td className="text-center p-4 text-white font-semibold">{isAr ? "3 خطوات" : "3 Steps"}</td>
                 </tr>
                 <tr className="border-b border-slate-800">
                   <td className="p-4 text-slate-300 flex items-center gap-2">
@@ -297,7 +297,7 @@ export default function Demo() {
               {/* Animated Flow Diagram */}
               <div className={`${scenario.bgColor} p-6 border-b ${scenario.borderColor}`}>
                 <h4 className="text-lg font-semibold text-white mb-4 text-center">
-                  {isAr ? "🔄 مخطط تدفق المسار (متحرك)" : "🔄 Path Flow Diagram (Animated)"}
+                  {isAr ? "🔄 مخطط تدفق المسار (متحرك)" : "🔄 Pathway Flowchart (Animated)"}
                 </h4>
                 <div className="flex items-center justify-center gap-2 flex-wrap">
                   {scenario.steps.map((step, stepIndex) => (
@@ -338,7 +338,7 @@ export default function Demo() {
                   <div>
                     <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <Play className="w-5 h-5" />
-                      {isAr ? "خطوات المسار التفصيلية" : "Detailed Path Steps"}
+                      {isAr ? "خطوات المسار التفصيلية" : "Detailed Pathway Steps"}
                     </h4>
                     <div className="space-y-3">
                       {scenario.steps.map((step, stepIndex) => (
@@ -370,7 +370,7 @@ export default function Demo() {
                   {/* Example Idea (Interactive) */}
                   <div>
                     <h4 className="text-lg font-semibold text-white mb-4">
-                      {isAr ? "💡 مثال حي قابل للنقر" : "💡 Interactive Live Example"}
+                      {isAr ? "💡 مثال حي قابل للنقر" : "💡 Clickable Live Example"}
                     </h4>
                     <Card className="bg-slate-800/50 border-slate-700 p-4 transition-all duration-300 hover:scale-105 hover:border-slate-600 cursor-pointer">
                       <h5 className="font-semibold text-white mb-2">
@@ -405,7 +405,7 @@ export default function Demo() {
                     size="lg"
                   >
                     <Play className="w-5 h-5 ml-2" />
-                    {isAr ? "جرب هذا السيناريو الآن (تفاعلي)" : "Try this scenario now (Interactive)"}
+                    {isAr ? "جرب هذا السيناريو الآن (تفاعلي)" : "Try this scenario now (interactive)"}
                   </Button>
                 </div>
               </div>
@@ -418,7 +418,7 @@ export default function Demo() {
           <div className="text-center">
             <Target className="w-12 h-12 text-purple-400 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-white mb-4">
-              {isAr ? "مسار NAQLA 2 → NAQLA 3" : "NAQLA 2 → NAQLA 3 Path"}
+              {isAr ? "مسار NAQLA 2 → NAQLA 3" : "NAQLA 2 → NAQLA 3 Pathway"}
             </h3>
             <p className="text-slate-300 text-lg mb-6 max-w-2xl mx-auto">
               {isAr ? (
@@ -433,11 +433,11 @@ export default function Demo() {
               </Badge>
               <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
               <Badge variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30 animate-pulse">
-                {isAr ? "توافق مع تحدي" : "Match with Challenge"}
+                {isAr ? "توافق مع تحدي" : "Match a Challenge"}
               </Badge>
               <ArrowRight className="w-5 h-5 text-slate-400 animate-pulse" />
               <Badge variant="outline" className="bg-green-500/10 text-green-300 border-green-500/30 animate-pulse">
-                {isAr ? "NAQLA 3: إكمال الصفقة" : "NAQLA 3: Complete Deal"}
+                {isAr ? "NAQLA 3: إكمال الصفقة" : "NAQLA 3: Complete the Deal"}
               </Badge>
             </div>
             <Button
@@ -454,7 +454,7 @@ export default function Demo() {
         <div className="mt-12 text-center text-slate-400">
           <p className="text-sm">
             {isAr ? (
-              <>💡 <strong>{isAr ? "ملاحظة:" : "مNoحظة:"}</strong>{isAr ? " جميع السيناريوهات أعلاه تعمل بشكل فعلي في المنصة. جرّب أي سيناريو لترى كيف يعمل النظام!" : "جميع السيناريوهات أعNoه تعمل بشكل فعلي في المنصة. جرّب أي سيناريو لترى كيف يعمل النظام!"}</>
+              <>💡 <strong>{isAr ? isAr ? "ملاحظة:" : "Note:" : "Note:"}</strong>{isAr ? isAr ? " جميع السيناريوهات أعلاه تعمل بشكل فعلي في المنصة. جرّب أي سيناريو لترى كيف يعمل النظام!" : " All scenarios above are live on the platform. Try any scenario to see how the system works!" : " All scenarios above are live on the platform. Try any scenario to see how the system works!"}</>
             ) : (
               <>💡 <strong>Note:</strong> All scenarios above work effectively on the platform. Try any scenario to see how the system works!</>
             )}

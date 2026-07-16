@@ -102,7 +102,7 @@ export default function IdeaClassification() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{isAr ? "إجمالي الأفكار" : "Total الأفكار"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "إجمالي الأفكار" : "Total Ideas" : "Total Ideas"}</CardTitle>
               <BarChart3 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -112,7 +112,7 @@ export default function IdeaClassification() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{isAr ? "أفكار ناجحة" : "[أفكار ناجحة]"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "أفكار ناجحة" : "Successful Ideas" : "Successful Ideas"}</CardTitle>
               <TrendingUp className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
@@ -125,7 +125,7 @@ export default function IdeaClassification() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{isAr ? "أفكار فاشلة" : "[أفكار فاشلة]"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "أفكار فاشلة" : "Failed Ideas" : "Failed Ideas"}</CardTitle>
               <TrendingDown className="h-4 w-4 text-red-500" />
             </CardHeader>
             <CardContent>
@@ -138,7 +138,7 @@ export default function IdeaClassification() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{isAr ? "قيد المراجعة" : "قيد Audit"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "قيد المراجعة" : "Under Review" : "Under Audit"}</CardTitle>
               <Clock className="h-4 w-4 text-yellow-500" />
             </CardHeader>
             <CardContent>
@@ -180,7 +180,7 @@ export default function IdeaClassification() {
           <Card>
             <CardContent className="py-12 text-center">
               <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-3" />
-              <p className="text-muted-foreground">{isAr ? "لا توجد أفكار معلقة للمراجعة" : "No توجد أفكار معلقة للمراجعة"}</p>
+              <p className="text-muted-foreground">{isAr ? isAr ? "لا توجد أفكار معلقة للمراجعة" : "No pending ideas for review" : "No pending ideas for review"}</p>
             </CardContent>
           </Card>
         ) : (
@@ -210,19 +210,19 @@ export default function IdeaClassification() {
                     )}
                     {idea.teamSize && (
                       <div>
-                        <span className="text-muted-foreground">{isAr ? "حجم الفريق:" : "حجم Team:"}</span>
+                        <span className="text-muted-foreground">{isAr ? isAr ? "حجم الفريق:" : "Team Size:" : "Team Size:"}</span>
                         <p className="font-medium">{idea.teamSize}</p>
                       </div>
                     )}
                     {idea.timelineMonths && (
                       <div>
-                        <span className="text-muted-foreground">{isAr ? "المدة:" : "[المدة:]"}</span>
+                        <span className="text-muted-foreground">{isAr ? isAr ? "المدة:" : "Duration:" : "Duration:"}</span>
                         <p className="font-medium">{idea.timelineMonths} شهر</p>
                       </div>
                     )}
                     {idea.predictedSuccessRate && (
                       <div>
-                        <span className="text-muted-foreground">{isAr ? "التنبؤ:" : "[التنبؤ:]"}</span>
+                        <span className="text-muted-foreground">{isAr ? isAr ? "التنبؤ:" : "Forecast:" : "Forecast:"}</span>
                         <p className="font-medium">
                           {(parseFloat(idea.predictedSuccessRate) * 100).toFixed(1)}%
                         </p>
@@ -282,7 +282,7 @@ export default function IdeaClassification() {
                 <Textarea
                   value={outcomeNotes}
                   onChange={(e) => setOutcomeNotes(e.target.value)}
-                  placeholder="أضف ملاحظات حول سبب النجاح أو الفشل..."
+                  placeholder={isAr ? "أضف ملاحظات حول سبب النجاح أو الفشل..." : "Add notes on success or failure reason..."}
                   rows={4}
                 />
               </div>

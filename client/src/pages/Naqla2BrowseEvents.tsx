@@ -87,7 +87,7 @@ export default function Naqla2BrowseEvents() {
           <div className="flex-1 relative">
             <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             <Input
-              placeholder="ابحث عن فعالية..."
+              placeholder={isAr ? "ابحث عن فعالية..." : "Search event..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10 bg-slate-900/50 border-slate-800 text-white"
@@ -96,36 +96,36 @@ export default function Naqla2BrowseEvents() {
           <Select value={typeFilter} onValueChange={(v) => setTypeFilter(v as any)}>
             <SelectTrigger className="w-full md:w-48 bg-slate-900/50 border-slate-800 text-white">
               <Filter className="w-4 h-4 ml-2" />
-              <SelectValue placeholder="النوع" />
+              <SelectValue placeholder={isAr ? "النوع" : "Type"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
-              <SelectItem value="workshop">{isAr ? "ورشة عمل" : "[ورشة عمل]"}</SelectItem>
-              <SelectItem value="conference">{isAr ? "مؤتمر" : "مؤDoneر"}</SelectItem>
-              <SelectItem value="hackathon">{isAr ? "هاكاثون" : "[هاكاثون]"}</SelectItem>
+              <SelectItem value="all">{isAr ? isAr ? "الكل" : "All" : "[All]"}</SelectItem>
+              <SelectItem value="workshop">{isAr ? isAr ? "ورشة عمل" : "Workshop" : "[Workshop]"}</SelectItem>
+              <SelectItem value="conference">{isAr ? isAr ? "مؤتمر" : "Conference" : "Conference"}</SelectItem>
+              <SelectItem value="hackathon">{isAr ? isAr ? "هاكاثون" : "Hackathon" : "[Hackathon]"}</SelectItem>
             </SelectContent>
           </Select>
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
             <SelectTrigger className="w-full md:w-48 bg-slate-900/50 border-slate-800 text-white">
               <Filter className="w-4 h-4 ml-2" />
-              <SelectValue placeholder="الحالة" />
+              <SelectValue placeholder={isAr ? "الحالة" : "Status"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
+              <SelectItem value="all">{isAr ? isAr ? "الكل" : "All" : "[All]"}</SelectItem>
               <SelectItem value="published">{isAr ? "منشور" : "Published"}</SelectItem>
-              <SelectItem value="ongoing">{isAr ? "جاري" : "[جاري]"}</SelectItem>
+              <SelectItem value="ongoing">{isAr ? isAr ? "جاري" : "Ongoing" : "[Ongoing]"}</SelectItem>
               <SelectItem value="completed">{isAr ? "مكتمل" : "Completed"}</SelectItem>
             </SelectContent>
           </Select>
           <Select value={virtualFilter?.toString()} onValueChange={(v) => setVirtualFilter(v === 'true' ? true : v === 'false' ? false : undefined)}>
             <SelectTrigger className="w-full md:w-48 bg-slate-900/50 border-slate-800 text-white">
               <Globe className="w-4 h-4 ml-2" />
-              <SelectValue placeholder="النوع" />
+              <SelectValue placeholder={isAr ? "النوع" : "Type"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{isAr ? "الكل" : "[الكل]"}</SelectItem>
-              <SelectItem value="true">{isAr ? "افتراضي" : "[افتراضي]"}</SelectItem>
-              <SelectItem value="false">{isAr ? "حضوري" : "[حضوري]"}</SelectItem>
+              <SelectItem value="all">{isAr ? isAr ? "الكل" : "All" : "[All]"}</SelectItem>
+              <SelectItem value="true">{isAr ? isAr ? "افتراضي" : "Virtual" : "[Virtual]"}</SelectItem>
+              <SelectItem value="false">{isAr ? isAr ? "حضوري" : "In-person" : "[In-person]"}</SelectItem>
             </SelectContent>
           </Select>
           <Button 
@@ -186,7 +186,7 @@ export default function Naqla2BrowseEvents() {
                       {event.deliveryMode === "online" ? (
                         <>
                           <Globe className="w-4 h-4 text-blue-500" />
-                          <span>{isAr ? "افتراضي" : "[افتراضي]"}</span>
+                          <span>{isAr ? isAr ? "افتراضي" : "Virtual" : "[Virtual]"}</span>
                         </>
                       ) : (
                         <>
@@ -230,7 +230,7 @@ export default function Naqla2BrowseEvents() {
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardContent className="py-20 text-center">
               <Calendar className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">{isAr ? "لا توجد فعاليات حالياً" : "No توجد فعاليات حالياً"}</p>
+              <p className="text-slate-400 text-lg">{isAr ? isAr ? "لا توجد فعاليات حالياً" : "No events currently" : "No events currently"}</p>
               <Button 
                 onClick={() => navigate('/naqla2/events/create')}
                 className="mt-6 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"

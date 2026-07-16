@@ -59,9 +59,9 @@ export default function ABTesting() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">{isAr ? "A/B Testing للنماذج" : "A/B Testing for Models"}</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? "A/B Testing للنماذج" : "Model A/B Testing"}</h1>
         <p className="text-muted-foreground">
-          {isAr ? "مقارنة أداء نماذج مختلفة واختيار الأفضل تلقائيًا" : "Compare different model performances and automatically select the best one"}
+          {isAr ? "مقارنة أداء نماذج مختلفة واختيار الأفضل تلقائيًا" : "Compare different model performances and auto-select the best"}
         </p>
       </div>
 
@@ -149,9 +149,9 @@ export default function ABTesting() {
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-1 text-muted-foreground">
-              <li>{isAr ? "✓ دقة عالية" : "✓ High accuracy"}</li>
-              <li>{isAr ? "✓ سريع في التدريب" : "✓ Fast training"}</li>
-              <li>{isAr ? "✓ يعمل جيدًا مع البيانات المحدودة" : "✓ Works well with limited data"}</li>
+              <li>{isAr ? "✓ دقة عالية" : "✓ High Accuracy"}</li>
+              <li>{isAr ? "✓ سريع في التدريب" : "✓ Fast Training"}</li>
+              <li>{isAr ? "✓ يعمل جيدًا مع البيانات المحدودة" : "✓ Good with Limited Data"}</li>
             </ul>
           </CardContent>
         </Card>
@@ -168,9 +168,9 @@ export default function ABTesting() {
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-1 text-muted-foreground">
-              <li>{isAr ? "✓ مقاوم للـ overfitting" : "✓ Resistant to overfitting"}</li>
-              <li>{isAr ? "✓ يتعامل مع البيانات غير المتوازنة" : "✓ Handles imbalanced data"}</li>
-              <li>{isAr ? "✓ Feature importance واضح" : "✓ Clear feature importance"}</li>
+              <li>{isAr ? "✓ مقاوم للـ overfitting" : "✓ Overfitting Resistant"}</li>
+              <li>{isAr ? "✓ يتعامل مع البيانات غير المتوازنة" : "✓ Handles Imbalanced Data"}</li>
+              <li>{isAr ? "✓ Feature importance واضح" : "✓ Clear Feature Importance"}</li>
             </ul>
           </CardContent>
         </Card>
@@ -187,9 +187,9 @@ export default function ABTesting() {
           </CardHeader>
           <CardContent>
             <ul className="text-sm space-y-1 text-muted-foreground">
-              <li>{isAr ? "✓ يتعلم علاقات معقدة" : "✓ Learns complex relationships"}</li>
-              <li>{isAr ? "✓ يتحسن مع البيانات الكبيرة" : "✓ Improves with large data"}</li>
-              <li>{isAr ? "✓ مرن وقابل للتخصيص" : "✓ Flexible and customizable"}</li>
+              <li>{isAr ? "✓ يتعلم علاقات معقدة" : "✓ Learns Complex Relationships"}</li>
+              <li>{isAr ? "✓ يتحسن مع البيانات الكبيرة" : "✓ Improves with Large Data"}</li>
+              <li>{isAr ? "✓ مرن وقابل للتخصيص" : "✓ Flexible & Customizable"}</li>
             </ul>
           </CardContent>
         </Card>
@@ -200,7 +200,7 @@ export default function ABTesting() {
         <CardHeader>
           <CardTitle>{isAr ? "تشغيل A/B Testing" : "Run A/B Testing"}</CardTitle>
           <CardDescription>
-            {isAr ? "قد يستغرق الأمر عدة دقائق حسب حجم البيانات" : "This may take several minutes depending on data size"}
+            {isAr ? "قد يستغرق الأمر عدة دقائق حسب حجم البيانات" : "May take several minutes depending on data size"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -212,7 +212,7 @@ export default function ABTesting() {
                 <li>{isAr ? "تقييم كل نموذج باستخدام Cross-Validation" : "Evaluate each model using Cross-Validation"}</li>
                 <li>{isAr ? "مقارنة الأداء (Accuracy, Precision, Recall, F1 Score)" : "Compare performance (Accuracy, Precision, Recall, F1 Score)"}</li>
                 <li>{isAr ? "اختيار النموذج الأفضل تلقائيًا" : "Automatically select the best model"}</li>
-                <li>{isAr ? "حفظ النموذج الفائز كنموذج رئيسي" : "Save the winning model as the main model"}</li>
+                <li>{isAr ? "حفظ النموذج الفائز كنموذج رئيسي" : "Save the winning model as primary"}</li>
               </ol>
             </div>
 
@@ -254,7 +254,7 @@ export default function ABTesting() {
         <CardHeader>
           <CardTitle>{isAr ? "عرض النتائج" : "View Results"}</CardTitle>
           <CardDescription>
-            {isAr ? "بعد إكمال A/B Testing، يمكنك مشاهدة النتائج التفصيلية" : "After completing A/B Testing, you can view detailed results"}
+            {isAr ? "بعد إكمال A/B Testing، يمكنك مشاهدة النتائج التفصيلية" : "After A/B Testing completes, you can view detailed results"}
           </CardDescription>
         </CardHeader>
         <CardContent>

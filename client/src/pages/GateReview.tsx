@@ -37,7 +37,7 @@ export default function GateReview() {
   const innovations = [
     {
       id: 1,
-      title: isAr ? "منصة التعليم الذكية" : "Smart Education Platform",
+      title: "Smart Learning Platform",
       stage: "Validation",
       status: "active" as const,
       startDate: "2026-01-15",
@@ -59,13 +59,13 @@ export default function GateReview() {
         customerSatisfaction: 8.5,
       },
       risks: [
-        { level: "high", description: isAr ? "معدل التحويل أقل من المتوقع (15% vs 20% مستهدف)" : "Conversion rate below target (15% vs 20% target)" },
-        { level: "medium", description: isAr ? "تكلفة اكتساب العميل أعلى من المتوقع" : "Customer acquisition cost higher than expected" },
+        { level: "high", description: "Conversion rate lower than expected (15% vs 20% target)" },
+        { level: "medium", description: "Customer acquisition cost higher than expected" },
       ],
       learnings: isAr ? [
-        "الطلاب يفضلون المحتوى المرئي على النصي",
-        "السعر ليس العائق الأساسي، بل جودة المحتوى",
-        "المعلمون يحتاجون لتدريب أولي بسيط",
+        isAr ? "الطلاب يفضلون المحتوى المرئي على النصي" : "Students prefer visual over text content",
+        isAr ? "السعر ليس العائق الأساسي، بل جودة المحتوى" : "Price is not the main barrier, content quality is",
+        isAr ? "المعلمون يحتاجون لتدريب أولي بسيط" : "Teachers need basic initial training",
       ] : [
         "Students prefer visual content over text",
         "Price is not the main barrier, content quality is",
@@ -73,12 +73,12 @@ export default function GateReview() {
       ],
       recommendation: "continue" as const,
       recommendationReason: isAr
-        ? "على الرغم من أن معدل التحويل أقل من المستهدف، إلا أن مستوى التفاعل عالٍ جداً (72%) والدروس المستفادة قيّمة. يُنصح بالاستمرار مع تعديل استراتيجية التسعير."
+        ? isAr ? "على الرغم من أن معدل التحويل أقل من المستهدف، إلا أن مستوى التفاعل عالٍ جداً (72%) والدروس المستفادة قيّمة. يُنصح بالاستمرار مع تعديل استراتيجية التسعير." : "Despite lower conversion, engagement is high (72%) and insights are valuable. Recommend continuing with pricing strategy adjustment."
         : "Although conversion rate is below target, engagement level is very high (72%) and learnings are valuable. Recommended to continue with pricing strategy adjustment.",
     },
     {
       id: 2,
-      title: isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System",
+      title: "Smart Inventory Management System",
       stage: "Ideation",
       status: "active" as const,
       startDate: "2026-01-10",
@@ -100,14 +100,14 @@ export default function GateReview() {
         technicalFeasibility: 65,
       },
       risks: [
-        { level: "high", description: isAr ? "الطلب في السوق أقل من المتوقع (45% vs 70% مستهدف)" : "Market demand below target (45% vs 70% target)" },
-        { level: "high", description: isAr ? "الميزة التنافسية ضعيفة مقارنة بالحلول الموجودة" : "Competitive advantage weak compared to existing solutions" },
-        { level: "medium", description: isAr ? "التكامل مع الأنظمة الحالية معقد" : "Integration with existing systems is complex" },
+        { level: "high", description: "Market demand lower than expected (45% vs 70% target)" },
+        { level: "high", description: "Weak competitive advantage vs existing solutions" },
+        { level: "medium", description: "Integration with current systems is complex" },
       ],
       learnings: isAr ? [
-        "الشركات الصغيرة لا تعتبر إدارة المخزون أولوية",
-        "التكامل مع أنظمة المحاسبة ليس ضرورياً كما كنا نعتقد",
-        "السوق المستهدف يجب أن يكون الشركات المتوسطة، ليس الصغيرة",
+        isAr ? "الشركات الصغيرة لا تعتبر إدارة المخزون أولوية" : "Small businesses don't prioritize inventory management",
+        isAr ? "التكامل مع أنظمة المحاسبة ليس ضرورياً كما كنا نعتقد" : "Accounting system integration not as crucial as thought",
+        isAr ? "السوق المستهدف يجب أن يكون الشركات المتوسطة، ليس الصغيرة" : "Target market should be medium, not small businesses",
       ] : [
         "Small businesses don't prioritize inventory management",
         "Integration with accounting systems is not as necessary as we thought",
@@ -115,12 +115,12 @@ export default function GateReview() {
       ],
       recommendation: "park" as const,
       recommendationReason: isAr
-        ? "الطلب في السوق المستهدف (الشركات الصغيرة) أقل بكثير من المتوقع، والميزة التنافسية ضعيفة. يُنصح بإيقاف المشروع مؤقتاً وإعادة تقييم السوق المستهدف."
+        ? isAr ? "الطلب في السوق المستهدف (الشركات الصغيرة) أقل بكثير من المتوقع، والميزة التنافسية ضعيفة. يُنصح بإيقاف المشروع مؤقتاً وإعادة تقييم السوق المستهدف." : "Demand in target market (small businesses) is much lower than expected, and competitive advantage is weak. Recommend pausing project and re-evaluating target market."
         : "Demand in target market (small businesses) is much lower than expected, and competitive advantage is weak. Recommended to park the project and re-evaluate target market.",
     },
     {
       id: 3,
-      title: isAr ? "تطبيق الصحة الوقائية" : "Preventive Health App",
+      title: "Preventive Health App",
       stage: "Validation",
       status: "active" as const,
       startDate: "2026-01-20",
@@ -142,12 +142,12 @@ export default function GateReview() {
         retentionRate: 78,
       },
       risks: [
-        { level: "low", description: isAr ? "معدل إكمال البيانات أقل قليلاً من المستهدف (65% vs 80%)" : "Data completion rate slightly below target (65% vs 80%)" },
+        { level: "low", description: "Data completion rate slightly below target (65% vs 80%)" },
       ],
       learnings: isAr ? [
-        "المستخدمون يثقون في النظام إذا كانت الشفافية واضحة",
-        "التوصيات المخصصة تزيد معدل الاحتفاظ بشكل كبير",
-        "الخصوصية ليست عائقاً إذا كانت القيمة واضحة",
+        isAr ? "المستخدمون يثقون في النظام إذا كانت الشفافية واضحة" : "Users trust the system with clear transparency",
+        isAr ? "التوصيات المخصصة تزيد معدل الاحتفاظ بشكل كبير" : "Personalized recommendations significantly boost retention",
+        isAr ? "الخصوصية ليست عائقاً إذا كانت القيمة واضحة" : "Privacy is not a barrier if value is clear",
       ] : [
         "Users trust the system when transparency is clear",
         "Personalized recommendations significantly increase retention rate",
@@ -155,12 +155,12 @@ export default function GateReview() {
       ],
       recommendation: "continue" as const,
       recommendationReason: isAr
-        ? "جميع المؤشرات إيجابية جداً، خاصة معدل التفاعل (85%) والاحتفاظ (78%). الفرضيات الرئيسية تم التحقق منها. يُنصح بالانتقال إلى مرحلة Prototyping."
+        ? isAr ? "جميع المؤشرات إيجابية جداً، خاصة معدل التفاعل (85%) والاحتفاظ (78%). الفرضيات الرئيسية تم التحقق منها. يُنصح بالانتقال إلى مرحلة Prototyping." : "All indicators are very positive, especially engagement (85%) and retention (78%). Key hypotheses validated. Recommend proceeding to Prototyping phase."
         : "All indicators are very positive, especially engagement rate (85%) and retention (78%). Main hypotheses have been validated. Recommended to move to Prototyping stage.",
     },
     {
       id: 4,
-      title: isAr ? "منصة التجارة الإلكترونية B2B" : "B2B E-commerce Platform",
+      title: "B2B E-commerce Platform",
       stage: "Ideation",
       status: "active" as const,
       startDate: "2025-12-15",
@@ -182,16 +182,16 @@ export default function GateReview() {
         profitability: 10,
       },
       risks: [
-        { level: "critical", description: isAr ? "4 من 6 فرضيات رئيسية تم دحضها" : "4 of 6 main hypotheses were invalidated" },
-        { level: "critical", description: isAr ? "الطلب في السوق ضعيف جداً (25%)" : "Market demand is very weak (25%)" },
-        { level: "high", description: isAr ? "لا توجد ميزة تنافسية واضحة" : "No clear competitive advantage" },
-        { level: "high", description: isAr ? "نموذج الربحية غير مستدام" : "Profitability model is unsustainable" },
+        { level: "critical", description: "4 of 6 key hypotheses disproven" },
+        { level: "critical", description: "Market demand very weak (25%)" },
+        { level: "high", description: "No clear competitive advantage" },
+        { level: "high", description: "Unsustainable profitability model" },
       ],
       learnings: isAr ? [
-        "الشركات B2B تفضل العلاقات المباشرة على المنصات",
-        "تكلفة اكتساب العميل عالية جداً ($5000+)",
-        "المنافسون الحاليون يقدمون خدمات مجانية",
-        "الحاجة للمنصة غير موجودة في السوق المحلي",
+        isAr ? "الشركات B2B تفضل العلاقات المباشرة على المنصات" : "B2B companies prefer direct relationships over platforms",
+        isAr ? "تكلفة اكتساب العميل عالية جداً ($5000+)" : "Customer acquisition cost very high ($5000+)",
+        isAr ? "المنافسون الحاليون يقدمون خدمات مجانية" : "Current competitors offer free services",
+        isAr ? "الحاجة للمنصة غير موجودة في السوق المحلي" : "No local market need for the platform",
       ] : [
         "B2B companies prefer direct relationships over platforms",
         "Customer acquisition cost is very high ($5000+)",
@@ -200,7 +200,7 @@ export default function GateReview() {
       ],
       recommendation: "kill" as const,
       recommendationReason: isAr
-        ? "المشروع فشل في إثبات جدواه. 4 من 6 فرضيات رئيسية تم دحضها، والطلب في السوق ضعيف جداً. استمرار المشروع سيهدر موارد كبيرة دون عائد متوقع. يُنصح بإيقاف المشروع نهائياً."
+        ? isAr ? "المشروع فشل في إثبات جدواه. 4 من 6 فرضيات رئيسية تم دحضها، والطلب في السوق ضعيف جداً. استمرار المشروع سيهدر موارد كبيرة دون عائد متوقع. يُنصح بإيقاف المشروع نهائياً." : "Project failed to prove viability. 4 of 6 key hypotheses disproven, market demand very weak. Continuing will waste significant resources without expected return. Recommend permanent halt."
         : "The project failed to prove its viability. 4 of 6 main hypotheses were invalidated, and market demand is very weak. Continuing the project will waste significant resources with no expected return. Recommended to terminate the project.",
     },
   ];
@@ -222,14 +222,14 @@ export default function GateReview() {
 
   const handleSubmitDecision = () => {
     if (!rationale) {
-      toast.error(isAr ? "الرجاء توضيح سبب القرار" : "Please provide a rationale for the decision");
+      toast.error(isAr ? "الرجاء توضيح سبب القرار" : "Please state reason for decision");
       return;
     }
 
     const decisionLabels = {
-      continue: isAr ? "الاستمرار" : "Continue",
-      park: isAr ? "الإيقاف المؤقت" : "Park",
-      kill: isAr ? "الإيقاف النهائي" : "Kill",
+      continue: "Continue",
+      park: "Pause",
+      kill: "Halt Permanently",
     };
 
     toast.success(isAr ? `تم تسجيل قرار ${decisionLabels[decisionType!]} بنجاح` : `Decision to ${decisionLabels[decisionType!]} recorded successfully`);
@@ -300,9 +300,9 @@ export default function GateReview() {
       case "continue":
         return isAr ? "الاستمرار" : "Continue";
       case "park":
-        return isAr ? "إيقاف مؤقت" : "Park";
+        return isAr ? "إيقاف مؤقت" : "Paused";
       case "kill":
-        return isAr ? "إيقاف نهائي" : "Kill";
+        return isAr ? "إيقاف نهائي" : "Halted";
       default:
         return rec;
     }
@@ -317,7 +317,7 @@ export default function GateReview() {
             {isAr ? "مراجعة البوابات (Gate Review)" : "Gate Review"}
           </h1>
           <p className="text-gray-600 mt-2">
-            {isAr ? "اتخذ قرارات حاسمة: الاستمرار، الإيقاف المؤقت، أو الإيقاف النهائي" : "Make critical decisions: Continue, Park, or Kill"}
+            {isAr ? "اتخذ قرارات حاسمة: الاستمرار، الإيقاف المؤقت، أو الإيقاف النهائي" : "Make critical decisions: Continue, Pause, or Halt Permanently"}
           </p>
         </div>
 
@@ -343,7 +343,7 @@ export default function GateReview() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "موقوف مؤقتاً" : "Parked"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "موقوف مؤقتاً" : "Paused"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-yellow-600">{stats.parked}</div>
@@ -352,7 +352,7 @@ export default function GateReview() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "موقوف نهائياً" : "Killed"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "موقوف نهائياً" : "Halted"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-red-600">{stats.killed}</div>
@@ -380,7 +380,7 @@ export default function GateReview() {
                 <Target className="h-5 w-5 text-green-600" />
                 {isAr ? "المشاريع للمراجعة" : "Projects for Review"}
               </CardTitle>
-              <CardDescription>{isAr ? "اختر مشروعاً لعرض التفاصيل واتخاذ القرار" : "Select a project to view details and make a decision"}</CardDescription>
+              <CardDescription>{isAr ? "اختر مشروعاً لعرض التفاصيل واتخاذ القرار" : "Select a project to view details and decide"}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -428,7 +428,7 @@ export default function GateReview() {
             {!selectedInnovationData ? (
               <CardContent className="py-12 text-center">
                 <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "اختر مشروعاً" : "Select a Project"}</h3>
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "اختر مشروعاً" : "Select Project"}</h3>
                 <p className="text-gray-500">
                   {isAr ? "اختر مشروعاً من القائمة لعرض التفاصيل واتخاذ قرار البوابة" : "Select a project from the list to view details and make a gate decision"}
                 </p>
@@ -509,7 +509,7 @@ export default function GateReview() {
                         <CardHeader>
                           <CardTitle className="text-base flex items-center gap-2 text-blue-900">
                             <Lightbulb className="h-5 w-5" />
-                            {isAr ? "الدروس المستفادة" : "Learnings"}
+                            {isAr ? "الدروس المستفادة" : "Lessons Learned"}
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -529,7 +529,7 @@ export default function GateReview() {
                       <div className="grid grid-cols-2 gap-4">
                         <Card>
                           <CardHeader className="pb-3">
-                            <CardTitle className="text-sm text-gray-600">{isAr ? "الفرضيات" : "Hypotheses"}</CardTitle>
+                            <CardTitle className="text-sm text-gray-600">{isAr ? "الفرضيات" : "Assumptions"}</CardTitle>
                           </CardHeader>
                           <CardContent>
                             <div className="space-y-2">
@@ -546,13 +546,13 @@ export default function GateReview() {
                                 </span>
                               </div>
                               <div className="flex items-center justify-between text-sm text-red-600">
-                                <span>{isAr ? "تم الدحض" : "Invalidated"}</span>
+                                <span>{isAr ? "تم الدحض" : "Debunked"}</span>
                                 <span className="font-semibold">
                                   {selectedInnovationData.hypotheses.invalidated}
                                 </span>
                               </div>
                               <div className="flex items-center justify-between text-sm text-blue-600">
-                                <span>{isAr ? "قيد الاختبار" : "Testing"}</span>
+                                <span>{isAr ? "قيد الاختبار" : "In Testing"}</span>
                                 <span className="font-semibold">
                                   {selectedInnovationData.hypotheses.testing}
                                 </span>
@@ -563,7 +563,7 @@ export default function GateReview() {
 
                         <Card>
                           <CardHeader className="pb-3">
-                            <CardTitle className="text-sm text-gray-600">{isAr ? "اختبارات RAT" : "RAT Tests"}</CardTitle>
+                            <CardTitle className="text-sm text-gray-600">{isAr ? "اختبارات RAT" : "RATs"}</CardTitle>
                           </CardHeader>
                           <CardContent>
                             <div className="space-y-2">
@@ -605,7 +605,7 @@ export default function GateReview() {
                       {selectedInnovationData.risks.length === 0 ? (
                         <div className="text-center py-8">
                           <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
-                          <p className="text-gray-600">{isAr ? "لا توجد مخاطر محددة" : "No identified risks"}</p>
+                          <p className="text-gray-600">{isAr ? "لا توجد مخاطر محددة" : "No Risks Identified"}</p>
                         </div>
                       ) : (
                         <div className="space-y-3">
@@ -657,7 +657,7 @@ export default function GateReview() {
                           onClick={() => handleDecision("park")}
                         >
                           <Pause className="h-4 w-4 ml-2" />
-                          {isAr ? "إيقاف مؤقت" : "Park"}
+                          {isAr ? "إيقاف مؤقت" : "Paused"}
                         </Button>
                         <Button
                           variant="outline"
@@ -665,7 +665,7 @@ export default function GateReview() {
                           onClick={() => handleDecision("kill")}
                         >
                           <XCircle className="h-4 w-4 ml-2" />
-                          {isAr ? "إيقاف نهائي" : "Kill"}
+                          {isAr ? "إيقاف نهائي" : "Halted"}
                         </Button>
                       </div>
 
@@ -677,15 +677,15 @@ export default function GateReview() {
                               {decisionType && getRecommendationLabel(decisionType)}
                             </DialogTitle>
                             <DialogDescription>
-                              {isAr ? "الرجاء توضيح سبب هذا القرار. سيتم توثيق هذا القرار في سجل المشروع." : "Please explain the rationale for this decision. This decision will be documented in the project log."}
+                              {isAr ? "الرجاء توضيح سبب هذا القرار. سيتم توثيق هذا القرار في سجل المشروع." : "Please explain the reason for this decision. It will be documented in the project log."}
                             </DialogDescription>
                           </DialogHeader>
                           <div className="space-y-4 py-4">
                             <div className="space-y-2">
-                              <Label htmlFor="rationale">{isAr ? "سبب القرار *" : "Decision Rationale *"}</Label>
+                              <Label htmlFor="rationale">{isAr ? "سبب القرار *" : "Reason for Decision *"}</Label>
                               <Textarea
                                 id="rationale"
-                                placeholder={isAr ? "اشرح بالتفصيل لماذا اتخذت هذا القرار..." : "Explain in detail why you made this decision..."}
+                                placeholder={isAr ? "اشرح بالتفصيل لماذا اتخذت هذا القرار..." : "Explain in detail why this decision was made..."}
                                 rows={6}
                                 value={rationale}
                                 onChange={(e) => setRationale(e.target.value)}

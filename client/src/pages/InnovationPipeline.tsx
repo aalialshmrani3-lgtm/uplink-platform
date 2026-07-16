@@ -142,52 +142,52 @@ interface UserStats {
 
 // ==================== SAMPLE DATA ====================
 const getSampleTrends = (isAr: boolean): Trend[] => [
-  { id: "tr-1", title: isAr ? "الذكاء الاصطناعي التوليدي" : "Generative AI", description: isAr ? "تقنيات AI قادرة على إنشاء محتوى جديد" : "AI technologies capable of creating new content", category: "technology", impact: "high", maturity: 70, relevance: 95, sources: ["Gartner", "McKinsey"] },
-  { id: "tr-2", title: isAr ? "الاستدامة الرقمية" : "Digital Sustainability", description: isAr ? "تقليل البصمة الكربونية للتقنيات" : "Reducing the carbon footprint of technologies", category: "market", impact: "high", maturity: 45, relevance: 85, sources: ["WEF", "Deloitte"] },
-  { id: "tr-3", title: isAr ? "Web3 والبلوكتشين" : "Web3 and Blockchain", description: isAr ? "اللامركزية والعقود الذكية" : "Decentralization and smart contracts", category: "technology", impact: "medium", maturity: 55, relevance: 60, sources: ["Coinbase", "a16z"] },
-  { id: "tr-4", title: isAr ? "تجربة العميل الفائقة" : "Hyper-Personalized Customer Experience", description: isAr ? "التخصيص المفرط والتفاعل الذكي" : "Extreme personalization and smart interaction", category: "consumer", impact: "high", maturity: 65, relevance: 90, sources: ["Forrester", "Salesforce"] },
-  { id: "tr-5", title: isAr ? "الحوسبة الكمية" : "Quantum Computing", description: isAr ? "معالجة البيانات بسرعات غير مسبوقة" : "Processing data at unprecedented speeds", category: "technology", impact: "high", maturity: 25, relevance: 40, sources: ["IBM", "Google"] }
+  { id: "tr-1", title: "Generative AI", description: "AI for new content creation", category: "technology", impact: "high", maturity: 70, relevance: 95, sources: ["Gartner", "McKinsey"] },
+  { id: "tr-2", title: "Digital Sustainability", description: "Reducing tech's carbon footprint", category: "market", impact: "high", maturity: 45, relevance: 85, sources: ["WEF", "Deloitte"] },
+  { id: "tr-3", title: "Web3 & Blockchain", description: "Decentralization & Smart Contracts", category: "technology", impact: "medium", maturity: 55, relevance: 60, sources: ["Coinbase", "a16z"] },
+  { id: "tr-4", title: "Hyper Customer Experience", description: "Hyper-personalization & Smart Interaction", category: "consumer", impact: "high", maturity: 65, relevance: 90, sources: ["Forrester", "Salesforce"] },
+  { id: "tr-5", title: "Quantum Computing", description: "Unprecedented data processing speeds", category: "technology", impact: "high", maturity: 25, relevance: 40, sources: ["IBM", "Google"] }
 ];
 
 const getSampleInitiatives = (isAr: boolean): StrategicInitiative[] => [
-  { id: "si-1", title: isAr ? "التحول الرقمي للخدمات" : "Digital Transformation of Services", description: isAr ? "تحويل جميع الخدمات التقليدية إلى خدمات رقمية متكاملة" : "Transforming all traditional services into integrated digital services", priority: "high", status: "active", progress: 45, budget: 5000000, budgetSpent: 2250000, owner: isAr ? "أحمد محمد" : "Ahmed Mohammed", startDate: "2024-01-01", endDate: "2024-12-31", kpis: [{ name: isAr ? "رضا العملاء" : "Customer Satisfaction", target: 90, current: 78 }, { name: isAr ? "وقت الخدمة" : "Service Time", target: 5, current: 8 }] },
-  { id: "si-2", title: isAr ? "الاستدامة البيئية" : "Environmental Sustainability", description: isAr ? "تطوير حلول مبتكرة للحفاظ على البيئة وتقليل البصمة الكربونية" : "Developing innovative solutions to preserve the environment and reduce carbon footprint", priority: "high", status: "active", progress: 30, budget: 3000000, budgetSpent: 900000, owner: isAr ? "سارة علي" : "Sara Ali", startDate: "2024-02-01", endDate: "2025-01-31", kpis: [{ name: isAr ? "تقليل الانبعاثات" : "Emissions Reduction", target: 40, current: 15 }] },
-  { id: "si-3", title: isAr ? "تجربة العميل المتميزة" : "Exceptional Customer Experience", description: isAr ? "إعادة تصميم رحلة العميل لتحقيق أعلى مستويات الرضا" : "Redesigning the customer journey to achieve the highest levels of satisfaction", priority: "medium", status: "active", progress: 60, budget: 2000000, budgetSpent: 1200000, owner: isAr ? "محمد خالد" : "Mohammed Khalid", startDate: "2024-01-15", endDate: "2024-09-30", kpis: [{ name: "NPS", target: 70, current: 55 }, { name: isAr ? "معدل الاحتفاظ" : "Retention Rate", target: 90, current: 75 }] }
+  { id: "si-1", title: "Digital Service Transformation", description: "Integrating traditional services digitally", priority: "high", status: "active", progress: 45, budget: 5000000, budgetSpent: 2250000, owner: "Ahmed Mohammed", startDate: "2024-01-01", endDate: "2024-12-31", kpis: [{ name: "Customer Satisfaction", target: 90, current: 78 }, { name: "Service Time", target: 5, current: 8 }] },
+  { id: "si-2", title: "Environmental Sustainability", description: "Innovative solutions for environmental preservation & carbon reduction", priority: "high", status: "active", progress: 30, budget: 3000000, budgetSpent: 900000, owner: "Sara Ali", startDate: "2024-02-01", endDate: "2025-01-31", kpis: [{ name: "Emissions Reduction", target: 40, current: 15 }] },
+  { id: "si-3", title: "Exceptional Customer Experience", description: "Redesigning customer journey for peak satisfaction", priority: "medium", status: "active", progress: 60, budget: 2000000, budgetSpent: 1200000, owner: "Mohammed Khaled", startDate: "2024-01-15", endDate: "2024-09-30", kpis: [{ name: "NPS", target: 70, current: 55 }, { name: "Retention Rate", target: 90, current: 75 }] }
 ];
 
 const getSampleChallenges = (isAr: boolean): Challenge[] => [
-  { id: "ch-1", title: isAr ? "كيف نجعل التسجيل أسرع بنسبة 80%؟" : "How can we make registration 80% faster?", description: isAr ? "تحدي تقليل وقت التسجيل من 15 دقيقة إلى 3 دقائق" : "Challenge to reduce registration time from 15 minutes to 3 minutes", initiativeId: "si-1", status: "in_progress", ideasCount: 12, deadline: "2024-03-31", reward: isAr ? "10,000 ريال" : "10,000 SAR", isOpen: true },
-  { id: "ch-2", title: isAr ? "كيف نقلل استهلاك الطاقة في مراكز البيانات؟" : "How can we reduce energy consumption in data centers?", description: isAr ? "تحدي خفض استهلاك الطاقة بنسبة 40%" : "Challenge to reduce energy consumption by 40%", initiativeId: "si-2", status: "open", ideasCount: 8, deadline: "2024-04-30", isOpen: true },
-  { id: "ch-3", title: isAr ? "كيف نحسن معدل الاحتفاظ بالعملاء؟" : "How can we improve customer retention rate?", description: isAr ? "زيادة معدل الاحتفاظ من 70% إلى 90%" : "Increase retention rate from 70% to 90%", initiativeId: "si-3", status: "refined", ideasCount: 15, deadline: "2024-05-15", isOpen: false }
+  { id: "ch-1", title: "How to make registration 80% faster?", description: "Challenge: Reduce registration from 15 to 3 minutes", initiativeId: "si-1", status: "in_progress", ideasCount: 12, deadline: "2024-03-31", reward: "10,000 SAR", isOpen: true },
+  { id: "ch-2", title: "How to reduce data center energy consumption?", description: "Challenge: 40% energy consumption reduction", initiativeId: "si-2", status: "open", ideasCount: 8, deadline: "2024-04-30", isOpen: true },
+  { id: "ch-3", title: "How to improve customer retention?", description: "Increase retention from 70% to 90%", initiativeId: "si-3", status: "refined", ideasCount: 15, deadline: "2024-05-15", isOpen: false }
 ];
 
 const getSampleIdeas = (isAr: boolean): Idea[] => [
-  { id: "idea-1", title: isAr ? "التسجيل عبر البصمة الرقمية" : "Biometric Registration", description: isAr ? "استخدام بصمة الوجه أو الإصبع للتسجيل الفوري" : "Using face or fingerprint for instant registration", challengeId: "ch-1", status: "clustered", clusterId: "cluster-1", score: 85, aiScore: 88, votes: { up: 24, down: 3 }, author: isAr ? "أحمد محمد" : "Ahmed Mohammed", createdAt: "2024-01-15", tags: [isAr ? "تقنية" : "Technology", isAr ? "أمان" : "Security", "UX"], comments: 15, views: 234, bookmarks: 12, potentialROI: 250, implementationCost: 500000, timeToMarket: isAr ? "6 أشهر" : "6 months" },
-  { id: "idea-2", title: isAr ? "الربط مع الهوية الوطنية" : "National ID Integration", description: isAr ? "سحب البيانات تلقائياً من قاعدة بيانات الهوية" : "Automatically pulling data from national ID database", challengeId: "ch-1", status: "clustered", clusterId: "cluster-1", score: 92, aiScore: 94, votes: { up: 31, down: 2 }, author: isAr ? "سارة علي" : "Sara Ali", createdAt: "2024-01-16", tags: [isAr ? "تكامل" : "Integration", isAr ? "حكومي" : "Governmental"], comments: 22, views: 456, bookmarks: 28, potentialROI: 400, implementationCost: 300000, timeToMarket: isAr ? "4 أشهر" : "4 months" },
-  { id: "idea-3", title: isAr ? "التبريد بالذكاء الاصطناعي" : "AI-Powered Cooling", description: isAr ? "نظام تبريد ذكي يتكيف مع الحمل الفعلي" : "Smart cooling system that adapts to actual load", challengeId: "ch-2", status: "testing", score: 78, aiScore: 82, votes: { up: 18, down: 5 }, author: isAr ? "محمد خالد" : "Mohammed Khalid", createdAt: "2024-01-17", tags: ["AI", isAr ? "استدامة" : "Sustainability"], comments: 8, views: 156, bookmarks: 6, potentialROI: 180, implementationCost: 800000, timeToMarket: isAr ? "12 شهر" : "12 months" },
-  { id: "idea-4", title: isAr ? "برنامج ولاء متدرج" : "Tiered Loyalty Program", description: isAr ? "نظام نقاط ومكافآت حسب مستوى الاستخدام" : "Points and rewards system based on usage level", challengeId: "ch-3", status: "active", score: 70, aiScore: 72, votes: { up: 15, down: 8 }, author: isAr ? "فاطمة أحمد" : "Fatima Ahmed", createdAt: "2024-01-18", tags: [isAr ? "ولاء" : "Loyalty", isAr ? "تسويق" : "Marketing"], comments: 12, views: 189, bookmarks: 9, potentialROI: 150, implementationCost: 200000, timeToMarket: isAr ? "3 أشهر" : "3 months" },
-  { id: "idea-5", title: isAr ? "التواصل الاستباقي" : "Proactive Communication", description: isAr ? "التواصل مع العملاء قبل انتهاء اشتراكهم" : "Communicating with customers before their subscription ends", challengeId: "ch-3", status: "parked", score: 55, aiScore: 58, votes: { up: 10, down: 12 }, author: isAr ? "عمر حسن" : "Omar Hassan", createdAt: "2024-01-19", tags: ["CRM", isAr ? "تواصل" : "Communication"], comments: 5, views: 87, bookmarks: 2, potentialROI: 80, implementationCost: 100000, timeToMarket: isAr ? "2 أشهر" : "2 months" }
+  { id: "idea-1", title: "Biometric Registration", description: "Use face or fingerprint for instant registration", challengeId: "ch-1", status: "clustered", clusterId: "cluster-1", score: 85, aiScore: 88, votes: { up: 24, down: 3 }, author: "Ahmed Mohammed", createdAt: "2024-01-15", tags: [isAr ? "تقنية" : "Technology", isAr ? "أمان" : "Security", "UX"], comments: 15, views: 234, bookmarks: 12, potentialROI: 250, implementationCost: 500000, timeToMarket: "6 months" },
+  { id: "idea-2", title: "National ID Integration", description: "Automatically retrieve data from ID database", challengeId: "ch-1", status: "clustered", clusterId: "cluster-1", score: 92, aiScore: 94, votes: { up: 31, down: 2 }, author: "Sara Ali", createdAt: "2024-01-16", tags: [isAr ? "تكامل" : "Integration", isAr ? "حكومي" : "Governmental"], comments: 22, views: 456, bookmarks: 28, potentialROI: 400, implementationCost: 300000, timeToMarket: "4 months" },
+  { id: "idea-3", title: "AI Cooling", description: "Smart cooling system adapts to actual load", challengeId: "ch-2", status: "testing", score: 78, aiScore: 82, votes: { up: 18, down: 5 }, author: "Mohammed Khaled", createdAt: "2024-01-17", tags: ["AI", isAr ? "استدامة" : "Sustainability"], comments: 8, views: 156, bookmarks: 6, potentialROI: 180, implementationCost: 800000, timeToMarket: "12 months" },
+  { id: "idea-4", title: "Tiered Loyalty Program", description: "Points & rewards system based on usage level", challengeId: "ch-3", status: "active", score: 70, aiScore: 72, votes: { up: 15, down: 8 }, author: "Fatima Ahmed", createdAt: "2024-01-18", tags: [isAr ? "ولاء" : "Loyalty", isAr ? "تسويق" : "Marketing"], comments: 12, views: 189, bookmarks: 9, potentialROI: 150, implementationCost: 200000, timeToMarket: "3 months" },
+  { id: "idea-5", title: "Proactive Communication", description: "Communicate with customers before subscription expiry", challengeId: "ch-3", status: "parked", score: 55, aiScore: 58, votes: { up: 10, down: 12 }, author: "Omar Hassan", createdAt: "2024-01-19", tags: ["CRM", isAr ? "تواصل" : "Communication"], comments: 5, views: 87, bookmarks: 2, potentialROI: 80, implementationCost: 100000, timeToMarket: "2 months" }
 ];
 
 const getSampleClusters = (isAr: boolean): Cluster[] => [
-  { id: "cluster-1", name: isAr ? "حلول الهوية الرقمية" : "Digital Identity Solutions", description: isAr ? "مجموعة أفكار تعتمد على التحقق الرقمي من الهوية" : "A group of ideas based on digital identity verification", ideas: ["idea-1", "idea-2"], status: "testing", aiSimilarity: 87 },
-  { id: "cluster-2", name: isAr ? "حلول الاحتفاظ بالعملاء" : "Customer Retention Solutions", description: isAr ? "أفكار لتحسين ولاء العملاء" : "Ideas to improve customer loyalty", ideas: ["idea-4"], status: "active", aiSimilarity: 72 }
+  { id: "cluster-1", name: "Digital Identity Solutions", description: "Ideas based on digital identity verification", ideas: ["idea-1", "idea-2"], status: "testing", aiSimilarity: 87 },
+  { id: "cluster-2", name: "Customer Retention Solutions", description: "Ideas to improve customer loyalty", ideas: ["idea-4"], status: "active", aiSimilarity: 72 }
 ];
 
 const getSampleHypotheses = (isAr: boolean): Hypothesis[] => [
-  { id: "hyp-1", clusterId: "cluster-1", statement: isAr ? "إذا استخدمنا التحقق البيومتري، سينخفض وقت التسجيل بنسبة 80%" : "If we use biometric verification, registration time will decrease by 80%", assumptions: [{ text: isAr ? "المستخدمون يملكون أجهزة تدعم البصمة" : "Users own devices that support biometrics", risk: "medium", validated: true }, { text: isAr ? "البنية التحتية جاهزة للتكامل" : "Infrastructure is ready for integration", risk: "high", validated: false }, { text: isAr ? "المستخدمون يثقون بالتحقق البيومتري" : "Users trust biometric verification", risk: "low", validated: true }], riskLevel: "medium", result: "pending", confidence: 65 }
+  { id: "hyp-1", clusterId: "cluster-1", statement: "Using biometric verification will reduce registration time by 80%", assumptions: [{ text: "Users have fingerprint-enabled devices", risk: "medium", validated: true }, { text: "Infrastructure ready for integration", risk: "high", validated: false }, { text: "Users trust biometric verification", risk: "low", validated: true }], riskLevel: "medium", result: "pending", confidence: 65 }
 ];
 
 const getSampleExperiments = (isAr: boolean): Experiment[] => [
-  { id: "exp-1", hypothesisId: "hyp-1", title: isAr ? "اختبار A/B للتسجيل البيومتري" : "A/B Test for Biometric Registration", description: isAr ? "مقارنة التسجيل التقليدي مع التسجيل بالبصمة" : "Comparing traditional registration with biometric registration", metrics: [{ name: isAr ? "وقت التسجيل" : "Registration Time", target: 3, actual: 4.2 }, { name: isAr ? "معدل الإكمال" : "Completion Rate", target: 95, actual: 88 }, { name: isAr ? "رضا المستخدم" : "User Satisfaction", target: 4.5, actual: 4.1 }], status: "running", learnings: "", startDate: "2024-02-01", cost: 50000 }
+  { id: "exp-1", hypothesisId: "hyp-1", title: "A/B test biometric enrollment", description: "Compare traditional vs. fingerprint enrollment", metrics: [{ name: "Enrollment time", target: 3, actual: 4.2 }, { name: "Completion rate", target: 95, actual: 88 }, { name: "User satisfaction", target: 4.5, actual: 4.1 }], status: "running", learnings: "", startDate: "2024-02-01", cost: 50000 }
 ];
 
 const getSampleLeaderboard = (isAr: boolean): UserStats[] => [
-  { id: "u-1", name: isAr ? "سارة علي" : "Sara Ali", points: 2850, level: 8, badges: [isAr ? "مبتكر" : "Innovator", isAr ? "قائد" : "Leader", isAr ? "خبير" : "Expert"], ideasSubmitted: 24, ideasApproved: 18, experimentsRun: 5, rank: 1 },
-  { id: "u-2", name: isAr ? "أحمد محمد" : "Ahmed Mohammed", points: 2340, level: 7, badges: [isAr ? "مبتكر" : "Innovator", isAr ? "متعاون" : "Collaborator"], ideasSubmitted: 19, ideasApproved: 12, experimentsRun: 3, rank: 2 },
-  { id: "u-3", name: isAr ? "محمد خالد" : "Mohammed Khalid", points: 1890, level: 6, badges: [isAr ? "باحث" : "Researcher", isAr ? "محلل" : "Analyst"], ideasSubmitted: 15, ideasApproved: 9, experimentsRun: 4, rank: 3 },
-  { id: "u-4", name: isAr ? "فاطمة أحمد" : "Fatima Ahmed", points: 1560, level: 5, badges: [isAr ? "مبتكر" : "Innovator"], ideasSubmitted: 12, ideasApproved: 7, experimentsRun: 2, rank: 4 },
-  { id: "u-5", name: isAr ? "عمر حسن" : "Omar Hassan", points: 1230, level: 4, badges: [isAr ? "متعاون" : "Collaborator"], ideasSubmitted: 10, ideasApproved: 5, experimentsRun: 1, rank: 5 }
+  { id: "u-1", name: "Sara Ali", points: 2850, level: 8, badges: [isAr ? "مبتكر" : "Innovator", isAr ? "قائد" : "Leader", isAr ? "خبير" : "Expert"], ideasSubmitted: 24, ideasApproved: 18, experimentsRun: 5, rank: 1 },
+  { id: "u-2", name: "Ahmed Mohammed", points: 2340, level: 7, badges: [isAr ? "مبتكر" : "Innovator", isAr ? "متعاون" : "Collaborator"], ideasSubmitted: 19, ideasApproved: 12, experimentsRun: 3, rank: 2 },
+  { id: "u-3", name: "Mohammed Khaled", points: 1890, level: 6, badges: [isAr ? "باحث" : "Researcher", isAr ? "محلل" : "Analyst"], ideasSubmitted: 15, ideasApproved: 9, experimentsRun: 4, rank: 3 },
+  { id: "u-4", name: "Fatima Ahmed", points: 1560, level: 5, badges: [isAr ? "مبتكر" : "Innovator"], ideasSubmitted: 12, ideasApproved: 7, experimentsRun: 2, rank: 4 },
+  { id: "u-5", name: "Omar Hassan", points: 1230, level: 4, badges: [isAr ? "متعاون" : "Collaborator"], ideasSubmitted: 10, ideasApproved: 5, experimentsRun: 1, rank: 5 }
 ];
 
 // ==================== COMPONENTS ====================
@@ -229,11 +229,11 @@ function TrendCard({ trend }: { trend: Trend }) {
     competitive: "bg-red-500/10 text-red-500"
   };
   const categoryLabels: Record<TrendCategory, string> = {
-    technology: isAr ? "تقنية" : "Technology",
-    market: isAr ? "سوق" : "Market",
-    consumer: isAr ? "مستهلك" : "Consumer",
-    regulatory: isAr ? "تنظيمي" : "Regulatory",
-    competitive: isAr ? "تنافسي" : "Competitive"
+    technology: "Technology",
+    market: "Market",
+    consumer: "Consumer",
+    regulatory: "Regulatory",
+    competitive: "Competitive"
   };
   const impactColors: Record<RiskLevel, string> = { high: "text-red-500", medium: "text-yellow-500", low: "text-green-500" };
 
@@ -287,13 +287,13 @@ function PortfolioMatrix({ initiatives }: { initiatives: StrategicInitiative[] }
           <PieChart className="w-5 h-5 text-purple-500" />
           {isAr ? "مصفوفة محفظة الابتكار" : "Innovation Portfolio Matrix"}
         </CardTitle>
-        <CardDescription>{isAr ? "توزيع المبادرات حسب المخاطر والعائد المتوقع" : "Distribution of initiatives by risk and expected return"}</CardDescription>
+        <CardDescription>{isAr ? "توزيع المبادرات حسب المخاطر والعائد المتوقع" : "Initiative distribution by risk & expected return"}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-4 h-64">
           <div className="border-l-2 border-b-2 border-border relative">
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground">{isAr ? "عائد منخفض" : "Low Return"}</div>
-            <div className="absolute top-1/2 -left-12 -translate-y-1/2 -rotate-90 text-xs text-muted-foreground">{isAr ? "مخاطر عالية" : "High Risk"}</div>
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground">{isAr ? "عائد منخفض" : "Low return"}</div>
+            <div className="absolute top-1/2 -left-12 -translate-y-1/2 -rotate-90 text-xs text-muted-foreground">{isAr ? "مخاطر عالية" : "High risk"}</div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center p-4 bg-red-500/10 rounded-lg">
                 <p className="text-xs text-red-500 font-medium">{isAr ? "تجنب" : "Avoid"}</p>
@@ -302,19 +302,19 @@ function PortfolioMatrix({ initiatives }: { initiatives: StrategicInitiative[] }
             </div>
           </div>
           <div className="border-b-2 border-border relative">
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground">{isAr ? "عائد عالي" : "High Return"}</div>
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground">{isAr ? "عائد عالي" : "High return"}</div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center p-4 bg-yellow-500/10 rounded-lg">
-                <p className="text-xs text-yellow-500 font-medium">{isAr ? "استثمار حذر" : "Cautious Investment"}</p>
+                <p className="text-xs text-yellow-500 font-medium">{isAr ? "استثمار حذر" : "Cautious investment"}</p>
                 <p className="text-lg font-bold">{initiatives.filter(i => i.priority === "high").length}</p>
               </div>
             </div>
           </div>
           <div className="border-l-2 border-border relative">
-            <div className="absolute top-1/2 -left-12 -translate-y-1/2 -rotate-90 text-xs text-muted-foreground">{isAr ? "مخاطر منخفضة" : "Low Risk"}</div>
+            <div className="absolute top-1/2 -left-12 -translate-y-1/2 -rotate-90 text-xs text-muted-foreground">{isAr ? "مخاطر منخفضة" : "Low risk"}</div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center p-4 bg-blue-500/10 rounded-lg">
-                <p className="text-xs text-blue-500 font-medium">{isAr ? "تحسين" : "Improve"}</p>
+                <p className="text-xs text-blue-500 font-medium">{isAr ? "تحسين" : "Optimize"}</p>
                 <p className="text-lg font-bold">{initiatives.filter(i => i.priority === "low").length}</p>
               </div>
             </div>
@@ -322,7 +322,7 @@ function PortfolioMatrix({ initiatives }: { initiatives: StrategicInitiative[] }
           <div className="relative">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center p-4 bg-green-500/10 rounded-lg">
-                <p className="text-xs text-green-500 font-medium">{isAr ? "استثمار قوي" : "Strong Investment"}</p>
+                <p className="text-xs text-green-500 font-medium">{isAr ? "استثمار قوي" : "Strong investment"}</p>
                 <p className="text-lg font-bold">{initiatives.filter(i => i.priority === "medium").length}</p>
               </div>
             </div>
@@ -347,7 +347,7 @@ function LeaderboardCard({ users }: { users: UserStats[] }) {
           <Trophy className="w-5 h-5 text-yellow-500" />
           {isAr ? "قادة الابتكار" : "Innovation Leaders"}
         </CardTitle>
-        <CardDescription>{isAr ? "أكثر المبتكرين نشاطاً وتأثيراً" : "Most active and influential innovators"}</CardDescription>
+        <CardDescription>{isAr ? "أكثر المبتكرين نشاطاً وتأثيراً" : "Most Active & Influential Innovators"}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         {users.slice(0, 5).map((user, index) => {
@@ -368,12 +368,12 @@ function LeaderboardCard({ users }: { users: UserStats[] }) {
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span>{isAr ? "المستوى" : "Level"} {user.level}</span>
                   <span>•</span>
-                  <span>{user.ideasSubmitted} {isAr ? "فكرة" : "idea(s)"}</span>
+                  <span>{user.ideasSubmitted} {isAr ? "فكرة" : "Idea"}</span>
                 </div>
               </div>
               <div className="text-left">
                 <p className="font-bold text-cyan-500">{user.points.toLocaleString()}</p>
-                <p className="text-xs text-muted-foreground">{isAr ? "نقطة" : "points"}</p>
+                <p className="text-xs text-muted-foreground">{isAr ? "نقطة" : "Point"}</p>
               </div>
             </div>
           );
@@ -389,7 +389,7 @@ function AIInsightsCard({ ideas }: { ideas: Idea[] }) {
 
   const topIdeas = ideas.filter(i => (i.aiScore || 0) >= 80).slice(0, 3);
   const duplicates = 2; // Simulated
-  const gaps = useMemo(() => isAr ? ["تجربة المستخدم على الموبايل", "التكامل مع الأنظمة القديمة"] : ["Mobile User Experience", "Legacy System Integration"], [isAr]);
+  const gaps = useMemo(() => isAr ? [isAr ? "تجربة المستخدم على الموبايل" : "Mobile UX", isAr ? "التكامل مع الأنظمة القديمة" : "Legacy System Integration"] : ["Mobile User Experience", "Legacy System Integration"], [isAr]);
 
   return (
     <Card className="border-purple-500/30">
@@ -398,7 +398,7 @@ function AIInsightsCard({ ideas }: { ideas: Idea[] }) {
           <Wand2 className="w-5 h-5 text-purple-500" />
           {isAr ? "رؤى الذكاء الاصطناعي" : "AI Insights"}
         </CardTitle>
-        <CardDescription>{isAr ? "تحليلات وتوصيات مدعومة بالـ AI" : "AI-powered analytics and recommendations"}</CardDescription>
+        <CardDescription>{isAr ? "تحليلات وتوصيات مدعومة بالـ AI" : "AI-Powered Analytics & Recommendations"}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
@@ -467,7 +467,7 @@ function BudgetTracker({ initiatives }: { initiatives: StrategicInitiative[] }) 
           </div>
           <div>
             <p className="text-lg font-bold text-cyan-500">{initiatives.length}</p>
-            <p className="text-xs text-muted-foreground">{isAr ? "مبادرة نشطة" : "Active Initiatives"}</p>
+            <p className="text-xs text-muted-foreground">{isAr ? "مبادرة نشطة" : "Active Initiative"}</p>
           </div>
         </div>
       </CardContent>
@@ -480,15 +480,15 @@ function PipelineFlow() {
   const isAr = language === 'ar';
 
   const stages = useMemo(() => [
-    { id: "trends", label: isAr ? "الاتجاهات" : "Trends", icon: Radar, color: "bg-violet-500", count: 5 },
-    { id: "strategy", label: isAr ? "الاستراتيجية" : "Strategy", icon: Target, color: "bg-blue-500", count: 3 },
-    { id: "initiative", label: isAr ? "المبادرات" : "Initiatives", icon: Rocket, color: "bg-indigo-500", count: 3 },
-    { id: "challenge", label: isAr ? "التحديات" : "Challenges", icon: Crosshair, color: "bg-orange-500", count: 3 },
-    { id: "ideation", label: isAr ? "الأفكار" : "Ideas", icon: Lightbulb, color: "bg-yellow-500", count: 5 },
-    { id: "cluster", label: isAr ? "التجميع" : "Clustering", icon: Layers, color: "bg-green-500", count: 2 },
-    { id: "hypothesis", label: isAr ? "الفرضيات" : "Hypotheses", icon: GitBranch, color: "bg-teal-500", count: 1 },
-    { id: "experiment", label: isAr ? "التجارب" : "Experiments", icon: Beaker, color: "bg-pink-500", count: 1 },
-    { id: "decision", label: isAr ? "القرار" : "Decision", icon: CheckCircle2, color: "bg-emerald-500", count: 0 }
+    { id: "trends", label: "Trends", icon: Radar, color: "bg-violet-500", count: 5 },
+    { id: "strategy", label: "Strategy", icon: Target, color: "bg-blue-500", count: 3 },
+    { id: "initiative", label: "Initiatives", icon: Rocket, color: "bg-indigo-500", count: 3 },
+    { id: "challenge", label: "Challenges", icon: Crosshair, color: "bg-orange-500", count: 3 },
+    { id: "ideation", label: "Ideas", icon: Lightbulb, color: "bg-yellow-500", count: 5 },
+    { id: "cluster", label: "Collection", icon: Layers, color: "bg-green-500", count: 2 },
+    { id: "hypothesis", label: "Hypotheses", icon: GitBranch, color: "bg-teal-500", count: 1 },
+    { id: "experiment", label: "Experiments", icon: Beaker, color: "bg-pink-500", count: 1 },
+    { id: "decision", label: "Decision", icon: CheckCircle2, color: "bg-emerald-500", count: 0 }
   ], [isAr]);
 
   return (
@@ -514,7 +514,7 @@ function PipelineFlow() {
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>{stage.count} {isAr ? "عنصر في" : "item(s) in"} {stage.label}</p>
+                      <p>{stage.count} {isAr ? "عنصر في" : "Item in"} {stage.label}</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -538,7 +538,7 @@ function InitiativeCard({ initiative, onSelect }: { initiative: StrategicInitiat
   const isAr = language === 'ar';
 
   const priorityColors: Record<RiskLevel, string> = { high: "bg-red-500/10 text-red-500", medium: "bg-yellow-500/10 text-yellow-500", low: "bg-green-500/10 text-green-500" };
-  const priorityLabels: Record<RiskLevel, string> = { high: isAr ? "عالية" : "High", medium: isAr ? "متوسطة" : "Medium", low: isAr ? "منخفضة" : "Low" };
+  const priorityLabels: Record<RiskLevel, string> = { high: "High", medium: "Medium", low: "Low" };
   const budgetPercent = Math.round((initiative.budgetSpent / initiative.budget) * 100);
 
   return (
@@ -587,7 +587,7 @@ function ChallengeCard({ challenge, onClick }: { challenge: Challenge; onClick: 
   const isAr = language === 'ar';
 
   const statusColors = { open: "bg-blue-500/10 text-blue-500", in_progress: "bg-yellow-500/10 text-yellow-500", refined: "bg-green-500/10 text-green-500", closed: "bg-gray-500/10 text-gray-500" };
-  const statusLabels = { open: isAr ? "مفتوح" : "Open", in_progress: isAr ? "قيد التنفيذ" : "In Progress", refined: isAr ? "محسّن" : "Refined", closed: isAr ? "مغلق" : "Closed" };
+  const statusLabels = { open: "Open", in_progress: "In Progress", refined: "Optimized", closed: "Closed" };
 
   return (
     <Card className="hover:border-orange-500/50 transition-all cursor-pointer group" onClick={onClick}>
@@ -595,7 +595,7 @@ function ChallengeCard({ challenge, onClick }: { challenge: Challenge; onClick: 
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="text-base group-hover:text-orange-400 transition-colors">{challenge.title}</CardTitle>
           <div className="flex items-center gap-1">
-            {challenge.isOpen && <Badge variant="outline" className="text-xs bg-purple-500/10 text-purple-500">{isAr ? "مفتوح للجميع" : "Open to All"}</Badge>}
+            {challenge.isOpen && <Badge variant="outline" className="text-xs bg-purple-500/10 text-purple-500">{isAr ? "مفتوح للجميع" : "Public"}</Badge>}
             <Badge className={statusColors[challenge.status]}>{statusLabels[challenge.status]}</Badge>
           </div>
         </div>
@@ -619,7 +619,7 @@ function IdeaCard({ idea, onVote, onStatusChange }: { idea: Idea; onVote: (type:
   const isAr = language === 'ar';
 
   const statusColors: Record<IdeaStatus, string> = { active: "bg-blue-500/10 text-blue-500", parked: "bg-yellow-500/10 text-yellow-500", killed: "bg-red-500/10 text-red-500", clustered: "bg-purple-500/10 text-purple-500", testing: "bg-green-500/10 text-green-500", approved: "bg-emerald-500/10 text-emerald-500", implemented: "bg-cyan-500/10 text-cyan-500" };
-  const statusLabels: Record<IdeaStatus, string> = { active: isAr ? "نشط" : "Active", parked: isAr ? "متوقف" : "Parked", killed: isAr ? "ملغي" : "Killed", clustered: isAr ? "مجمّع" : "Clustered", testing: isAr ? "قيد الاختبار" : "Testing", approved: isAr ? "معتمد" : "Approved", implemented: isAr ? "منفذ" : "Implemented" };
+  const statusLabels: Record<IdeaStatus, string> = { active: "Active", parked: "Paused", killed: "Canceled", clustered: "Clustered", testing: "In Testing", approved: "Approved", implemented: "Implemented" };
 
   return (
     <Card className="hover:border-cyan-500/30 transition-all group">
@@ -742,7 +742,7 @@ function HypothesisCard({ hypothesis, onRunExperiment }: { hypothesis: Hypothesi
 
   const riskColors: Record<RiskLevel, string> = { high: "text-red-500", medium: "text-yellow-500", low: "text-green-500" };
   const resultColors: Record<HypothesisResult, string> = { pending: "bg-gray-500/10 text-gray-500", supports: "bg-green-500/10 text-green-500", rejects: "bg-red-500/10 text-red-500", refine: "bg-yellow-500/10 text-yellow-500" };
-  const resultLabels: Record<HypothesisResult, string> = { pending: isAr ? "قيد الانتظار" : "Pending", supports: isAr ? "مدعومة" : "Supported", rejects: isAr ? "مرفوضة" : "Rejected", refine: isAr ? "تحتاج تحسين" : "Refine" };
+  const resultLabels: Record<HypothesisResult, string> = { pending: "Pending", supports: "Supported", rejects: "Rejected", refine: "Needs Improvement" };
 
   return (
     <Card className="border-teal-500/30">
@@ -788,7 +788,7 @@ function ExperimentCard({ experiment, onComplete }: { experiment: Experiment; on
   const isAr = language === 'ar';
 
   const statusColors = { planned: "bg-gray-500/10 text-gray-500", running: "bg-blue-500/10 text-blue-500", completed: "bg-green-500/10 text-green-500" };
-  const statusLabels = { planned: isAr ? "مخطط" : "Planned", running: isAr ? "جاري" : "Running", completed: isAr ? "مكتمل" : "Completed" };
+  const statusLabels = { planned: "Planned", running: "Ongoing", completed: "Completed" };
 
   return (
     <Card className="border-pink-500/30">
@@ -810,7 +810,7 @@ function ExperimentCard({ experiment, onComplete }: { experiment: Experiment; on
               <div key={i} className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
                   <span>{metric.name}</span>
-                  <span>{metric.actual !== undefined ? `${metric.actual} / ${metric.target}` : `${isAr ? "هدف" : "Target"}: ${metric.target}`}</span>
+                  <span>{metric.actual !== undefined ? `${metric.actual} / ${metric.target}` : `${isAr ? "هدف" : "Goal"}: ${metric.target}`}</span>
                 </div>
                 {metric.actual !== undefined && (
                   <Progress value={(metric.actual / metric.target) * 100} className="h-1.5" />
@@ -838,7 +838,7 @@ function ExperimentCard({ experiment, onComplete }: { experiment: Experiment; on
               <XCircle className="w-3 h-3 mr-1" />{isAr ? "فشل" : "Failure"}
             </Button>
             <Button size="sm" variant="outline" className="flex-1 text-yellow-500 border-yellow-500/30" onClick={() => onComplete("inconclusive")}>
-              <RotateCcw className="w-3 h-3 mr-1" />{isAr ? "غير حاسم" : "Inconclusive"}
+              <RotateCcw className="w-3 h-3 mr-1" />{isAr ? "غير حاسم" : "Undecided"}
             </Button>
           </div>
         )}
@@ -892,18 +892,18 @@ export default function InnovationPipeline() {
       }
       return idea;
     }));
-    toast.success(type === "up" ? (isAr ? "تم التصويت بالموافقة" : "Upvoted successfully") : (isAr ? "تم التصويت بالرفض" : "Downvoted successfully"));
+    toast.success(type === "up" ? (isAr ? "تم التصويت بالموافقة" : "Upvoted") : (isAr ? "تم التصويت بالرفض" : "Downvoted"));
   };
 
   const handleStatusChange = (ideaId: string, status: IdeaStatus) => {
     setIdeas(prev => prev.map(idea => idea.id === ideaId ? { ...idea, status } : idea));
-    const statusLabels: Record<IdeaStatus, string> = { active: isAr ? "نشط" : "Active", parked: isAr ? "متوقف" : "Parked", killed: isAr ? "ملغي" : "Killed", clustered: isAr ? "مجمّع" : "Clustered", testing: isAr ? "قيد الاختبار" : "Testing", approved: isAr ? "معتمد" : "Approved", implemented: isAr ? "منفذ" : "Implemented" };
+    const statusLabels: Record<IdeaStatus, string> = { active: "Active", parked: "Paused", killed: "Canceled", clustered: "Clustered", testing: "In Testing", approved: "Approved", implemented: "Implemented" };
     toast.success(isAr ? `تم تغيير الحالة إلى ${statusLabels[status]}` : `Status changed to ${statusLabels[status]}`);
   };
 
   const handleAddIdea = () => {
     if (!newIdea.title || !selectedChallenge) {
-      toast.error(isAr ? "يرجى ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
+      toast.error(isAr ? "يرجى ملء جميع الحقول المطلوبة" : "Please fill all required fields");
       return;
     }
 
@@ -918,14 +918,14 @@ export default function InnovationPipeline() {
 
   const handleExperimentComplete = (expId: string, result: "success" | "failure" | "inconclusive") => {
     setExperiments(prev => prev.map(exp => exp.id === expId ? { ...exp, status: "completed" as const, result } : exp));
-    const resultText = result === "success" ? (isAr ? "نجاح" : "Success") : result === "failure" ? (isAr ? "فشل" : "Failure") : (isAr ? "غير حاسم" : "Inconclusive");
+    const resultText = result === "success" ? (isAr ? "نجاح" : "Success") : result === "failure" ? (isAr ? "فشل" : "Failure") : (isAr ? "غير حاسم" : "Undecided");
     toast.success(isAr ? `تم إكمال التجربة: ${resultText}` : `Experiment completed: ${resultText}`);
   };
 
   const handleExportPDF = () => {
     // Generate PDF report content
     const reportData = {
-      title: isAr ? "تقرير Innovation Pipeline" : "Innovation Pipeline Report",
+      title: "Innovation Pipeline Report",
       date: new Date().toLocaleDateString(isAr ? "ar-SA" : "en-US"),
       stats: {
         totalIdeas,
@@ -993,7 +993,7 @@ export default function InnovationPipeline() {
           </div>
           <div class="stat-card">
             <div class="stat-value">${reportData.stats.avgScore}%</div>
-            <div class="stat-label">${isAr ? "متوسط التقييم" : "Average Score"}</div>
+            <div class="stat-label">${isAr ? "متوسط التقييم" : "Average Rating"}</div>
           </div>
         </div>
 
@@ -1026,7 +1026,7 @@ export default function InnovationPipeline() {
           <thead>
             <tr>
               <th>${isAr ? "العنوان" : "Title"}</th>
-              <th>${isAr ? "التقييم" : "Score"}</th>
+              <th>${isAr ? "التقييم" : "Rating"}</th>
               <th>${isAr ? "الحالة" : "Status"}</th>
               <th>${isAr ? "التصويتات" : "Votes"}</th>
             </tr>
@@ -1125,7 +1125,7 @@ export default function InnovationPipeline() {
               <MetricCard title={isAr ? "إجمالي الأفكار" : "Total Ideas"} value={totalIdeas} change={12} icon={Lightbulb} color="bg-yellow-500" />
               <MetricCard title={isAr ? "أفكار نشطة" : "Active Ideas"} value={activeIdeas} change={8} icon={Activity} color="bg-blue-500" />
               <MetricCard title={isAr ? "أفكار معتمدة" : "Approved Ideas"} value={approvedIdeas} change={25} icon={CheckCircle2} color="bg-green-500" />
-              <MetricCard title={isAr ? "متوسط التقييم" : "Average Score"} value={`${avgScore}%`} change={5} icon={BarChart3} color="bg-purple-500" />
+              <MetricCard title={isAr ? "متوسط التقييم" : "Average Rating"} value={`${avgScore}%`} change={5} icon={BarChart3} color="bg-purple-500" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1159,7 +1159,7 @@ export default function InnovationPipeline() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold">{isAr ? "استكشاف الاتجاهات" : "Explore Trends"}</h2>
-                <p className="text-muted-foreground">{isAr ? "تتبع التقنيات والاتجاهات الناشئة" : "Track emerging technologies and trends"}</p>
+                <p className="text-muted-foreground">{isAr ? "تتبع التقنيات والاتجاهات الناشئة" : "Track Emerging Tech & Trends"}</p>
               </div>
               <Button className="bg-gradient-to-r from-violet-500 to-purple-500">
                 <Plus className="w-4 h-4 ml-2" />
@@ -1243,7 +1243,7 @@ export default function InnovationPipeline() {
                     </div>
                     <div className="space-y-2">
                       <Label>{isAr ? "الوسوم (مفصولة بفاصلة)" : "Tags (comma-separated)"}</Label>
-                      <Input value={newIdea.tags} onChange={(e) => setNewIdea(prev => ({ ...prev, tags: e.target.value }))} placeholder={isAr ? "تقنية, ابتكار, UX" : "Technology, Innovation, UX"} />
+                      <Input value={newIdea.tags} onChange={(e) => setNewIdea(prev => ({ ...prev, tags: e.target.value }))} placeholder={isAr ? "تقنية, ابتكار, UX" : "Tech, Innovation, UX"} />
                     </div>
                   </div>
                   <div className="flex justify-end gap-2">
@@ -1266,7 +1266,7 @@ export default function InnovationPipeline() {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold flex items-center gap-2">
                   <Layers className="w-5 h-5 text-purple-500" />
-                  {isAr ? "المجموعات" : "Clusters"}
+                  {isAr ? "المجموعات" : "Groups"}
                 </h3>
                 {clusters.map(cluster => (
                   <ClusterCard key={cluster.id} cluster={cluster} ideas={ideas} onTest={() => { toast.success(isAr ? "تم بدء اختبار الفرضيات" : "Hypothesis testing started"); }} />
@@ -1309,7 +1309,7 @@ export default function InnovationPipeline() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">{isAr ? "الأفكار التي أثبتت جدواها" : "Ideas that have proven their worth"}</p>
+                      <p className="text-sm text-muted-foreground">{isAr ? "الأفكار التي أثبتت جدواها" : "Validated Ideas"}</p>
                       <div className="mt-4 space-y-2">
                         {ideas.filter(i => i.status === "approved" || (i.status === "testing" && i.score >= 80)).map(idea => (
                           <Badge key={idea.id} variant="outline" className="mr-1 bg-green-500/10">{idea.title}</Badge>
@@ -1320,11 +1320,11 @@ export default function InnovationPipeline() {
                   <Card className="border-yellow-500/30 bg-yellow-500/5">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base flex items-center gap-2 text-yellow-500">
-                        <PauseCircle className="w-5 h-5" />{isAr ? "للإيقاف المؤقت" : "For Parking"}
+                        <PauseCircle className="w-5 h-5" />{isAr ? "للإيقاف المؤقت" : "For Pause"}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">{isAr ? "أفكار تحتاج مزيداً من الوقت" : "Ideas that need more time"}</p>
+                      <p className="text-sm text-muted-foreground">{isAr ? "أفكار تحتاج مزيداً من الوقت" : "Ideas Needing More Time"}</p>
                       <div className="mt-4 space-y-2">
                         {ideas.filter(i => i.status === "parked").map(idea => (
                           <Badge key={idea.id} variant="outline" className="mr-1 bg-yellow-500/10">{idea.title}</Badge>
@@ -1335,11 +1335,11 @@ export default function InnovationPipeline() {
                   <Card className="border-red-500/30 bg-red-500/5">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base flex items-center gap-2 text-red-500">
-                        <XCircle className="w-5 h-5" />{isAr ? "للإلغاء" : "For Killing"}
+                        <XCircle className="w-5 h-5" />{isAr ? "للإلغاء" : "Cancel"}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">{isAr ? "أفكار لم تثبت جدواها" : "Ideas that have not proven their worth"}</p>
+                      <p className="text-sm text-muted-foreground">{isAr ? "أفكار لم تثبت جدواها" : "Unproven Ideas"}</p>
                       <div className="mt-4 space-y-2">
                         {ideas.filter(i => i.status === "killed").map(idea => (
                           <Badge key={idea.id} variant="outline" className="mr-1 bg-red-500/10">{idea.title}</Badge>
@@ -1368,11 +1368,11 @@ export default function InnovationPipeline() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {[
-                      { name: isAr ? "مبتكر" : "Innovator", desc: isAr ? "قدم 10 أفكار" : "Submitted 10 ideas", icon: Lightbulb, color: "text-yellow-500" },
-                      { name: isAr ? "قائد" : "Leader", desc: isAr ? "3 أفكار معتمدة" : "3 approved ideas", icon: Crown, color: "text-purple-500" },
-                      { name: isAr ? "خبير" : "Expert", desc: isAr ? "أجرى 5 تجارب" : "Ran 5 experiments", icon: Beaker, color: "text-pink-500" },
-                      { name: isAr ? "متعاون" : "Collaborator", desc: isAr ? "50 تصويت" : "50 votes", icon: Users, color: "text-blue-500" },
-                      { name: isAr ? "باحث" : "Researcher", desc: isAr ? "اكتشف 3 اتجاهات" : "Discovered 3 trends", icon: Radar, color: "text-green-500" }
+                      { name: "Innovator", desc: "Submitted 10 Ideas", icon: Lightbulb, color: "text-yellow-500" },
+                      { name: "Leader", desc: "3 Approved Ideas", icon: Crown, color: "text-purple-500" },
+                      { name: "Expert", desc: "Conducted 5 Experiments", icon: Beaker, color: "text-pink-500" },
+                      { name: "Collaborator", desc: "50 Votes", icon: Users, color: "text-blue-500" },
+                      { name: "Researcher", desc: "Discovered 3 Trends", icon: Radar, color: "text-green-500" }
                     ].map((badge, i) => (
                       <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
                         <badge.icon className={`w-5 h-5 ${badge.color}`} />
@@ -1393,9 +1393,9 @@ export default function InnovationPipeline() {
                   </CardHeader>
                   <CardContent className="text-center">
                     <p className="text-4xl font-bold text-cyan-500">0</p>
-                    <p className="text-sm text-muted-foreground mt-1">{isAr ? "ابدأ بإضافة أفكار لكسب النقاط!" : "Start by adding ideas to earn points!"}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{isAr ? "ابدأ بإضافة أفكار لكسب النقاط!" : "Start adding ideas to earn points!"}</p>
                     <Button className="mt-4 w-full" onClick={() => setActiveTab("ideas")}>
-                      <Plus className="w-4 h-4 ml-2" />{isAr ? "أضف فكرة الآن" : "Add an Idea Now"}
+                      <Plus className="w-4 h-4 ml-2" />{isAr ? "أضف فكرة الآن" : "Add Idea Now"}
                     </Button>
                   </CardContent>
                 </Card>

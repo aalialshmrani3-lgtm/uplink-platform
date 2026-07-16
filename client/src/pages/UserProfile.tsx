@@ -58,8 +58,8 @@ export default function UserProfile() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>{isAr ? "يجب تسجيل الدخول" : "يجب Login"}</CardTitle>
-            <CardDescription>{isAr ? "الرجاء تسجيل الدخول لعرض ملفك الشخصي" : "الرجاء Login لعرض ملفك الشخصي"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "يجب تسجيل الدخول" : "Login Required" : "Login Required"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "الرجاء تسجيل الدخول لعرض ملفك الشخصي" : "Please login to view your profile" : "Please login to view your profile"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -104,8 +104,8 @@ export default function UserProfile() {
           <CardContent>
             <Tabs defaultValue="info" className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-slate-800/50">
-                <TabsTrigger value="info">{isAr ? "المعلومات الشخصية" : "الInformation الشخصية"}</TabsTrigger>
-                <TabsTrigger value="activity">{isAr ? "النشاط" : "[النشاط]"}</TabsTrigger>
+                <TabsTrigger value="info">{isAr ? isAr ? "المعلومات الشخصية" : "Personal Info" : "Personal Info"}</TabsTrigger>
+                <TabsTrigger value="activity">{isAr ? isAr ? "النشاط" : "Activity" : "Activity"}</TabsTrigger>
                 <TabsTrigger value="stats">{isAr ? "الإحصائيات" : "Statistics"}</TabsTrigger>
               </TabsList>
 
@@ -198,7 +198,7 @@ export default function UserProfile() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="bio" className="text-white">{isAr ? "نبذة تعريفية" : "[نبذة تعريفية]"}</Label>
+                  <Label htmlFor="bio" className="text-white">{isAr ? isAr ? "نبذة تعريفية" : "About" : "About"}</Label>
                   <textarea
                     id="bio"
                     value={formData.bio}
@@ -212,7 +212,7 @@ export default function UserProfile() {
 
               <TabsContent value="activity" className="mt-6">
                 <div className="text-center py-12 text-slate-400">
-                  <p>{isAr ? "لا توجد أنشطة حالياً" : "No توجد أنشطة حالياً"}</p>
+                  <p>{isAr ? isAr ? "لا توجد أنشطة حالياً" : "No activities yet" : "No activities yet"}</p>
                 </div>
               </TabsContent>
 
@@ -220,7 +220,7 @@ export default function UserProfile() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">{isAr ? "الأفكار المقدمة" : "[الأفكار المقدمة]"}</CardTitle>
+                      <CardTitle className="text-white text-lg">{isAr ? isAr ? "الأفكار المقدمة" : "Submitted Ideas" : "Submitted Ideas"}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-4xl font-bold text-blue-400">0</p>
@@ -229,7 +229,7 @@ export default function UserProfile() {
 
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">{isAr ? "التحديات المشاركة" : "التحديات الShare"}</CardTitle>
+                      <CardTitle className="text-white text-lg">{isAr ? isAr ? "التحديات المشاركة" : "Participated Challenges" : "Participated Challenges"}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-4xl font-bold text-cyan-400">0</p>
@@ -238,7 +238,7 @@ export default function UserProfile() {
 
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardHeader>
-                      <CardTitle className="text-white text-lg">{isAr ? "العقود النشطة" : "Contracts النشطة"}</CardTitle>
+                      <CardTitle className="text-white text-lg">{isAr ? isAr ? "العقود النشطة" : "Active Contracts" : "Active Contracts"}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-4xl font-bold text-green-400">0</p>

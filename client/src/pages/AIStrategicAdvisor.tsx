@@ -300,46 +300,46 @@ export default function AIStrategicAdvisor() {
   };
 
   return (
-    <div className="container mx-auto py-8 space-y-8" dir={isAr ? "rtl" : "ltr"}> {/* Rule 3 */}
+    <div className="container mx-auto py-8 space-y-8" dir={isAr ? "rtl" : "ltr"}>
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold text-right">{isAr ? "المستشار الاستراتيجي بالذكاء الاصطناعي" : "AI Strategic Advisor"}</h1> {/* Rule 3 */}
+        <h1 className="text-4xl font-bold text-right">{isAr ? "المستشار الاستراتيجي بالذكاء الاصطناعي" : "AI Strategic Advisor"}</h1>
         <p className="text-muted-foreground text-right">
-          {isAr ? "تحليل شامل لمشروعك مع توصيات استراتيجية قابلة للتنفيذ" : "Comprehensive analysis of your project with actionable strategic recommendations"} {/* Rule 3 */}
+          {isAr ? "تحليل شامل لمشروعك مع توصيات استراتيجية قابلة للتنفيذ" : "Comprehensive project analysis with actionable strategic recommendations"}
         </p>
       </div>
 
       {/* Input Form */}
       <Card className="p-6">
-        <h2 className="text-2xl font-semibold mb-6 text-right">{isAr ? "معلومات المشروع" : "Project Information"}</h2> {/* Rule 3 */}
+        <h2 className="text-2xl font-semibold mb-6 text-right">{isAr ? "معلومات المشروع" : "Project Information"}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-right block">{isAr ? "عنوان المشروع *" : "Project Title *"}</Label> {/* Rule 3 */}
+            <Label htmlFor="title" className="text-right block">{isAr ? "عنوان المشروع *" : "Project Title *"}</Label>
             <Input
               id="title"
               name="title"
               value={formData.title}
               onChange={handleInputChange}
-              placeholder={isAr ? "مثال: منصة ذكية لإدارة الطاقة المتجددة" : "Example: Smart platform for renewable energy management"} // Rule 4
+              placeholder={isAr ? "مثال: منصة ذكية لإدارة الطاقة المتجددة" : "Example: Smart Renewable Energy Management Platform"} // Rule 4
               className="text-right"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="budget" className="text-right block">{isAr ? "الميزانية (ريال) *" : "Budget (SAR) *"}</Label> {/* Rule 3 */}
+            <Label htmlFor="budget" className="text-right block">{isAr ? "الميزانية (ريال) *" : "Budget (SAR) *"}</Label>
             <Input
               id="budget"
               name="budget"
               type="number"
               value={formData.budget}
               onChange={handleInputChange}
-              placeholder={isAr ? "مثال: 500000" : "Example: 500000"} // Rule 4
+              placeholder={isAr ? "مثال: 500000" : "Example: 500,000"} // Rule 4
               className="text-right"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="team_size" className="text-right block">{isAr ? "حجم الفريق *" : "Team Size *"}</Label> {/* Rule 3 */}
+            <Label htmlFor="team_size" className="text-right block">{isAr ? "حجم الفريق *" : "Team Size *"}</Label>
             <Input
               id="team_size"
               name="team_size"
@@ -352,7 +352,7 @@ export default function AIStrategicAdvisor() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="timeline_months" className="text-right block">{isAr ? "المدة الزمنية (أشهر) *" : "Timeline (months) *"}</Label> {/* Rule 3 */}
+            <Label htmlFor="timeline_months" className="text-right block">{isAr ? "المدة الزمنية (أشهر) *" : "Duration (Months) *"}</Label>
             <Input
               id="timeline_months"
               name="timeline_months"
@@ -365,7 +365,7 @@ export default function AIStrategicAdvisor() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="market_demand" className="text-right block">{isAr ? "الطلب السوقي (0-100)" : "Market Demand (0-100)"}</Label> {/* Rule 3 */}
+            <Label htmlFor="market_demand" className="text-right block">{isAr ? "الطلب السوقي (0-100)" : "Market Demand (0-100)"}</Label>
             <Input
               id="market_demand"
               name="market_demand"
@@ -379,7 +379,7 @@ export default function AIStrategicAdvisor() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="technical_feasibility" className="text-right block">{isAr ? "الجدوى التقنية (0-100)" : "Technical Feasibility (0-100)"}</Label> {/* Rule 3 */}
+            <Label htmlFor="technical_feasibility" className="text-right block">{isAr ? "الجدوى التقنية (0-100)" : "Technical Feasibility (0-100)"}</Label>
             <Input
               id="technical_feasibility"
               name="technical_feasibility"
@@ -393,13 +393,13 @@ export default function AIStrategicAdvisor() {
           </div>
 
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="description" className="text-right block">{isAr ? "وصف المشروع *" : "Project Description *"}</Label> {/* Rule 3 */}
+            <Label htmlFor="description" className="text-right block">{isAr ? "وصف المشروع *" : "Project Description *"}</Label>
             <Textarea
               id="description"
               name="description"
               value={formData.description}
               onChange={handleInputChange}
-              placeholder={isAr ? "اشرح فكرة مشروعك بالتفصيل..." : "Explain your project idea in detail..."} // Rule 4
+              placeholder={isAr ? "اشرح فكرة مشروعك بالتفصيل..." : "Describe your project idea in detail..."} // Rule 4
               rows={4}
               className="text-right"
             />
@@ -415,12 +415,12 @@ export default function AIStrategicAdvisor() {
           {isAnalyzing ? (
             <>
               <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-              {isAr ? "جارٍ التحليل..." : "Analyzing..."} {/* Rule 3 */}
+              {isAr ? "جارٍ التحليل..." : "Analyzing..."}
             </>
           ) : (
             <>
               <Target className="ml-2 h-4 w-4" />
-              {isAr ? "تحليل استراتيجي شامل" : "Comprehensive Strategic Analysis"} {/* Rule 3 */}
+              {isAr ? "تحليل استراتيجي شامل" : "Comprehensive Strategic Analysis"}
             </>
           )}
         </Button>
@@ -433,12 +433,12 @@ export default function AIStrategicAdvisor() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="text-right">
-                <h2 className="text-2xl font-semibold">{isAr ? "مؤشر الثقة في الابتكار (ICI)" : "Innovation Confidence Index (ICI)"}</h2> {/* Rule 3 */}
+                <h2 className="text-2xl font-semibold">{isAr ? "مؤشر الثقة في الابتكار (ICI)" : "Innovation Confidence Index (ICI)"}</h2>
                 <p className="text-muted-foreground">Innovation Confidence Index</p>
               </div>
               <div className="text-left">
                 <div className="text-5xl font-bold text-primary">{analysis.ici_score}</div>
-                <div className="text-sm text-muted-foreground">{isAr ? "من 100" : "out of 100"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground">{isAr ? "من 100" : "out of 100"}</div>
               </div>
               
               {/* Export Buttons */}
@@ -454,7 +454,7 @@ export default function AIStrategicAdvisor() {
                   ) : (
                     <FileDown className="h-4 w-4 ml-2" />
                   )}
-                  {isAr ? "تصدير PDF" : "Export PDF"} {/* Rule 3 */}
+                  {isAr ? "تصدير PDF" : "Export PDF"}
                 </Button>
                 <Button
                   onClick={handleExportExcel}
@@ -467,7 +467,7 @@ export default function AIStrategicAdvisor() {
                   ) : (
                     <FileDown className="h-4 w-4 ml-2" />
                   )}
-                  {isAr ? "تصدير Excel" : "Export Excel"} {/* Rule 3 */}
+                  {isAr ? "تصدير Excel" : "Export Excel"}
                 </Button>
               </div>
             </div>
@@ -475,23 +475,23 @@ export default function AIStrategicAdvisor() {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.success_probability}</div>
-                <div className="text-sm text-muted-foreground mt-1">{isAr ? "احتمالية النجاح" : "Success Probability"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "احتمالية النجاح" : "Success Probability"}</div>
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.market_fit}</div>
-                <div className="text-sm text-muted-foreground mt-1">{isAr ? "ملاءمة السوق" : "Market Fit"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "ملاءمة السوق" : "Market Fit"}</div>
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.execution_readiness}</div>
-                <div className="text-sm text-muted-foreground mt-1">{isAr ? "جاهزية التنفيذ" : "Execution Readiness"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "جاهزية التنفيذ" : "Execution Readiness"}</div>
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.investor_readiness}</div>
-                <div className="text-sm text-muted-foreground mt-1">{isAr ? "جاهزية المستثمر" : "Investor Readiness"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "جاهزية المستثمر" : "Investor Readiness"}</div>
               </div>
               <div className="text-center p-4 bg-muted rounded-lg">
                 <div className="text-2xl font-bold">{analysis.dimensions.financial_sustainability}</div>
-                <div className="text-sm text-muted-foreground mt-1">{isAr ? "الاستدامة المالية" : "Financial Sustainability"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mt-1">{isAr ? "الاستدامة المالية" : "Financial Sustainability"}</div>
               </div>
             </div>
           </Card>
@@ -499,7 +499,7 @@ export default function AIStrategicAdvisor() {
           {/* CEO Insights */}
           <Card className="p-6">
             <h2 className="text-2xl font-semibold mb-4 text-right flex items-center justify-end">
-              <span>{isAr ? "الرؤى التنفيذية" : "Executive Insights"}</span> {/* Rule 3 */}
+              <span>{isAr ? "الرؤى التنفيذية" : "Executive Insights"}</span>
               <Lightbulb className="mr-2 h-6 w-6 text-primary" />
             </h2>
             
@@ -516,7 +516,7 @@ export default function AIStrategicAdvisor() {
                         <h3 className="font-semibold text-lg">{insight.title}</h3>
                       </div>
                       <p className="text-sm mb-2">{insight.impact}</p>
-                      <p className="text-sm font-medium">💡 {isAr ? "التوصية:" : "Recommendation:"} {insight.recommendation}</p> {/* Rule 3 */}
+                      <p className="text-sm font-medium">💡 {isAr ? "التوصية:" : "Recommendation:"} {insight.recommendation}</p>
                     </div>
                   </div>
                 </div>
@@ -526,9 +526,9 @@ export default function AIStrategicAdvisor() {
 
           {/* Roadmap */}
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "خارطة الطريق التنفيذية" : "Executive Roadmap"}</h2> {/* Rule 3 */}
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "خارطة الطريق التنفيذية" : "Execution Roadmap"}</h2>
             <p className="text-muted-foreground mb-6 text-right">
-              {isAr ? "الجدول الزمني:" : "Timeline:"} {analysis.roadmap.total_timeline} | {isAr ? "الأولوية:" : "Priority:"} {analysis.roadmap.priority} {/* Rule 3 */}
+              {isAr ? "الجدول الزمني:" : "Timeline:"} {analysis.roadmap.total_timeline} | {isAr ? "الأولوية:" : "Priority:"} {analysis.roadmap.priority}
             </p>
             
             <div className="space-y-4">
@@ -540,10 +540,10 @@ export default function AIStrategicAdvisor() {
                     <div className="text-sm font-medium text-primary">{index + 1}</div>
                   </div>
                   <div className="text-sm text-muted-foreground text-right mb-2">
-                    {isAr ? "التكلفة:" : "Cost:"} {step.cost} {/* Rule 3 */}
+                    {isAr ? "التكلفة:" : "Cost:"} {step.cost}
                   </div>
                   <div className="text-sm text-right">
-                    <span className="font-medium">{isAr ? "المخرجات: " : "Deliverables: "}</span> {/* Rule 3 */}
+                    <span className="font-medium">{isAr ? "المخرجات: " : "Output:"}</span>
                     {step.deliverables.join(' • ')}
                   </div>
                   <div className="text-xs text-muted-foreground text-right mt-2">
@@ -556,44 +556,44 @@ export default function AIStrategicAdvisor() {
 
           {/* Investment Analysis */}
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "التحليل الاستثماري" : "Investment Analysis"}</h2> {/* Rule 3 */}
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "التحليل الاستثماري" : "Investment Analysis"}</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="p-4 bg-muted rounded-lg text-right">
-                <div className="text-sm text-muted-foreground mb-1">{isAr ? "نطاق التقييم" : "Valuation Range"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mb-1">{isAr ? "نطاق التقييم" : "Evaluation Scope"}</div>
                 <div className="text-xl font-bold">{analysis.investment.valuation_range}</div>
               </div>
               <div className="p-4 bg-muted rounded-lg text-right">
-                <div className="text-sm text-muted-foreground mb-1">{isAr ? "إمكانية التمويل" : "Funding Potential"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mb-1">{isAr ? "إمكانية التمويل" : "Fundability"}</div>
                 <div className="text-xl font-bold">{analysis.investment.funding_potential}</div>
               </div>
               <div className="p-4 bg-muted rounded-lg text-right">
-                <div className="text-sm text-muted-foreground mb-1">{isAr ? "جاهزية المستثمر" : "Investor Readiness"}</div> {/* Rule 3 */}
+                <div className="text-sm text-muted-foreground mb-1">{isAr ? "جاهزية المستثمر" : "Investor Readiness"}</div>
                 <div className="text-xl font-bold">Grade {analysis.irl_grade}</div>
               </div>
             </div>
 
-            <h3 className="font-semibold mb-3 text-right">{isAr ? "المستثمرون الموصى بهم" : "Recommended Investors"}</h3> {/* Rule 3 */}
+            <h3 className="font-semibold mb-3 text-right">{isAr ? "المستثمرون الموصى بهم" : "Recommended Investors"}</h3>
             <div className="space-y-3">
               {analysis.investment.recommended_investors.map((investor: any, index: number) => (
                 <div key={index} className="p-4 border rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-sm text-muted-foreground">
-                      {isAr ? "احتمالية:" : "Probability:"} {(investor.probability * 100).toFixed(0)}% {/* Rule 3 */}
+                      {isAr ? "احتمالية:" : "Probability:"} {(investor.probability * 100).toFixed(0)}%
                     </div>
                     <h4 className="font-semibold">{investor.type}</h4>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-sm text-right">
                     <div>
-                      <span className="text-muted-foreground">{isAr ? "المبلغ: " : "Amount: "}</span> {/* Rule 3 */}
+                      <span className="text-muted-foreground">{isAr ? "المبلغ: " : "Amount:"}</span>
                       <span className="font-medium">{investor.amount}</span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">{isAr ? "التخفيف: " : "Dilution: "}</span> {/* Rule 3 */}
+                      <span className="text-muted-foreground">{isAr ? "التخفيف: " : "Dilution:"}</span>
                       <span className="font-medium">{investor.dilution}</span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">{isAr ? "المدة: " : "Duration: "}</span> {/* Rule 3 */}
+                      <span className="text-muted-foreground">{isAr ? "المدة: " : "Duration:"}</span>
                       <span className="font-medium">{investor.timeline}</span>
                     </div>
                   </div>
@@ -604,7 +604,7 @@ export default function AIStrategicAdvisor() {
 
           {/* Critical Path */}
           <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "المسار الحرج للنجاح" : "Critical Path to Success"}</h2> {/* Rule 3 */}
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "المسار الحرج للنجاح" : "Critical Path to Success"}</h2>
             
             <div className="space-y-3">
               {analysis.critical_path.map((phase: any, index: number) => (
@@ -622,7 +622,7 @@ export default function AIStrategicAdvisor() {
                       <span className="font-semibold">{phase.phase}</span>
                       {phase.status === 'current' && (
                         <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded">
-                          {isAr ? "المرحلة الحالية" : "Current Phase"} {/* Rule 3 */}
+                          {isAr ? "المرحلة الحالية" : "Current Stage"}
                         </span>
                       )}
                     </div>
@@ -635,19 +635,19 @@ export default function AIStrategicAdvisor() {
           {/* What-If Simulator */}
           <Card className="p-6 mt-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-semibold text-right">{isAr ? `محاكي "ماذا لو؟"` : `What-If Simulator`}</h2> {/* Rule 3 */}
+              <h2 className="text-2xl font-semibold">{isAr ? "محاكي ماذا لو؟" : "What-If Simulator"}</h2>
               <Button
                 onClick={() => setShowWhatIf(!showWhatIf)}
                 variant="outline"
               >
-                {showWhatIf ? (isAr ? 'إخفاء' : 'Hide') : (isAr ? 'عرض' : 'Show')} {isAr ? 'المحاكي' : 'Simulator'} {/* Rule 3 */}
+                {showWhatIf ? (isAr ? 'إخفاء' : 'Hide') : (isAr ? 'عرض' : 'Show')} {isAr ? 'المحاكي' : 'Simulator'}
               </Button>
             </div>
 
             {showWhatIf && (
               <div className="space-y-4">
                 <p className="text-muted-foreground text-right">
-                  {isAr ? "جرّب سيناريوهات مختلفة وانظر تأثيرها على ICI و IRL" : "Try different scenarios and see their impact on ICI and IRL"} {/* Rule 3 */}
+                  {isAr ? "جرّب سيناريوهات مختلفة وانظر تأثيرها على ICI و IRL" : "Test different scenarios and see their impact on ICI and IRL"}
                 </p>
 
                 {/* Predefined Scenarios */}
@@ -661,8 +661,8 @@ export default function AIStrategicAdvisor() {
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">{isAr ? 'زيادة الميزانية 50%' : 'Increase Budget by 50%'}</span> {/* Rule 3 */}
-                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو حصلت على تمويل إضافي؟' : 'What if you secured additional funding?'}</span> {/* Rule 3 */}
+                    <span className="font-semibold">{isAr ? 'زيادة الميزانية 50%' : 'Increase Budget by 50%'}</span>
+                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو حصلت على تمويل إضافي؟' : 'What if you secured additional funding?'}</span>
                   </Button>
 
                   <Button
@@ -674,8 +674,8 @@ export default function AIStrategicAdvisor() {
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">{isAr ? 'توظيف 3 أعضاء جدد' : 'Hire 3 New Team Members'}</span> {/* Rule 3 */}
-                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو قمت بتوسيع الفريق؟' : 'What if you expanded the team?'}</span> {/* Rule 3 */}
+                    <span className="font-semibold">{isAr ? 'توظيف 3 أعضاء جدد' : 'Hire 3 New Team Members'}</span>
+                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو قمت بتوسيع الفريق؟' : 'What if you expanded the team?'}</span>
                   </Button>
 
                   <Button
@@ -687,8 +687,8 @@ export default function AIStrategicAdvisor() {
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">{isAr ? 'تحسين التحقق من الفرضيات' : 'Improve Hypothesis Validation'}</span> {/* Rule 3 */}
-                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو قمت باختبار أفضل؟' : 'What if you performed better testing?'}</span> {/* Rule 3 */}
+                    <span className="font-semibold">{isAr ? 'تحسين التحقق من الفرضيات' : 'Improve Hypothesis Validation'}</span>
+                    <span className="text-sm text-muted-foreground">{isAr ? 'ماذا لو قمت باختبار أفضل؟' : 'What if you performed better testing?'}</span>
                   </Button>
 
                   <Button
@@ -703,15 +703,15 @@ export default function AIStrategicAdvisor() {
                     className="h-auto p-4 flex flex-col items-end"
                     disabled={isSimulating}
                   >
-                    <span className="font-semibold">{isAr ? 'سيناريو شامل' : 'Comprehensive Scenario'}</span> {/* Rule 3 */}
-                    <span className="text-sm text-muted-foreground">{isAr ? 'تحسينات متعددة' : 'Multiple Improvements'}</span> {/* Rule 3 */}
+                    <span className="font-semibold">{isAr ? 'سيناريو شامل' : 'Comprehensive Scenario'}</span>
+                    <span className="text-sm text-muted-foreground">{isAr ? 'تحسينات متعددة' : 'Multiple Improvements'}</span>
                   </Button>
                 </div>
 
                 {/* Scenario Results */}
                 {whatIfScenarios.length > 0 && (
                   <div className="mt-6 space-y-4">
-                    <h3 className="text-lg font-semibold text-right">{isAr ? "نتائج المحاكاة" : "Simulation Results"}</h3> {/* Rule 3 */}
+                    <h3 className="text-lg font-semibold text-right">{isAr ? "نتائج المحاكاة" : "Simulation Results"}</h3>
                     {whatIfScenarios.map((scenario, index) => (
                       <div
                         key={index}
@@ -777,7 +777,7 @@ export default function AIStrategicAdvisor() {
                           </div>
 
                           <div className="text-right">
-                            <div className="text-muted-foreground">{isAr ? "احتمالية النجاح" : "Success Probability"}</div> {/* Rule 3 */}
+                            <div className="text-muted-foreground">{isAr ? "احتمالية النجاح" : "Success Probability"}</div>
                             <div className="font-semibold">
                               {(scenario.baseline.success_probability * 100).toFixed(1)}% →{' '}
                               {(scenario.modified.success_probability * 100).toFixed(1)}%
@@ -796,7 +796,7 @@ export default function AIStrategicAdvisor() {
                 {isSimulating && (
                   <div className="flex items-center justify-center p-8">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    <span className="mr-3">{isAr ? "جارٍ محاكاة السيناريو..." : "Simulating scenario..."}</span> {/* Rule 3 */}
+                    <span className="mr-3">{isAr ? "جارٍ محاكاة السيناريو..." : "Simulating scenario..."}</span>
                   </div>
                 )}
               </div>
@@ -805,16 +805,16 @@ export default function AIStrategicAdvisor() {
 
           {/* Feedback System */}
           <Card className="p-6 mt-6">
-            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "نظام الملاحظات" : "Feedback System"}</h2> {/* Rule 3 */}
+            <h2 className="text-2xl font-semibold mb-4 text-right">{isAr ? "نظام الملاحظات" : "Feedback System"}</h2>
             <p className="text-muted-foreground text-right mb-4">
-              {isAr ? "ساعدنا في تحسين النظام من خلال مشاركة ملاحظاتك حول التوصيات" : "Help us improve the system by sharing your feedback on the recommendations"} {/* Rule 3 */}
+              {isAr ? "ساعدنا في تحسين النظام من خلال مشاركة ملاحظاتك حول التوصيات" : "Help us improve the system by sharing your feedback on recommendations"}
             </p>
 
             <div className="space-y-4">
               {/* Feedback on CEO Insights */}
               {analysis?.ceo_insights && analysis.ceo_insights.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-right">{isAr ? "قيّم الرؤى الاستراتيجية" : "Rate Strategic Insights"}</h3> {/* Rule 3 */}
+                  <h3 className="font-semibold text-right">{isAr ? "قيّم الرؤى الاستراتيجية" : "Rate Strategic Insights"}</h3>
                   {analysis.ceo_insights.slice(0, 3).map((insight: any, index: number) => (
                     <div key={index} className="p-4 border rounded-lg">
                       <div className="flex items-center justify-between mb-2">
@@ -830,7 +830,7 @@ export default function AIStrategicAdvisor() {
                             })}
                             className="text-green-600 hover:bg-green-50"
                           >
-                            {isAr ? "✅ مفيدة" : "✅ Helpful"} {/* Rule 3 */}
+                            {isAr ? "✅ مفيدة" : "✅ Useful"}
                           </Button>
                           <Button
                             size="sm"
@@ -843,7 +843,7 @@ export default function AIStrategicAdvisor() {
                             })}
                             className="text-red-600 hover:bg-red-50"
                           >
-                            {isAr ? "❌ غير مفيدة" : "❌ Not Helpful"} {/* Rule 3 */}
+                            {isAr ? "❌ غير مفيدة" : "❌ Not Useful"}
                           </Button>
                         </div>
                         <p className="text-sm font-medium text-right">{insight.title}</p>
@@ -856,7 +856,7 @@ export default function AIStrategicAdvisor() {
               {/* Feedback on Roadmap */}
               {analysis?.roadmap && (
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-right">{isAr ? "قيّم خارطة الطريق" : "Rate Roadmap"}</h3> {/* Rule 3 */}
+                  <h3 className="font-semibold text-right">{isAr ? "قيّم خارطة الطريق" : "Rate Roadmap"}</h3>
                   <div className="p-4 border rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex gap-2">
@@ -871,7 +871,7 @@ export default function AIStrategicAdvisor() {
                           })}
                           className="text-green-600 hover:bg-green-50"
                         >
-                          {isAr ? "✅ قابلة للتنفيذ" : "✅ Actionable"} {/* Rule 3 */}
+                          {isAr ? "✅ قابلة للتنفيذ" : "✅ Actionable"}
                         </Button>
                         <Button
                           size="sm"
@@ -884,10 +884,10 @@ export default function AIStrategicAdvisor() {
                           })}
                           className="text-red-600 hover:bg-red-50"
                         >
-                          {isAr ? "❌ غير قابلة للتنفيذ" : "❌ Not Actionable"} {/* Rule 3 */}
+                          {isAr ? "❌ غير قابلة للتنفيذ" : "❌ Not Actionable"}
                         </Button>
                       </div>
-                      <p className="text-sm font-medium text-right">{isAr ? "خارطة الطريق العملية" : "Actionable Roadmap"}</p> {/* Rule 3 */}
+                      <p className="text-sm font-medium text-right">{isAr ? "خارطة الطريق العملية" : "Actionable Roadmap"}</p>
                     </div>
                   </div>
                 </div>
@@ -895,7 +895,7 @@ export default function AIStrategicAdvisor() {
 
               {/* General Feedback */}
               <div className="space-y-3">
-                <h3 className="font-semibold text-right">{isAr ? "ملاحظات عامة" : "General Feedback"}</h3> {/* Rule 3 */}
+                <h3 className="font-semibold text-right">{isAr ? "ملاحظات عامة" : "General Feedback"}</h3>
                 <Textarea
                   placeholder={isAr ? "شاركنا ملاحظاتك لتحسين النظام..." : "Share your feedback to improve the system..."} // Rule 4
                   className="text-right min-h-[100px]"
@@ -912,7 +912,7 @@ export default function AIStrategicAdvisor() {
                   disabled={!generalFeedback.trim()}
                   className="w-full"
                 >
-                  {isAr ? "إرسال الملاحظات" : "Submit Feedback"} {/* Rule 3 */}
+                  {isAr ? "إرسال الملاحظات" : "Submit Feedback"}
                 </Button>
               </div>
             </div>

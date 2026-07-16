@@ -55,7 +55,7 @@ export default function Naqla2EventDetail() {
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardContent className="py-12 text-center">
-            <p className="text-slate-400 text-lg">{isAr ? "الفعالية غير موجودة" : "[الفعالية غير موجودة]"}</p>
+            <p className="text-slate-400 text-lg">{isAr ? isAr ? "الفعالية غير موجودة" : "Event Not Found" : "[Event Not Found]"}</p>
             <Button onClick={() => navigate('/naqla2/events')} className="mt-4">
               <ArrowLeft className="w-4 h-4 ml-2" />
               العودة
@@ -163,11 +163,11 @@ export default function Naqla2EventDetail() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <p className="text-sm text-slate-400">{isAr ? "تاريخ البداية" : "[تاريخ البداية]"}</p>
+                <p className="text-sm text-slate-400">{isAr ? isAr ? "تاريخ البداية" : "Start Date" : "[Start Date]"}</p>
                 <p className="text-white">{new Date(event.startDate).toLocaleString('ar-SA')}</p>
               </div>
               <div>
-                <p className="text-sm text-slate-400">{isAr ? "تاريخ النهاية" : "[تاريخ النهاية]"}</p>
+                <p className="text-sm text-slate-400">{isAr ? isAr ? "تاريخ النهاية" : "End Date" : "[End Date]"}</p>
                 <p className="text-white">{new Date(event.endDate).toLocaleString('ar-SA')}</p>
               </div>
             </CardContent>
@@ -184,7 +184,7 @@ export default function Naqla2EventDetail() {
               {event.isVirtual ? (
                 <div className="flex items-center gap-2 text-blue-400">
                   <Globe className="w-5 h-5" />
-                  <span>{isAr ? "فعالية افتراضية (عبر الإنترنت)" : "[فعالية افتراضية (عبر الإنترنت)]"}</span>
+                  <span>{isAr ? isAr ? "فعالية افتراضية (عبر الإنترنت)" : "Virtual Event (Online)" : "[Virtual Event (Online)]"}</span>
                 </div>
               ) : (
                 <p className="text-white">{event.location || 'غير محدد'}</p>
@@ -204,7 +204,7 @@ export default function Naqla2EventDetail() {
                 {event.registrationsCount || 0}
                 {event.capacity && ` / ${event.capacity}`}
               </p>
-              <p className="text-sm text-slate-400 mt-1">{isAr ? "مشارك مسجل" : "[مشارك مسجل]"}</p>
+              <p className="text-sm text-slate-400 mt-1">{isAr ? isAr ? "مشارك مسجل" : "Registered Participant" : "[Registered Participant]"}</p>
             </CardContent>
           </Card>
 
@@ -218,7 +218,7 @@ export default function Naqla2EventDetail() {
               </CardHeader>
               <CardContent>
                 <p className="text-white text-2xl font-bold">{event.budget} ريال</p>
-                <p className="text-sm text-slate-400 mt-1">{isAr ? "إجمالي الميزانية" : "Total الميزانية"}</p>
+                <p className="text-sm text-slate-400 mt-1">{isAr ? isAr ? "إجمالي الميزانية" : "Total Budget" : "Total Budget"}</p>
               </CardContent>
             </Card>
           )}

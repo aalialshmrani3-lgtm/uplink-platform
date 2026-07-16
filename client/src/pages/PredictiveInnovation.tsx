@@ -10,30 +10,30 @@ export default function PredictiveInnovation() {
   const features = [
     {
       icon: <TrendingUp className="text-blue-600" size={32} />,
-      title: "تحليل اتجاهات السوق",
-      description: "مراقبة وتحليل اتجاهات السوق العالمية في الوقت الفعلي عبر 50+ صناعة",
-      stats: "50+ صناعة",
+      title: "Market Trend Analysis",
+      description: "Monitor and analyze global market trends in real-time across 50+ industries",
+      stats: "50+ Industries",
       color: "from-blue-500 to-cyan-600",
     },
     {
       icon: <Brain className="text-purple-600" size={32} />,
-      title: "تتبع براءات الاختراع",
-      description: "رصد براءات الاختراع الناشئة من USPTO, EPO, WIPO وتحديد الفجوات",
-      stats: "3M+ براءة",
+      title: "Patent Tracking",
+      description: "Monitor emerging patents from USPTO, EPO, WIPO and identify gaps",
+      stats: "3M+ Patents",
       color: "from-purple-500 to-pink-600",
     },
     {
       icon: <Globe className="text-green-600" size={32} />,
-      title: "الأبحاث الأكاديمية",
-      description: "تتبع أحدث الأبحاث من IEEE, Nature, Science وقواعد البيانات الأكاديمية",
-      stats: "100K+ بحث/شهر",
+      title: "Academic Research",
+      description: "Track latest research from IEEE, Nature, Science, and academic databases",
+      stats: "100K+ Research/Month",
       color: "from-green-500 to-emerald-600",
     },
     {
       icon: <Sparkles className="text-orange-600" size={32} />,
-      title: "تحليل وسائل التواصل",
-      description: "استخلاص رؤى من محادثات وسائل التواصل الاجتماعي والمنتديات المتخصصة",
-      stats: "10M+ منشور/يوم",
+      title: "Social Media Analysis",
+      description: "Extract insights from social media conversations and specialized forums",
+      stats: "10M+ Posts/Day",
       color: "from-orange-500 to-red-600",
     },
   ];
@@ -41,48 +41,48 @@ export default function PredictiveInnovation() {
   const predictions = [
     {
       id: 1,
-      title: "فرصة في الطاقة المتجددة",
-      category: "طاقة",
+      title: "Renewable Energy Opportunity",
+      category: "Energy",
       confidence: 94,
-      trend: "صاعد",
-      description: "تزايد الطلب على حلول تخزين الطاقة الشمسية بتقنية الجرافين",
+      trend: "Rising",
+      description: "Growing demand for graphene-based solar energy storage solutions",
       insights: [
-        "زيادة 340% في براءات الاختراع المرتبطة بالجرافين",
-        "45 بحث أكاديمي جديد في الربع الأخير",
-        "استثمارات بقيمة $2.3B في الشركات الناشئة",
+        isAr ? "زيادة 340% في براءات الاختراع المرتبطة بالجرافين" : "340% increase in graphene-related patents",
+        isAr ? "45 بحث أكاديمي جديد في الربع الأخير" : "45 new academic papers in the last quarter",
+        isAr ? "استثمارات بقيمة $2.3B في الشركات الناشئة" : "$2.3B investments in startups",
       ],
-      action: "استكشف الفرصة",
-      timeframe: "6-12 شهر",
+      action: "Explore Opportunity",
+      timeframe: "6-12 Months",
     },
     {
       id: 2,
-      title: "ثورة في الرعاية الصحية الرقمية",
-      category: "صحة",
+      title: "Digital Healthcare Revolution",
+      category: "Health",
       confidence: 89,
-      trend: "صاعد",
-      description: "تشخيص الأمراض المبكر باستخدام AI والتصوير الطبي المتقدم",
+      trend: "Rising",
+      description: "Early disease diagnosis using AI and advanced medical imaging",
       insights: [
-        "معدل دقة 98% في الكشف المبكر عن السرطان",
-        "تمويل حكومي بقيمة $1.8B للبحث والتطوير",
-        "نمو السوق المتوقع: 28% سنوياً",
+        isAr ? "معدل دقة 98% في الكشف المبكر عن السرطان" : "98% accuracy in early cancer detection",
+        isAr ? "تمويل حكومي بقيمة $1.8B للبحث والتطوير" : "$1.8B government funding for R&D",
+        isAr ? "نمو السوق المتوقع: 28% سنوياً" : "Expected market growth: 28% annually",
       ],
-      action: "ابدأ مشروع",
-      timeframe: "3-6 أشهر",
+      action: "Start Project",
+      timeframe: "3-6 Months",
     },
     {
       id: 3,
-      title: "تقنيات الزراعة الذكية",
-      category: "زراعة",
+      title: "Smart Farming Technologies",
+      category: "Agriculture",
       confidence: 87,
-      trend: "صاعد",
-      description: "أنظمة الري الذكي المدعومة بـ IoT والذكاء الاصطناعي",
+      trend: "Rising",
+      description: "Smart IoT & AI Irrigation Systems",
       insights: [
-        "توفير 60% من استهلاك المياه",
-        "زيادة الإنتاجية بنسبة 45%",
-        "اعتماد متزايد في منطقة الشرق الأوسط",
+        isAr ? "توفير 60% من استهلاك المياه" : "60% Water Saving",
+        isAr ? "زيادة الإنتاجية بنسبة 45%" : "45% Productivity Increase",
+        isAr ? "اعتماد متزايد في منطقة الشرق الأوسط" : "Growing Adoption in MENA",
       ],
-      action: "تقييم الجدوى",
-      timeframe: "9-18 شهر",
+      action: "Feasibility Assessment",
+      timeframe: "9-18 Months",
     },
   ];
 
@@ -118,13 +118,13 @@ export default function PredictiveInnovation() {
 
         {/* How It Works */}
         <Card className="p-8 mb-16 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
-          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "كيف يعمل النظام" : "[كيف يعمل النظام]"}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? isAr ? "كيف يعمل النظام" : "How it Works" : "How it Works"}</h2>
           <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
-              <h4 className="font-bold mb-2">{isAr ? "جمع البيانات" : "جمع Data"}</h4>
+              <h4 className="font-bold mb-2">{isAr ? isAr ? "جمع البيانات" : "Data Collection" : "Data Collection"}</h4>
               <p className="text-sm text-muted-foreground">
                 جمع بيانات من مصادر عالمية متعددة في الوقت الفعلي
               </p>
@@ -133,7 +133,7 @@ export default function PredictiveInnovation() {
               <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-purple-600">2</span>
               </div>
-              <h4 className="font-bold mb-2">{isAr ? "التحليل الذكي" : "Analysis الذكي"}</h4>
+              <h4 className="font-bold mb-2">{isAr ? isAr ? "التحليل الذكي" : "Smart Analysis" : "Smart Analysis"}</h4>
               <p className="text-sm text-muted-foreground">
                 تحليل متقدم باستخدام خوارزميات AI وML
               </p>
@@ -142,7 +142,7 @@ export default function PredictiveInnovation() {
               <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-green-600">3</span>
               </div>
-              <h4 className="font-bold mb-2">{isAr ? "التنبؤ بالفرص" : "التنبؤ بOpportunities"}</h4>
+              <h4 className="font-bold mb-2">{isAr ? isAr ? "التنبؤ بالفرص" : "Opportunity Prediction" : "Opportunity Prediction"}</h4>
               <p className="text-sm text-muted-foreground">
                 تحديد فجوات السوق والفرص الناشئة
               </p>
@@ -161,7 +161,7 @@ export default function PredictiveInnovation() {
 
         {/* Predictions */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "توقعات الابتكار الحالية" : "توقعات اNoبتكار الحالية"}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? isAr ? "توقعات الابتكار الحالية" : "Current Innovation Forecasts" : "Current Innovation Forecasts"}</h2>
           <div className="space-y-6">
             {predictions.map((prediction) => (
               <Card key={prediction.id} className="overflow-hidden">
@@ -181,7 +181,7 @@ export default function PredictiveInnovation() {
                       <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                         {prediction.confidence}%
                       </div>
-                      <div className="text-xs text-muted-foreground">{isAr ? "ثقة" : "[ثقة]"}</div>
+                      <div className="text-xs text-muted-foreground">{isAr ? isAr ? "ثقة" : "Trust" : "Trust"}</div>
                     </div>
                   </div>
 
@@ -212,7 +212,7 @@ export default function PredictiveInnovation() {
         {/* CTA Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">🔮</div>
-          <h2 className="text-3xl font-bold mb-4">{isAr ? "كن أول من يكتشف الفرص" : "كن أول من يكتشف Opportunities"}</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? isAr ? "كن أول من يكتشف الفرص" : "Be First to Discover Opportunities" : "Be First to Discover Opportunities"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             انضم إلى البرنامج التجريبي للابتكار التنبؤي واحصل على ميزة تنافسية لا تُضاهى
           </p>

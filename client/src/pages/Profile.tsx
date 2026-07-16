@@ -51,11 +51,11 @@ export default function Profile() {
 
   const updateMutation = trpc.user.updateProfile.useMutation({
     onSuccess: () => {
-      toast.success("تم تحديث الملف الشخصي بنجاح");
+      toast.success(isAr ? "تم تحديث الملف الشخصي بنجاح" : "Profile updated successfully");
       refetch();
     },
     onError: (error) => {
-      toast.error("حدث خطأ", { description: error.message });
+      toast.error(isAr ? "حدث خطأ" : "An error occurred", { description: error.message });
     },
   });
 
@@ -112,13 +112,13 @@ export default function Profile() {
             </span>
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-white">{user.name || "مستخدم"}</h1>
+            <h1 className="text-3xl font-bold text-white">{user.name || isAr ? "مستخدم" : "User"}</h1>
             <p className="text-slate-400">{user.email}</p>
             <div className="flex items-center gap-4 mt-2">
               <span className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-300">
-                {stats.tier === "platinum" ? "بلاتيني" :
-                 stats.tier === "gold" ? "ذهبي" :
-                 stats.tier === "silver" ? "فضي" : "عضو"}
+                {stats.tier === "platinum" ? isAr ? "بلاتيني" : "Platinum" :
+                 stats.tier === "gold" ? isAr ? "ذهبي" : "Gold" :
+                 stats.tier === "silver" ? isAr ? "فضي" : "Silver" : "Member"}
               </span>
               <span className="text-slate-400 text-sm">
                 انضم في {new Date(user.createdAt).toLocaleDateString("ar-SA")}
@@ -133,21 +133,21 @@ export default function Profile() {
             <CardContent className="pt-6 text-center">
               <Lightbulb className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{stats.projects}</div>
-              <div className="text-slate-400 text-sm">{isAr ? "مشاريع" : "[مشاريع]"}</div>
+              <div className="text-slate-400 text-sm">{isAr ? isAr ? "مشاريع" : "Projects" : "[Projects]"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="pt-6 text-center">
               <Shield className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{stats.ips}</div>
-              <div className="text-slate-400 text-sm">{isAr ? "ملكيات فكرية" : "[ملكيات فكرية]"}</div>
+              <div className="text-slate-400 text-sm">{isAr ? isAr ? "ملكيات فكرية" : "IPs" : "[IPs]"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="pt-6 text-center">
               <TrendingUp className="w-8 h-8 text-purple-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{stats.score}%</div>
-              <div className="text-slate-400 text-sm">{isAr ? "متوسط التقييم" : "متوسط Evaluation"}</div>
+              <div className="text-slate-400 text-sm">{isAr ? isAr ? "متوسط التقييم" : "Avg. Rating" : "Avg. Evaluation"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
@@ -175,12 +175,12 @@ export default function Profile() {
                   <Input
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder="الاسم الكامل"
+                    placeholder={isAr ? "الاسم الكامل" : "Full Name"}
                     className="bg-slate-900 border-slate-700 text-white"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-slate-300">{isAr ? "رقم الجوال" : "[رقم الجوال]"}</Label>
+                  <Label className="text-slate-300">{isAr ? isAr ? "رقم الجوال" : "Mobile Number" : "[Mobile Number]"}</Label>
                   <Input
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -193,20 +193,20 @@ export default function Profile() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label className="text-slate-300">{isAr ? "الجهة / الشركة" : "[الجهة / الشركة]"}</Label>
+                  <Label className="text-slate-300">{isAr ? isAr ? "الجهة / الشركة" : "Organization / Company" : "[Organization / Company]"}</Label>
                   <Input
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                    placeholder="اسم الجهة أو الشركة"
+                    placeholder={isAr ? "اسم الجهة أو الشركة" : "Organization or Company Name"}
                     className="bg-slate-900 border-slate-700 text-white"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-slate-300">{isAr ? "المسمى الوظيفي" : "[المسمى الوظيفي]"}</Label>
+                  <Label className="text-slate-300">{isAr ? isAr ? "المسمى الوظيفي" : "Job Title" : "[Job Title]"}</Label>
                   <Input
                     value={formData.position}
                     onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-                    placeholder="المسمى الوظيفي"
+                    placeholder={isAr ? "المسمى الوظيفي" : "Job Title"}
                     className="bg-slate-900 border-slate-700 text-white"
                   />
                 </div>
@@ -217,17 +217,17 @@ export default function Profile() {
                 <Input
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  placeholder="المدينة"
+                  placeholder={isAr ? "المدينة" : "City"}
                   className="bg-slate-900 border-slate-700 text-white"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label className="text-slate-300">{isAr ? "نبذة شخصية" : "[نبذة شخصية]"}</Label>
+                <Label className="text-slate-300">{isAr ? isAr ? "نبذة شخصية" : "Bio" : "[Bio]"}</Label>
                 <Textarea
                   value={formData.bio}
                   onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                  placeholder="اكتب نبذة مختصرة عنك..."
+                  placeholder={isAr ? "اكتب نبذة مختصرة عنك..." : "Write a brief bio about yourself..."}
                   className="bg-slate-900 border-slate-700 text-white min-h-24"
                 />
               </div>
@@ -243,7 +243,7 @@ export default function Profile() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label className="text-slate-300">{isAr ? "الموقع الإلكتروني" : "Website الإلكتروني"}</Label>
+                <Label className="text-slate-300">{isAr ? isAr ? "الموقع الإلكتروني" : "Website" : "Website"}</Label>
                 <Input
                   value={formData.website}
                   onChange={(e) => setFormData({ ...formData, website: e.target.value })}

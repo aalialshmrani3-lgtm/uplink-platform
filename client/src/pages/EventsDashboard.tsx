@@ -61,11 +61,11 @@ export default function EventsDashboard() {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      draft: { label: "مسودة", variant: "secondary" as const },
-      published: { label: "منشورة", variant: "default" as const },
-      ongoing: { label: "جارية", variant: "default" as const },
-      completed: { label: "مكتملة", variant: "secondary" as const },
-      cancelled: { label: "ملغاة", variant: "destructive" as const },
+      draft: { label: "Draft", variant: "secondary" as const },
+      published: { label: "Published", variant: "default" as const },
+      ongoing: { label: "Ongoing", variant: "default" as const },
+      completed: { label: "Completed", variant: "secondary" as const },
+      cancelled: { label: "Cancelled", variant: "destructive" as const },
     };
     const statusInfo = statusMap[status as keyof typeof statusMap] || statusMap.draft;
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
@@ -73,15 +73,15 @@ export default function EventsDashboard() {
 
   const getEventTypeBadge = (type: string) => {
     const typeMap = {
-      conference: "مؤتمر",
-      workshop: "ورشة عمل",
-      hackathon: "هاكاثون",
-      seminar: "ندوة",
-      webinar: "ويبينار",
-      networking: "لقاء علمي",
-      exhibition: "معرض",
-      competition: "مسابقة",
-      training: "تدريب",
+      conference: "Conference",
+      workshop: "Workshop",
+      hackathon: "Hackathon",
+      seminar: "Seminar",
+      webinar: "Webinar",
+      networking: "Scientific Meeting",
+      exhibition: "Exhibition",
+      competition: "Competition",
+      training: "Training",
     };
     return <Badge variant="outline">{typeMap[type as keyof typeof typeMap] || type}</Badge>;
   };
@@ -101,8 +101,8 @@ export default function EventsDashboard() {
   if (!user) {
     return (
       <div className="container py-20 text-center">
-        <h1 className="text-2xl font-bold mb-4">{isAr ? "يرجى تسجيل الدخول" : "يرجى Login"}</h1>
-        <p className="text-muted-foreground">{isAr ? "يجب تسجيل الدخول لعرض لوحة تحكم الفعاليات" : "يجب Login لعرض لوحة تحكم الفعاليات"}</p>
+        <h1 className="text-2xl font-bold mb-4">{isAr ? isAr ? "يرجى تسجيل الدخول" : "Please log in" : "Please log in"}</h1>
+        <p className="text-muted-foreground">{isAr ? isAr ? "يجب تسجيل الدخول لعرض لوحة تحكم الفعاليات" : "You must log in to view the events dashboard" : "You must log in to view the events dashboard"}</p>
       </div>
     );
   }
@@ -110,16 +110,16 @@ export default function EventsDashboard() {
   return (
     <>
       <SEOHead
-        title="لوحة تحكم الفعاليات - نقلة"
-        description="إدارة فعالياتك ومتابعة التسجيلات والإحصائيات"
+        title={isAr ? "لوحة تحكم الفعاليات - نقلة" : "Events Dashboard - Naqla"}
+        description={isAr ? "إدارة فعالياتك ومتابعة التسجيلات والإحصائيات" : "Manage your events, registrations, and statistics"}
       />
 
       <div className="container py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{isAr ? "لوحة تحكم الفعاليات" : "لوحة تحكم الEvents"}</h1>
-            <p className="text-muted-foreground">{isAr ? "إدارة ومتابعة جميع فعالياتك" : "إدارة ومتابعة جميع Eventsك"}</p>
+            <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "لوحة تحكم الفعاليات" : "Events Dashboard" : "Events Dashboard"}</h1>
+            <p className="text-muted-foreground">{isAr ? isAr ? "إدارة ومتابعة جميع فعالياتك" : "Manage and track all your events" : "Manage and track all your events"}</p>
           </div>
           <Button onClick={() => setLocation("/naqla2/add-event")}>
             <Plus className="w-4 h-4 ml-2" />
@@ -142,7 +142,7 @@ export default function EventsDashboard() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? "منشورة" : "Publishedة"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? isAr ? "منشورة" : "Published" : "Published"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">{stats.published}</div>
@@ -151,7 +151,7 @@ export default function EventsDashboard() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? "جارية" : "[جارية]"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? isAr ? "جارية" : "Ongoing" : "[Ongoing]"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-blue-600">{stats.ongoing}</div>
@@ -160,7 +160,7 @@ export default function EventsDashboard() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? "مكتملة" : "مكDoneلة"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{isAr ? isAr ? "مكتملة" : "Completed" : "Completed"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-gray-600">{stats.completed}</div>
@@ -171,8 +171,8 @@ export default function EventsDashboard() {
         {/* Events List */}
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "فعالياتي" : "Eventsي"}</CardTitle>
-            <CardDescription>{isAr ? "إدارة ومتابعة جميع الفعاليات التي أنشأتها" : "إدارة ومتابعة جميع الEvents التي أنشأتها"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "فعالياتي" : "My Events" : "My Events"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "إدارة ومتابعة جميع الفعاليات التي أنشأتها" : "Manage and track all events you created" : "Manage & Track Your Events"}</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs value={selectedTab} onValueChange={setSelectedTab}>
@@ -181,14 +181,14 @@ export default function EventsDashboard() {
                 <TabsTrigger value="published">منشورة ({stats.published})</TabsTrigger>
                 <TabsTrigger value="ongoing">جارية ({stats.ongoing})</TabsTrigger>
                 <TabsTrigger value="completed">مكتملة ({stats.completed})</TabsTrigger>
-                <TabsTrigger value="draft">{isAr ? "مسودات" : "[مسودات]"}</TabsTrigger>
+                <TabsTrigger value="draft">{isAr ? isAr ? "مسودات" : "Drafts" : "[Drafts]"}</TabsTrigger>
               </TabsList>
 
               <TabsContent value={selectedTab} className="space-y-4">
                 {isLoading ? (
                   <div className="text-center py-12">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                    <p className="mt-4 text-muted-foreground">{isAr ? "جارٍ التحميل..." : "جارٍ الDownload..."}</p>
+                    <p className="mt-4 text-muted-foreground">{isAr ? isAr ? "جارٍ التحميل..." : "Loading..." : "Downloading..."}</p>
                   </div>
                 ) : filteredEvents && filteredEvents.length > 0 ? (
                   filteredEvents.map((event: any) => (
@@ -291,7 +291,7 @@ export default function EventsDashboard() {
                 ) : (
                   <div className="text-center py-12">
                     <Calendar className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">{isAr ? "لا توجد فعاليات" : "No توجد فعاليات"}</h3>
+                    <h3 className="text-lg font-semibold mb-2">{isAr ? isAr ? "لا توجد فعاليات" : "No Events" : "No Events"}</h3>
                     <p className="text-muted-foreground mb-4">
                       لم تقم بإنشاء أي فعاليات بعد
                     </p>

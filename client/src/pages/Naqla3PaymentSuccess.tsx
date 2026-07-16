@@ -22,7 +22,7 @@ export default function Naqla3PaymentSuccess() {
           <div className="mx-auto w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-4">
             <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
           </div>
-          <CardTitle className="text-3xl">{isAr ? "تم الدفع بنجاح!" : "تم الدفع بSuccess!"}</CardTitle>
+          <CardTitle className="text-3xl">{isAr ? isAr ? "تم الدفع بنجاح!" : "Payment Successful!" : "Payment Successful!"}</CardTitle>
           <CardDescription className="text-lg">
             شكراً لك على شرائك. تم إتمام العملية بنجاح.
           </CardDescription>
@@ -31,9 +31,9 @@ export default function Naqla3PaymentSuccess() {
         <CardContent className="space-y-6">
           {/* Order Details */}
           <div className="bg-muted/50 rounded-lg p-6 space-y-3">
-            <h3 className="font-semibold text-lg mb-4">{isAr ? "تفاصيل الطلب" : "[تفاصيل الطلب]"}</h3>
+            <h3 className="font-semibold text-lg mb-4">{isAr ? isAr ? "تفاصيل الطلب" : "Order Details" : "Order Details"}</h3>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">{isAr ? "رقم الجلسة:" : "[رقم الجلسة:]"}</span>
+              <span className="text-muted-foreground">{isAr ? isAr ? "رقم الجلسة:" : "Session ID:" : "Session ID:"}</span>
               <span className="font-mono text-sm">{sessionId?.slice(0, 20)}...</span>
             </div>
             <div className="flex justify-between">
@@ -52,15 +52,15 @@ export default function Naqla3PaymentSuccess() {
             <ul className="space-y-2 text-muted-foreground">
               <li className="flex items-start gap-2">
                 <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>{isAr ? "سيتم إرسال تفاصيل الشراء والفاتورة إلى بريدك الإلكتروني" : "سيتم Submit تفاصيل الشراء والفاتورة إلى بريدك الإلكتروني"}</span>
+                <span>{isAr ? isAr ? "سيتم إرسال تفاصيل الشراء والفاتورة إلى بريدك الإلكتروني" : "Purchase details and invoice will be sent to your email." : "Purchase details and invoice will be sent to your email."}</span>
               </li>
               <li className="flex items-start gap-2">
                 <Download className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>{isAr ? "يمكنك تحميل الملفات والمستندات من لوحة التحكم" : "يمكنك تحميل الملفات والمستندات من Dashboard"}</span>
+                <span>{isAr ? isAr ? "يمكنك تحميل الملفات والمستندات من لوحة التحكم" : "You can download files and documents from the control panel." : "You can download files and documents from the Dashboard."}</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>{isAr ? "سيتم التواصل معك من قبل المالك خلال 24 ساعة" : "سيDone التواصل معك من قبل المالك خلال 24 ساعة"}</span>
+                <span>{isAr ? isAr ? "سيتم التواصل معك من قبل المالك خلال 24 ساعة" : "The owner will contact you within 24 hours." : "The owner will contact you within 24 hours."}</span>
               </li>
             </ul>
           </div>
@@ -82,7 +82,7 @@ export default function Naqla3PaymentSuccess() {
 
           {/* Support */}
           <div className="text-center text-sm text-muted-foreground pt-4 border-t">
-            <p>{isAr ? "هل تحتاج مساعدة؟ " : "[هل تحتاج مساعدة؟]"}< Link href="/support"><span className="text-primary hover:underline">{isAr ? "تواصل مع الدعم الفني" : "Connect مع الدعم الفني"}</span></Link></p>
+            <p>{isAr ? isAr ? "هل تحتاج مساعدة؟ " : "Need help?" : "Need help?"}< Link href="/support"><span className="text-primary hover:underline">{isAr ? isAr ? "تواصل مع الدعم الفني" : "Contact Support" : "Contact Support"}</span></Link></p>
           </div>
         </CardContent>
       </Card>

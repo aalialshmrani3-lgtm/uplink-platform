@@ -239,7 +239,7 @@ export default function Analytics() {
             <Select value={timeRange} onValueChange={setTimeRange}>
               <SelectTrigger className="w-32 bg-secondary/50">
                 <Calendar className="w-4 h-4 ml-2" />
-                <SelectValue placeholder={isAr ? "اختر نطاق زمني" : "Select time range"} />
+                <SelectValue placeholder={isAr ? "اختر نطاق زمني" : "Select Time Range"} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="week">{isAr ? "أسبوع" : "Week"}</SelectItem>
@@ -249,7 +249,7 @@ export default function Analytics() {
               </SelectContent>
             </Select>
 
-            <Button variant="outline" size="icon" className="bg-secondary/50" aria-label={isAr ? "تحديث البيانات" : "Refresh data"}>
+            <Button variant="outline" size="icon" className="bg-secondary/50" aria-label={isAr ? "تحديث البيانات" : "Refresh Data"}>
               <RefreshCw className="w-4 h-4" />
             </Button>
 
@@ -293,7 +293,7 @@ export default function Analytics() {
             change="+24%"
             changeType="up"
             icon={Briefcase}
-            description={isAr ? "مقارنة بالشهر الماضي" : "Compared to last month"}
+            description={isAr ? "مقارنة بالشهر الماضي" : "Compared to Last Month"}
             gradient="bg-gradient-to-br from-cyan-500 to-blue-600"
           />
           <StatCard
@@ -311,7 +311,7 @@ export default function Analytics() {
             change="+32%"
             changeType="up"
             icon={Users}
-            description={isAr ? "مستثمر جديد" : "New investors"}
+            description={isAr ? "مستثمر جديد" : "New Investor"}
             gradient="bg-gradient-to-br from-purple-500 to-pink-600"
           />
           <StatCard
@@ -320,7 +320,7 @@ export default function Analytics() {
             change="+15%"
             changeType="up"
             icon={Award}
-            description={isAr ? "براءة مسجلة" : "Registered patents"}
+            description={isAr ? "براءة مسجلة" : "Patent Registered"}
             gradient="bg-gradient-to-br from-amber-500 to-orange-600"
           />
         </div>
@@ -336,14 +336,14 @@ export default function Analytics() {
                     <TrendingUp className="w-5 h-5 text-cyan-400" />
                     {isAr ? "اتجاهات التمويل" : "Funding Trends"}
                   </CardTitle>
-                  <CardDescription>{isAr ? "التمويل الشهري وعدد المشاريع" : "Monthly funding and project count"}</CardDescription>
+                  <CardDescription>{isAr ? "التمويل الشهري وعدد المشاريع" : "Monthly Funding & Projects"}</CardDescription>
                 </div>
                 <Tabs defaultValue="area" className="w-auto">
                   <TabsList className="bg-secondary/50">
-                    <TabsTrigger value="area" className="text-xs" aria-label={isAr ? "عرض مخطط المساحة" : "View area chart"}>
+                    <TabsTrigger value="area" className="text-xs" aria-label={isAr ? "عرض مخطط المساحة" : "View Area Chart"}>
                       <BarChart3 className="w-3 h-3" />
                     </TabsTrigger>
-                    <TabsTrigger value="line" className="text-xs" aria-label={isAr ? "عرض مخطط الخط" : "View line chart"}>
+                    <TabsTrigger value="line" className="text-xs" aria-label={isAr ? "عرض مخطط الخط" : "View Line Chart"}>
                       <LineChartIcon className="w-3 h-3" />
                     </TabsTrigger>
                   </TabsList>
@@ -414,7 +414,7 @@ export default function Analytics() {
                 <PieChartIcon className="w-5 h-5 text-purple-400" />
                 {isAr ? "توزيع القطاعات" : "Sector Distribution"}
               </CardTitle>
-              <CardDescription>{isAr ? "المشاريع حسب القطاع" : "Projects by sector"}</CardDescription>
+              <CardDescription>{isAr ? "المشاريع حسب القطاع" : "Projects by Sector"}</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={280}>
@@ -465,7 +465,7 @@ export default function Analytics() {
                 <Rocket className="w-5 h-5 text-amber-400" />
                 {isAr ? "مراحل المشاريع" : "Project Stages"}
               </CardTitle>
-              <CardDescription>{isAr ? "توزيع المشاريع حسب المرحلة" : "Project distribution by stage"}</CardDescription>
+              <CardDescription>{isAr ? "توزيع المشاريع حسب المرحلة" : "Projects by Stage"}</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -505,7 +505,7 @@ export default function Analytics() {
                 <Target className="w-5 h-5 text-emerald-400" />
                 {isAr ? "مؤشرات الأداء" : "Performance Indicators"}
               </CardTitle>
-              <CardDescription>{isAr ? "متوسط تقييم المشاريع" : "Average project evaluation"}</CardDescription>
+              <CardDescription>{isAr ? "متوسط تقييم المشاريع" : "Avg. Project Rating"}</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -547,9 +547,9 @@ export default function Analytics() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Activity className="w-5 h-5 text-blue-400" />
-                {isAr ? "المقارنة السنوية" : "Yearly Comparison"}
+                {isAr ? "المقارنة السنوية" : "Annual Comparison"}
               </CardTitle>
-              <CardDescription>{isAr ? "نمو المنصة خلال السنوات" : "Platform growth over the years"}</CardDescription>
+              <CardDescription>{isAr ? "نمو المنصة خلال السنوات" : "Platform Growth Over Years"}</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -593,7 +593,7 @@ export default function Analytics() {
                 <Zap className="w-5 h-5 text-yellow-400" />
                 {isAr ? "النشاط الأسبوعي" : "Weekly Activity"}
               </CardTitle>
-              <CardDescription>{isAr ? "تفاعل المستخدمين خلال الأسبوع" : "User interaction during the week"}</CardDescription>
+              <CardDescription>{isAr ? "تفاعل المستخدمين خلال الأسبوع" : "User Engagement This Week"}</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>

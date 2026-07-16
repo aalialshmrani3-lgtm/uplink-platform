@@ -46,7 +46,7 @@ export default function Naqla2Challenges() {
             <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
               type="text"
-              placeholder="ابحث عن تحدٍ..."
+              placeholder={isAr ? "ابحث عن تحدٍ..." : "Search challenge..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-12 h-14 bg-slate-900/50 border-slate-700 text-white placeholder:text-slate-400"
@@ -64,7 +64,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">{challenges?.length || 0}</p>
-                  <p className="text-sm text-slate-400">{isAr ? "تحدٍ نشط" : "تحدٍ Active"}</p>
+                  <p className="text-sm text-slate-400">{isAr ? isAr ? "تحدٍ نشط" : "Active Challenge" : "Active Challenge"}</p>
                 </div>
               </div>
             </CardContent>
@@ -78,7 +78,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">500K+</p>
-                  <p className="text-sm text-slate-400">{isAr ? "إجمالي الجوائز" : "إجمالي الAwards"}</p>
+                  <p className="text-sm text-slate-400">{isAr ? isAr ? "إجمالي الجوائز" : "Total Prizes" : "Total Awards"}</p>
                 </div>
               </div>
             </CardContent>
@@ -92,7 +92,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">30+</p>
-                  <p className="text-sm text-slate-400">{isAr ? "يوم متوسط" : "يوم Average"}</p>
+                  <p className="text-sm text-slate-400">{isAr ? isAr ? "يوم متوسط" : "Avg. Day" : "Avg. Day"}</p>
                 </div>
               </div>
             </CardContent>
@@ -106,7 +106,7 @@ export default function Naqla2Challenges() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">1,200+</p>
-                  <p className="text-sm text-slate-400">{isAr ? "مشارك" : "[مشارك]"}</p>
+                  <p className="text-sm text-slate-400">{isAr ? isAr ? "مشارك" : "Participant" : "Participant"}</p>
                 </div>
               </div>
             </CardContent>
@@ -141,11 +141,11 @@ export default function Naqla2Challenges() {
                       {challenge.title}
                     </CardTitle>
                     <Badge variant="outline" className="bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
-                      {challenge.category || "عام"}
+                      {challenge.category || isAr ? "عام" : "General"}
                     </Badge>
                   </div>
                   <CardDescription className="text-slate-400 line-clamp-2">
-                    {challenge.description || "لا يوجد وصف"}
+                    {challenge.description || isAr ? "لا يوجد وصف" : "No description"}
                   </CardDescription>
                 </CardHeader>
 
@@ -184,8 +184,8 @@ export default function Naqla2Challenges() {
           <Card className="bg-slate-900/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <Target className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد تحديات" : "No توجد تحديات"}</h3>
-              <p className="text-slate-400">{isAr ? "لم يتم العثور على تحديات مطابقة لبحثك" : "لم يتم العثور على تحديات مطابقة لSearchك"}</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? isAr ? "لا توجد تحديات" : "No challenges" : "No challenges"}</h3>
+              <p className="text-slate-400">{isAr ? isAr ? "لم يتم العثور على تحديات مطابقة لبحثك" : "No challenges matching your search" : "No challenges matching your search"}</p>
             </CardContent>
           </Card>
         )}

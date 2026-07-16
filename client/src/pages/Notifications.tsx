@@ -35,7 +35,7 @@ const notificationsData: Notification[] = [
     id: 1,
     type: 'project',
     title: 'تحديث حالة المشروع',
-    message: 'تم قبول مشروعك "نظام الذكاء الاصطناعي" للتقييم',
+    message: 'تم قبول مشروعك isAr ? "نظام الذكاء الاصطناعي" : "AI System" للتقييم',
     time: 'منذ 5 دقائق',
     read: false,
     priority: 'high',
@@ -158,8 +158,8 @@ export default function Notifications() {
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
-      case 'high': return <Badge className="bg-red-500/20 text-red-400 border-0">{isAr ? "عاجل" : "[عاجل]"}</Badge>;
-      case 'medium': return <Badge className="bg-amber-500/20 text-amber-400 border-0">{isAr ? "متوسط" : "Average"}</Badge>;
+      case 'high': return <Badge className="bg-red-500/20 text-red-400 border-0">{isAr ? isAr ? "عاجل" : "Urgent" : "[Urgent]"}</Badge>;
+      case 'medium': return <Badge className="bg-amber-500/20 text-amber-400 border-0">{isAr ? "متوسط" : "Medium"}</Badge>;
       default: return null;
     }
   };
@@ -339,7 +339,7 @@ export default function Notifications() {
                       <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mb-4">
                         <Bell className="w-8 h-8 text-muted-foreground" />
                       </div>
-                      <p className="text-muted-foreground">{isAr ? "لا توجد إشعارات" : "No توجد إشعارات"}</p>
+                      <p className="text-muted-foreground">{isAr ? isAr ? "لا توجد إشعارات" : "No Notifications" : "No Notifications"}</p>
                     </div>
                   )}
                 </ScrollArea>
@@ -383,7 +383,7 @@ export default function Notifications() {
               <CardContent>
                 <div className="flex items-center justify-between p-4 rounded-xl bg-secondary/30">
                   <div>
-                    <h4 className="font-medium">{isAr ? "تفعيل إشعارات الدفع" : "[تفعيل إشعارات الدفع]"}</h4>
+                    <h4 className="font-medium">{isAr ? isAr ? "تفعيل إشعارات الدفع" : "Enable Push Notifications" : "[Enable Push Notifications]"}</h4>
                     <p className="text-sm text-muted-foreground">
                       استلام إشعارات فورية على جهازك
                     </p>

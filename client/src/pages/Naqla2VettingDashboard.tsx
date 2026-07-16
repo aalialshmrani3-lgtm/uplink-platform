@@ -72,7 +72,7 @@ export default function Naqla2VettingDashboard() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+        <div className="text-white text-xl">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Downloading..."}</div>
       </div>
     );
   }
@@ -97,7 +97,7 @@ export default function Naqla2VettingDashboard() {
               <Clock className="w-10 h-10 text-yellow-400" />
               <div>
                 <div className="text-3xl font-bold text-white">{pendingIPs?.length || 0}</div>
-                <div className="text-sm text-blue-200">{isAr ? "قيد الانتظار" : "قيد اNoنتظار"}</div>
+                <div className="text-sm text-blue-200">{isAr ? isAr ? "قيد الانتظار" : "Pending" : "Pending"}</div>
               </div>
             </div>
           </Card>
@@ -107,7 +107,7 @@ export default function Naqla2VettingDashboard() {
               <Scale className="w-10 h-10 text-blue-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-blue-200">{isAr ? "مراجعة قانونية" : "[مراجعة قانونية]"}</div>
+                <div className="text-sm text-blue-200">{isAr ? isAr ? "مراجعة قانونية" : "Legal Review" : "Legal Review"}</div>
               </div>
             </div>
           </Card>
@@ -117,7 +117,7 @@ export default function Naqla2VettingDashboard() {
               <Cpu className="w-10 h-10 text-purple-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-blue-200">{isAr ? "مراجعة فنية" : "[مراجعة فنية]"}</div>
+                <div className="text-sm text-blue-200">{isAr ? isAr ? "مراجعة فنية" : "Technical Review" : "Technical Review"}</div>
               </div>
             </div>
           </Card>
@@ -127,7 +127,7 @@ export default function Naqla2VettingDashboard() {
               <TrendingUp className="w-10 h-10 text-green-400" />
               <div>
                 <div className="text-3xl font-bold text-white">0</div>
-                <div className="text-sm text-blue-200">{isAr ? "مراجعة تجارية" : "[مراجعة تجارية]"}</div>
+                <div className="text-sm text-blue-200">{isAr ? isAr ? "مراجعة تجارية" : "Commercial Review" : "Commercial Review"}</div>
               </div>
             </div>
           </Card>
@@ -145,7 +145,7 @@ export default function Naqla2VettingDashboard() {
             {pendingIPs && pendingIPs.length === 0 ? (
               <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-8 text-center">
                 <AlertCircle className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                <p className="text-white text-lg">{isAr ? "لا توجد ملكيات فكرية منتظرة للمراجعة" : "No توجد ملكيات فكرية منتظرة للمراجعة"}</p>
+                <p className="text-white text-lg">{isAr ? isAr ? "لا توجد ملكيات فكرية منتظرة للمراجعة" : "No IP pending review" : "No IP pending review"}</p>
               </Card>
             ) : (
               <div className="space-y-4">
@@ -161,10 +161,10 @@ export default function Naqla2VettingDashboard() {
                       <div>
                         <h3 className="text-xl font-bold text-white mb-1">{ip.title}</h3>
                         <Badge className="bg-blue-500 text-white">
-                          {ip.type === "patent" ? "براءة اختراع" :
-                           ip.type === "trademark" ? "علامة تجارية" :
-                           ip.type === "copyright" ? "حقوق نشر" :
-                           ip.type === "trade_secret" ? "سر تجاري" : "تصميم صناعي"}
+                          {ip.type === "patent" ? isAr ? "براءة اختراع" : "Patent" :
+                           ip.type === "trademark" ? isAr ? "علامة تجارية" : "Trademark" :
+                           ip.type === "copyright" ? isAr ? "حقوق نشر" : "Copyright" :
+                           ip.type === "trade_secret" ? isAr ? "سر تجاري" : "Trade Secret" : "Industrial Design"}
                         </Badge>
                       </div>
                       <Eye className="w-5 h-5 text-blue-300" />
@@ -177,7 +177,7 @@ export default function Naqla2VettingDashboard() {
                         تاريخ التقديم: {new Date(ip.createdAt).toLocaleDateString("ar-SA")}
                       </span>
                       <Badge variant="outline" className="text-yellow-400 border-yellow-400">
-                        {ip.status === "submitted" ? "مقدم" : "قيد المراجعة"}
+                        {ip.status === "submitted" ? isAr ? "مقدم" : "Submitted" : "Under Review"}
                       </Badge>
                     </div>
                   </Card>
@@ -188,18 +188,18 @@ export default function Naqla2VettingDashboard() {
 
           {/* Right: Review Form */}
           <div>
-            <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "نموذج المراجعة" : "Growذج المراجعة"}</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">{isAr ? isAr ? "نموذج المراجعة" : "Review Form" : "Review Form"}</h2>
 
             {!selectedIP ? (
               <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-8 text-center">
                 <AlertCircle className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                <p className="text-white text-lg">{isAr ? "اختر ملكية فكرية من القائمة لبدء المراجعة" : "اختر ملكية فكرية من الMenu لبدء المراجعة"}</p>
+                <p className="text-white text-lg">{isAr ? isAr ? "اختر ملكية فكرية من القائمة لبدء المراجعة" : "Select IP from list to start review" : "Select IP from menu to start review"}</p>
               </Card>
             ) : (
               <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-6 space-y-6">
                 {/* Overall Score */}
                 <div>
-                  <Label className="text-white text-lg mb-2 block">{isAr ? "الدرجة الإجمالية (0-100)" : "الدرجة الTotalة (0-100)"}</Label>
+                  <Label className="text-white text-lg mb-2 block">{isAr ? isAr ? "الدرجة الإجمالية (0-100)" : "Overall Score (0-100)" : "Overall Score (0-100)"}</Label>
                   <Input
                     type="number"
                     min="0"
@@ -213,7 +213,7 @@ export default function Naqla2VettingDashboard() {
                 {/* Detailed Scores */}
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <Label className="text-white text-sm mb-1 block">{isAr ? "الجدة" : "الJeddah"}</Label>
+                    <Label className="text-white text-sm mb-1 block">{isAr ? isAr ? "الجدة" : "Novelty" : "Novelty"}</Label>
                     <Input
                       type="number"
                       min="0"
@@ -225,7 +225,7 @@ export default function Naqla2VettingDashboard() {
                   </div>
 
                   <div>
-                    <Label className="text-white text-sm mb-1 block">{isAr ? "الجدوى" : "[الجدوى]"}</Label>
+                    <Label className="text-white text-sm mb-1 block">{isAr ? isAr ? "الجدوى" : "Feasibility" : "Feasibility"}</Label>
                     <Input
                       type="number"
                       min="0"
@@ -251,18 +251,18 @@ export default function Naqla2VettingDashboard() {
 
                 {/* Comments */}
                 <div>
-                  <Label className="text-white text-lg mb-2 block">{isAr ? "ملاحظات المراجعة" : "مNoحظات المراجعة"}</Label>
+                  <Label className="text-white text-lg mb-2 block">{isAr ? isAr ? "ملاحظات المراجعة" : "Review Notes" : "Review Notes"}</Label>
                   <Textarea
                     value={reviewForm.comments}
                     onChange={(e) => setReviewForm({ ...reviewForm, comments: e.target.value })}
-                    placeholder="أدخل ملاحظاتك التفصيلية..."
+                    placeholder={isAr ? "أدخل ملاحظاتك التفصيلية..." : "Enter detailed notes..."}
                     className="bg-white/20 border-white/30 text-white min-h-[120px]"
                   />
                 </div>
 
                 {/* Recommendation */}
                 <div>
-                  <Label className="text-white text-lg mb-2 block">{isAr ? "التوصية" : "[التوصية]"}</Label>
+                  <Label className="text-white text-lg mb-2 block">{isAr ? isAr ? "التوصية" : "Recommendation" : "[Recommendation]"}</Label>
                   <div className="grid grid-cols-3 gap-3">
                     <Button
                       variant={reviewForm.recommendation === "approve" ? "default" : "outline"}
@@ -302,11 +302,11 @@ export default function Naqla2VettingDashboard() {
                 {/* Revision Suggestions (if needs_revision) */}
                 {reviewForm.recommendation === "needs_revision" && (
                   <div>
-                    <Label className="text-white text-lg mb-2 block">{isAr ? "اقتراحات التعديل" : "اقتراحات الEdit"}</Label>
+                    <Label className="text-white text-lg mb-2 block">{isAr ? isAr ? "اقتراحات التعديل" : "Edit Suggestions" : "Edit Suggestions"}</Label>
                     <Textarea
                       value={reviewForm.revisionSuggestions}
                       onChange={(e) => setReviewForm({ ...reviewForm, revisionSuggestions: e.target.value })}
-                      placeholder="أدخل اقتراحاتك للتحسين..."
+                      placeholder={isAr ? "أدخل اقتراحاتك للتحسين..." : "Enter improvement suggestions..."}
                       className="bg-white/20 border-white/30 text-white min-h-[100px]"
                     />
                   </div>
@@ -318,7 +318,7 @@ export default function Naqla2VettingDashboard() {
                   disabled={submitReview.isPending}
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg py-6"
                 >
-                  {submitReview.isPending ? "جاري الإرسال..." : "تقديم المراجعة"}
+                  {submitReview.isPending ? isAr ? "جاري الإرسال..." : "Submitting..." : "Submit Review"}
                 </Button>
               </Card>
             )}

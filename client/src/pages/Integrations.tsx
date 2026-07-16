@@ -8,86 +8,86 @@ export default function Integrations() {
   const isAr = language === 'ar';
   const categories = [
     {
-      name: "إدارة المشاريع",
+      name: "Project Management",
       icon: "📊",
       integrations: [
-        { name: "Jira", logo: "🔷", status: "متاح", description: "ربط المشاريع والمهام تلقائياً" },
-        { name: "Asana", logo: "🔴", status: "متاح", description: "مزامنة الفرق والمشاريع" },
-        { name: "Monday.com", logo: "🟣", status: "متاح", description: "إدارة سير العمل المتكاملة" },
-        { name: "Trello", logo: "🔵", status: "متاح", description: "تنظيم الأفكار والمهام" },
+        { name: "Jira", logo: "🔷", status: "Available", description: "Auto-link Projects & Tasks" },
+        { name: "Asana", logo: "🔴", status: "Available", description: "Sync Teams & Projects" },
+        { name: "Monday.com", logo: "🟣", status: "Available", description: "Integrated Workflow Management" },
+        { name: "Trello", logo: "🔵", status: "Available", description: "Organize Ideas & Tasks" },
       ],
     },
     {
-      name: "التواصل والتعاون",
+      name: "Communication & Collaboration",
       icon: "💬",
       integrations: [
-        { name: "Microsoft Teams", logo: "🟦", status: "متاح", description: "إشعارات فورية وتعاون" },
-        { name: "Slack", logo: "💬", status: "متاح", description: "قنوات مخصصة للابتكار" },
-        { name: "Zoom", logo: "📹", status: "متاح", description: "اجتماعات مدمجة" },
-        { name: "Google Meet", logo: "🎥", status: "متاح", description: "مؤتمرات فيديو سلسة" },
+        { name: "Microsoft Teams", logo: "🟦", status: "Available", description: "Instant Notifications & Collaboration" },
+        { name: "Slack", logo: "💬", status: "Available", description: "Dedicated Innovation Channels" },
+        { name: "Zoom", logo: "📹", status: "Available", description: "Integrated Meetings" },
+        { name: "Google Meet", logo: "🎥", status: "Available", description: "Seamless Video Conferencing" },
       ],
     },
     {
-      name: "أنظمة الأعمال",
+      name: "Business Systems",
       icon: "🏢",
       integrations: [
-        { name: "Salesforce", logo: "☁️", status: "متاح", description: "إدارة علاقات العملاء" },
-        { name: "SAP", logo: "🔶", status: "متاح", description: "تكامل أنظمة المؤسسات" },
-        { name: "Oracle", logo: "🔴", status: "قريباً", description: "قواعد البيانات المؤسسية" },
-        { name: "Microsoft Dynamics", logo: "🟦", status: "متاح", description: "إدارة الموارد" },
+        { name: "Salesforce", logo: "☁️", status: "Available", description: "CRM" },
+        { name: "SAP", logo: "🔶", status: "Available", description: "Enterprise System Integration" },
+        { name: "Oracle", logo: "🔴", status: "Coming Soon", description: "Enterprise Databases" },
+        { name: "Microsoft Dynamics", logo: "🟦", status: "Available", description: "Resource Management" },
       ],
     },
     {
-      name: "التخزين السحابي",
+      name: "Cloud Storage",
       icon: "☁️",
       integrations: [
-        { name: "Google Drive", logo: "📁", status: "متاح", description: "تخزين ومشاركة الملفات" },
-        { name: "Dropbox", logo: "📦", status: "متاح", description: "مزامنة المستندات" },
-        { name: "OneDrive", logo: "☁️", status: "متاح", description: "تكامل Microsoft 365" },
-        { name: "Box", logo: "📦", status: "متاح", description: "إدارة المحتوى المؤسسي" },
+        { name: "Google Drive", logo: "📁", status: "Available", description: "File Storage & Sharing" },
+        { name: "Dropbox", logo: "📦", status: "Available", description: "Document Sync" },
+        { name: "OneDrive", logo: "☁️", status: "Available", description: "Microsoft 365 Integration" },
+        { name: "Box", logo: "📦", status: "Available", description: "Enterprise Content Management" },
       ],
     },
     {
-      name: "التحليلات والبيانات",
+      name: "Analytics & Data",
       icon: "📈",
       integrations: [
-        { name: "Power BI", logo: "📊", status: "متاح", description: "تقارير وتحليلات متقدمة" },
-        { name: "Tableau", logo: "📉", status: "متاح", description: "تصورات بيانية تفاعلية" },
-        { name: "Google Analytics", logo: "📈", status: "متاح", description: "تتبع الأداء" },
-        { name: "Mixpanel", logo: "📊", status: "قريباً", description: "تحليلات المستخدمين" },
+        { name: "Power BI", logo: "📊", status: "Available", description: "Advanced Reports & Analytics" },
+        { name: "Tableau", logo: "📉", status: "Available", description: "Interactive Data Visualizations" },
+        { name: "Google Analytics", logo: "📈", status: "Available", description: "Performance Tracking" },
+        { name: "Mixpanel", logo: "📊", status: "Coming Soon", description: "User Analytics" },
       ],
     },
     {
-      name: "الأمن والامتثال",
+      name: "Security & Compliance",
       icon: "🔒",
       integrations: [
-        { name: "Okta", logo: "🔐", status: "متاح", description: "إدارة الهوية والوصول" },
-        { name: "Azure AD", logo: "🔷", status: "متاح", description: "مصادقة Microsoft" },
-        { name: "Auth0", logo: "🔒", status: "متاح", description: "مصادقة آمنة" },
-        { name: "OneLogin", logo: "🔑", status: "قريباً", description: "تسجيل دخول موحد" },
+        { name: "Okta", logo: "🔐", status: "Available", description: "Identity & Access Management" },
+        { name: "Azure AD", logo: "🔷", status: "Available", description: "Microsoft Authentication" },
+        { name: "Auth0", logo: "🔒", status: "Available", description: "Secure Authentication" },
+        { name: "OneLogin", logo: "🔑", status: "Coming Soon", description: "Single Sign-On" },
       ],
     },
   ];
 
   const features = [
     {
-      title: "تكامل سلس",
-      description: "ربط سريع مع أنظمتك الحالية دون تعقيد",
+      title: "Seamless Integration",
+      description: "Quick connection to existing systems without complexity",
       icon: "🔗",
     },
     {
-      title: "مزامنة تلقائية",
-      description: "تحديث البيانات في الوقت الفعلي عبر جميع الأنظمة",
+      title: "Automatic Sync",
+      description: "Real-time data updates across all systems",
       icon: "🔄",
     },
     {
-      title: "أمان عالي",
-      description: "تشفير من الطرف إلى الطرف لجميع البيانات",
+      title: "High Security",
+      description: "End-to-end encryption for all data",
       icon: "🔐",
     },
     {
-      title: "API مفتوحة",
-      description: "بناء تكاملات مخصصة حسب احتياجاتك",
+      title: "Open API",
+      description: "Build custom integrations to fit your needs",
       icon: "🔌",
     },
   ];
@@ -134,8 +134,8 @@ export default function Integrations() {
                     <div className="flex items-start justify-between mb-4">
                       <div className="text-5xl">{integration.logo}</div>
                       <Badge 
-                        variant={integration.status === "متاح" ? "default" : "secondary"}
-                        className={integration.status === "متاح" ? "bg-green-500" : ""}
+                        variant={integration.status === (isAr ? "متاح" : "Available") ? "default" : "secondary"}
+                        className={integration.status === (isAr ? "متاح" : "Available") ? "bg-green-500" : ""}
                       >
                         {integration.status}
                       </Badge>
@@ -146,7 +146,7 @@ export default function Integrations() {
                       {integration.description}
                     </p>
                     
-                    {integration.status === "متاح" && (
+                    {integration.status === (isAr ? "متاح" : "Available") && (
                       <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold">
                         تفعيل الآن
                         <ArrowRight size={16} />
@@ -162,7 +162,7 @@ export default function Integrations() {
         {/* Custom Integration CTA */}
         <Card className="mt-16 p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">🔌</div>
-          <h2 className="text-3xl font-bold mb-4">{isAr ? "هل تحتاج تكاملاً مخصصاً؟" : "هل تحتاج تكامNoً مخصصاً؟"}</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? isAr ? "هل تحتاج تكاملاً مخصصاً؟" : "Need a custom integration?" : "Need a custom integration?"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             استخدم API المفتوحة لدينا لبناء تكاملات مخصصة تناسب احتياجات مؤسستك
           </p>
@@ -182,19 +182,19 @@ export default function Integrations() {
             <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               50+
             </div>
-            <p className="text-muted-foreground">{isAr ? "تكامل متاح" : "[تكامل متاح]"}</p>
+            <p className="text-muted-foreground">{isAr ? isAr ? "تكامل متاح" : "Integration Available" : "[Integration Available]"}</p>
           </div>
           <div>
             <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               99.9%
             </div>
-            <p className="text-muted-foreground">{isAr ? "وقت التشغيل" : "وقت Operation"}</p>
+            <p className="text-muted-foreground">{isAr ? isAr ? "وقت التشغيل" : "Runtime" : "Operation Time"}</p>
           </div>
           <div>
             <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               &lt;5 دقائق
             </div>
-            <p className="text-muted-foreground">{isAr ? "وقت الإعداد" : "[وقت الإعداد]"}</p>
+            <p className="text-muted-foreground">{isAr ? isAr ? "وقت الإعداد" : "Setup Time" : "[Setup Time]"}</p>
           </div>
         </div>
       </div>

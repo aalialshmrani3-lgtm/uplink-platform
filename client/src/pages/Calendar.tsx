@@ -136,9 +136,9 @@ export default function Calendar() {
 
   const getTypeBadge = (type: string) => {
     switch (type) {
-      case 'video': return <Badge className="bg-cyan-500/20 text-cyan-400 border-0">{isAr ? "فيديو" : "[فيديو]"}</Badge>;
-      case 'in-person': return <Badge className="bg-emerald-500/20 text-emerald-400 border-0">{isAr ? "حضوري" : "[حضوري]"}</Badge>;
-      case 'phone': return <Badge className="bg-purple-500/20 text-purple-400 border-0">{isAr ? "هاتفي" : "[هاتفي]"}</Badge>;
+      case 'video': return <Badge className="bg-cyan-500/20 text-cyan-400 border-0">{isAr ? isAr ? "فيديو" : "Video" : "Video"}</Badge>;
+      case 'in-person': return <Badge className="bg-emerald-500/20 text-emerald-400 border-0">{isAr ? isAr ? "حضوري" : "In-person" : "In-person"}</Badge>;
+      case 'phone': return <Badge className="bg-purple-500/20 text-purple-400 border-0">{isAr ? isAr ? "هاتفي" : "Phone" : "Phone"}</Badge>;
       default: return null;
     }
   };
@@ -197,8 +197,8 @@ export default function Calendar() {
                 <CalendarIcon className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="font-bold">{isAr ? "التقويم والاجتماعات" : "التقويم والاجDoneاعات"}</h1>
-                <p className="text-xs text-muted-foreground">{isAr ? "جدولة وإدارة اجتماعاتك" : "جدولة وإدارة اجDoneاعاتك"}</p>
+                <h1 className="font-bold">{isAr ? isAr ? "التقويم والاجتماعات" : "Calendar & Meetings" : "Calendar & Meetings"}</h1>
+                <p className="text-xs text-muted-foreground">{isAr ? isAr ? "جدولة وإدارة اجتماعاتك" : "Schedule & Manage Meetings" : "Schedule & Manage Meetings"}</p>
               </div>
             </div>
           </div>
@@ -212,13 +212,13 @@ export default function Calendar() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>{isAr ? "جدولة اجتماع جديد" : "جدولة اجDoneاع جديد"}</DialogTitle>
+                <DialogTitle>{isAr ? isAr ? "جدولة اجتماع جديد" : "Schedule New Meeting" : "Schedule New Meeting"}</DialogTitle>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">{isAr ? "عنوان الاجتماع" : "عنوان الاجDoneاع"}</label>
+                  <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "عنوان الاجتماع" : "Meeting Title" : "Meeting Title"}</label>
                   <Input 
-                    placeholder="مثال: اجتماع مع مستثمر"
+                    placeholder={isAr ? "مثال: اجتماع مع مستثمر" : "Example: Investor Meeting"}
                     value={newMeeting.title}
                     onChange={(e) => setNewMeeting({...newMeeting, title: e.target.value})}
                   />
@@ -243,36 +243,36 @@ export default function Calendar() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{isAr ? "المدة" : "[المدة]"}</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "المدة" : "Duration" : "Duration"}</label>
                     <Select value={newMeeting.duration} onValueChange={(v) => setNewMeeting({...newMeeting, duration: v})}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="30 دقيقة">{isAr ? "30 دقيقة" : "[30 دقيقة]"}</SelectItem>
-                        <SelectItem value="1 ساعة">{isAr ? "1 ساعة" : "[1 ساعة]"}</SelectItem>
-                        <SelectItem value="2 ساعة">{isAr ? "2 ساعة" : "[2 ساعة]"}</SelectItem>
+                        <SelectItem value={isAr ? "30 دقيقة" : "30 Minutes"}>{isAr ? isAr ? "30 دقيقة" : "30 Minutes" : "30 Minutes"}</SelectItem>
+                        <SelectItem value={isAr ? "1 ساعة" : "1 Hour"}>{isAr ? isAr ? "1 ساعة" : "1 Hour" : "1 Hour"}</SelectItem>
+                        <SelectItem value={isAr ? "2 ساعة" : "2 Hours"}>{isAr ? isAr ? "2 ساعة" : "2 Hours" : "2 Hours"}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">{isAr ? "النوع" : "[النوع]"}</label>
+                    <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "النوع" : "Type" : "Type"}</label>
                     <Select value={newMeeting.type} onValueChange={(v) => setNewMeeting({...newMeeting, type: v as 'video' | 'in-person' | 'phone'})}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="video">{isAr ? "فيديو" : "[فيديو]"}</SelectItem>
-                        <SelectItem value="in-person">{isAr ? "حضوري" : "[حضوري]"}</SelectItem>
-                        <SelectItem value="phone">{isAr ? "هاتفي" : "[هاتفي]"}</SelectItem>
+                        <SelectItem value="video">{isAr ? isAr ? "فيديو" : "Video" : "Video"}</SelectItem>
+                        <SelectItem value="in-person">{isAr ? isAr ? "حضوري" : "In-person" : "In-person"}</SelectItem>
+                        <SelectItem value="phone">{isAr ? isAr ? "هاتفي" : "Phone" : "Phone"}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">{isAr ? "المدعو" : "[المدعو]"}</label>
+                  <label className="text-sm font-medium mb-2 block">{isAr ? isAr ? "المدعو" : "Invitee" : "Invitee"}</label>
                   <Input 
-                    placeholder="اسم المدعو"
+                    placeholder={isAr ? "اسم المدعو" : "Invitee Name"}
                     value={newMeeting.attendee}
                     onChange={(e) => setNewMeeting({...newMeeting, attendee: e.target.value})}
                   />
@@ -280,7 +280,7 @@ export default function Calendar() {
                 <div>
                   <label className="text-sm font-medium mb-2 block">{isAr ? "الوصف" : "Description"}</label>
                   <Textarea 
-                    placeholder="تفاصيل الاجتماع..."
+                    placeholder={isAr ? "تفاصيل الاجتماع..." : "Meeting Details..."}
                     value={newMeeting.description}
                     onChange={(e) => setNewMeeting({...newMeeting, description: e.target.value})}
                   />
@@ -435,7 +435,7 @@ export default function Calendar() {
                 ) : (
                   <div className="text-center py-8">
                     <CalendarIcon className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                    <p className="text-muted-foreground">{isAr ? "لا توجد اجتماعات قادمة" : "لا توجد اجDoneاعات قادمة"}</p>
+                    <p className="text-muted-foreground">{isAr ? isAr ? "لا توجد اجتماعات قادمة" : "No Upcoming Meetings" : "No Upcoming Meetings"}</p>
                   </div>
                 )}
               </CardContent>
@@ -444,7 +444,7 @@ export default function Calendar() {
             {/* Quick Actions */}
             <Card className="border-0 bg-card/50 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-lg">{isAr ? "إجراءات سريعة" : "[إجراءات سريعة]"}</CardTitle>
+                <CardTitle className="text-lg">{isAr ? isAr ? "إجراءات سريعة" : "Quick Actions" : "[Quick Actions]"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 <Link href="/messages">

@@ -30,26 +30,26 @@ export default function ProjectDetail() {
 
   const submitMutation = trpc.project.submit.useMutation({
     onSuccess: () => {
-      toast.success("تم تقديم المشروع للتقييم");
+      toast.success(isAr ? "تم تقديم المشروع للتقييم" : "Project submitted for evaluation");
       refetch();
     },
     onError: (error) => {
-      toast.error("حدث خطأ", { description: error.message });
+      toast.error(isAr ? "حدث خطأ" : "An error occurred", { description: error.message });
     },
   });
 
   const evaluateMutation = trpc.evaluation.evaluate.useMutation({
     onSuccess: (data) => {
-      toast.success("تم التقييم بنجاح!", {
+      toast.success(isAr ? "تم التقييم بنجاح!" : "Evaluation successful!", {
         description: `النتيجة: ${data.overallScore}% - ${
-          data.classification === "innovation" ? "ابتكار حقيقي" :
-          data.classification === "commercial" ? "حل تجاري" : "يحتاج تطوير"
+          data.classification === "innovation" ? (isAr ? "ابتكار حقيقي" : "True Innovation") :
+          data.classification === "commercial" ? (isAr ? "حل تجاري" : "Commercial Solution") : "Needs Development"
         }`,
       });
       refetch();
     },
     onError: (error) => {
-      toast.error("حدث خطأ في التقييم", { description: error.message });
+      toast.error(isAr ? "حدث خطأ في التقييم" : "Evaluation error", { description: error.message });
     },
   });
 
@@ -65,9 +65,9 @@ export default function ProjectDetail() {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "المشروع غير موجود" : "Project غير موجود"}</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? isAr ? "المشروع غير موجود" : "Project not found" : "Project not found"}</h2>
           <Link href="/projects">
-            <Button>{isAr ? "العودة للمشاريع" : "[العودة للمشاريع]"}</Button>
+            <Button>{isAr ? isAr ? "العودة للمشاريع" : "Back to Projects" : "[Back to Projects]"}</Button>
           </Link>
         </div>
       </div>
@@ -85,9 +85,9 @@ export default function ProjectDetail() {
 
   const getClassificationText = (classification: string) => {
     switch (classification) {
-      case "innovation": return "ابتكار حقيقي";
-      case "commercial": return "حل تجاري";
-      case "guidance": return "يحتاج تطوير";
+      case "innovation": return isAr ? "ابتكار حقيقي" : "True Innovation";
+      case "commercial": return isAr ? "حل تجاري" : "Commercial Solution";
+      case "guidance": return isAr ? "يحتاج تطوير" : "Needs Development";
       default: return classification;
     }
   };
@@ -146,11 +146,11 @@ export default function ProjectDetail() {
                       project.status === "rejected" ? "bg-red-500/20 text-red-400" :
                       "bg-slate-500/20 text-slate-400"
                     }`}>
-                      {project.status === "draft" && "مسودة"}
-                      {project.status === "submitted" && "مُقدّم"}
-                      {project.status === "evaluating" && "قيد التقييم"}
-                      {project.status === "approved" && "مُعتمد"}
-                      {project.status === "rejected" && "مرفوض"}
+                      {project.status === "draft" && isAr ? "مسودة" : "Draft"}
+                      {project.status === "submitted" && isAr ? "مُقدّم" : "Submitted"}
+                      {project.status === "evaluating" && isAr ? "قيد التقييم" : "Under Evaluation"}
+                      {project.status === "approved" && isAr ? "مُعتمد" : "Approved"}
+                      {project.status === "rejected" && isAr ? "مرفوض" : "Rejected"}
                     </span>
                   </div>
                 </div>
@@ -195,7 +195,7 @@ export default function ProjectDetail() {
             {/* Description */}
             <Card className="bg-slate-800/50 border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white">{isAr ? "وصف المشروع" : "وRow المشروع"}</CardTitle>
+                <CardTitle className="text-white">{isAr ? isAr ? "وصف المشروع" : "Project Description" : "Project Description"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-300 leading-relaxed">{project.description}</p>
@@ -210,7 +210,7 @@ export default function ProjectDetail() {
               <CardContent className="space-y-4">
                 {project.targetMarket && (
                   <div>
-                    <p className="text-slate-400 text-sm mb-1">{isAr ? "السوق المستهدف" : "Market المستهدف"}</p>
+                    <p className="text-slate-400 text-sm mb-1">{isAr ? isAr ? "السوق المستهدف" : "Target Market" : "Target Market"}</p>
                     <p className="text-white">{project.targetMarket}</p>
                   </div>
                 )}
@@ -222,7 +222,7 @@ export default function ProjectDetail() {
                 )}
                 {project.businessModel && (
                   <div>
-                    <p className="text-slate-400 text-sm mb-1">{isAr ? "نموذج العمل" : "Growذج العمل"}</p>
+                    <p className="text-slate-400 text-sm mb-1">{isAr ? isAr ? "نموذج العمل" : "Business Model" : "Business Model"}</p>
                     <p className="text-white">{project.businessModel}</p>
                   </div>
                 )}
@@ -255,9 +255,9 @@ export default function ProjectDetail() {
                           {getClassificationText(evaluation.classification)}
                         </p>
                         <p className="text-slate-400 text-sm">
-                          {evaluation.classification === "innovation" && "مسار سريع إلى NAQLA2 - التحديات والمطابقة"}
-                          {evaluation.classification === "commercial" && "مسار سريع إلى NAQLA2 - الفرص التجارية"}
-                          {evaluation.classification === "guidance" && "برنامج إرشاد وتطوير مكثف"}
+                          {evaluation.classification === "innovation" && isAr ? "مسار سريع إلى NAQLA2 - التحديات والمطابقة" : "Fast Track to NAQLA2 - Challenges & Matching"}
+                          {evaluation.classification === "commercial" && isAr ? "مسار سريع إلى NAQLA2 - الفرص التجارية" : "Fast Track to NAQLA2 - Commercial Opportunities"}
+                          {evaluation.classification === "guidance" && isAr ? "برنامج إرشاد وتطوير مكثف" : "Intensive Mentorship & Development Program"}
                         </p>
                       </div>
                     </div>
@@ -266,12 +266,12 @@ export default function ProjectDetail() {
                   {/* Score Breakdown */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {[
-                      { label: "الابتكار", score: evaluation.innovationScore, icon: Lightbulb },
-                      { label: "إمكانية السوق", score: evaluation.marketPotentialScore, icon: TrendingUp },
-                      { label: "الجدوى التقنية", score: evaluation.technicalFeasibilityScore, icon: Zap },
-                      { label: "قدرة الفريق", score: evaluation.teamCapabilityScore, icon: Users },
-                      { label: "قوة IP", score: evaluation.ipStrengthScore, icon: Shield },
-                      { label: "قابلية التوسع", score: evaluation.scalabilityScore, icon: Globe },
+                      { label: "Innovation", score: evaluation.innovationScore, icon: Lightbulb },
+                      { label: "Market Potential", score: evaluation.marketPotentialScore, icon: TrendingUp },
+                      { label: "Technical Feasibility", score: evaluation.technicalFeasibilityScore, icon: Zap },
+                      { label: "Team Capability", score: evaluation.teamCapabilityScore, icon: Users },
+                      { label: "IP Strength", score: evaluation.ipStrengthScore, icon: Shield },
+                      { label: "Scalability", score: evaluation.scalabilityScore, icon: Globe },
                     ].map((item, i) => (
                       <div key={i} className="bg-slate-900/50 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-2">
@@ -351,7 +351,7 @@ export default function ProjectDetail() {
                   {/* Risk Assessment */}
                   {evaluation.riskAssessment && (
                     <div>
-                      <h4 className="text-white font-semibold mb-2">{isAr ? "تقييم المخاطر" : "تقييم الRisks"}</h4>
+                      <h4 className="text-white font-semibold mb-2">{isAr ? isAr ? "تقييم المخاطر" : "Risk Assessment" : "Risk Assessment"}</h4>
                       <p className="text-slate-300 text-sm">{evaluation.riskAssessment}</p>
                     </div>
                   )}
@@ -365,33 +365,33 @@ export default function ProjectDetail() {
             {/* Quick Info */}
             <Card className="bg-slate-800/50 border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white text-lg">{isAr ? "معلومات سريعة" : "Information سريعة"}</CardTitle>
+                <CardTitle className="text-white text-lg">{isAr ? isAr ? "معلومات سريعة" : "Quick Info" : "Quick Info"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">{isAr ? "المرحلة" : "[المرحلة]"}</span>
+                  <span className="text-slate-400">{isAr ? isAr ? "المرحلة" : "Stage" : "[Stage]"}</span>
                   <span className="text-white">
-                    {project.stage === "idea" && "فكرة"}
-                    {project.stage === "prototype" && "نموذج أولي"}
+                    {project.stage === "idea" && isAr ? "فكرة" : "Idea"}
+                    {project.stage === "prototype" && isAr ? "نموذج أولي" : "Prototype"}
                     {project.stage === "mvp" && "MVP"}
-                    {project.stage === "growth" && "نمو"}
-                    {project.stage === "scale" && "توسع"}
+                    {project.stage === "growth" && isAr ? "نمو" : "Growth"}
+                    {project.stage === "scale" && isAr ? "توسع" : "Expansion"}
                   </span>
                 </div>
                 {project.teamSize && (
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400">{isAr ? "حجم الفريق" : "حجم Team"}</span>
+                    <span className="text-slate-400">{isAr ? isAr ? "حجم الفريق" : "Team Size" : "Team Size"}</span>
                     <span className="text-white">{project.teamSize} أعضاء</span>
                   </div>
                 )}
                 {project.fundingNeeded && (
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400">{isAr ? "التمويل المطلوب" : "الDoneويل المطلوب"}</span>
+                    <span className="text-slate-400">{isAr ? isAr ? "التمويل المطلوب" : "Funding Required" : "Funding Required"}</span>
                     <span className="text-white">{Number(project.fundingNeeded).toLocaleString()} ريال</span>
                   </div>
                 )}
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">{isAr ? "تاريخ الإنشاء" : "[تاريخ الإنشاء]"}</span>
+                  <span className="text-slate-400">{isAr ? isAr ? "تاريخ الإنشاء" : "Creation Date" : "[Creation Date]"}</span>
                   <span className="text-white">{new Date(project.createdAt).toLocaleDateString("ar-SA")}</span>
                 </div>
               </CardContent>
@@ -400,7 +400,7 @@ export default function ProjectDetail() {
             {/* Actions */}
             <Card className="bg-slate-800/50 border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white text-lg">{isAr ? "الإجراءات" : "Procedures"}</CardTitle>
+                <CardTitle className="text-white text-lg">{isAr ? "الإجراءات" : "Actions"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Link href="/ip/register">

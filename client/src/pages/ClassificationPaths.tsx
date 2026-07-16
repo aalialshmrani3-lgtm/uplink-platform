@@ -26,22 +26,22 @@ export default function ClassificationPaths() {
 
   const pathConfig = {
     innovation: {
-      title: "مسار الابتكار",
-      description: "الأفكار عالية الابتكار والتأثير (≥70%)",
+      title: "Innovation Track",
+      description: "Highly Innovative & Impactful Ideas (≥70%)",
       icon: TrendingUp,
       color: "bg-green-500",
       badge: "success",
     },
     commercial: {
-      title: "مسار التجاري",
-      description: "الأفكار ذات الجدوى التجارية الجيدة (60-70%)",
+      title: "Commercial Track",
+      description: "Good Commercial Viability Ideas (60-70%)",
       icon: Briefcase,
       color: "bg-yellow-500",
       badge: "warning",
     },
     guidance: {
-      title: "مسار التوجيه",
-      description: "الأفكار التي تحتاج إلى تطوير وتوجيه (أقل من 60%)",
+      title: "Guidance Track",
+      description: "Ideas Needing Development & Guidance (<60%)",
       icon: Lightbulb,
       color: "bg-blue-500",
       badge: "info",
@@ -54,7 +54,7 @@ export default function ClassificationPaths() {
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">{isAr ? "مسارات التصنيف" : "[مسارات التصنيف]"}</h1>
+        <h1 className="text-4xl font-bold mb-2">{isAr ? isAr ? "مسارات التصنيف" : "Classification Tracks" : "[Classification Tracks]"}</h1>
         <p className="text-muted-foreground">
           عرض الأفكار حسب المسار المحدد من نظام التقييم الذكي
         </p>
@@ -121,7 +121,7 @@ export default function ClassificationPaths() {
                         const reason = idea.reason;
                         return reason && (
                           <div className="text-sm text-muted-foreground">
-                            <strong>{isAr ? "السبب:" : "[السبب:]"}</strong> {String(reason)}
+                            <strong>{isAr ? isAr ? "السبب:" : "Reason:" : "[Reason:]"}</strong> {String(reason)}
                           </div>
                         );
                       })() as any}
@@ -129,7 +129,7 @@ export default function ClassificationPaths() {
                       {/* Next Steps */}
                       {idea.nextSteps && Array.isArray(idea.nextSteps) && idea.nextSteps.length > 0 && (
                         <div>
-                          <strong className="text-sm">{isAr ? "الخطوات التالية:" : "الخطوات Nextة:"}</strong>
+                          <strong className="text-sm">{isAr ? isAr ? "الخطوات التالية:" : "Next Steps:" : "Next Steps:"}</strong>
                           <ul className="list-disc list-inside text-sm text-muted-foreground mt-1">
                             {idea.nextSteps.slice(0, 3).map((step: string, index: number) => (
                               <li key={index}>{step}</li>

@@ -38,24 +38,24 @@ export default function UserRegistration() {
     e.preventDefault();
     
     if (!captchaValue) {
-      toast.error("يرجى إكمال التحقق من reCAPTCHA");
+      toast.error(isAr ? "يرجى إكمال التحقق من reCAPTCHA" : "Please complete reCAPTCHA verification");
       return;
     }
     
     if (!validatePassword(formData.password)) {
-      toast.error("يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، بما في ذلك حرف كبير، رقم، ورمز");
+      toast.error(isAr ? "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، بما في ذلك حرف كبير، رقم، ورمز" : "Password must be at least 8 characters, including an uppercase letter, a number, and a symbol");
       return;
     }
     
     if (formData.password !== formData.confirmPassword) {
-      toast.error("كلمتا المرور غير متطابقتين");
+      toast.error(isAr ? "كلمتا المرور غير متطابقتين" : "Passwords do not match");
       return;
     }
     
     const birthDate = new Date(formData.dateOfBirth);
     const age = Math.floor((Date.now() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
     if (age < 18) {
-      toast.error("يجب أن يكون عمرك 18 عاماً على الأقل للتسجيل");
+      toast.error(isAr ? "يجب أن يكون عمرك 18 عاماً على الأقل للتسجيل" : "You must be at least 18 years old to register");
       return;
     }
     
@@ -63,14 +63,14 @@ export default function UserRegistration() {
     
     try {
       // TODO: Call backend API for registration
-      toast.success("تم إرسال رابط التحقق - يرجى التحقق من بريدك الإلكتروني");
+      toast.success(isAr ? "تم إرسال رابط التحقق - يرجى التحقق من بريدك الإلكتروني" : "Verification link sent - please check your email");
       
       setTimeout(() => {
         setLocation("/");
       }, 2000);
       
     } catch (error) {
-      toast.error("حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.");
+      toast.error(isAr ? "حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى." : "An error occurred during registration. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -80,7 +80,7 @@ export default function UserRegistration() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">{isAr ? "تسجيل مستخدم جديد" : "Register مستخدم جديد"}</CardTitle>
+          <CardTitle className="text-2xl">{isAr ? isAr ? "تسجيل مستخدم جديد" : "Register New User" : "Register New User"}</CardTitle>
           <CardDescription>
             أنشئ حساباً جديداً للانضمام إلى منصة NAQLA
           </CardDescription>
@@ -88,14 +88,14 @@ export default function UserRegistration() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="fullName">{isAr ? "الاسم الكامل *" : "اNoسم الكامل *"}</Label>
+              <Label htmlFor="fullName">{isAr ? isAr ? "الاسم الكامل *" : "Full Name *" : "Full Name *"}</Label>
               <Input
                 id="fullName"
                 type="text"
                 required
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                placeholder="أدخل اسمك الكامل"
+                placeholder={isAr ? "أدخل اسمك الكامل" : "Enter your full name"}
               />
             </div>
 
@@ -119,7 +119,7 @@ export default function UserRegistration() {
                 required
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                placeholder="8 أحرف على الأقل"
+                placeholder={isAr ? "8 أحرف على الأقل" : "At least 8 characters"}
               />
               <p className="text-xs text-muted-foreground">
                 يجب أن تحتوي على حرف كبير، رقم، ورمز
@@ -127,14 +127,14 @@ export default function UserRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">{isAr ? "تأكيد كلمة المرور *" : "Confirm كلمة المرور *"}</Label>
+              <Label htmlFor="confirmPassword">{isAr ? isAr ? "تأكيد كلمة المرور *" : "Confirm Password *" : "Confirm Password *"}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
                 required
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                placeholder="أعد إدخال كلمة المرور"
+                placeholder={isAr ? "أعد إدخال كلمة المرور" : "Re-enter password"}
               />
             </div>
 
@@ -151,7 +151,7 @@ export default function UserRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="dateOfBirth">{isAr ? "تاريخ الميلاد *" : "تاريخ الميNoد *"}</Label>
+              <Label htmlFor="dateOfBirth">{isAr ? isAr ? "تاريخ الميلاد *" : "Date of Birth *" : "Date of Birth *"}</Label>
               <Input
                 id="dateOfBirth"
                 type="date"
@@ -176,11 +176,11 @@ export default function UserRegistration() {
               className="w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "جارٍ التسجيل..." : "تسجيل حساب جديد"}
+              {isSubmitting ? isAr ? "جارٍ التسجيل..." : "Registering..." : "Register New Account"}
             </Button>
 
             <div className="text-center text-sm">
-              <span className="text-muted-foreground">{isAr ? "لديك حساب بالفعل؟ " : "[لديك حساب بالفعل؟]"}</span>
+              <span className="text-muted-foreground">{isAr ? isAr ? "لديك حساب بالفعل؟ " : "Already have an account? " : "Already have an account?"}</span>
               <Button
                 type="button"
                 variant="link"

@@ -19,12 +19,12 @@ export default function StrategicPartners() {
   });
 
   const partnerTypeLabels: Record<string, string> = {
-    university: "جامعة",
-    government: "جهة حكومية",
-    incubator: "حاضنة أعمال",
-    accelerator: "مسرّع أعمال",
-    investor: "مستثمر",
-    corporate: "شركة",
+    university: "University",
+    government: "Government Entity",
+    incubator: "Business Incubator",
+    accelerator: "Business Accelerator",
+    investor: "Investor",
+    corporate: "Company",
   };
 
   return (
@@ -74,7 +74,7 @@ export default function StrategicPartners() {
                     const areas = partner.focusAreas;
                     return areas && Array.isArray(areas) && areas.length > 0 && (
                       <div>
-                        <strong className="text-sm">{isAr ? "مجالات التركيز:" : "مجاNoت التركيز:"}</strong>
+                        <strong className="text-sm">{isAr ? isAr ? "مجالات التركيز:" : "Focus Areas:" : "Focus Areas:"}</strong>
                         <div className="flex flex-wrap gap-1 mt-1">
                           {(areas as any[]).slice(0, 3).map((area: any, index: number) => (
                             <Badge key={index} variant="outline" className="text-xs">
@@ -90,7 +90,7 @@ export default function StrategicPartners() {
                     const types = partner.supportTypes;
                     return types && Array.isArray(types) && types.length > 0 && (
                       <div>
-                        <strong className="text-sm">{isAr ? "أنواع الدعم:" : "أنواع Support:"}</strong>
+                        <strong className="text-sm">{isAr ? isAr ? "أنواع الدعم:" : "Support Types:" : "Support Types:"}</strong>
                         <div className="flex flex-wrap gap-1 mt-1">
                           {(types as any[]).slice(0, 3).map((type: any, index: number) => (
                             <Badge key={index} variant="secondary" className="text-xs">

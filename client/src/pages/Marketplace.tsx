@@ -35,8 +35,8 @@ export default function Marketplace() {
   const demoProjects = [
     {
       id: 1,
-      title: isAr ? "نظام ذكاء اصطناعي للتشخيص الطبي" : "AI Medical Diagnosis System",
-      description: isAr ? "منصة AI متقدمة لتحليل الصور الطبية وتقديم تشخيصات دقيقة باستخدام أحدث تقنيات التعلم العميق" : "Advanced AI platform for medical image analysis and accurate diagnostics using deep learning",
+      title: "AI Medical Diagnosis System",
+      description: "Advanced AI platform for medical image analysis and accurate diagnoses using deep learning.",
       category: "healthcare",
       stage: "mvp",
       fundingNeeded: "2000000",
@@ -45,14 +45,14 @@ export default function Marketplace() {
       score: 85,
       hasIP: true,
       verified: true,
-      location: isAr ? "الرياض" : "Riyadh",
+      location: "Riyadh",
       teamSize: 8,
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     },
     {
       id: 2,
-      title: isAr ? "منصة إدارة الطاقة الذكية" : "Smart Energy Management Platform",
-      description: isAr ? "حل متكامل لمراقبة وتحسين استهلاك الطاقة في المباني التجارية والسكنية" : "Integrated solution for monitoring and optimizing energy consumption in commercial and residential buildings",
+      title: "Smart Energy Management Platform",
+      description: "Integrated solution for monitoring and optimizing energy consumption in commercial and residential buildings.",
       category: "energy",
       stage: "prototype",
       fundingNeeded: "1500000",
@@ -61,14 +61,14 @@ export default function Marketplace() {
       score: 78,
       hasIP: true,
       verified: true,
-      location: isAr ? "جدة" : "Jeddah",
+      location: "Jeddah",
       teamSize: 5,
       createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
     },
     {
       id: 3,
-      title: isAr ? "تطبيق التعليم التفاعلي" : "Interactive Learning App",
-      description: isAr ? "منصة تعليمية تستخدم الواقع المعزز والذكاء الاصطناعي لتحسين تجربة التعلم" : "Educational platform using augmented reality and AI to enhance the learning experience",
+      title: "Interactive Education App",
+      description: "Educational platform using AR and AI to enhance learning experience.",
       category: "education",
       stage: "growth",
       fundingNeeded: "3000000",
@@ -77,14 +77,14 @@ export default function Marketplace() {
       score: 92,
       hasIP: false,
       verified: true,
-      location: isAr ? "الرياض" : "Riyadh",
+      location: "Riyadh",
       teamSize: 12,
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     },
     {
       id: 4,
-      title: isAr ? "نظام اللوجستيات الذكي" : "Smart Logistics System",
-      description: isAr ? "حل لتحسين سلاسل التوريد باستخدام الذكاء الاصطناعي والتحليلات التنبؤية" : "Solution for optimizing supply chains using AI and predictive analytics",
+      title: "Smart Logistics System",
+      description: "Solution for optimizing supply chains using AI and predictive analytics.",
       category: "logistics",
       stage: "mvp",
       fundingNeeded: "2500000",
@@ -93,14 +93,14 @@ export default function Marketplace() {
       score: 74,
       hasIP: true,
       verified: false,
-      location: isAr ? "الدمام" : "Dammam",
+      location: "Dammam",
       teamSize: 6,
       createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
     },
     {
       id: 5,
-      title: isAr ? "محفظة رقمية للعملات المشفرة" : "Digital Cryptocurrency Wallet",
-      description: isAr ? "محفظة آمنة ومتوافقة مع الأنظمة السعودية لإدارة الأصول الرقمية" : "Secure wallet compliant with Saudi regulations for managing digital assets",
+      title: "Crypto Digital Wallet",
+      description: "Secure, Saudi-compliant wallet for managing digital assets.",
       category: "fintech",
       stage: "idea",
       fundingNeeded: "1000000",
@@ -109,14 +109,14 @@ export default function Marketplace() {
       score: 68,
       hasIP: false,
       verified: false,
-      location: isAr ? "الرياض" : "Riyadh",
+      location: "Riyadh",
       teamSize: 3,
       createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
     },
     {
       id: 6,
-      title: isAr ? "روبوت الزراعة الذكية" : "Smart Agriculture Robot",
-      description: isAr ? "روبوت آلي لمراقبة المحاصيل والري الذكي باستخدام تقنيات IoT" : "Automated robot for crop monitoring and smart irrigation using IoT technologies",
+      title: "Smart Agriculture Robot",
+      description: "Automated robot for crop monitoring and smart irrigation using IoT.",
       category: "agriculture",
       stage: "prototype",
       fundingNeeded: "4000000",
@@ -125,14 +125,14 @@ export default function Marketplace() {
       score: 81,
       hasIP: true,
       verified: true,
-      location: isAr ? "القصيم" : "Al-Qassim",
+      location: "Al-Qassim",
       teamSize: 7,
       createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
     },
     {
       id: 7,
-      title: isAr ? "منصة التجارة الإلكترونية B2B" : "B2B E-Commerce Platform",
-      description: isAr ? "سوق إلكتروني متخصص لربط الموردين بالشركات في قطاع التجزئة" : "Specialized online marketplace connecting suppliers with companies in the retail sector",
+      title: "B2B E-commerce Platform",
+      description: "Specialized e-marketplace connecting suppliers with businesses in retail.",
       category: "ecommerce",
       stage: "growth",
       fundingNeeded: "5000000",
@@ -141,14 +141,14 @@ export default function Marketplace() {
       score: 88,
       hasIP: false,
       verified: true,
-      location: isAr ? "جدة" : "Jeddah",
+      location: "Jeddah",
       teamSize: 15,
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
     },
     {
       id: 8,
-      title: isAr ? "تطبيق الصحة النفسية" : "Mental Health App",
-      description: isAr ? "منصة رقمية لتقديم خدمات الدعم النفسي والاستشارات عن بُعد" : "Digital platform for providing mental health support and remote consultations",
+      title: "Mental Health App",
+      description: "Digital platform for remote mental health support and consultations.",
       category: "healthcare",
       stage: "mvp",
       fundingNeeded: "1200000",
@@ -157,7 +157,7 @@ export default function Marketplace() {
       score: 76,
       hasIP: false,
       verified: true,
-      location: isAr ? "الرياض" : "Riyadh",
+      location: "Riyadh",
       teamSize: 4,
       createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000),
     },
@@ -166,38 +166,38 @@ export default function Marketplace() {
   const displayProjects = projects && projects.length > 0 ? projects : demoProjects;
 
   const categories = [
-    { value: "all", label: isAr ? "جميع الفئات" : "All Categories", icon: Grid3X3 },
-    { value: "healthcare", label: isAr ? "الرعاية الصحية" : "Healthcare", icon: Heart },
-    { value: "energy", label: isAr ? "الطاقة" : "Energy", icon: Sparkles },
-    { value: "education", label: isAr ? "التعليم" : "Education", icon: Target },
-    { value: "logistics", label: isAr ? "اللوجستيات" : "Logistics", icon: Building2 },
-    { value: "fintech", label: isAr ? "التقنية المالية" : "FinTech", icon: DollarSign },
-    { value: "agriculture", label: isAr ? "الزراعة" : "Agriculture", icon: Globe },
-    { value: "ecommerce", label: isAr ? "التجارة الإلكترونية" : "E-Commerce", icon: TrendingUp },
-    { value: "technology", label: isAr ? "التقنية" : "Technology", icon: Lightbulb },
+    { value: "all", label: "All Categories", icon: Grid3X3 },
+    { value: "healthcare", label: "Healthcare", icon: Heart },
+    { value: "energy", label: "Energy", icon: Sparkles },
+    { value: "education", label: "Education", icon: Target },
+    { value: "logistics", label: "Logistics", icon: Building2 },
+    { value: "fintech", label: "FinTech", icon: DollarSign },
+    { value: "agriculture", label: "Agriculture", icon: Globe },
+    { value: "ecommerce", label: "E-commerce", icon: TrendingUp },
+    { value: "technology", label: "Technology", icon: Lightbulb },
   ];
 
   const stages = [
-    { value: "all", label: isAr ? "جميع المراحل" : "All Stages" },
-    { value: "idea", label: isAr ? "فكرة" : "Idea" },
-    { value: "prototype", label: isAr ? "نموذج أولي" : "Prototype" },
+    { value: "all", label: "All Stages" },
+    { value: "idea", label: "Idea" },
+    { value: "prototype", label: "Prototype" },
     { value: "mvp", label: "MVP" },
-    { value: "growth", label: isAr ? "نمو" : "Growth" },
-    { value: "scale", label: isAr ? "توسع" : "Scale" },
+    { value: "growth", label: "Growth" },
+    { value: "scale", label: "Scale" },
   ];
 
   const scoreFilters = [
-    { value: "all", label: isAr ? "جميع التقييمات" : "All Ratings" },
-    { value: "high", label: isAr ? "ابتكار (80%+)" : "Innovation (80%+)" },
-    { value: "medium", label: isAr ? "تجاري (60-79%)" : "Commercial (60-79%)" },
-    { value: "low", label: isAr ? "إرشاد (<60%)" : "Guidance (<60%)" },
+    { value: "all", label: "All Ratings" },
+    { value: "high", label: "Innovation (80%+)" },
+    { value: "medium", label: "Commercial (60-79%)" },
+    { value: "low", label: "Mentorship (<60%)" },
   ];
 
   const sortOptions = [
-    { value: "newest", label: isAr ? "الأحدث" : "Newest" },
-    { value: "popular", label: isAr ? "الأكثر مشاهدة" : "Most Viewed" },
-    { value: "score", label: isAr ? "أعلى تقييم" : "Highest Rated" },
-    { value: "funding", label: isAr ? "أعلى تمويل" : "Highest Funding" },
+    { value: "newest", label: "Latest" },
+    { value: "popular", label: "Most Viewed" },
+    { value: "score", label: "Top Rated" },
+    { value: "funding", label: "Top Funded" },
   ];
 
   const filteredProjects = useMemo(() => {
@@ -302,12 +302,12 @@ export default function Marketplace() {
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full mb-4">
                   <Globe className="w-4 h-4 text-purple-400" />
-                  <span className="text-purple-400 text-sm">{isAr ? "NAQLA3 - السوق والتبادل" : "NAQLA3 - Market & Exchange"}</span>
+                  <span className="text-purple-400 text-sm">{isAr ? "NAQLA3 - السوق والتبادل" : "NAQLA3 - Marketplace & Exchange"}</span>
                 </div>
                 <h1 className="text-4xl font-bold text-white mb-4">{isAr ? "سوق الابتكارات" : "Innovation Marketplace"}</h1>
                 <p className="text-slate-300 text-lg max-w-xl">
                   {isAr
-                    ? "اكتشف أفضل الابتكارات السعودية واستثمر في المستقبل مع نظام حماية متكامل"
+                    ? isAr ? "اكتشف أفضل الابتكارات السعودية واستثمر في المستقبل مع نظام حماية متكامل" : "Discover top Saudi innovations and invest in the future with a comprehensive protection system."
                     : "Discover the best Saudi innovations and invest in the future with a comprehensive protection system"
                   }
                 </p>
@@ -315,13 +315,13 @@ export default function Marketplace() {
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl">
                   <div className="text-3xl font-bold text-white">{displayProjects.length}</div>
-                  <div className="text-slate-400 text-sm">{isAr ? "مشروع" : "Projects"}</div>
+                  <div className="text-slate-400 text-sm">{isAr ? "مشروع" : "Project"}</div>
                 </div>
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl">
                   <div className="text-3xl font-bold text-white">
                     {(displayProjects.reduce((sum: number, p: any) => sum + Number(p.fundingNeeded || 0), 0) / 1000000).toFixed(0)}M
                   </div>
-                  <div className="text-slate-400 text-sm">{isAr ? "تمويل مطلوب" : "Funding Needed"}</div>
+                  <div className="text-slate-400 text-sm">{isAr ? "تمويل مطلوب" : "Funding Required"}</div>
                 </div>
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl">
                   <div className="text-3xl font-bold text-white">
@@ -342,7 +342,7 @@ export default function Marketplace() {
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isAr ? "ابحث عن ابتكار بالاسم أو الوصف..." : "Search for an innovation by name or description..."}
+                placeholder={isAr ? "ابحث عن ابتكار بالاسم أو الوصف..." : "Search innovation by name or description..."}
                 className="bg-slate-800/50 border-slate-700 text-white pr-12 h-12 text-base"
               />
             </div>
@@ -421,7 +421,7 @@ export default function Marketplace() {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div>
-                  <label className="text-slate-300 text-sm mb-2 block">{isAr ? "تصنيف التقييم" : "Rating Classification"}</label>
+                  <label className="text-slate-300 text-sm mb-2 block">{isAr ? "تصنيف التقييم" : "Rating Category"}</label>
                   <select
                     value={selectedScore}
                     onChange={(e) => setSelectedScore(e.target.value)}
@@ -458,7 +458,7 @@ export default function Marketplace() {
                       onChange={(e) => setHasIP(e.target.checked)}
                       className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-purple-500 focus:ring-purple-500"
                     />
-                    <span className="text-slate-300">{isAr ? "لديه ملكية فكرية" : "Has Intellectual Property"}</span>
+                    <span className="text-slate-300">{isAr ? "لديه ملكية فكرية" : "Has IP"}</span>
                   </label>
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
@@ -516,7 +516,7 @@ export default function Marketplace() {
           <div className="text-center py-20">
             <Lightbulb className="w-16 h-16 text-slate-600 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد نتائج" : "No Results"}</h3>
-            <p className="text-slate-400 mb-4">{isAr ? "جرب تغيير معايير البحث أو الفلاتر" : "Try changing the search criteria or filters"}</p>
+            <p className="text-slate-400 mb-4">{isAr ? "جرب تغيير معايير البحث أو الفلاتر" : "Try changing search criteria or filters"}</p>
             <Button variant="outline" onClick={clearFilters} className="border-slate-700 text-slate-300">
               {isAr ? "مسح جميع الفلاتر" : "Clear All Filters"}
             </Button>
@@ -584,7 +584,7 @@ export default function Marketplace() {
                     {project.teamSize && (
                       <div className="flex items-center gap-1">
                         <Users className="w-4 h-4" />
-                        <span>{project.teamSize} {isAr ? "أعضاء" : "members"}</span>
+                        <span>{project.teamSize} {isAr ? "أعضاء" : "Members"}</span>
                       </div>
                     )}
                   </div>
@@ -666,7 +666,7 @@ export default function Marketplace() {
                             </div>
                             <div className="flex items-center gap-1">
                               <Users className="w-4 h-4" />
-                              <span>{project.teamSize || 0} {isAr ? "أعضاء" : "members"}</span>
+                              <span>{project.teamSize || 0} {isAr ? "أعضاء" : "Members"}</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Eye className="w-4 h-4" />
@@ -724,7 +724,7 @@ export default function Marketplace() {
               <h3 className="text-2xl font-bold text-white mb-3">{isAr ? "للمستثمرين" : "For Investors"}</h3>
               <p className="text-slate-300 mb-6 leading-relaxed">
                 {isAr
-                  ? "اكتشف فرص استثمارية مميزة في أفضل الابتكارات السعودية مع حماية كاملة عبر نظام الضمان الذكي"
+                  ? isAr ? "اكتشف فرص استثمارية مميزة في أفضل الابتكارات السعودية مع حماية كاملة عبر نظام الضمان الذكي" : "Discover prime investment opportunities in top Saudi innovations, fully protected by our smart guarantee system."
                   : "Discover distinctive investment opportunities in the best Saudi innovations with full protection through the smart guarantee system"
                 }
               </p>
@@ -741,7 +741,7 @@ export default function Marketplace() {
               <h3 className="text-2xl font-bold text-white mb-3">{isAr ? "للمبتكرين" : "For Innovators"}</h3>
               <p className="text-slate-300 mb-6 leading-relaxed">
                 {isAr
-                  ? "اعرض ابتكارك أمام آلاف المستثمرين والشركات واحصل على التمويل والدعم الذي تحتاجه"
+                  ? isAr ? "اعرض ابتكارك أمام آلاف المستثمرين والشركات واحصل على التمويل والدعم الذي تحتاجه" : "Showcase your innovation to thousands of investors and companies, and secure the funding and support you need."
                   : "Present your innovation to thousands of investors and companies and get the funding and support you need"
                 }
               </p>

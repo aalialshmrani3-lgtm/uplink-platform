@@ -23,14 +23,14 @@ export default function Naqla2Projects() {
   const promoteToNaqla3Mutation = trpc.naqla2.promoteToNaqla3.useMutation({
     onSuccess: (data) => {
       toast({
-        title: "تم بنجاح!",
-        description: "تم نقل مشروعك إلى NAQLA 3 للبيع",
+        title: "Success!",
+        description: "Your project has been moved to NAQLA 3 for sale.",
       });
       setLocation(`/naqla3/assets/${data.assetId}`);
     },
     onError: (error) => {
       toast({
-        title: "خطأ",
+        title: "Error",
         description: error.message,
         variant: "destructive",
       });
@@ -49,8 +49,8 @@ export default function Naqla2Projects() {
     return (
       <div className="container mx-auto py-12">
         <Card className="glass-card p-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "المشروع غير موجود" : "Project غير موجود"}</h2>
-          <Button onClick={() => setLocation("/")}>{isAr ? "العودة للرئيسية" : "[العودة للرئيسية]"}</Button>
+          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? isAr ? "المشروع غير موجود" : "Project not found" : "Project not found"}</h2>
+          <Button onClick={() => setLocation("/")}>{isAr ? isAr ? "العودة للرئيسية" : "Back to Home" : "Back to Home"}</Button>
         </Card>
       </div>
     );
@@ -78,7 +78,7 @@ export default function Naqla2Projects() {
               <p className="text-white font-semibold">{project.category}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">{isAr ? "تاريخ الإنشاء" : "[تاريخ الإنشاء]"}</p>
+              <p className="text-sm text-gray-400">{isAr ? isAr ? "تاريخ الإنشاء" : "Creation Date" : "Creation Date"}</p>
               <p className="text-white font-semibold">
                 {new Date(project.createdAt).toLocaleDateString("ar-SA")}
               </p>
@@ -93,7 +93,7 @@ export default function Naqla2Projects() {
             <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle2 className="w-5 h-5 text-green-400" />
-                <h3 className="text-lg font-semibold text-white">{isAr ? "مطابقة ذكية" : "[مطابقة ذكية]"}</h3>
+                <h3 className="text-lg font-semibold text-white">{isAr ? isAr ? "مطابقة ذكية" : "Smart Matching" : "Smart Matching"}</h3>
               </div>
               <p className="text-gray-300 text-sm">
                 تم العثور على فرص مناسبة لمشروعك. يمكنك الآن التواصل مع الشركاء المحتملين.
@@ -104,7 +104,7 @@ export default function Naqla2Projects() {
 
         {/* Promote to NAQLA 3 */}
         <Card className="glass-card p-8">
-          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? "الانتقال إلى NAQLA 3" : "اNoنتقال إلى NAQLA 3"}</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{isAr ? isAr ? "الانتقال إلى NAQLA 3" : "Move to NAQLA 3" : "Move to NAQLA 3"}</h2>
           <p className="text-gray-300 mb-6">
             بعد نجاح المطابقة والاتفاق مع الشركاء، يمكنك الانتقال إلى NAQLA 3 للبيع أو
             الاستحواذ.

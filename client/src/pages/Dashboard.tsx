@@ -99,8 +99,8 @@ export default function Dashboard() {
                 </AvatarFallback>
               </Avatar>
               <div className="text-right hidden sm:block">
-                <div className="font-medium text-sm">{isAr ? "منصة نقلة 5.0" : "[منصة نقلة 5.0]"}</div>
-                <div className="text-xs text-muted-foreground">{user.role === "admin" ? "مدير النظام" : "مبتكر"}</div>
+                <div className="font-medium text-sm">{isAr ? isAr ? "منصة نقلة 5.0" : "Naqla Platform 5.0" : "[Naqla Platform 5.0]"}</div>
+                <div className="text-xs text-muted-foreground">{user.role === "admin" ? isAr ? "مدير النظام" : "System Admin" : "Innovator"}</div>
               </div>
             </div>
             
@@ -118,17 +118,17 @@ export default function Dashboard() {
             <Sparkles className="w-5 h-5 text-cyan-400" />
             <span className="text-sm text-muted-foreground">{isAr ? "لوحة التحكم" : "Dashboard"}</span>
           </div>
-          <h1 className="text-3xl font-bold mb-2">{isAr ? "مرحباً بك في منصة نقلة 5.0!" : "[مرحباً بك في منصة نقلة 5.0!]"}</h1>
-          <p className="text-muted-foreground">{isAr ? "إليك نظرة عامة على نشاطك في منصة NAQLA" : "[إليك نظرة عامة على نشاطك في منصة NAQLA]"}</p>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "مرحباً بك في منصة نقلة 5.0!" : "Welcome to Naqla Platform 5.0!" : "[Welcome to Naqla Platform 5.0!]"}</h1>
+          <p className="text-muted-foreground">{isAr ? isAr ? "إليك نظرة عامة على نشاطك في منصة NAQLA" : "Here's an overview of your activity on NAQLA Platform" : "[Here's an overview of your activity on NAQLA Platform]"}</p>
         </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "مشاريعي", value: (myProjects?.length || 0) + 46, icon: Lightbulb, change: "+3", color: 'from-cyan-500 to-blue-600' },
-            { label: "ملكياتي الفكرية", value: (myIP?.length || 0) + 14, icon: Shield, change: "+2", color: 'from-emerald-500 to-teal-600' },
-            { label: "إجمالي المشاريع", value: stats?.totalProjects || 0, icon: FileText, change: "+12%", color: 'from-purple-500 to-pink-600' },
-            { label: "المستخدمين", value: stats?.totalUsers || 0, icon: Users, change: "+8%", color: 'from-amber-500 to-orange-600' },
+            { label: "My Projects", value: (myProjects?.length || 0) + 46, icon: Lightbulb, change: "+3", color: 'from-cyan-500 to-blue-600' },
+            { label: "My IP", value: (myIP?.length || 0) + 14, icon: Shield, change: "+2", color: 'from-emerald-500 to-teal-600' },
+            { label: "Total Projects", value: stats?.totalProjects || 0, icon: FileText, change: "+12%", color: 'from-purple-500 to-pink-600' },
+            { label: "Users", value: stats?.totalUsers || 0, icon: Users, change: "+8%", color: 'from-amber-500 to-orange-600' },
           ].map((stat, i) => (
             <Card key={i} className="border-0 bg-card/50 backdrop-blur-sm overflow-hidden card-hover">
               <CardContent className="p-5">
@@ -209,7 +209,7 @@ export default function Dashboard() {
                   <Lightbulb className="w-5 h-5 text-cyan-400" />
                   مشاريعي
                 </CardTitle>
-                <CardDescription>{isAr ? "آخر المشاريع المسجلة" : "آخر Projects المسجلة"}</CardDescription>
+                <CardDescription>{isAr ? isAr ? "آخر المشاريع المسجلة" : "Latest Registered Projects" : "Latest Registered Projects"}</CardDescription>
               </div>
               <Link href="/projects">
                 <Button variant="ghost" size="sm" className="text-cyan-400">
@@ -230,10 +230,10 @@ export default function Dashboard() {
                         <div className="flex-1 min-w-0">
                           <h4 className="font-medium text-sm truncate">{project.title}</h4>
                           <p className="text-xs text-muted-foreground">
-                            {project.status === "draft" && "مسودة"}
-                            {project.status === "submitted" && "مُقدّم"}
-                            {project.status === "evaluating" && "قيد التقييم"}
-                            {project.status === "approved" && "مُعتمد"}
+                            {project.status === "draft" && isAr ? "مسودة" : "Draft"}
+                            {project.status === "submitted" && isAr ? "مُقدّم" : "Submitted"}
+                            {project.status === "evaluating" && isAr ? "قيد التقييم" : "Under Review"}
+                            {project.status === "approved" && isAr ? "مُعتمد" : "Approved"}
                           </p>
                         </div>
                         <Badge variant="outline" className={`text-xs ${
@@ -252,7 +252,7 @@ export default function Dashboard() {
                   <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mx-auto mb-4">
                     <Lightbulb className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <p className="text-muted-foreground mb-4">{isAr ? "لم تسجل أي مشاريع بعد" : "[لم تسجل أي مشاريع بعد]"}</p>
+                  <p className="text-muted-foreground mb-4">{isAr ? isAr ? "لم تسجل أي مشاريع بعد" : "No projects registered yet" : "[No projects registered yet]"}</p>
                   <Link href="/projects/new">
                     <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
                       <Plus className="w-4 h-4 ml-2" />
@@ -272,7 +272,7 @@ export default function Dashboard() {
                   <Shield className="w-5 h-5 text-emerald-400" />
                   ملكياتي الفكرية
                 </CardTitle>
-                <CardDescription>{isAr ? "تسجيلات IP الخاصة بك" : "Registerات IP الخاصة بك"}</CardDescription>
+                <CardDescription>{isAr ? isAr ? "تسجيلات IP الخاصة بك" : "Your IP Registrations" : "Your IP Registrations"}</CardDescription>
               </div>
               <Link href="/ip/list">
                 <Button variant="ghost" size="sm" className="text-emerald-400">
@@ -298,7 +298,7 @@ export default function Dashboard() {
                         ip.status === "under_review" ? "border-amber-500/50 text-amber-400" :
                         "border-border"
                       }`}>
-                        {ip.status === "approved" ? "مُعتمد" : ip.status === "under_review" ? "قيد المراجعة" : ip.status}
+                        {ip.status === "approved" ? isAr ? "مُعتمد" : "Approved" : ip.status === "under_review" ? isAr ? "قيد المراجعة" : "Under Review" : ip.status}
                       </Badge>
                     </div>
                   ))}
@@ -308,7 +308,7 @@ export default function Dashboard() {
                   <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mx-auto mb-4">
                     <Shield className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <p className="text-muted-foreground mb-4">{isAr ? "لم تسجل أي ملكية فكرية بعد" : "[لم تسجل أي ملكية فكرية بعد]"}</p>
+                  <p className="text-muted-foreground mb-4">{isAr ? isAr ? "لم تسجل أي ملكية فكرية بعد" : "No IP registered yet" : "[No IP registered yet]"}</p>
                   <Link href="/ip/register">
                     <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white">
                       <Plus className="w-4 h-4 ml-2" />

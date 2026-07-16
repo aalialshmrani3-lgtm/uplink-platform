@@ -68,7 +68,7 @@ export default function UserSettings() {
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>{isAr ? "يجب تسجيل الدخول" : "Login Required"}</CardTitle>
-            <CardDescription>{isAr ? "الرجاء تسجيل الدخول لعرض الإعدادات" : "Please login to view settings"}</CardDescription>
+            <CardDescription>{isAr ? "الرجاء تسجيل الدخول لعرض الإعدادات" : "Please log in to view settings"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -121,7 +121,7 @@ export default function UserSettings() {
                     </SelectContent>
                   </Select>
                   <p className="text-sm text-slate-400">
-                    {isAr ? "اختر اللغة التي تريد استخدامها في المنصة" : "Choose the language you want to use on the platform"}
+                    {isAr ? "اختر اللغة التي تريد استخدامها في المنصة" : "Choose the language for the platform"}
                   </p>
                 </div>
                 <Button onClick={handleSaveSettings} className="w-full" disabled={updateSettingsMutation.isPending}>
@@ -156,7 +156,7 @@ export default function UserSettings() {
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
                       <p className="text-white font-medium">{isAr ? "الإشعارات الفورية" : "Push Notifications"}</p>
-                      <p className="text-sm text-slate-400">{isAr ? "تلقي إشعارات فورية في المتصفح" : "Receive instant notifications in your browser"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "تلقي إشعارات فورية في المتصفح" : "Receive instant browser notifications"}</p>
                     </div>
                     <Switch
                       checked={settings.notifications.push}
@@ -217,7 +217,7 @@ export default function UserSettings() {
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
                       <p className="text-white font-medium">{isAr ? "إظهار البريد الإلكتروني" : "Show Email"}</p>
-                      <p className="text-sm text-slate-400">{isAr ? "عرض بريدك الإلكتروني في الملف العام" : "Display your email on public profile"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "عرض بريدك الإلكتروني في الملف العام" : "Display your email in public profile"}</p>
                     </div>
                     <Switch
                       checked={settings.privacy.showEmail}
@@ -233,7 +233,7 @@ export default function UserSettings() {
                   <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700">
                     <div>
                       <p className="text-white font-medium">{isAr ? "إظهار رقم الهاتف" : "Show Phone Number"}</p>
-                      <p className="text-sm text-slate-400">{isAr ? "عرض رقم هاتفك في الملف العام" : "Display your phone number on public profile"}</p>
+                      <p className="text-sm text-slate-400">{isAr ? "عرض رقم هاتفك في الملف العام" : "Display your phone number in public profile"}</p>
                     </div>
                     <Switch
                       checked={settings.privacy.showPhone}
@@ -317,7 +317,7 @@ export default function UserSettings() {
                   </div>
 
                   <p className="text-sm text-slate-400">
-                    {isAr ? "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل" : "Password must contain at least 8 characters"}
+                    {isAr ? "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل" : "Password must be at least 8 characters"}
                   </p>
                 </div>
                 <Button onClick={handlePasswordChange} className="w-full" disabled={updateSettingsMutation.isPending}>

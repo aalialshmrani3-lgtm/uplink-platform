@@ -80,7 +80,7 @@ export default function ModelPerformance() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">{isAr ? "تحليلات أداء النموذج" : "تحليNoت أداء النموذج"}</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "تحليلات أداء النموذج" : "Model Performance Analytics" : "Model Performance Analytics"}</h1>
         <p className="text-muted-foreground">
           مقاييس الدقة، مقارنة التنبؤات بالنتائج الفعلية، وأهمية الميزات
         </p>
@@ -92,7 +92,7 @@ export default function ModelPerformance() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-lg">{isAr ? "النموذج الحالي" : "Growthذج الحالي"}</CardTitle>
+                <CardTitle className="text-lg">{isAr ? isAr ? "النموذج الحالي" : "Current Model" : "Current Model"}</CardTitle>
                 <CardDescription>XGBoost Classifier</CardDescription>
               </div>
               <Badge variant="default" className="bg-blue-600">
@@ -103,21 +103,21 @@ export default function ModelPerformance() {
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-muted-foreground">{isAr ? "عدد العينات:" : "Count العينات:"}</span>
+                <span className="text-muted-foreground">{isAr ? isAr ? "عدد العينات:" : "Sample Count:" : "Sample Count:"}</span>
                 <p className="font-semibold text-lg">{modelMetrics.training_samples}</p>
               </div>
               <div>
-                <span className="text-muted-foreground">{isAr ? "عدد الميزات:" : "عدد الFeatures:"}</span>
+                <span className="text-muted-foreground">{isAr ? isAr ? "عدد الميزات:" : "Feature Count:" : "Feature Count:"}</span>
                 <p className="font-semibold text-lg">{modelMetrics.feature_names.length}</p>
               </div>
               <div>
-                <span className="text-muted-foreground">{isAr ? "تاريخ التدريب:" : "تاريخ الTraining:"}</span>
+                <span className="text-muted-foreground">{isAr ? isAr ? "تاريخ التدريب:" : "Training Date:" : "Training Date:"}</span>
                 <p className="font-medium">
                   {new Date(modelMetrics.timestamp.slice(0, 8)).toLocaleDateString('ar-SA')}
                 </p>
               </div>
               <div>
-                <span className="text-muted-foreground">{isAr ? "الخوارزمية:" : "[الخوارزمية:]"}</span>
+                <span className="text-muted-foreground">{isAr ? isAr ? "الخوارزمية:" : "Algorithm:" : "Algorithm:"}</span>
                 <p className="font-medium">XGBoost</p>
               </div>
             </div>
@@ -194,7 +194,7 @@ export default function ModelPerformance() {
       {modelMetrics && (
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "نتائج التحقق المتقاطع (Cross-Validation)" : "نتائج التAchieve المتقاطع (Cross-Validation)"}</CardTitle>
+            <CardTitle>{isAr ? isAr ? "نتائج التحقق المتقاطع (Cross-Validation)" : "Cross-Validation Results" : "Cross-Validation Results"}</CardTitle>
             <CardDescription>
               تقييم أداء النموذج على مجموعات بيانات مختلفة
             </CardDescription>
@@ -203,7 +203,7 @@ export default function ModelPerformance() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">{isAr ? "متوسط الدقة" : "Average الدقة"}</span>
+                  <span className="text-sm font-medium">{isAr ? isAr ? "متوسط الدقة" : "Average Accuracy" : "Average Accuracy"}</span>
                   <span className="text-2xl font-bold text-green-600">
                     {(modelMetrics.metrics.cv_mean * 100).toFixed(1)}%
                   </span>
@@ -218,7 +218,7 @@ export default function ModelPerformance() {
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">{isAr ? "الانحراف المعياري" : "اNoنحراف المعياري"}</span>
+                  <span className="text-sm font-medium">{isAr ? isAr ? "الانحراف المعياري" : "Standard Deviation" : "Standard Deviation"}</span>
                   <span className="text-2xl font-bold text-blue-600">
                     ±{(modelMetrics.metrics.cv_std * 100).toFixed(1)}%
                   </span>
@@ -250,7 +250,7 @@ export default function ModelPerformance() {
                 <div className="text-sm text-muted-foreground mt-2">
                   True Positive
                   <br />
-                  <span className="text-xs">{isAr ? "(تنبؤ صحيح بالنجاح)" : "(تنبؤ صحيح بالSuccess)"}</span>
+                  <span className="text-xs">{isAr ? isAr ? "(تنبؤ صحيح بالنجاح)" : "(True Positive)" : "(True Positive)"}</span>
                 </div>
               </div>
 
@@ -261,7 +261,7 @@ export default function ModelPerformance() {
                 <div className="text-sm text-muted-foreground mt-2">
                   False Positive
                   <br />
-                  <span className="text-xs">{isAr ? "(تنبؤ خاطئ بالنجاح)" : "(تنبؤ خاطئ بالSuccess)"}</span>
+                  <span className="text-xs">{isAr ? isAr ? "(تنبؤ خاطئ بالنجاح)" : "(False Positive)" : "(False Positive)"}</span>
                 </div>
               </div>
 
@@ -272,7 +272,7 @@ export default function ModelPerformance() {
                 <div className="text-sm text-muted-foreground mt-2">
                   False Negative
                   <br />
-                  <span className="text-xs">{isAr ? "(تنبؤ خاطئ بالفشل)" : "[(تنبؤ خاطئ بالفشل)]"}</span>
+                  <span className="text-xs">{isAr ? isAr ? "(تنبؤ خاطئ بالفشل)" : "(False Negative)" : "(False Negative)"}</span>
                 </div>
               </div>
 
@@ -283,7 +283,7 @@ export default function ModelPerformance() {
                 <div className="text-sm text-muted-foreground mt-2">
                   True Negative
                   <br />
-                  <span className="text-xs">{isAr ? "(تنبؤ صحيح بالفشل)" : "[(تنبؤ صحيح بالفشل)]"}</span>
+                  <span className="text-xs">{isAr ? isAr ? "(تنبؤ صحيح بالفشل)" : "(True Negative)" : "(True Negative)"}</span>
                 </div>
               </div>
             </div>
@@ -295,7 +295,7 @@ export default function ModelPerformance() {
       {stats && (
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "توزيع البيانات" : "توزيع Data"}</CardTitle>
+            <CardTitle>{isAr ? isAr ? "توزيع البيانات" : "Data Distribution" : "Data Distribution"}</CardTitle>
             <CardDescription>
               إحصائيات الأفكار المصنفة
             </CardDescription>
@@ -353,7 +353,7 @@ export default function ModelPerformance() {
 
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <div className="flex items-center justify-between">
-                <span className="font-semibold">{isAr ? "إجمالي الأفكار" : "Total الأفكار"}</span>
+                <span className="font-semibold">{isAr ? isAr ? "إجمالي الأفكار" : "Total Ideas" : "Total Ideas"}</span>
                 <span className="text-2xl font-bold text-blue-600">{stats.total}</span>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
@@ -371,7 +371,7 @@ export default function ModelPerformance() {
       {modelMetrics && (
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "أهمية الميزات (Feature Importance)" : "أهمية الFeatures (Feature Importance)"}</CardTitle>
+            <CardTitle>{isAr ? isAr ? "أهمية الميزات (Feature Importance)" : "Feature Importance" : "Feature Importance"}</CardTitle>
             <CardDescription>
               الميزات الأكثر تأثيراً في التنبؤ بنجاح الأفكار
             </CardDescription>

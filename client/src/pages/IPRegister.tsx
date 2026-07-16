@@ -38,13 +38,13 @@ export default function IPRegister() {
 
   const createIPMutation = trpc.ip.create.useMutation({
     onSuccess: (data) => {
-      toast.success(isAr ? "تم تسجيل الملكية الفكرية بنجاح!" : "IP registered successfully!", {
-        description: `${isAr ? "رقم التوثيق" : "Blockchain Hash"}: ${data.blockchainHash.substring(0, 16)}...`,
+      toast.success(isAr ? "تم تسجيل الملكية الفكرية بنجاح!" : "IP Registered Successfully!", {
+        description: `${isAr ? "رقم التوثيق" : "Documentation ID"}: ${data.blockchainHash.substring(0, 16)}...`,
       });
       setLocation("/ip/list");
     },
     onError: (error) => {
-      toast.error(isAr ? "حدث خطأ" : "An error occurred", { description: error.message });
+      toast.error(isAr ? "حدث خطأ" : "An Error Occurred", { description: error.message });
     },
   });
 
@@ -110,33 +110,33 @@ export default function IPRegister() {
   };
 
   const steps = [
-    { id: 1, title: isAr ? "نوع الملكية" : "IP Type", icon: FileText },
-    { id: 2, title: isAr ? "المعلومات الأساسية" : "Basic Info", icon: Shield },
-    { id: 3, title: isAr ? "المخترعين" : "Inventors", icon: Users },
-    { id: 4, title: isAr ? "المراجعة والتقديم" : "Review & Submit", icon: Check },
+    { id: 1, title: "IP Type", icon: FileText },
+    { id: 2, title: "Basic Information", icon: Shield },
+    { id: 3, title: "Inventors", icon: Users },
+    { id: 4, title: "Review & Submit", icon: Check },
   ];
 
   const ipTypes = [
-    { value: "patent", label: isAr ? "براءة اختراع" : "Patent", desc: isAr ? "اختراع تقني جديد" : "New technical invention", icon: Zap },
-    { value: "trademark", label: isAr ? "علامة تجارية" : "Trademark", desc: isAr ? "شعار أو اسم تجاري" : "Logo or trade name", icon: Shield },
-    { value: "copyright", label: isAr ? "حقوق نشر" : "Copyright", desc: isAr ? "محتوى إبداعي أو برمجي" : "Creative or software content", icon: FileText },
-    { value: "industrial_design", label: isAr ? "تصميم صناعي" : "Industrial Design", desc: isAr ? "تصميم منتج فريد" : "Unique product design", icon: Globe },
+    { value: "patent", label: "Patent", desc: "New Technical Invention", icon: Zap },
+    { value: "trademark", label: "Trademark", desc: "Logo or Brand Name", icon: Shield },
+    { value: "copyright", label: "Copyright", desc: "Creative or Software Content", icon: FileText },
+    { value: "industrial_design", label: "Industrial Design", desc: "Unique Product Design", icon: Globe },
   ];
 
   const categories = [
-    { value: "technology", label: isAr ? "تقنية" : "Technology" },
-    { value: "healthcare", label: isAr ? "رعاية صحية" : "Healthcare" },
-    { value: "energy", label: isAr ? "طاقة" : "Energy" },
-    { value: "agriculture", label: isAr ? "زراعة" : "Agriculture" },
-    { value: "manufacturing", label: isAr ? "تصنيع" : "Manufacturing" },
-    { value: "software", label: isAr ? "برمجيات" : "Software" },
+    { value: "technology", label: "Technology" },
+    { value: "healthcare", label: "Healthcare" },
+    { value: "energy", label: "Energy" },
+    { value: "agriculture", label: "Agriculture" },
+    { value: "manufacturing", label: "Manufacturing" },
+    { value: "software", label: "Software" },
   ];
 
   const applicantTypes = [
-    { value: "individual", label: isAr ? "فرد" : "Individual" },
-    { value: "company", label: isAr ? "شركة" : "Company" },
-    { value: "university", label: isAr ? "جامعة" : "University" },
-    { value: "government", label: isAr ? "جهة حكومية" : "Government Entity" },
+    { value: "individual", label: "Individual" },
+    { value: "company", label: "Company" },
+    { value: "university", label: "University" },
+    { value: "government", label: "Government Entity" },
   ];
 
   return (
@@ -169,8 +169,8 @@ export default function IPRegister() {
             <Shield className="w-4 h-4 text-emerald-400" />
             <span className="text-emerald-400 text-sm">{isAr ? "NAQLA1 - توليد الملكية الفكرية" : "NAQLA1 - IP Generation"}</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "تسجيل ملكية فكرية جديدة" : "Register New Intellectual Property"}</h1>
-          <p className="text-slate-400">{isAr ? "سجّل ابتكارك واحصل على حماية فورية مع توثيق البلوكتشين" : "Register your innovation and get instant protection with blockchain notarization"}</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "تسجيل ملكية فكرية جديدة" : "Register New IP"}</h1>
+          <p className="text-slate-400">{isAr ? "سجّل ابتكارك واحصل على حماية فورية مع توثيق البلوكتشين" : "Register your innovation and get instant protection with blockchain documentation"}</p>
         </div>
 
         {/* Progress Steps */}
@@ -201,8 +201,8 @@ export default function IPRegister() {
             {currentStep === 1 && (
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "اختر نوع الملكية الفكرية" : "Choose IP Type"}</h2>
-                  <p className="text-slate-400">{isAr ? "حدد نوع الحماية المناسب لابتكارك" : "Select the appropriate protection type for your innovation"}</p>
+                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "اختر نوع الملكية الفكرية" : "Select IP Type"}</h2>
+                  <p className="text-slate-400">{isAr ? "حدد نوع الحماية المناسب لابتكارك" : "Choose the appropriate protection for your innovation"}</p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   {ipTypes.map((type) => (
@@ -229,7 +229,7 @@ export default function IPRegister() {
               <div className="space-y-6">
                 <div className="text-center mb-6">
                   <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "المعلومات الأساسية" : "Basic Information"}</h2>
-                  <p className="text-slate-400">{isAr ? "أدخل تفاصيل ملكيتك الفكرية" : "Enter details of your intellectual property"}</p>
+                  <p className="text-slate-400">{isAr ? "أدخل تفاصيل ملكيتك الفكرية" : "Enter IP Details"}</p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -257,7 +257,7 @@ export default function IPRegister() {
                   <Textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder={isAr ? "اشرح ملكيتك الفكرية بالتفصيل..." : "Describe your intellectual property in detail..."}
+                    placeholder={isAr ? "اشرح ملكيتك الفكرية بالتفصيل..." : "Describe your IP in detail..."}
                     className="bg-slate-900 border-slate-700 text-white min-h-32"
                   />
                 </div>
@@ -305,7 +305,7 @@ export default function IPRegister() {
                     <Input
                       value={formData.keywordInput}
                       onChange={(e) => setFormData({ ...formData, keywordInput: e.target.value })}
-                      placeholder={isAr ? "أضف كلمة مفتاحية" : "Add a keyword"}
+                      placeholder={isAr ? "أضف كلمة مفتاحية" : "Add Keyword"}
                       className="bg-slate-900 border-slate-700 text-white"
                       onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addKeyword())}
                     />
@@ -329,7 +329,7 @@ export default function IPRegister() {
               <div className="space-y-6">
                 <div className="text-center mb-6">
                   <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "المخترعين / المؤلفين" : "Inventors / Authors"}</h2>
-                  <p className="text-slate-400">{isAr ? "أضف معلومات المساهمين في هذه الملكية الفكرية" : "Add information about contributors to this IP"}</p>
+                  <p className="text-slate-400">{isAr ? "أضف معلومات المساهمين في هذه الملكية الفكرية" : "Add contributors' information for this IP"}</p>
                 </div>
                 {formData.inventors.map((inventor, index) => (
                   <Card key={index} className="bg-slate-900/50 border-slate-700">
@@ -359,7 +359,7 @@ export default function IPRegister() {
                           <Input
                             value={inventor.contribution}
                             onChange={(e) => updateInventor(index, "contribution", e.target.value)}
-                            placeholder={isAr ? "مثال: 50%" : "e.g., 50%"}
+                            placeholder={isAr ? "مثال: 50%" : "Example: 50%"}
                             className="bg-slate-800 border-slate-700 text-white"
                           />
                         </div>
@@ -369,7 +369,7 @@ export default function IPRegister() {
                 ))}
                 <Button type="button" onClick={addInventor} variant="outline" className="w-full border-slate-700 border-dashed">
                   <Users className="w-4 h-4 ml-2" />
-                  {isAr ? "إضافة مخترع آخر" : "Add another inventor"}
+                  {isAr ? "إضافة مخترع آخر" : "Add Another Inventor"}
                 </Button>
               </div>
             )}
@@ -378,15 +378,15 @@ export default function IPRegister() {
             {currentStep === 4 && (
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "مراجعة وتقديم" : "Review and Submit"}</h2>
-                  <p className="text-slate-400">{isAr ? "راجع المعلومات قبل التقديم" : "Review the information before submission"}</p>
+                  <h2 className="text-xl font-semibold text-white mb-2">{isAr ? "مراجعة وتقديم" : "Review & Submit"}</h2>
+                  <p className="text-slate-400">{isAr ? "راجع المعلومات قبل التقديم" : "Review information before submission"}</p>
                 </div>
 
                 <div className="bg-slate-900/50 rounded-xl p-6 space-y-4">
                   <div className="flex items-center gap-3 pb-4 border-b border-slate-700">
                     <Lock className="w-6 h-6 text-emerald-400" />
                     <div>
-                      <p className="text-white font-medium">{isAr ? "توثيق البلوكتشين" : "Blockchain Notarization"}</p>
+                      <p className="text-white font-medium">{isAr ? "توثيق البلوكتشين" : "Blockchain Documentation"}</p>
                       <p className="text-slate-400 text-sm">{isAr ? "سيتم إنشاء توقيع رقمي فريد لحماية ملكيتك" : "A unique digital signature will be created to protect your property"}</p>
                     </div>
                   </div>
@@ -403,7 +403,7 @@ export default function IPRegister() {
                     </div>
                     <div>
                       <p className="text-slate-400 text-sm">{isAr ? "التصنيف" : "Category"}</p>
-                      <p className="text-white">{formData.category || (isAr ? "غير محدد" : "Not specified")}</p>
+                      <p className="text-white">{formData.category || (isAr ? "غير محدد" : "Not Specified")}</p>
                     </div>
                   </div>
 
@@ -453,7 +453,7 @@ export default function IPRegister() {
                       <p className="text-emerald-400 font-medium">{isAr ? "حماية فورية" : "Instant Protection"}</p>
                       <p className="text-slate-300 text-sm">
                         {isAr
-                          ? "بمجرد التقديم، سيتم توثيق ملكيتك الفكرية على البلوكتشين وإرسال طلب إلى SAIP للمراجعة"
+                          ? isAr ? "بمجرد التقديم، سيتم توثيق ملكيتك الفكرية على البلوكتشين وإرسال طلب إلى SAIP للمراجعة" : "Upon submission, your IP will be blockchain-registered and a request sent to SAIP for review."
                           : "Upon submission, your intellectual property will be notarized on the blockchain and a request will be sent to SAIP for review"}
                       </p>
                     </div>

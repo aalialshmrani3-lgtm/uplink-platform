@@ -26,7 +26,7 @@ export default function Naqla2ChallengeDetail() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-12 h-12 text-blue-500 animate-spin mx-auto mb-4" />
-          <p className="text-white text-lg">{isAr ? "جاري تحميل تفاصيل التحدي..." : "جاري Download تفاصيل التحدي..."}</p>
+          <p className="text-white text-lg">{isAr ? isAr ? "جاري تحميل تفاصيل التحدي..." : "Loading challenge details..." : "Loading challenge details..."}</p>
         </div>
       </div>
     );
@@ -37,8 +37,8 @@ export default function Naqla2ChallengeDetail() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <Target className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-2">{isAr ? "التحدي غير موجود" : "التBorderي غير موجود"}</h2>
-          <p className="text-gray-400 mb-6">{isAr ? "عذراً، التحدي المطلوب غير موجود أو تم حذفه" : "عذراً، التحدي المطلوب غير موجود أو تم Deleteه"}</p>
+          <h2 className="text-2xl font-bold text-white mb-2">{isAr ? isAr ? "التحدي غير موجود" : "Challenge not found" : "Challenge not found"}</h2>
+          <p className="text-gray-400 mb-6">{isAr ? isAr ? "عذراً، التحدي المطلوب غير موجود أو تم حذفه" : "Sorry, the requested challenge is not found or has been deleted." : "Sorry, the requested challenge is not found or has been deleted."}</p>
           <Button onClick={() => setLocation("/naqla2/challenges")} variant="outline">
             <ArrowLeft className="w-4 h-4 ml-2" />
             العودة للتحديات
@@ -76,7 +76,7 @@ export default function Naqla2ChallengeDetail() {
               <div className="flex items-center gap-3">
                 <DollarSign className="w-8 h-8 text-green-500" />
                 <div>
-                  <p className="text-gray-400 text-sm">{isAr ? "قيمة الجائزة" : "Valuesة الجائزة"}</p>
+                  <p className="text-gray-400 text-sm">{isAr ? isAr ? "قيمة الجائزة" : "Prize value" : "Prize value"}</p>
                   <p className="text-white text-xl font-bold">{challenge.prize ? Number(challenge.prize).toLocaleString() : '0'} ريال</p>
                 </div>
               </div>
@@ -86,7 +86,7 @@ export default function Naqla2ChallengeDetail() {
               <div className="flex items-center gap-3">
                 <Calendar className="w-8 h-8 text-blue-500" />
                 <div>
-                  <p className="text-gray-400 text-sm">{isAr ? "تاريخ الانتهاء" : "تاريخ اNoنتهاء"}</p>
+                  <p className="text-gray-400 text-sm">{isAr ? isAr ? "تاريخ الانتهاء" : "End date" : "End date"}</p>
                   <p className="text-white text-lg font-semibold">
                     {challenge.endDate ? new Date(challenge.endDate).toLocaleDateString('ar-SA') : 'غير محدد'}
                   </p>
@@ -98,7 +98,7 @@ export default function Naqla2ChallengeDetail() {
               <div className="flex items-center gap-3">
                 <Users className="w-8 h-8 text-purple-500" />
                 <div>
-                  <p className="text-gray-400 text-sm">{isAr ? "عدد المشاركين" : "Count المشاركين"}</p>
+                  <p className="text-gray-400 text-sm">{isAr ? isAr ? "عدد المشاركين" : "Participants count" : "Participants count"}</p>
                   <p className="text-white text-xl font-bold">{relatedIdeas?.length || 0}</p>
                 </div>
               </div>
@@ -141,7 +141,7 @@ export default function Naqla2ChallengeDetail() {
           {ideasLoading ? (
             <div className="text-center py-12">
               <Loader2 className="w-8 h-8 text-blue-500 animate-spin mx-auto mb-3" />
-              <p className="text-gray-400">{isAr ? "جاري تحميل الأفكار..." : "جاري Download الأفكار..."}</p>
+              <p className="text-gray-400">{isAr ? isAr ? "جاري تحميل الأفكار..." : "Loading ideas..." : "Loading ideas..."}</p>
             </div>
           ) : relatedIdeas && relatedIdeas.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -180,8 +180,8 @@ export default function Naqla2ChallengeDetail() {
           ) : (
             <Card className="bg-slate-900/50 border-slate-700 p-12 text-center">
               <Lightbulb className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">{isAr ? "لا توجد أفكار مرتبطة بهذا التحدي بعد" : "No توجد أفكار مرتبطة بهذا التحدي بعد"}</h3>
-              <p className="text-gray-400 mb-6">{isAr ? "كن أول من يقدم حلاً مبتكراً لهذا التحدي!" : "كن أول من يقدم حNoً مبتكراً لهذا التحدي!"}</p>
+              <h3 className="text-xl font-bold text-white mb-2">{isAr ? isAr ? "لا توجد أفكار مرتبطة بهذا التحدي بعد" : "No ideas linked to this challenge yet." : "No ideas linked to this challenge yet."}</h3>
+              <p className="text-gray-400 mb-6">{isAr ? isAr ? "كن أول من يقدم حلاً مبتكراً لهذا التحدي!" : "Be the first to submit an innovative solution for this challenge!" : "Be the first to submit an innovative solution for this challenge!"}</p>
               <Button onClick={() => setLocation("/naqla1/submit")} className="bg-blue-600 hover:bg-blue-700">
                 قدّم فكرتك الآن
               </Button>
@@ -191,8 +191,8 @@ export default function Naqla2ChallengeDetail() {
 
         {/* Call to Action */}
         <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-0 p-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-3">{isAr ? "هل لديك حل مبتكر لهذا التحدي؟" : "هل لديك حل Innovator لهذا التحدي؟"}</h2>
-          <p className="text-blue-100 mb-6">{isAr ? "قدّم فكرتك الآن واحصل على فرصة للفوز بالجائزة!" : "قدّم فكرتك الآن واحصل على Opportunitiesة للفوز بالجائزة!"}</p>
+          <h2 className="text-2xl font-bold text-white mb-3">{isAr ? isAr ? "هل لديك حل مبتكر لهذا التحدي؟" : "Do you have an innovative solution for this challenge?" : "Do you have an innovative solution for this challenge?"}</h2>
+          <p className="text-blue-100 mb-6">{isAr ? isAr ? "قدّم فكرتك الآن واحصل على فرصة للفوز بالجائزة!" : "Submit your idea now and get a chance to win the prize!" : "Submit your idea now and get a chance to win the prize!"}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               onClick={() => setLocation("/naqla1/submit")} 

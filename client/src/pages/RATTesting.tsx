@@ -41,69 +41,69 @@ export default function RATTesting() {
   const hypotheses = [
     {
       id: 1,
-      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Education Platform",
-      statement: isAr ? "الطلاب مستعدون لدفع 50 ريال شهرياً مقابل محتوى تعليمي مخصص" : "Students are willing to pay 50 SAR monthly for personalized educational content",
+      innovationTitle: "Smart Education Platform",
+      statement: "Students willing to pay 50 SAR/month for personalized content",
       ratScore: 9.0,
       status: "testing" as const,
       tests: [
         {
           id: 1,
-          testName: isAr ? "Landing Page + تجربة مجانية" : "Landing Page + Free Trial",
+          testName: "Landing Page + Free Trial",
           status: "in_progress" as const,
           plannedDate: "2026-01-25",
           completedDate: null,
           budget: 5000,
           progress: 65,
-          result: isAr ? "15 من 100 مستخدم اشتركوا بعد التجربة (15%)" : "15 out of 100 users subscribed after trial (15%)",
-          learnings: isAr ? "السعر ليس العائق الأساسي، بل جودة المحتوى" : "Price is not the main barrier, but content quality",
+          result: "15 out of 100 users subscribed after trial (15%)",
+          learnings: "Price not main barrier, content quality is",
         },
       ],
     },
     {
       id: 2,
-      innovationTitle: isAr ? "منصة التعليم الذكية" : "Smart Education Platform",
-      statement: isAr ? "المعلمون سيستخدمون أدوات AI لإنشاء المحتوى" : "Teachers will use AI tools to create content",
+      innovationTitle: "Smart Education Platform",
+      statement: "Teachers will use AI tools to create content",
       ratScore: 6.5,
       status: "validated" as const,
       tests: [
         {
           id: 2,
-          testName: isAr ? "Wizard of Oz - دعم بشري" : "Wizard of Oz - Human Support",
+          testName: "Wizard of Oz - Human Support",
           status: "completed" as const,
           plannedDate: "2026-01-18",
           completedDate: "2026-01-24",
           budget: 3000,
           progress: 100,
-          result: isAr ? "72% من المعلمين استخدموا الأدوات بنشاط" : "72% of teachers actively used the tools",
-          learnings: isAr ? "المعلمون يحتاجون لتدريب أولي بسيط (30 دقيقة)" : "Teachers need simple initial training (30 minutes)",
+          result: "72% of teachers actively used tools",
+          learnings: "Teachers need simple initial training (30 min)",
         },
       ],
     },
     {
       id: 3,
-      innovationTitle: isAr ? "نظام إدارة المخزون الذكي" : "Smart Inventory Management System",
-      statement: isAr ? "الشركات الصغيرة ستدفع $200/شهر لنظام إدارة مخزون متقدم" : "Small businesses will pay $200/month for an advanced inventory management system",
+      innovationTitle: "Smart Inventory Management System",
+      statement: "Small businesses will pay $200/month for advanced inventory system",
       ratScore: 7.5,
       status: "pending" as const,
       tests: [],
     },
     {
       id: 5,
-      innovationTitle: isAr ? "تطبيق الصحة الوقائية" : "Preventive Health App",
-      statement: isAr ? "المستخدمون سيشاركون بياناتهم الصحية مقابل توصيات مخصصة" : "Users will share their health data in exchange for personalized recommendations",
+      innovationTitle: "Preventative Health App",
+      statement: "Users will share health data for personalized recommendations",
       ratScore: 9.0,
       status: "testing" as const,
       tests: [
         {
           id: 3,
-          testName: isAr ? "Concierge - توصيات يدوية" : "Concierge - Manual Recommendations",
+          testName: "Concierge - Manual Recommendations",
           status: "in_progress" as const,
           plannedDate: "2026-01-23",
           completedDate: null,
           budget: 2000,
           progress: 45,
-          result: isAr ? "65 من 100 مستخدم أكملوا الملف الصحي" : "65 out of 100 users completed the health profile",
-          learnings: isAr ? "الشفافية حول استخدام البيانات تزيد الثقة" : "Transparency about data usage increases trust",
+          result: "65 out of 100 users completed health profile",
+          learnings: "Data usage transparency increases trust",
         },
       ],
     },
@@ -130,7 +130,7 @@ export default function RATTesting() {
 
   const handleCreateTest = () => {
     if (!testData.testName || !testData.plannedDate) {
-      toast.error(isAr ? "الرجاء ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
+      toast.error(isAr ? "الرجاء ملء جميع الحقول المطلوبة" : "Please fill all required fields");
       return;
     }
 
@@ -214,10 +214,10 @@ export default function RATTesting() {
         {/* Header */}
         <div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-            {isAr ? "اختبار الافتراضات الخطرة (RAT Testing)" : "Riskiest Assumption Testing (RAT Testing)"}
+            {isAr ? "اختبار الافتراضات الخطرة (RAT Testing)" : "Riskiest Assumption Test (RAT Testing)"}
           </h1>
           <p className="text-gray-600 mt-2">
-            {isAr ? "اختبر الافتراضات الأكثر خطورة أولاً لتقليل المخاطر وتوفير الموارد" : "Test the riskiest assumptions first to reduce risks and save resources"}
+            {isAr ? "اختبر الافتراضات الأكثر خطورة أولاً لتقليل المخاطر وتوفير الموارد" : "Test riskiest assumptions first to reduce risk and save resources"}
           </p>
         </div>
 
@@ -278,9 +278,9 @@ export default function RATTesting() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-orange-600" />
-                {isAr ? "الفرضيات حسب الأولوية" : "Hypotheses by Priority"}
+                {isAr ? "الفرضيات حسب الأولوية" : "Assumptions by Priority"}
               </CardTitle>
-              <CardDescription>{isAr ? "مرتبة حسب درجة RAT (الأعلى أولاً)" : "Sorted by RAT score (highest first)"}</CardDescription>
+              <CardDescription>{isAr ? "مرتبة حسب درجة RAT (الأعلى أولاً)" : "Sorted by RAT Score (Highest First)"}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -314,7 +314,7 @@ export default function RATTesting() {
                             RAT: {hypothesis.ratScore.toFixed(1)}
                           </Badge>
                           <Badge variant="outline" className="text-xs">
-                            {hypothesis.tests.length} {isAr ? "اختبار" : "test(s)"}
+                            {hypothesis.tests.length} {isAr ? "اختبار" : "Test"}
                           </Badge>
                         </div>
                       </CardContent>
@@ -329,8 +329,8 @@ export default function RATTesting() {
             {!selectedHypothesisData ? (
               <CardContent className="py-12 text-center">
                 <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "اختر فرضية" : "Select a Hypothesis"}</h3>
-                <p className="text-gray-500">{isAr ? "اختر فرضية من القائمة لعرض التفاصيل وإدارة الاختبارات" : "Select a hypothesis from the list to view details and manage tests"}</p>
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "اختر فرضية" : "Select Hypothesis"}</h3>
+                <p className="text-gray-500">{isAr ? "اختر فرضية من القائمة لعرض التفاصيل وإدارة الاختبارات" : "Select a hypothesis from the list to view details and manage tests."}</p>
               </CardContent>
             ) : (
               <>
@@ -408,10 +408,10 @@ export default function RATTesting() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="resources">{isAr ? "الموارد المطلوبة" : "Required Resources"}</Label>
+                          <Label htmlFor="resources">{isAr ? "الموارد المطلوبة" : "Resources Required"}</Label>
                           <Textarea
                             id="resources"
-                            placeholder={isAr ? "مثال: مصمم UI، مطور frontend، 100 مستخدم تجريبي" : "Example: UI designer, frontend developer, 100 test users"}
+                            placeholder={isAr ? "مثال: مصمم UI، مطور frontend، 100 مستخدم تجريبي" : "Example: UI Designer, Frontend Dev, 100 Beta Users"}
                             rows={3}
                             value={testData.resources}
                             onChange={(e) => setTestData({ ...testData, resources: e.target.value })}
@@ -419,7 +419,7 @@ export default function RATTesting() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="methodology">{isAr ? "المنهجية والخطوات" : "Methodology and Steps"}</Label>
+                          <Label htmlFor="methodology">{isAr ? "المنهجية والخطوات" : "Methodology & Steps"}</Label>
                           <Textarea
                             id="methodology"
                             placeholder={isAr ? "1. إنشاء landing page\n2. إطلاق حملة إعلانية\n3. قياس معدل التحويل" : "1. Create landing page\n2. Launch ad campaign\n3. Measure conversion rate"}
@@ -507,7 +507,7 @@ export default function RATTesting() {
                                   {test.result && (
                                     <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                                       <div className="text-sm font-medium text-blue-900 mb-1">
-                                        {isAr ? "النتيجة الحالية" : "Current Result"}
+                                        {isAr ? "النتيجة الحالية" : "Current Outcome"}
                                       </div>
                                       <div className="text-sm text-blue-700">{test.result}</div>
                                     </div>
@@ -535,7 +535,7 @@ export default function RATTesting() {
                           <Label htmlFor="result">{isAr ? "نتائج الاختبار *" : "Test Results *"}</Label>
                           <Textarea
                             id="result"
-                            placeholder={isAr ? "صف النتائج بالتفصيل مع الأرقام والبيانات..." : "Describe the results in detail with numbers and data..."}
+                            placeholder={isAr ? "صف النتائج بالتفصيل مع الأرقام والبيانات..." : "Describe results in detail with numbers and data..."}
                             rows={5}
                             value={resultData.result}
                             onChange={(e) => setResultData({ ...resultData, result: e.target.value })}
@@ -543,7 +543,7 @@ export default function RATTesting() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="outcome">{isAr ? "الخلاصة" : "Outcome"}</Label>
+                          <Label htmlFor="outcome">{isAr ? "الخلاصة" : "Conclusion"}</Label>
                           <Select
                             value={resultData.outcome}
                             onValueChange={(value: "supports" | "rejects" | "inconclusive" | "pending") =>
@@ -556,7 +556,7 @@ export default function RATTesting() {
                             <SelectContent>
                               <SelectItem value="pending">{isAr ? "معلق" : "Pending"}</SelectItem>
                               <SelectItem value="supports">{isAr ? "يدعم الفرضية ✅" : "Supports Hypothesis ✅"}</SelectItem>
-                              <SelectItem value="rejects">{isAr ? "يدحض الفرضية ❌" : "Rejects Hypothesis ❌"}</SelectItem>
+                              <SelectItem value="rejects">{isAr ? "يدحض الفرضية ❌" : "Refutes Hypothesis ❌"}</SelectItem>
                               <SelectItem value="inconclusive">{isAr ? "غير حاسم 🤔" : "Inconclusive 🤔"}</SelectItem>
                             </SelectContent>
                           </Select>

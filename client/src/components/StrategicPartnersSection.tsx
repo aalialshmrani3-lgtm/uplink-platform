@@ -2,43 +2,47 @@ import { Building2, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function StrategicPartnersSection() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   const partners = [
     {
       name: "KAUST",
-      fullName: "جامعة الملك عبدالله للعلوم والتقنية",
-      description: "دعم البحث العلمي والابتكار التقني",
+      fullName: "King Abdullah University of Science & Technology",
+      description: "Supporting scientific research and technical innovation",
       color: "from-blue-500 to-cyan-600"
     },
     {
       name: "SAIP",
-      fullName: "الهيئة السعودية للملكية الفكرية",
-      description: "تسجيل وحماية براءات الاختراع",
+      fullName: "Saudi Authority for Intellectual Property",
+      description: "Patent registration and intellectual property protection",
       color: "from-emerald-500 to-teal-600"
     },
     {
       name: "RDIA",
-      fullName: "هيئة تطوير البحث والتطوير والابتكار",
-      description: "تمويل ودعم مشاريع البحث والابتكار",
+      fullName: "Research, Development & Innovation Authority",
+      description: "Funding and supporting research and innovation projects",
       color: "from-purple-500 to-pink-600"
     },
     {
       name: "MCIT",
-      fullName: "وزارة الاتصالات وتقنية المعلومات",
-      description: "دعم التحول الرقمي والابتكار التقني",
+      fullName: "Ministry of Communications & Information Technology",
+      description: "Supporting digital transformation and technical innovation",
       color: "from-orange-500 to-red-600"
     },
     {
       name: "SDAIA",
-      fullName: "الهيئة السعودية للبيانات والذكاء الاصطناعي",
-      description: "دعم مشاريع الذكاء الاصطناعي والبيانات",
+      fullName: "Saudi Data & Artificial Intelligence Authority",
+      description: "Supporting AI and data projects",
       color: "from-indigo-500 to-blue-600"
     },
     {
       name: "Monsha'at",
-      fullName: "الهيئة العامة للمنشآت الصغيرة والمتوسطة",
-      description: "دعم الشركات الناشئة والمنشآت الصغيرة",
+      fullName: "General Authority for Small & Medium Enterprises",
+      description: "Supporting startups and small enterprises",
       color: "from-pink-500 to-rose-600"
     }
   ];
@@ -48,16 +52,18 @@ export function StrategicPartnersSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            الشركاء الاستراتيجيون
+            {isAr ? "الشركاء الاستراتيجيون" : "Strategic Partners"}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            شراكات استراتيجية مع أبرز الجهات السعودية لدعم المبتكرين
+            {isAr
+              ? "شراكات استراتيجية مع أبرز الجهات السعودية لدعم المبتكرين"
+              : "Strategic partnerships with Saudi Arabia's leading organizations to support innovators"}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {partners.map((partner, index) => (
-            <Card 
+            <Card
               key={index}
               className="group hover:shadow-2xl transition-all duration-300 border-border/50 bg-card/50 backdrop-blur-sm hover:scale-105"
             >
@@ -86,7 +92,7 @@ export function StrategicPartnersSection() {
         <div className="text-center">
           <Link href="/strategic-partners">
             <Button size="lg" className="gap-2">
-              استكشف الشركاء
+              {isAr ? "استكشف الشركاء" : "Explore Partners"}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>

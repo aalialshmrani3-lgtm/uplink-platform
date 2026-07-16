@@ -87,7 +87,7 @@ export default function Naqla2Matching() {
           <CardHeader>
             <CardTitle className="text-white">{isAr ? "يجب تسجيل الدخول" : "Login Required"}</CardTitle>
             <CardDescription className="text-slate-400">
-              {isAr ? "الرجاء تسجيل الدخول للوصول إلى نظام المطابقة الذكية" : "Please login to access the smart matching system"}
+              {isAr ? "الرجاء تسجيل الدخول للوصول إلى نظام المطابقة الذكية" : "Please log in to access the Smart Matching system."}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -107,7 +107,7 @@ export default function Naqla2Matching() {
                 {isAr ? "المطابقة الذكية" : "Smart Matching"}
               </h1>
               <p className="text-slate-400 text-lg">
-                {isAr ? "اعثر على الشركاء والمستثمرين المناسبين باستخدام الذكاء الاصطناعي" : "Find the right partners and investors using artificial intelligence"}
+                {isAr ? "اعثر على الشركاء والمستثمرين المناسبين باستخدام الذكاء الاصطناعي" : "Find the right partners and investors using AI."}
               </p>
             </div>
             <Button
@@ -115,7 +115,7 @@ export default function Naqla2Matching() {
               className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700"
             >
               <Search className="w-4 h-4 mr-2" />
-              {isAr ? "طلب مطابقة جديد" : "New Matching Request"}
+              {isAr ? "طلب مطابقة جديد" : "New Match Request"}
             </Button>
           </div>
         </div>
@@ -124,12 +124,12 @@ export default function Naqla2Matching() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white text-lg">{isAr ? "كيف يعمل؟" : "How it works?"}</CardTitle>
+              <CardTitle className="text-white text-lg">{isAr ? "كيف يعمل؟" : "How it Works?"}</CardTitle>
             </CardHeader>
             <CardContent className="text-slate-400 text-sm space-y-2">
-              <p>{isAr ? "1. أدخل متطلباتك وتفضيلاتك" : "1. Enter your requirements and preferences"}</p>
-              <p>{isAr ? "2. الذكاء الاصطناعي يحلل ويبحث" : "2. AI analyzes and searches"}</p>
-              <p>{isAr ? "3. احصل على أفضل 10 مطابقات" : "3. Get the top 10 matches"}</p>
+              <p>{isAr ? "1. أدخل متطلباتك وتفضيلاتك" : "1. Enter your requirements & preferences"}</p>
+              <p>{isAr ? "2. الذكاء الاصطناعي يحلل ويبحث" : "2. AI analyzes & searches"}</p>
+              <p>{isAr ? "3. احصل على أفضل 10 مطابقات" : "3. Get top 10 matches"}</p>
               <p>{isAr ? "4. تواصل مع المطابقات المقبولة" : "4. Connect with accepted matches"}</p>
             </CardContent>
           </Card>
@@ -139,11 +139,11 @@ export default function Naqla2Matching() {
               <CardTitle className="text-white text-lg">{isAr ? "معايير المطابقة" : "Matching Criteria"}</CardTitle>
             </CardHeader>
             <CardContent className="text-slate-400 text-sm space-y-2">
-              <p>{isAr ? "• تشابه علامات الذكاء الاصطناعي (40%)" : "• AI tag similarity (40%)"}</p>
-              <p>{isAr ? "• توافق الصناعة (30%)" : "• Industry compatibility (30%)"}</p>
-              <p>{isAr ? "• توافق مستوى الابتكار (15%)" : "• Innovation level compatibility (15%)"}</p>
-              <p>{isAr ? "• توافق الجدوى (15%)" : "• Feasibility compatibility (15%)"}</p>
-              <p className="text-cyan-400 mt-2 text-xs">{isAr ? "✨ محسّن بالذكاء الاصطناعي" : "✨ AI-powered optimization"}</p>
+              <p>{isAr ? "• تشابه علامات الذكاء الاصطناعي (40%)" : "• AI Tag Similarity (40%)"}</p>
+              <p>{isAr ? "• توافق الصناعة (30%)" : "• Industry Compatibility (30%)"}</p>
+              <p>{isAr ? "• توافق مستوى الابتكار (15%)" : "• Innovation Level Fit (15%)"}</p>
+              <p>{isAr ? "• توافق الجدوى (15%)" : "• Feasibility Alignment (15%)"}</p>
+              <p className="text-cyan-400 mt-2 text-xs">{isAr ? "✨ محسّن بالذكاء الاصطناعي" : "✨ AI-Enhanced"}</p>
             </CardContent>
           </Card>
 
@@ -152,9 +152,9 @@ export default function Naqla2Matching() {
               <CardTitle className="text-white text-lg">ValidMatch</CardTitle>
             </CardHeader>
             <CardContent className="text-slate-400 text-sm space-y-2">
-              <p className="text-green-400 font-bold">{isAr ? "✓ نسبة ≥50%: مطابقة صالحة" : "✓ Score ≥50%: Valid match"}</p>
-              <p className="text-red-400 font-bold">{isAr ? "✗ نسبة <50%: مطابقة مرفوضة" : "✗ Score <50%: Rejected match"}</p>
-              <p className="mt-2">{isAr ? "يتم عرض المطابقات الصالحة فقط" : "Only valid matches are displayed"}</p>
+              <p className="text-green-400 font-bold">{isAr ? "✓ نسبة ≥50%: مطابقة صالحة" : "✓ Score ≥50%: Valid Match"}</p>
+              <p className="text-red-400 font-bold">{isAr ? "✗ نسبة <50%: مطابقة مرفوضة" : "✗ Score <50%: Rejected Match"}</p>
+              <p className="mt-2">{isAr ? "يتم عرض المطابقات الصالحة فقط" : "Only valid matches are displayed."}</p>
             </CardContent>
           </Card>
         </div>
@@ -163,9 +163,9 @@ export default function Naqla2Matching() {
         {showRequestForm && (
           <Card className="mb-8 bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">{isAr ? "طلب مطابقة جديد" : "New Matching Request"}</CardTitle>
+              <CardTitle className="text-white">{isAr ? "طلب مطابقة جديد" : "New Match Request"}</CardTitle>
               <CardDescription className="text-slate-400">
-                {isAr ? "املأ النموذج للحصول على أفضل المطابقات" : "Fill out the form to get the best matches"}
+                {isAr ? "املأ النموذج للحصول على أفضل المطابقات" : "Fill the form to get the best matches."}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -175,7 +175,7 @@ export default function Naqla2Matching() {
                     <Label htmlFor="seekingType" className="text-white">{isAr ? "نوع الباحث عنه" : "Seeking Type"}</Label>
                     <Select name="seekingType" required>
                       <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
-                        <SelectValue placeholder={isAr ? "اختر النوع" : "Select type"} />
+                        <SelectValue placeholder={isAr ? "اختر النوع" : "Select Type"} />
                       </SelectTrigger>
                       <SelectContent className="bg-slate-800 border-slate-700">
                         <SelectItem value="investor">{isAr ? "مستثمر" : "Investor"}</SelectItem>
@@ -191,7 +191,7 @@ export default function Naqla2Matching() {
                     <Input
                       id="industry"
                       name="industry"
-                      placeholder={isAr ? "مثال: التقنية، الصحة، التعليم" : "Example: Technology, Health, Education"}
+                      placeholder={isAr ? "مثال: التقنية، الصحة، التعليم" : "Ex: Tech, Health, Education"}
                       className="bg-slate-800/50 border-slate-700 text-white"
                     />
                   </div>
@@ -203,7 +203,7 @@ export default function Naqla2Matching() {
                     <Input
                       id="stage"
                       name="stage"
-                      placeholder={isAr ? "مثال: فكرة، نموذج أولي، نمو" : "Example: Idea, Prototype, Growth"}
+                      placeholder={isAr ? "مثال: فكرة، نموذج أولي، نمو" : "Ex: Idea, Prototype, Growth"}
                       className="bg-slate-800/50 border-slate-700 text-white"
                     />
                   </div>
@@ -224,7 +224,7 @@ export default function Naqla2Matching() {
                     <Input
                       id="location"
                       name="location"
-                      placeholder={isAr ? "مثال: الرياض، جدة" : "Example: Riyadh, Jeddah"}
+                      placeholder={isAr ? "مثال: الرياض، جدة" : "e.g., Riyadh, Jeddah"}
                       className="bg-slate-800/50 border-slate-700 text-white"
                     />
                   </div>
@@ -237,7 +237,7 @@ export default function Naqla2Matching() {
                     name="requirements"
                     required
                     rows={4}
-                    placeholder={isAr ? "اشرح متطلباتك بالتفصيل..." : "Explain your requirements in detail..."}
+                    placeholder={isAr ? "اشرح متطلباتك بالتفصيل..." : "Describe your requirements in detail..."}
                     className="bg-slate-800/50 border-slate-700 text-white"
                   />
                 </div>
@@ -318,9 +318,9 @@ export default function Naqla2Matching() {
             <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
               <CardContent className="text-center py-12">
                 <AlertCircle className="w-16 h-16 mx-auto mb-4 text-slate-600" />
-                <p className="text-slate-400 mb-4">{isAr ? "لا توجد مطابقات حالياً" : "No matches currently"}</p>
+                <p className="text-slate-400 mb-4">{isAr ? "لا توجد مطابقات حالياً" : "No matches found yet"}</p>
                 <Button onClick={() => setShowRequestForm(true)}>
-                  {isAr ? "ابدأ طلب مطابقة جديد" : "Start a new matching request"}
+                  {isAr ? "ابدأ طلب مطابقة جديد" : "Start New Match Request"}
                 </Button>
               </CardContent>
             </Card>

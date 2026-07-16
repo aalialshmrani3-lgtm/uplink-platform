@@ -111,7 +111,7 @@ export default function MyIdeas() {
             </div>
             <div>
               <h1 className="text-4xl font-bold text-white">{isAr ? "أفكاري" : "My Ideas"}</h1>
-              <p className="text-slate-400">{isAr ? "تتبع جميع الأفكار المرسلة ونتائج التحليل" : "تتبع جميع الأفكار المرسلة ونتائج Analysis"}</p>
+              <p className="text-slate-400">{isAr ? isAr ? "تتبع جميع الأفكار المرسلة ونتائج التحليل" : "Track all submitted ideas and analysis results" : "Track all submitted ideas and analysis results"}</p>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function MyIdeas() {
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
               type="text"
-              placeholder="ابحث في أفكارك..."
+              placeholder={isAr ? "ابحث في أفكارك..." : "Search your ideas..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-10 bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500"
@@ -155,7 +155,7 @@ export default function MyIdeas() {
 
           <TabsContent value={activeTab} className="mt-6">
             {isLoading ? (
-              <div className="text-center py-12 text-slate-400">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+              <div className="text-center py-12 text-slate-400">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Downloading..."}</div>
             ) : filteredIdeas && filteredIdeas.length > 0 ? (
               <div className="grid grid-cols-1 gap-6">
                 {filteredIdeas.map((idea: any) => (
@@ -190,7 +190,7 @@ export default function MyIdeas() {
                               <div className="text-lg font-bold text-white">{idea.aiAnalysis.innovationScore}%</div>
                             </div>
                             <div>
-                              <div className="text-xs text-slate-400 mb-1">{isAr ? "الجدوى" : "[الجدوى]"}</div>
+                              <div className="text-xs text-slate-400 mb-1">{isAr ? isAr ? "الجدوى" : "Feasibility" : "[Feasibility]"}</div>
                               <div className="text-lg font-bold text-white">{idea.aiAnalysis.feasibilityScore}%</div>
                             </div>
                             <div>
@@ -250,7 +250,7 @@ export default function MyIdeas() {
             ) : (
               <div className="text-center py-12">
                 <Lightbulb className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                <p className="text-slate-400">{isAr ? "لا توجد أفكار في هذا القسم" : "No توجد أفكار في هذا القسم"}</p>
+                <p className="text-slate-400">{isAr ? isAr ? "لا توجد أفكار في هذا القسم" : "No ideas in this section" : "No ideas in this section"}</p>
               </div>
             )}
           </TabsContent>

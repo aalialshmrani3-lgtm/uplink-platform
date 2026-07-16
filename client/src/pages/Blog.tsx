@@ -16,16 +16,16 @@ export default function Blog() {
     {
       id: 1,
       title: isAr
-        ? "مستقبل الابتكار في المملكة العربية السعودية: رؤية 2030 والتحول الرقمي"
+        ? isAr ? "مستقبل الابتكار في المملكة العربية السعودية: رؤية 2030 والتحول الرقمي" : "Future of Innovation in Saudi Arabia: Vision 2030 & Digital Transformation"
         : "The Future of Innovation in Saudi Arabia: Vision 2030 and Digital Transformation",
       excerpt: isAr
-        ? "تستعرض هذه المقالة أبرز مبادرات الابتكار في إطار رؤية 2030 وكيف تُسهم منظومة نقلة في تحقيق أهداف التنويع الاقتصادي."
+        ? isAr ? "تستعرض هذه المقالة أبرز مبادرات الابتكار في إطار رؤية 2030 وكيف تُسهم منظومة نقلة في تحقيق أهداف التنويع الاقتصادي." : "This article highlights key innovation initiatives under Vision 2030 and how Naqla contributes to economic diversification."
         : "This article highlights the key innovation initiatives within Vision 2030 and how the NAQLA ecosystem contributes to achieving economic diversification goals.",
-      author: isAr ? "فريق نقلة" : "NAQLA Team",
-      date: isAr ? "15 يناير 2025" : "January 15, 2025",
-      readTime: isAr ? "8 دقائق" : "8 min read",
-      category: isAr ? "رؤية 2030" : "Vision 2030",
-      tags: isAr ? ["ابتكار", "رؤية 2030", "التحول الرقمي"] : ["Innovation", "Vision 2030", "Digital Transformation"],
+      author: "Naqla Team",
+      date: "Jan 15, 2025",
+      readTime: "8 min read",
+      category: "Vision 2030",
+      tags: isAr ? [isAr ? "ابتكار" : "Innovation", isAr ? "رؤية 2030" : "Vision 2030", isAr ? "التحول الرقمي" : "Digital Transformation"] : ["Innovation", "Vision 2030", "Digital Transformation"],
       icon: TrendingUp,
       color: "from-cyan-500/20 to-blue-500/20",
       border: "border-cyan-500/30",
@@ -35,16 +35,16 @@ export default function Blog() {
     {
       id: 2,
       title: isAr
-        ? "كيف تحوّل فكرتك إلى مشروع ناجح: دليل المبتكر السعودي"
+        ? isAr ? "كيف تحوّل فكرتك إلى مشروع ناجح: دليل المبتكر السعودي" : "From Idea to Success: A Saudi Innovator's Guide"
         : "How to Turn Your Idea into a Successful Project: The Saudi Innovator's Guide",
       excerpt: isAr
-        ? "خطوات عملية لتحويل الأفكار الإبداعية إلى مشاريع قابلة للتطبيق، من التحقق من الفكرة حتى الحصول على التمويل."
+        ? isAr ? "خطوات عملية لتحويل الأفكار الإبداعية إلى مشاريع قابلة للتطبيق، من التحقق من الفكرة حتى الحصول على التمويل." : "Practical steps to turn creative ideas into viable projects, from idea validation to securing funding."
         : "Practical steps to transform creative ideas into viable projects, from idea validation to securing funding.",
-      author: isAr ? "د. سارة الأحمدي" : "Dr. Sarah Al-Ahmadi",
-      date: isAr ? "10 يناير 2025" : "January 10, 2025",
-      readTime: isAr ? "12 دقيقة" : "12 min read",
-      category: isAr ? "ريادة الأعمال" : "Entrepreneurship",
-      tags: isAr ? ["ريادة أعمال", "تمويل", "نصائح"] : ["Entrepreneurship", "Funding", "Tips"],
+      author: "Dr. Sara Al-Ahmadi",
+      date: "Jan 10, 2025",
+      readTime: "12 min read",
+      category: "Entrepreneurship",
+      tags: isAr ? [isAr ? "ريادة أعمال" : "Entrepreneurship", isAr ? "تمويل" : "Funding", isAr ? "نصائح" : "Tips"] : ["Entrepreneurship", "Funding", "Tips"],
       icon: Lightbulb,
       color: "from-amber-500/20 to-orange-500/20",
       border: "border-amber-500/30",
@@ -54,16 +54,16 @@ export default function Blog() {
     {
       id: 3,
       title: isAr
-        ? "الملكية الفكرية في عصر الذكاء الاصطناعي: تحديات وفرص"
+        ? isAr ? "الملكية الفكرية في عصر الذكاء الاصطناعي: تحديات وفرص" : "IP in the AI Era: Challenges & Opportunities"
         : "Intellectual Property in the Age of AI: Challenges and Opportunities",
       excerpt: isAr
-        ? "مع تصاعد استخدام الذكاء الاصطناعي، تبرز تساؤلات جوهرية حول ملكية المخرجات الإبداعية وكيفية حمايتها قانونياً."
+        ? isAr ? "مع تصاعد استخدام الذكاء الاصطناعي، تبرز تساؤلات جوهرية حول ملكية المخرجات الإبداعية وكيفية حمايتها قانونياً." : "As AI use grows, key questions arise about ownership of creative outputs and their legal protection."
         : "As AI usage grows, fundamental questions arise about ownership of creative outputs and how to protect them legally.",
-      author: isAr ? "م. خالد العتيبي" : "Eng. Khalid Al-Otaibi",
-      date: isAr ? "5 يناير 2025" : "January 5, 2025",
-      readTime: isAr ? "10 دقائق" : "10 min read",
-      category: isAr ? "الملكية الفكرية" : "Intellectual Property",
-      tags: isAr ? ["ملكية فكرية", "ذكاء اصطناعي", "قانون"] : ["IP", "Artificial Intelligence", "Law"],
+      author: "Eng. Khalid Al-Otaibi",
+      date: "Jan 5, 2025",
+      readTime: "10 min read",
+      category: "Intellectual Property",
+      tags: isAr ? [isAr ? "ملكية فكرية" : "Intellectual Property", isAr ? "ذكاء اصطناعي" : "AI", isAr ? "قانون" : "Law"] : ["IP", "Artificial Intelligence", "Law"],
       icon: Globe,
       color: "from-violet-500/20 to-purple-500/20",
       border: "border-violet-500/30",
@@ -73,16 +73,16 @@ export default function Blog() {
     {
       id: 4,
       title: isAr
-        ? "التحديات الوطنية: كيف تحل مشكلات المجتمع وتكسب جوائز ضخمة"
+        ? isAr ? "التحديات الوطنية: كيف تحل مشكلات المجتمع وتكسب جوائز ضخمة" : "National Challenges: Solve Community Problems, Win Big"
         : "National Challenges: How to Solve Community Problems and Win Major Prizes",
       excerpt: isAr
-        ? "دليل شامل للمشاركة في التحديات الوطنية المطروحة على منصة نقلة، وكيفية تقديم حلول مبتكرة تحظى بالتمويل والدعم."
+        ? isAr ? "دليل شامل للمشاركة في التحديات الوطنية المطروحة على منصة نقلة، وكيفية تقديم حلول مبتكرة تحظى بالتمويل والدعم." : "A comprehensive guide to participating in national challenges on the Naqla platform, and how to submit innovative solutions for funding and support."
         : "A comprehensive guide to participating in national challenges on the NAQLA platform and submitting innovative solutions that attract funding and support.",
-      author: isAr ? "أ. نورة السالم" : "Noura Al-Salem",
-      date: isAr ? "28 ديسمبر 2024" : "December 28, 2024",
-      readTime: isAr ? "7 دقائق" : "7 min read",
-      category: isAr ? "التحديات" : "Challenges",
-      tags: isAr ? ["تحديات", "جوائز", "حلول"] : ["Challenges", "Prizes", "Solutions"],
+      author: "Prof. Noura Al-Salem",
+      date: "Dec 28, 2024",
+      readTime: "7 min",
+      category: "Challenges",
+      tags: isAr ? [isAr ? "تحديات" : "Challenges", isAr ? "جوائز" : "Awards", isAr ? "حلول" : "Solutions"] : ["Challenges", "Prizes", "Solutions"],
       icon: Zap,
       color: "from-emerald-500/20 to-teal-500/20",
       border: "border-emerald-500/30",
@@ -92,16 +92,16 @@ export default function Blog() {
     {
       id: 5,
       title: isAr
-        ? "قصص نجاح: مبتكرون سعوديون غيّروا قطاعاتهم"
+        ? isAr ? "قصص نجاح: مبتكرون سعوديون غيّروا قطاعاتهم" : "Success Stories: Saudi Innovators Reshaping Industries"
         : "Success Stories: Saudi Innovators Who Transformed Their Sectors",
       excerpt: isAr
-        ? "نستعرض قصص ملهمة لمبتكرين سعوديين استخدموا منصة نقلة لتحويل أفكارهم إلى مشاريع ناجحة وحلول حقيقية."
+        ? isAr ? "نستعرض قصص ملهمة لمبتكرين سعوديين استخدموا منصة نقلة لتحويل أفكارهم إلى مشاريع ناجحة وحلول حقيقية." : "Explore inspiring stories of Saudi innovators who leveraged Naqla to transform ideas into successful projects and real-world solutions."
         : "We showcase inspiring stories of Saudi innovators who used the NAQLA platform to transform their ideas into successful projects and real-world solutions.",
-      author: isAr ? "فريق نقلة" : "NAQLA Team",
-      date: isAr ? "20 ديسمبر 2024" : "December 20, 2024",
-      readTime: isAr ? "15 دقيقة" : "15 min read",
-      category: isAr ? "قصص نجاح" : "Success Stories",
-      tags: isAr ? ["نجاح", "مبتكرون", "إلهام"] : ["Success", "Innovators", "Inspiration"],
+      author: "Naqla Team",
+      date: "Dec 20, 2024",
+      readTime: "15 min",
+      category: "Success Stories",
+      tags: isAr ? [isAr ? "نجاح" : "Success", isAr ? "مبتكرون" : "Innovators", isAr ? "إلهام" : "Inspiration"] : ["Success", "Innovators", "Inspiration"],
       icon: TrendingUp,
       color: "from-pink-500/20 to-rose-500/20",
       border: "border-pink-500/30",
@@ -111,16 +111,16 @@ export default function Blog() {
     {
       id: 6,
       title: isAr
-        ? "مقياس TRL: دليلك لفهم مستوى جاهزية تقنيتك للسوق"
+        ? isAr ? "مقياس TRL: دليلك لفهم مستوى جاهزية تقنيتك للسوق" : "TRL Scale: Your Guide to Understanding Technology Market Readiness"
         : "TRL Scale: Your Guide to Understanding Your Technology's Market Readiness",
       excerpt: isAr
-        ? "شرح مبسط لمقياس مستوى الجاهزية التقنية (TRL) وكيف يساعدك في تقييم مشروعك وجذب المستثمرين المناسبين."
+        ? isAr ? "شرح مبسط لمقياس مستوى الجاهزية التقنية (TRL) وكيف يساعدك في تقييم مشروعك وجذب المستثمرين المناسبين." : "A simple explanation of the Technology Readiness Level (TRL) scale and how it helps evaluate your project and attract suitable investors."
         : "A simplified explanation of the Technology Readiness Level (TRL) scale and how it helps you evaluate your project and attract the right investors.",
-      author: isAr ? "م. عبدالله الغامدي" : "Eng. Abdullah Al-Ghamdi",
-      date: isAr ? "15 ديسمبر 2024" : "December 15, 2024",
-      readTime: isAr ? "9 دقائق" : "9 min read",
-      category: isAr ? "أدوات" : "Tools",
-      tags: isAr ? ["TRL", "تقييم", "استثمار"] : ["TRL", "Evaluation", "Investment"],
+      author: "Eng. Abdullah Al-Ghamdi",
+      date: "Dec 15, 2024",
+      readTime: "9 min",
+      category: "Tools",
+      tags: isAr ? ["TRL", isAr ? "تقييم" : "Evaluation", isAr ? "استثمار" : "Investment"] : ["TRL", "Evaluation", "Investment"],
       icon: Lightbulb,
       color: "from-blue-500/20 to-indigo-500/20",
       border: "border-blue-500/30",
@@ -130,7 +130,7 @@ export default function Blog() {
   ];
 
   const categories = isAr
-    ? ["الكل", "رؤية 2030", "ريادة الأعمال", "الملكية الفكرية", "التحديات", "قصص نجاح", "أدوات"]
+    ? [isAr ? "الكل" : "All", isAr ? "رؤية 2030" : "Vision 2030", isAr ? "ريادة الأعمال" : "Entrepreneurship", isAr ? "الملكية الفكرية" : "Intellectual Property", isAr ? "التحديات" : "Challenges", isAr ? "قصص نجاح" : "Success Stories", isAr ? "أدوات" : "Tools"]
     : ["All", "Vision 2030", "Entrepreneurship", "Intellectual Property", "Challenges", "Success Stories", "Tools"];
 
   const [activeCategory, setActiveCategory] = useState(categories[0]);
@@ -168,10 +168,10 @@ export default function Blog() {
           <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <BookOpen className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? "مدونة نقلة" : "NAQLA Blog"}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{isAr ? "مدونة نقلة" : "Naqla Blog"}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             {isAr
-              ? "مقالات وتقارير ودراسات حالة من عالم الابتكار والريادة في المملكة العربية السعودية والعالم."
+              ? isAr ? "مقالات وتقارير ودراسات حالة من عالم الابتكار والريادة في المملكة العربية السعودية والعالم." : "Articles, reports, and case studies from the world of innovation and entrepreneurship in Saudi Arabia and beyond."
               : "Articles, reports, and case studies from the world of innovation and entrepreneurship in Saudi Arabia and beyond."}
           </p>
           {/* Search */}
@@ -275,20 +275,20 @@ export default function Blog() {
           {/* Newsletter CTA */}
           <div className="mt-16 p-8 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl text-center">
             <h3 className="text-xl font-bold mb-2">
-              {isAr ? "اشترك في النشرة البريدية" : "Subscribe to Our Newsletter"}
+              {isAr ? "اشترك في النشرة البريدية" : "Subscribe to Newsletter"}
             </h3>
             <p className="text-muted-foreground text-sm mb-6">
               {isAr
-                ? "احصل على أحدث المقالات والتقارير مباشرةً في بريدك الإلكتروني"
+                ? isAr ? "احصل على أحدث المقالات والتقارير مباشرةً في بريدك الإلكتروني" : "Get the latest articles and reports directly in your inbox"
                 : "Get the latest articles and reports delivered directly to your inbox"}
             </p>
             <div className="flex gap-3 max-w-md mx-auto">
               <Input
-                placeholder={isAr ? "بريدك الإلكتروني" : "Your email address"}
+                placeholder={isAr ? "بريدك الإلكتروني" : "Your Email"}
                 className="bg-card/50 border-border/50 flex-1"
               />
               <button
-                onClick={() => toast.success(isAr ? "تم الاشتراك في النشرة البريدية بنجاح!" : "Successfully subscribed to the newsletter!")}
+                onClick={() => toast.success(isAr ? "تم الاشتراك في النشرة البريدية بنجاح!" : "Successfully subscribed to newsletter!")}
                 className="px-5 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm rounded-lg font-medium hover:opacity-90 transition-opacity shrink-0"
               >
                 {isAr ? "اشترك" : "Subscribe"}

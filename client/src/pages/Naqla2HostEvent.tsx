@@ -64,7 +64,7 @@ export default function Naqla2HostEvent() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800 max-w-md">
           <CardContent className="p-8">
-            <p className="text-white text-center">{isAr ? "يرجى تسجيل الدخول لإقامة فعالية" : "Please login to host an event"}</p>
+            <p className="text-white text-center">{isAr ? "يرجى تسجيل الدخول لإقامة فعالية" : "Please log in to host an event"}</p>
           </CardContent>
         </Card>
       </div>
@@ -142,7 +142,7 @@ export default function Naqla2HostEvent() {
                     <Label htmlFor="description" className="text-white">{isAr ? "وصف الفعالية *" : "Event Description *"}</Label>
                     <Textarea
                       id="description"
-                      placeholder={isAr ? "اشرح الهدف والأنشطة..." : "Explain the goals and activities..."}
+                      placeholder={isAr ? "اشرح الهدف والأنشطة..." : "Explain the goal and activities..."}
                       value={eventData.description}
                       onChange={(e) => setEventData({ ...eventData, description: e.target.value })}
                       required
@@ -230,7 +230,7 @@ export default function Naqla2HostEvent() {
                       />
                       <Label htmlFor="needSponsors" className="text-white flex items-center gap-2">
                         <Building2 className="w-4 h-4 text-purple-400" />
-                        {isAr ? "أبحث عن رعاة" : "Looking for sponsors"}
+                        {isAr ? "أبحث عن رعاة" : "Looking for Sponsors"}
                       </Label>
                     </div>
 
@@ -244,7 +244,7 @@ export default function Naqla2HostEvent() {
                       />
                       <Label htmlFor="needInnovators" className="text-white flex items-center gap-2">
                         <Users className="w-4 h-4 text-cyan-400" />
-                        {isAr ? "أبحث عن مبتكرين" : "Looking for innovators"}
+                        {isAr ? "أبحث عن مبتكرين" : "Looking for Innovators"}
                       </Label>
                     </div>
                   </div>
@@ -268,12 +268,12 @@ export default function Naqla2HostEvent() {
               <CardHeader>
                 <CardTitle className="text-white">{isAr ? "إدارة الحضور" : "Manage Attendees"}</CardTitle>
                 <CardDescription className="text-slate-400">
-                  {isAr ? "قائمة المسجلين في الفعالية" : "List of registered attendees"}
+                  {isAr ? "قائمة المسجلين في الفعالية" : "Event Registrants List"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center text-slate-400 py-12">
-                  {isAr ? "سيتم عرض قائمة الحضور هنا بعد إنشاء الفعالية" : "Attendee list will be displayed here after creating the event"}
+                  {isAr ? "سيتم عرض قائمة الحضور هنا بعد إنشاء الفعالية" : "Attendee list will be displayed here after event creation"}
                 </div>
               </CardContent>
             </Card>
@@ -285,12 +285,12 @@ export default function Naqla2HostEvent() {
               <CardHeader>
                 <CardTitle className="text-white">{isAr ? "البحث عن رعاة" : "Find Sponsors"}</CardTitle>
                 <CardDescription className="text-slate-400">
-                  {isAr ? "الرعاة المحتملين لفعاليتك" : "Potential sponsors for your event"}
+                  {isAr ? "الرعاة المحتملين لفعاليتك" : "Potential Sponsors for Your Event"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center text-slate-400 py-12">
-                  {isAr ? "سنساعدك في إيجاد رعاة مناسبين لفعاليتك" : "We will help you find suitable sponsors for your event"}
+                  {isAr ? "سنساعدك في إيجاد رعاة مناسبين لفعاليتك" : "We'll help you find suitable sponsors for your event."}
                 </div>
               </CardContent>
             </Card>
@@ -302,12 +302,12 @@ export default function Naqla2HostEvent() {
               <CardHeader>
                 <CardTitle className="text-white">{isAr ? "البحث عن مبتكرين" : "Find Innovators"}</CardTitle>
                 <CardDescription className="text-slate-400">
-                  {isAr ? "المبتكرين المهتمين بمجال فعاليتك" : "Innovators interested in your event field"}
+                  {isAr ? "المبتكرين المهتمين بمجال فعاليتك" : "Innovators interested in your event's field"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center text-slate-400 py-12">
-                  {isAr ? "سنساعدك في إيجاد مبتكرين مناسبين لفعاليتك" : "We will help you find suitable innovators for your event"}
+                  {isAr ? "سنساعدك في إيجاد مبتكرين مناسبين لفعاليتك" : "We'll help you find suitable innovators for your event."}
                 </div>
               </CardContent>
             </Card>

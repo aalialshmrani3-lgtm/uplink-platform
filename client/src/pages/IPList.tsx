@@ -35,31 +35,31 @@ export default function IPList() {
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case "draft": return "مسودة";
-      case "submitted": return "مُقدّم";
-      case "under_review": return "قيد المراجعة";
-      case "approved": return "مُعتمد";
-      case "rejected": return "مرفوض";
-      case "registered": return "مسجّل";
-      case "expired": return "منتهي";
+      case "draft": return isAr ? "مسودة" : "Draft";
+      case "submitted": return isAr ? "مُقدّم" : "Submitted";
+      case "under_review": return isAr ? "قيد المراجعة" : "Under Review";
+      case "approved": return isAr ? "مُعتمد" : "Approved";
+      case "rejected": return isAr ? "مرفوض" : "Rejected";
+      case "registered": return isAr ? "مسجّل" : "Registered";
+      case "expired": return isAr ? "منتهي" : "Expired";
       default: return status;
     }
   };
 
   const getTypeText = (type: string) => {
     switch (type) {
-      case "patent": return "براءة اختراع";
-      case "trademark": return "علامة تجارية";
-      case "copyright": return "حقوق نشر";
-      case "trade_secret": return "سر تجاري";
-      case "industrial_design": return "تصميم صناعي";
+      case "patent": return isAr ? "براءة اختراع" : "Patent";
+      case "trademark": return isAr ? "علامة تجارية" : "Trademark";
+      case "copyright": return isAr ? "حقوق نشر" : "Copyright";
+      case "trade_secret": return isAr ? "سر تجاري" : "Trade Secret";
+      case "industrial_design": return isAr ? "تصميم صناعي" : "Industrial Design";
       default: return type;
     }
   };
 
   const copyHash = (hash: string) => {
     navigator.clipboard.writeText(hash);
-    toast.success("تم نسخ رقم التوثيق");
+    toast.success(isAr ? "تم نسخ رقم التوثيق" : "Documentation ID copied");
   };
 
   return (
@@ -95,8 +95,8 @@ export default function IPList() {
 
       <div className="container mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "ملكياتي الفكرية" : "[ملكياتي الفكرية]"}</h1>
-          <p className="text-slate-400">{isAr ? "إدارة وتتبع تسجيلات الملكية الفكرية الخاصة بك" : "إدارة وتتبع Registerات الملكية الفكرية الخاصة بك"}</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? isAr ? "ملكياتي الفكرية" : "My IP" : "My IP"}</h1>
+          <p className="text-slate-400">{isAr ? isAr ? "إدارة وتتبع تسجيلات الملكية الفكرية الخاصة بك" : "Manage and track your IP registrations" : "Manage and track your IP registrations"}</p>
         </div>
 
         {isLoading ? (
@@ -131,7 +131,7 @@ export default function IPList() {
                         </p>
                         {ip.blockchainHash && (
                           <div className="flex items-center gap-2 mt-3">
-                            <span className="text-xs text-slate-500">{isAr ? "توثيق البلوكتشين:" : "[توثيق البلوكتشين:]"}</span>
+                            <span className="text-xs text-slate-500">{isAr ? isAr ? "توثيق البلوكتشين:" : "Blockchain Documentation:" : "Blockchain Documentation:"}</span>
                             <code className="text-xs text-emerald-400 bg-slate-900 px-2 py-1 rounded">
                               {ip.blockchainHash.substring(0, 20)}...
                             </code>
@@ -180,8 +180,8 @@ export default function IPList() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <Shield className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد ملكيات فكرية" : "No توجد ملكيات فكرية"}</h3>
-              <p className="text-slate-400 mb-6">{isAr ? "ابدأ بتسجيل ملكيتك الفكرية الأولى" : "ابدأ بRegister ملكيتك الفكرية الأولى"}</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? isAr ? "لا توجد ملكيات فكرية" : "No IP found" : "No IP found"}</h3>
+              <p className="text-slate-400 mb-6">{isAr ? isAr ? "ابدأ بتسجيل ملكيتك الفكرية الأولى" : "Start by registering your first IP" : "Start by registering your first IP"}</p>
               <Link href="/ip/register">
                 <Button className="bg-emerald-500 hover:bg-emerald-600">
                   <Plus className="w-4 h-4 ml-2" />

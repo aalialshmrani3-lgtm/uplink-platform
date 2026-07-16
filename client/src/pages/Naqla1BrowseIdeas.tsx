@@ -75,8 +75,8 @@ export default function Naqla1BrowseIdeas() {
               <Lightbulb className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-white">{isAr ? "استعراض الأفكار" : "[استعراض الأفكار]"}</h1>
-              <p className="text-slate-400">{isAr ? "اكتشف الأفكار الابتكارية المقدمة في NAQLA 1" : "اكتشف الأفكار اNoبتكارية المقدمة في NAQLA 1"}</p>
+              <h1 className="text-4xl font-bold text-white">{isAr ? isAr ? "استعراض الأفكار" : "Browse Ideas" : "Browse Ideas"}</h1>
+              <p className="text-slate-400">{isAr ? isAr ? "اكتشف الأفكار الابتكارية المقدمة في NAQLA 1" : "Explore innovative ideas submitted to NAQLA 1" : "Explore innovative ideas submitted to NAQLA 1"}</p>
             </div>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function Naqla1BrowseIdeas() {
               <div className="relative">
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <Input
-                  placeholder="ابحث عن فكرة..."
+                  placeholder={isAr ? "ابحث عن فكرة..." : "Search for an idea..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pr-10 bg-slate-800/50 border-slate-700 text-white"
@@ -105,38 +105,38 @@ export default function Naqla1BrowseIdeas() {
               {/* Category Filter */}
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                 <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
-                  <SelectValue placeholder="الفئة" />
+                  <SelectValue placeholder={isAr ? "الفئة" : "Category"} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">{isAr ? "جميع الفئات" : "All Categories"}</SelectItem>
-                  <SelectItem value="technology">{isAr ? "تقنية" : "[تقنية]"}</SelectItem>
-                  <SelectItem value="health">{isAr ? "صحة" : "[صحة]"}</SelectItem>
-                  <SelectItem value="education">{isAr ? "تعليم" : "[تعليم]"}</SelectItem>
-                  <SelectItem value="environment">{isAr ? "بيئة" : "[بيئة]"}</SelectItem>
-                  <SelectItem value="finance">{isAr ? "مالية" : "[مالية]"}</SelectItem>
+                  <SelectItem value="technology">{isAr ? isAr ? "تقنية" : "Technology" : "Technology"}</SelectItem>
+                  <SelectItem value="health">{isAr ? isAr ? "صحة" : "Health" : "Health"}</SelectItem>
+                  <SelectItem value="education">{isAr ? isAr ? "تعليم" : "Education" : "Education"}</SelectItem>
+                  <SelectItem value="environment">{isAr ? isAr ? "بيئة" : "Environment" : "Environment"}</SelectItem>
+                  <SelectItem value="finance">{isAr ? isAr ? "مالية" : "Finance" : "Finance"}</SelectItem>
                 </SelectContent>
               </Select>
 
               {/* Status Filter */}
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
-                  <SelectValue placeholder="الحالة" />
+                  <SelectValue placeholder={isAr ? "الحالة" : "Status"} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{isAr ? "جميع الحالات" : "جميع الحاNoت"}</SelectItem>
-                  <SelectItem value="approved">{isAr ? "موافق عليها" : "OK عليها"}</SelectItem>
-                  <SelectItem value="pending">{isAr ? "قيد المراجعة" : "قيد Audit"}</SelectItem>
-                  <SelectItem value="needs_improvement">{isAr ? "تحتاج تحسين" : "[تحتاج تحسين]"}</SelectItem>
+                  <SelectItem value="all">{isAr ? isAr ? "جميع الحالات" : "All Statuses" : "All Statuses"}</SelectItem>
+                  <SelectItem value="approved">{isAr ? isAr ? "موافق عليها" : "Approved" : "Approved"}</SelectItem>
+                  <SelectItem value="pending">{isAr ? isAr ? "قيد المراجعة" : "Under Review" : "Under Review"}</SelectItem>
+                  <SelectItem value="needs_improvement">{isAr ? isAr ? "تحتاج تحسين" : "Needs Improvement" : "Needs Improvement"}</SelectItem>
                 </SelectContent>
               </Select>
 
               {/* Challenge Filter */}
               <Select value={challengeFilter} onValueChange={setChallengeFilter}>
                 <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
-                  <SelectValue placeholder="التحدي" />
+                  <SelectValue placeholder={isAr ? "التحدي" : "Challenge"} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{isAr ? "جميع التحديات" : "جميع Challenges"}</SelectItem>
+                  <SelectItem value="all">{isAr ? isAr ? "جميع التحديات" : "All Challenges" : "All Challenges"}</SelectItem>
                   {challenges?.map((challenge) => (
                     <SelectItem key={challenge.id} value={challenge.id.toString()}>
                       {challenge.title}
@@ -152,7 +152,7 @@ export default function Naqla1BrowseIdeas() {
         {isLoading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
-            <p className="text-slate-400 mt-4">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</p>
+            <p className="text-slate-400 mt-4">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Downloading..."}</p>
           </div>
         ) : ideas && ideas.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -200,7 +200,7 @@ export default function Naqla1BrowseIdeas() {
                             </p>
                           </div>
                           <div className="text-center p-2 rounded-lg bg-slate-800/50">
-                            <p className="text-xs text-slate-400 mb-1">{isAr ? "الجدوى" : "[الجدوى]"}</p>
+                            <p className="text-xs text-slate-400 mb-1">{isAr ? isAr ? "الجدوى" : "Feasibility" : "[Feasibility]"}</p>
                             <p className="text-lg font-bold text-purple-400">
                               {parseFloat(idea.feasibilityScore || '0').toFixed(0)}%
                             </p>
@@ -239,7 +239,7 @@ export default function Naqla1BrowseIdeas() {
           <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
             <CardContent className="py-12 text-center">
               <Lightbulb className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">{isAr ? "لا توجد أفكار مطابقة للفلاتر المحددة" : "No توجد أفكار مطابقة للفNoتر المحددة"}</p>
+              <p className="text-slate-400 text-lg">{isAr ? isAr ? "لا توجد أفكار مطابقة للفلاتر المحددة" : "No ideas match the selected filters" : "No ideas match the selected filters"}</p>
             </CardContent>
           </Card>
         )}

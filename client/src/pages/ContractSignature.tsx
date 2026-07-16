@@ -28,15 +28,15 @@ export default function ContractSignature() {
   const uploadSignatureMutation = trpc.naqla3.contracts.uploadSignature.useMutation({
     onSuccess: () => {
       toast({
-        title: "✅ تم حفظ التوقيع بنجاح",
-        description: "تم رفع توقيعك الإلكتروني",
+        title: "✅ Signature saved",
+        description: "E-signature uploaded",
       });
       refetch();
       setIsUploading(false);
     },
     onError: (error: any) => {
       toast({
-        title: "❌ فشل حفظ التوقيع",
+        title: "❌ Failed to save signature",
         description: error.message,
         variant: "destructive",
       });
@@ -47,13 +47,13 @@ export default function ContractSignature() {
   const generatePdfMutation = trpc.naqla3.contracts.generateSignedPDF.useMutation({
     onSuccess: (data: any) => {
       toast({
-        title: "✅ تم توليد PDF",
+        title: "✅ PDF generated",
         description: data.message,
       });
     },
     onError: (error: any) => {
       toast({
-        title: "❌ فشل توليد PDF",
+        title: "❌ Failed to generate PDF",
         description: error.message,
         variant: "destructive",
       });
@@ -86,7 +86,7 @@ export default function ContractSignature() {
   if (isLoading) {
     return (
       <div className="container mx-auto py-8">
-        <div className="text-center">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</div>
+        <div className="text-center">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Downloading..."}</div>
       </div>
     );
   }
@@ -94,7 +94,7 @@ export default function ContractSignature() {
   if (!contract) {
     return (
       <div className="container mx-auto py-8">
-        <div className="text-center text-red-600">{isAr ? "العقد غير موجود" : "[العقد غير موجود]"}</div>
+        <div className="text-center text-red-600">{isAr ? isAr ? "العقد غير موجود" : "Contract not found" : "[Contract not found]"}</div>
       </div>
     );
   }
@@ -108,7 +108,7 @@ export default function ContractSignature() {
   return (
     <div className="container mx-auto py-8 max-w-4xl">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">{isAr ? "التوقيع الإلكتروني للعقد" : "[التوقيع الإلكتروني للعقد]"}</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "التوقيع الإلكتروني للعقد" : "Contract E-signature" : "[Contract E-signature]"}</h1>
         <p className="text-muted-foreground">{contract.title}</p>
       </div>
 
@@ -120,11 +120,11 @@ export default function ContractSignature() {
         </h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-muted-foreground">{isAr ? "نوع العقد" : "[نوع العقد]"}</p>
+            <p className="text-sm text-muted-foreground">{isAr ? isAr ? "نوع العقد" : "Contract Type" : "[Contract Type]"}</p>
             <p className="font-medium">{contract.type}</p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">{isAr ? "القيمة الإجمالية" : "الValuesة الإجمالية"}</p>
+            <p className="text-sm text-muted-foreground">{isAr ? isAr ? "القيمة الإجمالية" : "Total Value" : "Total Value"}</p>
             <p className="font-medium">{contract.totalValue} {contract.currency}</p>
           </div>
           <div>
@@ -142,28 +142,28 @@ export default function ContractSignature() {
 
       {/* Signature Status */}
       <Card className="p-6 mb-6">
-        <h2 className="text-xl font-semibold mb-4">{isAr ? "حالة التوقيعات" : "[حالة التوقيعات]"}</h2>
+        <h2 className="text-xl font-semibold mb-4">{isAr ? isAr ? "حالة التوقيعات" : "Signature Status" : "[Signature Status]"}</h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-            <span>{isAr ? "البائع (الطرف الأول)" : "[البائع (الطرف الأول)]"}</span>
+            <span>{isAr ? isAr ? "البائع (الطرف الأول)" : "Seller (Party 1)" : "[Seller (Party 1)]"}</span>
             {sellerSigned ? (
               <span className="flex items-center gap-2 text-green-600">
                 <CheckCircle2 className="w-5 h-5" />
                 موقّع
               </span>
             ) : (
-              <span className="text-muted-foreground">{isAr ? "لم يوقع بعد" : "[لم يوقع بعد]"}</span>
+              <span className="text-muted-foreground">{isAr ? isAr ? "لم يوقع بعد" : "Not yet signed" : "[Not yet signed]"}</span>
             )}
           </div>
           <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-            <span>{isAr ? "المشتري (الطرف الثاني)" : "[المشتري (الطرف الثاني)]"}</span>
+            <span>{isAr ? isAr ? "المشتري (الطرف الثاني)" : "Buyer (Party 2)" : "[Buyer (Party 2)]"}</span>
             {buyerSigned ? (
               <span className="flex items-center gap-2 text-green-600">
                 <CheckCircle2 className="w-5 h-5" />
                 موقّع
               </span>
             ) : (
-              <span className="text-muted-foreground">{isAr ? "لم يوقع بعد" : "[لم يوقع بعد]"}</span>
+              <span className="text-muted-foreground">{isAr ? isAr ? "لم يوقع بعد" : "Not yet signed" : "[Not yet signed]"}</span>
             )}
           </div>
         </div>
@@ -172,7 +172,7 @@ export default function ContractSignature() {
       {/* Signature Canvas */}
       {((isSeller && !sellerSigned) || (isBuyer && !buyerSigned)) && (
         <Card className="p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">{isAr ? "توقيعك الإلكتروني" : "[توقيعك الإلكتروني]"}</h2>
+          <h2 className="text-xl font-semibold mb-4">{isAr ? isAr ? "توقيعك الإلكتروني" : "Your E-signature" : "[Your E-signature]"}</h2>
           <SignatureCanvas
             onSave={handleSaveSignature}
             disabled={isUploading}
@@ -183,7 +183,7 @@ export default function ContractSignature() {
       {/* Download PDF */}
       {bothSigned && (
         <Card className="p-6">
-          <h2 className="text-xl font-semibold mb-4">{isAr ? "تحميل العقد الموقع" : "Download العقد الموقع"}</h2>
+          <h2 className="text-xl font-semibold mb-4">{isAr ? isAr ? "تحميل العقد الموقع" : "Download Signed Contract" : "Download Signed Contract"}</h2>
           <p className="text-muted-foreground mb-4">
             تم توقيع العقد من قبل الطرفين. يمكنك الآن تحميل نسخة PDF موقعة.
           </p>
@@ -193,7 +193,7 @@ export default function ContractSignature() {
             size="lg"
           >
             <Download className="w-5 h-5 ml-2" />
-            {generatePdfMutation.isPending ? "جاري التوليد..." : "تحميل PDF الموقع"}
+            {generatePdfMutation.isPending ? isAr ? "جاري التوليد..." : "Generating..." : "Download Site PDF"}
           </Button>
         </Card>
       )}

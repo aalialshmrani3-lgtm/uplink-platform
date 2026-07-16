@@ -9,82 +9,82 @@ export default function SustainabilityAIEthics() {
   const isAr = language === 'ar';
   const esgMetrics = [
     {
-      category: "البيئة",
+      category: "Environment",
       icon: "🌱",
       color: "from-green-500 to-emerald-600",
       metrics: [
-        "انبعاثات الكربون",
-        "استهلاك الطاقة",
-        "إدارة النفايات",
-        "استخدام المياه",
-        "الاقتصاد الدائري",
+        isAr ? "انبعاثات الكربون" : "Carbon Emissions",
+        isAr ? "استهلاك الطاقة" : "Energy Consumption",
+        isAr ? "إدارة النفايات" : "Waste Management",
+        isAr ? "استخدام المياه" : "Water Usage",
+        isAr ? "الاقتصاد الدائري" : "Circular Economy",
       ],
     },
     {
-      category: "المجتمع",
+      category: "Community",
       icon: "👥",
       color: "from-blue-500 to-cyan-600",
       metrics: [
-        "تأثير المجتمع",
-        "حقوق العمال",
-        "التنوع والشمول",
-        "سلامة المنتج",
-        "المسؤولية الاجتماعية",
+        isAr ? "تأثير المجتمع" : "Community Impact",
+        isAr ? "حقوق العمال" : "Labor Rights",
+        isAr ? "التنوع والشمول" : "Diversity & Inclusion",
+        isAr ? "سلامة المنتج" : "Product Safety",
+        isAr ? "المسؤولية الاجتماعية" : "Social Responsibility",
       ],
     },
     {
-      category: "الحوكمة",
+      category: "Governance",
       icon: "⚖️",
       color: "from-purple-500 to-pink-600",
       metrics: [
-        "أخلاقيات الأعمال",
-        "الشفافية",
-        "حقوق المساهمين",
-        "إدارة المخاطر",
-        "الامتثال التنظيمي",
+        isAr ? "أخلاقيات الأعمال" : "Business Ethics",
+        isAr ? "الشفافية" : "Transparency",
+        isAr ? "حقوق المساهمين" : "Shareholder Rights",
+        isAr ? "إدارة المخاطر" : "Risk Management",
+        isAr ? "الامتثال التنظيمي" : "Regulatory Compliance",
       ],
     },
   ];
 
   const aiEthicsPrinciples = [
     {
-      title: "الشفافية والقابلية للتفسير",
+      title: "Transparency & Explainability",
       icon: "🔍",
-      description: "جميع قرارات AI يجب أن تكون قابلة للتفسير والفهم من قبل المستخدمين",
+      description: "All AI decisions must be explainable and understandable to users.",
       practices: [
-        "توثيق كامل لنماذج AI المستخدمة",
-        "تفسير واضح لكيفية اتخاذ القرارات",
-        "شفافية في البيانات المستخدمة للتدريب",
+        isAr ? "توثيق كامل لنماذج AI المستخدمة" : "Full documentation of AI models used.",
+        isAr ? "تفسير واضح لكيفية اتخاذ القرارات" : "Clear explanation of decision-making.",
+        isAr ? "شفافية في البيانات المستخدمة للتدريب" : "Transparency in training data.",
       ],
     },
     {
-      title: "العدالة وعدم التحيز",
+      title: "Fairness & Impartiality",
       icon: "⚖️",
-      description: "ضمان عدم وجود تحيز في نماذج AI وتحقيق العدالة في جميع القرارات",
+      description: "Ensure no bias in AI models and fairness in all decisions.",
       practices: [
-        "اختبار منتظم للتحيز في النماذج",
-        "تنوع في بيانات التدريب",
-        "مراجعة مستقلة للخوارزميات",
+        isAr ? "اختبار منتظم للتحيز في النماذج" : "Regular bias testing in models.",
+        isAr ? "تنوع في بيانات التدريب" : "Diversity in training data.",
+        isAr ? "مراجعة مستقلة للخوارزميات" : "Independent algorithm review.",
       ],
     },
     {
-      title: "الخصوصية وحماية البيانات",
+      title: "Privacy & Data Protection",
       icon: "🔒",
-      description: "حماية صارمة لبيانات المستخدمين والامتثال لجميع قوانين الخصوصية",
+      description: "Strict user data protection and compliance with all privacy laws.",
       practices: [
-        "تشفير شامل للبيانات",
-        "الحد الأدنى من جمع البيانات",
-        "حق المستخدم في حذف بياناته",
+        isAr ? "تشفير شامل للبيانات" : "End-to-End Data Encryption",
+        isAr ? "الحد الأدنى من جمع البيانات" : "Minimal Data Collection",
+        isAr ? "حق المستخدم في حذف بياناته" : "User Right to Data Deletion",
       ],
     },
     {
-      title: "المساءلة والمسؤولية",
+      title: "Accountability & Responsibility",
       icon: "👤",
-      description: "مسؤولية واضحة عن قرارات وتأثيرات أنظمة AI",
+      description: "Clear Responsibility for AI Decisions & Impacts",
       practices: [
-        "آليات واضحة للمساءلة",
-        "مراجعة دورية للأنظمة",
-        "قنوات للإبلاغ عن المشاكل",
+        isAr ? "آليات واضحة للمساءلة" : "Clear Accountability Mechanisms",
+        isAr ? "مراجعة دورية للأنظمة" : "Regular System Review",
+        isAr ? "قنوات للإبلاغ عن المشاكل" : "Channels for Issue Reporting",
       ],
     },
   ];
@@ -92,35 +92,35 @@ export default function SustainabilityAIEthics() {
   const certifications = [
     {
       name: "ISO 14001",
-      category: "بيئي",
-      description: "نظام إدارة بيئية",
+      category: "Environmental",
+      description: "Environmental Management System",
       icon: "🌍",
     },
     {
       name: "B Corp",
-      category: "استدامة",
-      description: "شهادة الأعمال المستدامة",
+      category: "Sustainability",
+      description: "Sustainable Business Certification",
       icon: "🏆",
     },
     {
       name: "LEED",
-      category: "بيئي",
-      description: "الريادة في الطاقة والتصميم البيئي",
+      category: "Environmental",
+      description: "Leadership in Energy & Environmental Design (LEED)",
       icon: "🏢",
     },
     {
       name: "AI Ethics Certified",
-      category: "أخلاقيات AI",
-      description: "شهادة أخلاقيات الذكاء الاصطناعي",
+      category: "AI Ethics",
+      description: "AI Ethics Certification",
       icon: "🤖",
     },
   ];
 
   const impactMetrics = [
-    { label: "تقليل انبعاثات CO₂", value: "-45%", icon: "🌱" },
-    { label: "مشاريع مستدامة", value: "3,200+", icon: "♻️" },
-    { label: "امتثال أخلاقيات AI", value: "100%", icon: "✓" },
-    { label: "شهادات استدامة", value: "850+", icon: "🏆" },
+    { label: "CO₂ Emission Reduction", value: "-45%", icon: "🌱" },
+    { label: "Sustainable Projects", value: "3,200+", icon: "♻️" },
+    { label: "AI Ethics Compliance", value: "100%", icon: "✓" },
+    { label: "Sustainability Certifications", value: "850+", icon: "🏆" },
   ];
 
   return (
@@ -154,7 +154,7 @@ export default function SustainabilityAIEthics() {
 
         {/* ESG Metrics */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "معايير ESG المتكاملة" : "[معايير ESG المتكاملة]"}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? isAr ? "معايير ESG المتكاملة" : "Integrated ESG Standards" : "[Integrated ESG Standards]"}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {esgMetrics.map((category, index) => (
               <Card key={index} className="p-6 hover:shadow-xl transition-all">
@@ -175,7 +175,7 @@ export default function SustainabilityAIEthics() {
 
         {/* AI Ethics Principles */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "مبادئ أخلاقيات الذكاء الاصطناعي" : "مبادئ أخNoقيات الذكاء اNoصطناعي"}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? isAr ? "مبادئ أخلاقيات الذكاء الاصطناعي" : "AI Ethics Principles" : "AI Ethics Principles"}</h2>
           <div className="space-y-6">
             {aiEthicsPrinciples.map((principle, index) => (
               <Card key={index} className="p-6">
@@ -201,7 +201,7 @@ export default function SustainabilityAIEthics() {
 
         {/* Certifications */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "الشهادات والامتثال" : "الشهادات واNoمتثال"}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? isAr ? "الشهادات والامتثال" : "Certifications & Compliance" : "Certifications & Compliance"}</h2>
           <div className="grid md:grid-cols-4 gap-6">
             {certifications.map((cert, index) => (
               <Card key={index} className="p-6 text-center hover:shadow-xl transition-all hover:-translate-y-2">
@@ -216,7 +216,7 @@ export default function SustainabilityAIEthics() {
 
         {/* Assessment Tool */}
         <Card className="p-8 mb-16 bg-gradient-to-r from-green-500/10 to-blue-500/10 border-2 border-green-500/20">
-          <h2 className="text-3xl font-bold mb-6 text-center">{isAr ? "أداة تقييم الاستدامة وأخلاقيات AI" : "أداة تقييم اNoستدامة وأخNoقيات AI"}</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">{isAr ? isAr ? "أداة تقييم الاستدامة وأخلاقيات AI" : "Sustainability & AI Ethics Assessment Tool" : "Sustainability & AI Ethics Assessment Tool"}</h2>
           <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
             قيّم مشروعك الابتكاري بناءً على معايير ESG وأخلاقيات AI واحصل على تقرير شامل مع توصيات للتحسين
           </p>
@@ -226,7 +226,7 @@ export default function SustainabilityAIEthics() {
               <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-3">
                 <Target className="text-green-600" size={32} />
               </div>
-              <h4 className="font-bold mb-2">{isAr ? "تقييم شامل" : "[تقييم شامل]"}</h4>
+              <h4 className="font-bold mb-2">{isAr ? isAr ? "تقييم شامل" : "Comprehensive Assessment" : "[Comprehensive Assessment]"}</h4>
               <p className="text-sm text-muted-foreground">
                 تقييم متعدد الأبعاد يغطي جميع جوانب ESG وأخلاقيات AI
               </p>
@@ -235,7 +235,7 @@ export default function SustainabilityAIEthics() {
               <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-3">
                 <BarChart3 className="text-blue-600" size={32} />
               </div>
-              <h4 className="font-bold mb-2">{isAr ? "تقرير تفصيلي" : "[تقرير تفصيلي]"}</h4>
+              <h4 className="font-bold mb-2">{isAr ? isAr ? "تقرير تفصيلي" : "Detailed Report" : "[Detailed Report]"}</h4>
               <p className="text-sm text-muted-foreground">
                 تقرير مفصل مع نقاط القوة والضعف والمقارنة مع المعايير
               </p>
@@ -244,7 +244,7 @@ export default function SustainabilityAIEthics() {
               <div className="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
                 <TrendingUp className="text-purple-600" size={32} />
               </div>
-              <h4 className="font-bold mb-2">{isAr ? "توصيات عملية" : "[توصيات عملية]"}</h4>
+              <h4 className="font-bold mb-2">{isAr ? isAr ? "توصيات عملية" : "Actionable Recommendations" : "[Actionable Recommendations]"}</h4>
               <p className="text-sm text-muted-foreground">
                 خطة عمل واضحة لتحسين أداء الاستدامة والأخلاقيات
               </p>
@@ -264,7 +264,7 @@ export default function SustainabilityAIEthics() {
         {/* CTA Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-green-500/10 to-blue-500/10 border-2 border-green-500/20">
           <div className="text-5xl mb-6">🌍</div>
-          <h2 className="text-3xl font-bold mb-4">{isAr ? "ابتكر بمسؤولية" : "Innovate بمسؤولية"}</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? isAr ? "ابتكر بمسؤولية" : "Innovate Responsibly" : "Innovate Responsibly"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             انضم إلى حركة الابتكار المسؤول وكن جزءاً من بناء مستقبل مستدام للجميع
           </p>

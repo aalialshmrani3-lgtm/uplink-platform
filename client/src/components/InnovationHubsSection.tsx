@@ -1,36 +1,40 @@
 import { Building2, GraduationCap, Globe, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function InnovationHubsSection() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   const hubs = [
     {
       icon: GraduationCap,
-      title: "الجامعات ومراكز البحث",
-      description: "أفكار من الجامعات والمؤسسات البحثية",
+      title: "Universities & Research Centers",
+      description: "Ideas from universities and research institutions",
       color: "from-blue-500 to-cyan-600",
       bgColor: "bg-blue-500/10",
       count: "50+"
     },
     {
       icon: Building2,
-      title: "الشركات والمؤسسات",
-      description: "حلول من القطاع الخاص والشركات",
+      title: "Companies & Enterprises",
+      description: "Solutions from the private sector and companies",
       color: "from-purple-500 to-pink-600",
       bgColor: "bg-purple-500/10",
       count: "80+"
     },
     {
       icon: Globe,
-      title: "الجهات الحكومية",
-      description: "مبادرات من الوزارات والهيئات",
+      title: "Government Entities",
+      description: "Initiatives from ministries and official bodies",
       color: "from-emerald-500 to-teal-600",
       bgColor: "bg-emerald-500/10",
       count: "30+"
     },
     {
       icon: Users,
-      title: "المبتكرون الأفراد",
-      description: "أفكار من المبدعين والمخترعين",
+      title: "Individual Innovators",
+      description: "Ideas from creators and inventors",
       color: "from-orange-500 to-red-600",
       bgColor: "bg-orange-500/10",
       count: "200+"
@@ -42,10 +46,10 @@ export function InnovationHubsSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            مراكز الابتكار
+            {isAr ? "مراكز الابتكار" : "Innovation Hubs"}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            نجمع الأفكار من 4 مصادر رئيسية لبناء منظومة ابتكار شاملة
+            {isAr ? "نجمع الأفكار من 4 مصادر رئيسية لبناء منظومة ابتكار شاملة" : "We gather ideas from 4 main sources to build a comprehensive innovation ecosystem"}
           </p>
         </div>
 

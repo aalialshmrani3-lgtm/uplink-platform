@@ -19,11 +19,11 @@ export default function Contracts() {
   const demoContracts = [
     {
       id: 1,
-      title: "عقد ترخيص براءة اختراع",
+      title: "Patent License Agreement",
       type: "license",
       status: "active",
-      partyA: "شركة TechVision",
-      partyB: "المبتكر أحمد",
+      partyA: "TechVision Company",
+      partyB: "Innovator Ahmed",
       value: "500000",
       startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
       endDate: new Date(Date.now() + 335 * 24 * 60 * 60 * 1000),
@@ -32,11 +32,11 @@ export default function Contracts() {
     },
     {
       id: 2,
-      title: "عقد شراكة استثمارية",
+      title: "Investment Partnership Agreement",
       type: "investment",
       status: "pending",
-      partyA: "صندوق الابتكار",
-      partyB: "شركة GreenEnergy",
+      partyA: "Innovation Fund",
+      partyB: "GreenEnergy Company",
       value: "2000000",
       startDate: null,
       endDate: null,
@@ -45,11 +45,11 @@ export default function Contracts() {
     },
     {
       id: 3,
-      title: "عقد تطوير مشترك",
+      title: "Joint Development Agreement",
       type: "development",
       status: "completed",
-      partyA: "جامعة الملك سعود",
-      partyB: "شركة HealthAI",
+      partyA: "King Saud University",
+      partyB: "HealthAI Company",
       value: "750000",
       startDate: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000),
       endDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
@@ -80,23 +80,23 @@ export default function Contracts() {
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case "draft": return "مسودة";
-      case "pending": return "قيد الانتظار";
-      case "active": return "نشط";
-      case "completed": return "مكتمل";
-      case "disputed": return "متنازع عليه";
-      case "terminated": return "منتهي";
+      case "draft": return isAr ? "مسودة" : "Draft";
+      case "pending": return isAr ? "قيد الانتظار" : "Pending";
+      case "active": return isAr ? "نشط" : "Active";
+      case "completed": return isAr ? "مكتمل" : "Completed";
+      case "disputed": return isAr ? "متنازع عليه" : "Disputed";
+      case "terminated": return isAr ? "منتهي" : "Expired";
       default: return status;
     }
   };
 
   const getTypeText = (type: string) => {
     switch (type) {
-      case "license": return "ترخيص";
-      case "investment": return "استثمار";
-      case "development": return "تطوير";
-      case "acquisition": return "استحواذ";
-      case "partnership": return "شراكة";
+      case "license": return isAr ? "ترخيص" : "License";
+      case "investment": return isAr ? "استثمار" : "Investment";
+      case "development": return isAr ? "تطوير" : "Development";
+      case "acquisition": return isAr ? "استحواذ" : "Acquisition";
+      case "partnership": return isAr ? "شراكة" : "Partnership";
       default: return type;
     }
   };
@@ -129,10 +129,10 @@ export default function Contracts() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/30 rounded-full mb-4">
             <FileText className="w-4 h-4 text-indigo-400" />
-            <span className="text-indigo-400 text-sm">{isAr ? "NAQLA4 - العقود الذكية" : "NAQLA4 - Contracts الذكية"}</span>
+            <span className="text-indigo-400 text-sm">{isAr ? isAr ? "NAQLA4 - العقود الذكية" : "NAQLA4 - Smart Contracts" : "NAQLA4 - Smart Contracts"}</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? "عقودي" : "[عقودي]"}</h1>
-          <p className="text-slate-400">{isAr ? "إدارة العقود الذكية والاتفاقيات" : "إدارة العقود الذكية واNoتفاقيات"}</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{isAr ? isAr ? "عقودي" : "My Contracts" : "[My Contracts]"}</h1>
+          <p className="text-slate-400">{isAr ? isAr ? "إدارة العقود الذكية والاتفاقيات" : "Manage Smart Contracts & Agreements" : "Manage Smart Contracts & Agreements"}</p>
         </div>
 
         {/* Stats */}
@@ -141,7 +141,7 @@ export default function Contracts() {
             <CardContent className="pt-6 text-center">
               <FileText className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">{displayContracts.length}</div>
-              <div className="text-slate-400 text-sm">{isAr ? "إجمالي العقود" : "إجمالي Contracts"}</div>
+              <div className="text-slate-400 text-sm">{isAr ? isAr ? "إجمالي العقود" : "Total Contracts" : "Total Contracts"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
@@ -150,7 +150,7 @@ export default function Contracts() {
               <div className="text-2xl font-bold text-white">
                 {displayContracts.filter((c: any) => c.status === "active").length}
               </div>
-              <div className="text-slate-400 text-sm">{isAr ? "عقود نشطة" : "عقود Activeة"}</div>
+              <div className="text-slate-400 text-sm">{isAr ? isAr ? "عقود نشطة" : "Active Contracts" : "Active Contracts"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
@@ -159,14 +159,14 @@ export default function Contracts() {
               <div className="text-2xl font-bold text-white">
                 {(displayContracts.reduce((sum: number, c: any) => sum + Number(c.value || 0), 0) / 1000000).toFixed(1)}M
               </div>
-              <div className="text-slate-400 text-sm">{isAr ? "إجمالي القيمة" : "إجمالي الValuesة"}</div>
+              <div className="text-slate-400 text-sm">{isAr ? isAr ? "إجمالي القيمة" : "Total Value" : "Total Value"}</div>
             </CardContent>
           </Card>
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="pt-6 text-center">
               <Shield className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
               <div className="text-2xl font-bold text-white">100%</div>
-              <div className="text-slate-400 text-sm">{isAr ? "محمية بالبلوكتشين" : "[محمية بالبلوكتشين]"}</div>
+              <div className="text-slate-400 text-sm">{isAr ? isAr ? "محمية بالبلوكتشين" : "Blockchain Protected" : "[Blockchain Protected]"}</div>
             </CardContent>
           </Card>
         </div>
@@ -212,7 +212,7 @@ export default function Contracts() {
                         {contract.milestones > 0 && (
                           <div className="mb-3">
                             <div className="flex items-center justify-between text-sm mb-1">
-                              <span className="text-slate-400">{isAr ? "التقدم" : "[التقدم]"}</span>
+                              <span className="text-slate-400">{isAr ? isAr ? "التقدم" : "Progress" : "[Progress]"}</span>
                               <span className="text-white">
                                 {contract.completedMilestones}/{contract.milestones} مراحل
                               </span>
@@ -278,8 +278,8 @@ export default function Contracts() {
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="py-16 text-center">
               <FileText className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? "لا توجد عقود" : "No توجد عقود"}</h3>
-              <p className="text-slate-400 mb-6">{isAr ? "ستظهر عقودك هنا عند إنشائها" : "[ستظهر عقودك هنا عند إنشائها]"}</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{isAr ? isAr ? "لا توجد عقود" : "No Contracts" : "No Contracts"}</h3>
+              <p className="text-slate-400 mb-6">{isAr ? isAr ? "ستظهر عقودك هنا عند إنشائها" : "Your contracts will appear here once created" : "[Your contracts will appear here once created]"}</p>
             </CardContent>
           </Card>
         )}
@@ -290,7 +290,7 @@ export default function Contracts() {
             <div className="flex items-start gap-6">
               <Shield className="w-16 h-16 text-indigo-400" />
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">{isAr ? "عقود ذكية آمنة" : "[عقود ذكية آمنة]"}</h3>
+                <h3 className="text-xl font-bold text-white mb-2">{isAr ? isAr ? "عقود ذكية آمنة" : "Secure Smart Contracts" : "[Secure Smart Contracts]"}</h3>
                 <p className="text-slate-300 mb-4">
                   جميع العقود في NAQLA مؤمنة بتقنية البلوكتشين مع نظام ضمان (Escrow) لحماية جميع الأطراف.
                   يتم تنفيذ المدفوعات تلقائياً عند إتمام كل مرحلة.

@@ -162,7 +162,7 @@ export default function WebhookManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">{isAr ? "إدارة Webhooks" : "[إدارة Webhooks]"}</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "إدارة Webhooks" : "Manage Webhooks" : "Manage Webhooks"}</h1>
           <p className="text-muted-foreground">
             استقبل إشعارات فورية عند حدوث أحداث مهمة في المنصة
           </p>
@@ -176,7 +176,7 @@ export default function WebhookManagement() {
       {/* Webhooks List */}
       <Card>
         <CardHeader>
-          <CardTitle>{isAr ? "Webhooks الخاصة بك" : "[Webhooks الخاصة بك]"}</CardTitle>
+          <CardTitle>{isAr ? isAr ? "Webhooks الخاصة بك" : "Your Webhooks" : "Your Webhooks"}</CardTitle>
           <CardDescription>
             {webhooks?.length || 0} webhook نشط
           </CardDescription>
@@ -283,17 +283,17 @@ export default function WebhookManagement() {
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>{isAr ? "إنشاء Webhook جديد" : "إنشاء Webhook New"}</DialogTitle>
+            <DialogTitle>{isAr ? isAr ? "إنشاء Webhook جديد" : "Create New Webhook" : "Create New Webhook"}</DialogTitle>
             <DialogDescription>
               أنشئ webhook لاستقبال إشعارات عند حدوث أحداث معينة
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div>
-              <Label htmlFor="webhookName">{isAr ? "الاسم *" : "اNoسم *"}</Label>
+              <Label htmlFor="webhookName">{isAr ? isAr ? "الاسم *" : "Name *" : "Name *"}</Label>
               <Input
                 id="webhookName"
-                placeholder="مثال: Slack Notifications"
+                placeholder={isAr ? "مثال: Slack Notifications" : "Example: Slack Notifications"}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="mt-2"
@@ -312,10 +312,10 @@ export default function WebhookManagement() {
             </div>
 
             <div>
-              <Label htmlFor="webhookSecret">{isAr ? "Secret (اختياري)" : "[Secret (اختياري)]"}</Label>
+              <Label htmlFor="webhookSecret">{isAr ? isAr ? "Secret (اختياري)" : "Secret (Optional)" : "Secret (Optional)"}</Label>
               <Input
                 id="webhookSecret"
-                placeholder="سيتم توليد secret تلقائيًا إذا تركته فارغًا"
+                placeholder={isAr ? "سيتم توليد secret تلقائيًا إذا تركته فارغًا" : "A secret will be generated automatically if left blank"}
                 value={formData.secret}
                 onChange={(e) => setFormData({ ...formData, secret: e.target.value })}
                 className="mt-2"
@@ -326,7 +326,7 @@ export default function WebhookManagement() {
             </div>
 
             <div>
-              <Label>{isAr ? "الأحداث *" : "الأBorderاث *"}</Label>
+              <Label>{isAr ? isAr ? "الأحداث *" : "Events *" : "Events *"}</Label>
               <div className="grid grid-cols-2 gap-3 mt-2">
                 {AVAILABLE_EVENTS.map((event) => (
                   <div key={event.id} className="flex items-center space-x-2 space-x-reverse">
@@ -370,7 +370,7 @@ export default function WebhookManagement() {
       <Dialog open={logsDialogOpen} onOpenChange={setLogsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{isAr ? "سجل Webhook" : "[سجل Webhook]"}</DialogTitle>
+            <DialogTitle>{isAr ? isAr ? "سجل Webhook" : "Webhook Log" : "Webhook Log"}</DialogTitle>
             <DialogDescription>
               آخر 20 محاولة لتشغيل هذا Webhook
             </DialogDescription>

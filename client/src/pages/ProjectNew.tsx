@@ -42,7 +42,7 @@ export default function ProjectNew() {
   const createProjectMutation = trpc.project.create.useMutation({
     onSuccess: (data) => {
       toast.success(isAr ? "تم إنشاء المشروع بنجاح!" : "Project created successfully!", { // Rule 3
-        description: isAr ? "يمكنك الآن تقديمه للتقييم" : "You can now submit it for evaluation", // Rule 3
+        description: "You can now submit it for evaluation.", // Rule 3
       });
       setLocation(`/projects/${data.id}`);
     },
@@ -103,9 +103,9 @@ export default function ProjectNew() {
   // Rule 5: Conditional array for progress steps
   const progressSteps = isAr
     ? [
-        { id: 1, title: "المعلومات الأساسية" },
-        { id: 2, title: "التفاصيل" },
-        { id: 3, title: "المراجعة" },
+        { id: 1, title: "Basic Information" },
+        { id: 2, title: "Details" },
+        { id: 3, title: "Review" },
       ]
     : [
         { id: 1, title: "Basic Information" },
@@ -116,16 +116,16 @@ export default function ProjectNew() {
   // Rule 5: Conditional array for categories
   const categories = isAr
     ? [
-        { value: "technology", label: "تقنية المعلومات" },
-        { value: "healthcare", label: "الرعاية الصحية" },
-        { value: "fintech", label: "التقنية المالية" },
-        { value: "education", label: "التعليم" },
-        { value: "energy", label: "الطاقة" },
-        { value: "agriculture", label: "الزراعة" },
-        { value: "manufacturing", label: "التصنيع" },
-        { value: "logistics", label: "اللوجستيات" },
-        { value: "entertainment", label: "الترفيه" },
-        { value: "other", label: "أخرى" },
+        { value: "technology", label: "IT" },
+        { value: "healthcare", label: "Healthcare" },
+        { value: "fintech", label: "FinTech" },
+        { value: "education", label: "Education" },
+        { value: "energy", label: "Energy" },
+        { value: "agriculture", label: "Agriculture" },
+        { value: "manufacturing", label: "Manufacturing" },
+        { value: "logistics", label: "Logistics" },
+        { value: "entertainment", label: "Entertainment" },
+        { value: "other", label: "Other" },
       ]
     : [
         { value: "technology", label: "Information Technology" },
@@ -143,11 +143,11 @@ export default function ProjectNew() {
   // Rule 5: Conditional array for stages
   const stages = isAr
     ? [
-        { value: "idea", label: "فكرة" },
-        { value: "prototype", label: "نموذج أولي" },
-        { value: "mvp", label: "منتج قابل للتطبيق (MVP)" },
-        { value: "growth", label: "نمو" },
-        { value: "scale", label: "توسع" },
+        { value: "idea", label: "Idea" },
+        { value: "prototype", label: "Prototype" },
+        { value: "mvp", label: "MVP" },
+        { value: "growth", label: "Growth" },
+        { value: "scale", label: "Scaling" },
       ]
     : [
         { value: "idea", label: "Idea" },
@@ -187,7 +187,7 @@ export default function ProjectNew() {
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-4">
             <Lightbulb className="w-4 h-4 text-cyan-400" />
             <span className="text-cyan-400 text-sm">
-              {isAr ? "تسجيل ابتكار جديد" : "Register a New Innovation"}
+              {isAr ? "تسجيل ابتكار جديد" : "Register New Innovation"}
             </span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">
@@ -237,7 +237,7 @@ export default function ProjectNew() {
                     <Input
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      placeholder={isAr ? "عنوان ابتكارك" : "Your innovation title"}
+                      placeholder={isAr ? "عنوان ابتكارك" : "Your Innovation Title"}
                       className="bg-slate-900 border-slate-700 text-white"
                     />
                   </div>
@@ -327,13 +327,13 @@ export default function ProjectNew() {
                       type="number"
                       value={formData.teamSize}
                       onChange={(e) => setFormData({ ...formData, teamSize: e.target.value })}
-                      placeholder={isAr ? "عدد أعضاء الفريق" : "Number of team members"}
+                      placeholder={isAr ? "عدد أعضاء الفريق" : "Number of Team Members"}
                       className="bg-slate-900 border-slate-700 text-white"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-slate-300">
-                      {isAr ? "التمويل المطلوب (ريال)" : "Funding Needed (SAR)"}
+                      {isAr ? "التمويل المطلوب (ريال)" : "Funding Required (SAR)"}
                     </Label>
                     <Input
                       value={formData.fundingNeeded}
@@ -363,7 +363,7 @@ export default function ProjectNew() {
                   <Textarea
                     value={formData.competitiveAdvantage}
                     onChange={(e) => setFormData({ ...formData, competitiveAdvantage: e.target.value })}
-                    placeholder={isAr ? "ما الذي يميز مشروعك عن المنافسين؟" : "What distinguishes your project from competitors?"}
+                    placeholder={isAr ? "ما الذي يميز مشروعك عن المنافسين؟" : "What differentiates your project from competitors?"}
                     className="bg-slate-900 border-slate-700 text-white min-h-24"
                   />
                 </div>
@@ -388,7 +388,7 @@ export default function ProjectNew() {
                     <Input
                       value={formData.tagInput}
                       onChange={(e) => setFormData({ ...formData, tagInput: e.target.value })}
-                      placeholder={isAr ? "أضف وسم" : "Add tag"}
+                      placeholder={isAr ? "أضف وسم" : "Add Tag"}
                       className="bg-slate-900 border-slate-700 text-white"
                       onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
                     />
@@ -412,7 +412,7 @@ export default function ProjectNew() {
               <div className="space-y-6">
                 <div className="text-center mb-6">
                   <h2 className="text-xl font-semibold text-white mb-2">
-                    {isAr ? "مراجعة المشروع" : "Project Review"}
+                    {isAr ? "مراجعة المشروع" : "Review Project"}
                   </h2>
                   <p className="text-slate-400">
                     {isAr ? "راجع المعلومات قبل الإنشاء" : "Review information before creation"}
@@ -468,7 +468,7 @@ export default function ProjectNew() {
                   {formData.fundingNeeded && (
                     <div>
                       <p className="text-slate-400 text-sm">
-                        {isAr ? "التمويل المطلوب" : "Funding Needed"}
+                        {isAr ? "التمويل المطلوب" : "Funding Required"}
                       </p>
                       <p className="text-white">
                         {parseInt(formData.fundingNeeded).toLocaleString()} {isAr ? "ريال" : "SAR"}
@@ -501,7 +501,7 @@ export default function ProjectNew() {
                       </p>
                       <p className="text-slate-300 text-sm">
                         {isAr
-                          ? "بعد إنشاء المشروع، يمكنك تقديمه للحصول على تقييم ذكاء اصطناعي شامل يحدد مسار ابتكارك"
+                          ? isAr ? "بعد إنشاء المشروع، يمكنك تقديمه للحصول على تقييم ذكاء اصطناعي شامل يحدد مسار ابتكارك" : "After creating the project, you can submit it for a comprehensive AI evaluation to guide your innovation path."
                           : "After creating the project, you can submit it for a comprehensive AI evaluation that defines your innovation's path."}
                       </p>
                     </div>

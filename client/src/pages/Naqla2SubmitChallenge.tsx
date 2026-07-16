@@ -59,7 +59,7 @@ export default function Naqla2SubmitChallenge() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800 max-w-md">
           <CardContent className="p-8">
-            <p className="text-white text-center">{isAr ? "يرجى تسجيل الدخول لإرسال تحدي" : "يرجى Login لإرسال تحدي"}</p>
+            <p className="text-white text-center">{isAr ? isAr ? "يرجى تسجيل الدخول لإرسال تحدي" : "Please log in to submit a challenge" : "Please log in to submit a challenge"}</p>
           </CardContent>
         </Card>
       </div>
@@ -92,10 +92,10 @@ export default function Naqla2SubmitChallenge() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Title */}
               <div>
-                <Label htmlFor="title" className="text-white">{isAr ? "عنوان التحدي *" : "عنوان التBorderي *"}</Label>
+                <Label htmlFor="title" className="text-white">{isAr ? isAr ? "عنوان التحدي *" : "Challenge Title *" : "Challenge Title *"}</Label>
                 <Input
                   id="title"
-                  placeholder="مثال: تطوير نظام ذكاء اصطناعي للتشخيص الطبي"
+                  placeholder={isAr ? "مثال: تطوير نظام ذكاء اصطناعي للتشخيص الطبي" : "Example: Developing an AI system for medical diagnosis"}
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   required
@@ -105,10 +105,10 @@ export default function Naqla2SubmitChallenge() {
 
               {/* Description */}
               <div>
-                <Label htmlFor="description" className="text-white">{isAr ? "وصف التحدي *" : "وRow التحدي *"}</Label>
+                <Label htmlFor="description" className="text-white">{isAr ? isAr ? "وصف التحدي *" : "Challenge Description *" : "Challenge Description *"}</Label>
                 <Textarea
                   id="description"
-                  placeholder="اشرح المشكلة والهدف من التحدي..."
+                  placeholder={isAr ? "اشرح المشكلة والهدف من التحدي..." : "Explain the problem and goal of the challenge..."}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   required
@@ -125,25 +125,25 @@ export default function Naqla2SubmitChallenge() {
                   onValueChange={(value) => setFormData({ ...formData, category: value })}
                 >
                   <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
-                    <SelectValue placeholder="اختر الفئة" />
+                    <SelectValue placeholder={isAr ? "اختر الفئة" : "Select Category"} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="ai">{isAr ? "الذكاء الاصطناعي" : "Artificial Intelligence"}</SelectItem>
                     <SelectItem value="health">{isAr ? "الصحة" : "Health"}</SelectItem>
                     <SelectItem value="education">{isAr ? "التعليم" : "Education"}</SelectItem>
                     <SelectItem value="environment">{isAr ? "البيئة" : "Environment"}</SelectItem>
-                    <SelectItem value="fintech">{isAr ? "التقنية المالية" : "FinTech"}</SelectItem>
-                    <SelectItem value="other">{isAr ? "أخرى" : "[أخرى]"}</SelectItem>
+                    <SelectItem value="fintech">{isAr ? "التقنية المالية" : "Fintech"}</SelectItem>
+                    <SelectItem value="other">{isAr ? isAr ? "أخرى" : "Other" : "[Other]"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Requirements */}
               <div>
-                <Label htmlFor="requirements" className="text-white">{isAr ? "المتطلبات *" : "[المتطلبات *]"}</Label>
+                <Label htmlFor="requirements" className="text-white">{isAr ? isAr ? "المتطلبات *" : "Requirements *" : "[Requirements *]"}</Label>
                 <Textarea
                   id="requirements"
-                  placeholder="ما هي المتطلبات والمعايير للحل؟"
+                  placeholder={isAr ? "ما هي المتطلبات والمعايير للحل؟" : "What are the requirements and criteria for the solution?"}
                   value={formData.requirements}
                   onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
                   required
@@ -160,7 +160,7 @@ export default function Naqla2SubmitChallenge() {
                 </Label>
                 <Input
                   id="prize"
-                  placeholder="مثال: 100,000 ريال + تمويل للمشروع"
+                  placeholder={isAr ? "مثال: 100,000 ريال + تمويل للمشروع" : "Example: 100,000 SAR + project funding"}
                   value={formData.prize}
                   onChange={(e) => setFormData({ ...formData, prize: e.target.value })}
                   required
@@ -192,7 +192,7 @@ export default function Naqla2SubmitChallenge() {
                 </Label>
                 <Input
                   id="targetAudience"
-                  placeholder="مثال: مطورين، طلاب، شركات ناشئة"
+                  placeholder={isAr ? "مثال: مطورين، طلاب، شركات ناشئة" : "Example: Developers, students, startups"}
                   value={formData.targetAudience}
                   onChange={(e) => setFormData({ ...formData, targetAudience: e.target.value })}
                   required

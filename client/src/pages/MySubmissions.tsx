@@ -31,7 +31,7 @@ export default function MySubmissions() {
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">{isAr ? "جاري تحميل حلولك..." : "جاري Download حلولك..."}</p>
+            <p className="text-muted-foreground">{isAr ? isAr ? "جاري تحميل حلولك..." : "Loading your solutions..." : "Downloading your solutions..."}</p>
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function MySubmissions() {
     <div className="container mx-auto py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">{isAr ? "حلولي المقدمة" : "Solutionsي المقدمة"}</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "حلولي المقدمة" : "My Submitted Solutions" : "My Submitted Solutions"}</h1>
         <p className="text-muted-foreground">
           تتبع جميع مشاركاتك في التحديات وحالتها
         </p>
@@ -87,7 +87,7 @@ export default function MySubmissions() {
       <div className="grid gap-4 md:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{isAr ? "إجمالي الحلول" : "إجمالي الSolutions"}</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? isAr ? "إجمالي الحلول" : "Total Solutions" : "Total Solutions"}</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -97,7 +97,7 @@ export default function MySubmissions() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{isAr ? "قيد المراجعة" : "قيد Audit"}</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? isAr ? "قيد المراجعة" : "Under Review" : "Under Audit"}</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -107,7 +107,7 @@ export default function MySubmissions() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{isAr ? "متأهل/مرشح" : "[متأهل/مرشح]"}</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? isAr ? "متأهل/مرشح" : "Qualified/Nominated" : "Qualified/Nominated"}</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -117,7 +117,7 @@ export default function MySubmissions() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{isAr ? "فائز" : "[فائز]"}</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? isAr ? "فائز" : "Winner" : "Winner"}</CardTitle>
             <Trophy className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>
@@ -144,7 +144,7 @@ export default function MySubmissions() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-            <p className="text-lg font-medium mb-2">{isAr ? "لا توجد حلول مقدمة" : "No توجد حلول مقدمة"}</p>
+            <p className="text-lg font-medium mb-2">{isAr ? isAr ? "لا توجد حلول مقدمة" : "No solutions submitted" : "No solutions submitted"}</p>
             <p className="text-muted-foreground mb-4">
               {filter === 'all' 
                 ? 'لم تقدم أي حلول بعد. ابدأ بالمشاركة في التحديات!'

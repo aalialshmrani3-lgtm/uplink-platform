@@ -20,7 +20,7 @@ export default function MyJourney() {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-muted-foreground">{isAr ? "يرجى تسجيل الدخول لعرض رحلتك" : "يرجى Login لعرض رحلتك"}</p>
+        <p className="text-muted-foreground">{isAr ? isAr ? "يرجى تسجيل الدخول لعرض رحلتك" : "Please log in to view your journey" : "Please log in to view your journey"}</p>
       </div>
     );
   }
@@ -41,8 +41,8 @@ export default function MyJourney() {
     {
       id: 1,
       title: "NAQLA 1",
-      titleAr: "أبلينك 1",
-      description: "تقديم الأفكار وتحليلها",
+      titleAr: "Uplink 1",
+      description: "Idea Submission & Analysis",
       status: currentStage >= 1 ? "completed" : "pending",
       count: ideas?.length || 0,
       items: ideas || []
@@ -50,8 +50,8 @@ export default function MyJourney() {
     {
       id: 2,
       title: "NAQLA 2",
-      titleAr: "أبلينك 2",
-      description: "المطابقة مع الجهات المناسبة",
+      titleAr: "Uplink 2",
+      description: "Matching with Relevant Entities",
       status: currentStage >= 2 ? "completed" : currentStage === 1 ? "in-progress" : "pending",
       count: matches?.length || 0,
       items: matches || []
@@ -59,8 +59,8 @@ export default function MyJourney() {
     {
       id: 3,
       title: "NAQLA 3",
-      titleAr: "أبلينك 3",
-      description: "العقود الذكية والتنفيذ",
+      titleAr: "Uplink 3",
+      description: "Smart Contracts & Execution",
       status: currentStage >= 3 ? "completed" : currentStage === 2 ? "in-progress" : "pending",
       count: contracts?.length || 0,
       items: contracts || []
@@ -122,7 +122,7 @@ export default function MyJourney() {
                     : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
                   }
                 `}>
-                  {stage.count} {stage.status === "completed" ? "مكتمل" : stage.status === "in-progress" ? "قيد التنفيذ" : "معلق"}
+                  {stage.count} {stage.status === "completed" ? isAr ? "مكتمل" : "Completed" : stage.status === "in-progress" ? isAr ? "قيد التنفيذ" : "In Progress" : "Pending"}
                 </span>
               </div>
             ))}
@@ -147,7 +147,7 @@ export default function MyJourney() {
                     : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
                   }
                 `}>
-                  {stage.status === "completed" ? "مكتمل ✓" : stage.status === "in-progress" ? "قيد التنفيذ..." : "معلق"}
+                  {stage.status === "completed" ? isAr ? "مكتمل ✓" : "Completed ✓" : stage.status === "in-progress" ? isAr ? "قيد التنفيذ..." : "In Progress..." : "Pending"}
                 </div>
               </div>
 
@@ -185,7 +185,7 @@ export default function MyJourney() {
         {/* Call to Action */}
         {currentStage === 0 && (
           <Card className="mt-8 p-8 text-center bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
-            <h3 className="text-2xl font-bold mb-4">{isAr ? "ابدأ رحلتك الآن!" : "Start Your Journey الآن!"}</h3>
+            <h3 className="text-2xl font-bold mb-4">{isAr ? isAr ? "ابدأ رحلتك الآن!" : "Start Your Journey Now!" : "Start Your Journey Now!"}</h3>
             <p className="text-muted-foreground mb-6">
               قدّم فكرتك الأولى وابدأ رحلتك في عالم الابتكار
             </p>

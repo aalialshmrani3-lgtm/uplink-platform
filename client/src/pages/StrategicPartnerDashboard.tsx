@@ -38,8 +38,8 @@ export default function StrategicPartnerDashboard() {
   const acceptIdea = trpc.partners.acceptIdea.useMutation({
     onSuccess: () => {
       toast({
-        title: "تم قبول الفكرة",
-        description: "تم قبول الفكرة بنجاح وإرسال إشعار للمبتكر",
+        title: "Idea Accepted",
+        description: "Idea accepted. Innovator notified.",
       });
       refetch();
     },
@@ -49,8 +49,8 @@ export default function StrategicPartnerDashboard() {
   const rejectIdea = trpc.partners.rejectIdea.useMutation({
     onSuccess: () => {
       toast({
-        title: "تم رفض الفكرة",
-        description: "تم رفض الفكرة وإرسال feedback للمبتكر",
+        title: "Idea Rejected",
+        description: "Idea rejected. Feedback sent to innovator.",
       });
       refetch();
     },
@@ -60,8 +60,8 @@ export default function StrategicPartnerDashboard() {
   const sendFeedback = trpc.partners.sendFeedback.useMutation({
     onSuccess: () => {
       toast({
-        title: "تم إرسال الملاحظات",
-        description: "تم إرسال ملاحظاتك للمبتكر بنجاح",
+        title: "Feedback Sent",
+        description: "Your feedback has been sent to the innovator.",
       });
       refetch();
     },
@@ -93,8 +93,8 @@ export default function StrategicPartnerDashboard() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold">{isAr ? "لوحة تحكم الشريك الاستراتيجي" : "لوحة تحكم الشريك اNoستراتيجي"}</h1>
-        <p className="text-muted-foreground">{isAr ? "إدارة الأفكار المُوجّهة إليك من NAQLA 1" : "[إدارة الأفكار المُوجّهة إليك من NAQLA 1]"}</p>
+        <h1 className="text-3xl font-bold">{isAr ? isAr ? "لوحة تحكم الشريك الاستراتيجي" : "Strategic Partner Dashboard" : "Strategic Partner Dashboard"}</h1>
+        <p className="text-muted-foreground">{isAr ? isAr ? "إدارة الأفكار المُوجّهة إليك من NAQLA 1" : "Manage Ideas from NAQLA 1" : "Manage Ideas from NAQLA 1"}</p>
       </div>
 
       {/* Stats Cards */}
@@ -151,8 +151,8 @@ export default function StrategicPartnerDashboard() {
       {/* Ideas Table */}
       <Card>
         <CardHeader>
-          <CardTitle>{isAr ? "الأفكار المُوجّهة" : "[الأفكار المُوجّهة]"}</CardTitle>
-          <CardDescription>{isAr ? "قم بمراجعة الأفكار وإرسال feedback للمبتكرين" : "قم بمراجعة الأفكار وSubmit feedback للمبتكرين"}</CardDescription>
+          <CardTitle>{isAr ? isAr ? "الأفكار المُوجّهة" : "Directed Ideas" : "Directed Ideas"}</CardTitle>
+          <CardDescription>{isAr ? isAr ? "قم بمراجعة الأفكار وإرسال feedback للمبتكرين" : "Review ideas and send feedback to innovators." : "Review ideas and submit feedback to innovators."}</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={selectedTab} onValueChange={setSelectedTab}>
@@ -170,10 +170,10 @@ export default function StrategicPartnerDashboard() {
                     <TableRow>
                       <TableHead>{isAr ? "العنوان" : "Title"}</TableHead>
                       <TableHead>{isAr ? "الفئة" : "Category"}</TableHead>
-                      <TableHead>{isAr ? "الدرجة" : "[الدرجة]"}</TableHead>
-                      <TableHead>{isAr ? "المسار" : "[المسار]"}</TableHead>
+                      <TableHead>{isAr ? isAr ? "الدرجة" : "Score" : "Score"}</TableHead>
+                      <TableHead>{isAr ? isAr ? "المسار" : "Track" : "Track"}</TableHead>
                       <TableHead>{isAr ? "الحالة" : "Status"}</TableHead>
-                      <TableHead>{isAr ? "الإجراءات" : "Procedures"}</TableHead>
+                      <TableHead>{isAr ? "الإجراءات" : "Actions"}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -186,9 +186,9 @@ export default function StrategicPartnerDashboard() {
                         </TableCell>
                         <TableCell>
                           <Badge>
-                            {idea.classificationPath === "innovation" && "ابتكار"}
-                            {idea.classificationPath === "commercial" && "تجاري"}
-                            {idea.classificationPath === "guidance" && "توجيه"}
+                            {idea.classificationPath === "innovation" && isAr ? "ابتكار" : "Innovation"}
+                            {idea.classificationPath === "commercial" && isAr ? "تجاري" : "Commercial"}
+                            {idea.classificationPath === "guidance" && isAr ? "توجيه" : "Guidance"}
                           </Badge>
                         </TableCell>
                         <TableCell>
@@ -228,7 +228,7 @@ export default function StrategicPartnerDashboard() {
                                   size="sm"
                                   variant="outline"
                                   onClick={() => {
-                                    const feedback = prompt("أدخل ملاحظاتك:");
+                                    const feedback = prompt(isAr ? "أدخل ملاحظاتك:" : "Enter your feedback:");
                                     if (feedback) {
                                       rejectIdea.mutate({ 
                                         ideaId: idea.id,
@@ -247,7 +247,7 @@ export default function StrategicPartnerDashboard() {
                               size="sm"
                               variant="ghost"
                               onClick={() => {
-                                const feedback = prompt("أدخل ملاحظاتك:");
+                                const feedback = prompt(isAr ? "أدخل ملاحظاتك:" : "Enter your feedback:");
                                 if (feedback) {
                                   sendFeedback.mutate({ 
                                     ideaId: idea.id,

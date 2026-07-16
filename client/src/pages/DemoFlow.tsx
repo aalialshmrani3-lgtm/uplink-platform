@@ -19,141 +19,141 @@ export default function DemoFlow() {
   const stages = [
     {
       id: "registration",
-      title: "التسجيل",
+      title: "Register",
       icon: UserPlus,
       color: "from-blue-500 to-cyan-600",
       borderColor: "border-blue-500/30",
-      description: "اختر نوع حسابك وأنشئ ملفك الشخصي",
+      description: "Choose account type & create profile",
       options: [
-        { label: "حكومة", icon: Building2 },
-        { label: "شركة قطاع خاص", icon: Briefcase },
-        { label: "منظمة دولية", icon: Globe },
-        { label: "مبتكر فردي", icon: Lightbulb },
-        { label: "جامعة/مؤسسة بحثية", icon: GraduationCap },
-        { label: "مستثمر", icon: TrendingUp },
+        { label: "Government", icon: Building2 },
+        { label: "Private Sector Company", icon: Briefcase },
+        { label: "International Organization", icon: Globe },
+        { label: "Individual Innovator", icon: Lightbulb },
+        { label: "University/Research Institution", icon: GraduationCap },
+        { label: "Investor", icon: TrendingUp },
       ],
       nextStage: "naqla1",
     },
     {
       id: "naqla1",
-      title: "NAQLA 1 - تقديم الفكرة",
+      title: "NAQLA 1 - Idea Submission",
       icon: Lightbulb,
       color: "from-purple-500 to-pink-600",
       borderColor: "border-purple-500/30",
-      description: "قدم فكرتك واحصل على تقييم ذكي شامل",
+      description: "Submit your idea & get a smart, comprehensive evaluation",
       steps: [
-        "املأ نموذج الفكرة (العنوان، الوصف، المجال، الفئة المستهدفة)",
-        "تحليل AI تلقائي للفكرة",
-        "حساب Innovation Level + Classification",
-        "عرض SWOT Analysis + Recommendations",
+        isAr ? "املأ نموذج الفكرة (العنوان، الوصف، المجال، الفئة المستهدفة)" : "Fill out the idea form (Title, Description, Field, Target Audience)",
+        isAr ? "تحليل AI تلقائي للفكرة" : "Automatic AI Idea Analysis",
+        isAr ? "حساب Innovation Level + Classification" : "Calculate Innovation Level + Classification",
+        isAr ? "عرض SWOT Analysis + Recommendations" : "View SWOT Analysis + Recommendations",
       ],
       scenarios: [
         {
           condition: "≥70%",
-          label: "ابتكار عالي",
+          label: "High Innovation",
           icon: CheckCircle2,
           color: "text-green-400",
           bgColor: "bg-green-500/10",
           borderColor: "border-green-500/30",
           nextStage: "naqla2-innovation",
-          description: "فكرتك مبتكرة وعالية الجودة! ستنتقل إلى NAQLA 2 للمطابقة مع المستثمرين والهاكاثونات",
+          description: "Your idea is innovative and high-quality! It will proceed to NAQLA 2 for matching with investors and hackathons.",
         },
         {
           condition: "50-69%",
-          label: "حل تجاري/استثماري",
+          label: "Commercial/Investment Solution",
           icon: AlertCircle,
           color: "text-yellow-400",
           bgColor: "bg-yellow-500/10",
           borderColor: "border-yellow-500/30",
           nextStage: "naqla2-commercial",
-          description: "فكرتك لها قيمة تجارية! ستنتقل إلى NAQLA 2 للمطابقة مع التحديات التجارية",
+          description: "Your idea has commercial value! It will proceed to NAQLA 2 for matching with business challenges.",
         },
         {
           condition: "<50%",
-          label: "يحتاج تحسين",
+          label: "Needs Improvement",
           icon: XCircle,
           color: "text-red-400",
           bgColor: "bg-red-500/10",
           borderColor: "border-red-500/30",
           nextStage: "feedback",
-          description: "فكرتك تحتاج إلى تحسين. ستحصل على نصائح مخصصة وتوجيهات لتطويرها",
+          description: "Your idea needs improvement. You will receive tailored advice and guidance for development.",
         },
       ],
     },
     {
       id: "naqla2-innovation",
-      title: "NAQLA 2 - المطابقة (ابتكار عالي)",
+      title: "NAQLA 2 - Matching (High Innovation)",
       icon: Rocket,
       color: "from-green-500 to-emerald-600",
       borderColor: "border-green-500/30",
-      description: "مطابقة ذكية مع المستثمرين والهاكاثونات المناسبة",
+      description: "Smart matching with suitable investors and hackathons",
       features: [
-        "عرض فكرتك على المستثمرين المهتمين بمجالك",
-        "التسجيل في الهاكاثونات المناسبة لمستوى ابتكارك",
-        "المطابقة مع الشركات الباحثة عن حلول مبتكرة",
-        "الحصول على فرص تمويل وشراكات استراتيجية",
+        isAr ? "عرض فكرتك على المستثمرين المهتمين بمجالك" : "Present your idea to investors interested in your field",
+        isAr ? "التسجيل في الهاكاثونات المناسبة لمستوى ابتكارك" : "Register for hackathons suitable for your innovation level",
+        isAr ? "المطابقة مع الشركات الباحثة عن حلول مبتكرة" : "Match with companies seeking innovative solutions",
+        isAr ? "الحصول على فرص تمويل وشراكات استراتيجية" : "Gain funding opportunities and strategic partnerships",
       ],
       nextStage: "naqla3",
     },
     {
       id: "naqla2-commercial",
-      title: "NAQLA 2 - المطابقة (حل تجاري)",
+      title: "NAQLA 2 - Matching (Commercial Solution)",
       icon: Target,
       color: "from-yellow-500 to-orange-600",
       borderColor: "border-yellow-500/30",
-      description: "مطابقة مع التحديات التجارية والفرص الاستثمارية",
+      description: "Match with business challenges and investment opportunities",
       features: [
-        "تصفح التحديات التجارية من الشركات الكبرى",
-        "تقديم حلولك للتحديات المناسبة",
-        "المطابقة مع الفعاليات والمؤتمرات التجارية",
-        "الحصول على فرص استثمارية وشراكات تجارية",
+        isAr ? "تصفح التحديات التجارية من الشركات الكبرى" : "Browse business challenges from major companies",
+        isAr ? "تقديم حلولك للتحديات المناسبة" : "Submit your solutions for suitable challenges",
+        isAr ? "المطابقة مع الفعاليات والمؤتمرات التجارية" : "Match with Events & Conferences",
+        isAr ? "الحصول على فرص استثمارية وشراكات تجارية" : "Access Investment & Business Partnerships",
       ],
       nextStage: "naqla3",
     },
     {
       id: "feedback",
-      title: "النصائح والتوجيه",
+      title: "Advice & Guidance",
       icon: AlertCircle,
       color: "from-red-500 to-pink-600",
       borderColor: "border-red-500/30",
-      description: "احصل على نصائح مخصصة لتحسين فكرتك",
+      description: "Get tailored advice to refine your idea",
       features: [
-        "تحليل نقاط الضعف في الفكرة",
-        "توصيات محددة للتحسين",
-        "مصادر تعليمية وإرشادية",
-        "إمكانية إعادة تقديم الفكرة بعد التحسين",
+        isAr ? "تحليل نقاط الضعف في الفكرة" : "Idea Weakness Analysis",
+        isAr ? "توصيات محددة للتحسين" : "Specific Improvement Recommendations",
+        isAr ? "مصادر تعليمية وإرشادية" : "Educational & Guidance Resources",
+        isAr ? "إمكانية إعادة تقديم الفكرة بعد التحسين" : "Resubmit Idea After Improvement",
       ],
       nextStage: "naqla1",
       isRetry: true,
     },
     {
       id: "naqla3",
-      title: "NAQLA 3 - العقود الذكية",
+      title: "NAQLA 3 - Smart Contracts",
       icon: FileText,
       color: "from-cyan-500 to-blue-600",
       borderColor: "border-cyan-500/30",
-      description: "إنشاء عقود ذكية وإدارة المراحل والأموال",
+      description: "Create Smart Contracts & Manage Milestones/Funds",
       features: [
-        "إنشاء Smart Contract على Blockchain",
-        "تحديد Milestones (المراحل) للمشروع",
-        "نظام Escrow لحماية الأموال",
-        "إطلاق الأموال تدريجياً عند إكمال كل مرحلة",
-        "توثيق كل خطوة على Blockchain",
+        isAr ? "إنشاء Smart Contract على Blockchain" : "Create Smart Contract on Blockchain",
+        isAr ? "تحديد Milestones (المراحل) للمشروع" : "Define Project Milestones",
+        isAr ? "نظام Escrow لحماية الأموال" : "Escrow System for Fund Protection",
+        isAr ? "إطلاق الأموال تدريجياً عند إكمال كل مرحلة" : "Release Funds Incrementally per Milestone",
+        isAr ? "توثيق كل خطوة على Blockchain" : "Document Each Step on Blockchain",
       ],
       nextStage: "completed",
     },
     {
       id: "completed",
-      title: "مبروك! اكتملت الرحلة",
+      title: "Congratulations! Journey Complete",
       icon: Award,
       color: "from-purple-500 to-pink-600",
       borderColor: "border-purple-500/30",
-      description: "تم إنشاء شراكة ناجحة وعقد ذكي آمن",
+      description: "Successful Partnership & Secure Smart Contract Created",
       features: [
-        "عقد ذكي نشط على Blockchain",
-        "شراكة مع مستثمر/جهة رسمية",
-        "نظام دفع آمن ومضمون",
-        "متابعة التقدم في المشروع",
+        isAr ? "عقد ذكي نشط على Blockchain" : "Active Smart Contract on Blockchain",
+        isAr ? "شراكة مع مستثمر/جهة رسمية" : "Partnership with Investor/Official Entity",
+        isAr ? "نظام دفع آمن ومضمون" : "Secure & Guaranteed Payment System",
+        isAr ? "متابعة التقدم في المشروع" : "Track Project Progress",
       ],
     },
   ];
@@ -165,8 +165,8 @@ export default function DemoFlow() {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead 
-        title="Demo Flow - رحلة المستخدم الكاملة"
-        description="تعرف على رحلة المستخدم الكاملة في منصة NAQLA من التسجيل حتى العقود الذكية"
+        title={isAr ? "Demo Flow - رحلة المستخدم الكاملة" : "Demo Flow - Full User Journey"}
+        description={isAr ? "تعرف على رحلة المستخدم الكاملة في منصة NAQLA من التسجيل حتى العقود الذكية" : "Explore the full NAQLA user journey from registration to smart contracts"}
       />
 
       {/* Hero Section */}
@@ -180,7 +180,7 @@ export default function DemoFlow() {
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
               من الفكرة إلى
-              <span className="text-gradient-blue">{isAr ? " العقد الذكي" : "[العقد الذكي]"}</span>
+              <span className="text-gradient-blue">{isAr ? isAr ? " العقد الذكي" : "Smart Contract" : "[Smart Contract]"}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               اكتشف كيف تتحول فكرتك إلى مشروع حقيقي مع شراكات عالمية وعقود ذكية آمنة
@@ -257,7 +257,7 @@ export default function DemoFlow() {
                         {/* NAQLA 1 Steps */}
                         {stage.id === "naqla1" && stage.steps && (
                           <div className="mb-6">
-                            <h4 className="text-foreground font-semibold mb-3">{isAr ? "خطوات التقديم:" : "[خطوات التقديم:]"}</h4>
+                            <h4 className="text-foreground font-semibold mb-3">{isAr ? isAr ? "خطوات التقديم:" : "Submission Steps:" : "[Submission Steps:]"}</h4>
                             <div className="space-y-2">
                               {stage.steps.map((step, i) => (
                                 <div key={i} className="flex items-start gap-3">
@@ -274,7 +274,7 @@ export default function DemoFlow() {
                         {/* NAQLA 1 Scenarios */}
                         {stage.id === "naqla1" && stage.scenarios && (
                           <div>
-                            <h4 className="text-foreground font-semibold mb-3">{isAr ? "السيناريوهات المحتملة:" : "السيناريوهات المحDoneلة:"}</h4>
+                            <h4 className="text-foreground font-semibold mb-3">{isAr ? isAr ? "السيناريوهات المحتملة:" : "Possible Scenarios:" : "Possible Scenarios:"}</h4>
                             <div className="space-y-3">
                               {stage.scenarios.map((scenario, i) => {
                                 const ScenarioIcon = scenario.icon;
@@ -306,7 +306,7 @@ export default function DemoFlow() {
                         {stage.features && (
                           <div>
                             <h4 className="text-foreground font-semibold mb-3">
-                              {stage.id === "feedback" ? "ما ستحصل عليه:" : "المميزات:"}
+                              {stage.id === "feedback" ? isAr ? "ما ستحصل عليه:" : "What You'll Get:" : "Features:"}
                             </h4>
                             <div className="space-y-2">
                               {stage.features.map((feature, i) => (
@@ -338,7 +338,7 @@ export default function DemoFlow() {
                               }}
                               className={`w-full bg-gradient-to-r ${stage.color} text-white`}
                             >
-                              {stage.isRetry ? "إعادة المحاولة" : "المرحلة التالية"}
+                              {stage.isRetry ? isAr ? "إعادة المحاولة" : "Retry" : "Next Stage"}
                               <ArrowRight className="w-4 h-4 mr-2" />
                             </Button>
                           </div>

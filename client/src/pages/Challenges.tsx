@@ -39,23 +39,23 @@ export default function Challenges() {
   const demoChallenges = [
     {
       id: 1,
-      title: isAr ? "هاكاثون الهيدروجين الأخضر - أرامكو" : "Green Hydrogen Hackathon - Aramco",
-      description: isAr ? "طوّر حلولاً مبتكرة لإنتاج وتخزين ونقل الهيدروجين الأخضر بكفاءة عالية. الفائز يحصل على عقد تجريبي مع أرامكو السعودية." : "Develop innovative solutions for producing, storing, and transporting green hydrogen efficiently. Winner gets a pilot contract with Saudi Aramco.",
+      title: "Green Hydrogen Hackathon - Aramco",
+      description: "Develop innovative solutions for efficient green hydrogen production, storage, and transport. Winner secures a pilot contract with Saudi Aramco.",
       type: "hackathon",
       category: "energy",
       prize: "2000000",
       status: "open",
       participants: 312,
       endDate: new Date(Date.now() + 42 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "أرامكو السعودية" : "Saudi Aramco",
-      badge: isAr ? "🏆 جائزة كبرى" : "🏆 Grand Prize",
+      sponsor: "Saudi Aramco",
+      badge: "🏆 Grand Prize",
       badgeColor: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
       globalPartner: false,
     },
     {
       id: 2,
-      title: isAr ? "تحدي تبريد البطاريات في الحرارة العالية" : "Battery Cooling in Extreme Heat Challenge",
-      description: isAr ? "ابتكر نظام تبريد فعّال للبطاريات الكهربائية في درجات حرارة تتجاوز 50°م. الحل الفائز سيُطبَّق في مشاريع نيوم." : "Innovate an effective cooling system for electric batteries in temperatures exceeding 50°C. The winning solution will be implemented in NEOM projects.",
+      title: "High-Temperature Battery Cooling Challenge",
+      description: "Create an effective cooling system for electric vehicle batteries in temperatures above 50°C. Winning solution to be implemented in NEOM projects.",
       type: "challenge",
       category: "energy",
       prize: "1500000",
@@ -63,104 +63,104 @@ export default function Challenges() {
       participants: 189,
       endDate: new Date(Date.now() + 55 * 24 * 60 * 60 * 1000),
       sponsor: "NEOM",
-      badge: isAr ? "🌟 تحدي نيوم" : "🌟 NEOM Challenge",
+      badge: "🌟 NEOM Challenge",
       badgeColor: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
       globalPartner: false,
     },
     {
       id: 3,
-      title: isAr ? "مسابقة الذكاء الاصطناعي للتشخيص الطبي" : "AI Medical Diagnosis Competition",
-      description: isAr ? "طوّر نموذج AI لتشخيص الأمراض المزمنة من صور الأشعة بدقة تفوق 95%. الفائز يحصل على تمويل أولي من وزارة الصحة." : "Develop an AI model to diagnose chronic diseases from X-ray images with over 95% accuracy. Winner receives seed funding from the Ministry of Health.",
+      title: "AI Medical Diagnosis Competition",
+      description: "Develop an AI model for chronic disease diagnosis from medical images with over 95% accuracy. Winner receives seed funding from the Ministry of Health.",
       type: "competition",
       category: "healthcare",
       prize: "1000000",
       status: "open",
       participants: 267,
       endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "وزارة الصحة" : "Ministry of Health",
-      badge: isAr ? "🏥 رعاية صحية" : "🏥 Healthcare",
+      sponsor: "Ministry of Health",
+      badge: "🏥 Healthcare",
       badgeColor: "bg-pink-500/20 text-pink-400 border-pink-500/30",
       globalPartner: false,
     },
     {
       id: 4,
-      title: isAr ? "هاكاثون المدن الذكية - رؤية 2030" : "Smart Cities Hackathon - Vision 2030",
-      description: isAr ? "ابتكر حلولاً لتحسين إدارة حركة المرور وتقليل استهلاك الطاقة في المدن السعودية باستخدام إنترنت الأشياء والذكاء الاصطناعي." : "Innovate solutions to improve traffic management and reduce energy consumption in Saudi cities using IoT and AI.",
+      title: "Smart Cities Hackathon - Vision 2030",
+      description: "Innovate solutions to improve traffic management and reduce energy consumption in Saudi cities using IoT and AI.",
       type: "hackathon",
       category: "technology",
       prize: "750000",
       status: "open",
       participants: 445,
       endDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "وزارة الاتصالات" : "Ministry of Communications",
-      badge: isAr ? "🏙️ مدن ذكية" : "🏙️ Smart Cities",
+      sponsor: "Ministry of Communications",
+      badge: "🏙️ Smart Cities",
       badgeColor: "bg-blue-500/20 text-blue-400 border-blue-500/30",
       globalPartner: false,
     },
     {
       id: 5,
-      title: isAr ? "تحدي روبوتات تنظيف الألواح الشمسية" : "Solar Panel Cleaning Robots Challenge",
-      description: isAr ? "صمّم روبوتاً ذاتياً لتنظيف الألواح الشمسية في البيئات الصحراوية بتكلفة تشغيل أقل من 0.5 ريال/م². الفائز يحصل على عقد توريد." : "Design an autonomous robot for cleaning solar panels in desert environments at an operating cost below 0.5 SAR/m². Winner gets a supply contract.",
+      title: "Solar Panel Cleaning Robot Challenge",
+      description: "Design an autonomous robot for cleaning solar panels in desert environments with operating costs under 0.5 SAR/m². Winner receives a supply contract.",
       type: "challenge",
       category: "energy",
       prize: "800000",
       status: "open",
       participants: 134,
       endDate: new Date(Date.now() + 65 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "الشركة السعودية للكهرباء" : "Saudi Electricity Company",
-      badge: isAr ? "☀️ طاقة شمسية" : "☀️ Solar Energy",
+      sponsor: "Saudi Electricity Company",
+      badge: "☀️ Solar Energy",
       badgeColor: "bg-orange-500/20 text-orange-400 border-orange-500/30",
       globalPartner: false,
     },
     {
       id: 6,
-      title: isAr ? "مسابقة الزراعة الذكية بالمياه المُعالجة" : "Smart Agriculture with Treated Water Competition",
-      description: isAr ? "طوّر نظاماً متكاملاً للزراعة المائية يستخدم المياه المُعالجة ويقلل الاستهلاك بنسبة 70%. مدعوم من وزارة البيئة والمياه." : "Develop an integrated hydroponics system using treated water that reduces consumption by 70%. Supported by the Ministry of Environment and Water.",
+      title: "Smart Agriculture with Treated Water Competition",
+      description: "Develop an integrated hydroponic system using treated water, reducing consumption by 70%. Supported by the Ministry of Environment and Water.",
       type: "competition",
       category: "agriculture",
       prize: "600000",
       status: "open",
       participants: 98,
       endDate: new Date(Date.now() + 50 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "وزارة البيئة والمياه" : "Ministry of Environment & Water",
-      badge: isAr ? "🌱 زراعة مستدامة" : "🌱 Sustainable Agriculture",
+      sponsor: "Ministry of Environment and Water",
+      badge: "🌱 Sustainable Agriculture",
       badgeColor: "bg-green-500/20 text-green-400 border-green-500/30",
       globalPartner: false,
     },
     {
       id: 7,
-      title: isAr ? "هاكاثون البلوكتشين للملكية الفكرية" : "Blockchain IP Hackathon",
-      description: isAr ? "ابتكر منصة لحماية وتسجيل براءات الاختراع باستخدام تقنية البلوكتشين. الفائز يحصل على تمويل من صندوق الاستثمارات العامة." : "Innovate a platform for protecting and registering patents using blockchain technology. Winner receives funding from the Public Investment Fund.",
+      title: "Blockchain for Intellectual Property Hackathon",
+      description: "Create a platform for protecting and registering patents using blockchain technology. Winner receives funding from the Public Investment Fund.",
       type: "hackathon",
       category: "technology",
       prize: "500000",
       status: "open",
       participants: 203,
       endDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "صندوق الاستثمارات العامة" : "Public Investment Fund",
-      badge: isAr ? "🔗 بلوكتشين" : "🔗 Blockchain",
+      sponsor: "Public Investment Fund",
+      badge: "🔗 Blockchain",
       badgeColor: "bg-purple-500/20 text-purple-400 border-purple-500/30",
       globalPartner: false,
     },
     {
       id: 8,
-      title: isAr ? "تحدي احتجاز الكربون في الصناعة" : "Industrial Carbon Capture Challenge",
-      description: isAr ? "طوّر تقنية فعّالة لاحتجاز وتخزين انبعاثات CO₂ من المصانع بتكلفة أقل من 50 دولار/طن. جائزة مقدمة من مبادرة السعودية الخضراء." : "Develop an effective technology for capturing and storing CO₂ emissions from factories at a cost below $50/ton. Prize offered by the Green Saudi Initiative.",
+      title: "Industrial Carbon Capture Challenge",
+      description: "Develop an effective technology for capturing and storing CO₂ emissions from factories at a cost under $50/ton. Prize sponsored by the Saudi Green Initiative.",
       type: "challenge",
       category: "environment",
       prize: "3000000",
       status: "open",
       participants: 156,
       endDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "مبادرة السعودية الخضراء" : "Green Saudi Initiative",
-      badge: isAr ? "🌍 جائزة المناخ" : "🌍 Climate Prize",
+      sponsor: "Saudi Green Initiative",
+      badge: "🌍 Climate Award",
       badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
       globalPartner: false,
     },
     {
       id: 9,
-      title: isAr ? "هاكاثون التقنية المالية اللامركزية" : "Decentralized FinTech Hackathon",
-      description: isAr ? "ابتكارات في مجال DeFi والدفع الرقمي والخدمات المصرفية الإسلامية المتوافقة مع الشريعة." : "Innovations in DeFi, digital payments, and Shariah-compliant Islamic banking services.",
+      title: "Decentralized FinTech Hackathon",
+      description: "Innovations in DeFi, digital payments, and Sharia-compliant Islamic banking.",
       type: "hackathon",
       category: "fintech",
       prize: "400000",
@@ -168,29 +168,29 @@ export default function Challenges() {
       participants: 512,
       endDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
       sponsor: "SAMA",
-      badge: isAr ? "💰 تقنية مالية" : "💰 FinTech",
+      badge: "💰 FinTech",
       badgeColor: "bg-amber-500/20 text-amber-400 border-amber-500/30",
       globalPartner: false,
     },
     {
       id: 10,
-      title: isAr ? "مسابقة التعليم بالواقع المعزز" : "Augmented Reality Education Competition",
-      description: isAr ? "طوّر تجارب تعليمية تفاعلية باستخدام AR/VR لتعليم العلوم والرياضيات للطلاب في المراحل الابتدائية والمتوسطة." : "Develop interactive educational experiences using AR/VR to teach science and math to primary and middle school students.",
+      title: "AR Education Challenge",
+      description: "Develop interactive AR/VR learning experiences for K-8 science and math education.",
       type: "competition",
       category: "education",
       prize: "350000",
       status: "closed",
       participants: 289,
       endDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "وزارة التعليم" : "Ministry of Education",
-      badge: isAr ? "📚 تعليم" : "📚 Education",
+      sponsor: "Ministry of Education",
+      badge: "📚 Education",
       badgeColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
       globalPartner: false,
     },
     {
       id: 11,
-      title: isAr ? "تحدي التكنولوجيا الحيوية - علاج السرطان بالنانو" : "Biotech Challenge - Nano Cancer Treatment",
-      description: isAr ? "طوّر جسيمات نانوية ذكية لاستهداف الخلايا السرطانية وتوصيل الأدوية بدقة تفوق 98% دون أضرار جانبية." : "Develop smart nanoparticles to target cancer cells and deliver drugs with over 98% precision without side effects.",
+      title: "BioTech Challenge - Nano Cancer Treatment",
+      description: "Develop smart nanoparticles for targeted cancer cell therapy with >98% precision and no side effects.",
       type: "challenge",
       category: "biotechnology",
       prize: "5000000",
@@ -204,8 +204,8 @@ export default function Challenges() {
     },
     {
       id: 12,
-      title: isAr ? "هاكاثون المواد المتقدمة - بدائل الكربون الفائق" : "Advanced Materials Hackathon - Super Carbon Alternatives",
-      description: isAr ? "اكتشف مواد جديدة أخف وأقوى من الكربون الفائق لتطبيقات الفضاء والطاقة." : "Discover new materials lighter and stronger than super carbon for space and energy applications.",
+      title: "Advanced Materials Hackathon - Supercarbon Alternatives",
+      description: "Discover new materials lighter and stronger than supercarbon for space and energy applications.",
       type: "hackathon",
       category: "advanced_materials",
       prize: "4000000",
@@ -219,23 +219,23 @@ export default function Challenges() {
     },
     {
       id: 13,
-      title: isAr ? "تحدي Clean Tech - تحلية المياه بالطاقة الشمسية" : "Clean Tech Challenge - Solar Water Desalination",
-      description: isAr ? "صمّم منظومة تحلية مياه تعمل 100% بالطاقة الشمسية بتكلفة أقل من 0.3 دولار/م³." : "Design a water desalination system powered 100% by solar energy at a cost below $0.3/m³.",
+      title: "Clean Tech Challenge - Solar Desalination",
+      description: "Design a 100% solar-powered desalination system at <$0.3/m³.",
       type: "challenge",
       category: "clean_tech",
       prize: "6000000",
       status: "open",
       participants: 142,
       endDate: new Date(Date.now() + 75 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "NEOM × صندوق التنمية الخليجي" : "NEOM × Gulf Development Fund",
+      sponsor: "NEOM × Gulf Development Fund",
       badge: "💧 Clean Tech",
       badgeColor: "bg-teal-500/20 text-teal-400 border-teal-500/30",
       globalPartner: true,
     },
     {
       id: 14,
-      title: isAr ? "مسابقة الحوسبة الكمية للأدوية" : "Quantum Computing for Drug Discovery Competition",
-      description: isAr ? "استخدم الحوسبة الكمية لاكتشاف أدوية جديدة لمرض الزهايمر في وقت قياسي." : "Use quantum computing to discover new drugs for Alzheimer's disease in record time.",
+      title: "Quantum Computing Drug Discovery Challenge",
+      description: "Utilize quantum computing for rapid Alzheimer's drug discovery.",
       type: "competition",
       category: "quantum_computing",
       prize: "3500000",
@@ -249,15 +249,15 @@ export default function Challenges() {
     },
     {
       id: 15,
-      title: isAr ? "هاكاثون الذكاء الاصطناعي للأمن السيبراني" : "AI Cybersecurity Hackathon",
-      description: isAr ? "طوّر نظام AI لاكتشاف التهديدات السيبرانية في الوقت الفعلي بدقة 99.9%." : "Develop an AI system for real-time cybersecurity threat detection with 99.9% accuracy.",
+      title: "AI Cybersecurity Hackathon",
+      description: "Develop an AI system for real-time cyber threat detection with 99.9% accuracy.",
       type: "hackathon",
       category: "technology",
       prize: "2500000",
       status: "open",
       participants: 198,
       endDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
-      sponsor: isAr ? "STC × وزارة الداخلية" : "STC × Ministry of Interior",
+      sponsor: "STC × Ministry of Interior",
       badge: "🔐 Cybersecurity",
       badgeColor: "bg-red-500/20 text-red-400 border-red-500/30",
       globalPartner: true,
@@ -275,28 +275,28 @@ export default function Challenges() {
 
   const getTypeText = (type: string) => {
     const types: Record<string, string> = {
-      hackathon: isAr ? "هاكاثون" : "Hackathon",
-      competition: isAr ? "مسابقة" : "Competition",
-      challenge: isAr ? "تحدي" : "Challenge",
-      open_problem: isAr ? "مشكلة مفتوحة" : "Open Problem",
-      conference: isAr ? "مؤتمر" : "Conference",
+      hackathon: "Hackathon",
+      competition: "Competition",
+      challenge: "Challenge",
+      open_problem: "Open Problem",
+      conference: "Conference",
     };
     return types[type] || type;
   };
 
   const getCategoryText = (category: string) => {
     const cats: Record<string, string> = {
-      healthcare: isAr ? "الرعاية الصحية" : "Healthcare",
-      energy: isAr ? "الطاقة" : "Energy",
-      technology: isAr ? "التقنية" : "Technology",
-      fintech: isAr ? "التقنية المالية" : "FinTech",
-      education: isAr ? "التعليم" : "Education",
-      agriculture: isAr ? "الزراعة" : "Agriculture",
-      environment: isAr ? "البيئة" : "Environment",
-      biotechnology: isAr ? "التكنولوجيا الحيوية" : "Biotechnology",
-      advanced_materials: isAr ? "المواد المتقدمة" : "Advanced Materials",
-      clean_tech: isAr ? "التقنية النظيفة" : "Clean Tech",
-      quantum_computing: isAr ? "الحوسبة الكمية" : "Quantum Computing",
+      healthcare: "Healthcare",
+      energy: "Energy",
+      technology: "Technology",
+      fintech: "FinTech",
+      education: "Education",
+      agriculture: "Agriculture",
+      environment: "Environment",
+      biotechnology: "Biotechnology",
+      advanced_materials: "Advanced Materials",
+      clean_tech: "Clean Tech",
+      quantum_computing: "Quantum Computing",
     };
     return cats[category] || category;
   };
@@ -313,15 +313,15 @@ export default function Challenges() {
   const globalPartnerCount = displayChallenges.filter((c: any) => c.globalPartner).length;
 
   const categories = [
-    { id: "all", label: isAr ? "الكل" : "All" },
+    { id: "all", label: "All" },
     { id: "biotechnology", label: "🧬 Biotech" },
-    { id: "advanced_materials", label: isAr ? "⚗️ مواد متقدمة" : "⚗️ Advanced Materials" },
+    { id: "advanced_materials", label: "⚗️ Advanced Materials" },
     { id: "clean_tech", label: "💧 Clean Tech" },
-    { id: "quantum_computing", label: isAr ? "⚛️ كمية" : "⚛️ Quantum" },
-    { id: "energy", label: isAr ? "⚡ طاقة" : "⚡ Energy" },
-    { id: "technology", label: isAr ? "💻 تقنية" : "💻 Technology" },
-    { id: "healthcare", label: isAr ? "🏥 صحة" : "🏥 Healthcare" },
-    { id: "environment", label: isAr ? "🌍 بيئة" : "🌍 Environment" },
+    { id: "quantum_computing", label: "⚛️ Quantum" },
+    { id: "energy", label: "⚡ Energy" },
+    { id: "technology", label: "💻 Tech" },
+    { id: "healthcare", label: "🏥 Health" },
+    { id: "environment", label: "🌍 Environment" },
   ];
 
   return (
@@ -362,7 +362,7 @@ export default function Challenges() {
             </div>
             <div>
               <div className="text-white font-bold text-sm">{isAr ? "منصة الابتكار الوطنية" : "National Innovation Platform"}</div>
-              <div className="text-violet-300 text-xs">{isAr ? "تحديات محلية ودولية متخصصة" : "Local and international specialized challenges"}</div>
+              <div className="text-violet-300 text-xs">{isAr ? "تحديات محلية ودولية متخصصة" : "Specialized Local & International Challenges"}</div>
             </div>
           </div>
           <div className="flex-1 text-slate-300 text-sm text-center md:text-right">
@@ -383,14 +383,14 @@ export default function Challenges() {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4">
             <Brain className="w-4 h-4 text-blue-400" />
-            <span className="text-blue-400 text-sm font-medium">{isAr ? "نقلة 2 - التحديات الوطنية والدولية" : "NAQLA2 - National & International Challenges"}</span>
+            <span className="text-blue-400 text-sm font-medium">{isAr ? "نقلة 2 - التحديات الوطنية والدولية" : "Naqla 2 - National & International Challenges"}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             {isAr ? "التحديات والمسابقات الوطنية" : "National Challenges & Competitions"}
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
             {isAr
-              ? "شارك في تحديات الابتكار الاستراتيجية وتنافس على جوائز بملايين الريالات مع أبرز المبتكرين في المملكة والخليج والعالم"
+              ? isAr ? "شارك في تحديات الابتكار الاستراتيجية وتنافس على جوائز بملايين الريالات مع أبرز المبتكرين في المملكة والخليج والعالم" : "Participate in strategic innovation challenges and compete for multi-million SAR prizes with top innovators from the Kingdom, Gulf, and worldwide."
               : "Participate in strategic innovation challenges and compete for prizes worth millions with top innovators from Saudi Arabia, the Gulf, and the world"
             }
           </p>
@@ -399,11 +399,11 @@ export default function Challenges() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
           {[
-            { label: isAr ? "تحدي نشط" : "Active Challenge", value: String(displayChallenges.filter((c: any) => c.status === "open").length), icon: Zap, color: "text-cyan-400" },
-            { label: isAr ? "مشارك مسجل" : "Registered Participant", value: "3,940+", icon: Users, color: "text-blue-400" },
-            { label: isAr ? "إجمالي الجوائز" : "Total Prizes", value: `${(totalPrize / 1000000).toFixed(1)}M ${isAr ? "ريال" : "SAR"}`, icon: DollarSign, color: "text-yellow-400" },
-            { label: isAr ? "تحدي دولي" : "International Challenge", value: String(globalPartnerCount), icon: Globe, color: "text-violet-400" },
-            { label: isAr ? "فائز سابق" : "Past Winner", value: "150+", icon: Trophy, color: "text-emerald-400" },
+            { label: "Active Challenge", value: String(displayChallenges.filter((c: any) => c.status === "open").length), icon: Zap, color: "text-cyan-400" },
+            { label: "Registered Participant", value: "3,940+", icon: Users, color: "text-blue-400" },
+            { label: "Total Prizes", value: `${(totalPrize / 1000000).toFixed(1)}M ${isAr ? "ريال" : "SAR"}`, icon: DollarSign, color: "text-yellow-400" },
+            { label: "International Challenge", value: String(globalPartnerCount), icon: Globe, color: "text-violet-400" },
+            { label: "Previous Winner", value: "150+", icon: Trophy, color: "text-emerald-400" },
           ].map((stat, i) => (
             <Card key={i} className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-colors">
               <CardContent className="pt-5 pb-4 text-center">
@@ -451,9 +451,9 @@ export default function Challenges() {
           </div>
           <div className="flex gap-2">
             {[
-              { id: "all", label: isAr ? "الكل" : "All" },
-              { id: "open", label: isAr ? "مفتوح" : "Open" },
-              { id: "closed", label: isAr ? "منتهي" : "Closed" },
+              { id: "all", label: "All" },
+              { id: "open", label: "Open" },
+              { id: "closed", label: "Closed" },
             ].map((f) => (
               <Button
                 key={f.id}
@@ -494,7 +494,7 @@ export default function Challenges() {
                     <div className="absolute top-3 left-3 z-10">
                       <Badge className="bg-violet-600/90 text-white border-0 text-[10px] gap-1 px-2 py-0.5">
                         <Globe className="w-2.5 h-2.5" />
-                        {isAr ? "دولي" : "Global"}
+                        {isAr ? "دولي" : "International"}
                       </Badge>
                     </div>
                   )}
@@ -533,7 +533,7 @@ export default function Challenges() {
                     <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mb-4">
                       <div className="flex items-center gap-1">
                         <Users className="w-3.5 h-3.5" />
-                        <span>{challenge.participants?.toLocaleString()} {isAr ? "مشارك" : "participants"}</span>
+                        <span>{challenge.participants?.toLocaleString()} {isAr ? "مشارك" : "Participant"}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5" />
@@ -541,8 +541,8 @@ export default function Challenges() {
                           {challenge.status === "open"
                             ? daysLeft > 0
                               ? isAr ? `${daysLeft} يوم متبقي` : `${daysLeft} days left`
-                              : isAr ? "آخر يوم!" : "Last day!"
-                            : isAr ? "انتهى التحدي" : "Challenge ended"
+                              : "Last day!"
+                            : "Challenge ended"
                           }
                         </span>
                       </div>
@@ -570,7 +570,7 @@ export default function Challenges() {
                           : "bg-slate-700 text-slate-500 cursor-not-allowed text-xs"
                         }
                       >
-                        {challenge.status === "open" ? (isAr ? "شارك الآن" : "Join Now") : (isAr ? "انتهى التحدي" : "Challenge Ended")}
+                        {challenge.status === "open" ? (isAr ? "شارك الآن" : "Participate now") : (isAr ? "انتهى التحدي" : "Challenge ended")}
                         {challenge.status === "open" && <ArrowLeft className="w-3 h-3 mr-1" />}
                       </Button>
                     </div>
@@ -586,7 +586,7 @@ export default function Challenges() {
             <div className="text-5xl mb-4">🔍</div>
             <p className="text-slate-400 text-lg">{isAr ? "لا توجد تحديات تطابق بحثك" : "No challenges match your search"}</p>
             <Button variant="outline" className="mt-4 border-slate-700 text-slate-300" onClick={() => { setSearch(""); setFilter("all"); setCategoryFilter("all"); }}>
-              {isAr ? "إعادة تعيين الفلتر" : "Reset Filter"}
+              {isAr ? "إعادة تعيين الفلتر" : "Reset filter"}
             </Button>
           </div>
         )}
@@ -599,15 +599,15 @@ export default function Challenges() {
             </div>
             <h2 className="text-xl font-bold text-white">{isAr ? "قطاعات الابتكار المتخصصة" : "Specialized Innovation Sectors"}</h2>
             <Link href="/naqla2/national-challenges" className="text-violet-400 text-xs hover:underline mr-auto">
-              {isAr ? "عرض التحديات الوطنية ←" : "View National Challenges →"}
+              {isAr ? "عرض التحديات الوطنية ←" : "View National Challenges ←"}
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: <Dna className="w-6 h-6" />, title: isAr ? "التكنولوجيا الحيوية" : "Biotechnology", desc: isAr ? "علم الجينوم، الأدوية الدقيقة، النانو الطبي" : "Genomics, precision medicine, medical nano", color: "text-rose-400", bg: "bg-rose-500/10 border-rose-500/20", link: "/naqla2/national-challenges" },
-              { icon: <Atom className="w-6 h-6" />, title: isAr ? "المواد المتقدمة" : "Advanced Materials", desc: isAr ? "الكربون الفائق، المواد النانوية، السيراميك الذكي" : "Super carbon, nanomaterials, smart ceramics", color: "text-violet-400", bg: "bg-violet-500/10 border-violet-500/20", link: "/challenges" },
-              { icon: <Leaf className="w-6 h-6" />, title: isAr ? "التقنية النظيفة" : "Clean Tech", desc: isAr ? "تحلية المياه، الطاقة المتجددة، إدارة النفايات" : "Water desalination, renewable energy, waste management", color: "text-teal-400", bg: "bg-teal-500/10 border-teal-500/20", link: "/challenges" },
-              { icon: <Cpu className="w-6 h-6" />, title: isAr ? "الحوسبة الكمية" : "Quantum Computing", desc: isAr ? "خوارزميات كمية، تشفير ما بعد الكم، محاكاة" : "Quantum algorithms, post-quantum encryption, simulation", color: "text-sky-400", bg: "bg-sky-500/10 border-sky-500/20", link: "/challenges" },
+              { icon: <Dna className="w-6 h-6" />, title: "Biotechnology", desc: "Genomics, Precision Medicine, Medical Nano", color: "text-rose-400", bg: "bg-rose-500/10 border-rose-500/20", link: "/naqla2/national-challenges" },
+              { icon: <Atom className="w-6 h-6" />, title: "Advanced Materials", desc: "Super Carbon, Nanomaterials, Smart Ceramics", color: "text-violet-400", bg: "bg-violet-500/10 border-violet-500/20", link: "/challenges" },
+              { icon: <Leaf className="w-6 h-6" />, title: "Clean Tech", desc: "Water Desalination, Renewable Energy, Waste Management", color: "text-teal-400", bg: "bg-teal-500/10 border-teal-500/20", link: "/challenges" },
+              { icon: <Cpu className="w-6 h-6" />, title: "Quantum Computing", desc: "Quantum Algorithms, Post-Quantum Cryptography, Simulation", color: "text-sky-400", bg: "bg-sky-500/10 border-sky-500/20", link: "/challenges" },
             ].map((sector, i) => (
               <Link key={i} href={sector.link}>
                 <Card className={`border ${sector.bg} hover:scale-105 transition-transform cursor-pointer`}>
@@ -625,16 +625,16 @@ export default function Challenges() {
         {/* CTA Section */}
         <div className="mt-8 bg-gradient-to-r from-blue-900/40 to-purple-900/40 rounded-2xl p-8 text-center border border-blue-800/40">
           <div className="text-4xl mb-3">🚀</div>
-          <h2 className="text-2xl font-bold text-white mb-3">{isAr ? "هل لديك تحدي لطرحه؟" : "Have a Challenge to Post?"}</h2>
+          <h2 className="text-2xl font-bold text-white mb-3">{isAr ? "هل لديك تحدي لطرحه؟" : "Have a challenge to propose?"}</h2>
           <p className="text-slate-300 mb-6 max-w-xl mx-auto text-sm">
             {isAr
-              ? "إذا كنت شركة أو جهة حكومية وتريد طرح تحدي للمبتكرين والحصول على أفضل الحلول، تواصل معنا الآن."
+              ? isAr ? "إذا كنت شركة أو جهة حكومية وتريد طرح تحدي للمبتكرين والحصول على أفضل الحلول، تواصل معنا الآن." : "If you are a company or government entity looking to propose a challenge to innovators and get the best solutions, contact us now."
               : "If you are a company or government entity and want to post a challenge for innovators and get the best solutions, contact us now."
             }
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-              {isAr ? "طرح تحدي جديد" : "Post a New Challenge"}
+              {isAr ? "طرح تحدي جديد" : "Propose a new challenge"}
             </Button>
             <Link href="/admin">
               <Button variant="outline" className="border-violet-600 text-violet-300 hover:bg-violet-900/30 gap-2">
@@ -643,7 +643,7 @@ export default function Challenges() {
               </Button>
             </Link>
             <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
-              {isAr ? "تعرف على الشروط" : "Learn the Terms"}
+              {isAr ? "تعرف على الشروط" : "Learn about the conditions"}
             </Button>
           </div>
         </div>

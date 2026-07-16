@@ -89,7 +89,7 @@ const messagesData = [
   {
     id: 2,
     sender: 'أحمد الراشد',
-    content: 'اطلعت على مشروعك "نظام الذكاء الاصطناعي للتشخيص الطبي" وأجده واعداً جداً.',
+    content: 'اطلعت على مشروعك isAr ? "نظام الذكاء الاصطناعي للتشخيص الطبي" : "AI Medical Diagnosis System" وأجده واعداً جداً.',
     time: '10:31 ص',
     isMe: false,
     status: 'read',
@@ -196,7 +196,7 @@ export default function Messages() {
               </div>
               <div>
                 <h1 className="text-lg font-bold">{isAr ? "الرسائل" : "Messages"}</h1>
-                <p className="text-xs text-muted-foreground">{isAr ? "تواصل آمن ومشفر" : "Connect آمن ومشفر"}</p>
+                <p className="text-xs text-muted-foreground">{isAr ? isAr ? "تواصل آمن ومشفر" : "Secure & Encrypted Communication" : "Secure & Encrypted Connect"}</p>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function Messages() {
           <Card className="border-0 bg-card/50 backdrop-blur-sm overflow-hidden">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between mb-4">
-                <CardTitle className="text-lg">{isAr ? "المحادثات" : "[المحادثات]"}</CardTitle>
+                <CardTitle className="text-lg">{isAr ? isAr ? "المحادثات" : "Chats" : "[Chats]"}</CardTitle>
                 <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
                   <Plus className="w-4 h-4 ml-1" />
                   جديد
@@ -227,7 +227,7 @@ export default function Messages() {
               <div className="relative">
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="البحث في المحادثات..."
+                  placeholder={isAr ? "البحث في المحادثات..." : "Search Chats..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pr-10 bg-secondary/50"
@@ -237,9 +237,9 @@ export default function Messages() {
               {/* Tabs */}
               <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
                 <TabsList className="w-full bg-secondary/50">
-                  <TabsTrigger value="all" className="flex-1 text-xs">{isAr ? "الكل" : "[الكل]"}</TabsTrigger>
-                  <TabsTrigger value="investors" className="flex-1 text-xs">{isAr ? "مستثمرين" : "Investorين"}</TabsTrigger>
-                  <TabsTrigger value="innovators" className="flex-1 text-xs">{isAr ? "مبتكرين" : "Innovatorين"}</TabsTrigger>
+                  <TabsTrigger value="all" className="flex-1 text-xs">{isAr ? isAr ? "الكل" : "All" : "[All]"}</TabsTrigger>
+                  <TabsTrigger value="investors" className="flex-1 text-xs">{isAr ? isAr ? "مستثمرين" : "Investors" : "Investors"}</TabsTrigger>
+                  <TabsTrigger value="innovators" className="flex-1 text-xs">{isAr ? isAr ? "مبتكرين" : "Innovators" : "Innovators"}</TabsTrigger>
                 </TabsList>
               </Tabs>
             </CardHeader>
@@ -328,7 +328,7 @@ export default function Messages() {
                   <Video className="w-4 h-4" />
                 </Button>
                 <Link href="/calendar">
-                  <Button variant="ghost" size="icon" className="rounded-full" title="جدولة اجتماع">
+                  <Button variant="ghost" size="icon" className="rounded-full" title={isAr ? "جدولة اجتماع" : "Schedule Meeting"}>
                     <Calendar className="w-4 h-4" />
                   </Button>
                 </Link>
@@ -393,7 +393,7 @@ export default function Messages() {
                 
                 <div className="flex-1 relative">
                   <Input
-                    placeholder="اكتب رسالتك..."
+                    placeholder={isAr ? "اكتب رسالتك..." : "Type your message..."}
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}

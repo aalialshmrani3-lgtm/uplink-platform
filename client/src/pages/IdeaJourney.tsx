@@ -42,8 +42,8 @@ export default function IdeaJourney() {
       <div className="container mx-auto py-8">
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "الفكرة غير موجودة" : "الIdea غير موجودة"}</CardTitle>
-            <CardDescription>{isAr ? "لم يتم العثور على الفكرة المطلوبة" : "لم يDone العثور على الفكرة المطلوبة"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "الفكرة غير موجودة" : "Idea not found" : "Idea not found"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "لم يتم العثور على الفكرة المطلوبة" : "Requested idea not found" : "Requested idea not found"}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -103,10 +103,10 @@ export default function IdeaJourney() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {idea.status === "approved" && "مقبولة"}
-              {idea.status === "pending" && "قيد المراجعة"}
-              {idea.status === "revision_needed" && "بحاجة لتطوير"}
-              {idea.status === "rejected" && "مرفوضة"}
+              {idea.status === "approved" && isAr ? "مقبولة" : "Accepted"}
+              {idea.status === "pending" && isAr ? "قيد المراجعة" : "Under Review"}
+              {idea.status === "revision_needed" && isAr ? "بحاجة لتطوير" : "Needs Development"}
+              {idea.status === "rejected" && isAr ? "مرفوضة" : "Rejected"}
             </div>
           </CardContent>
         </Card>
@@ -114,14 +114,14 @@ export default function IdeaJourney() {
         {analysis && (
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">{isAr ? "الدرجة الإجمالية" : "الدرجة الTotalة"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "الدرجة الإجمالية" : "Total Score" : "Total Score"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{analysis.overallScore}%</div>
               <p className="text-sm text-muted-foreground">
-                {classification?.classificationPath === "innovation" && "مسار الابتكار"}
-                {classification?.classificationPath === "commercial" && "مسار تجاري"}
-                {classification?.classificationPath === "guidance" && "مسار التوجيه"}
+                {classification?.classificationPath === "innovation" && isAr ? "مسار الابتكار" : "Innovation Track"}
+                {classification?.classificationPath === "commercial" && isAr ? "مسار تجاري" : "Commercial Track"}
+                {classification?.classificationPath === "guidance" && isAr ? "مسار التوجيه" : "Mentorship Track"}
               </p>
             </CardContent>
           </Card>
@@ -130,7 +130,7 @@ export default function IdeaJourney() {
         {classification && (
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">{isAr ? "الشريك الاستراتيجي" : "الشريك اNoستراتيجي"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "الشريك الاستراتيجي" : "Strategic Partner" : "Strategic Partner"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -150,7 +150,7 @@ export default function IdeaJourney() {
             <GitBranch className="w-5 h-5" />
             رحلة الفكرة
           </CardTitle>
-          <CardDescription>{isAr ? "تتبع مسار فكرتك عبر منصة NAQLA" : "[تتبع مسار فكرتك عبر منصة NAQLA]"}</CardDescription>
+          <CardDescription>{isAr ? isAr ? "تتبع مسار فكرتك عبر منصة NAQLA" : "Track your idea on NAQLA platform" : "Track your idea on NAQLA platform"}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="relative space-y-8">
@@ -191,22 +191,22 @@ export default function IdeaJourney() {
                           <div><strong>{isAr ? "الفئة:" : "Category:"}</strong> {step.data.category}</div>
                         )}
                         {step.data.overallScore && (
-                          <div><strong>{isAr ? "الدرجة:" : "[الدرجة:]"}</strong> {step.data.overallScore}%</div>
+                          <div><strong>{isAr ? isAr ? "الدرجة:" : "Score:" : "Score:"}</strong> {step.data.overallScore}%</div>
                         )}
                         {step.data.classification && (
-                          <div><strong>{isAr ? "التصنيف:" : "[التصنيف:]"}</strong> {step.data.classification}</div>
+                          <div><strong>{isAr ? isAr ? "التصنيف:" : "Classification:" : "Classification:"}</strong> {step.data.classification}</div>
                         )}
                         {step.data.suggestedPartner && (
-                          <div><strong>{isAr ? "الشريك المقترح:" : "الPartner المقترح:"}</strong> {step.data.suggestedPartner}</div>
+                          <div><strong>{isAr ? isAr ? "الشريك المقترح:" : "Proposed Partner:" : "Proposed Partner:"}</strong> {step.data.suggestedPartner}</div>
                         )}
                         {step.data.choice && (
-                          <div><strong>{isAr ? "الاختيار:" : "اNoختيار:"}</strong> {step.data.choice === 'naqla2' ? 'NAQLA 2' : 'NAQLA 3'}</div>
+                          <div><strong>{isAr ? isAr ? "الاختيار:" : "Selection:" : "Selection:"}</strong> {step.data.choice === 'naqla2' ? 'NAQLA 2' : 'NAQLA 3'}</div>
                         )}
                         {step.data.projectId && (
-                          <div><strong>{isAr ? "رقم المشروع:" : "رقم Project:"}</strong> {step.data.projectId}</div>
+                          <div><strong>{isAr ? isAr ? "رقم المشروع:" : "Project No.:" : "Project No.:"}</strong> {step.data.projectId}</div>
                         )}
                         {step.data.assetId && (
-                          <div><strong>{isAr ? "رقم الأصل:" : "[رقم الأصل:]"}</strong> {step.data.assetId}</div>
+                          <div><strong>{isAr ? isAr ? "رقم الأصل:" : "Asset ID:" : "[Asset ID:]"}</strong> {step.data.assetId}</div>
                         )}
                       </div>
                     )}
@@ -229,7 +229,7 @@ export default function IdeaJourney() {
             <p className="text-sm text-muted-foreground">{idea.description}</p>
           </div>
           <div>
-            <h3 className="font-semibold mb-1">{isAr ? "المشكلة" : "[المشكلة]"}</h3>
+            <h3 className="font-semibold mb-1">{isAr ? isAr ? "المشكلة" : "Problem" : "[Problem]"}</h3>
             <p className="text-sm text-muted-foreground">{idea.problem}</p>
           </div>
           <div>
@@ -237,7 +237,7 @@ export default function IdeaJourney() {
             <p className="text-sm text-muted-foreground">{idea.solution}</p>
           </div>
           <div>
-            <h3 className="font-semibold mb-1">{isAr ? "السوق المستهدف" : "Market المستهدف"}</h3>
+            <h3 className="font-semibold mb-1">{isAr ? isAr ? "السوق المستهدف" : "Target Market" : "Target Market"}</h3>
             <p className="text-sm text-muted-foreground">{idea.targetMarket}</p>
           </div>
         </CardContent>

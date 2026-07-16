@@ -2,53 +2,57 @@ import { Rocket, Briefcase, Lightbulb, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function ClassificationPathsSection() {
+  const { language } = useLanguage();
+  const isAr = language === 'ar';
+
   const paths = [
     {
       icon: Rocket,
-      title: "مسار الابتكار",
+      title: "Innovation Path",
       subtitle: "Innovation Path",
       score: "≥70%",
-      description: "أفكار ابتكارية عالية الجودة تحصل على تسريع فوري + blockchain + تسجيل IP",
+      description: isAr
+        ? "أفكار ابتكارية عالية الجودة تحصل على تسريع فوري + blockchain + تسجيل IP"
+        : "High-quality innovative ideas receive immediate acceleration + blockchain + IP registration",
       color: "from-emerald-500 to-teal-600",
       bgColor: "bg-emerald-500/10",
       borderColor: "border-emerald-500/30",
-      features: [
-        "تسريع فوري في برامج الاحتضان",
-        "تسجيل blockchain للملكية الفكرية",
-        "دعم تسجيل براءات الاختراع"
-      ]
+      features: isAr
+        ? ["تسريع فوري في برامج الاحتضان", "تسجيل blockchain للملكية الفكرية", "دعم تسجيل براءات الاختراع"]
+        : ["Immediate acceleration in incubation programs", "Blockchain registration for intellectual property", "Patent registration support"]
     },
     {
       icon: Briefcase,
-      title: "مسار التجاري",
+      title: "Commercial Path",
       subtitle: "Commercial Path",
       score: "60-70%",
-      description: "حلول تجارية قابلة للتطبيق تحصل على دعم من الحاضنات والشركاء التجاريين",
+      description: isAr
+        ? "حلول تجارية قابلة للتطبيق تحصل على دعم من الحاضنات والشركاء التجاريين"
+        : "Viable commercial solutions receive support from incubators and commercial partners",
       color: "from-blue-500 to-indigo-600",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
-      features: [
-        "دعم من الحاضنات والمسرعات",
-        "ربط مع المستثمرين والشركات",
-        "استشارات تجارية متخصصة"
-      ]
+      features: isAr
+        ? ["دعم من الحاضنات والمسرعات", "ربط مع المستثمرين والشركات", "استشارات تجارية متخصصة"]
+        : ["Support from incubators and accelerators", "Connection with investors and companies", "Specialized commercial consulting"]
     },
     {
       icon: Lightbulb,
-      title: "مسار التوجيه",
+      title: "Guidance Path",
       subtitle: "Guidance Path",
-      score: "أقل من 60%",
-      description: "أفكار تحتاج تطوير تحصل على توجيه واقتراحات لتحسينها وإعادة تقديمها",
+      score: "Below 60%",
+      description: isAr
+        ? "أفكار تحتاج تطوير تحصل على توجيه واقتراحات لتحسينها وإعادة تقديمها"
+        : "Ideas needing development receive guidance and suggestions for improvement and resubmission",
       color: "from-orange-500 to-red-600",
       bgColor: "bg-orange-500/10",
       borderColor: "border-orange-500/30",
-      features: [
-        "تحليل تفصيلي نقاط القوة والضعف",
-        "اقتراحات محددة للتحسين",
-        "إمكانية إعادة التقديم بعد التطوير"
-      ]
+      features: isAr
+        ? ["تحليل تفصيلي نقاط القوة والضعف", "اقتراحات محددة للتحسين", "إمكانية إعادة التقديم بعد التطوير"]
+        : ["Detailed analysis of strengths and weaknesses", "Specific improvement suggestions", "Option to resubmit after development"]
     }
   ];
 
@@ -57,16 +61,18 @@ export function ClassificationPathsSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            مسارات التصنيف الذكي
+            {isAr ? "مسارات التصنيف الذكي" : "Smart Classification Paths"}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            نظام تقييم ذكي يصنف الأفكار تلقائياً إلى 3 مسارات بناءً على الجودة والجدوى
+            {isAr
+              ? "نظام تقييم ذكي يصنف الأفكار تلقائياً إلى 3 مسارات بناءً على الجودة والجدوى"
+              : "A smart evaluation system that automatically classifies ideas into 3 paths based on quality and viability"}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {paths.map((path, index) => (
-            <Card 
+            <Card
               key={index}
               className={`group hover:shadow-2xl transition-all duration-300 border ${path.borderColor} bg-card/50 backdrop-blur-sm hover:scale-105`}
             >
@@ -74,7 +80,7 @@ export function ClassificationPathsSection() {
                 <div className={`w-20 h-20 rounded-2xl ${path.bgColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform mx-auto`}>
                   <path.icon className="w-10 h-10 text-foreground" />
                 </div>
-                
+
                 <div className="text-center mb-4">
                   <div className={`inline-block px-4 py-2 rounded-full ${path.bgColor} mb-3`}>
                     <span dir="ltr" className={`text-lg font-bold bg-gradient-to-r ${path.color} bg-clip-text text-transparent`}>
@@ -105,7 +111,7 @@ export function ClassificationPathsSection() {
         <div className="text-center">
           <Link href="/classification-paths">
             <Button size="lg" className="gap-2">
-              استكشف المسارات
+              {isAr ? "استكشف المسارات" : "Explore Paths"}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>

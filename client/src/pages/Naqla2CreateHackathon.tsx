@@ -93,7 +93,7 @@ export default function Naqla2CreateHackathon() {
         {/* Form */}
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">{isAr ? "معلومات الهاكاثون" : "Information الهاكاثون"}</CardTitle>
+            <CardTitle className="text-white">{isAr ? isAr ? "معلومات الهاكاثون" : "Hackathon Info" : "Hackathon Info"}</CardTitle>
             <CardDescription className="text-slate-400">
               املأ التفاصيل الأساسية للهاكاثون
             </CardDescription>
@@ -102,12 +102,12 @@ export default function Naqla2CreateHackathon() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Title */}
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-white">{isAr ? "عنوان الهاكاثون *" : "[عنوان الهاكاثون *]"}</Label>
+                <Label htmlFor="title" className="text-white">{isAr ? isAr ? "عنوان الهاكاثون *" : "Hackathon Title *" : "Hackathon Title *"}</Label>
                 <Input
                   id="title"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="مثال: هاكاثون الذكاء الاصطناعي 2024"
+                  placeholder={isAr ? "مثال: هاكاثون الذكاء الاصطناعي 2024" : "Example: AI Hackathon 2024"}
                   required
                   className="bg-slate-950/50 border-slate-700 text-white"
                 />
@@ -120,7 +120,7 @@ export default function Naqla2CreateHackathon() {
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="وصف تفصيلي للهاكاثون والأهداف والجوائز..."
+                  placeholder={isAr ? "وصف تفصيلي للهاكاثون والأهداف والجوائز..." : "Detailed description of the hackathon, goals, prizes..."}
                   required
                   rows={6}
                   className="bg-slate-950/50 border-slate-700 text-white"
@@ -164,8 +164,8 @@ export default function Naqla2CreateHackathon() {
                 <div className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-blue-500" />
                   <div>
-                    <Label htmlFor="isVirtual" className="text-white">{isAr ? "هاكاثون افتراضي" : "[هاكاثون افتراضي]"}</Label>
-                    <p className="text-sm text-slate-400">{isAr ? "سيتم عقده عبر الإنترنت" : "سيDone عقده عبر الإنترنت"}</p>
+                    <Label htmlFor="isVirtual" className="text-white">{isAr ? isAr ? "هاكاثون افتراضي" : "Virtual Hackathon" : "Virtual Hackathon"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? isAr ? "سيتم عقده عبر الإنترنت" : "Will be held online" : "Will be held online"}</p>
                   </div>
                 </div>
                 <Switch
@@ -186,7 +186,7 @@ export default function Naqla2CreateHackathon() {
                     id="location"
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    placeholder="مثال: الرياض، السعودية"
+                    placeholder={isAr ? "مثال: الرياض، السعودية" : "Example: Riyadh, Saudi Arabia"}
                     className="bg-slate-950/50 border-slate-700 text-white"
                   />
                 </div>
@@ -228,8 +228,8 @@ export default function Naqla2CreateHackathon() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 rounded-lg bg-slate-950/50 border border-slate-700">
                   <div>
-                    <Label htmlFor="needSponsors" className="text-white">{isAr ? "نحتاج رعاة" : "[نحتاج رعاة]"}</Label>
-                    <p className="text-sm text-slate-400">{isAr ? "هل تبحث عن رعاة للهاكاثون؟" : "هل تSearch عن رعاة للهاكاثون؟"}</p>
+                    <Label htmlFor="needSponsors" className="text-white">{isAr ? isAr ? "نحتاج رعاة" : "Need Sponsors" : "Need Sponsors"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? isAr ? "هل تبحث عن رعاة للهاكاثون؟" : "Looking for hackathon sponsors?" : "Looking for hackathon sponsors?"}</p>
                   </div>
                   <Switch
                     id="needSponsors"
@@ -239,8 +239,8 @@ export default function Naqla2CreateHackathon() {
                 </div>
                 <div className="flex items-center justify-between p-4 rounded-lg bg-slate-950/50 border border-slate-700">
                   <div>
-                    <Label htmlFor="needInnovators" className="text-white">{isAr ? "نحتاج مبتكرين" : "نحتاج Innovatorين"}</Label>
-                    <p className="text-sm text-slate-400">{isAr ? "هل تبحث عن مبتكرين للمشاركة؟" : "هل تبحث عن مبتكرين للShare؟"}</p>
+                    <Label htmlFor="needInnovators" className="text-white">{isAr ? isAr ? "نحتاج مبتكرين" : "Need Innovators" : "Need Innovators"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? isAr ? "هل تبحث عن مبتكرين للمشاركة؟" : "Looking for innovators to participate?" : "Looking for innovators to participate?"}</p>
                   </div>
                   <Switch
                     id="needInnovators"

@@ -91,7 +91,7 @@ export default function Naqla2CreateEvent() {
 
         <Card className="bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-white">{isAr ? "معلومات الفعالية" : "Information الفعالية"}</CardTitle>
+            <CardTitle className="text-white">{isAr ? isAr ? "معلومات الفعالية" : "Event Info" : "Event Info"}</CardTitle>
             <CardDescription className="text-slate-400">
               املأ التفاصيل الأساسية للفعالية
             </CardDescription>
@@ -99,26 +99,26 @@ export default function Naqla2CreateEvent() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="type" className="text-white">{isAr ? "نوع الفعالية *" : "[نوع الفعالية *]"}</Label>
+                <Label htmlFor="type" className="text-white">{isAr ? isAr ? "نوع الفعالية *" : "Event Type *" : "Event Type *"}</Label>
                 <Select value={formData.type} onValueChange={(v) => setFormData({ ...formData, type: v as any })}>
                   <SelectTrigger className="bg-slate-950/50 border-slate-700 text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="workshop">{isAr ? "ورشة عمل" : "[ورشة عمل]"}</SelectItem>
-                    <SelectItem value="conference">{isAr ? "مؤتمر" : "مؤDoneر"}</SelectItem>
-                    <SelectItem value="hackathon">{isAr ? "هاكاثون" : "[هاكاثون]"}</SelectItem>
+                    <SelectItem value="workshop">{isAr ? isAr ? "ورشة عمل" : "Workshop" : "Workshop"}</SelectItem>
+                    <SelectItem value="conference">{isAr ? isAr ? "مؤتمر" : "Conference" : "Conference"}</SelectItem>
+                    <SelectItem value="hackathon">{isAr ? isAr ? "هاكاثون" : "Hackathon" : "Hackathon"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="title" className="text-white">{isAr ? "عنوان الفعالية *" : "[عنوان الفعالية *]"}</Label>
+                <Label htmlFor="title" className="text-white">{isAr ? isAr ? "عنوان الفعالية *" : "Event Title *" : "Event Title *"}</Label>
                 <Input
                   id="title"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="مثال: ورشة عمل الابتكار الرقمي"
+                  placeholder={isAr ? "مثال: ورشة عمل الابتكار الرقمي" : "Example: Digital Innovation Workshop"}
                   required
                   className="bg-slate-950/50 border-slate-700 text-white"
                 />
@@ -130,7 +130,7 @@ export default function Naqla2CreateEvent() {
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="وصف تفصيلي للفعالية..."
+                  placeholder={isAr ? "وصف تفصيلي للفعالية..." : "Detailed event description..."}
                   required
                   rows={6}
                   className="bg-slate-950/50 border-slate-700 text-white"
@@ -172,8 +172,8 @@ export default function Naqla2CreateEvent() {
                 <div className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-blue-500" />
                   <div>
-                    <Label htmlFor="isVirtual" className="text-white">{isAr ? "فعالية افتراضية" : "[فعالية افتراضية]"}</Label>
-                    <p className="text-sm text-slate-400">{isAr ? "سيتم عقدها عبر الإنترنت" : "سيDone عقدها عبر الإنترنت"}</p>
+                    <Label htmlFor="isVirtual" className="text-white">{isAr ? isAr ? "فعالية افتراضية" : "Virtual Event" : "Virtual Event"}</Label>
+                    <p className="text-sm text-slate-400">{isAr ? isAr ? "سيتم عقدها عبر الإنترنت" : "Will be held online" : "Will be held online"}</p>
                   </div>
                 </div>
                 <Switch
@@ -193,7 +193,7 @@ export default function Naqla2CreateEvent() {
                     id="location"
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    placeholder="مثال: الرياض، السعودية"
+                    placeholder={isAr ? "مثال: الرياض، السعودية" : "Example: Riyadh, Saudi Arabia"}
                     className="bg-slate-950/50 border-slate-700 text-white"
                   />
                 </div>

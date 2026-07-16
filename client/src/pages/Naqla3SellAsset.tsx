@@ -41,8 +41,8 @@ export default function Naqla3SellAsset() {
     setIsSubmitting(false);
     setIsSuccess(true);
 
-    toast.success(isAr ? "تم إرسال الطلب بنجاح!" : "Request submitted successfully!", {
-      description: isAr ? "سيتم مراجعة طلبك والتواصل معك قريباً" : "Your request will be reviewed and we will contact you soon",
+    toast.success(isAr ? "تم إرسال الطلب بنجاح!" : "Request Sent Successfully!", {
+      description: "Your request will be reviewed and we'll contact you soon.",
     });
 
     // Redirect after 3 seconds
@@ -59,15 +59,15 @@ export default function Naqla3SellAsset() {
             <div className="mx-auto mb-4">
               <CheckCircle2 className="w-16 h-16 text-green-500" />
             </div>
-            <CardTitle className="text-2xl">{isAr ? "تم إرسال الطلب بنجاح!" : "Request Submitted Successfully!"}</CardTitle>
+            <CardTitle className="text-2xl">{isAr ? "تم إرسال الطلب بنجاح!" : "Request Sent Successfully!"}</CardTitle>
             <CardDescription>
-              {isAr ? "سيتم مراجعة طلبك من قبل فريقنا والتواصل معك قريباً" : "Your request will be reviewed by our team and we will contact you soon"}
+              {isAr ? "سيتم مراجعة طلبك من قبل فريقنا والتواصل معك قريباً" : "Our team will review your request and contact you soon."}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/naqla3/marketplace">
               <Button className="w-full">
-                {isAr ? "العودة إلى البورصة" : "Return to Exchange"}
+                {isAr ? "العودة إلى البورصة" : "Back to Exchange"}
               </Button>
             </Link>
           </CardContent>
@@ -84,14 +84,14 @@ export default function Naqla3SellAsset() {
           <Link href="/naqla3/marketplace">
             <Button variant="ghost" className="mb-6">
               <ArrowLeft className="w-4 h-4 ml-2" />
-              {isAr ? "العودة إلى البورصة" : "Return to Exchange"}
+              {isAr ? "العودة إلى البورصة" : "Back to Exchange"}
             </Button>
           </Link>
 
           <div>
-            <h1 className="text-4xl font-bold mb-4">{isAr ? "عرض أصل للبيع" : "List Asset for Sale"}</h1>
+            <h1 className="text-4xl font-bold mb-4">{isAr ? "عرض أصل للبيع" : "List an Asset for Sale"}</h1>
             <p className="text-xl text-muted-foreground">
-              {isAr ? "قم بعرض ترخيصك، منتجك، أو شركتك للبيع في بورصة الابتكار" : "List your license, product, or company for sale on the Innovation Exchange"}
+              {isAr ? "قم بعرض ترخيصك، منتجك، أو شركتك للبيع في بورصة الابتكار" : "List your license, product, or company for sale on the Innovation Exchange."}
             </p>
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function Naqla3SellAsset() {
             <Card>
               <CardHeader>
                 <CardTitle>{isAr ? "نوع الأصل" : "Asset Type"}</CardTitle>
-                <CardDescription>{isAr ? "اختر نوع الأصل الذي تريد عرضه للبيع" : "Choose the type of asset you want to list for sale"}</CardDescription>
+                <CardDescription>{isAr ? "اختر نوع الأصل الذي تريد عرضه للبيع" : "Select the asset type you want to list for sale."}</CardDescription>
               </CardHeader>
               <CardContent>
                 <RadioGroup
@@ -122,7 +122,7 @@ export default function Naqla3SellAsset() {
                       <div className="text-3xl mb-2">📜</div>
                       <div className="font-semibold">{isAr ? "ترخيص" : "License"}</div>
                       <div className="text-sm text-muted-foreground mt-1">
-                        {isAr ? "ترخيص تقنية أو براءة اختراع" : "Technology license or patent"}
+                        {isAr ? "ترخيص تقنية أو براءة اختراع" : "Technology or Patent License"}
                       </div>
                     </div>
                   </Label>
@@ -136,7 +136,7 @@ export default function Naqla3SellAsset() {
                       <div className="text-3xl mb-2">📦</div>
                       <div className="font-semibold">{isAr ? "منتج" : "Product"}</div>
                       <div className="text-sm text-muted-foreground mt-1">
-                        {isAr ? "منتج تقني أو برمجي" : "Technical or software product"}
+                        {isAr ? "منتج تقني أو برمجي" : "Tech or Software Product"}
                       </div>
                     </div>
                   </Label>
@@ -150,7 +150,7 @@ export default function Naqla3SellAsset() {
                       <div className="text-3xl mb-2">🏢</div>
                       <div className="font-semibold">{isAr ? "استحواذ" : "Acquisition"}</div>
                       <div className="text-sm text-muted-foreground mt-1">
-                        {isAr ? "شركة ناشئة أو مشروع" : "Startup or project"}
+                        {isAr ? "شركة ناشئة أو مشروع" : "Startup or Project"}
                       </div>
                     </div>
                   </Label>
@@ -162,14 +162,14 @@ export default function Naqla3SellAsset() {
             <Card>
               <CardHeader>
                 <CardTitle>{isAr ? "المعلومات الأساسية" : "Basic Information"}</CardTitle>
-                <CardDescription>{isAr ? "أدخل تفاصيل الأصل الذي تريد عرضه" : "Enter the details of the asset you want to list"}</CardDescription>
+                <CardDescription>{isAr ? "أدخل تفاصيل الأصل الذي تريد عرضه" : "Enter details for the asset you want to list."}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="title">{isAr ? "العنوان *" : "Title *"}</Label>
                   <Input
                     id="title"
-                    placeholder={isAr ? "مثال: ترخيص تقنية الذكاء الاصطناعي للطاقة" : "Example: AI Technology License for Energy"}
+                    placeholder={isAr ? "مثال: ترخيص تقنية الذكاء الاصطناعي للطاقة" : "Example: AI Energy Technology License"}
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     required
@@ -192,7 +192,7 @@ export default function Naqla3SellAsset() {
                   <Label htmlFor="category">{isAr ? "الفئة *" : "Category *"}</Label>
                   <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
                     <SelectTrigger>
-                      <SelectValue placeholder={isAr ? "اختر الفئة" : "Select category"} />
+                      <SelectValue placeholder={isAr ? "اختر الفئة" : "Select Category"} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="ai-ml">AI & ML</SelectItem>
@@ -215,7 +215,7 @@ export default function Naqla3SellAsset() {
             <Card>
               <CardHeader>
                 <CardTitle>{isAr ? "التسعير" : "Pricing"}</CardTitle>
-                <CardDescription>{isAr ? "حدد سعر الأصل ونوع الدفع" : "Set the asset price and payment type"}</CardDescription>
+                <CardDescription>{isAr ? "حدد سعر الأصل ونوع الدفع" : "Set asset price and payment type."}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -234,12 +234,12 @@ export default function Naqla3SellAsset() {
                   <Label htmlFor="priceType">{isAr ? "نوع الدفع *" : "Payment Type *"}</Label>
                   <Select value={formData.priceType} onValueChange={(value) => setFormData({ ...formData, priceType: value })}>
                     <SelectTrigger>
-                      <SelectValue placeholder={isAr ? "اختر نوع الدفع" : "Select payment type"} />
+                      <SelectValue placeholder={isAr ? "اختر نوع الدفع" : "Select Payment Type"} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="one-time">{isAr ? "دفعة واحدة" : "One-time"}</SelectItem>
+                      <SelectItem value="one-time">{isAr ? "دفعة واحدة" : "One-time Payment"}</SelectItem>
                       <SelectItem value="monthly">{isAr ? "شهري" : "Monthly"}</SelectItem>
-                      <SelectItem value="yearly">{isAr ? "سنوي" : "Yearly"}</SelectItem>
+                      <SelectItem value="yearly">{isAr ? "سنوي" : "Annually"}</SelectItem>
                       <SelectItem value="negotiable">{isAr ? "قابل للتفاوض" : "Negotiable"}</SelectItem>
                     </SelectContent>
                   </Select>
@@ -250,7 +250,7 @@ export default function Naqla3SellAsset() {
             {/* Contact Information */}
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "معلومات التواصل" : "Contact Information"}</CardTitle>
+                <CardTitle>{isAr ? "معلومات التواصل" : "Contact Info"}</CardTitle>
                 <CardDescription>{isAr ? "كيف يمكن للمشترين المحتملين التواصل معك؟" : "How can potential buyers contact you?"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -291,7 +291,7 @@ export default function Naqla3SellAsset() {
                 <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary/50 transition-colors cursor-pointer">
                   <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                   <p className="text-sm text-muted-foreground mb-2">
-                    {isAr ? "اسحب وأفلت الملفات هنا، أو انقر للاختيار" : "Drag and drop files here, or click to select"}
+                    {isAr ? "اسحب وأفلت الملفات هنا، أو انقر للاختيار" : "Drag & drop files here, or click to browse"}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {isAr ? "PDF, DOC, DOCX (حتى 10 MB)" : "PDF, DOC, DOCX (up to 10 MB)"}
@@ -319,7 +319,7 @@ export default function Naqla3SellAsset() {
                 className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? (isAr ? "جاري الإرسال..." : "Submitting...") : (isAr ? "عرض للبيع" : "List for Sale")}
+                {isSubmitting ? (isAr ? "جاري الإرسال..." : "Submitting...") : (isAr ? "عرض للبيع" : "Offer for Sale")}
               </Button>
             </div>
           </form>

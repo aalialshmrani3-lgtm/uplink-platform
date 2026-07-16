@@ -98,7 +98,7 @@ export default function Naqla3ContractDetail() {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center p-4">
         <Card className="w-full max-w-md bg-slate-900/50 backdrop-blur-xl border-slate-800">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">{isAr ? "تسجيل الدخول مطلوب" : "Login مطلوب"}</CardTitle>
+            <CardTitle className="text-2xl text-center">{isAr ? isAr ? "تسجيل الدخول مطلوب" : "Login Required" : "Login Required"}</CardTitle>
             <CardDescription className="text-center">
               يرجى تسجيل الدخول لعرض تفاصيل العقد
             </CardDescription>
@@ -146,15 +146,15 @@ export default function Naqla3ContractDetail() {
               <div className="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg">
                 <Users className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-slate-400">{isAr ? "الأطراف" : "[الأطراف]"}</p>
-                  <p className="font-semibold text-white">{isAr ? "مبتكر + مستثمر" : "مبتكر + Investor"}</p>
+                  <p className="text-sm text-slate-400">{isAr ? isAr ? "الأطراف" : "Parties" : "Parties"}</p>
+                  <p className="font-semibold text-white">{isAr ? isAr ? "مبتكر + مستثمر" : "Innovator + Investor" : "Innovator + Investor"}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg">
                 <DollarSign className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-slate-400">{isAr ? "المبلغ الإجمالي" : "Amount الإجمالي"}</p>
+                  <p className="text-sm text-slate-400">{isAr ? isAr ? "المبلغ الإجمالي" : "Total Amount" : "Total Amount"}</p>
                   <p className="font-semibold text-white">10,000 MATIC</p>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function Naqla3ContractDetail() {
               <div className="flex items-center gap-3 p-4 bg-slate-800/50 rounded-lg">
                 <Calendar className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-slate-400">{isAr ? "تاريخ الإنشاء" : "[تاريخ الإنشاء]"}</p>
+                  <p className="text-sm text-slate-400">{isAr ? isAr ? "تاريخ الإنشاء" : "Creation Date" : "Creation Date"}</p>
                   <p className="font-semibold text-white">
                     {new Date().toLocaleDateString('ar-SA')}
                   </p>
@@ -218,7 +218,7 @@ export default function Naqla3ContractDetail() {
             ) : (
               <div className="text-center py-12 text-slate-400">
                 <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>{isAr ? "لا توجد مراحل لهذا العقد" : "No توجد مراحل لهذا العقد"}</p>
+                <p>{isAr ? isAr ? "لا توجد مراحل لهذا العقد" : "No Stages for this Contract" : "No Stages for this Contract"}</p>
               </div>
             )}
           </CardContent>

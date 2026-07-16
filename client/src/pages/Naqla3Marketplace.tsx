@@ -18,9 +18,9 @@ const mockAssetsOld = [
   {
     id: 1,
     type: "license",
-    title: "ترخيص تقنية الذكاء الاصطناعي للطاقة",
-    description: "تقنية متقدمة لتحسين كفاءة استهلاك الطاقة باستخدام الذكاء الاصطناعي",
-    owner: "شركة تقنية الابتكار",
+    title: "AI Energy Tech License",
+    description: "Advanced AI tech for energy efficiency",
+    owner: "Innovation Tech Co.",
     price: 50000,
     priceType: "yearly",
     rating: 4.9,
@@ -32,9 +32,9 @@ const mockAssetsOld = [
   {
     id: 2,
     type: "license",
-    title: "ترخيص خوارزمية التشفير المتقدم",
-    description: "خوارزمية تشفير عالية الأمان للبيانات الحساسة",
-    owner: "مجموعة الأمن السيبراني",
+    title: "Advanced Encryption Algorithm License",
+    description: "High-security encryption for sensitive data",
+    owner: "Cybersecurity Group",
     price: 30000,
     priceType: "yearly",
     rating: 4.8,
@@ -46,9 +46,9 @@ const mockAssetsOld = [
   {
     id: 3,
     type: "product",
-    title: "نظام إدارة المخزون الذكي",
-    description: "حل متكامل لإدارة المخزون مع تحليلات متقدمة",
-    owner: "شركة الحلول التقنية",
+    title: "Smart Inventory Management System",
+    description: "Integrated inventory solution with advanced analytics",
+    owner: "Tech Solutions Co.",
     price: 75000,
     priceType: "one-time",
     rating: 4.7,
@@ -60,9 +60,9 @@ const mockAssetsOld = [
   {
     id: 4,
     type: "product",
-    title: "تطبيق التجارة الإلكترونية الجاهز",
-    description: "تطبيق متكامل للتجارة الإلكترونية مع لوحة تحكم",
-    owner: "مجموعة التطوير السريع",
+    title: "Ready-made E-commerce App",
+    description: "Full e-commerce app with admin panel",
+    owner: "Rapid Development Group",
     price: 120000,
     priceType: "one-time",
     rating: 4.9,
@@ -74,9 +74,9 @@ const mockAssetsOld = [
   {
     id: 5,
     type: "acquisition",
-    title: "شركة ناشئة في مجال التقنية المالية",
-    description: "شركة ناشئة بـ 50 عميل نشط وإيرادات شهرية 100 ألف ريال",
-    owner: "مؤسسو فينتك",
+    title: "Fintech Startup",
+    description: "Startup with 50 active clients, 100K SAR MRR",
+    owner: "Fintech Founders",
     price: 2500000,
     priceType: "one-time",
     rating: 4.6,
@@ -88,9 +88,9 @@ const mockAssetsOld = [
   {
     id: 6,
     type: "acquisition",
-    title: "استحواذ على منصة التعليم الإلكتروني",
-    description: "منصة تعليمية مع 10,000 مستخدم نشط",
-    owner: "مجموعة التعليم الرقمي",
+    title: "E-learning Platform Acquisition",
+    description: "Educational platform with 10,000 active users",
+    owner: "Digital Education Group",
     price: 3800000,
     priceType: "one-time",
     rating: 4.8,
@@ -119,9 +119,9 @@ export default function Naqla3Marketplace() {
 
   const getTypeLabel = (type: string) => {
     switch (type) {
-      case "license": return "ترخيص";
-      case "product": return "منتج";
-      case "acquisition": return "استحواذ";
+      case "license": return isAr ? "ترخيص" : "License";
+      case "product": return isAr ? "منتج" : "Product";
+      case "acquisition": return isAr ? "استحواذ" : "Acquisition";
       default: return type;
     }
   };
@@ -149,7 +149,7 @@ export default function Naqla3Marketplace() {
 
           <div className="flex items-center justify-between gap-6 mb-8">
             <div>
-              <h1 className="text-4xl font-bold mb-4">{isAr ? "بورصة الابتكار" : "بورصة اNoبتكار"}</h1>
+              <h1 className="text-4xl font-bold mb-4">{isAr ? isAr ? "بورصة الابتكار" : "Innovation Exchange" : "Innovation Exchange"}</h1>
               <p className="text-xl text-muted-foreground">
                 تصفح واشترِ التراخيص، المنتجات، والشركات الناشئة
               </p>
@@ -167,7 +167,7 @@ export default function Naqla3Marketplace() {
             <div className="flex-1 relative">
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="ابحث عن تراخيص، منتجات، أو شركات..."
+                placeholder={isAr ? "ابحث عن تراخيص، منتجات، أو شركات..." : "Search licenses, products, or companies..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pr-10"
@@ -176,19 +176,19 @@ export default function Naqla3Marketplace() {
 
             <Select value={selectedType} onValueChange={setSelectedType}>
               <SelectTrigger className="w-full md:w-[200px]">
-                <SelectValue placeholder="نوع الأصل" />
+                <SelectValue placeholder={isAr ? "نوع الأصل" : "Asset Type"} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">{isAr ? "جميع الأنواع" : "[جميع الأنواع]"}</SelectItem>
-                <SelectItem value="license">{isAr ? "تراخيص" : "[تراخيص]"}</SelectItem>
+                <SelectItem value="all">{isAr ? isAr ? "جميع الأنواع" : "All Types" : "[All Types]"}</SelectItem>
+                <SelectItem value="license">{isAr ? isAr ? "تراخيص" : "Licenses" : "[Licenses]"}</SelectItem>
                 <SelectItem value="product">{isAr ? "منتجات" : "Products"}</SelectItem>
-                <SelectItem value="acquisition">{isAr ? "استحواذ" : "[استحواذ]"}</SelectItem>
+                <SelectItem value="acquisition">{isAr ? isAr ? "استحواذ" : "Acquisition" : "[Acquisition]"}</SelectItem>
               </SelectContent>
             </Select>
 
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
               <SelectTrigger className="w-full md:w-[200px]">
-                <SelectValue placeholder="الفئة" />
+                <SelectValue placeholder={isAr ? "الفئة" : "Category"} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{isAr ? "جميع الفئات" : "All Categories"}</SelectItem>
@@ -211,7 +211,7 @@ export default function Naqla3Marketplace() {
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-              <p className="text-muted-foreground">{isAr ? "جاري تحميل الأصول..." : "جاري Download الأصول..."}</p>
+              <p className="text-muted-foreground">{isAr ? isAr ? "جاري تحميل الأصول..." : "Loading Assets..." : "Downloading Assets..."}</p>
             </div>
           </div>
         )}
@@ -223,25 +223,25 @@ export default function Naqla3Marketplace() {
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-purple-600 mb-1">5,000+</div>
-              <div className="text-sm text-muted-foreground">{isAr ? "أصل معروض" : "أصل مOffers"}</div>
+              <div className="text-sm text-muted-foreground">{isAr ? isAr ? "أصل معروض" : "Asset Offered" : "Asset Offered"}</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-green-600 mb-1">2,000+</div>
-              <div className="text-sm text-muted-foreground">{isAr ? "صفقة مكتملة" : "صفقة مكDoneلة"}</div>
+              <div className="text-sm text-muted-foreground">{isAr ? isAr ? "صفقة مكتملة" : "Deal Completed" : "Deal Completed"}</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-blue-600 mb-1">100M+</div>
-              <div className="text-sm text-muted-foreground">{isAr ? "ريال معاملات" : "ريال معامNoت"}</div>
+              <div className="text-sm text-muted-foreground">{isAr ? isAr ? "ريال معاملات" : "Transaction Riyals" : "Transaction Riyals"}</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6">
               <div className="text-3xl font-bold text-yellow-600 mb-1">99%</div>
-              <div className="text-sm text-muted-foreground">{isAr ? "معدل الأمان" : "Rate الأمان"}</div>
+              <div className="text-sm text-muted-foreground">{isAr ? isAr ? "معدل الأمان" : "Security Rate" : "Security Rate"}</div>
             </CardContent>
           </Card>
         </div>
@@ -273,7 +273,7 @@ export default function Naqla3Marketplace() {
                           {getTypeLabel(asset.type)}
                         </Badge>
                         <Badge variant={asset.status === "active" ? "default" : "secondary"}>
-                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
+                          {asset.status === "active" ? isAr ? "متاح" : "Available" : "Under Negotiation"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -284,7 +284,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? isAr ? "المالك" : "Owner" : "[Owner]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -294,7 +294,7 @@ export default function Naqla3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {"دفعة واحدة"}
+                              {isAr ? "دفعة واحدة" : "One-time Payment"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
@@ -335,7 +335,7 @@ export default function Naqla3Marketplace() {
                           {getTypeLabel(asset.type)}
                         </Badge>
                         <Badge variant={asset.status === "active" ? "default" : "secondary"}>
-                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
+                          {asset.status === "active" ? isAr ? "متاح" : "Available" : "Under Negotiation"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -346,7 +346,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? isAr ? "المالك" : "Owner" : "[Owner]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -356,7 +356,7 @@ export default function Naqla3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {"دفعة واحدة"}
+                              {isAr ? "دفعة واحدة" : "One-time Payment"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
@@ -397,7 +397,7 @@ export default function Naqla3Marketplace() {
                           {getTypeLabel(asset.type)}
                         </Badge>
                         <Badge variant={asset.status === "active" ? "default" : "secondary"}>
-                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
+                          {asset.status === "active" ? isAr ? "متاح" : "Available" : "Under Negotiation"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -408,7 +408,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? isAr ? "المالك" : "Owner" : "[Owner]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -418,7 +418,7 @@ export default function Naqla3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {"دفعة واحدة"}
+                              {isAr ? "دفعة واحدة" : "One-time Payment"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
@@ -459,7 +459,7 @@ export default function Naqla3Marketplace() {
                           {getTypeLabel(asset.type)}
                         </Badge>
                         <Badge variant={asset.status === "active" ? "default" : "secondary"}>
-                          {asset.status === "active" ? "متاح" : "قيد التفاوض"}
+                          {asset.status === "active" ? isAr ? "متاح" : "Available" : "Under Negotiation"}
                         </Badge>
                       </div>
                       <CardTitle className="text-lg line-clamp-2">{asset.title}</CardTitle>
@@ -470,7 +470,7 @@ export default function Naqla3Marketplace() {
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-muted-foreground mb-1">{isAr ? "المالك" : "[المالك]"}</p>
+                          <p className="text-sm text-muted-foreground mb-1">{isAr ? isAr ? "المالك" : "Owner" : "[Owner]"}</p>
                           <p className="font-medium">{asset.ownerId}</p>
                         </div>
 
@@ -480,7 +480,7 @@ export default function Naqla3Marketplace() {
                               {asset.price.toLocaleString()} ريال
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {"دفعة واحدة"}
+                              {isAr ? "دفعة واحدة" : "One-time Payment"}
                             </p>
                           </div>
                           <div className="flex items-center gap-1">
@@ -512,7 +512,7 @@ export default function Naqla3Marketplace() {
         {filteredAssets.length === 0 && (
           <Card className="text-center py-12">
             <CardContent>
-              <p className="text-muted-foreground mb-4">{isAr ? "لم يتم العثور على نتائج" : "لم يDone العثور على نتائج"}</p>
+              <p className="text-muted-foreground mb-4">{isAr ? isAr ? "لم يتم العثور على نتائج" : "No Results Found" : "No Results Found"}</p>
               <Button variant="outline" onClick={() => {
                 setSearchQuery("");
                 setSelectedType("all");

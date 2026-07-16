@@ -22,7 +22,7 @@ export default function AnalyticsDashboard() {
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <Activity className="h-12 w-12 animate-spin mx-auto mb-4 text-primary" />
-            <p className="text-muted-foreground">{isAr ? "جارٍ تحميل التحليلات..." : "Loading analytics..."}</p>
+            <p className="text-muted-foreground">{isAr ? "جارٍ تحميل التحليلات..." : "Loading Analytics..."}</p>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@ export default function AnalyticsDashboard() {
     return (
       <div className="container mx-auto py-8" dir={isAr ? "rtl" : "ltr"}>
         <div className="text-center">
-          <p className="text-muted-foreground">{isAr ? "لا توجد بيانات متاحة" : "No data available"}</p>
+          <p className="text-muted-foreground">{isAr ? "لا توجد بيانات متاحة" : "No Data Available"}</p>
         </div>
       </div>
     );
@@ -90,13 +90,13 @@ export default function AnalyticsDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{isAr ? "إجمالي التحليلات" : "Total Analyses"}</CardTitle>
+            <CardTitle className="text-sm font-medium">{isAr ? "إجمالي التحليلات" : "Total Analytics"}</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{analytics.analysisStats.total}</div>
             <p className="text-xs text-muted-foreground">
-              {isAr ? "متوسط ICI:" : "Avg ICI:"} {analytics.analysisStats.avgIci.toFixed(1)}
+              {isAr ? "متوسط ICI:" : "Avg. ICI:"} {analytics.analysisStats.avgIci.toFixed(1)}
             </p>
           </CardContent>
         </Card>
@@ -151,7 +151,7 @@ export default function AnalyticsDashboard() {
       <Tabs defaultValue="feedback" className="space-y-4">
         <TabsList>
           <TabsTrigger value="feedback">{isAr ? "اتجاهات الملاحظات" : "Feedback Trends"}</TabsTrigger>
-          <TabsTrigger value="analysis">{isAr ? "إحصائيات التحليلات" : "Analysis Statistics"}</TabsTrigger>
+          <TabsTrigger value="analysis">{isAr ? "إحصائيات التحليلات" : "Analytics Statistics"}</TabsTrigger>
           <TabsTrigger value="predictions">{isAr ? "دقة التنبؤات" : "Prediction Accuracy"}</TabsTrigger>
         </TabsList>
 
@@ -160,7 +160,7 @@ export default function AnalyticsDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>{isAr ? "الملاحظات حسب النوع" : "Feedback by Type"}</CardTitle>
-                <CardDescription>{isAr ? "توزيع الملاحظات على الميزات المختلفة" : "Distribution of feedback across different features"}</CardDescription>
+                <CardDescription>{isAr ? "توزيع الملاحظات على الميزات المختلفة" : "Distribution of feedback across features"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
@@ -179,7 +179,7 @@ export default function AnalyticsDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>{isAr ? "التقييمات" : "Ratings"}</CardTitle>
-                <CardDescription>{isAr ? "توزيع تقييمات المستخدمين" : "Distribution of user ratings"}</CardDescription>
+                <CardDescription>{isAr ? "توزيع تقييمات المستخدمين" : "User Ratings Distribution"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
@@ -208,7 +208,7 @@ export default function AnalyticsDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>{isAr ? "ملخص الملاحظات" : "Feedback Summary"}</CardTitle>
-              <CardDescription>{isAr ? "نظرة عامة على أداء النظام" : "Overview of system performance"}</CardDescription>
+              <CardDescription>{isAr ? "نظرة عامة على أداء النظام" : "System Performance Overview"}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -246,7 +246,7 @@ export default function AnalyticsDashboard() {
           <div className="grid gap-4 md:grid-cols-3">
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "متوسط ICI Score" : "Avg ICI Score"}</CardTitle>
+                <CardTitle>{isAr ? "متوسط ICI Score" : "Avg. ICI Score"}</CardTitle>
                 <CardDescription>Innovation Confidence Index</CardDescription>
               </CardHeader>
               <CardContent>
@@ -261,7 +261,7 @@ export default function AnalyticsDashboard() {
 
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "متوسط IRL Score" : "Avg IRL Score"}</CardTitle>
+                <CardTitle>{isAr ? "متوسط IRL Score" : "Avg. IRL Score"}</CardTitle>
                 <CardDescription>Investor Readiness Level</CardDescription>
               </CardHeader>
               <CardContent>
@@ -276,7 +276,7 @@ export default function AnalyticsDashboard() {
 
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "متوسط احتمالية النجاح" : "Avg Success Probability"}</CardTitle>
+                <CardTitle>{isAr ? "متوسط احتمالية النجاح" : "Avg. Success Probability"}</CardTitle>
                 <CardDescription>Success Probability</CardDescription>
               </CardHeader>
               <CardContent>
@@ -292,25 +292,25 @@ export default function AnalyticsDashboard() {
 
           <Card>
             <CardHeader>
-              <CardTitle>{isAr ? "توزيع التحليلات" : "Analysis Distribution"}</CardTitle>
-              <CardDescription>{isAr ? "إحصائيات تفصيلية للتحليلات الاستراتيجية" : "Detailed statistics for strategic analyses"}</CardDescription>
+              <CardTitle>{isAr ? "توزيع التحليلات" : "Analytics Distribution"}</CardTitle>
+              <CardDescription>{isAr ? "إحصائيات تفصيلية للتحليلات الاستراتيجية" : "Detailed statistics for strategic analytics"}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span>{isAr ? "إجمالي التحليلات" : "Total Analyses"}</span>
+                  <span>{isAr ? "إجمالي التحليلات" : "Total Analytics"}</span>
                   <span className="font-bold">{analytics.analysisStats.total}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>{isAr ? "متوسط ICI Score" : "Avg ICI Score"}</span>
+                  <span>{isAr ? "متوسط ICI Score" : "Avg. ICI Score"}</span>
                   <span className="font-bold">{analytics.analysisStats.avgIci.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>{isAr ? "متوسط IRL Score" : "Avg IRL Score"}</span>
+                  <span>{isAr ? "متوسط IRL Score" : "Avg. IRL Score"}</span>
                   <span className="font-bold">{analytics.analysisStats.avgIrl.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>{isAr ? "متوسط احتمالية النجاح" : "Avg Success Probability"}</span>
+                  <span>{isAr ? "متوسط احتمالية النجاح" : "Avg. Success Probability"}</span>
                   <span className="font-bold">
                     {(analytics.analysisStats.avgSuccessProbability * 100).toFixed(2)}%
                   </span>
@@ -324,7 +324,7 @@ export default function AnalyticsDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>{isAr ? "دقة التنبؤات" : "Prediction Accuracy"}</CardTitle>
-              <CardDescription>{isAr ? "مدى دقة تنبؤات النظام" : "How accurate the system's predictions are"}</CardDescription>
+              <CardDescription>{isAr ? "مدى دقة تنبؤات النظام" : "System prediction accuracy"}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
@@ -353,7 +353,7 @@ export default function AnalyticsDashboard() {
                   <div className="text-center text-muted-foreground">
                     <p>{isAr ? "لا توجد بيانات تنبؤات متاحة حتى الآن" : "No prediction data available yet"}</p>
                     <p className="text-sm mt-2">
-                      {isAr ? "سيتم تحديث هذا القسم عندما يتم تتبع النتائج الفعلية للمشاريع" : "This section will be updated when actual project outcomes are tracked"}
+                      {isAr ? "سيتم تحديث هذا القسم عندما يتم تتبع النتائج الفعلية للمشاريع" : "This section will update as actual project outcomes are tracked"}
                     </p>
                   </div>
                 )}

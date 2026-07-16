@@ -8,71 +8,71 @@ export default function Testimonials() {
   const testimonials = [
     {
       id: 1,
-      name: "د. أحمد المالكي",
-      role: "مدير الابتكار - شركة تقنية رائدة",
+      name: "Dr. Ahmed Al-Malki",
+      role: "Innovation Manager - Leading Tech Company",
       company: "TechCorp",
       image: "👨‍💼",
       rating: 5,
-      text: "NAQLA 5.0 غيّرت طريقة إدارتنا للابتكار بالكامل. نظام التقييم بالذكاء الاصطناعي وفّر علينا أسابيع من العمل اليدوي، والعقود الذكية جعلت التعاملات أكثر أماناً وشفافية.",
-      results: "زيادة 300% في الأفكار المقدمة، وتقليل 70% في وقت التقييم",
+      text: "NAQLA 5.0 completely transformed our innovation management. The AI-powered evaluation system saved us weeks of manual work, and smart contracts made transactions more secure and transparent.",
+      results: "300% increase in submitted ideas, 70% reduction in evaluation time",
     },
     {
       id: 2,
-      name: "سارة الحربي",
-      role: "مؤسسة ناشئة",
+      name: "Sara Al-Harbi",
+      role: "Startup Founder",
       company: "InnovateLab",
       image: "👩‍💻",
       rating: 5,
-      text: "كمبتكرة شابة، كانت حماية أفكاري أكبر همومي. نظام توثيق الملكية الفكرية بتقنية Blockchain أعطاني راحة البال الكاملة. الآن أستطيع التركيز على تطوير أفكاري دون قلق.",
-      results: "حصلت على تمويل بقيمة $500K خلال 3 أشهر",
+      text: "As a young innovator, protecting my ideas was my biggest concern. NAQLA's blockchain IP documentation system gave me complete peace of mind. Now I can focus on developing my ideas without worry.",
+      results: "Secured $500K in funding within 3 months",
     },
     {
       id: 3,
-      name: "م. خالد العتيبي",
-      role: "مدير المشاريع",
+      name: "Eng. Khalid Al-Otaibi",
+      role: "Project Manager",
       company: "Innovation Hub",
       image: "👨‍🔬",
       rating: 5,
-      text: "نظام Pipeline المتكامل في NAQLA يفوق كل المنصات العالمية التي جربناها. القدرة على تتبع الأفكار من البداية حتى التنفيذ، مع تحليلات AI الذكية، جعلت عملنا أكثر كفاءة بكثير.",
-      results: "نجحنا في إطلاق 15 مشروع ابتكاري في سنة واحدة",
+      text: "NAQLA's integrated Pipeline system surpasses all global platforms we've tried. The ability to track ideas from inception to execution, with smart AI analytics, made our work significantly more efficient.",
+      results: "Successfully launched 15 innovation projects in one year",
     },
     {
       id: 4,
-      name: "د. فاطمة القحطاني",
-      role: "مستثمرة ملاك",
+      name: "Dr. Fatima Al-Qahtani",
+      role: "Angel Investor",
       company: "Angel Investors Network",
       image: "👩‍💼",
       rating: 5,
-      text: "نظام التوصيات الذكية في NAQLA ساعدني في اكتشاف فرص استثمارية ممتازة. التقييمات الدقيقة والتحليلات الشاملة جعلت قراراتي الاستثمارية أكثر ثقة ونجاحاً.",
-      results: "عائد استثمار بنسبة 250% في السنة الأولى",
+      text: "NAQLA's smart recommendation system helped me discover excellent investment opportunities. Accurate evaluations and comprehensive analytics made my investment decisions more confident and successful.",
+      results: "250% ROI in the first year",
     },
     {
       id: 5,
-      name: "يوسف الشمري",
-      role: "رائد أعمال",
+      name: "Yousef Al-Shammari",
+      role: "Entrepreneur",
       company: "StartupX",
       image: "👨‍💼",
       rating: 5,
-      text: "الأكاديمية ونادي النخبة في NAQLA فتحا لي أبواباً لم أكن أحلم بها. التدريب المتخصص والشبكة العالمية من المبتكرين ساعدتني في تطوير مشروعي بشكل احترافي.",
-      results: "توسعت إلى 5 دول في أقل من سنة",
+      text: "NAQLA's Academy and Elite Club opened doors I never dreamed of. Specialized training and a global network of innovators helped me develop my project professionally.",
+      results: "Expanded to 5 countries in less than a year",
     },
     {
       id: 6,
-      name: "د. منى العمري",
-      role: "مديرة البحث والتطوير",
+      name: "Dr. Mona Al-Omari",
+      role: "R&D Manager",
       company: "Research Institute",
       image: "👩‍🔬",
       rating: 5,
-      text: "واجهة API المتقدمة سمحت لنا بدمج NAQLA مع أنظمتنا الداخلية بسلاسة. الآن لدينا نظام متكامل لإدارة الابتكار يربط جميع أقسامنا.",
-      results: "تحسين التعاون بين الأقسام بنسبة 400%",
+      text: "The advanced API allowed us to seamlessly integrate NAQLA with our internal systems. Now we have a comprehensive innovation management system connecting all our departments.",
+      results: "400% improvement in inter-departmental collaboration",
     },
   ];
 
   const stats = [
-    { label: "عميل راضٍ", value: "10,000+", icon: "😊" },
-    { label: "تقييم متوسط", value: "4.9/5", icon: "⭐" },
-    { label: "مشروع ناجح", value: "50,000+", icon: "🚀" },
-    { label: "معدل النجاح", value: "95%", icon: "📈" },
+    { label: "Satisfied Customer", value: "10,000+", icon: "😊" },
+    { label: "Average Rating", value: "4.9/5", icon: "⭐" },
+    { label: "Successful Project", value: "50,000+", icon: "🚀" },
+    { label: "Success Rate", value: "95%", icon: "📈" },
   ];
 
   return (
@@ -132,7 +132,7 @@ export default function Testimonials() {
 
               {/* Results */}
               <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg p-4 border border-blue-500/20">
-                <p className="text-sm font-semibold text-blue-600 mb-1">{isAr ? "النتائج:" : "الResults:"}</p>
+                <p className="text-sm font-semibold text-blue-600 mb-1">{isAr ? isAr ? "النتائج:" : "Results:" : "Results:"}</p>
                 <p className="text-sm">{testimonial.results}</p>
               </div>
             </Card>
@@ -141,7 +141,7 @@ export default function Testimonials() {
 
         {/* CTA Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
-          <h2 className="text-3xl font-bold mb-4">{isAr ? "انضم إلى آلاف المبتكرين الناجحين" : "انضم إلى آNoف المبتكرين الناجحين"}</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? isAr ? "انضم إلى آلاف المبتكرين الناجحين" : "Join thousands of successful innovators" : "Join thousands of successful innovators"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             ابدأ رحلتك في الابتكار اليوم واكتشف لماذا يثق الآلاف في NAQLA
           </p>

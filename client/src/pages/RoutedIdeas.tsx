@@ -32,9 +32,9 @@ export default function RoutedIdeas() {
   const getClassificationBadge = (score: number | null) => {
     if (!score) return null;
     if (score >= 70) {
-      return <Badge className="bg-green-600">{isAr ? "ابتكار حقيقي" : "[ابتكار حقيقي]"}</Badge>;
+      return <Badge className="bg-green-600">{isAr ? isAr ? "ابتكار حقيقي" : "Real Innovation" : "[Real Innovation]"}</Badge>;
     } else if (score >= 50) {
-      return <Badge className="bg-blue-600">{isAr ? "مشروع تجاري" : "[مشروع تجاري]"}</Badge>;
+      return <Badge className="bg-blue-600">{isAr ? isAr ? "مشروع تجاري" : "Business Project" : "[Business Project]"}</Badge>;
     }
     return null;
   };
@@ -65,7 +65,7 @@ export default function RoutedIdeas() {
             <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <Input
               type="text"
-              placeholder="ابحث عن فكرة بالعنوان..."
+              placeholder={isAr ? "ابحث عن فكرة بالعنوان..." : "Search idea by title..."}
               value={search}
               onChange={(e) => handleSearchChange(e.target.value)}
               className="pr-10 text-right"
@@ -124,13 +124,13 @@ export default function RoutedIdeas() {
                       
                       <div className="flex justify-between items-center mb-4">
                         <div className="text-right">
-                          <p className="text-sm text-gray-500">{isAr ? "النتيجة الإجمالية" : "النتيجة الTotalة"}</p>
+                          <p className="text-sm text-gray-500">{isAr ? isAr ? "النتيجة الإجمالية" : "Overall Score" : "Total Score"}</p>
                           <p className={`text-2xl font-bold ${getScoreColor(idea.overallScore)}`}>
                             {idea.overallScore || 'N/A'}%
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm text-gray-500">{isAr ? "تاريخ التوجيه" : "[تاريخ التوجيه]"}</p>
+                          <p className="text-sm text-gray-500">{isAr ? isAr ? "تاريخ التوجيه" : "Routing Date" : "[Routing Date]"}</p>
                           <p className="text-sm font-medium">
                             {idea.routedAt ? new Date(idea.routedAt).toLocaleDateString('ar-SA') : 'غير محدد'}
                           </p>
@@ -151,7 +151,7 @@ export default function RoutedIdeas() {
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-16">
                   <Lightbulb className="text-gray-300 mb-4" size={64} />
-                  <p className="text-gray-500 text-lg mb-2">{isAr ? "لا توجد أفكار موجهة حالياً" : "No توجد أفكار موجهة حالياً"}</p>
+                  <p className="text-gray-500 text-lg mb-2">{isAr ? isAr ? "لا توجد أفكار موجهة حالياً" : "No ideas currently routed" : "No ideas currently routed"}</p>
                   <p className="text-gray-400 text-sm">
                     {search ? 'جرب البحث بكلمات مختلفة' : 'ستظهر الأفكار الموجهة من نقلة 1 هنا'}
                   </p>
@@ -165,25 +165,25 @@ export default function RoutedIdeas() {
         {ideas && ideas.length > 0 && (
           <Card className="mt-8">
             <CardHeader>
-              <CardTitle>{isAr ? "ملخص إحصائي" : "[ملخص إحصائي]"}</CardTitle>
+              <CardTitle>{isAr ? isAr ? "ملخص إحصائي" : "Statistical Summary" : "[Statistical Summary]"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
                   <p className="text-3xl font-bold text-gray-900">{ideas.length}</p>
-                  <p className="text-sm text-gray-600">{isAr ? "إجمالي الأفكار الموجهة" : "إجمالي Routed Ideas"}</p>
+                  <p className="text-sm text-gray-600">{isAr ? isAr ? "إجمالي الأفكار الموجهة" : "Total Routed Ideas" : "Total Routed Ideas"}</p>
                 </div>
                 <div className="text-center p-4 bg-green-50 rounded-lg">
                   <p className="text-3xl font-bold text-green-600">
                     {ideas.filter(i => i.overallScore && i.overallScore >= 70).length}
                   </p>
-                  <p className="text-sm text-gray-600">{isAr ? "ابتكار حقيقي" : "[ابتكار حقيقي]"}</p>
+                  <p className="text-sm text-gray-600">{isAr ? isAr ? "ابتكار حقيقي" : "Real Innovation" : "[Real Innovation]"}</p>
                 </div>
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
                   <p className="text-3xl font-bold text-blue-600">
                     {ideas.filter(i => i.overallScore && i.overallScore >= 50 && i.overallScore < 70).length}
                   </p>
-                  <p className="text-sm text-gray-600">{isAr ? "مشروع تجاري" : "[مشروع تجاري]"}</p>
+                  <p className="text-sm text-gray-600">{isAr ? isAr ? "مشروع تجاري" : "Business Project" : "[Business Project]"}</p>
                 </div>
               </div>
             </CardContent>

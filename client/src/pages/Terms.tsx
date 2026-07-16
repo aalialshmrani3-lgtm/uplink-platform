@@ -11,66 +11,66 @@ export default function Terms() {
     ? [
         {
           icon: CheckCircle,
-          title: "قبول الشروط",
+          title: "Accept Terms",
           content: [
-            "باستخدامك منصة نقلة، فإنك توافق على الالتزام بهذه الشروط والأحكام.",
-            "إذا كنت تمثل مؤسسة، فإنك تؤكد صلاحيتك لقبول هذه الشروط نيابةً عنها.",
-            "نحتفظ بحق تعديل هذه الشروط في أي وقت مع إشعار مسبق.",
-            "استمرارك في استخدام المنصة بعد التعديلات يعني قبولك للشروط الجديدة.",
+            isAr ? "باستخدامك منصة نقلة، فإنك توافق على الالتزام بهذه الشروط والأحكام." : "By using Naqla platform, you agree to be bound by these Terms and Conditions.",
+            isAr ? "إذا كنت تمثل مؤسسة، فإنك تؤكد صلاحيتك لقبول هذه الشروط نيابةً عنها." : "If you represent an organization, you confirm your authority to accept these terms on its behalf.",
+            isAr ? "نحتفظ بحق تعديل هذه الشروط في أي وقت مع إشعار مسبق." : "We reserve the right to modify these terms at any time with prior notice.",
+            isAr ? "استمرارك في استخدام المنصة بعد التعديلات يعني قبولك للشروط الجديدة." : "Your continued use of the platform after modifications signifies your acceptance of the new terms.",
           ],
         },
         {
           icon: Users,
-          title: "شروط الاستخدام",
+          title: "Terms of Use",
           content: [
-            "يجب أن يكون عمرك 18 سنة أو أكثر لاستخدام المنصة.",
-            "تلتزم بتقديم معلومات دقيقة وصحيحة عند التسجيل.",
-            "أنت مسؤول عن الحفاظ على سرية بيانات حسابك.",
-            "يُحظر استخدام المنصة لأغراض غير قانونية أو مضرة.",
-            "يُحظر انتهاك حقوق الملكية الفكرية للآخرين.",
-            "يُحظر نشر محتوى مضلل أو مسيء أو مخالف للأنظمة السعودية.",
+            isAr ? "يجب أن يكون عمرك 18 سنة أو أكثر لاستخدام المنصة." : "You must be 18 years or older to use the platform.",
+            isAr ? "تلتزم بتقديم معلومات دقيقة وصحيحة عند التسجيل." : "You agree to provide accurate and truthful information upon registration.",
+            isAr ? "أنت مسؤول عن الحفاظ على سرية بيانات حسابك." : "You are responsible for maintaining the confidentiality of your account data.",
+            isAr ? "يُحظر استخدام المنصة لأغراض غير قانونية أو مضرة." : "Use of the platform for illegal or harmful purposes is prohibited.",
+            isAr ? "يُحظر انتهاك حقوق الملكية الفكرية للآخرين." : "Infringement of others' intellectual property rights is prohibited.",
+            isAr ? "يُحظر نشر محتوى مضلل أو مسيء أو مخالف للأنظمة السعودية." : "Posting misleading, offensive, or content violating Saudi regulations is prohibited.",
           ],
         },
         {
           icon: Zap,
-          title: "الملكية الفكرية",
+          title: "Intellectual Property",
           content: [
-            "تحتفظ بملكية جميع الأفكار والابتكارات التي تشاركها على المنصة.",
-            "تمنحنا ترخيصاً محدوداً لعرض محتواك وتسهيل الوصول إليه من قِبل الشركاء.",
-            "لا تنتقل ملكية ابتكاراتك إلى المنصة أو أي طرف ثالث دون موافقتك الصريحة.",
-            "أي عقود ملكية فكرية تُبرم عبر المنصة تخضع للقانون السعودي والدولي.",
-            "نحمي حقوقك الفكرية ونوفر أدوات التوثيق والحماية القانونية.",
+            isAr ? "تحتفظ بملكية جميع الأفكار والابتكارات التي تشاركها على المنصة." : "You retain ownership of all ideas and innovations you share on the platform.",
+            isAr ? "تمنحنا ترخيصاً محدوداً لعرض محتواك وتسهيل الوصول إليه من قِبل الشركاء." : "You grant us a limited license to display your content and facilitate partner access.",
+            isAr ? "لا تنتقل ملكية ابتكاراتك إلى المنصة أو أي طرف ثالث دون موافقتك الصريحة." : "Ownership of your innovations does not transfer to the platform or any third party without your explicit consent.",
+            isAr ? "أي عقود ملكية فكرية تُبرم عبر المنصة تخضع للقانون السعودي والدولي." : "Any IP contracts concluded via the platform are subject to Saudi and international law.",
+            isAr ? "نحمي حقوقك الفكرية ونوفر أدوات التوثيق والحماية القانونية." : "We protect your intellectual rights and provide documentation and legal protection tools.",
           ],
         },
         {
           icon: Scale,
-          title: "المسؤولية والضمانات",
+          title: "Liability and Warranties",
           content: [
-            "تُقدَّم المنصة 'كما هي' دون ضمانات صريحة أو ضمنية.",
-            "لا نضمن توافر المنصة بشكل مستمر أو خالٍ من الأخطاء.",
-            "لا نتحمل مسؤولية الخسائر الناجمة عن قرارات الاستثمار أو الأعمال.",
-            "مسؤوليتنا محدودة بقيمة الاشتراك المدفوع خلال الاثني عشر شهراً الماضية.",
-            "لا نتحمل مسؤولية أي خسائر غير مباشرة أو تبعية.",
+            isAr ? "تُقدَّم المنصة 'كما هي' دون ضمانات صريحة أو ضمنية." : "The platform is provided 'as is' without express or implied warranties.",
+            isAr ? "لا نضمن توافر المنصة بشكل مستمر أو خالٍ من الأخطاء." : "We do not guarantee continuous or error-free platform availability.",
+            isAr ? "لا نتحمل مسؤولية الخسائر الناجمة عن قرارات الاستثمار أو الأعمال." : "We are not liable for losses resulting from investment or business decisions.",
+            isAr ? "مسؤوليتنا محدودة بقيمة الاشتراك المدفوع خلال الاثني عشر شهراً الماضية." : "Our liability is limited to the subscription fee paid in the last twelve months.",
+            isAr ? "لا نتحمل مسؤولية أي خسائر غير مباشرة أو تبعية." : "We are not liable for any indirect or consequential losses.",
           ],
         },
         {
           icon: Globe,
-          title: "القانون المطبق والتحكيم",
+          title: "Governing Law and Arbitration",
           content: [
-            "تخضع هذه الشروط لأحكام نظام التجارة الإلكترونية السعودي.",
-            "تُحسم النزاعات أولاً عبر التفاوض الودي خلال 30 يوماً.",
-            "في حال فشل التفاوض، يُلجأ إلى التحكيم وفق أنظمة المركز السعودي للتحكيم التجاري.",
-            "تختص المحاكم السعودية بالفصل في أي نزاعات لا تُحسم بالتحكيم.",
+            isAr ? "تخضع هذه الشروط لأحكام نظام التجارة الإلكترونية السعودي." : "These terms are governed by the provisions of the Saudi E-commerce Law.",
+            isAr ? "تُحسم النزاعات أولاً عبر التفاوض الودي خلال 30 يوماً." : "Disputes are first resolved through amicable negotiation within 30 days.",
+            isAr ? "في حال فشل التفاوض، يُلجأ إلى التحكيم وفق أنظمة المركز السعودي للتحكيم التجاري." : "If negotiation fails, arbitration will be pursued according to the Saudi Center for Commercial Arbitration rules.",
+            isAr ? "تختص المحاكم السعودية بالفصل في أي نزاعات لا تُحسم بالتحكيم." : "Saudi courts have jurisdiction over any disputes not resolved by arbitration.",
           ],
         },
         {
           icon: AlertTriangle,
-          title: "إنهاء الحساب",
+          title: "Account Termination",
           content: [
-            "يمكنك إنهاء حسابك في أي وقت من خلال إعدادات الحساب.",
-            "نحتفظ بحق تعليق أو إنهاء الحسابات التي تنتهك هذه الشروط.",
-            "عند إنهاء الحساب، يمكنك طلب نسخة من بياناتك خلال 30 يوماً.",
-            "تستمر بعض الأحكام (كالملكية الفكرية والمسؤولية) بعد إنهاء الحساب.",
+            isAr ? "يمكنك إنهاء حسابك في أي وقت من خلال إعدادات الحساب." : "You can terminate your account at any time via account settings.",
+            isAr ? "نحتفظ بحق تعليق أو إنهاء الحسابات التي تنتهك هذه الشروط." : "We reserve the right to suspend or terminate accounts violating these terms.",
+            isAr ? "عند إنهاء الحساب، يمكنك طلب نسخة من بياناتك خلال 30 يوماً." : "Upon account termination, you can request a copy of your data within 30 days.",
+            isAr ? "تستمر بعض الأحكام (كالملكية الفكرية والمسؤولية) بعد إنهاء الحساب." : "Certain provisions (e.g., IP, liability) survive account termination.",
           ],
         },
       ]
@@ -153,7 +153,7 @@ export default function Terms() {
             </div>
           </Link>
           <span className="text-border/50">|</span>
-          <span className="text-sm font-medium">{isAr ? "الشروط والأحكام" : "Terms & Conditions"}</span>
+          <span className="text-sm font-medium">{isAr ? "الشروط والأحكام" : "Terms and Conditions"}</span>
         </div>
       </div>
 
@@ -164,11 +164,11 @@ export default function Terms() {
             <FileText className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            {isAr ? "الشروط والأحكام" : "Terms & Conditions"}
+            {isAr ? "الشروط والأحكام" : "Terms and Conditions"}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {isAr
-              ? "يرجى قراءة هذه الشروط والأحكام بعناية قبل استخدام منصة نقلة. استخدامك للمنصة يعني موافقتك على هذه الشروط."
+              ? isAr ? "يرجى قراءة هذه الشروط والأحكام بعناية قبل استخدام منصة نقلة. استخدامك للمنصة يعني موافقتك على هذه الشروط." : "Please read these Terms and Conditions carefully before using Naqla platform. Your use implies agreement to these terms."
               : "Please read these terms and conditions carefully before using the NAQLA platform. Your use of the platform constitutes your acceptance of these terms."}
           </p>
           <p className="text-sm text-muted-foreground mt-4">
@@ -208,7 +208,7 @@ export default function Terms() {
           <div className="mt-10 p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/20 rounded-2xl text-center">
             <p className="text-sm text-muted-foreground mb-2">
               {isAr
-                ? "للاستفسار عن هذه الشروط، تواصل معنا عبر:"
+                ? isAr ? "للاستفسار عن هذه الشروط، تواصل معنا عبر:" : "For inquiries about these terms, contact us via:"
                 : "For inquiries about these terms, contact us at:"}
             </p>
             <a href="mailto:legal@naqla.sa" className="text-blue-400 hover:text-blue-300 font-medium text-sm">

@@ -141,7 +141,7 @@ export default function DataExport() {
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">{isAr ? "تصدير بيانات التدريب" : "تصدير بيانات الTraining"}</h1>
+        <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "تصدير بيانات التدريب" : "Export Training Data" : "Export Training Data"}</h1>
         <p className="text-muted-foreground">
           تصدير بيانات الأفكار المصنفة بصيغ متعددة للتحليل الخارجي
         </p>
@@ -152,7 +152,7 @@ export default function DataExport() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{isAr ? "أفكار ناجحة" : "[أفكار ناجحة]"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "أفكار ناجحة" : "Successful Ideas" : "[Successful Ideas]"}</CardTitle>
               <Badge variant="default" className="bg-green-600">{stats.success}</Badge>
             </CardHeader>
             <CardContent>
@@ -164,7 +164,7 @@ export default function DataExport() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{isAr ? "أفكار فاشلة" : "[أفكار فاشلة]"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "أفكار فاشلة" : "Failed Ideas" : "[Failed Ideas]"}</CardTitle>
               <Badge variant="default" className="bg-red-600">{stats.failure}</Badge>
             </CardHeader>
             <CardContent>
@@ -176,7 +176,7 @@ export default function DataExport() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{isAr ? "قيد المراجعة" : "قيد Audit"}</CardTitle>
+              <CardTitle className="text-sm font-medium">{isAr ? isAr ? "قيد المراجعة" : "Under Review" : "Under Audit"}</CardTitle>
               <Badge variant="default" className="bg-yellow-600">{stats.pending}</Badge>
             </CardHeader>
             <CardContent>
@@ -193,7 +193,7 @@ export default function DataExport() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Filter className="w-5 h-5" />
-            <CardTitle>{isAr ? "تصفية البيانات" : "Filter البيانات"}</CardTitle>
+            <CardTitle>{isAr ? isAr ? "تصفية البيانات" : "Filter Data" : "Filter Data"}</CardTitle>
           </div>
           <CardDescription>
             اختر أنواع الأفكار التي تريد تصديرها
@@ -235,7 +235,7 @@ export default function DataExport() {
       {/* Export Options */}
       <Card>
         <CardHeader>
-          <CardTitle>{isAr ? "تصدير البيانات" : "Data Export"}</CardTitle>
+          <CardTitle>{isAr ? "تصدير البيانات" : "Export Data"}</CardTitle>
           <CardDescription>
             اختر الصيغة المناسبة لاحتياجاتك
           </CardDescription>
@@ -335,7 +335,7 @@ export default function DataExport() {
       {trainingData && trainingData.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "معاينة البيانات" : "معاينة Data"}</CardTitle>
+            <CardTitle>{isAr ? isAr ? "معاينة البيانات" : "Preview Data" : "Preview Data"}</CardTitle>
             <CardDescription>
               أول 5 سجلات من البيانات المتاحة
             </CardDescription>
@@ -346,11 +346,11 @@ export default function DataExport() {
                 <thead>
                   <tr className="border-b">
                     <th className="text-right p-2">{isAr ? "الميزانية" : "Budget"}</th>
-                    <th className="text-right p-2">{isAr ? "حجم الفريق" : "حجم Team"}</th>
-                    <th className="text-right p-2">{isAr ? "المدة" : "[المدة]"}</th>
-                    <th className="text-right p-2">{isAr ? "الطلب" : "[الطلب]"}</th>
-                    <th className="text-right p-2">{isAr ? "الجدوى" : "[الجدوى]"}</th>
-                    <th className="text-right p-2">{isAr ? "النتيجة" : "[النتيجة]"}</th>
+                    <th className="text-right p-2">{isAr ? isAr ? "حجم الفريق" : "Team Size" : "Team Size"}</th>
+                    <th className="text-right p-2">{isAr ? isAr ? "المدة" : "Duration" : "[Duration]"}</th>
+                    <th className="text-right p-2">{isAr ? isAr ? "الطلب" : "Demand" : "[Demand]"}</th>
+                    <th className="text-right p-2">{isAr ? isAr ? "الجدوى" : "Feasibility" : "[Feasibility]"}</th>
+                    <th className="text-right p-2">{isAr ? isAr ? "النتيجة" : "Outcome" : "[Outcome]"}</th>
                   </tr>
                 </thead>
                 <tbody>

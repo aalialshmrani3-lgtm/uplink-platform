@@ -163,8 +163,8 @@ export default function Naqla1() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950">
       <SEOHead 
-        title="NAQLA1 - محرك تحليل الأفكار بالذكاء الاصطناعي"
-        description="تحليل الأفكار والابتكارات باستخدام الذكاء الاصطناعي المتقدم. تصنيف ذكي إلى 3 مستويات: ابتكار حقيقي، مشروع تجاري، أو فكرة تحتاج تطوير."
+        title={isAr ? "NAQLA1 - محرك تحليل الأفكار بالذكاء الاصطناعي" : "NAQLA1 - AI Idea Analysis Engine"}
+        description={isAr ? "تحليل الأفكار والابتكارات باستخدام الذكاء الاصطناعي المتقدم. تصنيف ذكي إلى 3 مستويات: ابتكار حقيقي، مشروع تجاري، أو فكرة تحتاج تطوير." : "Analyze ideas & innovations with advanced AI. Smart classification into 3 levels: True Innovation, Business Project, or Idea Needs Development."}
       />
 
       {/* Hero Section */}
@@ -176,7 +176,7 @@ export default function Naqla1() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 animate-fade-in">
               <Brain className="w-5 h-5 text-blue-400" />
-              <span className="text-sm font-medium text-blue-300">{isAr ? "محرك التحليل بالذكاء الاصطناعي" : "محرك التحليل بالذكاء اNoصطناعي"}</span>
+              <span className="text-sm font-medium text-blue-300">{isAr ? isAr ? "محرك التحليل بالذكاء الاصطناعي" : "AI Analysis Engine" : "AI Analysis Engine"}</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in-up">
@@ -240,8 +240,8 @@ export default function Naqla1() {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "كيف يعمل التحليل؟" : "كيف يعمل Analysis؟"}</h2>
-            <p className="text-xl text-gray-400">{isAr ? "خمس خطوات لتحليل فكرتك بدقة عالية" : "[خمس خطوات لتحليل فكرتك بدقة عالية]"}</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? isAr ? "كيف يعمل التحليل؟" : "How Analysis Works?" : "How Analysis Works?"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? isAr ? "خمس خطوات لتحليل فكرتك بدقة عالية" : "Five Steps for High-Accuracy Idea Analysis" : "[Five Steps for High-Accuracy Idea Analysis]"}</p>
           </div>
 
           <div className="grid md:grid-cols-5 gap-6">
@@ -268,8 +268,8 @@ export default function Naqla1() {
       <section className="py-20 px-4 bg-gradient-to-b from-transparent to-slate-900/50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "مستويات التصنيف" : "[مستويات التصنيف]"}</h2>
-            <p className="text-xl text-gray-400">{isAr ? "نصنف الأفكار إلى 3 مستويات بناءً على معايير دقيقة" : "نصنف الأفكار إلى 3 مستويات Buildً على معايير دقيقة"}</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? isAr ? "مستويات التصنيف" : "Classification Levels" : "[Classification Levels]"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? isAr ? "نصنف الأفكار إلى 3 مستويات بناءً على معايير دقيقة" : "Ideas are classified into 3 levels based on precise criteria." : "Ideas are classified into 3 levels based on precise criteria."}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -287,7 +287,7 @@ export default function Naqla1() {
                 <p className="text-gray-300 mb-6">{level.description}</p>
                 
                 <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-3">{isAr ? "المعايير:" : "Standards:"}</h4>
+                  <h4 className="text-sm font-semibold text-gray-400 mb-3">{isAr ? "المعايير:" : "Criteria:"}</h4>
                   <ul className="space-y-2">
                     {level.criteria.map((criterion, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
@@ -299,7 +299,7 @@ export default function Naqla1() {
                 </div>
                 
                 <div className="pt-6 border-t border-gray-700">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-2">{isAr ? "الخطوة التالية:" : "الخطوة Nextة:"}</h4>
+                  <h4 className="text-sm font-semibold text-gray-400 mb-2">{isAr ? isAr ? "الخطوة التالية:" : "Next Step:" : "Next Step:"}</h4>
                   <p className="text-sm text-gray-300">{level.nextStep}</p>
                 </div>
               </Card>
@@ -312,8 +312,8 @@ export default function Naqla1() {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? "معايير التقييم" : "معايير Evaluation"}</h2>
-            <p className="text-xl text-gray-400">{isAr ? "نقيّم الأفكار بناءً على 10 معايير رئيسية محدثة بأوزان مختلفة" : "نقيّم الأفكار بناءً على 10 معايير رئيسية Updatedة بأوزان مختلفة"}</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? isAr ? "معايير التقييم" : "Evaluation Criteria" : "Evaluation Criteria"}</h2>
+            <p className="text-xl text-gray-400">{isAr ? isAr ? "نقيّم الأفكار بناءً على 10 معايير رئيسية محدثة بأوزان مختلفة" : "Ideas are evaluated based on 10 key updated criteria with different weightings." : "Ideas are evaluated based on 10 key updated criteria with different weightings."}</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">

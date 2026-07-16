@@ -11,64 +11,64 @@ export default function Privacy() {
     ? [
         {
           icon: Database,
-          title: "البيانات التي نجمعها",
+          title: "Data We Collect",
           content: [
-            "معلومات الحساب: الاسم، البريد الإلكتروني، رقم الهاتف عند التسجيل.",
-            "بيانات الابتكار: الأفكار والمشاريع والملكية الفكرية التي تشاركها على المنصة.",
-            "بيانات الاستخدام: كيفية تفاعلك مع المنصة لتحسين تجربتك.",
-            "البيانات التقنية: عنوان IP، نوع المتصفح، نظام التشغيل لأغراض الأمان.",
+            isAr ? "معلومات الحساب: الاسم، البريد الإلكتروني، رقم الهاتف عند التسجيل." : "Account Info: Name, email, phone number upon registration.",
+            isAr ? "بيانات الابتكار: الأفكار والمشاريع والملكية الفكرية التي تشاركها على المنصة." : "Innovation Data: Ideas, projects, IP shared on the platform.",
+            isAr ? "بيانات الاستخدام: كيفية تفاعلك مع المنصة لتحسين تجربتك." : "Usage Data: How you interact with the platform to improve your experience.",
+            isAr ? "البيانات التقنية: عنوان IP، نوع المتصفح، نظام التشغيل لأغراض الأمان." : "Technical Data: IP address, browser type, OS for security.",
           ],
         },
         {
           icon: Eye,
-          title: "كيف نستخدم بياناتك",
+          title: "How We Use Your Data",
           content: [
-            "تقديم خدمات المنصة وتحسينها باستمرار.",
-            "ربطك بالشركاء والمستثمرين والجهات الحكومية المناسبة.",
-            "إرسال إشعارات مهمة تتعلق بمشاريعك وفرص التمويل.",
-            "تحليل الاتجاهات لتطوير منظومة الابتكار الوطنية.",
-            "الامتثال للمتطلبات القانونية والتنظيمية في المملكة العربية السعودية.",
+            isAr ? "تقديم خدمات المنصة وتحسينها باستمرار." : "Provide and continuously improve platform services.",
+            isAr ? "ربطك بالشركاء والمستثمرين والجهات الحكومية المناسبة." : "Connect you with relevant partners, investors, and government entities.",
+            isAr ? "إرسال إشعارات مهمة تتعلق بمشاريعك وفرص التمويل." : "Send important notifications regarding your projects and funding opportunities.",
+            isAr ? "تحليل الاتجاهات لتطوير منظومة الابتكار الوطنية." : "Analyze trends to develop the national innovation ecosystem.",
+            isAr ? "الامتثال للمتطلبات القانونية والتنظيمية في المملكة العربية السعودية." : "Comply with legal and regulatory requirements in Saudi Arabia.",
           ],
         },
         {
           icon: Lock,
-          title: "حماية بياناتك",
+          title: "Protecting Your Data",
           content: [
-            "تشفير SSL/TLS لجميع البيانات المنقولة.",
-            "تشفير البيانات الحساسة في قواعد البيانات.",
-            "مراجعات أمنية دورية واختبارات الاختراق.",
-            "صلاحيات وصول محدودة للموظفين وفق مبدأ الحاجة للمعرفة.",
-            "نسخ احتياطية منتظمة وخطط استمرارية الأعمال.",
+            isAr ? "تشفير SSL/TLS لجميع البيانات المنقولة." : "SSL/TLS encryption for all transmitted data.",
+            isAr ? "تشفير البيانات الحساسة في قواعد البيانات." : "Encryption of sensitive data in databases.",
+            isAr ? "مراجعات أمنية دورية واختبارات الاختراق." : "Regular security audits and penetration testing.",
+            isAr ? "صلاحيات وصول محدودة للموظفين وفق مبدأ الحاجة للمعرفة." : "Limited staff access based on need-to-know principle.",
+            isAr ? "نسخ احتياطية منتظمة وخطط استمرارية الأعمال." : "Regular backups and business continuity plans.",
           ],
         },
         {
           icon: UserCheck,
-          title: "حقوقك",
+          title: "Your Rights",
           content: [
-            "الوصول: يمكنك طلب نسخة من بياناتك الشخصية في أي وقت.",
-            "التصحيح: يمكنك تحديث أو تصحيح بياناتك غير الدقيقة.",
-            "الحذف: يمكنك طلب حذف حسابك وبياناتك وفق الشروط المحددة.",
-            "الاعتراض: يمكنك الاعتراض على معالجة بياناتك لأغراض معينة.",
-            "النقل: يمكنك طلب نقل بياناتك بصيغة قابلة للقراءة الآلية.",
+            isAr ? "الوصول: يمكنك طلب نسخة من بياناتك الشخصية في أي وقت." : "Access: Request a copy of your personal data anytime.",
+            isAr ? "التصحيح: يمكنك تحديث أو تصحيح بياناتك غير الدقيقة." : "Correction: Update or correct inaccurate data.",
+            isAr ? "الحذف: يمكنك طلب حذف حسابك وبياناتك وفق الشروط المحددة." : "Deletion: Request account and data deletion under specified conditions.",
+            isAr ? "الاعتراض: يمكنك الاعتراض على معالجة بياناتك لأغراض معينة." : "Objection: Object to data processing for specific purposes.",
+            isAr ? "النقل: يمكنك طلب نقل بياناتك بصيغة قابلة للقراءة الآلية." : "Portability: Request your data in a machine-readable format.",
           ],
         },
         {
           icon: Bell,
-          title: "مشاركة البيانات",
+          title: "Data Sharing",
           content: [
-            "لا نبيع بياناتك الشخصية لأي طرف ثالث.",
-            "نشارك البيانات مع شركاء موثوقين فقط بموافقتك الصريحة.",
-            "قد نشارك بيانات مجمّعة ومجهولة الهوية لأغراض البحث والإحصاء.",
-            "نلتزم بالإفصاح عند الطلب القانوني من الجهات المختصة.",
+            isAr ? "لا نبيع بياناتك الشخصية لأي طرف ثالث." : "We do not sell your personal data to third parties.",
+            isAr ? "نشارك البيانات مع شركاء موثوقين فقط بموافقتك الصريحة." : "We share data with trusted partners only with your explicit consent.",
+            isAr ? "قد نشارك بيانات مجمّعة ومجهولة الهوية لأغراض البحث والإحصاء." : "We may share aggregated, anonymized data for research and statistics.",
+            isAr ? "نلتزم بالإفصاح عند الطلب القانوني من الجهات المختصة." : "We comply with disclosure upon legal request from competent authorities.",
           ],
         },
         {
           icon: Mail,
-          title: "التواصل معنا",
+          title: "Contact Us",
           content: [
-            "لأي استفسارات تتعلق بخصوصيتك، تواصل معنا عبر: privacy@naqla.sa",
-            "يمكنك أيضاً زيارة صفحة اتصل بنا لتقديم طلباتك.",
-            "سنرد على جميع الطلبات خلال 30 يوم عمل.",
+            isAr ? "لأي استفسارات تتعلق بخصوصيتك، تواصل معنا عبر: privacy@naqla.sa" : "For privacy inquiries, contact us at: privacy@naqla.sa",
+            isAr ? "يمكنك أيضاً زيارة صفحة اتصل بنا لتقديم طلباتك." : "You can also visit our Contact Us page to submit your requests.",
+            isAr ? "سنرد على جميع الطلبات خلال 30 يوم عمل." : "We will respond to all requests within 30 business days.",
           ],
         },
       ]
@@ -164,7 +164,7 @@ export default function Privacy() {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {isAr
-              ? "نحن في منصة نقلة نلتزم بحماية خصوصيتك وأمان بياناتك. تعرّف على كيفية جمع بياناتك واستخدامها وحمايتها."
+              ? isAr ? "نحن في منصة نقلة نلتزم بحماية خصوصيتك وأمان بياناتك. تعرّف على كيفية جمع بياناتك واستخدامها وحمايتها." : "At Naqla Platform, we are committed to protecting your privacy and data security. Learn how your data is collected, used, and protected."
               : "At NAQLA platform, we are committed to protecting your privacy and data security. Learn how your data is collected, used, and protected."}
           </p>
           <p className="text-sm text-muted-foreground mt-4">
@@ -204,7 +204,7 @@ export default function Privacy() {
           <div className="mt-10 p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl text-center">
             <p className="text-sm text-muted-foreground">
               {isAr
-                ? "تلتزم منصة نقلة بأحكام نظام حماية البيانات الشخصية في المملكة العربية السعودية (PDPL) والأنظمة الدولية ذات الصلة."
+                ? isAr ? "تلتزم منصة نقلة بأحكام نظام حماية البيانات الشخصية في المملكة العربية السعودية (PDPL) والأنظمة الدولية ذات الصلة." : "Naqla Platform complies with the provisions of the Personal Data Protection Law (PDPL) in Saudi Arabia and relevant international regulations."
                 : "NAQLA platform complies with the provisions of the Saudi Personal Data Protection Law (PDPL) and relevant international regulations."}
             </p>
           </div>

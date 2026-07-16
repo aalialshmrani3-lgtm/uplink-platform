@@ -25,12 +25,12 @@ export default function UnifiedDashboard() {
 
   // Mock data for charts
   const predictiveData = isAr ? [
-    { month: "يناير", opportunities: 45, accuracy: 89 },
-    { month: "فبراير", opportunities: 52, accuracy: 91 },
-    { month: "مارس", opportunities: 61, accuracy: 94 },
-    { month: "أبريل", opportunities: 58, accuracy: 92 },
-    { month: "مايو", opportunities: 73, accuracy: 95 },
-    { month: "يونيو", opportunities: 82, accuracy: 96 },
+    { month: "Jan", opportunities: 45, accuracy: 89 },
+    { month: "Feb", opportunities: 52, accuracy: 91 },
+    { month: "Mar", opportunities: 61, accuracy: 94 },
+    { month: "Apr", opportunities: 58, accuracy: 92 },
+    { month: "May", opportunities: 73, accuracy: 95 },
+    { month: "Jun", opportunities: 82, accuracy: 96 },
   ] : [
     { month: "January", opportunities: 45, accuracy: 89 },
     { month: "February", opportunities: 52, accuracy: 91 },
@@ -41,11 +41,11 @@ export default function UnifiedDashboard() {
   ];
 
   const networkData = isAr ? [
-    { category: "تقنيون", count: 8500 },
-    { category: "أكاديميون", count: 6200 },
-    { category: "استراتيجيون", count: 4800 },
-    { category: "مصممون", count: 3500 },
-    { category: "قانونيون", count: 2000 },
+    { category: "Technologists", count: 8500 },
+    { category: "Academics", count: 6200 },
+    { category: "Strategists", count: 4800 },
+    { category: "Designers", count: 3500 },
+    { category: "Legal Experts", count: 2000 },
   ] : [
     { category: "Technicians", count: 8500 },
     { category: "Academics", count: 6200 },
@@ -55,9 +55,9 @@ export default function UnifiedDashboard() {
   ];
 
   const esgData = isAr ? [
-    { name: "بيئة", value: 35, color: "#10b981" },
-    { name: "مجتمع", value: 30, color: "#3b82f6" },
-    { name: "حوكمة", value: 35, color: "#a855f7" },
+    { name: "Environment", value: 35, color: "#10b981" },
+    { name: "Community", value: 30, color: "#3b82f6" },
+    { name: "Governance", value: 35, color: "#a855f7" },
   ] : [
     { name: "Environment", value: 35, color: "#10b981" },
     { name: "Social", value: 30, color: "#3b82f6" },
@@ -66,7 +66,7 @@ export default function UnifiedDashboard() {
 
   const kpiCards = [
     {
-      title: isAr ? "فرص ابتكار متوقعة" : "Predicted Innovation Opportunities",
+      title: "Expected Innovation Opportunities",
       value: "82",
       change: "+18%",
       trend: "up",
@@ -74,7 +74,7 @@ export default function UnifiedDashboard() {
       color: "from-blue-500 to-cyan-600",
     },
     {
-      title: isAr ? "خبراء نشطون" : "Active Experts",
+      title: "Active Experts",
       value: "25,143",
       change: "+12%",
       trend: "up",
@@ -82,7 +82,7 @@ export default function UnifiedDashboard() {
       color: "from-green-500 to-emerald-600",
     },
     {
-      title: isAr ? "مشاريع مستدامة" : "Sustainable Projects",
+      title: "Sustainable Projects",
       value: "3,247",
       change: "+25%",
       trend: "up",
@@ -90,7 +90,7 @@ export default function UnifiedDashboard() {
       color: "from-purple-500 to-pink-600",
     },
     {
-      title: isAr ? "تعاونات عالمية" : "Global Collaborations",
+      title: "Global Collaborations",
       value: "8,592",
       change: "+31%",
       trend: "up",
@@ -102,24 +102,24 @@ export default function UnifiedDashboard() {
   const recentActivities = [
     {
       type: "prediction",
-      title: isAr ? "فرصة جديدة في الطاقة المتجددة" : "New Opportunity in Renewable Energy",
-      description: isAr ? "تزايد الطلب على حلول تخزين الطاقة الشمسية" : "Increasing demand for solar energy storage solutions",
+      title: "New Opportunity in Renewable Energy",
+      description: "Rising Demand for Solar Energy Storage Solutions",
       confidence: 94,
-      time: isAr ? "منذ ساعتين" : "2 hours ago",
+      time: "2 hours ago",
     },
     {
       type: "network",
-      title: isAr ? "خبير جديد انضم للشبكة" : "New Expert Joined the Network",
-      description: isAr ? "د. أحمد محمد - متخصص في الذكاء الاصطناعي" : "Dr. Ahmed Mohammed - AI Specialist",
+      title: "New Expert Joined Network",
+      description: "Dr. Ahmed Mohamed - AI Specialist",
       rating: 4.9,
-      time: isAr ? "منذ 4 ساعات" : "4 hours ago",
+      time: "4 hours ago",
     },
     {
       type: "sustainability",
-      title: isAr ? "مشروع حصل على شهادة استدامة" : "Project Received Sustainability Certificate",
-      description: isAr ? "مشروع \"الزراعة الذكية\" - ISO 14001" : "\"Smart Agriculture\" Project - ISO 14001",
+      title: "Project Received Sustainability Certificate",
+      description: isAr ? 'مشروع "الزراعة الذكية" - ISO 14001' : '"Smart Agriculture" Project - ISO 14001',
       score: 87,
-      time: isAr ? "منذ يوم" : "1 day ago",
+      time: "1 day ago",
     },
   ];
 
@@ -129,7 +129,7 @@ export default function UnifiedDashboard() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">{isAr ? "لوحة التحكم الموحدة" : "Unified Dashboard"}</h1>
-          <p className="text-muted-foreground">{isAr ? "نظرة شاملة على جميع ميزات NAQLA 6.0" : "A comprehensive overview of all NAQLA 6.0 features"}</p>
+          <p className="text-muted-foreground">{isAr ? "نظرة شاملة على جميع ميزات NAQLA 6.0" : "Comprehensive overview of all NAQLA 6.0 features"}</p>
         </div>
 
         {/* KPI Cards */}
@@ -161,7 +161,7 @@ export default function UnifiedDashboard() {
           <TabsContent value="predictive" className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <Card className="p-6">
-                <h3 className="text-xl font-bold mb-4">{isAr ? "اتجاه فرص الابتكار" : "Innovation Opportunities Trend"}</h3>
+                <h3 className="text-xl font-bold mb-4">{isAr ? "اتجاه فرص الابتكار" : "Innovation Opportunity Trends"}</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={predictiveData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -195,14 +195,14 @@ export default function UnifiedDashboard() {
                 <div className="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
                   <div>
                     <div className="font-semibold">{isAr ? "فرصة في الطاقة المتجددة" : "Renewable Energy Opportunity"}</div>
-                    <div className="text-sm text-muted-foreground">{isAr ? "تخزين الطاقة بتقنية الجرافين" : "Graphene-based energy storage"}</div>
+                    <div className="text-sm text-muted-foreground">{isAr ? "تخزين الطاقة بتقنية الجرافين" : "Graphene Energy Storage"}</div>
                   </div>
                   <Badge className="bg-green-500">{isAr ? "94% ثقة" : "94% Confidence"}</Badge>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
                   <div>
                     <div className="font-semibold">{isAr ? "ثورة في الرعاية الصحية الرقمية" : "Digital Healthcare Revolution"}</div>
-                    <div className="text-sm text-muted-foreground">{isAr ? "تشخيص مبكر بالذكاء الاصطناعي" : "Early diagnosis with AI"}</div>
+                    <div className="text-sm text-muted-foreground">{isAr ? "تشخيص مبكر بالذكاء الاصطناعي" : "AI Early Diagnosis"}</div>
                   </div>
                   <Badge className="bg-green-500">{isAr ? "89% ثقة" : "89% Confidence"}</Badge>
                 </div>
@@ -267,14 +267,14 @@ export default function UnifiedDashboard() {
                 <div className="flex items-center justify-between p-4 bg-green-50 dark:bg-green-950 rounded-lg">
                   <div>
                     <div className="font-semibold">{isAr ? "تطوير تطبيق صحي عالمي" : "Global Health App Development"}</div>
-                    <div className="text-sm text-muted-foreground">{isAr ? "12 خبير من 8 دول" : "12 experts from 8 countries"}</div>
+                    <div className="text-sm text-muted-foreground">{isAr ? "12 خبير من 8 دول" : "12 Experts from 8 Countries"}</div>
                   </div>
                   <Badge>{isAr ? "نشط" : "Active"}</Badge>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
                   <div>
                     <div className="font-semibold">{isAr ? "حل صناعي مبتكر" : "Innovative Industrial Solution"}</div>
-                    <div className="text-sm text-muted-foreground">{isAr ? "5 خبراء من 4 قارات" : "5 experts from 4 continents"}</div>
+                    <div className="text-sm text-muted-foreground">{isAr ? "5 خبراء من 4 قارات" : "5 Experts from 4 Continents"}</div>
                   </div>
                   <Badge>{isAr ? "نشط" : "Active"}</Badge>
                 </div>
@@ -313,7 +313,7 @@ export default function UnifiedDashboard() {
                 <div className="space-y-6">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm">{isAr ? "تقليل انبعاثات CO₂" : "CO₂ Emissions Reduction"}</span>
+                      <span className="text-sm">{isAr ? "تقليل انبعاثات CO₂" : "CO₂ Emission Reduction"}</span>
                       <span className="font-bold text-green-600">-45%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
@@ -343,27 +343,27 @@ export default function UnifiedDashboard() {
             </div>
 
             <Card className="p-6">
-              <h3 className="text-xl font-bold mb-4">{isAr ? "الشهادات الحديثة" : "Recent Certifications"}</h3>
+              <h3 className="text-xl font-bold mb-4">{isAr ? "الشهادات الحديثة" : "Recent Certificates"}</h3>
               <div className="grid md:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
                   <div className="text-3xl mb-2">🌍</div>
                   <div className="font-semibold">ISO 14001</div>
-                  <div className="text-sm text-muted-foreground">{isAr ? "245 مشروع" : "245 projects"}</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "245 مشروع" : "245 Projects"}</div>
                 </div>
                 <div className="text-center p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
                   <div className="text-3xl mb-2">🏆</div>
                   <div className="font-semibold">B Corp</div>
-                  <div className="text-sm text-muted-foreground">{isAr ? "189 مشروع" : "189 projects"}</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "189 مشروع" : "189 Projects"}</div>
                 </div>
                 <div className="text-center p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
                   <div className="text-3xl mb-2">🏢</div>
                   <div className="font-semibold">LEED</div>
-                  <div className="text-sm text-muted-foreground">{isAr ? "312 مشروع" : "312 projects"}</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "312 مشروع" : "312 Projects"}</div>
                 </div>
                 <div className="text-center p-4 bg-orange-50 dark:bg-orange-950 rounded-lg">
                   <div className="text-3xl mb-2">🤖</div>
                   <div className="font-semibold">AI Ethics</div>
-                  <div className="text-sm text-muted-foreground">{isAr ? "421 مشروع" : "421 projects"}</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? "421 مشروع" : "421 Projects"}</div>
                 </div>
               </div>
             </Card>
@@ -386,7 +386,7 @@ export default function UnifiedDashboard() {
                   <div className="text-sm text-muted-foreground mb-2">{activity.description}</div>
                   <div className="flex items-center gap-4 text-xs text-muted-foreground">
                     <span>{activity.time}</span>
-                    {"confidence" in activity && <Badge variant="secondary">{activity.confidence}% {isAr ? "ثقة" : "Confidence"}</Badge>}
+                    {"confidence" in activity && <Badge variant="secondary">{activity.confidence}% {isAr ? "ثقة" : "Trust"}</Badge>}
                     {"rating" in activity && <Badge variant="secondary">⭐ {activity.rating}</Badge>}
                     {"score" in activity && <Badge variant="secondary">{activity.score}/100</Badge>}
                   </div>

@@ -78,7 +78,7 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <Activity className="w-12 h-12 mx-auto animate-pulse text-muted-foreground mb-4" />
-            <p className="text-muted-foreground">{isAr ? "جاري تحميل البيانات..." : "جاري Download البيانات..."}</p>
+            <p className="text-muted-foreground">{isAr ? isAr ? "جاري تحميل البيانات..." : "Loading Data..." : "Downloading Data..."}</p>
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">{isAr ? "لوحة تحكم المشرفين" : "لوحة تحكم الSupervisorين"}</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "لوحة تحكم المشرفين" : "Admin Dashboard" : "Supervisor Dashboard"}</h1>
           <p className="text-muted-foreground">
             إحصائيات فورية ومباشرة للمنصة
           </p>
@@ -198,8 +198,8 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "المستخدمون النشطون" : "المستخدمون الActiveون"}</CardTitle>
-            <CardDescription>{isAr ? "المستخدمون المتصلون حاليًا" : "الUserون المتصلون حاليًا"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "المستخدمون النشطون" : "Active Users" : "Active Users"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "المستخدمون المتصلون حاليًا" : "Online Users" : "Online Users"}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
@@ -221,8 +221,8 @@ export default function AdminDashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{isAr ? "التقييمات المعلقة" : "Evaluationات المعلقة"}</CardTitle>
-            <CardDescription>{isAr ? "تتطلب اهتمام المشرفين" : "تتطلب اهDoneام المشرفين"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "التقييمات المعلقة" : "Pending Reviews" : "Pending Evaluations"}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "تتطلب اهتمام المشرفين" : "Requires Admin Attention" : "Requires Admin Attention"}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
@@ -289,8 +289,8 @@ export default function AdminDashboard() {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>{isAr ? "إجراءات سريعة" : "[إجراءات سريعة]"}</CardTitle>
-          <CardDescription>{isAr ? "الوصول السريع للأدوات الإدارية" : "الوصول السريع للTools الإدارية"}</CardDescription>
+          <CardTitle>{isAr ? isAr ? "إجراءات سريعة" : "Quick Actions" : "Quick Actions"}</CardTitle>
+          <CardDescription>{isAr ? isAr ? "الوصول السريع للأدوات الإدارية" : "Quick Access to Admin Tools" : "Quick Access to Admin Tools"}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -306,21 +306,21 @@ export default function AdminDashboard() {
               className="p-4 border rounded-lg hover:bg-accent transition-colors text-center"
             >
               <Activity className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <p className="font-medium text-sm">{isAr ? "أداء النموذج" : "أداء Growthذج"}</p>
+              <p className="font-medium text-sm">{isAr ? isAr ? "أداء النموذج" : "Model Performance" : "Model Performance"}</p>
             </a>
             <a
               href="/admin/data-export"
               className="p-4 border rounded-lg hover:bg-accent transition-colors text-center"
             >
               <Globe className="w-8 h-8 mx-auto mb-2 text-green-600" />
-              <p className="font-medium text-sm">{isAr ? "تصدير البيانات" : "Data Export"}</p>
+              <p className="font-medium text-sm">{isAr ? "تصدير البيانات" : "Export Data"}</p>
             </a>
             <a
               href="/webhook-management"
               className="p-4 border rounded-lg hover:bg-accent transition-colors text-center"
             >
               <Activity className="w-8 h-8 mx-auto mb-2 text-orange-600" />
-              <p className="font-medium text-sm">{isAr ? "إدارة Webhooks" : "[إدارة Webhooks]"}</p>
+              <p className="font-medium text-sm">{isAr ? isAr ? "إدارة Webhooks" : "Manage Webhooks" : "Manage Webhooks"}</p>
             </a>
           </div>
         </CardContent>

@@ -17,48 +17,48 @@ export default function Register() {
   const userTypes = isAr ? [
     {
       id: "innovator",
-      title: "مبتكر",
-      description: "لديك أفكار إبداعية وتريد تحويلها لواقع",
+      title: "Innovator",
+      description: "Have creative ideas and want to make them a reality",
       icon: Lightbulb,
       color: "from-blue-500 to-cyan-500",
       path: "/register/innovator"
     },
     {
       id: "investor",
-      title: "مستثمر",
-      description: "تبحث عن فرص استثمارية واعدة",
+      title: "Investor",
+      description: "Looking for promising investment opportunities",
       icon: TrendingUp,
       color: "from-green-500 to-emerald-500",
       path: "/register/investor"
     },
     {
       id: "company",
-      title: "شركة",
-      description: "شركة تبحث عن ابتكارات أو شراكات",
+      title: "Company",
+      description: "Company seeking innovations or partnerships",
       icon: Building2,
       color: "from-purple-500 to-pink-500",
       path: "/register/company"
     },
     {
       id: "individual",
-      title: "فرد / مواطن",
-      description: "مهتم بالابتكار والمشاركة في المنظومة",
+      title: "Individual / Citizen",
+      description: "Interested in innovation and ecosystem participation",
       icon: User,
       color: "from-orange-500 to-red-500",
       path: "/register/individual"
     },
     {
       id: "government",
-      title: "جهة حكومية",
-      description: "جهة حكومية تدعم الابتكار والتطوير",
+      title: "Government Entity",
+      description: "Government entity supporting innovation and development",
       icon: Landmark,
       color: "from-indigo-500 to-blue-500",
       path: "/register/government"
     },
     {
       id: "private_sector",
-      title: "قطاع خاص",
-      description: "مؤسسة من القطاع الخاص تبحث عن فرص",
+      title: "Private Sector",
+      description: "Private sector institution seeking opportunities",
       icon: Briefcase,
       color: "from-teal-500 to-cyan-500",
       path: "/register/private-sector"
@@ -123,7 +123,7 @@ export default function Register() {
             {isAr ? "انضم إلى منظومة NAQLA" : "Join the NAQLA Ecosystem"}
           </h1>
           <p className="text-xl text-blue-200 max-w-2xl mx-auto">
-            {isAr ? "اختر نوع حسابك للبدء في رحلة الابتكار والتطوير" : "Choose your account type to start your journey of innovation and development"}
+            {isAr ? "اختر نوع حسابك للبدء في رحلة الابتكار والتطوير" : "Choose your account type to start your innovation and development journey"}
           </p>
         </div>
 
@@ -156,7 +156,7 @@ export default function Register() {
 
                     {/* Arrow */}
                     <div className="mt-6 flex items-center text-blue-300 group-hover:text-white transition-colors">
-                      <span className="text-sm font-medium">{isAr ? "ابدأ الآن" : "Start Now"}</span>
+                      <span className="text-sm font-medium">{isAr ? "ابدأ الآن" : "Get Started"}</span>
                       <svg 
                         className="w-5 h-5 mr-2 transform group-hover:translate-x-1 transition-transform" 
                         fill="none" 

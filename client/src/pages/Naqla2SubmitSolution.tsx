@@ -37,7 +37,7 @@ export default function Naqla2SubmitSolution() {
 
   const submitMutation = trpc.naqla2.challenges.submitSolution.useMutation({
     onSuccess: () => {
-      toast.success("تم تقديم الحل بنجاح! سيتم مراجعة حلك من قبل لجنة التحكيم");
+      toast.success(isAr ? "تم تقديم الحل بنجاح! سيتم مراجعة حلك من قبل لجنة التحكيم" : "Solution submitted successfully! It will be reviewed by the judging panel.");
       setLocation(`/naqla2/challenges/${challengeId}`);
     },
     onError: (error) => {
@@ -49,12 +49,12 @@ export default function Naqla2SubmitSolution() {
     e.preventDefault();
     
     if (!user) {
-      toast.error("يجب تسجيل الدخول أولاً لتقديم الحل");
+      toast.error(isAr ? "يجب تسجيل الدخول أولاً لتقديم الحل" : "You must log in first to submit a solution.");
       return;
     }
 
     if (!registration) {
-      toast.error("يجب التسجيل في التحدي أولاً");
+      toast.error(isAr ? "يجب التسجيل في التحدي أولاً" : "You must register for the challenge first.");
       return;
     }
 
@@ -69,7 +69,7 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">{isAr ? "جاري التحميل..." : "جاري الDownload..."}</p>
+          <p className="text-muted-foreground">{isAr ? isAr ? "جاري التحميل..." : "Loading..." : "Downloading..."}</p>
         </div>
       </div>
     );
@@ -80,8 +80,8 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>{isAr ? "التحدي غير موجود" : "التBorderي غير موجود"}</CardTitle>
-            <CardDescription>{isAr ? "لم يتم العثور على التحدي المطلوب" : "لم يDone العثور على التحدي المطلوب"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "التحدي غير موجود" : "Challenge not found." : "Challenge not found."}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "لم يتم العثور على التحدي المطلوب" : "Requested challenge not found." : "Requested challenge not found."}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/naqla2/challenges">
@@ -101,8 +101,8 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>{isAr ? "تسجيل الدخول مطلوب" : "Login مطلوب"}</CardTitle>
-            <CardDescription>{isAr ? "يجب تسجيل الدخول أولاً لتقديم حلك" : "يجب Login أولاً لتقديم حلك"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "تسجيل الدخول مطلوب" : "Login required." : "Login required."}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "يجب تسجيل الدخول أولاً لتقديم حلك" : "You must log in first to submit your solution." : "You must log in first to submit your solution."}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/login">
@@ -119,12 +119,12 @@ export default function Naqla2SubmitSolution() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle>{isAr ? "التسجيل مطلوب" : "الRegister مطلوب"}</CardTitle>
-            <CardDescription>{isAr ? "يجب التسجيل في التحدي أولاً قبل تقديم الحل" : "يجب الRegister في التحدي أولاً قبل تقديم الحل"}</CardDescription>
+            <CardTitle>{isAr ? isAr ? "التسجيل مطلوب" : "Registration required." : "Registration required."}</CardTitle>
+            <CardDescription>{isAr ? isAr ? "يجب التسجيل في التحدي أولاً قبل تقديم الحل" : "You must register for the challenge before submitting a solution." : "You must register for the challenge before submitting a solution."}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href={`/naqla2/challenges/${challengeId}`}>
-              <Button className="w-full">{isAr ? "العودة إلى التحدي" : "العودة إلى التBorderي"}</Button>
+              <Button className="w-full">{isAr ? isAr ? "العودة إلى التحدي" : "Back to challenge" : "Back to challenge"}</Button>
             </Link>
           </CardContent>
         </Card>
@@ -144,7 +144,7 @@ export default function Naqla2SubmitSolution() {
             </Button>
           </Link>
 
-          <h1 className="text-3xl font-bold mb-2">{isAr ? "قدم حلك" : "[قدم حلك]"}</h1>
+          <h1 className="text-3xl font-bold mb-2">{isAr ? isAr ? "قدم حلك" : "Submit your solution" : "Submit your solution"}</h1>
           <p className="text-muted-foreground">{challenge.title}</p>
         </div>
       </div>
@@ -156,52 +156,52 @@ export default function Naqla2SubmitSolution() {
             {/* Basic Info */}
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "المعلومات الأساسية" : "الInformation الأساسية"}</CardTitle>
-                <CardDescription>{isAr ? "أدخل تفاصيل حلك المقترح" : "[أدخل تفاصيل حلك المقترح]"}</CardDescription>
+                <CardTitle>{isAr ? isAr ? "المعلومات الأساسية" : "Basic Information" : "Basic Information"}</CardTitle>
+                <CardDescription>{isAr ? isAr ? "أدخل تفاصيل حلك المقترح" : "Enter details of your proposed solution" : "Enter details of your proposed solution"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="title">{isAr ? "عنوان الحل *" : "عنوان Solution *"}</Label>
+                  <Label htmlFor="title">{isAr ? isAr ? "عنوان الحل *" : "Solution Title *" : "Solution Title *"}</Label>
                   <Input
                     id="title"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    placeholder="عنوان واضح ومختصر لحلك"
+                    placeholder={isAr ? "عنوان واضح ومختصر لحلك" : "A clear and concise title for your solution"}
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="description">{isAr ? "وصف الحل *" : "وRow الحل *"}</Label>
+                  <Label htmlFor="description">{isAr ? isAr ? "وصف الحل *" : "Solution Description *" : "Solution Overview *"}</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder="وصف شامل للحل المقترح"
+                    placeholder={isAr ? "وصف شامل للحل المقترح" : "Comprehensive description of the proposed solution"}
                     rows={4}
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="solution">{isAr ? "التفاصيل التقنية *" : "التفاصيل Technology *"}</Label>
+                  <Label htmlFor="solution">{isAr ? isAr ? "التفاصيل التقنية *" : "Technical Details *" : "Technology Details *"}</Label>
                   <Textarea
                     id="solution"
                     value={formData.solution}
                     onChange={(e) => setFormData({ ...formData, solution: e.target.value })}
-                    placeholder="اشرح كيف يعمل الحل، التقنيات المستخدمة، والمنهجية المتبعة"
+                    placeholder={isAr ? "اشرح كيف يعمل الحل، التقنيات المستخدمة، والمنهجية المتبعة" : "Explain how the solution works, technologies used, and methodology"}
                     rows={6}
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="expectedImpact">{isAr ? "التأثير المتوقع" : "الEffect المتوقع"}</Label>
+                  <Label htmlFor="expectedImpact">{isAr ? isAr ? "التأثير المتوقع" : "Expected Impact" : "Expected Effect"}</Label>
                   <Textarea
                     id="expectedImpact"
                     value={formData.expectedImpact}
                     onChange={(e) => setFormData({ ...formData, expectedImpact: e.target.value })}
-                    placeholder="ما هو التأثير المتوقع لهذا الحل؟ كيف سيحل المشكلة؟"
+                    placeholder={isAr ? "ما هو التأثير المتوقع لهذا الحل؟ كيف سيحل المشكلة؟" : "What is the expected impact of this solution? How will it solve the problem?"}
                     rows={4}
                   />
                 </div>
@@ -211,17 +211,17 @@ export default function Naqla2SubmitSolution() {
             {/* Team Info */}
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "معلومات الفريق (اختياري)" : "Information الفريق (اختياري)"}</CardTitle>
-                <CardDescription>{isAr ? "إذا كنت تعمل ضمن فريق، أدخل اسم الفريق" : "إذا كنت تعمل ضمن فريق، أدخل اسم Team"}</CardDescription>
+                <CardTitle>{isAr ? isAr ? "معلومات الفريق (اختياري)" : "Team Information (optional)" : "Team Information (optional)"}</CardTitle>
+                <CardDescription>{isAr ? isAr ? "إذا كنت تعمل ضمن فريق، أدخل اسم الفريق" : "If you are working as part of a team, enter the team name" : "If you are working as part of a team, enter the team name"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div>
-                  <Label htmlFor="teamName">{isAr ? "اسم الفريق" : "اسم Team"}</Label>
+                  <Label htmlFor="teamName">{isAr ? isAr ? "اسم الفريق" : "Team Name" : "Team Name"}</Label>
                   <Input
                     id="teamName"
                     value={formData.teamName}
                     onChange={(e) => setFormData({ ...formData, teamName: e.target.value })}
-                    placeholder="اسم الفريق (اختياري)"
+                    placeholder={isAr ? "اسم الفريق (اختياري)" : "Team Name (optional)"}
                   />
                 </div>
               </CardContent>
@@ -230,12 +230,12 @@ export default function Naqla2SubmitSolution() {
             {/* Links & Resources */}
             <Card>
               <CardHeader>
-                <CardTitle>{isAr ? "الروابط والموارد (اختياري)" : "الLinks والموارد (اختياري)"}</CardTitle>
-                <CardDescription>{isAr ? "أضف روابط للعرض التوضيحي، الكود، أو الفيديو" : "أضف Links للعرض التوضيحي، الكود، أو الفيديو"}</CardDescription>
+                <CardTitle>{isAr ? isAr ? "الروابط والموارد (اختياري)" : "Links & Resources (optional)" : "Links & Resources (optional)"}</CardTitle>
+                <CardDescription>{isAr ? isAr ? "أضف روابط للعرض التوضيحي، الكود، أو الفيديو" : "Add links to demo, code, or video" : "Add links to demo, code, or video"}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="video">{isAr ? "رابط الفيديو التوضيحي" : "[رابط الفيديو التوضيحي]"}</Label>
+                  <Label htmlFor="video">{isAr ? isAr ? "رابط الفيديو التوضيحي" : "Demo Video Link" : "[Demo Video Link]"}</Label>
                   <Input
                     id="video"
                     type="url"
@@ -246,7 +246,7 @@ export default function Naqla2SubmitSolution() {
                 </div>
 
                 <div>
-                  <Label htmlFor="prototype">{isAr ? "رابط النموذج الأولي / Demo" : "رابط Growthذج الأولي / Demo"}</Label>
+                  <Label htmlFor="prototype">{isAr ? isAr ? "رابط النموذج الأولي / Demo" : "Prototype / Demo Link" : "Prototype / Demo Link"}</Label>
                   <Input
                     id="prototype"
                     type="url"

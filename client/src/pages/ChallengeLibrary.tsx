@@ -36,10 +36,10 @@ export default function ChallengeLibrary() {
   const challenges = [
     {
       id: 1,
-      title: isAr ? "تحسين تجربة العملاء الرقمية" : "Improve Digital Customer Experience",
-      description: isAr ? "انخفاض رضا العملاء بنسبة 15% في Q3 بسبب بطء المنصة الرقمية" : "Customer satisfaction dropped 15% in Q3 due to slow digital platform",
-      businessImpact: isAr ? "خسارة محتملة $2M من الإيرادات السنوية" : "Potential loss of $2M in annual revenue",
-      stakeholders: isAr ? ["فريق المنتج", "خدمة العملاء", "التسويق"] : ["Product Team", "Customer Service", "Marketing"],
+      title: "Enhance Digital Customer Experience",
+      description: "15% drop in Q3 customer satisfaction due to slow digital platform",
+      businessImpact: "Potential $2M annual revenue loss",
+      stakeholders: isAr ? [isAr ? "فريق المنتج" : "Product Team", isAr ? "خدمة العملاء" : "Customer Service", isAr ? "التسويق" : "Marketing"] : ["Product Team", "Customer Service", "Marketing"],
       priority: "high" as const,
       status: "active" as const,
       linkedInnovations: 5,
@@ -47,10 +47,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 2,
-      title: isAr ? "تقليل تكلفة سلسلة التوريد" : "Reduce Supply Chain Costs",
-      description: isAr ? "ارتفاع تكاليف الشحن والتخزين بنسبة 25% خلال العام الماضي" : "Shipping and storage costs increased by 25% over the past year",
-      businessImpact: isAr ? "توفير محتمل $1.5M سنوياً" : "Potential savings of $1.5M annually",
-      stakeholders: isAr ? ["العمليات", "المشتريات", "المالية"] : ["Operations", "Procurement", "Finance"],
+      title: "Reduce Supply Chain Cost",
+      description: "25% increase in shipping & storage costs last year",
+      businessImpact: "Potential $1.5M annual savings",
+      stakeholders: isAr ? [isAr ? "العمليات" : "Operations", isAr ? "المشتريات" : "Procurement", isAr ? "المالية" : "Finance"] : ["Operations", "Procurement", "Finance"],
       priority: "high" as const,
       status: "in_progress" as const,
       linkedInnovations: 8,
@@ -58,10 +58,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 3,
-      title: isAr ? "زيادة إنتاجية الموظفين" : "Increase Employee Productivity",
-      description: isAr ? "متوسط الوقت المستغرق في المهام الإدارية 3 ساعات يومياً" : "Average time spent on administrative tasks is 3 hours daily",
-      businessImpact: isAr ? "زيادة محتملة 20% في الإنتاجية" : "Potential 20% increase in productivity",
-      stakeholders: isAr ? ["الموارد البشرية", "IT", "جميع الأقسام"] : ["Human Resources", "IT", "All Departments"],
+      title: "Increase Employee Productivity",
+      description: "Avg. 3 hours/day spent on administrative tasks",
+      businessImpact: "Potential 20% productivity increase",
+      stakeholders: isAr ? [isAr ? "الموارد البشرية" : "Human Resources", "IT", isAr ? "جميع الأقسام" : "All Departments"] : ["Human Resources", "IT", "All Departments"],
       priority: "medium" as const,
       status: "active" as const,
       linkedInnovations: 3,
@@ -69,10 +69,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 4,
-      title: isAr ? "تحسين استدامة العمليات" : "Improve Operations Sustainability",
-      description: isAr ? "الحاجة لتقليل البصمة الكربونية بنسبة 30% بحلول 2027" : "Need to reduce carbon footprint by 30% by 2027",
-      businessImpact: isAr ? "الامتثال للمعايير البيئية + تحسين السمعة" : "Compliance with environmental standards + reputation improvement",
-      stakeholders: isAr ? ["الاستدامة", "العمليات", "الإدارة العليا"] : ["Sustainability", "Operations", "Senior Management"],
+      title: "Improve Operational Sustainability",
+      description: "Need to reduce carbon footprint by 30% by 2027",
+      businessImpact: "Environmental compliance + improved reputation",
+      stakeholders: isAr ? [isAr ? "الاستدامة" : "Sustainability", isAr ? "العمليات" : "Operations", isAr ? "الإدارة العليا" : "Senior Management"] : ["Sustainability", "Operations", "Senior Management"],
       priority: "medium" as const,
       status: "active" as const,
       linkedInnovations: 2,
@@ -80,10 +80,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 5,
-      title: isAr ? "تطوير منتجات جديدة للسوق الناشئة" : "Develop New Products for Emerging Markets",
-      description: isAr ? "فرصة دخول سوق بقيمة $500M مع منافسة محدودة" : "Opportunity to enter a $500M market with limited competition",
-      businessImpact: isAr ? "إيرادات محتملة $50M في السنة الأولى" : "Potential revenue of $50M in the first year",
-      stakeholders: isAr ? ["R&D", "التسويق", "المبيعات"] : ["R&D", "Marketing", "Sales"],
+      title: "Develop New Products for Emerging Market",
+      description: "Opportunity to enter $500M market with limited competition",
+      businessImpact: "Potential $50M revenue in first year",
+      stakeholders: isAr ? ["R&D", isAr ? "التسويق" : "Marketing", isAr ? "المبيعات" : "Sales"] : ["R&D", "Marketing", "Sales"],
       priority: "high" as const,
       status: "active" as const,
       linkedInnovations: 12,
@@ -91,10 +91,10 @@ export default function ChallengeLibrary() {
     },
     {
       id: 6,
-      title: isAr ? "تحسين أمن البيانات" : "Improve Data Security",
-      description: isAr ? "زيادة التهديدات السيبرانية وضرورة تعزيز الحماية" : "Increased cyber threats and need to enhance protection",
-      businessImpact: isAr ? "تجنب خسائر محتملة $10M من الاختراقات" : "Avoid potential losses of $10M from breaches",
-      stakeholders: isAr ? ["IT Security", "القانونية", "جميع الأقسام"] : ["IT Security", "Legal", "All Departments"],
+      title: "Enhance Data Security",
+      description: "Increased cyber threats, need for stronger protection",
+      businessImpact: "Avoid potential $10M losses from breaches",
+      stakeholders: isAr ? ["IT Security", isAr ? "القانونية" : "Legal", isAr ? "جميع الأقسام" : "All Departments"] : ["IT Security", "Legal", "All Departments"],
       priority: "high" as const,
       status: "solved" as const,
       linkedInnovations: 4,
@@ -177,7 +177,7 @@ export default function ChallengeLibrary() {
       case "in_progress":
         return isAr ? "قيد التنفيذ" : "In Progress";
       case "solved":
-        return isAr ? "محلول" : "Solved";
+        return isAr ? "محلول" : "Resolved";
       case "archived":
         return isAr ? "مؤرشف" : "Archived";
       default:
@@ -209,7 +209,7 @@ export default function ChallengeLibrary() {
               <DialogHeader>
                 <DialogTitle>{isAr ? "إنشاء تحدٍ استراتيجي جديد" : "Create New Strategic Challenge"}</DialogTitle>
                 <DialogDescription>
-                  {isAr ? "حدد التحدي الذي تواجهه المؤسسة لتوجيه الابتكارات نحو حلول فعّالة" : "Define the challenge your organization faces to guide innovations towards effective solutions"}
+                  {isAr ? "حدد التحدي الذي تواجهه المؤسسة لتوجيه الابتكارات نحو حلول فعّالة" : "Define the organizational challenge to guide innovations towards effective solutions"}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
@@ -217,7 +217,7 @@ export default function ChallengeLibrary() {
                   <Label htmlFor="title">{isAr ? "عنوان التحدي *" : "Challenge Title *"}</Label>
                   <Input
                     id="title"
-                    placeholder={isAr ? "مثال: تحسين تجربة العملاء الرقمية" : "Example: Improve digital customer experience"}
+                    placeholder={isAr ? "مثال: تحسين تجربة العملاء الرقمية" : "Example: Enhance Digital Customer Experience"}
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   />
@@ -238,7 +238,7 @@ export default function ChallengeLibrary() {
                   <Label htmlFor="businessImpact">{isAr ? "تأثير الأعمال" : "Business Impact"}</Label>
                   <Textarea
                     id="businessImpact"
-                    placeholder={isAr ? "ما هو التأثير المالي أو الاستراتيجي؟ (كمي إن أمكن)" : "What is the financial or strategic impact? (quantify if possible)"}
+                    placeholder={isAr ? "ما هو التأثير المالي أو الاستراتيجي؟ (كمي إن أمكن)" : "What is the financial or strategic impact? (Quantify if possible)"}
                     rows={3}
                     value={formData.businessImpact}
                     onChange={(e) => setFormData({ ...formData, businessImpact: e.target.value })}
@@ -249,14 +249,14 @@ export default function ChallengeLibrary() {
                   <Label htmlFor="stakeholders">{isAr ? "أصحاب المصلحة المتأثرين" : "Affected Stakeholders"}</Label>
                   <Input
                     id="stakeholders"
-                    placeholder={isAr ? "مثال: فريق المنتج، خدمة العملاء، التسويق" : "Example: Product team, Customer service, Marketing"}
+                    placeholder={isAr ? "مثال: فريق المنتج، خدمة العملاء، التسويق" : "Example: Product Team, Customer Service, Marketing"}
                     value={formData.stakeholders}
                     onChange={(e) => setFormData({ ...formData, stakeholders: e.target.value })}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="constraints">{isAr ? "القيود والموارد" : "Constraints and Resources"}</Label>
+                  <Label htmlFor="constraints">{isAr ? "القيود والموارد" : "Constraints & Resources"}</Label>
                   <Textarea
                     id="constraints"
                     placeholder={isAr ? "ما هي القيود (الميزانية، الوقت، الموارد)؟" : "What are the constraints (budget, time, resources)?"}
@@ -337,7 +337,7 @@ export default function ChallengeLibrary() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "محلول" : "Solved"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "محلول" : "Resolved"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-purple-600">{stats.solved}</div>
@@ -346,7 +346,7 @@ export default function ChallengeLibrary() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "الابتكارات المرتبطة" : "Linked Innovations"}</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{isAr ? "الابتكارات المرتبطة" : "Related Innovations"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-indigo-600">{stats.totalInnovations}</div>
@@ -361,7 +361,7 @@ export default function ChallengeLibrary() {
               <div className="flex-1 relative">
                 <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <Input
-                  placeholder={isAr ? "ابحث في التحديات..." : "Search challenges..."}
+                  placeholder={isAr ? "ابحث في التحديات..." : "Search Challenges..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pr-10"
@@ -377,7 +377,7 @@ export default function ChallengeLibrary() {
                   <SelectItem value="all">{isAr ? "جميع الحالات" : "All Statuses"}</SelectItem>
                   <SelectItem value="active">{isAr ? "نشط" : "Active"}</SelectItem>
                   <SelectItem value="in_progress">{isAr ? "قيد التنفيذ" : "In Progress"}</SelectItem>
-                  <SelectItem value="solved">{isAr ? "محلول" : "Solved"}</SelectItem>
+                  <SelectItem value="solved">{isAr ? "محلول" : "Resolved"}</SelectItem>
                   <SelectItem value="archived">{isAr ? "مؤرشف" : "Archived"}</SelectItem>
                 </SelectContent>
               </Select>
@@ -464,7 +464,7 @@ export default function ChallengeLibrary() {
                     </div>
                     <Badge variant="outline" className="gap-1">
                       <Target className="h-3 w-3" />
-                      {challenge.linkedInnovations} {isAr ? "ابتكار مرتبط" : "linked innovations"}
+                      {challenge.linkedInnovations} {isAr ? "ابتكار مرتبط" : "Related Innovation"}
                     </Badge>
                   </div>
                 </div>
@@ -478,7 +478,7 @@ export default function ChallengeLibrary() {
             <CardContent className="py-12 text-center">
               <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-700 mb-2">{isAr ? "لا توجد تحديات" : "No Challenges"}</h3>
-              <p className="text-gray-500 mb-4">{isAr ? "لم يتم العثور على تحديات تطابق معايير البحث" : "No challenges found matching the search criteria"}</p>
+              <p className="text-gray-500 mb-4">{isAr ? "لم يتم العثور على تحديات تطابق معايير البحث" : "No challenges found matching search criteria"}</p>
               <Button variant="outline" onClick={() => {
                 setSearchQuery("");
                 setStatusFilter("all");

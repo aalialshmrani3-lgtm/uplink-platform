@@ -11,152 +11,152 @@ export default function ThreeEngines() {
     {
       id: 1,
       name: "NAQLA1",
-      title: "محرك توليد الملكية الفكرية",
+      title: "IP Generation Engine",
       subtitle: "IP Generation Engine",
       icon: Shield,
       color: "from-emerald-500 to-teal-600",
       bgGradient: "from-emerald-500/10 to-teal-500/10",
       borderColor: "border-emerald-500/20",
-      description: "نظام متكامل لتتبع الأفكار من المفهوم إلى براءة الاختراع مع تقييم AI لقابلية التسجيل",
+      description: "Integrated system for tracking ideas from concept to patent with AI registrability assessment.",
       features: [
         {
-          title: "تتبع الأفكار",
-          description: "من المفهوم الأولي إلى براءة الاختراع المسجلة",
+          title: "Idea Tracking",
+          description: "From initial concept to registered patent",
           icon: "📝",
         },
         {
-          title: "تقييم AI",
-          description: "تقييم قابلية براءة الاختراع باستخدام الذكاء الاصطناعي",
+          title: "AI Assessment",
+          description: "AI-powered patentability assessment",
           icon: "🤖",
         },
         {
-          title: "إدارة محفظة IP",
-          description: "إدارة شاملة لجميع الملكيات الفكرية",
+          title: "IP Portfolio Management",
+          description: "Comprehensive management of all intellectual properties",
           icon: "📊",
         },
         {
-          title: "توثيق Blockchain",
-          description: "حماية الملكية بتقنية البلوكتشين الآمنة",
+          title: "Blockchain Documentation",
+          description: "Secure IP protection with blockchain technology",
           icon: "⛓️",
         },
         {
-          title: "تكامل SAIP & WIPO",
-          description: "تسجيل مباشر مع الجهات الرسمية",
+          title: "SAIP & WIPO Integration",
+          description: "Direct registration with official bodies",
           icon: "🏛️",
         },
         {
-          title: "تقارير تفصيلية",
-          description: "تقارير شاملة عن حالة كل ملكية فكرية",
+          title: "Detailed Reports",
+          description: "Comprehensive reports on each IP's status",
           icon: "📄",
         },
       ],
       stats: [
-        { label: "براءة مسجلة", value: "145+" },
-        { label: "علامة تجارية", value: "89+" },
-        { label: "معدل النجاح", value: "92%" },
+        { label: "Registered Patent", value: "145+" },
+        { label: "Trademark", value: "89+" },
+        { label: "Success Rate", value: "92%" },
       ],
       link: "/ip/register",
-      cta: "سجل ملكيتك الفكرية",
+      cta: "Register Your IP",
     },
     {
       id: 2,
       name: "NAQLA2",
-      title: "محرك التحديات والمطابقة",
+      title: "Challenges & Matching Engine",
       subtitle: "Challenge Matching Engine",
       icon: Brain,
       color: "from-blue-500 to-indigo-600",
       bgGradient: "from-blue-500/10 to-indigo-500/10",
       borderColor: "border-blue-500/20",
-      description: "خوارزمية مطابقة ذكية تربط المبتكرين بالمستثمرين والشركات المناسبة",
+      description: "Smart matching algorithm connecting innovators with suitable investors and companies",
       features: [
         {
-          title: "مطابقة ذكية",
-          description: "خوارزمية AI متقدمة للمطابقة المثالية",
+          title: "Smart Matching",
+          description: "Advanced AI algorithm for perfect matching",
           icon: "🎯",
         },
         {
-          title: "توصيات الخبراء",
-          description: "توصيات AI للخبراء المناسبين",
+          title: "Expert Recommendations",
+          description: "AI recommendations for suitable experts",
           icon: "👥",
         },
         {
-          title: "تشكيل فريق تلقائي",
-          description: "بناء فرق متكاملة بناءً على المهارات",
+          title: "Automated Team Formation",
+          description: "Building integrated teams based on skills",
           icon: "🤝",
         },
         {
-          title: "تحديات ومسابقات",
-          description: "منصة للتحديات والمسابقات الابتكارية",
+          title: "Challenges & Competitions",
+          description: "Platform for innovative challenges and competitions",
           icon: "🏆",
         },
         {
-          title: "تقييم متعدد المعايير",
-          description: "تقييم شامل بناءً على معايير متعددة",
+          title: "Multi-criteria Evaluation",
+          description: "Comprehensive evaluation based on multiple criteria",
           icon: "⭐",
         },
         {
-          title: "تحليلات متقدمة",
-          description: "رؤى عميقة حول فرص المطابقة",
+          title: "Advanced Analytics",
+          description: "Deep insights into matching opportunities",
           icon: "📈",
         },
       ],
       stats: [
-        { label: "مطابقة ناجحة", value: "2,500+" },
-        { label: "تحدي نشط", value: "50+" },
-        { label: "معدل الرضا", value: "95%" },
+        { label: "Successful Match", value: "2,500+" },
+        { label: "Active Challenge", value: "50+" },
+        { label: "Satisfaction Rate", value: "95%" },
       ],
       link: "/challenges",
-      cta: "استكشف التحديات",
+      cta: "Explore Challenges",
     },
     {
       id: 3,
       name: "NAQLA3",
-      title: "محرك السوق المفتوح",
+      title: "Open Marketplace Engine",
       subtitle: "Open Market Engine",
       icon: Globe,
       color: "from-purple-500 to-pink-600",
       bgGradient: "from-purple-500/10 to-pink-500/10",
       borderColor: "border-purple-500/20",
-      description: "سوق مفتوح لتبادل الابتكارات مع عقود ذكية ونظام ضمان آمن",
+      description: "Open marketplace for innovation exchange with smart contracts and secure escrow",
       features: [
         {
-          title: "سوق الابتكارات",
-          description: "منصة لعرض وشراء الابتكارات",
+          title: "Innovation Marketplace",
+          description: "Platform to showcase and purchase innovations",
           icon: "🛒",
         },
         {
-          title: "نظام عطاءات",
-          description: "نظام عطاءات شفاف وعادل",
+          title: "Bidding System",
+          description: "Transparent and fair bidding system",
           icon: "💰",
         },
         {
-          title: "عقود ذكية",
-          description: "عقود آمنة وقابلة للتنفيذ تلقائياً",
+          title: "Smart Contracts",
+          description: "Secure, self-executing contracts",
           icon: "📜",
         },
         {
-          title: "نظام Escrow",
-          description: "ضمان مالي آمن لجميع المعاملات",
+          title: "Escrow System",
+          description: "Secure financial guarantee for all transactions",
           icon: "🔒",
         },
         {
-          title: "إدارة المعاملات",
-          description: "تتبع كامل لجميع المعاملات",
+          title: "Transaction Management",
+          description: "Full transaction tracking",
           icon: "💳",
         },
         {
-          title: "تقييمات ومراجعات",
-          description: "نظام تقييم شفاف للبائعين والمشترين",
+          title: "Ratings & Reviews",
+          description: "Transparent rating system for buyers and sellers",
           icon: "⭐",
         },
       ],
       stats: [
-        { label: "معاملة ناجحة", value: "1,200+" },
-        { label: "قيمة التداول", value: "$60M+" },
-        { label: "معدل الأمان", value: "100%" },
+        { label: "Successful Transaction", value: "1,200+" },
+        { label: "Trading Value", value: "$60M+" },
+        { label: "Security Rate", value: "100%" },
       ],
       link: "/marketplace",
-      cta: "تصفح السوق",
+      cta: "Browse Marketplace",
     },
   ];
 
@@ -257,7 +257,7 @@ export default function ThreeEngines() {
         {/* Integration Section */}
         <Card className="p-12 text-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-2 border-blue-500/20">
           <div className="text-5xl mb-6">🔗</div>
-          <h2 className="text-3xl font-bold mb-4">{isAr ? "المحركات الثلاثة تعمل معاً" : "المحركات الثNoثة تعمل معاً"}</h2>
+          <h2 className="text-3xl font-bold mb-4">{isAr ? isAr ? "المحركات الثلاثة تعمل معاً" : "Three Engines Working Together" : "Three Engines Working Together"}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             التكامل السلس بين المحركات الثلاثة يخلق نظاماً بيئياً متكاملاً يغطي دورة حياة الابتكار بالكامل - من الفكرة إلى التسويق
           </p>
@@ -267,19 +267,19 @@ export default function ThreeEngines() {
               <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
                 <Shield className="text-emerald-600" size={24} />
               </div>
-              <p className="text-sm font-semibold">{isAr ? "احمِ فكرتك" : "[احمِ فكرتك]"}</p>
+              <p className="text-sm font-semibold">{isAr ? isAr ? "احمِ فكرتك" : "Protect Your Idea" : "[Protect Your Idea]"}</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
                 <Brain className="text-blue-600" size={24} />
               </div>
-              <p className="text-sm font-semibold">{isAr ? "اعثر على شركاء" : "[اعثر على شركاء]"}</p>
+              <p className="text-sm font-semibold">{isAr ? isAr ? "اعثر على شركاء" : "Find Partners" : "[Find Partners]"}</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
                 <Globe className="text-purple-600" size={24} />
               </div>
-              <p className="text-sm font-semibold">{isAr ? "سوّق ابتكارك" : "[سوّق ابتكارك]"}</p>
+              <p className="text-sm font-semibold">{isAr ? isAr ? "سوّق ابتكارك" : "Market Your Innovation" : "[Market Your Innovation]"}</p>
             </div>
           </div>
 

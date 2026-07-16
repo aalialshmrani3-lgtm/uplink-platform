@@ -26,15 +26,15 @@ export default function MFASetup() {
       const result = await setupMutation.mutateAsync();
       setQrCode(result.qrCode);
       setSecret(result.secret);
-      toast.success("تم إنشاء رمز QR بنجاح");
+      toast.success(isAr ? "تم إنشاء رمز QR بنجاح" : "QR code generated successfully");
     } catch (error: any) {
-      toast.error(error.message || "فشل في إنشاء رمز QR");
+      toast.error(error.message || isAr ? "فشل في إنشاء رمز QR" : "Failed to generate QR code");
     }
   };
 
   const handleEnable = async () => {
     if (!secret || !verificationCode) {
-      toast.error("يرجى إدخال رمز التحقق");
+      toast.error(isAr ? "يرجى إدخال رمز التحقق" : "Please enter verification code");
       return;
     }
 
@@ -43,19 +43,19 @@ export default function MFASetup() {
         secret,
         token: verificationCode
       });
-      toast.success("تم تفعيل MFA بنجاح!");
+      toast.success(isAr ? "تم تفعيل MFA بنجاح!" : "MFA enabled successfully!");
       setQrCode(null);
       setSecret(null);
       setVerificationCode("");
       refetchStatus();
     } catch (error: any) {
-      toast.error(error.message || "رمز التحقق غير صحيح");
+      toast.error(error.message || isAr ? "رمز التحقق غير صحيح" : "Incorrect verification code");
     }
   };
 
   const handleDisable = async () => {
     if (!disableCode) {
-      toast.error("يرجى إدخال رمز التحقق");
+      toast.error(isAr ? "يرجى إدخال رمز التحقق" : "Please enter verification code");
       return;
     }
 
@@ -63,11 +63,11 @@ export default function MFASetup() {
       await disableMutation.mutateAsync({
         token: disableCode
       });
-      toast.success("تم تعطيل MFA بنجاح");
+      toast.success(isAr ? "تم تعطيل MFA بنجاح" : "MFA disabled successfully");
       setDisableCode("");
       refetchStatus();
     } catch (error: any) {
-      toast.error(error.message || "رمز التحقق غير صحيح");
+      toast.error(error.message || isAr ? "رمز التحقق غير صحيح" : "Incorrect verification code");
     }
   };
 
@@ -95,12 +95,12 @@ export default function MFASetup() {
                 )}
                 <div>
                   <CardTitle>
-                    {mfaStatus?.mfaEnabled ? "MFA مفعّل" : "MFA غير مفعّل"}
+                    {mfaStatus?.mfaEnabled ? isAr ? "MFA مفعّل" : "MFA Enabled" : "MFA Disabled"}
                   </CardTitle>
                   <CardDescription>
                     {mfaStatus?.mfaEnabled
-                      ? "حسابك محمي بالمصادقة الثنائية"
-                      : "قم بتفعيل المصادقة الثنائية لحماية أفضل"}
+                      ? isAr ? "حسابك محمي بالمصادقة الثنائية" : "Your account is protected with 2FA"
+                      : "Enable 2FA for better protection"}
                   </CardDescription>
                 </div>
               </div>
@@ -123,7 +123,7 @@ export default function MFASetup() {
                 {!qrCode ? (
                   <div className="space-y-4">
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? "الخطوة 1: تحميل التطبيق" : "الخطوة 1: Download التطبيق"}</h3>
+                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? isAr ? "الخطوة 1: تحميل التطبيق" : "Step 1: Download App" : "Step 1: Download App"}</h3>
                       <p className="text-sm text-slate-300">
                         قم بتحميل تطبيق Google Authenticator من متجر التطبيقات
                       </p>
@@ -134,13 +134,13 @@ export default function MFASetup() {
                       className="w-full bg-gradient-to-r from-cyan-500 to-blue-600"
                       size="lg"
                     >
-                      {setupMutation.isPending ? "جاري الإنشاء..." : "إنشاء رمز QR"}
+                      {setupMutation.isPending ? isAr ? "جاري الإنشاء..." : "Generating..." : "Generate QR Code"}
                     </Button>
                   </div>
                 ) : (
                   <div className="space-y-6">
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? "الخطوة 2: مسح رمز QR" : "[الخطوة 2: مسح رمز QR]"}</h3>
+                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? isAr ? "الخطوة 2: مسح رمز QR" : "Step 2: Scan QR Code" : "Step 2: Scan QR Code"}</h3>
                       <p className="text-sm text-slate-300 mb-4">
                         افتح تطبيق Google Authenticator وامسح الرمز التالي:
                       </p>
@@ -150,13 +150,13 @@ export default function MFASetup() {
                     </div>
 
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? "الخطوة 3: التحقق" : "الخطوة 3: التAchieve"}</h3>
+                      <h3 className="font-semibold text-blue-400 mb-2">{isAr ? isAr ? "الخطوة 3: التحقق" : "Step 3: Verify" : "Step 3: Verify"}</h3>
                       <p className="text-sm text-slate-300 mb-4">
                         أدخل الرمز المكون من 6 أرقام من التطبيق:
                       </p>
                       <div className="space-y-3">
                         <div>
-                          <Label htmlFor="verificationCode">{isAr ? "رمز التحقق" : "رمز التAchieve"}</Label>
+                          <Label htmlFor="verificationCode">{isAr ? isAr ? "رمز التحقق" : "Verification Code" : "Verification Code"}</Label>
                           <Input
                             id="verificationCode"
                             type="text"
@@ -173,7 +173,7 @@ export default function MFASetup() {
                           className="w-full bg-gradient-to-r from-green-500 to-emerald-600"
                           size="lg"
                         >
-                          {enableMutation.isPending ? "جاري التحقق..." : "تفعيل MFA"}
+                          {enableMutation.isPending ? isAr ? "جاري التحقق..." : "Verifying..." : "Enable MFA"}
                         </Button>
                       </div>
                     </div>
@@ -197,7 +197,7 @@ export default function MFASetup() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="disableCode">{isAr ? "رمز التحقق" : "رمز التAchieve"}</Label>
+                  <Label htmlFor="disableCode">{isAr ? isAr ? "رمز التحقق" : "Verification Code" : "Verification Code"}</Label>
                   <Input
                     id="disableCode"
                     type="text"
@@ -215,7 +215,7 @@ export default function MFASetup() {
                   className="w-full"
                   size="lg"
                 >
-                  {disableMutation.isPending ? "جاري التعطيل..." : "تعطيل MFA"}
+                  {disableMutation.isPending ? isAr ? "جاري التعطيل..." : "Disabling..." : "Disable MFA"}
                 </Button>
               </CardContent>
             </Card>

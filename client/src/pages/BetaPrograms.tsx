@@ -27,65 +27,65 @@ export default function BetaPrograms() {
   const programs = [
     {
       id: "predictive-innovation",
-      title: "الابتكار التنبؤي",
+      title: "Predictive Innovation",
       icon: <TrendingUp className="text-blue-600" size={40} />,
-      description: "كن أول من يستخدم نظام التنبؤ بفرص الابتكار قبل المنافسين",
+      description: "Be the first to use our innovation opportunity prediction system before competitors",
       features: [
-        "تحليل اتجاهات السوق العالمية في الوقت الفعلي",
-        "تتبع براءات الاختراع الناشئة من USPTO, EPO, WIPO",
-        "مراقبة الأبحاث الأكاديمية من IEEE, Nature, Science",
-        "توصيات ابتكار تنبؤية بالذكاء الاصطناعي",
+        isAr ? "تحليل اتجاهات السوق العالمية في الوقت الفعلي" : "Real-time global market trend analysis",
+        isAr ? "تتبع براءات الاختراع الناشئة من USPTO, EPO, WIPO" : "Track emerging patents from USPTO, EPO, WIPO",
+        isAr ? "مراقبة الأبحاث الأكاديمية من IEEE, Nature, Science" : "Monitor academic research from IEEE, Nature, Science",
+        isAr ? "توصيات ابتكار تنبؤية بالذكاء الاصطناعي" : "AI-powered predictive innovation recommendations",
       ],
       benefits: [
-        "وصول مبكر لمدة 6 أشهر",
-        "تدريب مخصص من فريق NAQLA",
-        "دعم فني أولوية",
-        "خصم 50% على الاشتراك السنوي",
+        isAr ? "وصول مبكر لمدة 6 أشهر" : "6-month early access",
+        isAr ? "تدريب مخصص من فريق NAQLA" : "Custom training from NAQLA team",
+        isAr ? "دعم فني أولوية" : "Priority technical support",
+        isAr ? "خصم 50% على الاشتراك السنوي" : "50% off annual subscription",
       ],
-      slots: "15 مقعد متبقي",
-      duration: "6 أشهر",
+      slots: "15 seats remaining",
+      duration: "6 months",
       color: "from-blue-500 to-cyan-600",
     },
     {
       id: "global-networks",
-      title: "الشبكات العالمية",
+      title: "Global Networking",
       icon: <Globe className="text-green-600" size={40} />,
-      description: "انضم إلى شبكة 25,000+ خبير ومبتكر من 120+ دولة",
+      description: "Join a network of 25,000+ experts and innovators from 120+ countries",
       features: [
-        "وصول حصري لشبكة الخبراء العالمية",
-        "مطابقة ذكية مع الخبراء المناسبين",
-        "حماية متقدمة للملكية الفكرية",
-        "أدوات تعاون عالمية متكاملة",
+        isAr ? "وصول حصري لشبكة الخبراء العالمية" : "Exclusive access to global expert network",
+        isAr ? "مطابقة ذكية مع الخبراء المناسبين" : "Smart matching with relevant experts",
+        isAr ? "حماية متقدمة للملكية الفكرية" : "Advanced IP protection",
+        isAr ? "أدوات تعاون عالمية متكاملة" : "Integrated global collaboration tools",
       ],
       benefits: [
-        "3 استشارات مجانية مع خبراء",
-        "أولوية في المطابقة",
-        "وصول لفعاليات حصرية",
-        "خصم 40% على خدمات الخبراء",
+        isAr ? "3 استشارات مجانية مع خبراء" : "3 free expert consultations",
+        isAr ? "أولوية في المطابقة" : "Priority matching",
+        isAr ? "وصول لفعاليات حصرية" : "Access to exclusive events",
+        isAr ? "خصم 40% على خدمات الخبراء" : "40% off expert services",
       ],
-      slots: "20 مقعد متبقي",
-      duration: "4 أشهر",
+      slots: "20 seats remaining",
+      duration: "4 months",
       color: "from-green-500 to-emerald-600",
     },
     {
       id: "sustainability-ai-ethics",
-      title: "الاستدامة وأخلاقيات AI",
+      title: "Sustainability & AI Ethics",
       icon: <Leaf className="text-purple-600" size={40} />,
-      description: "قيّم وحسّن مشاريعك وفقاً لمعايير ESG وأخلاقيات الذكاء الاصطناعي",
+      description: "Assess and improve your projects according to ESG standards and AI ethics",
       features: [
-        "تقييم شامل لمعايير ESG",
-        "إطار عمل أخلاقيات AI المتقدم",
-        "شهادات استدامة معترف بها",
-        "تقارير امتثال تفصيلية",
+        isAr ? "تقييم شامل لمعايير ESG" : "Comprehensive ESG assessment",
+        isAr ? "إطار عمل أخلاقيات AI المتقدم" : "Advanced AI ethics framework",
+        isAr ? "شهادات استدامة معترف بها" : "Recognized sustainability certifications",
+        isAr ? "تقارير امتثال تفصيلية" : "Detailed compliance reports",
       ],
       benefits: [
-        "تقييم ESG مجاني (قيمة $5,000)",
-        "استشارة أخلاقيات AI",
-        "شهادة استدامة",
-        "خصم 60% على التقييمات المستقبلية",
+        isAr ? "تقييم ESG مجاني (قيمة $5,000)" : "Free ESG Assessment ($5,000 value)",
+        isAr ? "استشارة أخلاقيات AI" : "AI Ethics Consultation",
+        isAr ? "شهادة استدامة" : "Sustainability Certificate",
+        isAr ? "خصم 60% على التقييمات المستقبلية" : "60% off future assessments",
       ],
-      slots: "10 مقاعد متبقية",
-      duration: "3 أشهر",
+      slots: "10 seats left",
+      duration: "3 months",
       color: "from-purple-500 to-pink-600",
     },
   ];
@@ -94,12 +94,12 @@ export default function BetaPrograms() {
     e.preventDefault();
     
     if (!formData.fullName || !formData.email || !formData.program || !formData.reason) {
-    showToast.error("يرجى ملء جميع الحقول المطلوبة");
+    showToast.error(isAr ? "يرجى ملء جميع الحقول المطلوبة" : "Please fill in all required fields");
       return;
     }
 
     // Here you would typically send the data to your backend
-    showToast.success("تم التسجيل بنجاح! 🎉\nسنتواصل معك خلال 48 ساعة لتأكيد مشاركتك");
+    showToast.success(isAr ? "تم التسجيل بنجاح! 🎉\nسنتواصل معك خلال 48 ساعة لتأكيد مشاركتك" : "Registration successful! 🎉\nWe will contact you within 48 hours to confirm your participation.");
 
     // Reset form
     setFormData({
@@ -148,7 +148,7 @@ export default function BetaPrograms() {
               <p className="text-muted-foreground mb-6">{program.description}</p>
 
               <div className="mb-6">
-                <h4 className="font-semibold mb-3 text-sm">{isAr ? "الميزات الرئيسية:" : "الميزات Home:"}</h4>
+                <h4 className="font-semibold mb-3 text-sm">{isAr ? isAr ? "الميزات الرئيسية:" : "Key Features:" : "Home Features:"}</h4>
                 <div className="space-y-2">
                   {program.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-2">
@@ -160,7 +160,7 @@ export default function BetaPrograms() {
               </div>
 
               <div className="mb-6">
-                <h4 className="font-semibold mb-3 text-sm">{isAr ? "فوائد المشاركين:" : "[فوائد المشاركين:]"}</h4>
+                <h4 className="font-semibold mb-3 text-sm">{isAr ? isAr ? "فوائد المشاركين:" : "Participant Benefits:" : "Participant Benefits:"}</h4>
                 <div className="space-y-2">
                   {program.benefits.map((benefit, i) => (
                     <div key={i} className="flex items-start gap-2">
@@ -173,7 +173,7 @@ export default function BetaPrograms() {
 
               <div className="flex items-center justify-between pt-4 border-t">
                 <div>
-                  <div className="text-sm text-muted-foreground">{isAr ? "المدة" : "[المدة]"}</div>
+                  <div className="text-sm text-muted-foreground">{isAr ? isAr ? "المدة" : "Duration" : "Duration"}</div>
                   <div className="font-semibold">{program.duration}</div>
                 </div>
                 <Badge variant="secondary">{program.slots}</Badge>
@@ -184,7 +184,7 @@ export default function BetaPrograms() {
 
         {/* Registration Form */}
         <Card className="p-8 max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">{isAr ? "نموذج التسجيل" : "نموذج الRegister"}</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">{isAr ? isAr ? "نموذج التسجيل" : "Registration Form" : "Registration Form"}</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -193,7 +193,7 @@ export default function BetaPrograms() {
               <Input
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                placeholder="أدخل اسمك الكامل"
+                placeholder={isAr ? "أدخل اسمك الكامل" : "Enter your full name"}
                 required
               />
             </div>
@@ -213,19 +213,19 @@ export default function BetaPrograms() {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">{isAr ? "الشركة/المؤسسة" : "[الشركة/المؤسسة]"}</label>
+                <label className="block text-sm font-medium mb-2">{isAr ? isAr ? "الشركة/المؤسسة" : "Company/Organization" : "Company/Organization"}</label>
                 <Input
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  placeholder="اسم الشركة"
+                  placeholder={isAr ? "اسم الشركة" : "Company Name"}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">{isAr ? "المسمى الوظيفي" : "[المسمى الوظيفي]"}</label>
+                <label className="block text-sm font-medium mb-2">{isAr ? isAr ? "المسمى الوظيفي" : "Job Title" : "Job Title"}</label>
                 <Input
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  placeholder="مدير الابتكار"
+                  placeholder={isAr ? "مدير الابتكار" : "Innovation Manager"}
                 />
               </div>
             </div>
@@ -243,7 +243,7 @@ export default function BetaPrograms() {
                 required
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="اختر البرنامج" />
+                  <SelectValue placeholder={isAr ? "اختر البرنامج" : "Select Program"} />
                 </SelectTrigger>
                 <SelectContent>
                   {programs.map((program) => (
@@ -262,7 +262,7 @@ export default function BetaPrograms() {
               <Textarea
                 value={formData.reason}
                 onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                placeholder="أخبرنا عن اهتمامك وكيف ستستفيد من البرنامج..."
+                placeholder={isAr ? "أخبرنا عن اهتمامك وكيف ستستفيد من البرنامج..." : "Tell us about your interest and how you'll benefit from the program..."}
                 rows={4}
                 required
               />
@@ -280,22 +280,22 @@ export default function BetaPrograms() {
 
         {/* FAQ Section */}
         <div className="mt-16 max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? "أسئلة شائعة" : "[أسئلة شائعة]"}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{isAr ? isAr ? "أسئلة شائعة" : "FAQ" : "FAQ"}</h2>
           <div className="space-y-4">
             <Card className="p-6">
-              <h3 className="font-bold mb-2">{isAr ? "ما هي متطلبات الانضمام؟" : "ما هي متطلبات اNoنضمام؟"}</h3>
+              <h3 className="font-bold mb-2">{isAr ? isAr ? "ما هي متطلبات الانضمام؟" : "What are the admission requirements?" : "What are the admission requirements?"}</h3>
               <p className="text-muted-foreground">
                 نبحث عن مبتكرين وشركات ومؤسسات جادة في استكشاف ميزات NAQLA 6.0 وتقديم تغذية راجعة بناءة.
               </p>
             </Card>
             <Card className="p-6">
-              <h3 className="font-bold mb-2">{isAr ? "هل البرنامج التجريبي مجاني؟" : "[هل البرنامج التجريبي مجاني؟]"}</h3>
+              <h3 className="font-bold mb-2">{isAr ? isAr ? "هل البرنامج التجريبي مجاني؟" : "Is the pilot program free?" : "Is the pilot program free?"}</h3>
               <p className="text-muted-foreground">
                 نعم، المشاركة في البرنامج التجريبي مجانية بالكامل، بالإضافة إلى الحصول على خصومات حصرية عند الإطلاق الرسمي.
               </p>
             </Card>
             <Card className="p-6">
-              <h3 className="font-bold mb-2">{isAr ? "متى يبدأ البرنامج؟" : "[متى يبدأ البرنامج؟]"}</h3>
+              <h3 className="font-bold mb-2">{isAr ? isAr ? "متى يبدأ البرنامج؟" : "When does the program start?" : "[When does the program start?]"}</h3>
               <p className="text-muted-foreground">
                 سيتم الإعلان عن تاريخ البدء للمشاركين المقبولين عبر البريد الإلكتروني خلال أسبوعين من التسجيل.
               </p>
