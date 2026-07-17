@@ -137,6 +137,36 @@ export default function Naqla2() {
       link: '/naqla2/solutions/submit',
       count: '500K+',
     },
+    {
+      id: 'matching-hub',
+      title: isAr ? 'مركز التطابق الذكي' : 'Smart Matching Hub',
+      description: isAr ? 'تطابق ابتكارك مع الحاضنات والمسرّعات والشركات المهتمة تلقائياً' : 'Auto-match your innovation with interested incubators, accelerators and companies',
+      icon: Brain,
+      color: 'from-blue-500 to-indigo-600',
+      borderColor: 'border-blue-500/30',
+      link: '/naqla2/matching-hub',
+      badge: isAr ? 'جديد' : 'New',
+    },
+    {
+      id: 'deal-room',
+      title: isAr ? 'غرفة التفاوض' : 'Deal Room',
+      description: isAr ? 'تفاوض بشكل آمن مع الجهات المهتمة وأبرم الاتفاقيات قبل الانتقال إلى NAQLA 3' : 'Negotiate securely and finalize agreements before moving to NAQLA 3',
+      icon: Briefcase,
+      color: 'from-green-500 to-emerald-600',
+      borderColor: 'border-green-500/30',
+      link: '/naqla2/deal-room',
+      badge: isAr ? 'جديد' : 'New',
+    },
+    {
+      id: 'events-needs-board',
+      title: isAr ? 'لوحة الفعاليات والحاجات' : 'Events & Needs Board',
+      description: isAr ? 'هاكاثونات ومعارض ومؤتمرات - سجّل كمبتكر أو متطوع أو راعٍ أو مرشد' : 'Hackathons, expos, conferences - register as innovator, volunteer, sponsor or mentor',
+      icon: Globe,
+      color: 'from-orange-500 to-red-600',
+      borderColor: 'border-orange-500/30',
+      link: '/naqla2/events-needs-board',
+      badge: isAr ? 'جديد' : 'New',
+    },
   ];
 
   const stats = [

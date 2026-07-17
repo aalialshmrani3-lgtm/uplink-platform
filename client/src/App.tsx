@@ -120,6 +120,9 @@ const Naqla2AdminSubmissions = lazy(() => import("./pages/Naqla2AdminSubmissions
 const MySubmissions = lazy(() => import("./pages/MySubmissions")); // My Submissions
 const ClassificationPaths = lazy(() => import("./pages/ClassificationPaths")); // Classification Paths
 const Naqla2Projects = lazy(() => import("./pages/Naqla2Projects")); // NAQLA 2 Projects
+const Naqla2MatchingHub = lazy(() => import("./pages/Naqla2MatchingHub")); // NAQLA 2 Matching Hub
+const Naqla2DealRoom = lazy(() => import("./pages/Naqla2DealRoom")); // NAQLA 2 Deal Room
+const Naqla2EventsNeedsBoard = lazy(() => import("./pages/Naqla2EventsNeedsBoard")); // NAQLA 2 Events & Needs Board
 const Naqla3Assets = lazy(() => import("./pages/Naqla3Assets")); // NAQLA 3 Assets
 const StrategicPartners = lazy(() => import("./pages/StrategicPartners")); // Strategic Partners
 const ValueFootprints = lazy(() => import("./pages/ValueFootprints")); // Value Footprints
@@ -372,6 +375,9 @@ function Router() {
         <Route path="/naqla2/challenges" component={Naqla2Challenges} /> {/* Browse Challenges */}
         <Route path="/my-submissions" component={MySubmissions} /> {/* My Submissions */}
         <Route path="/naqla2/projects/:id" component={Naqla2Projects} /> {/* NAQLA 2 Project Detail */}
+        <Route path="/naqla2/matching-hub" component={Naqla2MatchingHub} /> {/* NAQLA 2 Matching Hub */}
+        <Route path="/naqla2/deal-room" component={Naqla2DealRoom} /> {/* NAQLA 2 Deal Room */}
+        <Route path="/naqla2/events-needs-board" component={Naqla2EventsNeedsBoard} /> {/* NAQLA 2 Events & Needs Board */}
         <Route path="/naqla3" component={Naqla3} />
         <Route path="/naqla3/assets/:id" component={Naqla3Assets} /> {/* NAQLA 3 Asset Detail - NEW */}
         <Route path="/naqla3/marketplace" component={Naqla3Marketplace} /> {/* Marketplace */}
