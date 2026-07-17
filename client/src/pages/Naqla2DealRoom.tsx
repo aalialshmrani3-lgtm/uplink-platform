@@ -192,6 +192,9 @@ export default function Naqla2DealRoom() {
     generatedAt: string;
   } | null>(null);
   const [contractCopied, setContractCopied] = useState(false);
+  const [isEditingContract, setIsEditingContract] = useState(false);
+  const [editedContractText, setEditedContractText] = useState('');
+  const [contractSaved, setContractSaved] = useState(false);
 
   const generateContractMutation = trpc.naqla2.generateContract.useMutation({
     onSuccess: (data) => {
@@ -222,6 +225,27 @@ export default function Naqla2DealRoom() {
     });
   };
 
+  const handleEditContract = () => {
+    if (!generatedContract) return;
+    setEditedContractText(generatedContract.contractText);
+    setIsEditingContract(true);
+    setContractSaved(false);
+  };
+
+  const handleSaveContractEdit = () => {
+    if (!generatedContract) return;
+    setGeneratedContract({ ...generatedContract, contractText: editedContractText });
+    setIsEditingContract(false);
+    setContractSaved(true);
+    setTimeout(() => setContractSaved(false), 3000);
+    toast.success(isAr ? 'تم حفظ التعديلات على المسودة!' : 'Contract edits saved!');
+  };
+
+  const handleCancelContractEdit = () => {
+    setIsEditingContract(false);
+    setEditedContractText('');
+  };
+
   const handleCopyContract = () => {
     if (!generatedContract) return;
     navigator.clipboard.writeText(generatedContract.contractText);
@@ -232,7 +256,7 @@ export default function Naqla2DealRoom() {
 
   const handleDownloadContract = () => {
     if (!generatedContract) return;
-    const blob = new Blob([generatedContract.contractText], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([generatedContract.contractText], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -607,44 +631,144 @@ export default function Naqla2DealRoom() {
                         )}
                       </Button>
 
-                      {/* Generated Contract Display */}
+                      {/* Generated Contract Display with Inline Editor */}
                       {generatedContract && (
                         <div className="mt-5">
+                          {/* Header Row */}
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
                               <CheckCircle2 className="w-5 h-5 text-green-400" />
                               <span className="font-semibold text-foreground">
                                 {isAr ? 'المسودة جاهزة' : 'Draft Ready'}: {generatedContract.contractTypeLabel}
                               </span>
+                              {contractSaved && (
+                                <span className="flex items-center gap-1 text-xs text-green-400 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20">
+                                  <CheckCircle2 className="w-3 h-3" />
+                                  {isAr ? 'تم الحفظ' : 'Saved'}
+                                </span>
+                              )}
                             </div>
-                            <div className="flex gap-2">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={handleCopyContract}
-                                className="border-border/50 text-muted-foreground hover:text-foreground"
-                              >
-                                <Copy className="w-4 h-4 mr-1" />
-                                {contractCopied ? (isAr ? 'تم النسخ!' : 'Copied!') : (isAr ? 'نسخ' : 'Copy')}
-                              </Button>
-                              <Button
-                                size="sm"
-                                onClick={handleDownloadContract}
-                                className="bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30"
-                              >
-                                <Download className="w-4 h-4 mr-1" />
-                                {isAr ? 'تحميل' : 'Download'}
-                              </Button>
+                            <div className="flex gap-2 flex-wrap">
+                              {!isEditingContract ? (
+                                <>
+                                  {/* Edit Button */}
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={handleEditContract}
+                                    className="border-blue-500/40 text-blue-400 hover:bg-blue-500/10"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    {isAr ? 'تحرير' : 'Edit'}
+                                  </Button>
+                                  {/* Copy Button */}
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={handleCopyContract}
+                                    className="border-border/50 text-muted-foreground hover:text-foreground"
+                                  >
+                                    <Copy className="w-4 h-4 mr-1" />
+                                    {contractCopied ? (isAr ? 'تم النسخ!' : 'Copied!') : (isAr ? 'نسخ' : 'Copy')}
+                                  </Button>
+                                  {/* Download Button */}
+                                  <Button
+                                    size="sm"
+                                    onClick={handleDownloadContract}
+                                    className="bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30"
+                                  >
+                                    <Download className="w-4 h-4 mr-1" />
+                                    {isAr ? 'تحميل' : 'Download'}
+                                  </Button>
+                                  {/* Print Button */}
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => {
+                                      const win = window.open('', '_blank');
+                                      if (win) {
+                                        win.document.write(`<html><head><title>${generatedContract.contractTypeLabel}</title><style>body{font-family:Arial,sans-serif;padding:40px;direction:${isAr?'rtl':'ltr'};white-space:pre-wrap;font-size:14px;line-height:1.8;}</style></head><body>${generatedContract.contractText.replace(/\n/g,'<br/>')}</body></html>`);
+                                        win.document.close();
+                                        win.print();
+                                      }
+                                    }}
+                                    className="border-border/50 text-muted-foreground hover:text-foreground"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                                    {isAr ? 'طباعة' : 'Print'}
+                                  </Button>
+                                </>
+                              ) : (
+                                <>
+                                  {/* Save Edit Button */}
+                                  <Button
+                                    size="sm"
+                                    onClick={handleSaveContractEdit}
+                                    className="bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30"
+                                  >
+                                    <CheckCircle2 className="w-4 h-4 mr-1" />
+                                    {isAr ? 'حفظ التعديلات' : 'Save Edits'}
+                                  </Button>
+                                  {/* Cancel Edit Button */}
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={handleCancelContractEdit}
+                                    className="border-red-500/40 text-red-400 hover:bg-red-500/10"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                    {isAr ? 'إلغاء' : 'Cancel'}
+                                  </Button>
+                                </>
+                              )}
                             </div>
                           </div>
-                          <div className="bg-background/80 border border-border/50 rounded-xl p-4 max-h-96 overflow-y-auto">
-                            <pre className="text-sm text-foreground whitespace-pre-wrap font-sans leading-relaxed" dir={isAr ? 'rtl' : 'ltr'}>
-                              {generatedContract.contractText}
-                            </pre>
+
+                          {/* Edit Mode Banner */}
+                          {isEditingContract && (
+                            <div className="flex items-center gap-2 mb-2 px-3 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                              {isAr
+                                ? 'وضع التحرير: يمكنك الآن تعديل نص المسودة مباشرةً. اضغط "حفظ التعديلات" عند الانتهاء.'
+                                : 'Edit mode: You can now modify the draft text directly. Click "Save Edits" when done.'}
+                            </div>
+                          )}
+
+                          {/* Contract Content: View or Edit */}
+                          <div className={`bg-background/80 border rounded-xl overflow-hidden ${
+                            isEditingContract ? 'border-blue-500/40 ring-1 ring-blue-500/20' : 'border-border/50'
+                          }`}>
+                            {isEditingContract ? (
+                              <textarea
+                                value={editedContractText}
+                                onChange={e => setEditedContractText(e.target.value)}
+                                className="w-full min-h-[420px] p-4 bg-transparent text-sm text-foreground font-sans leading-relaxed resize-y outline-none"
+                                dir={isAr ? 'rtl' : 'ltr'}
+                                spellCheck={false}
+                                style={{ fontFamily: 'inherit' }}
+                              />
+                            ) : (
+                              <div className="p-4 max-h-96 overflow-y-auto">
+                                <pre className="text-sm text-foreground whitespace-pre-wrap font-sans leading-relaxed" dir={isAr ? 'rtl' : 'ltr'}>
+                                  {generatedContract.contractText}
+                                </pre>
+                              </div>
+                            )}
                           </div>
-                          <p className="text-xs text-muted-foreground/60 mt-2 text-right">
-                            {isAr ? 'تم التوليد في:' : 'Generated at:'} {new Date(generatedContract.generatedAt).toLocaleString(isAr ? 'ar-SA' : 'en-US')}
-                          </p>
+
+                          {/* Footer */}
+                          <div className="flex items-center justify-between mt-2">
+                            <p className="text-xs text-muted-foreground/60">
+                              {isAr ? 'تم التوليد في:' : 'Generated at:'} {new Date(generatedContract.generatedAt).toLocaleString(isAr ? 'ar-SA' : 'en-US')}
+                            </p>
+                            {isEditingContract && (
+                              <p className="text-xs text-muted-foreground/60">
+                                {isAr
+                                  ? `${editedContractText.length} حرف`
+                                  : `${editedContractText.length} characters`}
+                              </p>
+                            )}
+                          </div>
                         </div>
                       )}
                     </CardContent>

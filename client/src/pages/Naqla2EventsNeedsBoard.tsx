@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -166,6 +166,68 @@ export default function Naqla2EventsNeedsBoard() {
   const [registerRole, setRegisterRole] = useState('');
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showSaveFilterModal, setShowSaveFilterModal] = useState(false);
+  const [newFilterName, setNewFilterName] = useState('');
+  const [savedFilters, setSavedFilters] = useState<Array<{
+    id: string;
+    name: string;
+    filters: {
+      type: string; sector: string; status: string;
+      city: string; prize: string; date: string;
+      search: string; sortBy: string;
+    };
+    createdAt: string;
+  }>>(() => {
+    try {
+      const stored = localStorage.getItem('uplink_saved_event_filters');
+      return stored ? JSON.parse(stored) : [];
+    } catch { return []; }
+  });
+  const [showSavedFiltersPanel, setShowSavedFiltersPanel] = useState(false);
+
+  const persistSavedFilters = useCallback((filters: typeof savedFilters) => {
+    setSavedFilters(filters);
+    localStorage.setItem('uplink_saved_event_filters', JSON.stringify(filters));
+  }, []);
+
+  const handleSaveCurrentFilter = () => {
+    if (!newFilterName.trim()) {
+      toast.error(isAr ? 'أدخل اسماً للفلتر' : 'Please enter a filter name');
+      return;
+    }
+    const newFilter = {
+      id: Date.now().toString(),
+      name: newFilterName.trim(),
+      filters: {
+        type: filterType, sector: filterSector, status: filterStatus,
+        city: filterCity, prize: filterPrize, date: filterDate,
+        search: searchQuery, sortBy,
+      },
+      createdAt: new Date().toISOString(),
+    };
+    persistSavedFilters([...savedFilters, newFilter]);
+    setNewFilterName('');
+    setShowSaveFilterModal(false);
+    toast.success(isAr ? `تم حفظ الفلتر "‏${newFilter.name}‏" بنجاح` : `Filter "${newFilter.name}" saved successfully`);
+  };
+
+  const handleApplySavedFilter = (saved: typeof savedFilters[0]) => {
+    setFilterType(saved.filters.type);
+    setFilterSector(saved.filters.sector);
+    setFilterStatus(saved.filters.status);
+    setFilterCity(saved.filters.city);
+    setFilterPrize(saved.filters.prize);
+    setFilterDate(saved.filters.date);
+    setSearchQuery(saved.filters.search);
+    setSortBy(saved.filters.sortBy as 'date' | 'prize' | 'fill');
+    setShowSavedFiltersPanel(false);
+    toast.success(isAr ? `تم تطبيق الفلتر "‏${saved.name}‏"` : `Filter "${saved.name}" applied`);
+  };
+
+  const handleDeleteSavedFilter = (id: string) => {
+    persistSavedFilters(savedFilters.filter(f => f.id !== id));
+    toast.success(isAr ? 'تم حذف الفلتر' : 'Filter deleted');
+  };
 
   // Derived filter options
   const cities = useMemo(() => {
@@ -416,6 +478,84 @@ export default function Naqla2EventsNeedsBoard() {
               >
                 <List className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Save Current Filters Button */}
+            {activeFiltersCount > 0 && (
+              <button
+                onClick={() => setShowSaveFilterModal(true)}
+                className="flex items-center gap-1.5 px-3 py-2 h-9 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/30 text-sm hover:bg-blue-500/20 transition-all"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                {isAr ? 'حفظ الفلاتر' : 'Save Filters'}
+              </button>
+            )}
+
+            {/* Saved Filters Button */}
+            <div className="relative">
+              <button
+                onClick={() => setShowSavedFiltersPanel(!showSavedFiltersPanel)}
+                className={`flex items-center gap-1.5 px-3 py-2 h-9 rounded-lg border text-sm transition-all ${
+                  showSavedFiltersPanel
+                    ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+                    : 'bg-card/50 text-muted-foreground border-border/50 hover:text-foreground hover:bg-card/80'
+                }`}
+              >
+                <Star className="w-3.5 h-3.5" />
+                {isAr ? 'الفلاتر المحفوظة' : 'Saved Filters'}
+                {savedFilters.length > 0 && (
+                  <span className="ml-1 w-4 h-4 rounded-full bg-purple-500 text-white text-xs flex items-center justify-center">
+                    {savedFilters.length}
+                  </span>
+                )}
+              </button>
+
+              {/* Saved Filters Dropdown */}
+              {showSavedFiltersPanel && (
+                <div className="absolute top-full mt-2 z-50 w-72 rounded-xl bg-card border border-border/60 shadow-xl backdrop-blur-sm" dir={isAr ? 'rtl' : 'ltr'}>
+                  <div className="p-3 border-b border-border/40">
+                    <p className="text-sm font-semibold text-foreground">
+                      {isAr ? 'الفلاتر المحفوظة' : 'Saved Filters'}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {isAr ? 'انقر لتطبيق أي فلتر محفوظ' : 'Click to apply any saved filter'}
+                    </p>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    {savedFilters.length === 0 ? (
+                      <div className="p-4 text-center">
+                        <Star className="w-8 h-8 text-muted-foreground/30 mx-auto mb-2" />
+                        <p className="text-sm text-muted-foreground">
+                          {isAr ? 'لا توجد فلاتر محفوظة بعد' : 'No saved filters yet'}
+                        </p>
+                        <p className="text-xs text-muted-foreground/60 mt-1">
+                          {isAr ? 'قم بضبط الفلاتر ثم اضغط "حفظ الفلاتر"' : 'Set filters then click "Save Filters"'}
+                        </p>
+                      </div>
+                    ) : (
+                      savedFilters.map(saved => (
+                        <div key={saved.id} className="flex items-center gap-2 p-3 hover:bg-secondary/30 transition-colors border-b border-border/20 last:border-0">
+                          <button
+                            onClick={() => handleApplySavedFilter(saved)}
+                            className="flex-1 text-left min-w-0"
+                          >
+                            <p className="text-sm font-medium text-foreground truncate">{saved.name}</p>
+                            <p className="text-xs text-muted-foreground/60 mt-0.5">
+                              {new Date(saved.createdAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US')}
+                            </p>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteSavedFilter(saved.id)}
+                            className="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground/50 hover:text-red-400 hover:bg-red-500/10 transition-all flex-shrink-0"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Active Filters Count + Reset */}
@@ -833,6 +973,75 @@ export default function Naqla2EventsNeedsBoard() {
               </div>
             </CardContent>
           </Card>
+        </div>
+      )}
+
+      {/* ===== SAVE FILTER MODAL ===== */}
+      {showSaveFilterModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowSaveFilterModal(false); }}
+        >
+          <div className="w-full max-w-sm mx-4 rounded-2xl bg-card border border-border/60 shadow-2xl p-6" dir={isAr ? 'rtl' : 'ltr'}>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                <Star className="w-5 h-5 text-blue-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-foreground">
+                  {isAr ? 'حفظ إعدادات الفلتر' : 'Save Filter Settings'}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  {isAr ? 'سيتم حفظ الفلاتر الحالية للاستخدام لاحقاً' : 'Current filters will be saved for future use'}
+                </p>
+              </div>
+            </div>
+
+            {/* Active Filters Summary */}
+            <div className="mb-4 p-3 rounded-xl bg-secondary/30 border border-border/30">
+              <p className="text-xs font-semibold text-muted-foreground mb-2">
+                {isAr ? 'الفلاتر الحالية:' : 'Current filters:'}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {filterType !== 'all' && <span className="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">{isAr ? EVENT_TYPES.find(t => t.id === filterType)?.label.ar : EVENT_TYPES.find(t => t.id === filterType)?.label.en}</span>}
+                {filterSector !== 'all' && <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">{isAr ? SECTOR_LABELS[filterSector]?.ar : SECTOR_LABELS[filterSector]?.en}</span>}
+                {filterStatus !== 'all' && <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">{filterStatus}</span>}
+                {filterCity !== 'all' && <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">{filterCity}</span>}
+                {filterPrize !== 'all' && <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">{filterPrize === 'high' ? '+300K SAR' : filterPrize === 'medium' ? '100K-300K SAR' : '<100K SAR'}</span>}
+                {filterDate !== 'all' && <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">{filterDate}</span>}
+                {searchQuery && <span className="text-xs px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20">"‏{searchQuery}‏"</span>}
+              </div>
+            </div>
+
+            {/* Name Input */}
+            <div className="mb-5">
+              <label className="text-sm font-medium text-foreground mb-2 block">
+                {isAr ? 'اسم الفلتر' : 'Filter Name'}
+              </label>
+              <input
+                type="text"
+                value={newFilterName}
+                onChange={e => setNewFilterName(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') handleSaveCurrentFilter(); }}
+                placeholder={isAr ? 'مثال: فعاليات الطاقة في الرياض' : 'e.g., Energy events in Riyadh'}
+                className="w-full px-3 py-2 rounded-lg bg-secondary/40 border border-border/50 text-foreground placeholder:text-muted-foreground/50 text-sm outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20"
+                autoFocus
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <Button
+                onClick={handleSaveCurrentFilter}
+                className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                {isAr ? 'حفظ' : 'Save'}
+              </Button>
+              <Button variant="outline" onClick={() => { setShowSaveFilterModal(false); setNewFilterName(''); }}>
+                {isAr ? 'إلغاء' : 'Cancel'}
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

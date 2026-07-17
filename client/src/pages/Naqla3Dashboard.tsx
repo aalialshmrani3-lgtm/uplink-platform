@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,6 +15,17 @@ import {
   CheckSquare, XCircle, Timer, Sparkles, TrendingDown, Activity
 } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import {
+  Chart as ChartJS,
+  CategoryScale, LinearScale, BarElement, LineElement,
+  PointElement, ArcElement, Title, Tooltip, Legend, Filler
+} from 'chart.js';
+import { Bar, Line, Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale, LinearScale, BarElement, LineElement,
+  PointElement, ArcElement, Title, Tooltip, Legend, Filler
+);
 
 // ===================== MOCK DATA =====================
 
@@ -412,6 +423,181 @@ export default function Naqla3Dashboard() {
                   );
                 })}
               </div>
+
+              {/* ===== INTERACTIVE CHARTS ROW ===== */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Bar Chart: Monthly Sales Revenue */}
+                <div className="lg:col-span-2">
+                  <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
+                    <CardHeader className="pb-3 border-b border-border/50">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-base flex items-center gap-2">
+                          <BarChart3 className="w-4 h-4 text-blue-400" />
+                          {isAr ? 'إيرادات البيع الشهرية (SAR)' : 'Monthly Sales Revenue (SAR)'}
+                        </CardTitle>
+                        <Badge variant="outline" className="text-xs text-blue-400 border-blue-500/30">
+                          {isAr ? '2025' : '2025'}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-4">
+                      <div style={{ height: 220 }}>
+                        <Bar
+                          data={{
+                            labels: isAr
+                              ? ['ين', 'فب', 'مار', 'أبر', 'ماي', 'يون', 'يول', 'أغس', 'سبت', 'أكت', 'نوف', 'ديس']
+                              : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            datasets: [
+                              {
+                                label: isAr ? 'إيرادات البيع' : 'Sales Revenue',
+                                data: [850000, 1200000, 980000, 1450000, 1100000, 1800000, 2100000, 1650000, 1950000, 2300000, 1750000, 2800000],
+                                backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                                borderColor: 'rgba(59, 130, 246, 1)',
+                                borderWidth: 1,
+                                borderRadius: 6,
+                              },
+                              {
+                                label: isAr ? 'إيرادات التراخيص' : 'Licensing Revenue',
+                                data: [320000, 450000, 380000, 520000, 490000, 610000, 720000, 580000, 690000, 810000, 640000, 950000],
+                                backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                                borderColor: 'rgba(16, 185, 129, 1)',
+                                borderWidth: 1,
+                                borderRadius: 6,
+                              },
+                            ],
+                          }}
+                          options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                              legend: { position: 'top' as const, labels: { color: '#94a3b8', font: { size: 11 } } },
+                              tooltip: { callbacks: { label: (ctx) => ` ${(ctx.raw as number).toLocaleString()} SAR` } },
+                            },
+                            scales: {
+                              x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                              y: { ticks: { color: '#64748b', font: { size: 10 }, callback: (v) => `${(Number(v)/1000000).toFixed(1)}M` }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                            },
+                          }}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Doughnut: IP Portfolio Distribution */}
+                <div>
+                  <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
+                    <CardHeader className="pb-3 border-b border-border/50">
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-purple-400" />
+                        {isAr ? 'توزيع محفظة الملكية الفكرية' : 'IP Portfolio Distribution'}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-4">
+                      <div style={{ height: 180 }}>
+                        <Doughnut
+                          data={{
+                            labels: isAr
+                              ? ['براءة اختراع', 'علامة تجارية', 'حقوق تأليف', 'أسرار تجارية']
+                              : ['Patents', 'Trademarks', 'Copyrights', 'Trade Secrets'],
+                            datasets: [{
+                              data: [45, 25, 20, 10],
+                              backgroundColor: ['rgba(245, 158, 11, 0.8)', 'rgba(59, 130, 246, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(139, 92, 246, 0.8)'],
+                              borderColor: ['rgba(245, 158, 11, 1)', 'rgba(59, 130, 246, 1)', 'rgba(16, 185, 129, 1)', 'rgba(139, 92, 246, 1)'],
+                              borderWidth: 2,
+                            }],
+                          }}
+                          options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                              legend: { position: 'bottom' as const, labels: { color: '#94a3b8', font: { size: 10 }, padding: 8 } },
+                              tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw}%` } },
+                            },
+                            cutout: '65%',
+                          }}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* Line Chart: Sales Progress Over Time */}
+              <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
+                <CardHeader className="pb-3 border-b border-border/50">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-green-400" />
+                      {isAr ? 'تتبع تقدم عمليات البيع والاستحواذ' : 'Sales & Acquisition Progress Tracking'}
+                    </CardTitle>
+                    <div className="flex gap-2">
+                      {[{label: isAr ? 'شهري' : 'Monthly', val: 'monthly'}, {label: isAr ? 'ربعي' : 'Quarterly', val: 'quarterly'}].map(opt => (
+                        <button key={opt.val} className="text-xs px-2 py-1 rounded-md bg-secondary/40 text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all">
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <div style={{ height: 200 }}>
+                    <Line
+                      data={{
+                        labels: isAr
+                          ? ['ين', 'فب', 'مار', 'أبر', 'ماي', 'يون', 'يول', 'أغس', 'سبت', 'أكت', 'نوف', 'ديس']
+                          : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [
+                          {
+                            label: isAr ? 'عمليات البيع المكتملة' : 'Completed Sales',
+                            data: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7],
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                            pointRadius: 4,
+                          },
+                          {
+                            label: isAr ? 'عمليات الاستحواذ المكتملة' : 'Completed Acquisitions',
+                            data: [0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3],
+                            borderColor: 'rgba(139, 92, 246, 1)',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: 'rgba(139, 92, 246, 1)',
+                            pointRadius: 4,
+                          },
+                          {
+                            label: isAr ? 'إجمالي القيمة (M SAR)' : 'Total Value (M SAR)',
+                            data: [1.2, 2.1, 3.8, 5.2, 6.1, 7.9, 10.2, 11.8, 13.5, 15.1, 16.8, 19.4],
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                            fill: false,
+                            tension: 0.4,
+                            pointBackgroundColor: 'rgba(16, 185, 129, 1)',
+                            pointRadius: 4,
+                            yAxisID: 'y1',
+                          },
+                        ],
+                      }}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index' as const, intersect: false },
+                        plugins: {
+                          legend: { position: 'top' as const, labels: { color: '#94a3b8', font: { size: 11 } } },
+                        },
+                        scales: {
+                          x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                          y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: isAr ? 'عدد العمليات' : 'Operations', color: '#64748b', font: { size: 10 } } },
+                          y1: { position: 'right' as const, ticks: { color: '#64748b', font: { size: 10 }, callback: (v) => `${v}M` }, grid: { drawOnChartArea: false }, title: { display: true, text: 'SAR', color: '#64748b', font: { size: 10 } } },
+                        },
+                      }}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
 
               {/* Recent Activity + Quick Actions */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
