@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -222,6 +222,59 @@ export default function Naqla3Dashboard() {
   const [selectedPatent, setSelectedPatent] = useState<typeof MOCK_PATENTS[0] | null>(null);
   const [selectedSale, setSelectedSale] = useState<typeof MOCK_SALES[0] | null>(null);
 
+  // ===== TIME RANGE STATE =====
+  type TimePreset = 'q1' | 'q2' | 'q3' | 'q4' | 'h1' | 'h2' | 'full' | 'custom';
+  const [timePreset, setTimePreset] = useState<TimePreset>('full');
+  const [customStart, setCustomStart] = useState('');
+  const [customEnd, setCustomEnd] = useState('');
+  const [showCustomRange, setShowCustomRange] = useState(false);
+
+  // All monthly data (12 months)
+  const ALL_MONTHS_AR = ['ين', 'فب', 'مار', 'أبر', 'ماي', 'يون', 'يول', 'أغس', 'سبت', 'أكت', 'نوف', 'ديس'];
+  const ALL_MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const ALL_SALES_DATA = [850000, 1200000, 980000, 1450000, 1100000, 1800000, 2100000, 1650000, 1950000, 2300000, 1750000, 2800000];
+  const ALL_LICENSE_DATA = [320000, 450000, 380000, 520000, 490000, 610000, 720000, 580000, 690000, 810000, 640000, 950000];
+  const ALL_COMPLETED_SALES = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7];
+  const ALL_COMPLETED_ACQ = [0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3];
+  const ALL_TOTAL_VALUE = [1.2, 2.1, 3.8, 5.2, 6.1, 7.9, 10.2, 11.8, 13.5, 15.1, 16.8, 19.4];
+
+  // Derive slice range from preset
+  const { startIdx, endIdx } = useMemo(() => {
+    switch (timePreset) {
+      case 'q1': return { startIdx: 0, endIdx: 3 };
+      case 'q2': return { startIdx: 3, endIdx: 6 };
+      case 'q3': return { startIdx: 6, endIdx: 9 };
+      case 'q4': return { startIdx: 9, endIdx: 12 };
+      case 'h1': return { startIdx: 0, endIdx: 6 };
+      case 'h2': return { startIdx: 6, endIdx: 12 };
+      case 'custom': {
+        const months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+        const s = customStart ? Math.max(0, months.indexOf(customStart.slice(5,7))) : 0;
+        const e = customEnd ? Math.min(12, months.indexOf(customEnd.slice(5,7)) + 1) : 12;
+        return { startIdx: s, endIdx: e > s ? e : s + 1 };
+      }
+      default: return { startIdx: 0, endIdx: 12 };
+    }
+  }, [timePreset, customStart, customEnd]);
+
+  const chartLabels = useMemo(() => (isAr ? ALL_MONTHS_AR : ALL_MONTHS_EN).slice(startIdx, endIdx), [isAr, startIdx, endIdx]);
+  const chartSalesData = useMemo(() => ALL_SALES_DATA.slice(startIdx, endIdx), [startIdx, endIdx]);
+  const chartLicenseData = useMemo(() => ALL_LICENSE_DATA.slice(startIdx, endIdx), [startIdx, endIdx]);
+  const chartCompletedSales = useMemo(() => ALL_COMPLETED_SALES.slice(startIdx, endIdx), [startIdx, endIdx]);
+  const chartCompletedAcq = useMemo(() => ALL_COMPLETED_ACQ.slice(startIdx, endIdx), [startIdx, endIdx]);
+  const chartTotalValue = useMemo(() => ALL_TOTAL_VALUE.slice(startIdx, endIdx), [startIdx, endIdx]);
+
+  const TIME_PRESETS: { key: TimePreset; labelAr: string; labelEn: string }[] = [
+    { key: 'q1', labelAr: 'ر1', labelEn: 'Q1' },
+    { key: 'q2', labelAr: 'ر2', labelEn: 'Q2' },
+    { key: 'q3', labelAr: 'ر3', labelEn: 'Q3' },
+    { key: 'q4', labelAr: 'ر4', labelEn: 'Q4' },
+    { key: 'h1', labelAr: 'ن1', labelEn: 'H1' },
+    { key: 'h2', labelAr: 'ن2', labelEn: 'H2' },
+    { key: 'full', labelAr: 'كامل', labelEn: 'Full' },
+    { key: 'custom', labelAr: 'مخصص', labelEn: 'Custom' },
+  ];
+
   const totalPatentValue = 14700000;
   const totalSalesValue = 11000000;
   const pendingDeals = 2;
@@ -424,6 +477,71 @@ export default function Naqla3Dashboard() {
                 })}
               </div>
 
+              {/* ===== TIME RANGE SELECTOR ===== */}
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between flex-wrap gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-foreground">
+                      {isAr ? 'النطاق الزمني:' : 'Time Range:'}
+                    </span>
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {TIME_PRESETS.map(preset => (
+                        <button
+                          key={preset.key}
+                          onClick={() => {
+                            setTimePreset(preset.key);
+                            if (preset.key === 'custom') setShowCustomRange(true);
+                            else setShowCustomRange(false);
+                          }}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
+                            timePreset === preset.key
+                              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+                              : 'bg-card/50 text-muted-foreground border-border/40 hover:text-foreground hover:bg-secondary/40'
+                          }`}
+                        >
+                          {isAr ? preset.labelAr : preset.labelEn}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">
+                      {isAr ? `عرض ${endIdx - startIdx} شهر` : `Showing ${endIdx - startIdx} months`}
+                    </span>
+                    <Badge variant="outline" className="text-xs text-amber-400 border-amber-500/30">
+                      2025
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Custom Date Range Inputs */}
+                {showCustomRange && timePreset === 'custom' && (
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-card/50 border border-border/40 flex-wrap">
+                    <span className="text-xs text-muted-foreground">{isAr ? 'من:' : 'From:'}</span>
+                    <input
+                      type="month"
+                      value={customStart}
+                      onChange={e => setCustomStart(e.target.value)}
+                      min="2025-01" max="2025-12"
+                      className="px-2 py-1 rounded-md bg-secondary/40 border border-border/50 text-foreground text-xs outline-none focus:border-blue-500/50"
+                    />
+                    <span className="text-xs text-muted-foreground">{isAr ? 'إلى:' : 'To:'}</span>
+                    <input
+                      type="month"
+                      value={customEnd}
+                      onChange={e => setCustomEnd(e.target.value)}
+                      min="2025-01" max="2025-12"
+                      className="px-2 py-1 rounded-md bg-secondary/40 border border-border/50 text-foreground text-xs outline-none focus:border-blue-500/50"
+                    />
+                    {customStart && customEnd && (
+                      <span className="text-xs text-green-400">
+                        {isAr ? `عرض ${endIdx - startIdx} شهر` : `${endIdx - startIdx} months selected`}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
               {/* ===== INTERACTIVE CHARTS ROW ===== */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Bar Chart: Monthly Sales Revenue */}
@@ -435,22 +553,22 @@ export default function Naqla3Dashboard() {
                           <BarChart3 className="w-4 h-4 text-blue-400" />
                           {isAr ? 'إيرادات البيع الشهرية (SAR)' : 'Monthly Sales Revenue (SAR)'}
                         </CardTitle>
-                        <Badge variant="outline" className="text-xs text-blue-400 border-blue-500/30">
-                          {isAr ? '2025' : '2025'}
-                        </Badge>
+                        <span className="text-xs text-muted-foreground/60">
+                          {isAr
+                            ? `إجمالي: ${(chartSalesData.reduce((a,b) => a+b, 0) / 1000000).toFixed(1)}M SAR`
+                            : `Total: ${(chartSalesData.reduce((a,b) => a+b, 0) / 1000000).toFixed(1)}M SAR`}
+                        </span>
                       </div>
                     </CardHeader>
                     <CardContent className="pt-4">
                       <div style={{ height: 220 }}>
                         <Bar
                           data={{
-                            labels: isAr
-                              ? ['ين', 'فب', 'مار', 'أبر', 'ماي', 'يون', 'يول', 'أغس', 'سبت', 'أكت', 'نوف', 'ديس']
-                              : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            labels: chartLabels,
                             datasets: [
                               {
                                 label: isAr ? 'إيرادات البيع' : 'Sales Revenue',
-                                data: [850000, 1200000, 980000, 1450000, 1100000, 1800000, 2100000, 1650000, 1950000, 2300000, 1750000, 2800000],
+                                data: chartSalesData,
                                 backgroundColor: 'rgba(59, 130, 246, 0.7)',
                                 borderColor: 'rgba(59, 130, 246, 1)',
                                 borderWidth: 1,
@@ -458,7 +576,7 @@ export default function Naqla3Dashboard() {
                               },
                               {
                                 label: isAr ? 'إيرادات التراخيص' : 'Licensing Revenue',
-                                data: [320000, 450000, 380000, 520000, 490000, 610000, 720000, 580000, 690000, 810000, 640000, 950000],
+                                data: chartLicenseData,
                                 backgroundColor: 'rgba(16, 185, 129, 0.7)',
                                 borderColor: 'rgba(16, 185, 129, 1)',
                                 borderWidth: 1,
@@ -544,13 +662,11 @@ export default function Naqla3Dashboard() {
                   <div style={{ height: 200 }}>
                     <Line
                       data={{
-                        labels: isAr
-                          ? ['ين', 'فب', 'مار', 'أبر', 'ماي', 'يون', 'يول', 'أغس', 'سبت', 'أكت', 'نوف', 'ديس']
-                          : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        labels: chartLabels,
                         datasets: [
                           {
                             label: isAr ? 'عمليات البيع المكتملة' : 'Completed Sales',
-                            data: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7],
+                            data: chartCompletedSales,
                             borderColor: 'rgba(59, 130, 246, 1)',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             fill: true,
@@ -560,7 +676,7 @@ export default function Naqla3Dashboard() {
                           },
                           {
                             label: isAr ? 'عمليات الاستحواذ المكتملة' : 'Completed Acquisitions',
-                            data: [0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3],
+                            data: chartCompletedAcq,
                             borderColor: 'rgba(139, 92, 246, 1)',
                             backgroundColor: 'rgba(139, 92, 246, 0.1)',
                             fill: true,
@@ -570,7 +686,7 @@ export default function Naqla3Dashboard() {
                           },
                           {
                             label: isAr ? 'إجمالي القيمة (M SAR)' : 'Total Value (M SAR)',
-                            data: [1.2, 2.1, 3.8, 5.2, 6.1, 7.9, 10.2, 11.8, 13.5, 15.1, 16.8, 19.4],
+                            data: chartTotalValue,
                             borderColor: 'rgba(16, 185, 129, 1)',
                             backgroundColor: 'rgba(16, 185, 129, 0.05)',
                             fill: false,

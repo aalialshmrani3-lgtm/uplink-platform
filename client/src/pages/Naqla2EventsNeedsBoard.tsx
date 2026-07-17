@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -171,6 +171,7 @@ export default function Naqla2EventsNeedsBoard() {
   const [savedFilters, setSavedFilters] = useState<Array<{
     id: string;
     name: string;
+    isDefault?: boolean;
     filters: {
       type: string; sector: string; status: string;
       city: string; prize: string; date: string;
@@ -228,6 +229,37 @@ export default function Naqla2EventsNeedsBoard() {
     persistSavedFilters(savedFilters.filter(f => f.id !== id));
     toast.success(isAr ? 'تم حذف الفلتر' : 'Filter deleted');
   };
+
+  // Set/unset a filter as default
+  const handleSetDefault = (id: string) => {
+    const updated = savedFilters.map(f => ({
+      ...f,
+      isDefault: f.id === id ? !f.isDefault : false,
+    }));
+    persistSavedFilters(updated);
+    const target = updated.find(f => f.id === id);
+    if (target?.isDefault) {
+      toast.success(isAr ? `تم تعيين “‏${target.name}‏” كفلتر افتراضي` : `"${target.name}" set as default filter`);
+    } else {
+      toast.success(isAr ? 'تم إلغاء الفلتر الافتراضي' : 'Default filter cleared');
+    }
+  };
+
+  // Apply default filter on first mount
+  useEffect(() => {
+    const defaultFilter = savedFilters.find(f => f.isDefault);
+    if (defaultFilter) {
+      setFilterType(defaultFilter.filters.type);
+      setFilterSector(defaultFilter.filters.sector);
+      setFilterStatus(defaultFilter.filters.status);
+      setFilterCity(defaultFilter.filters.city);
+      setFilterPrize(defaultFilter.filters.prize);
+      setFilterDate(defaultFilter.filters.date);
+      setSearchQuery(defaultFilter.filters.search);
+      setSortBy(defaultFilter.filters.sortBy as 'date' | 'prize' | 'fill');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Derived filter options
   const cities = useMemo(() => {
@@ -535,11 +567,30 @@ export default function Naqla2EventsNeedsBoard() {
                     ) : (
                       savedFilters.map(saved => (
                         <div key={saved.id} className="flex items-center gap-2 p-3 hover:bg-secondary/30 transition-colors border-b border-border/20 last:border-0">
+                          {/* Default star indicator */}
+                          <button
+                            onClick={() => handleSetDefault(saved.id)}
+                            title={isAr ? (saved.isDefault ? 'إلغاء الافتراضي' : 'تعيين كفلتر افتراضي') : (saved.isDefault ? 'Remove default' : 'Set as default')}
+                            className={`w-6 h-6 rounded-md flex items-center justify-center transition-all flex-shrink-0 ${
+                              saved.isDefault
+                                ? 'text-amber-400 bg-amber-500/15 hover:bg-amber-500/25'
+                                : 'text-muted-foreground/40 hover:text-amber-400 hover:bg-amber-500/10'
+                            }`}
+                          >
+                            <Star className={`w-3.5 h-3.5 ${saved.isDefault ? 'fill-current' : ''}`} />
+                          </button>
                           <button
                             onClick={() => handleApplySavedFilter(saved)}
                             className="flex-1 text-left min-w-0"
                           >
-                            <p className="text-sm font-medium text-foreground truncate">{saved.name}</p>
+                            <div className="flex items-center gap-1.5">
+                              <p className="text-sm font-medium text-foreground truncate">{saved.name}</p>
+                              {saved.isDefault && (
+                                <span className="text-xs px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30 whitespace-nowrap flex-shrink-0">
+                                  {isAr ? 'افتراضي' : 'Default'}
+                                </span>
+                              )}
+                            </div>
                             <p className="text-xs text-muted-foreground/60 mt-0.5">
                               {new Date(saved.createdAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US')}
                             </p>

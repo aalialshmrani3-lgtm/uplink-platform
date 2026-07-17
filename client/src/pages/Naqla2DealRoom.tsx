@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useRef, useCallback } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { trpc } from '@/lib/trpc';
@@ -195,6 +195,22 @@ export default function Naqla2DealRoom() {
   const [isEditingContract, setIsEditingContract] = useState(false);
   const [editedContractText, setEditedContractText] = useState('');
   const [contractSaved, setContractSaved] = useState(false);
+  const editorRef = useRef<HTMLDivElement>(null);
+
+  // Rich text formatting commands
+  const execFormat = useCallback((command: string, value?: string) => {
+    document.execCommand(command, false, value);
+    if (editorRef.current) {
+      setEditedContractText(editorRef.current.innerHTML);
+      editorRef.current.focus();
+    }
+  }, []);
+
+  const handleEditorInput = useCallback(() => {
+    if (editorRef.current) {
+      setEditedContractText(editorRef.current.innerHTML);
+    }
+  }, []);
 
   const generateContractMutation = trpc.naqla2.generateContract.useMutation({
     onSuccess: (data) => {
@@ -227,9 +243,21 @@ export default function Naqla2DealRoom() {
 
   const handleEditContract = () => {
     if (!generatedContract) return;
-    setEditedContractText(generatedContract.contractText);
+    // Convert plain text to HTML for rich editor
+    const htmlContent = generatedContract.contractText
+      .split('\n')
+      .map(line => line.trim() === '' ? '<br>' : `<p>${line}</p>`)
+      .join('');
+    setEditedContractText(htmlContent);
     setIsEditingContract(true);
     setContractSaved(false);
+    // Focus editor after render
+    setTimeout(() => {
+      if (editorRef.current) {
+        editorRef.current.innerHTML = htmlContent;
+        editorRef.current.focus();
+      }
+    }, 50);
   };
 
   const handleSaveContractEdit = () => {
@@ -724,13 +752,133 @@ export default function Naqla2DealRoom() {
                             </div>
                           </div>
 
-                          {/* Edit Mode Banner */}
+                          {/* Edit Mode Banner + Formatting Toolbar */}
                           {isEditingContract && (
-                            <div className="flex items-center gap-2 mb-2 px-3 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                              {isAr
-                                ? 'وضع التحرير: يمكنك الآن تعديل نص المسودة مباشرةً. اضغط "حفظ التعديلات" عند الانتهاء.'
-                                : 'Edit mode: You can now modify the draft text directly. Click "Save Edits" when done.'}
+                            <div className="mb-2 rounded-xl border border-blue-500/30 bg-blue-500/5 overflow-hidden">
+                              {/* Info Banner */}
+                              <div className="flex items-center gap-2 px-3 py-2 border-b border-blue-500/20 text-blue-400 text-xs">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                {isAr ? 'وضع التحرير الغني: استخدم شريط الأدوات لتنسيق النص' : 'Rich edit mode: Use the toolbar to format text'}
+                              </div>
+                              {/* Formatting Toolbar */}
+                              <div className="flex items-center gap-1 px-3 py-2 flex-wrap">
+                                {/* Bold */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('bold'); }}
+                                  title={isAr ? 'خط عريض (Ctrl+B)' : 'Bold (Ctrl+B)'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all text-sm font-bold border border-transparent hover:border-border/40"
+                                >
+                                  B
+                                </button>
+                                {/* Italic */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('italic'); }}
+                                  title={isAr ? 'خط مائل (Ctrl+I)' : 'Italic (Ctrl+I)'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all text-sm italic border border-transparent hover:border-border/40"
+                                >
+                                  I
+                                </button>
+                                {/* Underline */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('underline'); }}
+                                  title={isAr ? 'تسطير (Ctrl+U)' : 'Underline (Ctrl+U)'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all text-sm underline border border-transparent hover:border-border/40"
+                                >
+                                  U
+                                </button>
+                                <div className="w-px h-5 bg-border/50 mx-1" />
+                                {/* H1 */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('formatBlock', 'h2'); }}
+                                  title={isAr ? 'عنوان رئيسي' : 'Heading'}
+                                  className="px-2 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all text-xs font-semibold border border-transparent hover:border-border/40"
+                                >
+                                  H1
+                                </button>
+                                {/* H2 */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('formatBlock', 'h3'); }}
+                                  title={isAr ? 'عنوان فرعي' : 'Subheading'}
+                                  className="px-2 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all text-xs font-semibold border border-transparent hover:border-border/40"
+                                >
+                                  H2
+                                </button>
+                                {/* Paragraph */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('formatBlock', 'p'); }}
+                                  title={isAr ? 'فقرة عادية' : 'Paragraph'}
+                                  className="px-2 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all text-xs border border-transparent hover:border-border/40"
+                                >
+                                  P
+                                </button>
+                                <div className="w-px h-5 bg-border/50 mx-1" />
+                                {/* Unordered List */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('insertUnorderedList'); }}
+                                  title={isAr ? 'قائمة نقطية' : 'Bullet List'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg>
+                                </button>
+                                {/* Ordered List */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('insertOrderedList'); }}
+                                  title={isAr ? 'قائمة مرقمة' : 'Numbered List'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+                                </button>
+                                <div className="w-px h-5 bg-border/50 mx-1" />
+                                {/* Align Right (for Arabic) */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('justifyRight'); }}
+                                  title={isAr ? 'محاذاة يمين' : 'Align Right'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="7" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="7" y2="18"/></svg>
+                                </button>
+                                {/* Align Left */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('justifyLeft'); }}
+                                  title={isAr ? 'محاذاة يسار' : 'Align Left'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="10" x2="21" y2="10"/><line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="3" y1="18" x2="17" y2="18"/></svg>
+                                </button>
+                                {/* Center */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('justifyCenter'); }}
+                                  title={isAr ? 'توسيط' : 'Center'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="10" x2="18" y2="10"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="6" y1="18" x2="18" y2="18"/></svg>
+                                </button>
+                                <div className="w-px h-5 bg-border/50 mx-1" />
+                                {/* Horizontal Rule */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('insertHorizontalRule'); }}
+                                  title={isAr ? 'خط فاصل' : 'Horizontal Rule'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/></svg>
+                                </button>
+                                {/* Undo */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('undo'); }}
+                                  title={isAr ? 'تراجع (Ctrl+Z)' : 'Undo (Ctrl+Z)'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+                                </button>
+                                {/* Redo */}
+                                <button
+                                  onMouseDown={e => { e.preventDefault(); execFormat('redo'); }}
+                                  title={isAr ? 'إعادة (Ctrl+Y)' : 'Redo (Ctrl+Y)'}
+                                  className="w-8 h-8 rounded-md flex items-center justify-center text-foreground/70 hover:bg-secondary/60 hover:text-foreground transition-all border border-transparent hover:border-border/40"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+                                </button>
+                              </div>
                             </div>
                           )}
 
@@ -739,19 +887,31 @@ export default function Naqla2DealRoom() {
                             isEditingContract ? 'border-blue-500/40 ring-1 ring-blue-500/20' : 'border-border/50'
                           }`}>
                             {isEditingContract ? (
-                              <textarea
-                                value={editedContractText}
-                                onChange={e => setEditedContractText(e.target.value)}
-                                className="w-full min-h-[420px] p-4 bg-transparent text-sm text-foreground font-sans leading-relaxed resize-y outline-none"
+                              <div
+                                ref={editorRef}
+                                contentEditable
+                                suppressContentEditableWarning
+                                onInput={handleEditorInput}
                                 dir={isAr ? 'rtl' : 'ltr'}
-                                spellCheck={false}
-                                style={{ fontFamily: 'inherit' }}
+                                className="w-full min-h-[420px] p-4 bg-transparent text-sm text-foreground font-sans leading-relaxed outline-none prose prose-invert max-w-none"
+                                style={{
+                                  fontFamily: 'inherit',
+                                  lineHeight: '1.8',
+                                }}
                               />
                             ) : (
                               <div className="p-4 max-h-96 overflow-y-auto">
-                                <pre className="text-sm text-foreground whitespace-pre-wrap font-sans leading-relaxed" dir={isAr ? 'rtl' : 'ltr'}>
-                                  {generatedContract.contractText}
-                                </pre>
+                                {generatedContract.contractText.startsWith('<') ? (
+                                  <div
+                                    className="text-sm text-foreground leading-relaxed prose prose-invert max-w-none"
+                                    dir={isAr ? 'rtl' : 'ltr'}
+                                    dangerouslySetInnerHTML={{ __html: generatedContract.contractText }}
+                                  />
+                                ) : (
+                                  <pre className="text-sm text-foreground whitespace-pre-wrap font-sans leading-relaxed" dir={isAr ? 'rtl' : 'ltr'}>
+                                    {generatedContract.contractText}
+                                  </pre>
+                                )}
                               </div>
                             )}
                           </div>
