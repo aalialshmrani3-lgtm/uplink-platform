@@ -4278,6 +4278,179 @@ Write the contract in full formal and legal format.`;
           },
         };
       }),
+    }),
+
+  // ============================================
+  // SAIP IP Assessment - Intellectual Property Evaluation
+  // ============================================
+  saipAssessment: router({
+    // Evaluate innovation against SAIP patent criteria
+    evaluateInnovation: protectedProcedure
+      .input(
+        z.object({
+          title: z.string().min(5, 'عنوان الابتكار مطلوب'),
+          description: z.string().min(50, 'الوصف يجب أن يكون 50 حرفاً على الأقل'),
+          field: z.string().min(2, 'مجال الابتكار مطلوب'),
+          existingSolutions: z.string().optional(),
+          technicalDetails: z.string().optional(),
+          ipType: z.enum(['patent', 'trademark', 'copyright', 'design', 'trade_secret']).default('patent'),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const { invokeLLM } = await import('./_core/llm');
+
+        const systemPrompt = `أنت خبير متخصص في الملكية الفكرية وبراءات الاختراع لدى الهيئة السعودية للملكية الفكرية (SAIP).
+مهمتك تقييم الابتكارات وفقاً لمعايير SAIP الثلاثة لبراءة الاختراع:
+
+1. الجدة (Novelty): هل الاختراع جديد ولم يسبق الكشف عنه علناً في أي مكان بالعالم؟
+2. خطوة الابتكار (Inventive Step): هل الاختراع غير بديهي لمتخصص في المجال؟
+3. قابلية التطبيق الصناعي (Industrial Applicability): هل يمكن تصنيع الاختراع أو استخدامه في الصناعة؟
+
+قدّم تقييماً شاملاً بالعربية بتنسيق JSON محدد.
+المعلومات المطلوبة:
+- overall_score: نسبة مئوية من 0 إلى 100
+- recommendation: إحدى القيم الثلاث: 'eligible' أو 'needs_improvement' أو 'not_eligible'
+- criteria: كائن يحتوي على novelty و inventive_step و industrial_applicability وكل منها يحتوي على: score (0-100), status ('pass'|'partial'|'fail'), analysis (نص تحليل)
+- strengths: مصفوفة نقاط القوة
+- weaknesses: مصفوفة نقاط الضعف
+- saip_recommendation: نص مفصل بالعربية حول الخطوات التالية مع SAIP
+- ip_type_recommendation: نوع حماية الملكية الفكرية الموصى به
+- saip_links: مصفوفة روابط SAIP ذات صلة بنوع الحماية الموصى به
+- estimated_filing_cost: تكلفة التقديم التقريبية بالريال السعودي`;
+
+        const userPrompt = `قيّم هذا الابتكار وفقاً لمعايير SAIP:
+
+عنوان الابتكار: ${input.title}
+مجال الابتكار: ${input.field}
+نوع الحماية المطلوبة: ${input.ipType}
+
+وصف الابتكار:
+${input.description}
+
+${input.existingSolutions ? `الحلول الموجودة حالياً:
+${input.existingSolutions}` : ''}
+
+${input.technicalDetails ? `التفاصيل التقنية:
+${input.technicalDetails}` : ''}`;
+
+        const response = await invokeLLM({
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+          response_format: {
+            type: 'json_schema',
+            json_schema: {
+              name: 'saip_assessment',
+              strict: true,
+              schema: {
+                type: 'object',
+                properties: {
+                  overall_score: { type: 'number' },
+                  recommendation: { type: 'string' },
+                  criteria: {
+                    type: 'object',
+                    properties: {
+                      novelty: {
+                        type: 'object',
+                        properties: {
+                          score: { type: 'number' },
+                          status: { type: 'string' },
+                          analysis: { type: 'string' },
+                        },
+                        required: ['score', 'status', 'analysis'],
+                        additionalProperties: false,
+                      },
+                      inventive_step: {
+                        type: 'object',
+                        properties: {
+                          score: { type: 'number' },
+                          status: { type: 'string' },
+                          analysis: { type: 'string' },
+                        },
+                        required: ['score', 'status', 'analysis'],
+                        additionalProperties: false,
+                      },
+                      industrial_applicability: {
+                        type: 'object',
+                        properties: {
+                          score: { type: 'number' },
+                          status: { type: 'string' },
+                          analysis: { type: 'string' },
+                        },
+                        required: ['score', 'status', 'analysis'],
+                        additionalProperties: false,
+                      },
+                    },
+                    required: ['novelty', 'inventive_step', 'industrial_applicability'],
+                    additionalProperties: false,
+                  },
+                  strengths: { type: 'array', items: { type: 'string' } },
+                  weaknesses: { type: 'array', items: { type: 'string' } },
+                  saip_recommendation: { type: 'string' },
+                  ip_type_recommendation: { type: 'string' },
+                  saip_links: { type: 'array', items: { type: 'string' } },
+                  estimated_filing_cost: { type: 'string' },
+                },
+                required: ['overall_score', 'recommendation', 'criteria', 'strengths', 'weaknesses', 'saip_recommendation', 'ip_type_recommendation', 'saip_links', 'estimated_filing_cost'],
+                additionalProperties: false,
+              },
+            },
+          },
+        });
+
+        const rawContent = response.choices[0]?.message?.content;
+        const content = typeof rawContent === 'string' ? rawContent : null;
+        if (!content) throw new Error('فشل التقييم');
+        const assessment = JSON.parse(content);
+
+        // Save assessment to DB for the user
+        const userId = ctx.user.id;
+        await db.saveSaipAssessment({
+          userId,
+          title: input.title,
+          field: input.field,
+          ipType: input.ipType,
+          overallScore: assessment.overall_score,
+          recommendation: assessment.recommendation,
+          assessmentData: JSON.stringify(assessment),
+        });
+
+        return assessment;
+      }),
+
+    // Save SAIP application reference number
+    saveApplicationRef: protectedProcedure
+      .input(
+        z.object({
+          assessmentId: z.number(),
+          saipRefNumber: z.string().min(3, 'رقم الطلب غير صحيح'),
+          ipType: z.enum(['patent', 'trademark', 'copyright', 'design', 'trade_secret']),
+          notes: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        await db.updateSaipAssessmentRef({
+          assessmentId: input.assessmentId,
+          saipRefNumber: input.saipRefNumber,
+          ipType: input.ipType,
+          notes: input.notes,
+          userId: ctx.user.id,
+        });
+        return { success: true, message: 'تم حفظ رقم طلب SAIP بنجاح' };
+      }),
+
+    // Get all assessments for current user
+    getMyAssessments: protectedProcedure.query(async ({ ctx }) => {
+      return db.getUserSaipAssessments(ctx.user.id);
+    }),
+
+    // Get single assessment
+    getAssessment: protectedProcedure
+      .input(z.object({ assessmentId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        return db.getSaipAssessmentById(input.assessmentId, ctx.user.id);
+      }),
   }),
 
   // ============================================

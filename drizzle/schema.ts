@@ -1908,3 +1908,25 @@ export type InsertUserChoice = typeof userChoices.$inferInsert;
 
 export type IdeaJourneyEvent = typeof ideaJourneyEvents.$inferSelect;
 export type InsertIdeaJourneyEvent = typeof ideaJourneyEvents.$inferInsert;
+
+// ============================================
+// SAIP IP Assessment Table
+// ============================================
+export const saipAssessments = mysqlTable("saip_assessments", {
+  id: int().autoincrement().primaryKey(),
+  userId: int().notNull(),
+  title: varchar({ length: 500 }).notNull(),
+  field: varchar({ length: 200 }).notNull(),
+  ipType: mysqlEnum(['patent', 'trademark', 'copyright', 'design', 'trade_secret']).notNull().default('patent'),
+  overallScore: int().notNull().default(0),
+  recommendation: mysqlEnum(['eligible', 'needs_improvement', 'not_eligible']).notNull().default('needs_improvement'),
+  assessmentData: json(), // Full AI assessment JSON
+  saipRefNumber: varchar({ length: 200 }), // SAIP application reference number
+  saipRefNotes: text(), // User notes about SAIP filing
+  saipFiledAt: timestamp({ mode: 'string' }), // When user filed with SAIP
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export type SaipAssessment = typeof saipAssessments.$inferSelect;
+export type InsertSaipAssessment = typeof saipAssessments.$inferInsert;

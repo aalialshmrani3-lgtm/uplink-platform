@@ -146,6 +146,7 @@ const Privacy = lazy(() => import("./pages/Privacy")); // Privacy Policy
 const Terms = lazy(() => import("./pages/Terms")); // Terms & Conditions
 const Contact = lazy(() => import("./pages/Contact")); // Contact Us
 const Blog = lazy(() => import("./pages/Blog")); // Blog
+const SaipAssessment = lazy(() => import("./pages/SaipAssessment")); // SAIP IP Assessment
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -453,6 +454,7 @@ function Router() {
         <Route path="/terms" component={Terms} />
         <Route path="/contact" component={Contact} />
         <Route path="/blog" component={Blog} />
+        <Route path="/saip-assessment" component={SaipAssessment} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

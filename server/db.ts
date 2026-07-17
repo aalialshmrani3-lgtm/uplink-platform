@@ -2289,3 +2289,72 @@ export async function deleteCluster(id: number) {
     .delete(ideaClusters)
     .where(eq(ideaClusters.id, id));
 }
+
+
+// ============================================
+// SAIP Assessment Helpers
+// ============================================
+import { saipAssessments } from '../drizzle/schema';
+
+export async function saveSaipAssessment(data: {
+  userId: number;
+  title: string;
+  field: string;
+  ipType: 'patent' | 'trademark' | 'copyright' | 'design' | 'trade_secret';
+  overallScore: number;
+  recommendation: 'eligible' | 'needs_improvement' | 'not_eligible';
+  assessmentData: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(saipAssessments).values({
+    userId: data.userId,
+    title: data.title,
+    field: data.field,
+    ipType: data.ipType,
+    overallScore: data.overallScore,
+    recommendation: data.recommendation,
+    assessmentData: JSON.parse(data.assessmentData),
+  });
+  return { id: Number(result[0].insertId) };
+}
+
+export async function updateSaipAssessmentRef(data: {
+  assessmentId: number;
+  saipRefNumber: string;
+  ipType: 'patent' | 'trademark' | 'copyright' | 'design' | 'trade_secret';
+  notes?: string;
+  userId: number;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(saipAssessments)
+    .set({
+      saipRefNumber: data.saipRefNumber,
+      saipRefNotes: data.notes,
+      saipFiledAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      updatedAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
+    })
+    .where(and(eq(saipAssessments.id, data.assessmentId), eq(saipAssessments.userId, data.userId)));
+}
+
+export async function getUserSaipAssessments(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db
+    .select()
+    .from(saipAssessments)
+    .where(eq(saipAssessments.userId, userId))
+    .orderBy(desc(saipAssessments.createdAt));
+}
+
+export async function getSaipAssessmentById(assessmentId: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const results = await db
+    .select()
+    .from(saipAssessments)
+    .where(and(eq(saipAssessments.id, assessmentId), eq(saipAssessments.userId, userId)));
+  return results[0] ?? null;
+}
