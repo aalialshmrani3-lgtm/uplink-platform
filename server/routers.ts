@@ -4451,6 +4451,28 @@ ${input.technicalDetails}` : ''}`;
       .query(async ({ input, ctx }) => {
         return db.getSaipAssessmentById(input.assessmentId, ctx.user.id);
       }),
+    // Update SAIP application status
+    updateSaipStatus: protectedProcedure
+      .input(z.object({
+        assessmentId: z.number(),
+        status: z.enum(['pending', 'under_review', 'approved', 'rejected', 'withdrawn']),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const assessment = await db.getSaipAssessmentById(input.assessmentId, ctx.user.id);
+        if (!assessment) throw new TRPCError({ code: 'NOT_FOUND', message: 'التقييم غير موجود' });
+        await db.updateSaipApplicationStatus(input.assessmentId, ctx.user.id, input.status, input.notes);
+        return { success: true, status: input.status };
+      }),
+    // Generate PDF report
+    generatePdfReport: protectedProcedure
+      .input(z.object({ assessmentId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const assessment = await db.getSaipAssessmentById(input.assessmentId, ctx.user.id);
+        if (!assessment) throw new TRPCError({ code: 'NOT_FOUND', message: 'التقييم غير موجود' });
+        // Return assessment data for client-side PDF generation
+        return { success: true, data: assessment };
+      }),
   }),
 
   // ============================================

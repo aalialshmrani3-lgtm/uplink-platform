@@ -2358,3 +2358,20 @@ export async function getSaipAssessmentById(assessmentId: number, userId: number
     .where(and(eq(saipAssessments.id, assessmentId), eq(saipAssessments.userId, userId)));
   return results[0] ?? null;
 }
+
+export async function updateSaipApplicationStatus(
+  assessmentId: number,
+  userId: number,
+  status: 'pending' | 'under_review' | 'approved' | 'rejected' | 'withdrawn',
+  notes?: string
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const updateData: Record<string, unknown> = { saipStatus: status };
+  if (notes !== undefined) updateData.saipRefNotes = notes;
+  await db
+    .update(saipAssessments)
+    .set(updateData)
+    .where(and(eq(saipAssessments.id, assessmentId), eq(saipAssessments.userId, userId)));
+  return { success: true };
+}

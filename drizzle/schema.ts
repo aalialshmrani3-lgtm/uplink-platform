@@ -1924,6 +1924,7 @@ export const saipAssessments = mysqlTable("saip_assessments", {
   saipRefNumber: varchar({ length: 200 }), // SAIP application reference number
   saipRefNotes: text(), // User notes about SAIP filing
   saipFiledAt: timestamp({ mode: 'string' }), // When user filed with SAIP
+  saipStatus: mysqlEnum(['pending', 'under_review', 'approved', 'rejected', 'withdrawn']), // SAIP application status
   createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
   updatedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 });
