@@ -109,6 +109,7 @@ const Naqla3Contracts = lazy(() => import('./pages/Naqla3Contracts'));
 const Naqla3ContractDetail = lazy(() => import('./pages/Naqla3ContractDetail')); // Contract Detail with Milestones
 const Naqla3BlockchainContracts = lazy(() => import('./pages/Naqla3BlockchainContracts')); // Added for Flowchart Match
 const Naqla3Escrow = lazy(() => import("./pages/Naqla3Escrow")); // Added for Flowchart Match
+const Naqla3Dashboard = lazy(() => import('./pages/Naqla3Dashboard')); // NAQLA 3 Dashboard - Patents, Sales & Acquisitions
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
 const Naqla2SubmitChallenge = lazy(() => import("./pages/Naqla2SubmitChallenge")); // Submit Challenge
 const Naqla2HostEvent = lazy(() => import("./pages/Naqla2HostEvent")); // Host Event Dashboard
@@ -387,6 +388,7 @@ function Router() {
         <Route path="/naqla3/contracts" component={Naqla3Contracts} /> {/* Added for Flowchart Match */}
         <Route path="/naqla3/contracts/:id" component={Naqla3ContractDetail} /> {/* Contract Detail with Milestones */}
         <Route path="/naqla3/escrow" component={Naqla3Escrow} /> {/* Added for Flowchart Match */}
+        <Route path="/naqla3/dashboard" component={Naqla3Dashboard} /> {/* NAQLA 3 Dashboard - Patents, Sales & Acquisitions */}
         {/* /admin route already exists at /admin/dashboard */}
         <Route path="/search" component={GlobalSearch} /> {/* Added for Flowchart Match */}
         <Route path="/academy" component={Academy} />

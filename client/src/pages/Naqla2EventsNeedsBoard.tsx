@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,9 @@ import {
   Calendar, Users, Star, Zap, Globe, MapPin, Clock, Search,
   Plus, ArrowRight, CheckCircle2, Building2, Heart, Leaf,
   Cpu, Factory, Wifi, TrendingUp, Shield, ChevronRight,
-  Megaphone, Handshake, Lightbulb, Trophy
+  Megaphone, Handshake, Lightbulb, Trophy, Filter, X,
+  LayoutGrid, List, SlidersHorizontal, DollarSign, ChevronDown,
+  Tag, Award, RefreshCw
 } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
 
@@ -153,18 +155,71 @@ export default function Naqla2EventsNeedsBoard() {
   const [selectedEvent, setSelectedEvent] = useState<typeof MOCK_EVENTS[0] | null>(null);
   const [filterType, setFilterType] = useState('all');
   const [filterSector, setFilterSector] = useState('all');
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [filterCity, setFilterCity] = useState('all');
+  const [filterPrize, setFilterPrize] = useState('all');
+  const [filterDate, setFilterDate] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'date' | 'prize' | 'fill'>('date');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [registerRole, setRegisterRole] = useState('');
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const filteredEvents = MOCK_EVENTS.filter(ev => {
-    const matchesType = filterType === 'all' || ev.type === filterType;
-    const matchesSector = filterSector === 'all' || ev.sector === filterSector;
-    const matchesSearch = searchQuery === '' ||
-      (isAr ? ev.title : ev.titleEn).toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesType && matchesSector && matchesSearch;
-  });
+  // Derived filter options
+  const cities = useMemo(() => {
+    const citySet = new Set(MOCK_EVENTS.map(e => isAr ? e.location : e.locationEn));
+    return Array.from(citySet);
+  }, [isAr]);
+
+  const activeFiltersCount = [filterType, filterSector, filterStatus, filterCity, filterPrize, filterDate]
+    .filter(f => f !== 'all').length + (searchQuery ? 1 : 0);
+
+  const resetFilters = () => {
+    setFilterType('all');
+    setFilterSector('all');
+    setFilterStatus('all');
+    setFilterCity('all');
+    setFilterPrize('all');
+    setFilterDate('all');
+    setSearchQuery('');
+    setSortBy('date');
+  };
+
+  const filteredEvents = useMemo(() => {
+    let events = MOCK_EVENTS.filter(ev => {
+      const matchesType = filterType === 'all' || ev.type === filterType;
+      const matchesSector = filterSector === 'all' || ev.sector === filterSector;
+      const matchesStatus = filterStatus === 'all' || ev.status === filterStatus;
+      const matchesCity = filterCity === 'all' || (isAr ? ev.location : ev.locationEn) === filterCity;
+      const matchesPrize = filterPrize === 'all' ||
+        (filterPrize === 'high' && parseInt(ev.prize.replace(/[^0-9]/g, '')) >= 300000) ||
+        (filterPrize === 'medium' && parseInt(ev.prize.replace(/[^0-9]/g, '')) >= 100000 && parseInt(ev.prize.replace(/[^0-9]/g, '')) < 300000) ||
+        (filterPrize === 'low' && parseInt(ev.prize.replace(/[^0-9]/g, '')) < 100000);
+      const matchesDate = filterDate === 'all' ||
+        (filterDate === 'this_month' && new Date(ev.date).getMonth() === new Date().getMonth()) ||
+        (filterDate === 'next_3months' && new Date(ev.date) <= new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)) ||
+        (filterDate === 'this_year' && new Date(ev.date).getFullYear() === new Date().getFullYear());
+      const matchesSearch = searchQuery === '' ||
+        (isAr ? ev.title : ev.titleEn).toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (isAr ? ev.organizer : ev.organizerEn).toLowerCase().includes(searchQuery.toLowerCase()) ||
+        ev.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesType && matchesSector && matchesStatus && matchesCity && matchesPrize && matchesDate && matchesSearch;
+    });
+    // Sort
+    events = [...events].sort((a, b) => {
+      if (sortBy === 'date') return new Date(a.date).getTime() - new Date(b.date).getTime();
+      if (sortBy === 'prize') return parseInt(b.prize.replace(/[^0-9]/g, '')) - parseInt(a.prize.replace(/[^0-9]/g, ''));
+      if (sortBy === 'fill') {
+        const fillA = Object.values(a.needs).reduce((s, n) => s + n.registered, 0) / Object.values(a.needs).reduce((s, n) => s + n.needed, 0);
+        const fillB = Object.values(b.needs).reduce((s, n) => s + n.registered, 0) / Object.values(b.needs).reduce((s, n) => s + n.needed, 0);
+        return fillB - fillA;
+      }
+      return 0;
+    });
+    return events;
+  }, [filterType, filterSector, filterStatus, filterCity, filterPrize, filterDate, searchQuery, sortBy, isAr]);
 
   const handleRegister = () => {
     if (!registerRole) {
@@ -239,53 +294,263 @@ export default function Naqla2EventsNeedsBoard() {
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Advanced Filters */}
       <div className="relative px-6 pb-6">
         <div className="container max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-4">
+          {/* Primary Filter Row */}
+          <div className="flex flex-col md:flex-row gap-3 mb-3">
+            {/* Search */}
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
-                placeholder={isAr ? 'ابحث عن فعالية...' : 'Search events...'}
+                placeholder={isAr ? 'ابحث بالاسم، المنظم، أو الوسوم...' : 'Search by name, organizer, or tags...'}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 className="pl-10 bg-secondary/30 border-border/50"
               />
+              {searchQuery && (
+                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+                </button>
+              )}
             </div>
+
+            {/* Sector Quick Filter - Chips */}
+            <div className="flex gap-2 overflow-x-auto pb-1 flex-shrink-0">
+              {[{ id: 'all', ar: 'الكل', en: 'All', icon: Globe }, ...Object.entries(SECTOR_LABELS).map(([id, label]) => ({ id, ar: label.ar, en: label.en, icon: SECTOR_ICONS[id] || Globe }))].map(sector => {
+                const SIcon = sector.icon;
+                return (
+                  <button
+                    key={sector.id}
+                    onClick={() => setFilterSector(sector.id)}
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all border ${
+                      filterSector === sector.id
+                        ? 'bg-orange-500/20 text-orange-400 border-orange-500/40'
+                        : 'bg-secondary/30 text-muted-foreground border-border/30 hover:border-border'
+                    }`}
+                  >
+                    <SIcon className="w-3.5 h-3.5" />
+                    {isAr ? sector.ar : sector.en}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Secondary Controls Row */}
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Type Filter */}
             <Select value={filterType} onValueChange={setFilterType}>
-              <SelectTrigger className="w-full md:w-48 bg-secondary/30 border-border/50">
-                <SelectValue placeholder={isAr ? 'نوع الفعالية' : 'Event Type'} />
+              <SelectTrigger className="w-40 bg-secondary/30 border-border/50 h-9 text-sm">
+                <Zap className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
+                <SelectValue placeholder={isAr ? 'النوع' : 'Type'} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{isAr ? 'كل الأنواع' : 'All Types'}</SelectItem>
                 {EVENT_TYPES.map(t => (
-                  <SelectItem key={t.id} value={t.id}>
-                    {isAr ? t.label.ar : t.label.en}
-                  </SelectItem>
+                  <SelectItem key={t.id} value={t.id}>{isAr ? t.label.ar : t.label.en}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <Select value={filterSector} onValueChange={setFilterSector}>
-              <SelectTrigger className="w-full md:w-48 bg-secondary/30 border-border/50">
-                <SelectValue placeholder={isAr ? 'القطاع' : 'Sector'} />
+
+            {/* Status Filter */}
+            <Select value={filterStatus} onValueChange={setFilterStatus}>
+              <SelectTrigger className="w-40 bg-secondary/30 border-border/50 h-9 text-sm">
+                <CheckCircle2 className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
+                <SelectValue placeholder={isAr ? 'الحالة' : 'Status'} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">{isAr ? 'كل القطاعات' : 'All Sectors'}</SelectItem>
-                {Object.entries(SECTOR_LABELS).map(([id, label]) => (
-                  <SelectItem key={id} value={id}>
-                    {isAr ? label.ar : label.en}
-                  </SelectItem>
-                ))}
+                <SelectItem value="all">{isAr ? 'كل الحالات' : 'All Statuses'}</SelectItem>
+                <SelectItem value="open">{isAr ? 'مفتوح' : 'Open'}</SelectItem>
+                <SelectItem value="filling">{isAr ? 'يمتلئ بسرعة' : 'Filling Fast'}</SelectItem>
+                <SelectItem value="closed">{isAr ? 'مغلق' : 'Closed'}</SelectItem>
               </SelectContent>
             </Select>
+
+            {/* Advanced Filters Toggle */}
+            <button
+              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm border transition-all h-9 ${
+                showAdvancedFilters || [filterCity, filterPrize, filterDate].some(f => f !== 'all')
+                  ? 'bg-orange-500/20 text-orange-400 border-orange-500/40'
+                  : 'bg-secondary/30 text-muted-foreground border-border/30 hover:border-border'
+              }`}
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              {isAr ? 'فلاتر متقدمة' : 'Advanced Filters'}
+              {[filterCity, filterPrize, filterDate].filter(f => f !== 'all').length > 0 && (
+                <span className="w-4 h-4 rounded-full bg-orange-500 text-white text-xs flex items-center justify-center">
+                  {[filterCity, filterPrize, filterDate].filter(f => f !== 'all').length}
+                </span>
+              )}
+            </button>
+
+            {/* Sort */}
+            <Select value={sortBy} onValueChange={(v: any) => setSortBy(v)}>
+              <SelectTrigger className="w-44 bg-secondary/30 border-border/50 h-9 text-sm">
+                <RefreshCw className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
+                <SelectValue placeholder={isAr ? 'ترتيب حسب' : 'Sort by'} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="date">{isAr ? 'التاريخ (الأقرب)' : 'Date (Nearest)'}</SelectItem>
+                <SelectItem value="prize">{isAr ? 'الجائزة (الأعلى)' : 'Prize (Highest)'}</SelectItem>
+                <SelectItem value="fill">{isAr ? 'نسبة الامتلاء' : 'Fill Rate'}</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {/* View Mode */}
+            <div className="flex border border-border/50 rounded-lg overflow-hidden">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`px-3 py-2 h-9 transition-all ${
+                  viewMode === 'grid' ? 'bg-orange-500/20 text-orange-400' : 'bg-secondary/30 text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`px-3 py-2 h-9 transition-all ${
+                  viewMode === 'list' ? 'bg-orange-500/20 text-orange-400' : 'bg-secondary/30 text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Active Filters Count + Reset */}
+            {activeFiltersCount > 0 && (
+              <button
+                onClick={resetFilters}
+                className="flex items-center gap-1.5 px-3 py-2 h-9 rounded-lg bg-red-500/10 text-red-400 border border-red-500/30 text-sm hover:bg-red-500/20 transition-all"
+              >
+                <X className="w-3.5 h-3.5" />
+                {isAr ? `مسح الفلاتر (${activeFiltersCount})` : `Clear Filters (${activeFiltersCount})`}
+              </button>
+            )}
+
+            {/* Results Count */}
+            <span className="text-sm text-muted-foreground ml-auto">
+              {isAr ? `${filteredEvents.length} فعالية` : `${filteredEvents.length} events`}
+            </span>
           </div>
+
+          {/* Advanced Filters Panel */}
+          {showAdvancedFilters && (
+            <div className="mt-3 p-4 rounded-xl bg-card/50 border border-border/50 backdrop-blur-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* City Filter */}
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground mb-2 block flex items-center gap-1">
+                    <MapPin className="w-3 h-3" />
+                    {isAr ? 'المدينة' : 'City'}
+                  </label>
+                  <Select value={filterCity} onValueChange={setFilterCity}>
+                    <SelectTrigger className="bg-secondary/30 border-border/50">
+                      <SelectValue placeholder={isAr ? 'كل المدن' : 'All Cities'} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{isAr ? 'كل المدن' : 'All Cities'}</SelectItem>
+                      {cities.map(city => (
+                        <SelectItem key={city} value={city}>{city}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Prize Range */}
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground mb-2 block flex items-center gap-1">
+                    <DollarSign className="w-3 h-3" />
+                    {isAr ? 'قيمة الجائزة' : 'Prize Range'}
+                  </label>
+                  <Select value={filterPrize} onValueChange={setFilterPrize}>
+                    <SelectTrigger className="bg-secondary/30 border-border/50">
+                      <SelectValue placeholder={isAr ? 'أي جائزة' : 'Any Prize'} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{isAr ? 'أي جائزة' : 'Any Prize'}</SelectItem>
+                      <SelectItem value="high">{isAr ? '+300,000 SAR' : '+300,000 SAR'}</SelectItem>
+                      <SelectItem value="medium">{isAr ? '100,000 - 300,000 SAR' : '100,000 - 300,000 SAR'}</SelectItem>
+                      <SelectItem value="low">{isAr ? 'أقل من 100,000 SAR' : 'Less than 100,000 SAR'}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Date Range */}
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground mb-2 block flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {isAr ? 'الفترة الزمنية' : 'Time Period'}
+                  </label>
+                  <Select value={filterDate} onValueChange={setFilterDate}>
+                    <SelectTrigger className="bg-secondary/30 border-border/50">
+                      <SelectValue placeholder={isAr ? 'أي وقت' : 'Any Time'} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{isAr ? 'أي وقت' : 'Any Time'}</SelectItem>
+                      <SelectItem value="this_month">{isAr ? 'هذا الشهر' : 'This Month'}</SelectItem>
+                      <SelectItem value="next_3months">{isAr ? 'خلال 3 أشهر' : 'Next 3 Months'}</SelectItem>
+                      <SelectItem value="this_year">{isAr ? 'هذا العام' : 'This Year'}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Active Filter Tags */}
+              {activeFiltersCount > 0 && (
+                <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border/30">
+                  <span className="text-xs text-muted-foreground">{isAr ? 'الفلاتر النشطة:' : 'Active filters:'}</span>
+                  {filterType !== 'all' && (
+                    <button onClick={() => setFilterType('all')} className="flex items-center gap-1 px-2 py-1 rounded-md bg-orange-500/10 text-orange-400 text-xs border border-orange-500/30 hover:bg-orange-500/20">
+                      <Tag className="w-3 h-3" />
+                      {isAr ? EVENT_TYPES.find(t => t.id === filterType)?.label.ar : EVENT_TYPES.find(t => t.id === filterType)?.label.en}
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                  {filterSector !== 'all' && (
+                    <button onClick={() => setFilterSector('all')} className="flex items-center gap-1 px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 text-xs border border-blue-500/30 hover:bg-blue-500/20">
+                      <Tag className="w-3 h-3" />
+                      {isAr ? SECTOR_LABELS[filterSector]?.ar : SECTOR_LABELS[filterSector]?.en}
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                  {filterCity !== 'all' && (
+                    <button onClick={() => setFilterCity('all')} className="flex items-center gap-1 px-2 py-1 rounded-md bg-green-500/10 text-green-400 text-xs border border-green-500/30 hover:bg-green-500/20">
+                      <MapPin className="w-3 h-3" />
+                      {filterCity}
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                  {filterPrize !== 'all' && (
+                    <button onClick={() => setFilterPrize('all')} className="flex items-center gap-1 px-2 py-1 rounded-md bg-yellow-500/10 text-yellow-400 text-xs border border-yellow-500/30 hover:bg-yellow-500/20">
+                      <Award className="w-3 h-3" />
+                      {filterPrize === 'high' ? '+300K' : filterPrize === 'medium' ? '100K-300K' : '<100K'}
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Events Grid */}
+      {/* Events Grid/List */}
       <div className="relative px-6 pb-24">
         <div className="container max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filteredEvents.length === 0 && (
+            <div className="text-center py-16">
+              <Search className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-30" />
+              <p className="text-xl font-semibold text-foreground mb-2">{isAr ? 'لا توجد فعاليات مطابقة' : 'No matching events'}</p>
+              <p className="text-muted-foreground mb-4">{isAr ? 'جرّب تعديل الفلاتر أو البحث بكلمات مختلفة' : 'Try adjusting filters or searching with different keywords'}</p>
+              <Button variant="outline" onClick={resetFilters}>
+                <RefreshCw className="w-4 h-4 mr-2" />
+                {isAr ? 'إعادة ضبط الفلاتر' : 'Reset Filters'}
+              </Button>
+            </div>
+          )}
+          <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'flex flex-col gap-4'}>
             {filteredEvents.map(event => {
               const SectorIcon = SECTOR_ICONS[event.sector] || Globe;
               const eventType = EVENT_TYPES.find(t => t.id === event.type);
@@ -298,7 +563,7 @@ export default function Naqla2EventsNeedsBoard() {
               return (
                 <Card
                   key={event.id}
-                  className={`bg-card/50 border-border/50 backdrop-blur-sm hover:border-orange-500/30 transition-all ${
+                  className={`bg-card/50 border-border/50 backdrop-blur-sm hover:border-orange-500/30 transition-all ${viewMode === 'list' ? 'flex flex-row' : ''} ${
                     event.featured ? 'ring-1 ring-orange-500/30' : ''
                   }`}
                 >

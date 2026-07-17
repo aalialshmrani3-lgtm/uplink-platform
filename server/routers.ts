@@ -4124,6 +4124,99 @@ Provide response in JSON format:
       }),
 
     // ========================================
+    // AI Contract & NDA Generation - توليد العقود واتفاقيات NDA
+    // ========================================
+    generateContract: protectedProcedure
+      .input(z.object({
+        contractType: z.enum(['collaboration', 'nda', 'licensing', 'acquisition']),
+        partyA: z.string(), // المبتكر
+        partyB: z.string(), // الجهة المهتمة
+        innovationTitle: z.string(),
+        innovationDescription: z.string().optional(),
+        terms: z.object({
+          equity: z.string().optional(),
+          funding: z.string().optional(),
+          duration: z.string().optional(),
+          support: z.array(z.string()).optional(),
+        }).optional(),
+        language: z.enum(['ar', 'en']).default('ar'),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { invokeLLM } = await import('./_core/llm');
+        const contractTypeLabels: Record<string, { ar: string; en: string }> = {
+          collaboration: { ar: 'عقد تعاون وشراكة', en: 'Collaboration & Partnership Agreement' },
+          nda: { ar: 'اتفاقية عدم الإفصاح (NDA)', en: 'Non-Disclosure Agreement (NDA)' },
+          licensing: { ar: 'عقد ترخيص الملكية الفكرية', en: 'Intellectual Property Licensing Agreement' },
+          acquisition: { ar: 'عقد استحواذ', en: 'Acquisition Agreement' },
+        };
+        const typeLabel = contractTypeLabels[input.contractType];
+        const isAr = input.language === 'ar';
+        const systemPrompt = isAr
+          ? `أنت محامٍ متخصص في عقود الملكية الفكرية والابتكار في المملكة العربية السعودية. قم بصياغة مسودة عقد قانونية احترافية ومتكاملة باللغة العربية وفق أنظمة المملكة العربية السعودية.`
+          : `You are a specialized attorney in intellectual property and innovation contracts in Saudi Arabia. Draft a professional and comprehensive legal contract in English according to Saudi Arabian regulations.`;
+        const userPrompt = isAr
+          ? `اكتب مسودة ${typeLabel.ar} بين:
+- الطرف الأول (المبتكر): ${input.partyA}
+- الطرف الثاني (الجهة المهتمة): ${input.partyB}
+- موضوع الابتكار: ${input.innovationTitle}
+${input.innovationDescription ? `- وصف الابتكار: ${input.innovationDescription}` : ''}
+${input.terms?.equity ? `- نسبة الحصة: ${input.terms.equity}` : ''}
+${input.terms?.funding ? `- التمويل المتفق عليه: ${input.terms.funding}` : ''}
+${input.terms?.duration ? `- مدة العقد: ${input.terms.duration}` : ''}
+${input.terms?.support ? `- أشكال الدعم: ${input.terms.support.join(', ')}` : ''}
+
+يجب أن تشمل المسودة:
+1. ديباجة العقد وتعريف الأطراف
+2. تعريف موضوع العقد والملكية الفكرية
+3. حقوق والتزامات كل طرف
+4. الشروط المالية والتعويضات
+5. السرية وحماية المعلومات
+6. مدة العقد وشروط الإنهاء
+7. تسوية النزاعات والقانون المطبق (نظام المملكة العربية السعودية)
+8. التوقيعات والتاريخ
+
+اكتب العقد بصيغة رسمية وقانونية كاملة.`
+          : `Write a draft ${typeLabel.en} between:
+- Party A (Innovator): ${input.partyA}
+- Party B (Interested Entity): ${input.partyB}
+- Innovation Subject: ${input.innovationTitle}
+${input.innovationDescription ? `- Innovation Description: ${input.innovationDescription}` : ''}
+${input.terms?.equity ? `- Equity Share: ${input.terms.equity}` : ''}
+${input.terms?.funding ? `- Agreed Funding: ${input.terms.funding}` : ''}
+${input.terms?.duration ? `- Contract Duration: ${input.terms.duration}` : ''}
+${input.terms?.support ? `- Support Types: ${input.terms.support.join(', ')}` : ''}
+
+The draft must include:
+1. Contract preamble and party definitions
+2. Subject matter definition and intellectual property
+3. Rights and obligations of each party
+4. Financial terms and compensation
+5. Confidentiality and information protection
+6. Contract duration and termination conditions
+7. Dispute resolution and applicable law (Saudi Arabian law)
+8. Signatures and date
+
+Write the contract in full formal and legal format.`;
+        const response = await invokeLLM({
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+        });
+        const rawContent = response.choices[0]?.message?.content;
+        const contractText = typeof rawContent === 'string' ? rawContent : Array.isArray(rawContent) ? rawContent.map((c: any) => (c.type === 'text' ? c.text : '')).join('') : '';
+        return {
+          success: true,
+          contractType: input.contractType,
+          contractTypeLabel: isAr ? typeLabel.ar : typeLabel.en,
+          contractText,
+          generatedAt: new Date().toISOString(),
+          parties: { partyA: input.partyA, partyB: input.partyB },
+          innovationTitle: input.innovationTitle,
+        };
+      }),
+
+    // ========================================
     // AI Opportunities Matching - المطابقة الذكية الشاملة
     // ========================================
     getProjectOpportunities: protectedProcedure
