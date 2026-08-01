@@ -386,6 +386,37 @@ export default function Naqla1IdeaAnalysis() {
                       {isAr ? "إعادة تقديم الفكرة بعد التحسين" : "Resubmit idea after improvement"}
                     </Button>
                   </Link>
+
+                  {/* دورات تطويرية مقترحة */}
+                  <div className="mt-4 bg-amber-500/10 border border-amber-500/30 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Zap className="w-5 h-5 text-amber-400" />
+                      <h3 className="font-bold text-foreground text-sm">
+                        {isAr ? "دورات وموارد تعليمية مقترحة لتطوير فكرتك" : "Recommended Courses & Resources to Develop Your Idea"}
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {[
+                        { name: isAr ? "التفكير التصميمي" : "Design Thinking", platform: "Coursera", url: "https://www.coursera.org/learn/design-thinking-innovation", color: "blue" },
+                        { name: isAr ? "أسس ريادة الأعمال" : "Entrepreneurship Fundamentals", platform: "edX", url: "https://www.edx.org/learn/entrepreneurship", color: "purple" },
+                        { name: isAr ? "بناء نموذج العمل" : "Business Model Canvas", platform: "MIT OCW", url: "https://ocw.mit.edu", color: "green" },
+                        { name: isAr ? "منهجية Lean Startup" : "Lean Startup Methodology", platform: isAr ? "منشآت" : "Monsha'at", url: "https://monshaat.gov.sa", color: "amber" },
+                        { name: isAr ? "تسريع Flat6Labs" : "Flat6Labs Accelerator", platform: isAr ? "الرياض" : "Riyadh", url: "https://flat6labs.com", color: "cyan" },
+                        { name: isAr ? "برنامج رواد" : "Rowad Program", platform: isAr ? "السعودية" : "Saudi Arabia", url: "https://rowad.gov.sa", color: "rose" },
+                      ].map((course, i) => (
+                        <a key={i} href={course.url} target="_blank" rel="noopener noreferrer"
+                          className="flex items-center gap-3 p-3 rounded-lg bg-background/60 hover:bg-background/90 transition-colors border border-border/30">
+                          <div className={`w-8 h-8 rounded-lg bg-${course.color}-500/20 flex items-center justify-center flex-shrink-0`}>
+                            <Lightbulb className={`w-4 h-4 text-${course.color}-400`} />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-foreground truncate">{course.name}</p>
+                            <p className="text-xs text-muted-foreground">{course.platform}</p>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -463,6 +494,50 @@ export default function Naqla1IdeaAnalysis() {
                     </div>
                   </div>
 
+                  {/* توصية SAIP للابتكارات */}
+                  <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-5">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                        <Shield className="w-5 h-5 text-emerald-400" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-foreground text-sm">
+                          {isAr ? "⭐ توصية SAIP: سجّل براءة اختراعك" : "⭐ SAIP Recommendation: Register Your Patent"}
+                        </h3>
+                        <p className="text-xs text-muted-foreground">
+                          {isAr ? "فكرتك تستوفي شروط الجدّة وخطوة الابتكار لدى الهيئة السعودية للملكية الفكرية" : "Your idea meets the novelty and inventive step criteria for SAIP"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                      <div className="bg-background/50 rounded-lg p-3 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">{isAr ? "نوع الحماية" : "Protection Type"}</p>
+                        <p className="text-sm font-semibold text-emerald-400">{isAr ? "براءة اختراع" : "Patent"}</p>
+                      </div>
+                      <div className="bg-background/50 rounded-lg p-3 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">{isAr ? "مدة الحماية" : "Protection Period"}</p>
+                        <p className="text-sm font-semibold text-emerald-400">{isAr ? "20 سنة" : "20 Years"}</p>
+                      </div>
+                      <div className="bg-background/50 rounded-lg p-3 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">{isAr ? "رسوم التقديم" : "Filing Fee"}</p>
+                        <p className="text-sm font-semibold text-emerald-400">{isAr ? "1,500 ريال" : "SAR 1,500"}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <a href="https://ipsearch.saip.gov.sa" target="_blank" rel="noopener noreferrer"
+                        className="flex-1 text-center py-2 px-4 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 text-sm font-medium transition-colors border border-emerald-500/30">
+                        {isAr ? "بحث في قاعدة SAIP" : "Search SAIP Database"}
+                      </a>
+                      <a href="https://www.saip.gov.sa/services/patents" target="_blank" rel="noopener noreferrer"
+                        className="flex-1 text-center py-2 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition-colors">
+                        {isAr ? "سجّل في SAIP الآن" : "Register on SAIP Now"}
+                      </a>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-3 text-center">
+                      {isAr ? "⚠️ لا تفصح عن تفاصيل فكرتك قبل إيداع طلب البراءة" : "⚠️ Do not disclose your idea details before filing the patent application"}
+                    </p>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* خيار 1: NAQLA 2 */}
                     <Button 
@@ -496,7 +571,7 @@ export default function Naqla1IdeaAnalysis() {
                         <span className="font-semibold">NAQLA 3</span>
                       </div>
                       <span className="text-xs text-white/80 text-right">
-                        {isAr ? "الذهاب مباشرة إلى سوق الابتكارات" : "Go to Innovation Marketplace"}
+                        {isAr ? "الذهاب مباشرةً إلى سوق الابتكارات" : "Go to Innovation Marketplace"}
                       </span>
                     </Button>
                   </div>

@@ -11,7 +11,7 @@ import { getDb } from "./db";
 import { userChoices, ideaJourneyEvents } from "../drizzle/schema";
 import { eq, asc } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { analyzeIdea, validateIdeaInput, getClassificationLevel } from "./naqla1-ai-analyzer";
+import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
 import crypto from "crypto";
 import * as hackathonsService from "./naqla2/hackathons";
 import * as eventsService from "./naqla2/events";
@@ -744,11 +744,36 @@ export const appRouter = router({
             naqla2Message = "💪 لا تستسلم! طور فكرتك حسب الاقتراحات وأعد التقديم مرة أخرى.";
           }
 
+          // Generate SAIP recommendation
+          const saipRecommendation = determineSaipRecommendation(
+            analysisResult.classification,
+            analysisResult.overallScore,
+            analysisResult.criterionScores
+          );
+
+          // Generate development plan with courses
+          const developmentPlan = generateDevelopmentPlan(
+            analysisResult.classification,
+            analysisResult.overallScore,
+            analysisResult.criterionScores,
+            idea.category || "general"
+          );
+
+          // Check NAQLA2 transition readiness
+          const naqla2Transition = checkNaqla2Transition(
+            analysisResult.classification,
+            analysisResult.overallScore,
+            false // hasSaipApplication - will be checked separately
+          );
+
           return {
             analysisId,
             ...analysisResult,
             transferredToNaqla2,
             naqla2Message,
+            saipRecommendation,
+            developmentPlan,
+            naqla2Transition,
             message: "تم تحليل الفكرة بنجاح!"
           };
         } catch (error) {

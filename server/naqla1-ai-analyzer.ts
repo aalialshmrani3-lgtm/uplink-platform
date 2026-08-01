@@ -594,3 +594,232 @@ export function validateIdeaInput(idea: Partial<IdeaInput>): { valid: boolean; e
     errors
   };
 }
+
+// ============================================
+// SAIP RECOMMENDATION ENGINE
+// ============================================
+
+export interface SaipRecommendation {
+  eligible: boolean;
+  protectionType: "patent" | "trademark" | "copyright" | "trade_secret" | "none";
+  protectionTypeLabel: string;
+  reason: string;
+  urgency: "high" | "medium" | "low";
+  estimatedCost: string;
+  saipPortalUrl: string;
+  steps: string[];
+}
+
+export function determineSaipRecommendation(
+  classification: "innovation" | "commercial" | "weak",
+  overallScore: number,
+  criterionScores: CriterionScore[]
+): SaipRecommendation {
+  const noveltyScore = criterionScores.find(c => c.criterion === "technicalNovelty")?.score || 0;
+
+  if (classification === "innovation" && noveltyScore >= 70) {
+    return {
+      eligible: true,
+      protectionType: "patent",
+      protectionTypeLabel: "براءة اختراع",
+      reason: "فكرتك تحقق معايير الجِدة والابتكار وقابلية التطبيق الصناعي المطلوبة لبراءة الاختراع",
+      urgency: "high",
+      estimatedCost: "3,000 - 8,000 ريال",
+      saipPortalUrl: "https://www.saip.gov.sa/services/patents/",
+      steps: [
+        "1. سجّل في بوابة SAIP عبر Nafath على saip.gov.sa",
+        "2. ابحث عن براءات مشابهة في قاعدة بيانات SAIP",
+        "3. أعدّ وصفاً تقنياً مفصلاً للاختراع",
+        "4. قدّم طلب براءة الاختراع مع الرسوم والمخططات",
+        "5. احفظ رقم الطلب في NAQLA لمتابعة الحالة"
+      ]
+    };
+  }
+
+  if (classification === "commercial" && overallScore >= 60) {
+    return {
+      eligible: true,
+      protectionType: "trademark",
+      protectionTypeLabel: "علامة تجارية",
+      reason: "فكرتك حل تجاري واعد — حماية العلامة التجارية تضمن حقوقك في السوق",
+      urgency: "medium",
+      estimatedCost: "1,000 - 3,000 ريال",
+      saipPortalUrl: "https://www.saip.gov.sa/services/trademarks/",
+      steps: [
+        "1. سجّل في بوابة SAIP عبر Nafath",
+        "2. ابحث عن علامات تجارية مشابهة",
+        "3. صمّم شعارك وحدد فئة النشاط التجاري",
+        "4. قدّم طلب تسجيل العلامة التجارية",
+        "5. احفظ رقم الطلب في NAQLA لمتابعة الحالة"
+      ]
+    };
+  }
+
+  return {
+    eligible: false,
+    protectionType: "none",
+    protectionTypeLabel: "غير مؤهل حالياً",
+    reason: "فكرتك تحتاج إلى تطوير أكثر قبل التقديم على حماية الملكية الفكرية",
+    urgency: "low",
+    estimatedCost: "—",
+    saipPortalUrl: "https://www.saip.gov.sa",
+    steps: [
+      "1. طوّر فكرتك بناءً على التوصيات",
+      "2. أعد التقديم على NAQLA بعد التحسينات",
+      "3. عند الحصول على تصنيف أعلى، ستظهر توصية SAIP تلقائياً"
+    ]
+  };
+}
+
+// ============================================
+// DEVELOPMENT COURSES ENGINE
+// ============================================
+
+export interface DevelopmentCourse {
+  title: string;
+  provider: string;
+  url: string;
+  duration: string;
+  level: "مبتدئ" | "متوسط" | "متقدم";
+  category: string;
+  relevance: string;
+}
+
+export interface MarketingProgram {
+  title: string;
+  description: string;
+  timeline: string;
+  actions: string[];
+}
+
+export interface DevelopmentPlan {
+  overallGuidance: string;
+  priorityAreas: string[];
+  courses: DevelopmentCourse[];
+  marketingProgram?: MarketingProgram;
+}
+
+export function generateDevelopmentPlan(
+  classification: "innovation" | "commercial" | "weak",
+  overallScore: number,
+  criterionScores: CriterionScore[],
+  category: string = "general"
+): DevelopmentPlan {
+  const weakAreas = criterionScores
+    .filter(c => c.score < 60)
+    .sort((a, b) => a.score - b.score)
+    .slice(0, 4);
+
+  const priorityAreas = weakAreas.map(c => c.criterion);
+  const allCourses: DevelopmentCourse[] = [];
+
+  if (priorityAreas.includes("technicalNovelty") || priorityAreas.includes("technicalFeasibility")) {
+    allCourses.push(
+      { title: "أساسيات الابتكار والتفكير الإبداعي", provider: "Misk Academy", url: "https://misk.org.sa/academy", duration: "6 أسابيع", level: "مبتدئ", category: "الابتكار", relevance: "تطوير مهارات التفكير الإبداعي وتوليد الأفكار الجديدة" },
+      { title: "Design Thinking for Innovation", provider: "Coursera (Stanford)", url: "https://www.coursera.org/learn/design-thinking-innovation", duration: "4 أسابيع", level: "متوسط", category: "الابتكار", relevance: "منهجية التفكير التصميمي لحل المشكلات بشكل مبتكر" }
+    );
+  }
+
+  if (priorityAreas.includes("commercialValue") || priorityAreas.includes("scalability")) {
+    allCourses.push(
+      { title: "نماذج الأعمال وريادة الأعمال", provider: "منصة رواد الأعمال", url: "https://rowad.monsha.com", duration: "8 أسابيع", level: "مبتدئ", category: "ريادة الأعمال", relevance: "بناء نموذج عمل قابل للتوسع وتحقيق الإيرادات" },
+      { title: "Business Model Canvas Masterclass", provider: "Udemy", url: "https://www.udemy.com/course/business-model-canvas", duration: "3 أسابيع", level: "متوسط", category: "ريادة الأعمال", relevance: "رسم خارطة نموذج العمل وتحديد مصادر الإيرادات" }
+    );
+  }
+
+  if (priorityAreas.includes("socialImpact") || priorityAreas.includes("sustainability")) {
+    allCourses.push(
+      { title: "الاستدامة وأهداف التنمية المستدامة", provider: "King Abdulaziz University Online", url: "https://online.kau.edu.sa", duration: "5 أسابيع", level: "مبتدئ", category: "الاستدامة", relevance: "ربط الفكرة بأهداف رؤية 2030 وأهداف التنمية المستدامة" }
+    );
+  }
+
+  if (priorityAreas.includes("technicalRisk") || priorityAreas.includes("timeToMarket")) {
+    allCourses.push(
+      { title: "إدارة المشاريع الناشئة (Lean Startup)", provider: "edX", url: "https://www.edx.org/learn/lean-startup", duration: "6 أسابيع", level: "متوسط", category: "إدارة المشاريع", relevance: "تقليل المخاطر وتسريع الوصول للسوق بمنهجية Lean" }
+    );
+  }
+
+  allCourses.push(
+    { title: "برنامج تطوير رواد الأعمال", provider: "Monsha'at (منشآت)", url: "https://www.monshaat.gov.sa/programs", duration: "12 أسبوع", level: "مبتدئ", category: "ريادة الأعمال", relevance: "برنامج حكومي شامل لتطوير رواد الأعمال السعوديين" }
+  );
+
+  const marketingProgram: MarketingProgram = {
+    title: "برنامج تسويق الفكرة للمستثمرين",
+    description: "إذا مرّ شهر دون اهتمام من مستثمر، نفعّل هذا البرنامج تلقائياً",
+    timeline: "30 يوم",
+    actions: [
+      "📧 إرسال ملخص الفكرة لـ 50 مستثمراً محلياً وأجنبياً في قاعدة بيانات NAQLA",
+      "📢 نشر الفكرة (بدون تفاصيل سرية) في لوحة التحديات العامة",
+      "🎯 مطابقة الفكرة مع تحديات الشركات الكبرى المسجلة في NAQLA",
+      "📊 إنشاء ملف استثماري (Teaser) وإرساله للصناديق الاستثمارية",
+      "🤝 اقتراح شركاء استراتيجيين محتملين من قاعدة بيانات NAQLA",
+      "📅 جدولة جلسة عرض افتراضية مع أقرب 3 مستثمرين مناسبين"
+    ]
+  };
+
+  const overallGuidance = classification === "weak"
+    ? `فكرتك حصلت على ${overallScore}% وتحتاج إلى تطوير في ${weakAreas.length} مجالات رئيسية.`
+    : classification === "commercial"
+    ? `فكرتك حل تجاري واعد بنسبة ${overallScore}%. لتعزيز فرص نجاحها في السوق، ننصح بالتطوير في المجالات التالية.`
+    : `فكرتك ابتكار متميز بنسبة ${overallScore}%. لتعظيم أثرها وفرص تمويلها، ننصح بتطوير الجوانب التالية.`;
+
+  return {
+    overallGuidance,
+    priorityAreas,
+    courses: allCourses.slice(0, 6),
+    marketingProgram: classification !== "weak" ? marketingProgram : undefined
+  };
+}
+
+// ============================================
+// NAQLA2 TRANSITION CHECKER
+// ============================================
+
+export interface Naqla2TransitionStatus {
+  canTransition: boolean;
+  transitionType: "immediate" | "after_saip" | "after_development" | "not_ready";
+  message: string;
+  conditions: string[];
+  estimatedTimeToReady?: string;
+}
+
+export function checkNaqla2Transition(
+  classification: "innovation" | "commercial" | "weak",
+  overallScore: number,
+  hasSaipApplication: boolean = false
+): Naqla2TransitionStatus {
+  if (hasSaipApplication) {
+    return {
+      canTransition: true,
+      transitionType: "immediate",
+      message: "🎉 فكرتك محمية بـ SAIP وجاهزة للانتقال الفوري إلى نقلة TWO للاستثمار",
+      conditions: ["✅ تم التحقق من ورقة SAIP", "✅ الفكرة محمية قانونياً", "✅ جاهزة للعرض على المستثمرين"]
+    };
+  }
+
+  if (classification === "innovation" && overallScore >= 80) {
+    return {
+      canTransition: true,
+      transitionType: "after_saip",
+      message: "✅ فكرتك مؤهلة للانتقال إلى نقلة TWO. ننصح بتسجيل براءة الاختراع أولاً لحماية حقوقك",
+      conditions: ["✅ النتيجة تتجاوز 80%", "⚠️ ننصح بتسجيل SAIP قبل الانتقال", "✅ يمكن الانتقال الآن مع الاحتفاظ بحقوقك"]
+    };
+  }
+
+  if (classification === "commercial" && overallScore >= 60) {
+    return {
+      canTransition: true,
+      transitionType: "immediate",
+      message: "✅ فكرتك حل تجاري جاهز للانتقال إلى نقلة TWO لإيجاد المستثمرين والشركاء",
+      conditions: ["✅ النتيجة تتجاوز 60%", "✅ الفكرة قابلة للتطبيق التجاري", "✅ جاهزة للعرض على المستثمرين"]
+    };
+  }
+
+  return {
+    canTransition: false,
+    transitionType: "after_development",
+    message: "⏳ فكرتك تحتاج إلى تطوير قبل الانتقال إلى نقلة TWO",
+    conditions: ["❌ النتيجة أقل من 60%", "📚 يجب إتمام برامج التطوير الموصى بها", "🔄 أعد التقديم بعد التحسينات"],
+    estimatedTimeToReady: "4-8 أسابيع مع الدورات الموصى بها"
+  };
+}

@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, int, varchar, mysqlEnum, json, text, timestamp, decimal, index, foreignKey } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, int, varchar, mysqlEnum, json, text, timestamp, decimal, index, foreignKey, tinyint } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const adminLogs = mysqlTable("admin_logs", {
@@ -1931,3 +1931,90 @@ export const saipAssessments = mysqlTable("saip_assessments", {
 
 export type SaipAssessment = typeof saipAssessments.$inferSelect;
 export type InsertSaipAssessment = typeof saipAssessments.$inferInsert;
+
+// ============================================
+// NAQLA 2 — Investor/Sponsor Ecosystem Tables
+// ============================================
+
+// Investor & Sponsor Profiles
+export const investorProfiles = mysqlTable("investor_profiles", {
+  id: int().autoincrement().primaryKey(),
+  userId: int().notNull(),
+  profileType: mysqlEnum(['individual_investor', 'institutional_investor', 'sponsor', 'corporate_partner', 'foreign_investor']).notNull().default('individual_investor'),
+  displayName: varchar({ length: 300 }).notNull(),
+  organization: varchar({ length: 300 }),
+  country: varchar({ length: 100 }).notNull().default('Saudi Arabia'),
+  city: varchar({ length: 100 }),
+  bio: text(),
+  sectors: json(), // Array of interested sectors: ['energy','health','tech','water','sustainability']
+  investmentRange: mysqlEnum(['under_100k', '100k_500k', '500k_1m', '1m_5m', 'above_5m']),
+  sponsorshipBudget: mysqlEnum(['under_50k', '50k_200k', '200k_500k', 'above_500k']),
+  isVerified: tinyint().default(0),
+  isPublic: tinyint().default(1),
+  linkedinUrl: varchar({ length: 500 }),
+  websiteUrl: varchar({ length: 500 }),
+  logoUrl: varchar({ length: 1000 }),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+// Event/Hackathon Sponsorship Requests
+export const sponsorshipRequests = mysqlTable("sponsorship_requests", {
+  id: int().autoincrement().primaryKey(),
+  organizerId: int().notNull(), // user who posted the event
+  title: varchar({ length: 500 }).notNull(),
+  eventType: mysqlEnum(['hackathon', 'conference', 'workshop', 'challenge', 'meetup', 'bootcamp', 'exhibition']).notNull(),
+  sector: varchar({ length: 100 }).notNull(), // energy, health, tech, water, etc.
+  description: text().notNull(),
+  expectedAttendees: int(),
+  eventDate: timestamp({ mode: 'string' }),
+  location: varchar({ length: 300 }),
+  isOnline: tinyint().default(0),
+  totalBudgetNeeded: int(), // in SAR
+  sponsorshipTiers: json(), // [{name:'Gold', amount:50000, benefits:[...]}, ...]
+  currentFunding: int().default(0),
+  status: mysqlEnum(['draft', 'open', 'matched', 'funded', 'completed', 'cancelled']).notNull().default('open'),
+  proceedToNaqla3: tinyint().default(0), // flag when ready to generate smart contract
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+// Sponsorship Matches (investor/sponsor ↔ event)
+export const sponsorshipMatches = mysqlTable("sponsorship_matches", {
+  id: int().autoincrement().primaryKey(),
+  requestId: int().notNull(),
+  investorProfileId: int().notNull(),
+  matchScore: int().default(0), // AI match score 0-100
+  sponsorshipTier: varchar({ length: 100 }),
+  amountCommitted: int().default(0),
+  status: mysqlEnum(['pending', 'interested', 'negotiating', 'agreed', 'contract_sent', 'completed', 'declined']).notNull().default('pending'),
+  notes: text(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+// Expert/Mentor Directory
+export const expertProfiles = mysqlTable("expert_profiles", {
+  id: int().autoincrement().primaryKey(),
+  userId: int().notNull(),
+  displayName: varchar({ length: 300 }).notNull(),
+  title: varchar({ length: 300 }),
+  organization: varchar({ length: 300 }),
+  sectors: json(), // ['energy','health','tech','water']
+  expertise: json(), // ['AI','blockchain','renewable_energy',...]
+  country: varchar({ length: 100 }).default('Saudi Arabia'),
+  isAvailableForMentoring: tinyint().default(1),
+  isAvailableForJudging: tinyint().default(1),
+  linkedinUrl: varchar({ length: 500 }),
+  avatarUrl: varchar({ length: 1000 }),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export type InvestorProfile = typeof investorProfiles.$inferSelect;
+export type InsertInvestorProfile = typeof investorProfiles.$inferInsert;
+export type SponsorshipRequest = typeof sponsorshipRequests.$inferSelect;
+export type InsertSponsorshipRequest = typeof sponsorshipRequests.$inferInsert;
+export type SponsorshipMatch = typeof sponsorshipMatches.$inferSelect;
+export type InsertSponsorshipMatch = typeof sponsorshipMatches.$inferInsert;
+export type ExpertProfile = typeof expertProfiles.$inferSelect;
+export type InsertExpertProfile = typeof expertProfiles.$inferInsert;
