@@ -81,6 +81,7 @@ const MyIdeas = lazy(() => import('@/pages/MyIdeas'));
 const Naqla1BrowseIdeas = lazy(() => import('@/pages/Naqla1BrowseIdeas'));
 const Naqla1IdeaDetail = lazy(() => import('@/pages/Naqla1IdeaDetail'));
 const Naqla1IdeaAnalysis = lazy(() => import('@/pages/Naqla1IdeaAnalysis'));
+const Naqla1CaseStudies = lazy(() => import('@/pages/Naqla1CaseStudies'));
 const IdeaJourney = lazy(() => import('@/pages/IdeaJourney'));
 const Naqla2BrowseHackathons = lazy(() => import('@/pages/Naqla2BrowseHackathons'));
 const Naqla2CreateHackathon = lazy(() => import('@/pages/Naqla2CreateHackathon'));
@@ -339,6 +340,7 @@ function Router() {
         <Route path="/uplink1/browse" component={Naqla1BrowseIdeas} />
         <Route path="/uplink1/ideas/:id" component={Naqla1IdeaDetail} />
         <Route path="/uplink1/ideas/:id/analysis" component={Naqla1IdeaAnalysis} />
+        <Route path="/naqla1/case-studies" component={Naqla1CaseStudies} />
         <Route path="/naqla1/result" component={IdeaResult} />
         <Route path="/naqla1/ideas/:ideaId/result" component={IdeaResult} />
         <Route path="/journey/:id" component={IdeaJourney} />

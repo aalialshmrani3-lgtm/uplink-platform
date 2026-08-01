@@ -19,6 +19,7 @@ import { getLoginUrl } from '@/const';
 import { useAuth } from '@/_core/hooks/useAuth';
 import SEOHead from '@/components/SEOHead';
 import { mockIdeas, mockClassificationStats } from '@/data/mockNAQLA1';
+import { BookOpen, Shield } from 'lucide-react';
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Naqla1() {
@@ -362,6 +363,18 @@ export default function Naqla1() {
                   </a>
                 </Button>
               )}
+              <Button size="lg" variant="outline" asChild className="border-emerald-700 text-emerald-400 hover:bg-emerald-900/30 bg-transparent">
+                <Link href="/naqla1/case-studies">
+                  <BookOpen className="w-5 h-5 mr-2" />
+                  شاهد أمثلة حقيقية
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="border-purple-700 text-purple-400 hover:bg-purple-900/30 bg-transparent">
+                <Link href="/saip-assessment">
+                  <Shield className="w-5 h-5 mr-2" />
+                  تقييم الملكية الفكرية
+                </Link>
+              </Button>
               <Button size="lg" variant="outline" asChild className="border-gray-700 hover:bg-gray-800">
                 <Link href="/">
                   <ArrowRight className="w-5 h-5 ml-2" />
