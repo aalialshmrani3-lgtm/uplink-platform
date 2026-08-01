@@ -377,3 +377,21 @@
 - [ ] بناء صفحة Case Studies لنقلة ONE تعرض أفكاراً حقيقية مقيّمة
 - [ ] تحويل نقطة دخول نقلة ONE إلى مجانية مع تقرير أولي فوري
 - [ ] إضافة Stage-gated: عرض التفاصيل تدريجياً حسب جودة الفكرة
+
+---
+
+## 🔧 مهمة: إصلاح الأزرار المعطلة وإضافة صفحة ملف المستثمر
+
+### Phase 1: إصلاح الأزرار المعطلة
+- [x] إصلاح زر "ابدأ الآن مجاناً" في صفحة /why-naqla
+- [x] التحقق من زر "سجل دخول لتحليل فكرتك" في NAQLA 1 (يعمل بشكل صحيح)
+
+### Phase 2: إضافة صفحة ملف المستثمر
+- [x] إنشاء صفحة Naqla2InvestorProfile.tsx
+- [x] إضافة procedures createInvestorProfile, getMyInvestorProfile, listInvestorProfiles في naqla2 router
+- [x] إضافة procedures createSponsorshipRequest, listSponsorshipRequests, getMySponsorshipRequests في naqla2 router
+- [x] إضافة route /naqla2/investor-profile في App.tsx
+- [x] إصلاح أخطاء TypeScript في routers.ts (استعادة من git checkpoint)
+
+### Phase 3: حفظ checkpoint
+- [ ] حفظ checkpoint نهائي

@@ -1,10 +1,12 @@
 import { Check, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocation } from "wouter";
 
 export default function WhyNaqla() {
   const { language } = useLanguage();
   const isAr = language === 'ar';
+  const [, navigate] = useLocation();
   const competitors = [
     {
       name: "NAQLA 5.0",
@@ -204,8 +206,11 @@ export default function WhyNaqla() {
           <p className="text-xl text-muted-foreground mb-8">
             ابدأ رحلتك في الابتكار مع المنصة الأكثر تقدماً في العالم
           </p>
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg transition-all">
-            ابدأ الآن مجاناً
+          <button 
+            onClick={() => navigate('/register')}
+            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold text-lg hover:shadow-lg transition-all cursor-pointer"
+          >
+            {isAr ? 'ابدأ الآن مجاناً' : 'Start for Free'}
           </button>
         </div>
       </div>

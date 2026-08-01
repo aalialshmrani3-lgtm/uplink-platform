@@ -4303,6 +4303,182 @@ Write the contract in full formal and legal format.`;
           },
         };
       }),
+
+    // ============================================
+    // Investor Profiles
+    // ============================================
+    createInvestorProfile: protectedProcedure
+      .input(z.object({
+        profileType: z.enum(['individual_investor', 'institutional_investor', 'sponsor', 'corporate_partner', 'foreign_investor']),
+        displayName: z.string().min(2),
+        organization: z.string().optional(),
+        country: z.string().default('Saudi Arabia'),
+        city: z.string().optional(),
+        bio: z.string().optional(),
+        sectors: z.array(z.string()).default([]),
+        investmentRange: z.enum(['under_100k', '100k_500k', '500k_1m', '1m_5m', 'above_5m']).optional(),
+        sponsorshipBudget: z.enum(['under_50k', '50k_200k', '200k_500k', 'above_500k']).optional(),
+        isPublic: z.boolean().default(true),
+        websiteUrl: z.string().optional(),
+        linkedinUrl: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const { investorProfiles } = await import('../drizzle/schema');
+        const { eq } = await import('drizzle-orm');
+        // Check if profile already exists
+        const existing = await database.select().from(investorProfiles)
+          .where(eq(investorProfiles.userId, ctx.user.id)).limit(1);
+        if (existing.length > 0) {
+          // Update existing profile
+          await database.update(investorProfiles)
+            .set({
+              profileType: input.profileType,
+              displayName: input.displayName,
+              organization: input.organization,
+              country: input.country,
+              city: input.city,
+              bio: input.bio,
+              sectors: input.sectors,
+              investmentRange: input.investmentRange,
+              sponsorshipBudget: input.sponsorshipBudget,
+              isPublic: input.isPublic ? 1 : 0,
+              websiteUrl: input.websiteUrl,
+              linkedinUrl: input.linkedinUrl,
+            })
+            .where(eq(investorProfiles.userId, ctx.user.id));
+          return { success: true, id: existing[0].id, updated: true };
+        }
+        const result = await database.insert(investorProfiles).values({
+          userId: ctx.user.id,
+          profileType: input.profileType,
+          displayName: input.displayName,
+          organization: input.organization,
+          country: input.country,
+          city: input.city,
+          bio: input.bio,
+          sectors: input.sectors,
+          investmentRange: input.investmentRange,
+          sponsorshipBudget: input.sponsorshipBudget,
+          isPublic: input.isPublic ? 1 : 0,
+          websiteUrl: input.websiteUrl,
+          linkedinUrl: input.linkedinUrl,
+        });
+        return { success: true, id: (result as any).insertId, updated: false };
+      }),
+    getMyInvestorProfile: protectedProcedure
+      .query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) return null;
+        const { investorProfiles } = await import('../drizzle/schema');
+        const { eq } = await import('drizzle-orm');
+        const profiles = await database.select().from(investorProfiles)
+          .where(eq(investorProfiles.userId, ctx.user.id))
+          .limit(1);
+        return profiles[0] || null;
+      }),
+    listInvestorProfiles: publicProcedure
+      .input(z.object({
+        profileType: z.string().optional(),
+        sector: z.string().optional(),
+        search: z.string().optional(),
+        limit: z.number().default(20),
+        offset: z.number().default(0),
+      }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) return [];
+        const { investorProfiles } = await import('../drizzle/schema');
+        const { eq, and, like, desc } = await import('drizzle-orm');
+        const conditions: any[] = [eq(investorProfiles.isPublic, 1)];
+        if (input.profileType) {
+          conditions.push(eq(investorProfiles.profileType, input.profileType as any));
+        }
+        if (input.search) {
+          conditions.push(like(investorProfiles.displayName, `%${input.search}%`));
+        }
+        return await database.select().from(investorProfiles)
+          .where(and(...conditions))
+          .orderBy(desc(investorProfiles.createdAt))
+          .limit(input.limit)
+          .offset(input.offset);
+      }),
+    // ============================================
+    // Sponsorship Requests
+    // ============================================
+    createSponsorshipRequest: protectedProcedure
+      .input(z.object({
+        title: z.string().min(5),
+        eventType: z.enum(['hackathon', 'conference', 'workshop', 'challenge', 'meetup', 'bootcamp', 'exhibition']),
+        sector: z.string(),
+        description: z.string().min(20),
+        expectedAttendees: z.number().optional(),
+        eventDate: z.string().optional(),
+        location: z.string().optional(),
+        isOnline: z.boolean().default(false),
+        totalBudgetNeeded: z.number().optional(),
+        sponsorshipTiers: z.array(z.object({
+          name: z.string(),
+          amount: z.number(),
+          benefits: z.array(z.string()),
+        })).optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const { sponsorshipRequests } = await import('../drizzle/schema');
+        const result = await database.insert(sponsorshipRequests).values({
+          organizerId: ctx.user.id,
+          title: input.title,
+          eventType: input.eventType,
+          sector: input.sector,
+          description: input.description,
+          expectedAttendees: input.expectedAttendees,
+          eventDate: input.eventDate,
+          location: input.location,
+          isOnline: input.isOnline ? 1 : 0,
+          totalBudgetNeeded: input.totalBudgetNeeded,
+          sponsorshipTiers: input.sponsorshipTiers,
+          status: 'open',
+        });
+        return { success: true, id: (result as any).insertId };
+      }),
+    listSponsorshipRequests: publicProcedure
+      .input(z.object({
+        sector: z.string().optional(),
+        eventType: z.string().optional(),
+        status: z.string().optional(),
+        search: z.string().optional(),
+        limit: z.number().default(20),
+        offset: z.number().default(0),
+      }))
+      .query(async ({ input }) => {
+        const database = await getDb();
+        if (!database) return [];
+        const { sponsorshipRequests } = await import('../drizzle/schema');
+        const { eq, and, like, desc } = await import('drizzle-orm');
+        const conditions: any[] = [];
+        if (input.sector) conditions.push(eq(sponsorshipRequests.sector, input.sector));
+        if (input.status) conditions.push(eq(sponsorshipRequests.status, input.status as any));
+        if (input.eventType) conditions.push(eq(sponsorshipRequests.eventType, input.eventType as any));
+        if (input.search) conditions.push(like(sponsorshipRequests.title, `%${input.search}%`));
+        return await database.select().from(sponsorshipRequests)
+          .where(conditions.length > 0 ? and(...conditions) : undefined)
+          .orderBy(desc(sponsorshipRequests.createdAt))
+          .limit(input.limit)
+          .offset(input.offset);
+      }),
+    getMySponsorshipRequests: protectedProcedure
+      .query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) return [];
+        const { sponsorshipRequests } = await import('../drizzle/schema');
+        const { eq, desc } = await import('drizzle-orm');
+        return await database.select().from(sponsorshipRequests)
+          .where(eq(sponsorshipRequests.organizerId, ctx.user.id))
+          .orderBy(desc(sponsorshipRequests.createdAt));
+      }),
     }),
 
   // ============================================
