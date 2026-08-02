@@ -395,3 +395,15 @@
 
 ### Phase 3: حفظ checkpoint
 - [ ] حفظ checkpoint نهائي
+
+
+---
+
+## 📊 مهمة: بناء Dashboards لكل محرك
+
+- [x] بناء Dashboard نقلة ONE (/naqla1/dashboard) - إحصائيات الأفكار والمستخدمين والتوجيه
+- [x] بناء Dashboard نقلة TWO (/naqla2/dashboard) - المستثمرين والفعاليات والتحديات والشراكات
+- [x] بناء Dashboard نقلة THREE (/naqla3/dashboard-new) - الأصول الرقمية والعقود والإيرادات
+- [x] إضافة procedures getDashboardStats لكل نقلة في routers.ts
+- [x] إضافة روابط "لوحة التحكم" في صفحات نقلة 1 و 2 و 3 الرئيسية
+- [x] ربط المسارات في App.tsx

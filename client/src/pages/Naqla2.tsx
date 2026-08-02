@@ -3,7 +3,7 @@ import {
   Target, Users, Lightbulb, Calendar, Trophy, 
   Building2, Globe, GraduationCap, Briefcase,
   ArrowRight, Sparkles, Award, Zap, Brain, Rocket, 
-  Search, Clock, ChevronRight, CheckCircle2
+  Search, Clock, ChevronRight, CheckCircle2, BarChart3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -214,6 +214,16 @@ export default function Naqla2() {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
               منصة متكاملة تربط المبتكرين بالمستثمرين والشركات من خلال الهاكاثونات والفعاليات والتحديات الحقيقية
             </p>
+
+            {/* Dashboard Link */}
+            <div className="flex justify-center mb-6">
+              <Link href="/naqla2/dashboard">
+                <Button variant="outline" className="gap-2 border-blue-500/40 text-blue-300 hover:bg-blue-900/20">
+                  <BarChart3 className="w-4 h-4" />
+                  {isAr ? 'لوحة التحكم - NAQLA 2' : 'NAQLA 2 Dashboard'}
+                </Button>
+              </Link>
+            </div>
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">

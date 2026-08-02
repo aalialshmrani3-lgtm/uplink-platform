@@ -283,6 +283,12 @@ export default function Naqla3() {
                   عرض أصل للبيع
                 </Link>
               </Button>
+              <Button size="lg" variant="outline" asChild className="border-violet-700 text-violet-300 hover:bg-violet-900/30 bg-transparent">
+                <Link href="/naqla3/dashboard-new">
+                  <BarChart3 className="w-5 h-5 mr-2" />
+                  لوحة التحكم
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

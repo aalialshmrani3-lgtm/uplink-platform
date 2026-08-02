@@ -149,6 +149,9 @@ const Terms = lazy(() => import("./pages/Terms")); // Terms & Conditions
 const Contact = lazy(() => import("./pages/Contact")); // Contact Us
 const Blog = lazy(() => import("./pages/Blog")); // Blog
 const SaipAssessment = lazy(() => import("./pages/SaipAssessment")); // SAIP IP Assessment
+const Naqla1Dashboard = lazy(() => import("./pages/Naqla1Dashboard")); // NAQLA 1 Dashboard
+const Naqla2Dashboard = lazy(() => import("./pages/Naqla2Dashboard")); // NAQLA 2 Dashboard
+const Naqla3DashboardNew = lazy(() => import("./pages/Naqla3DashboardNew")); // NAQLA 3 Dashboard New
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -331,6 +334,7 @@ function Router() {
         <Route path="/challenges" component={Challenges} />
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/naqla1" component={Naqla1} />
+        <Route path="/naqla1/dashboard" component={Naqla1Dashboard} /> {/* NAQLA 1 Dashboard */}
         <Route path="/naqla1/submit" component={SubmitIdea} />
         <Route path="/naqla1/browse" component={Naqla1BrowseIdeas} />
         <Route path="/naqla1/ideas/:id" component={Naqla1IdeaDetail} />
@@ -352,6 +356,7 @@ function Router() {
         <Route path="/value-footprints" component={ValueFootprints} />
         <Route path="/trl-assessment" component={TRLAssessment} />
         <Route path="/naqla2" component={Naqla2} />
+        <Route path="/naqla2/dashboard" component={Naqla2Dashboard} /> {/* NAQLA 2 Dashboard */}
           <Route path="/naqla2/routed-ideas" component={RoutedIdeas} />
           <Route path="/naqla2/national-challenges" component={NationalChallenges} />
         <Route path="/naqla1/opportunities" component={Naqla1Opportunities} />
@@ -394,6 +399,7 @@ function Router() {
         <Route path="/naqla3/contracts/:id" component={Naqla3ContractDetail} /> {/* Contract Detail with Milestones */}
         <Route path="/naqla3/escrow" component={Naqla3Escrow} /> {/* Added for Flowchart Match */}
         <Route path="/naqla3/dashboard" component={Naqla3Dashboard} /> {/* NAQLA 3 Dashboard - Patents, Sales & Acquisitions */}
+        <Route path="/naqla3/dashboard-new" component={Naqla3DashboardNew} /> {/* NAQLA 3 Dashboard New */}
         {/* /admin route already exists at /admin/dashboard */}
         <Route path="/search" component={GlobalSearch} /> {/* Added for Flowchart Match */}
         <Route path="/academy" component={Academy} />
