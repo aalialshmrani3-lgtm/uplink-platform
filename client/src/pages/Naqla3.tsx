@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { 
   ShoppingCart, 
   Shield, 
@@ -16,19 +17,104 @@ import {
   Package,
   BarChart3,
   Lock,
-  Zap
+  Zap,
+  Plus,
+  Search,
+  FileCheck,
+  Handshake,
+  Globe,
+  ChevronRight,
+  Activity
 } from 'lucide-react';
 import { getLoginUrl } from '@/const';
 import { useAuth } from '@/_core/hooks/useAuth';
 import SEOHead from '@/components/SEOHead';
 import { mockContracts, mockMarketplace, mockMarketStats } from '@/data/mockNAQLA3';
 import { useLanguage } from "@/contexts/LanguageContext";
+import { trpc } from '@/lib/trpc';
 
 export default function Naqla3() {
   const { language } = useLanguage();
   const isAr = language === 'ar';
   const { user } = useAuth();
   const [selectedAssetType, setSelectedAssetType] = useState<'license' | 'product' | 'company'>('license');
+  const { data: liveStats } = trpc.naqla3.getDashboardStats.useQuery();
+
+  const dealTypes = [
+    {
+      id: 'license',
+      title: 'تراخيص',
+      desc: 'منح حق استخدام الملكية الفكرية مع الاحتفاظ بالملكية الأصلية',
+      icon: Key,
+      color: 'from-blue-600 to-cyan-700',
+      border: 'border-blue-500/30',
+      count: liveStats?.licenseAssets ?? 387,
+      link: '/naqla3/sell?type=license',
+      action: 'اعرض ترخيصاً',
+    },
+    {
+      id: 'acquisition',
+      title: 'استحواذ كامل',
+      desc: 'بيع الشركة أو المشروع بالكامل مع جميع أصوله وملكياته الفكرية',
+      icon: Building2,
+      color: 'from-amber-600 to-orange-700',
+      border: 'border-amber-500/30',
+      count: liveStats?.acquisitionAssets ?? 156,
+      link: '/naqla3/sell?type=acquisition',
+      action: 'ابدأ الاستحواذ',
+    },
+    {
+      id: 'product',
+      title: 'منتج/حل كامل',
+      desc: 'بيع المنتج أو الحل التقني نفسه مع نقل حقوق الاستخدام',
+      icon: Package,
+      color: 'from-violet-600 to-purple-700',
+      border: 'border-violet-500/30',
+      count: liveStats?.productAssets ?? 298,
+      link: '/naqla3/sell?type=product',
+      action: 'اعرض منتجاً',
+    },
+    {
+      id: 'partnership',
+      title: 'شراكة استراتيجية',
+      desc: 'شراكة طويلة الأمد مع تبادل الملكية الفكرية والخبرات',
+      icon: Handshake,
+      color: 'from-emerald-600 to-teal-700',
+      border: 'border-emerald-500/30',
+      count: liveStats?.partnershipAssets ?? 234,
+      link: '/naqla3/sell?type=partnership',
+      action: 'ابحث عن شريك',
+    },
+    {
+      id: 'patent',
+      title: 'براءة اختراع',
+      desc: 'تسجيل وحماية وبيع براءات الاختراع والملكية الفكرية',
+      icon: FileCheck,
+      color: 'from-rose-600 to-pink-700',
+      border: 'border-rose-500/30',
+      count: liveStats?.activeAssets ?? 892,
+      link: '/naqla3/contracts',
+      action: 'احمِ ابتكارك',
+    },
+    {
+      id: 'escrow',
+      title: 'ضمان المعاملات',
+      desc: 'حسابات ضمان آمنة لتأمين المعاملات والعقود الكبيرة',
+      icon: Shield,
+      color: 'from-indigo-600 to-blue-700',
+      border: 'border-indigo-500/30',
+      count: liveStats?.activeEscrow ?? 45,
+      link: '/naqla3/escrow',
+      action: 'أنشئ حساب ضمان',
+    },
+  ];
+
+  const statCards = [
+    { label: 'الأصول النشطة', value: liveStats?.activeAssets?.toLocaleString() ?? '892+', icon: Package, color: 'text-violet-400', bg: 'bg-violet-500/10' },
+    { label: 'العقود المكتملة', value: liveStats?.completedContracts?.toLocaleString() ?? '289+', icon: FileCheck, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+    { label: 'حسابات الضمان', value: liveStats?.activeEscrow?.toLocaleString() ?? '45+', icon: Shield, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+    { label: 'إجمالي الإيرادات', value: liveStats?.totalRevenue ? `${(liveStats.totalRevenue / 1000000).toFixed(1)}M` : '18.7M', icon: DollarSign, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+  ];
 
   const assetTypes = [
     {
@@ -294,18 +380,53 @@ export default function Naqla3() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 px-4">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <Card 
-                key={index}
-                className="glass-card p-6 text-center hover:scale-105 transition-transform duration-300"
-              >
-                <stat.icon className="w-8 h-8 mx-auto mb-3 text-purple-400" />
-                <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+      {/* Live Stats Section */}
+      <section className="py-10 px-4 bg-card/10 border-y border-border/20">
+        <div className="container mx-auto max-w-5xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {statCards.map((s, i) => (
+              <div key={i} className={`p-4 rounded-2xl ${s.bg} border border-border/30 flex items-center gap-3`}>
+                <s.icon className={`w-8 h-8 ${s.color} shrink-0`} />
+                <div>
+                  <div className="text-xl font-bold text-foreground">{s.value}</div>
+                  <div className="text-xs text-muted-foreground">{s.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Deal Types Dashboard */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-10">
+            <Badge className="mb-4 bg-violet-500/10 text-violet-400 border-violet-500/30">
+              <Activity className="w-3 h-3 ml-1" />
+              أنواع الصفقات
+            </Badge>
+            <h2 className="text-3xl font-bold text-foreground mb-3">ماذا تريد أن تفعل؟</h2>
+            <p className="text-muted-foreground">اختر نوع الصفقة المناسب لابتكارك</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {dealTypes.map((deal, i) => (
+              <Card key={i} className={`bg-card/60 backdrop-blur-sm border ${deal.border} hover:scale-105 transition-all duration-300`}>
+                <CardContent className="p-5">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${deal.color} flex items-center justify-center`}>
+                      <deal.icon className="w-5 h-5 text-white" />
+                    </div>
+                    <Badge className="bg-card/80 text-foreground font-bold text-xs">{deal.count.toLocaleString()}</Badge>
+                  </div>
+                  <h3 className="text-base font-bold text-foreground mb-1">{deal.title}</h3>
+                  <p className="text-xs text-muted-foreground mb-4 leading-relaxed">{deal.desc}</p>
+                  <Link href={deal.link}>
+                    <Button size="sm" className={`w-full bg-gradient-to-r ${deal.color} gap-1 text-xs`}>
+                      {deal.action}
+                      <ChevronRight className="w-3 h-3" />
+                    </Button>
+                  </Link>
+                </CardContent>
               </Card>
             ))}
           </div>

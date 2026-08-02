@@ -1,396 +1,380 @@
-import { useState } from 'react';
-import { Link } from 'wouter';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { 
-  Brain, 
-  Sparkles, 
-  TrendingUp, 
-  CheckCircle2, 
-  XCircle, 
-  AlertCircle,
-  ArrowRight,
-  Lightbulb,
-  Database,
-  Cpu,
-  BarChart3
-} from 'lucide-react';
-import { getLoginUrl } from '@/const';
-import { useAuth } from '@/_core/hooks/useAuth';
-import SEOHead from '@/components/SEOHead';
-import { mockIdeas, mockClassificationStats } from '@/data/mockNAQLA1';
-import { BookOpen, Shield } from 'lucide-react';
-import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "wouter";
+import {
+  Brain, Lightbulb, BarChart3, ArrowRight, Users, TrendingUp,
+  Zap, CheckCircle2, Clock, Target, Rocket, FileText,
+  Search, Plus, Eye, Star, ChevronRight, Activity,
+  FlaskConical, Building2, Globe, Award, Sparkles, XCircle
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { getLoginUrl } from "@/const";
+import { trpc } from "@/lib/trpc";
+import SEOHead from "@/components/SEOHead";
 
 export default function Naqla1() {
-  const { language } = useLanguage();
-  const isAr = language === 'ar';
   const { user } = useAuth();
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const { data: stats } = trpc.naqla1.getDashboardStats.useQuery();
 
-  const analysisSteps = [
+  const quickActions = [
     {
-      icon: Lightbulb,
-      title: 'استقبال الفكرة',
-      description: 'يقوم المبتكر بإدخال فكرته مع جميع التفاصيل والمستندات الداعمة'
+      title: "حلل فكرتك الآن",
+      desc: "قدّم فكرتك وستحصل على تحليل شامل خلال دقائق",
+      icon: Sparkles,
+      color: "from-violet-600 to-purple-700",
+      border: "border-violet-500/30",
+      link: user ? "/naqla1/submit" : getLoginUrl(),
+      external: !user,
+      badge: "مجاناً",
     },
     {
-      icon: Brain,
-      title: 'التحليل بالذكاء الاصطناعي',
-      description: 'تحليل الفكرة باستخدام خوارزميات ML/NLP المتقدمة والبيانات التاريخية'
+      title: "استعرض الأفكار",
+      desc: "تصفح الأفكار المحللة والموجهة من المبتكرين",
+      icon: Search,
+      color: "from-blue-600 to-cyan-700",
+      border: "border-blue-500/30",
+      link: "/naqla1/browse",
+      external: false,
+      badge: `${stats?.totalIdeas?.toLocaleString() ?? "847+"}`,
     },
     {
-      icon: Database,
-      title: 'المقارنة مع قاعدة البيانات',
-      description: 'مقارنة الفكرة مع الابتكارات السابقة والتحديات الحالية'
+      title: "الفرص المتاحة",
+      desc: "اكتشف الفرص الاستثمارية والتعاون المتاحة",
+      icon: TrendingUp,
+      color: "from-emerald-600 to-teal-700",
+      border: "border-emerald-500/30",
+      link: "/naqla1/opportunities",
+      external: false,
+      badge: "جديد",
     },
     {
-      icon: BarChart3,
-      title: 'التقييم والتصنيف',
-      description: 'تقييم الفكرة بناءً على معايير متعددة وتصنيفها إلى 3 مستويات'
+      title: "دراسات الحالة",
+      desc: "تعلم من تجارب المبتكرين الناجحين",
+      icon: FileText,
+      color: "from-amber-600 to-orange-700",
+      border: "border-amber-500/30",
+      link: "/naqla1/case-studies",
+      external: false,
+      badge: "12 حالة",
     },
-    {
-      icon: CheckCircle2,
-      title: 'النتيجة والتوجيه',
-      description: 'إصدار تقرير شامل وتوجيه الفكرة للمسار المناسب'
-    }
   ];
 
-  const classificationLevels = [
+  const classificationPaths = [
     {
-      icon: CheckCircle2,
-      level: 'ابتكار حقيقي',
-      score: '≥70%',
-      color: 'from-green-500 to-emerald-600',
-      description: 'فكرة تحقق معايير الابتكار الصارمة',
-      criteria: [
-        'جدة تقنية عالية (Novelty)',
-        'أثر اقتصادي واجتماعي كبير',
-        'جدوى تقنية وتجارية مثبتة',
-        'قابلية للتطوير (Scalability)'
-      ],
-      nextStep: 'تنتقل تلقائياً إلى NAQLA 2 للمطابقة مع التحديات والمستثمرين'
+      score: "≥ 70%",
+      label: "ابتكار حقيقي",
+      desc: "فكرة جديدة كلياً بإمكانية براءة اختراع وتأثير عالمي",
+      color: "from-violet-600 to-purple-700",
+      border: "border-violet-500/40",
+      icon: Star,
+      destination: "نقلة 2 + نقلة 3",
+      destColor: "text-violet-300",
+      count: stats?.innovationIdeas ?? 198,
     },
     {
-      icon: AlertCircle,
-      level: 'مشروع تجاري / حل جزئي',
-      score: '50-70%',
-      color: 'from-yellow-500 to-orange-600',
-      description: 'فكرة لها قيمة تجارية لكن لا تصنف كابتكار',
-      criteria: [
-        'حل لمشكلة محددة',
-        'قيمة تجارية واضحة',
-        'تحسين على حلول موجودة',
-        'سوق محدد ومعروف'
-      ],
-      nextStep: 'توجيه إلى شبكة المطابقة في NAQLA 2 للربط مع المستثمرين'
+      score: "50–70%",
+      label: "مشروع تجاري",
+      desc: "حل تجاري ذكي يحتاج تطوير وشراكات استراتيجية",
+      color: "from-blue-600 to-cyan-700",
+      border: "border-blue-500/40",
+      icon: Building2,
+      destination: "نقلة 2",
+      destColor: "text-blue-300",
+      count: stats?.commercialIdeas ?? 287,
     },
     {
-      icon: XCircle,
-      level: 'تحتاج تطوير',
-      score: '<50%',
-      color: 'from-red-500 to-rose-600',
-      description: 'فكرة لا تحقق المعايير المطلوبة',
-      criteria: [
-        'نقص في الجدة أو الأصالة',
-        'جدوى تقنية أو تجارية ضعيفة',
-        'أثر محدود أو غير واضح',
-        'تحديات تنفيذية كبيرة'
-      ],
-      nextStep: 'إرجاع للمرسل مع تقرير مفصل وتوجيهات للتحسين'
-    }
+      score: "< 50%",
+      label: "تحتاج تطوير",
+      desc: "فكرة واعدة تحتاج إرشاداً وتحسيناً قبل الإطلاق",
+      color: "from-amber-600 to-orange-700",
+      border: "border-amber-500/40",
+      icon: FlaskConical,
+      destination: "برنامج الإرشاد",
+      destColor: "text-amber-300",
+      count: stats?.weakIdeas ?? 138,
+    },
   ];
 
-  const evaluationCriteria = [
-    {
-      name: 'الجدة التقنية',
-      weight: '15%',
-      description: 'مدى أصالة الفكرة وتميزها عن الحلول الموجودة'
-    },
-    {
-      name: 'الأثر المجتمعي',
-      weight: '15%',
-      description: 'التأثير الاجتماعي والبيئي والاقتصادي المحتمل'
-    },
-    {
-      name: 'الجدوى التقنية',
-      weight: '12%',
-      description: 'إمكانية التنفيذ باستخدام التقنيات المتاحة'
-    },
-    {
-      name: 'القيمة التجارية',
-      weight: '12%',
-      description: 'حجم السوق والطلب المتوقع والعائد على الاستثمار'
-    },
-    {
-      name: 'قابلية التوسع',
-      weight: '10%',
-      description: 'إمكانية توسيع الحل ليشمل أسواق وقطاعات أكبر'
-    },
-    {
-      name: 'الاستدامة',
-      weight: '10%',
-      description: 'قدرة الحل على الاستمرار والتطور على المدى البعيد'
-    },
-    {
-      name: 'المخاطر التقنية',
-      weight: '8%',
-      description: 'تقييم المخاطر والتحديات التقنية المحتملة'
-    },
-    {
-      name: 'سرعة التنفيذ',
-      weight: '8%',
-      description: 'الوقت المتوقع للوصول إلى السوق (Time to Market)'
-    },
-    {
-      name: 'الميزة التنافسية',
-      weight: '5%',
-      description: 'ما يميز الحل عن المنافسين في السوق'
-    },
-    {
-      name: 'الاستعداد التنظيمي',
-      weight: '5%',
-      description: 'جاهزية الفريق والمؤسسة لتنفيذ الفكرة'
-    }
-  ];
-
-  const stats = [
-    { number: '15,000+', label: 'فكرة تم تحليلها', icon: Lightbulb },
-    { number: '3,200+', label: 'ابتكار حقيقي', icon: Sparkles },
-    { number: '95%', label: 'دقة التحليل', icon: Brain },
-    { number: '< 24h', label: 'وقت التحليل', icon: TrendingUp }
+  const statCards = [
+    { label: "إجمالي الأفكار", value: stats?.totalIdeas?.toLocaleString() ?? "847+", icon: Lightbulb, color: "text-violet-400", bg: "bg-violet-500/10" },
+    { label: "تم تحليلها", value: stats?.analyzedIdeas?.toLocaleString() ?? "623+", icon: Brain, color: "text-blue-400", bg: "bg-blue-500/10" },
+    { label: "موجهة لنقلة 2", value: stats?.routedToNaqla2?.toLocaleString() ?? "312+", icon: ArrowRight, color: "text-emerald-400", bg: "bg-emerald-500/10" },
+    { label: "موجهة لنقلة 3", value: stats?.routedToNaqla3?.toLocaleString() ?? "89+", icon: Rocket, color: "text-amber-400", bg: "bg-amber-500/10" },
+    { label: "قيد المراجعة", value: stats?.pendingIdeas?.toLocaleString() ?? "124", icon: Clock, color: "text-rose-400", bg: "bg-rose-500/10" },
+    { label: "المبتكرون", value: stats?.innovatorCount?.toLocaleString() ?? "876+", icon: Users, color: "text-cyan-400", bg: "bg-cyan-500/10" },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950">
-      <SEOHead 
-        title={isAr ? "NAQLA1 - محرك تحليل الأفكار بالذكاء الاصطناعي" : "NAQLA1 - AI Idea Analysis Engine"}
-        description={isAr ? "تحليل الأفكار والابتكارات باستخدام الذكاء الاصطناعي المتقدم. تصنيف ذكي إلى 3 مستويات: ابتكار حقيقي، مشروع تجاري، أو فكرة تحتاج تطوير." : "Analyze ideas & innovations with advanced AI. Smart classification into 3 levels: True Innovation, Business Project, or Idea Needs Development."}
-      />
+    <>
+      <SEOHead title="نقلة ONE - محرك التحليل بالذكاء الاصطناعي" description="حلل فكرتك بالذكاء الاصطناعي واكتشف مسارها نحو النجاح" />
+      <div className="min-h-screen bg-background text-foreground" dir="rtl">
 
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.1),transparent_50%)]" />
-        
-        <div className="container mx-auto relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 animate-fade-in">
-              <Brain className="w-5 h-5 text-blue-400" />
-              <span className="text-sm font-medium text-blue-300">{isAr ? isAr ? "محرك التحليل بالذكاء الاصطناعي" : "AI Analysis Engine" : "AI Analysis Engine"}</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in-up">
-              NAQLA 1
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-300 mb-4 animate-fade-in-up animation-delay-100">
-              تحليل الأفكار بالذكاء الاصطناعي
-            </p>
-            
-            <p className="text-lg text-gray-400 mb-8 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
-              نحلل فكرتك باستخدام خوارزميات الذكاء الاصطناعي المتقدمة والبيانات التاريخية لتحديد مستوى الابتكار وتوجيهها للمسار المناسب
-            </p>
+        {/* Hero Section */}
+        <section className="relative pt-24 pb-16 px-6 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-950/40 via-background to-background" />
+          <div className="absolute top-20 right-10 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-10 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl" />
 
-            <div className="flex flex-wrap gap-4 justify-center animate-fade-in-up animation-delay-300">
-              {user ? (
-                <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <Link href="/naqla1/submit">
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    ابدأ تحليل فكرتك
+          <div className="container relative max-w-6xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
+              {/* Left: Text */}
+              <div className="flex-1 text-center lg:text-right">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/30 mb-6">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+                  </span>
+                  <span className="text-sm text-violet-300">NAQLA ONE — محرك التحليل بالذكاء الاصطناعي</span>
+                </div>
+
+                <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                  <span className="text-foreground">حوّل فكرتك إلى</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-violet-400 to-purple-300 bg-clip-text text-transparent">
+                    ابتكار موثّق
+                  </span>
+                </h1>
+
+                <p className="text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+                  نحلل فكرتك بخوارزميات الذكاء الاصطناعي المتقدمة لتحديد مستوى الابتكار وتوجيهها للمسار المناسب — من الفكرة إلى الواقع
+                </p>
+
+                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                  {user ? (
+                    <Link href="/naqla1/submit">
+                      <Button size="lg" className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 gap-2 text-base px-8">
+                        <Plus className="w-5 h-5" />
+                        حلل فكرتك الآن
+                      </Button>
+                    </Link>
+                  ) : (
+                    <a href={getLoginUrl()}>
+                      <Button size="lg" className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 gap-2 text-base px-8">
+                        <Sparkles className="w-5 h-5" />
+                        سجل دخول لتحليل فكرتك
+                      </Button>
+                    </a>
+                  )}
+                  <Link href="/naqla1/browse">
+                    <Button size="lg" variant="outline" className="border-violet-500/40 text-violet-300 hover:bg-violet-900/20 gap-2 text-base px-8 bg-transparent">
+                      <Eye className="w-5 h-5" />
+                      استعرض الأفكار
+                    </Button>
                   </Link>
-                </Button>
-              ) : (
-                <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <a href={getLoginUrl()}>
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    سجل دخول لتحليل فكرتك
-                  </a>
-                </Button>
-              )}
-              <Link href="/naqla1/result">
-                <Button size="lg" variant="outline" className="border-purple-700 hover:bg-purple-800">
-                  <ArrowRight className="w-5 h-5 mr-2" />
-                  نتيجة الفكرة والتوجيه
-                </Button>
-              </Link>
-              <Link href="/naqla1/dashboard">
-                <Button size="lg" variant="outline" className="border-blue-700 text-blue-300 hover:bg-blue-900/30 bg-transparent">
-                  <BarChart3 className="w-5 h-5 mr-2" />
-                  لوحة التحكم
-                </Button>
-              </Link>
+                </div>
+              </div>
+
+              {/* Right: Stats Grid */}
+              <div className="flex-1 grid grid-cols-2 gap-4 max-w-sm w-full">
+                {statCards.map((s, i) => (
+                  <div key={i} className={`p-4 rounded-2xl ${s.bg} border border-border/30 backdrop-blur-sm`}>
+                    <s.icon className={`w-6 h-6 ${s.color} mb-2`} />
+                    <div className="text-2xl font-bold text-foreground">{s.value}</div>
+                    <div className="text-xs text-muted-foreground">{s.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Stats Section */}
-      <section className="py-12 px-4">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <Card 
-                key={index}
-                className="glass-card p-6 text-center hover:scale-105 transition-transform duration-300"
-              >
-                <stat.icon className="w-8 h-8 mx-auto mb-3 text-blue-400" />
-                <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? isAr ? "كيف يعمل التحليل؟" : "How Analysis Works?" : "How Analysis Works?"}</h2>
-            <p className="text-xl text-gray-400">{isAr ? isAr ? "خمس خطوات لتحليل فكرتك بدقة عالية" : "Five Steps for High-Accuracy Idea Analysis" : "[Five Steps for High-Accuracy Idea Analysis]"}</p>
-          </div>
-
-          <div className="grid md:grid-cols-5 gap-6">
-            {analysisSteps.map((step, index) => (
-              <Card 
-                key={index}
-                className="glass-card p-6 hover:scale-105 transition-all duration-300 relative"
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-                  {index + 1}
-                </div>
-                <step.icon className={`w-12 h-12 mb-4 transition-colors duration-300 ${hoveredCard === index ? 'text-blue-400' : 'text-gray-400'}`} />
-                <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
-                <p className="text-sm text-gray-400">{step.description}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Classification Levels */}
-      <section className="py-20 px-4 bg-gradient-to-b from-transparent to-slate-900/50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? isAr ? "مستويات التصنيف" : "Classification Levels" : "[Classification Levels]"}</h2>
-            <p className="text-xl text-gray-400">{isAr ? isAr ? "نصنف الأفكار إلى 3 مستويات بناءً على معايير دقيقة" : "Ideas are classified into 3 levels based on precise criteria." : "Ideas are classified into 3 levels based on precise criteria."}</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {classificationLevels.map((level, index) => (
-              <Card 
-                key={index}
-                className="glass-card p-8 hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-blue-500/50"
-              >
-                <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${level.color} flex items-center justify-center mb-6`}>
-                  <level.icon className="w-8 h-8 text-white" />
-                </div>
-                
-                <h3 className="text-2xl font-bold text-white mb-2">{level.level}</h3>
-                <div className="text-sm text-gray-400 mb-4">نقاط التقييم: {level.score}</div>
-                <p className="text-gray-300 mb-6">{level.description}</p>
-                
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-3">{isAr ? "المعايير:" : "Criteria:"}</h4>
-                  <ul className="space-y-2">
-                    {level.criteria.map((criterion, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
-                        <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                        <span>{criterion}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div className="pt-6 border-t border-gray-700">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-2">{isAr ? isAr ? "الخطوة التالية:" : "Next Step:" : "Next Step:"}</h4>
-                  <p className="text-sm text-gray-300">{level.nextStep}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Evaluation Criteria */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">{isAr ? isAr ? "معايير التقييم" : "Evaluation Criteria" : "Evaluation Criteria"}</h2>
-            <p className="text-xl text-gray-400">{isAr ? isAr ? "نقيّم الأفكار بناءً على 10 معايير رئيسية محدثة بأوزان مختلفة" : "Ideas are evaluated based on 10 key updated criteria with different weightings." : "Ideas are evaluated based on 10 key updated criteria with different weightings."}</p>
-          </div>
-
-          <div className="max-w-4xl mx-auto space-y-6">
-            {evaluationCriteria.map((criterion, index) => (
-              <Card 
-                key={index}
-                className="glass-card p-6 hover:scale-102 transition-all duration-300"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-white">{criterion.weight}</span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-2">{criterion.name}</h3>
-                    <p className="text-gray-400">{criterion.description}</p>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <Card className="glass-card p-12 text-center">
-            <Brain className="w-16 h-16 mx-auto mb-6 text-blue-400" />
-            <h2 className="text-3xl font-bold text-white mb-4">
-              جاهز لتحليل فكرتك؟
-            </h2>
-            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-              ابدأ الآن واحصل على تقرير تحليل شامل خلال 24 ساعة
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              {user ? (
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  ابدأ التحليل الآن
-                </Button>
-              ) : (
-                <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <a href={getLoginUrl()}>
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    سجل دخول للبدء
+        {/* Quick Actions */}
+        <section className="py-12 px-6">
+          <div className="container max-w-6xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl font-bold text-foreground mb-2">ماذا تريد أن تفعل؟</h2>
+              <p className="text-muted-foreground">اختر الإجراء المناسب لك</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {quickActions.map((action, i) => (
+                action.external ? (
+                  <a key={i} href={action.link}>
+                    <Card className={`group h-full bg-card/50 backdrop-blur-sm border ${action.border} hover:border-opacity-100 transition-all duration-300 hover:scale-105 cursor-pointer`}>
+                      <CardContent className="p-6">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                          <action.icon className="w-6 h-6 text-white" />
+                        </div>
+                        <Badge className="mb-3 text-xs bg-card/80">{action.badge}</Badge>
+                        <h3 className="font-bold text-foreground mb-2">{action.title}</h3>
+                        <p className="text-sm text-muted-foreground">{action.desc}</p>
+                      </CardContent>
+                    </Card>
                   </a>
-                </Button>
-              )}
-              <Button size="lg" variant="outline" asChild className="border-emerald-700 text-emerald-400 hover:bg-emerald-900/30 bg-transparent">
+                ) : (
+                  <Link key={i} href={action.link}>
+                    <Card className={`group h-full bg-card/50 backdrop-blur-sm border ${action.border} hover:border-opacity-100 transition-all duration-300 hover:scale-105 cursor-pointer`}>
+                      <CardContent className="p-6">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                          <action.icon className="w-6 h-6 text-white" />
+                        </div>
+                        <Badge className="mb-3 text-xs bg-card/80">{action.badge}</Badge>
+                        <h3 className="font-bold text-foreground mb-2">{action.title}</h3>
+                        <p className="text-sm text-muted-foreground">{action.desc}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* How it Works */}
+        <section className="py-16 px-6 bg-card/20">
+          <div className="container max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <Badge className="mb-4 bg-violet-500/10 text-violet-400 border-violet-500/30">
+                <Activity className="w-3 h-3 ml-1" />
+                كيف يعمل المحرك
+              </Badge>
+              <h2 className="text-3xl font-bold text-foreground mb-4">ثلاث خطوات للتحليل الشامل</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { step: "01", title: "تقديم الفكرة", desc: "أدخل فكرتك بالتفاصيل الكاملة — المجال، المشكلة، الحل المقترح", icon: Lightbulb, color: "from-violet-500 to-purple-600" },
+                { step: "02", title: "التحليل بالذكاء الاصطناعي", desc: "خوارزميات متقدمة تحلل الابتكار، الجدوى، والسوق المستهدف", icon: Brain, color: "from-blue-500 to-cyan-600" },
+                { step: "03", title: "التصنيف والتوجيه", desc: "تُصنَّف فكرتك وتُوجَّه للمسار المناسب: نقلة 2 أو نقلة 3", icon: Target, color: "from-emerald-500 to-teal-600" },
+              ].map((step, i) => (
+                <Card key={i} className="bg-card/60 backdrop-blur-sm border border-border/40 hover:border-violet-500/40 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center flex-shrink-0`}>
+                        <step.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <span className="text-4xl font-black text-muted-foreground/20">{step.step}</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground">{step.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Classification Paths */}
+        <section className="py-16 px-6">
+          <div className="container max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/30">
+                <Target className="w-3 h-3 ml-1" />
+                مسارات التصنيف
+              </Badge>
+              <h2 className="text-3xl font-bold text-foreground mb-4">إلى أين ستذهب فكرتك؟</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                بناءً على نتيجة التحليل، تُوجَّه فكرتك تلقائياً للمسار الأنسب
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {classificationPaths.map((path, i) => (
+                <Card key={i} className={`bg-card/60 backdrop-blur-sm border ${path.border} hover:scale-105 transition-all duration-300`}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${path.color} flex items-center justify-center`}>
+                        <path.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <Badge className="text-lg font-bold bg-card/80 px-3">{path.score}</Badge>
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">{path.label}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">{path.desc}</p>
+                    <div className="flex items-center justify-between pt-4 border-t border-border/30">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">الوجهة</div>
+                        <div className={`text-sm font-bold ${path.destColor}`}>{path.destination}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-muted-foreground mb-1">المصنفة</div>
+                        <div className="text-lg font-bold text-foreground">{path.count.toLocaleString()}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Recent Ideas */}
+        {stats?.recentIdeas && stats.recentIdeas.length > 0 && (
+          <section className="py-12 px-6 bg-card/20">
+            <div className="container max-w-6xl mx-auto">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-2xl font-bold text-foreground">آخر الأفكار المقدمة</h2>
+                <Link href="/naqla1/browse">
+                  <Button variant="ghost" className="gap-2 text-violet-400 hover:text-violet-300">
+                    عرض الكل <ChevronRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {stats.recentIdeas.map((idea: any, i: number) => (
+                  <Card key={i} className="bg-card/60 backdrop-blur-sm border border-border/40 hover:border-violet-500/30 transition-all">
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <Badge className={`text-xs ${idea.status === 'analyzed' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                          {idea.status === 'analyzed' ? 'محللة' : 'قيد المراجعة'}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">{idea.category}</span>
+                      </div>
+                      <h4 className="font-semibold text-foreground text-sm mb-2 line-clamp-2">{idea.title}</h4>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-muted-foreground">
+                          {idea.submittedAt ? new Date(idea.submittedAt).toLocaleDateString('ar-SA') : ''}
+                        </span>
+                        <Link href={`/naqla1/ideas/${idea.id}`}>
+                          <Button size="sm" variant="ghost" className="h-7 text-xs text-violet-400 hover:text-violet-300 gap-1">
+                            عرض <ChevronRight className="w-3 h-3" />
+                          </Button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* CTA */}
+        <section className="py-20 px-6">
+          <div className="container max-w-4xl mx-auto text-center">
+            <div className="p-10 rounded-3xl bg-gradient-to-br from-violet-900/30 to-purple-900/20 border border-violet-500/20">
+              <Globe className="w-12 h-12 text-violet-400 mx-auto mb-4" />
+              <h2 className="text-3xl font-bold text-foreground mb-4">جاهز لتحليل فكرتك؟</h2>
+              <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+                انضم لأكثر من {stats?.innovatorCount?.toLocaleString() ?? "876"} مبتكر يستخدمون نقلة ONE لتحويل أفكارهم إلى واقع
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center">
+                {user ? (
+                  <Link href="/naqla1/submit">
+                    <Button size="lg" className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 gap-2 px-10">
+                      <Plus className="w-5 h-5" />
+                      ابدأ التحليل الآن
+                    </Button>
+                  </Link>
+                ) : (
+                  <a href={getLoginUrl()}>
+                    <Button size="lg" className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 gap-2 px-10">
+                      <Sparkles className="w-5 h-5" />
+                      سجل دخول وابدأ مجاناً
+                    </Button>
+                  </a>
+                )}
                 <Link href="/naqla1/case-studies">
-                  <BookOpen className="w-5 h-5 mr-2" />
-                  شاهد أمثلة حقيقية
+                  <Button size="lg" variant="outline" className="border-violet-500/40 text-violet-300 hover:bg-violet-900/20 gap-2 px-10 bg-transparent">
+                    <Award className="w-5 h-5" />
+                    قصص النجاح
+                  </Button>
                 </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="border-purple-700 text-purple-400 hover:bg-purple-900/30 bg-transparent">
-                <Link href="/saip-assessment">
-                  <Shield className="w-5 h-5 mr-2" />
-                  تقييم الملكية الفكرية
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="border-gray-700 hover:bg-gray-800">
-                <Link href="/">
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                  العودة للرئيسية
-                </Link>
-              </Button>
+              </div>
             </div>
-          </Card>
-        </div>
-      </section>
-    </div>
+          </div>
+        </section>
+
+      </div>
+    </>
   );
 }

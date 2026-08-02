@@ -3,7 +3,9 @@ import {
   Target, Users, Lightbulb, Calendar, Trophy, 
   Building2, Globe, GraduationCap, Briefcase,
   ArrowRight, Sparkles, Award, Zap, Brain, Rocket, 
-  Search, Clock, ChevronRight, CheckCircle2, BarChart3
+  Search, Clock, ChevronRight, CheckCircle2, BarChart3,
+  DollarSign, Network, Heart, Leaf, Droplets, Sun, Cpu,
+  ShoppingBag, Factory, Stethoscope, Shield, Landmark, Plus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,11 +14,28 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import SEOHead from "@/components/SEOHead";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { trpc } from "@/lib/trpc";
+
+const SECTORS = [
+  { id: "health", label: "الصحة", icon: Stethoscope, color: "from-rose-500 to-pink-600" },
+  { id: "energy", label: "الطاقة", icon: Sun, color: "from-amber-500 to-orange-600" },
+  { id: "water", label: "المياه", icon: Droplets, color: "from-blue-500 to-cyan-600" },
+  { id: "environment", label: "البيئة", icon: Leaf, color: "from-emerald-500 to-teal-600" },
+  { id: "education", label: "التعليم", icon: GraduationCap, color: "from-violet-500 to-purple-600" },
+  { id: "technology", label: "التقنية", icon: Cpu, color: "from-indigo-500 to-blue-600" },
+  { id: "finance", label: "المالية", icon: DollarSign, color: "from-yellow-500 to-amber-600" },
+  { id: "industry", label: "الصناعة", icon: Factory, color: "from-slate-500 to-gray-600" },
+  { id: "community", label: "المجتمع", icon: Heart, color: "from-pink-500 to-rose-600" },
+  { id: "security", label: "الأمن", icon: Shield, color: "from-red-500 to-rose-600" },
+  { id: "government", label: "الحكومة", icon: Landmark, color: "from-blue-600 to-indigo-700" },
+  { id: "ecommerce", label: "التجارة", icon: ShoppingBag, color: "from-teal-500 to-cyan-600" },
+];
 
 export default function Naqla2() {
   const { language } = useLanguage();
   const isAr = language === 'ar';
   const { user } = useAuth();
+  const { data: liveStats } = trpc.naqla2.getDashboardStats.useQuery();
 
   const organizerOptions = [
     {
@@ -170,10 +189,10 @@ export default function Naqla2() {
   ];
 
   const stats = [
-    { value: '200+', label: 'تحدٍ نشط', icon: Target },
-    { value: '50+', label: 'هاكاثون', icon: Trophy },
-    { value: '100+', label: 'فعالية', icon: Calendar },
-    { value: '1000+', label: 'مبتكر', icon: Users },
+    { value: liveStats?.totalRoutedIdeas?.toLocaleString() ?? '312+', label: 'أفكار موجهة', icon: ArrowRight },
+    { value: liveStats?.totalHackathons?.toLocaleString() ?? '43+', label: 'هاكاثون', icon: Trophy },
+    { value: liveStats?.totalEvents?.toLocaleString() ?? '156+', label: 'فعالية', icon: Calendar },
+    { value: liveStats?.totalInvestors?.toLocaleString() ?? '234+', label: 'مستثمر', icon: DollarSign },
   ];
 
   return (
@@ -190,8 +209,30 @@ export default function Naqla2() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
 
+      {/* Sectors Bar */}
+      <section className="pt-28 pb-6 px-6 bg-card/10 border-b border-border/20">
+        <div className="container max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/30 text-xs">التخصصات</Badge>
+            <span className="text-sm text-muted-foreground">اختر تخصصك للبحث عن هاكاثونات وتحديات</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {SECTORS.map((sector, i) => (
+              <Link key={i} href={`/naqla2/hackathons?sector=${sector.id}`}>
+                <div className={`flex items-center gap-2 px-3 py-2 rounded-xl bg-card/50 border border-border/30 hover:border-blue-500/40 transition-all duration-200 hover:scale-105 cursor-pointer`}>
+                  <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${sector.color} flex items-center justify-center`}>
+                    <sector.icon className="w-3 h-3 text-white" />
+                  </div>
+                  <span className="text-xs font-medium text-foreground">{sector.label}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-6">
+      <section className="relative pt-8 pb-24 px-6">
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
@@ -215,12 +256,33 @@ export default function Naqla2() {
               منصة متكاملة تربط المبتكرين بالمستثمرين والشركات من خلال الهاكاثونات والفعاليات والتحديات الحقيقية
             </p>
 
-            {/* Dashboard Link */}
-            <div className="flex justify-center mb-6">
-              <Link href="/naqla2/dashboard">
-                <Button variant="outline" className="gap-2 border-blue-500/40 text-blue-300 hover:bg-blue-900/20">
-                  <BarChart3 className="w-4 h-4" />
-                  {isAr ? 'لوحة التحكم - NAQLA 2' : 'NAQLA 2 Dashboard'}
+            {/* Action Buttons */}
+            <div className="flex flex-wrap justify-center gap-3 mb-6">
+              {user ? (
+                <Link href="/naqla2/hackathons/create">
+                  <Button className="gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
+                    <Plus className="w-4 h-4" />
+                    سجّل هاكاثوناً
+                  </Button>
+                </Link>
+              ) : (
+                <a href={getLoginUrl()}>
+                  <Button className="gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
+                    <Zap className="w-4 h-4" />
+                    سجل دخول للمشاركة
+                  </Button>
+                </a>
+              )}
+              <Link href="/naqla2/investor-profile">
+                <Button variant="outline" className="gap-2 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/20 bg-transparent">
+                  <DollarSign className="w-4 h-4" />
+                  سجل كمستثمر
+                </Button>
+              </Link>
+              <Link href="/naqla2/national-challenges">
+                <Button variant="outline" className="gap-2 border-rose-500/40 text-rose-300 hover:bg-rose-900/20 bg-transparent">
+                  <Target className="w-4 h-4" />
+                  التحديات الوطنية
                 </Button>
               </Link>
             </div>
