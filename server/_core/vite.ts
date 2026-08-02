@@ -65,11 +65,17 @@ export function serveStatic(app: Express) {
       etag: true,
       lastModified: true,
       setHeaders: (res, filePath) => {
-        // Cache JS/CSS/images aggressively
+        // Never cache version.json
+        if (filePath.endsWith("version.json")) {
+          res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+          res.setHeader("Pragma", "no-cache");
+          res.setHeader("Expires", "0");
+          return;
+        }
+        // Cache JS/CSS/images aggressively (they have content hashes)
         if (filePath.endsWith(".js") || filePath.endsWith(".css") || filePath.match(/\.(jpg|jpeg|png|gif|svg|webp|ico)$/)) {
           res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
         }
-        // Enable compression
         res.setHeader("X-Content-Type-Options", "nosniff");
       },
     })
