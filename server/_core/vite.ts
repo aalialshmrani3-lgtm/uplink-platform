@@ -76,7 +76,11 @@ export function serveStatic(app: Express) {
   );
 
   // fall through to index.html if the file doesn't exist
+  // Always send no-cache for index.html so browsers always fetch the latest version
   app.use("*", (_req, res) => {
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
