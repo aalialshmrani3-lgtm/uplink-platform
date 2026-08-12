@@ -1,6 +1,6 @@
 {
-  "testedAt": "2026-08-12T10:17:14.017Z",
-  "baseUrl": "http://127.0.0.1:3000",
+  "testedAt": "2026-08-12T10:25:54.261Z",
+  "baseUrl": "https://uplink5.xyz",
   "routeCount": 141,
   "passedRouteCount": 141,
   "failedRoutes": [],
