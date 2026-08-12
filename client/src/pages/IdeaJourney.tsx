@@ -80,7 +80,7 @@ export default function IdeaJourney() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate("/naqla1/my-ideas")}
+            onClick={() => navigate("/my-ideas")}
             className="mb-2"
           >
             <ArrowLeft className="w-4 h-4 ml-2" />

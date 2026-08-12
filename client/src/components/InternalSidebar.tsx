@@ -28,7 +28,7 @@ export default function InternalSidebar({ className }: InternalSidebarProps) {
     { href: "/academy", label: t.sidebar.academy, icon: GraduationCap },
     { href: "/developers", label: t.sidebar.developers, icon: Code },
     { href: "/profile", label: t.sidebar.profile, icon: Users },
-    { href: "/settings", label: t.sidebar.settings, icon: Settings },
+    { href: "/user/settings", label: t.sidebar.settings, icon: Settings },
   ];
 
   return (

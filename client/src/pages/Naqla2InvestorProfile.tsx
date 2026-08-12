@@ -56,7 +56,7 @@ export default function Naqla2InvestorProfile() {
   const createProfile = trpc.naqla2.createInvestorProfile.useMutation({
     onSuccess: () => {
       toast.success('تم إنشاء ملفك الشخصي بنجاح!');
-      navigate('/naqla2/investors');
+      navigate('/naqla2/dashboard');
     },
     onError: (err) => {
       toast.error(err.message || 'حدث خطأ أثناء إنشاء الملف الشخصي');

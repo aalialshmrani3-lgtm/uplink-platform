@@ -393,7 +393,6 @@ function Router() {
         <Route path="/naqla3/assets/:id" component={Naqla3Assets} /> {/* NAQLA 3 Asset Detail - NEW */}
         <Route path="/naqla3/marketplace" component={Naqla3Marketplace} /> {/* Marketplace */}
         <Route path="/naqla3/sell" component={Naqla3SellAsset} /> {/* Sell Asset */}
-        <Route path="/naqla3/assets/:id" component={Naqla3AssetDetails} /> {/* Asset Details */}
         <Route path="/naqla3/payment/success" component={Naqla3PaymentSuccess} /> {/* Payment Success */}
         <Route path="/naqla3/contracts" component={Naqla3Contracts} /> {/* Added for Flowchart Match */}
         <Route path="/naqla3/contracts/:id" component={Naqla3ContractDetail} /> {/* Contract Detail with Milestones */}
@@ -458,7 +457,7 @@ function Router() {
         <Route path="/register/company" component={RegisterCompany} />
         <Route path="/register/international" component={RegisterInternational} />
         <Route path="/register/university" component={RegisterUniversity} />
-          <Route path="/demo" component={DemoFlow} />
+          <Route path="/demo-flow" component={DemoFlow} />
           <Route path="/my-journey" component={MyJourney} />
         <Route path="/privacy" component={Privacy} />
         <Route path="/terms" component={Terms} />

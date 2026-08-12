@@ -46,26 +46,6 @@ export default defineConfig({
         chunkFileNames: "assets/js/[name]-[hash].js",
         entryFileNames: "assets/js/[name]-[hash].js",
         assetFileNames: "assets/[ext]/[name]-[hash].[ext]",
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('wouter')) {
-              return 'vendor-react';
-            }
-            if (id.includes('@trpc') || id.includes('@tanstack')) {
-              return 'vendor-trpc';
-            }
-            if (id.includes('recharts') || id.includes('chart.js') || id.includes('react-chartjs')) {
-              return 'vendor-charts';
-            }
-            if (id.includes('@radix-ui')) {
-              return 'vendor-radix';
-            }
-            if (id.includes('framer-motion') || id.includes('lucide-react') || id.includes('sonner')) {
-              return 'vendor-ui';
-            }
-            return 'vendor-misc';
-          }
-        },
       },
     },
     chunkSizeWarningLimit: 6000,

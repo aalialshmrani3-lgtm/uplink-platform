@@ -45,7 +45,7 @@ export default function Naqla2() {
       icon: Target,
       color: 'from-blue-500 to-cyan-600',
       borderColor: 'border-blue-500/30',
-      link: '/naqla2/challenges/create',
+      link: '/naqla2/submit-challenge',
     },
     {
       id: 'host-hackathon',
@@ -153,7 +153,7 @@ export default function Naqla2() {
       icon: Lightbulb,
       color: 'from-yellow-500 to-orange-600',
       borderColor: 'border-yellow-500/30',
-      link: '/naqla2/solutions/submit',
+      link: '/naqla2/challenges',
       count: '500K+',
     },
     {

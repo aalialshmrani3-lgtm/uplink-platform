@@ -474,7 +474,7 @@ export default function IdeaResult() {
               </Button>
             </Link>
 
-            <Link href="/naqla3/sell-asset">
+            <Link href="/naqla3/sell">
               <Button 
                 className="w-full h-auto py-6 bg-gradient-to-r from-indigo-500 to-purple-600 text-white flex items-center gap-4 hover:scale-105 transition-transform"
                 onClick={() => setShowNaqla3Dialog(false)}

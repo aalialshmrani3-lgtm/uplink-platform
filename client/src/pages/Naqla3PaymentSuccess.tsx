@@ -82,7 +82,7 @@ export default function Naqla3PaymentSuccess() {
 
           {/* Support */}
           <div className="text-center text-sm text-muted-foreground pt-4 border-t">
-            <p>{isAr ? isAr ? "هل تحتاج مساعدة؟ " : "Need help?" : "Need help?"}< Link href="/support"><span className="text-primary hover:underline">{isAr ? isAr ? "تواصل مع الدعم الفني" : "Contact Support" : "Contact Support"}</span></Link></p>
+            <p>{isAr ? isAr ? "هل تحتاج مساعدة؟ " : "Need help?" : "Need help?"}< Link href="/contact"><span className="text-primary hover:underline">{isAr ? isAr ? "تواصل مع الدعم الفني" : "Contact Support" : "Contact Support"}</span></Link></p>
           </div>
         </CardContent>
       </Card>
