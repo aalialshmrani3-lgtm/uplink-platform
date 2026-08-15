@@ -528,8 +528,9 @@
 - [x] إعداد Visual Style Frame لمشهد NAQLA 1 AI Assessment
 - [x] إعداد Visual Style Frame لمشهد Smart Matching
 - [x] إعداد Visual Style Frame لمشهد NAQLA 1 → 2 → 3 Architecture
-- [ ] الحصول على اعتماد المستخدم للـ Storyboard والـ Frames قبل إنتاج الفيديو الصامت
-- [ ] إنتاج Silent Motion Graphics Cut بعد الاعتماد فقط
+- [x] الحصول على اعتماد المستخدم للـ Storyboard والـ Frames قبل إنتاج الفيديو الصامت
+- [x] إنتاج Silent Motion Graphics Cut بعد الاعتماد فقط
+- [x] مراجعة Silent Motion Graphics Cut الصامتة بدقة 1920×1080 و30fps ومدته 135 ثانية
 - [ ] كتابة Voice Over وموسيقى بعد اعتماد النسخة الصامتة فقط
 
 ### Visual Style V2 قبل إنتاج النسخة الصامتة
@@ -542,7 +543,16 @@
 - [x] إعادة بناء إطار Smart Matching ببطاقات وظيفية وتأثير ظهور تدريجي ونقطة 95% واحدة
 - [x] إزالة صفحة المطابقة الكاملة من الإطار واستبدالها بعناصر UI مختارة واضحة فقط
 - [x] تثبيت إطار Architecture: NAQLA 1 → NAQLA 2 → NAQLA 3 مع AI/Data وتحول بطاقة الفكرة
-- [ ] تقديم Storyboard مختصر وVisual Style V2 للاعتماد قبل إنتاج الفيديو الصامت
+- [x] تقديم Storyboard مختصر وVisual Style V2 للاعتماد قبل إنتاج الفيديو الصامت
+
+### Visual Style V2.1 — تعديلات الاعتماد الأخيرة
+
+- [x] ربط نتيجة 95% في Smart Matching بمصدر Best Match Found واضح
+- [x] تقوية بطاقة Selected Partner لتظهر كأعلى توافق نهائي
+- [x] تصغير وتنظيف نافذة NAQLA UI Excerpt لتبقى دليلاً بصرياً مساعداً
+- [x] توحيد اتجاه رحلة Architecture من اليمين إلى اليسار في البطاقات والشريط السفلي
+- [x] تخفيف حجم عنوان Architecture وتحسين ترتيب NAQLA ECOSYSTEM ثم العنوان ثم طبقات الذكاء والبيانات
+- [x] بدء Silent Motion Graphics Cut بعد تنفيذ تعديلات V2.1 فقط
 
 ### مرحلة Clean Silent Master — رحلة حياة الابتكار
 
