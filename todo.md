@@ -518,6 +518,20 @@
 - [ ] كتابة التعليق الصوتي وفق ما يظهر فعلياً بعد اعتماد الفيديو الصامت
 - [ ] مزج التعليق والموسيقى والمؤثرات الخفيفة ثم تسليم الفيلم النهائي
 
+---
+
+## ✦ مهمة: NAQLA Product Explainer Film — المعالجة الإخراجية الجديدة
+
+- [x] إيقاف استخدام Master Visual / Screen Walkthrough كفيلم نهائي
+- [x] إعداد Storyboard كامل لرحلة IDEA → AI → OPPORTUNITY → MATCH → DEAL → MARKET → IMPACT
+- [x] توثيق عناصر واجهة NAQLA الحقيقية المختارة لكل مشهد دون إعادة تصميم المنصة
+- [x] إعداد Visual Style Frame لمشهد NAQLA 1 AI Assessment
+- [x] إعداد Visual Style Frame لمشهد Smart Matching
+- [x] إعداد Visual Style Frame لمشهد NAQLA 1 → 2 → 3 Architecture
+- [ ] الحصول على اعتماد المستخدم للـ Storyboard والـ Frames قبل إنتاج الفيديو الصامت
+- [ ] إنتاج Silent Motion Graphics Cut بعد الاعتماد فقط
+- [ ] كتابة Voice Over وموسيقى بعد اعتماد النسخة الصامتة فقط
+
 ### مرحلة Clean Silent Master — رحلة حياة الابتكار
 
 - [x] حذف كل شاشات وإطارات التحميل والانتقال من Rough Cut دون استثناء
