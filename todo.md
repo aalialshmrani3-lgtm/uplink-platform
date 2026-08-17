@@ -826,3 +826,13 @@
 - [x] إخفاء حقول TRL من Domain وPassport UI عندما يكون Framework هو PRODUCT_COMMERCIAL أو تكون الجاهزية غير منطبقة
 - [x] توسيع اختبارات الوحدة وE2E للسرية داخل tenant وadmin وClaimed TRL وعدم انطباق TRL وتعارض بصمة idempotency
 - [x] إعداد EVIDENCE_AUTHORIZATION_MATRIX.md وتحديث التقارير وسجل Patch القفل وتجميع `NAQLA_PHASE_1_LOCKED_PACKAGE.zip`
+
+---
+
+## 🧷 NAQLA Phase 1 — Final Evidence Ownership Patch
+
+- [x] منع org_editor وadmin وغير منشئ Evidence من إنشاء Version أو تغيير metadata أو مشاركة Evidence لا يملكونه
+- [x] قصر Evidence version وmetadata management وsharing على منشئ Evidence في tenant المالكة مع تسجيل النجاح والرفض
+- [x] إبقاء Evidence create حقاً مستقلاً لمن يملك كتابة السجل، مع تثبيت ملكية الدليل للمنشئ عند الرفع
+- [x] توسيع اختبارات الوحدة وE2E لمسار Person A/Person B داخل المنظمة وDisclosure grantees وتدقيق عمليات المنع
+- [x] تحديث مصفوفة التفويض وتقارير E2E وسجل Patch الملكية وتجميع `NAQLA_PHASE_1_FINAL_LOCKED_PACKAGE.zip`
