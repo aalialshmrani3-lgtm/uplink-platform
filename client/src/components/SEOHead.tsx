@@ -21,18 +21,18 @@ export default function SEOHead({
   const { language } = useLanguage();
   
   const defaultTitle = language === 'ar' 
-    ? 'NAQLA 5.0 - منصة الابتكار العالمية'
-    : 'NAQLA 5.0 - Global Innovation Platform';
+    ? 'NAQLA - منظومة تشغيل الابتكار'
+    : 'NAQLA - Innovation Operating System';
     
   const defaultDescription = language === 'ar'
-    ? 'منصة NAQLA 5.0 تربط المبتكرين حول العالم بالمستثمرين والشركات والمؤسسات من خلال ثلاثة محركات متكاملة: توليد الملكية الفكرية، التحديات والمطابقة، والسوق المفتوح'
-    : 'NAQLA 5.0 connects innovators worldwide with investors, companies, and institutions through three integrated engines: IP Generation, Challenges & Matching, and Open Marketplace';
+    ? 'NAQLA هي منظومة تشغيل الابتكار للسجلات والتحديات والاكتشاف والربط ضمن الصلاحيات المتاحة.'
+    : 'NAQLA is an innovation operating system for records, challenges, discovery, and authorized connection workflows.';
     
   const defaultKeywords = language === 'ar'
     ? 'ابتكار، ملكية فكرية، استثمار، مستثمرين، براءات اختراع، تحديات، سوق ابتكار، NAQLA، السعودية'
     : 'innovation, intellectual property, investment, investors, patents, challenges, innovation marketplace, NAQLA, Saudi Arabia';
   
-  const fullTitle = title ? `${title} | NAQLA 5.0` : defaultTitle;
+  const fullTitle = title ? `${title} | NAQLA` : defaultTitle;
   const fullDescription = description || defaultDescription;
   const fullKeywords = keywords || defaultKeywords;
   const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://naqla.sa');
@@ -56,7 +56,7 @@ export default function SEOHead({
       <meta property="og:description" content={fullDescription} />
       <meta property="og:image" content={image} />
       <meta property="og:locale" content={language === 'ar' ? 'ar_SA' : 'en_US'} />
-      <meta property="og:site_name" content="NAQLA 5.0" />
+      <meta property="og:site_name" content="NAQLA" />
       
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
@@ -77,7 +77,7 @@ export default function SEOHead({
         {JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: 'NAQLA 5.0',
+          name: 'NAQLA',
           description: fullDescription,
           url: 'https://naqla.sa',
           logo: 'https://naqla.sa/logo.png',

@@ -870,3 +870,25 @@
 - [x] عرض السجل ذي `selected_organizations` للمنظمة المستهدفة فقط عبر Demand Exchange
 - [x] إضافة واجهة المالك لإدارة target واختبارات Domain وE2E للعزل والتدقيق
 - [x] توثيق وحزم توسعة الاكتشاف الموجّه قبل أي AI أو Workspace أو معاملة
+
+---
+
+## 🧩 NAQLA Phase 2 — Challenge & Applicant Lifecycle
+
+- [ ] توثيق حالات Challenge وApplication وقواعد الانتقال والمالكين وسجل Audit مع فصل Match وInterest وApplication
+- [ ] تصميم وتنفيذ Eligibility Engine وApplication snapshots وForm Builder ديناميكي وطلبات المعلومات الآمنة
+- [ ] تنفيذ Reviewer workflow وRubrics وConflict-of-Interest وقرار مؤسسي منفصل عن Match Score
+- [ ] إضافة Challenge Dashboard وApplicant Dashboard ومؤشرات Funnel مبنية على حالات قاعدة البيانات
+- [ ] توسيع اختبارات Domain وE2E للانتقالات والأهلية والعزل وEvidence references والمراجعات والقرارات
+- [ ] توثيق وحزم دورة التحدي والمتقدمين قبل بدء AI Matching Copilot
+
+---
+
+## 🛠️ NAQLA Phase 2 — UI Stabilization Patch
+
+- [x] تشخيص سبب تعليق NAQLA 5.0 في الإقلاع وتوثيق مسار bootstrap المتعطل
+- [x] تنفيذ حالات booting وready وerror وcontext_required مع حد زمني وشاشة استرداد عملية
+- [x] إزالة تسمية NAQLA 5.0 من واجهة المستخدم الرئيسية وحصر الإصدار في التشخيص/حول المنتج
+- [ ] تنظيف ملاحة سياق الجهة إلى الربط: نظرة عامة، التحديات، الطلبات، الاكتشاف، المطابقات، الاهتمامات فقط
+- [ ] ضبط CTA الإنشاء وبطاقات Match وشاشة Challenge والوسم الصريح للبيانات التجريبية دون إعادة تصميم الهوية
+- [ ] إضافة اختبارات E2E للخروج من التحميل وفشل Bootstrap وrefresh وتبديل السياق، وتوثيق المسارات والأزرار والفجوات

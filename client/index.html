@@ -10,55 +10,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>NAQLA 5.0 - National Innovation Platform</title>    
-    <!-- Auto-reload: detect new version and reload automatically -->
-    <script>
-      (function() {
-        // Version check: fetch /version.json every 30 seconds, reload if changed
-        var currentBuildId = null;
-        
-        function checkVersion() {
-          fetch('/version.json?t=' + Date.now(), { cache: 'no-store' })
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-              if (!currentBuildId) {
-                currentBuildId = data.buildId;
-              } else if (currentBuildId !== data.buildId) {
-                // New version detected — reload silently
-                window.location.reload(true);
-              }
-            })
-            .catch(function() {});
-        }
-        
-        // Check on load and every 30 seconds
-        window.addEventListener('load', function() {
-          checkVersion();
-          setInterval(checkVersion, 30000);
-        });
-
-        // Lock React globals early to prevent external scripts from overwriting
-        var locked = false;
-        window.__lockReact = function() {
-          if (locked) return;
-          if (window.React && window.ReactDOM) {
-            var react = window.React;
-            var reactDOM = window.ReactDOM;
-            Object.defineProperty(window, 'React', {
-              value: react,
-              writable: false,
-              configurable: false
-            });
-            Object.defineProperty(window, 'ReactDOM', {
-              value: reactDOM,
-              writable: false,
-              configurable: false
-            });
-            locked = true;
-          }
-        };
-      })();
-    </script>
+    <title>NAQLA — منظومة تشغيل الابتكار</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

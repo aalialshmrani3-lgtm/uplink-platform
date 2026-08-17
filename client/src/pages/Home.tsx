@@ -331,7 +331,7 @@ export default function Home() {
                 <Rocket className="w-5 h-5 text-white" />
               </div>
             </div>
-            <span className="text-xl font-bold text-gradient-cyan">NAQLA 5.0</span>
+            <span className="text-xl font-bold text-gradient-cyan">NAQLA</span>
           </div>
           
           <div className="hidden md:flex items-center gap-6">
@@ -515,7 +515,8 @@ export default function Home() {
                 { value: 50, suffix: '+', label: t.home.stats.partnerships, icon: Handshake },
                 { value: 60, suffix: 'M+', label: t.home.stats.funding, icon: TrendingUp },
               ].map((stat, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30">
+                <div key={i} className="relative p-4 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30">
+                  <span className="absolute top-2 left-2 text-[10px] text-amber-300/90">بيانات تجريبية</span>
                   <stat.icon className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
                   <div className="text-2xl md:text-3xl font-bold text-foreground">
                     <AnimatedCounter end={stat.value} suffix={stat.suffix} />

@@ -6,7 +6,8 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense } from "react";
+import { BootGate } from "./components/BootGate";
 
 // Lazy load Home page for better initial performance
 const Home = lazy(() => import("./pages/Home"));
@@ -154,154 +155,6 @@ const Naqla1Dashboard = lazy(() => import("./pages/Naqla1Dashboard")); // NAQLA 
 const Naqla2Dashboard = lazy(() => import("./pages/Naqla2Dashboard")); // NAQLA 2 Dashboard
 const Naqla3DashboardNew = lazy(() => import("./pages/Naqla3DashboardNew")); // NAQLA 3 Dashboard New
 const AuditStaging = lazy(() => import("./pages/AuditStaging"));
-
-// Splash Screen Component
-function SplashScreen({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0);
-  const [fadeOut, setFadeOut] = useState(false);
-
-  useEffect(() => {
-    // Maximum timeout of 5 seconds - force show home page after this
-    const maxTimeout = setTimeout(() => {
-      setProgress(100);
-      setTimeout(() => setFadeOut(true), 200);
-      setTimeout(() => onComplete(), 800);
-    }, 5000);
-
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          clearTimeout(maxTimeout);
-          setTimeout(() => setFadeOut(true), 200);
-          setTimeout(() => onComplete(), 800);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 30);
-
-    return () => {
-      clearInterval(timer);
-      clearTimeout(maxTimeout);
-    };
-  }, [onComplete]);
-
-  return (
-    <div 
-      className={`fixed inset-0 z-[9999] bg-[#030712] flex flex-col items-center justify-center transition-opacity duration-500 ${
-        fadeOut ? 'opacity-0' : 'opacity-100'
-      }`}
-    >
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px]">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute inset-20 bg-gradient-to-r from-purple-500/10 to-pink-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }} />
-        </div>
-        
-        {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400/50 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Logo Animation */}
-      <div className="relative z-10 mb-8">
-        <div className="relative">
-          {/* Glow Effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl blur-2xl opacity-50 animate-pulse" />
-          
-          {/* Logo Container */}
-          <div className="relative bg-gradient-to-br from-cyan-500 to-blue-600 p-6 rounded-3xl shadow-2xl transform transition-transform hover:scale-105">
-            <svg 
-              className="w-20 h-20 text-white" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="1.5"
-            >
-              <path 
-                d="M12 2L2 7l10 5 10-5-10-5z" 
-                className="animate-draw"
-                strokeDasharray="100"
-                strokeDashoffset="100"
-                style={{ animation: 'draw 1s ease-out forwards' }}
-              />
-              <path 
-                d="M2 17l10 5 10-5" 
-                className="animate-draw"
-                strokeDasharray="100"
-                strokeDashoffset="100"
-                style={{ animation: 'draw 1s ease-out 0.3s forwards' }}
-              />
-              <path 
-                d="M2 12l10 5 10-5" 
-                className="animate-draw"
-                strokeDasharray="100"
-                strokeDashoffset="100"
-                style={{ animation: 'draw 1s ease-out 0.6s forwards' }}
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      {/* Brand Name */}
-      <h1 className="relative z-10 text-5xl font-bold mb-2">
-        <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-          NAQLA
-        </span>
-        <span className="text-white/80 text-2xl mr-2">5.0</span>
-      </h1>
-      
-      <p className="relative z-10 text-white/50 text-lg mb-12">Global Innovation Platform</p>
-
-      {/* Progress Bar */}
-      <div className="relative z-10 w-64">
-        <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full transition-all duration-100 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className="text-center text-white/40 text-sm mt-3">
-          {progress < 100 ? 'جاري التحميل...' : 'مرحباً بك'}
-        </p>
-      </div>
-
-      <style>{`
-        @keyframes draw {
-          to {
-            stroke-dashoffset: 0;
-          }
-        }
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-            opacity: 0.5;
-          }
-          50% {
-            transform: translateY(-20px) translateX(10px);
-            opacity: 1;
-          }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-      `}</style>
-    </div>
-  );
-}
 
 // Loading component
 function PageLoader() {
@@ -478,38 +331,16 @@ function Router() {
 }
 
 function App() {
-  // Initialize splash state: skip if already seen in this session
-  const alreadySeen = typeof window !== 'undefined' && !!sessionStorage.getItem('splash_seen');
-  const [showSplash, setShowSplash] = useState(!alreadySeen);
-
-  useEffect(() => {
-    if (alreadySeen) return;
-
-    // HARD TIMEOUT: Force hide splash after 2.5 seconds max
-    const forceHideTimeout = setTimeout(() => {
-      setShowSplash(false);
-      sessionStorage.setItem('splash_seen', 'true');
-    }, 2500);
-
-    return () => clearTimeout(forceHideTimeout);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleSplashComplete = () => {
-    setShowSplash(false);
-    sessionStorage.setItem('splash_seen', 'true');
-  };
-
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <LanguageProvider>
-        <TooltipProvider>
-          {showSplash && (
-            <SplashScreen onComplete={handleSplashComplete} />
-          )}
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+          <BootGate>
+            <TooltipProvider>
+              <Toaster />
+              <Router />
+            </TooltipProvider>
+          </BootGate>
         </LanguageProvider>
       </ThemeProvider>
     </ErrorBoundary>

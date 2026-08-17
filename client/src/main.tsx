@@ -10,16 +10,6 @@ import { getLoginUrl } from "./const";
 import "./index.css";
 import { HelmetProvider } from 'react-helmet-async';
 
-// Expose React globally for any libraries that need it
-const win = window as any;
-win.React = React;
-win.ReactDOM = ReactDOM;
-
-// Lock React to prevent external scripts from overwriting
-if (typeof win.__lockReact === 'function') {
-  win.__lockReact();
-}
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

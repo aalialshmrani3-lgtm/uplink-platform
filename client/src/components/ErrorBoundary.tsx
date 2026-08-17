@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { AlertTriangle, RotateCcw } from "lucide-react";
+import { AlertTriangle, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { Component, ReactNode } from "react";
 
 interface Props {
@@ -23,35 +23,40 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
+      const technicalId = `UI-${Date.now().toString(36).toUpperCase()}`;
+      const selectContext = () => {
+        sessionStorage.removeItem("naqla_active_context");
+        window.location.assign("/");
+      };
       return (
-        <div className="flex items-center justify-center min-h-screen p-8 bg-background">
-          <div className="flex flex-col items-center w-full max-w-2xl p-8">
+        <main className="flex items-center justify-center min-h-screen p-8 bg-background" dir="rtl" aria-live="assertive">
+          <div className="flex flex-col items-center w-full max-w-2xl p-8 text-center">
             <AlertTriangle
               size={48}
               className="text-destructive mb-6 flex-shrink-0"
             />
 
-            <h2 className="text-xl mb-4">An unexpected error occurred.</h2>
+            <p className="text-xs font-semibold tracking-[0.18em] text-cyan-500">NAQLA</p>
+            <h2 className="text-xl mb-3">تعذر تجهيز مساحة العمل</h2>
+            <p className="mb-5 text-sm text-muted-foreground">حدث خطأ أثناء تحميل هذه الصفحة. يمكنك إعادة المحاولة أو العودة لاختيار السياق.</p>
 
-            <div className="p-4 w-full rounded bg-muted overflow-auto mb-6">
-              <pre className="text-sm text-muted-foreground whitespace-break-spaces">
-                {this.state.error?.stack}
-              </pre>
+            {import.meta.env.DEV && (
+              <div className="p-4 w-full rounded bg-muted overflow-auto mb-6 text-right" dir="ltr">
+                <p className="mb-2 text-xs text-muted-foreground">Technical error ID: {technicalId}</p>
+                <pre className="text-sm text-muted-foreground whitespace-break-spaces">{this.state.error?.stack}</pre>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button onClick={() => window.location.reload()} className={cn("flex items-center gap-2 px-4 py-2 rounded-lg", "bg-primary text-primary-foreground", "hover:opacity-90 cursor-pointer")}>
+                <RotateCcw size={16} /> إعادة المحاولة
+              </button>
+              <button onClick={selectContext} className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:bg-muted cursor-pointer">
+                <SlidersHorizontal size={16} /> العودة لاختيار السياق
+              </button>
             </div>
-
-            <button
-              onClick={() => window.location.reload()}
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-lg",
-                "bg-primary text-primary-foreground",
-                "hover:opacity-90 cursor-pointer"
-              )}
-            >
-              <RotateCcw size={16} />
-              Reload Page
-            </button>
           </div>
-        </div>
+        </main>
       );
     }
 

@@ -43,7 +43,7 @@ export default function InternalSidebar({ className }: InternalSidebarProps) {
             <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
               <Rocket className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-gradient-cyan">NAQLA 5.0</span>
+            <span className="text-xl font-bold text-gradient-cyan">NAQLA</span>
           </div>
         </Link>
 
@@ -73,6 +73,7 @@ export default function InternalSidebar({ className }: InternalSidebarProps) {
 
         {/* Quick Stats */}
         <div className="mt-8 p-4 rounded-lg bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border border-cyan-500/20">
+          <p className="mb-2 text-[10px] text-amber-300">بيانات تجريبية</p>
           <h4 className="text-sm font-semibold text-foreground mb-3">{t.dashboard.myStats}</h4>
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
