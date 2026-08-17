@@ -24,6 +24,19 @@ function serveLegacyWorkerRetirement(req: Request, res: Response, next: NextFunc
   res.send(legacyWorkerRetirementScript);
 }
 
+function recoverLegacyClientStorage(req: Request, res: Response, next: NextFunction) {
+  const hasRecoveryMarker = req.headers.cookie?.includes("naqla-client-recovery=1");
+  const isDocumentRoute = !path.extname(req.path);
+  const wantsHtml = req.method === "GET" && isDocumentRoute && Boolean(req.accepts(["html"]));
+  if (wantsHtml && !hasRecoveryMarker) {
+    // One recovery pass removes an inherited shell, cache and worker; the
+    // marker avoids repeating this destructive cleanup on later visits.
+    res.setHeader("Clear-Site-Data", '"cache", "storage"');
+    res.setHeader("Set-Cookie", "naqla-client-recovery=1; Path=/; Max-Age=31536000; SameSite=Lax; Secure");
+  }
+  next();
+}
+
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
@@ -39,6 +52,7 @@ export async function setupVite(app: Express, server: Server) {
   });
 
   app.use(serveLegacyWorkerRetirement);
+  app.use(recoverLegacyClientStorage);
   app.use(vite.middlewares);
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
@@ -78,6 +92,7 @@ export function serveStatic(app: Express) {
   }
 
   app.use(serveLegacyWorkerRetirement);
+  app.use(recoverLegacyClientStorage);
 
   // Aggressive caching for static assets
   app.use(
