@@ -9,6 +9,7 @@ import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
 import { HelmetProvider } from 'react-helmet-async';
+import { clearLegacyClientShell } from "./lib/legacyClientCleanup";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,6 +61,9 @@ const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Root element not found. Make sure index.html has <div id='root'></div>");
 }
+
+// Do not await: recovery from a legacy browser shell must not hold up React.
+void clearLegacyClientShell();
 
 ReactDOM.createRoot(rootElement).render(
   <HelmetProvider>
