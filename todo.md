@@ -854,3 +854,11 @@
 - [x] إضافة واجهة Demand Exchange لاختيار teaser وإنشاء مرشح Challenge من دون إدخال معرّف يدوي أو Overall Score
 - [x] توسيع اختبارات Domain وE2E للتحقق من private وanonymous teaser وtenant isolation ومنع Evidence
 - [x] توثيق وحزم توسعة Demand Exchange ضمن Phase 2 قبل أي AI أو Interest أو Transaction
+
+### Interest اختياري بلا Workspace أو صفقة
+
+- [x] توثيق حالات Interest المقيدة ومبدأ عدم كشف Evidence أو هوية إضافية أو إنشاء Workspace تلقائياً
+- [x] تنفيذ Interest بعد مرشح eligible فقط مع تفويض المنظمة ومالك السجل وidempotency وAudit Events
+- [x] إضافة واجهة طلب Interest وصندوق رد المالك (Accept/Decline) يعرضان الحالة فقط
+- [x] توسيع اختبارات Domain وE2E لحالات الطلب والقبول والرفض والعزل وتعارض الطلبات
+- [x] توثيق وحزم توسعة Interest ضمن Phase 2 قبل Workspaces أو معاملات لاحقة
