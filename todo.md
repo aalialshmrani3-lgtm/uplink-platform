@@ -719,3 +719,51 @@
 - [x] إضافة Procedures آمنة وإذن المالك للمشروع لقراءة وتحديث Submission وEvidence وPassport
 - [x] إضافة اختبارات وحدة وعقد وE2E لمسارات تقني وتجاري وملكية فكرية وتحدٍ
 - [x] توثيق حدود CR-01 والنتائج ومنع بدء CR-02 إلى CR-05 قبل اعتماد المستخدم
+
+---
+
+## 🏗️ NAQLA NEW BUILD — Innovation Operating System مستقل
+
+- [ ] استخراج المواصفات الكاملة من التوجيه الرئيسي وتحديد معايير الاستقلال عن المشروع القديم
+- [ ] إنشاء مشروع ومستودع وقاعدة بيانات وهوية NAQLA مستقلة تماماً عن UPLINK Platform
+- [ ] بناء هوية متعددة الأدوار وOrganization Profiles وSaudi Innovation Graph جديد
+- [ ] بناء بوابة النوايا والرحلات المتعددة ونموذج NAQLA 1 الديناميكي وEvidence Vault من الصفر
+- [ ] بناء NAQLA 2 للطلب والاكتشاف والمطابقة والبرامج والصفقات من الصفر
+- [ ] بناء NAQLA 3 للجاهزية التجارية والعقد والتنفيذ والتوسع من الصفر
+- [ ] بناء طبقة NAQLA Intelligence والتحليلات والتدقيق والحدود التشغيلية من الصفر
+- [ ] إنشاء بيانات تجريبية مترابطة وموسومة فقط واختبار الأدوار والرحلات والأمان
+- [ ] تسليم المشروع المستقل وملف التشغيل وخطة الإطلاق دون نقل منطق أو بيانات أو تكاملات قديمة
+
+---
+
+## 🧱 NAQLA Phase 0.1 — تصحيحات معمارية قبل Backend
+
+- [x] استبدال الكيان الجذري Project بـ Innovation Record/Case ذي subject_type وفصل Journey عنه
+- [x] فصل Persona/Actor عن Organization Type وعن Permission Role في وثائق الهوية وRBAC
+- [x] تحويل Lifecycle في NAQLA 2 وNAQLA 3 إلى Core Lifecycle مع Conditional Subflows حسب Engagement/Transaction Type
+- [x] إضافة NAQLA Taxonomy & Ontology كطبقة مرجعية للقطاعات والتقنيات والطلبات والأدلة والجغرافيا والأنواع
+- [x] تعميق Evidence Vault إلى Requirement وItem وClaim وReview وDecision وVersion وProvenance وHash
+- [x] إضافة Evaluation Framework وCriterion وAssessment Run ونتيجة ومعايير وإصدارات وHuman Override
+- [x] استكمال Innovation Passport بملخص تنفيذي وأقسام قابلة للتوسيع وTRL معلن/مدعوم/موثق وثقة أدلة واضحة
+- [x] تصحيح سياق الدور وOrganization Switcher والـGlobal CTA وفق Persona/Organization Context
+- [x] تصحيح Challenge وMatch Decision وMutual Interest وWorkspace وDraft/Published وHard Gates مقابل Soft Score
+- [x] إعادة تعريف Saudi Innovation Graph كـDerived Projection لا مصدر حقيقة ثانٍ
+- [x] فصل Demand عن Program وEcosystem Opportunity وتصحيح مصطلحات NAQLA 3 إلى «التسويق التجاري»
+- [x] اختبار اللقطات والحزمة المحدثة والتوقف لاعتماد Phase 0.1
+
+---
+
+## 🔒 NAQLA Phase 0.2 — Domain & Foundation Lock
+
+- [x] تثبيت InnovationRecord كاسم canonical واستبعاد Startup من subject_type مع Journey منفصل
+- [x] إضافة نموذج Startup Organization وStartupProfile وملكية السجلات والأصول
+- [x] إعادة تعريف subject_type وأنواع الابتكار المستقلة وقواعد مطابقة المنظمة مقابل السجل
+- [x] إضافة ReadinessFrameworkApplicability لتقرير انطباق TRL أو Product/Commercial Readiness وفق السؤال لا النوع فقط
+- [x] توثيق UserAccount وPerson وTenant وOrganization وMembership وPermissionRole وActiveContext
+- [x] إضافة RouteContextPolicy وربط Active Context بالملاحة وCTA والبيانات وصلاحية المسار
+- [x] إضافة AccessGrant وVisibilityPolicy وDataClassification وConsent وDisclosurePermission
+- [x] إضافة DiscoveryConsent ومنع ظهور السجل أو Evidence في الربط من دون إذن مستقل
+- [x] فصل NAQLA 3 إلى Commercial Asset Layer وTransaction Layer ومسارين Asset Ready وTransaction Ready
+- [x] توثيق Conditional Match Lifecycle وDemand/Program/Opportunity وGraph Projection دون تغيير المعمارية المعتمدة
+- [x] تحديث النموذج التفاعلي للحالات الشخصية والمؤسسية وغير المسموحة والسجل الجاهز للتسويق
+- [x] تحديث الوثائق واللقطات والحزمة والتوقف لاعتماد Phase 0.2 قبل أي Backend
