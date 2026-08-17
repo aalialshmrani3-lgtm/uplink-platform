@@ -683,4 +683,4 @@
 - [x] إنشاء اختبارات Browser E2E ورحلات المراجعة مع لقطات وتتبعات وسجل console/network
 - [x] إنشاء AUDIT_MANIFEST.json منظم لكل مسار وميزة وزر وAPI وجدول ودور واختبار
 - [x] تجميع NAQLA_FULL_AUDIT_PACKAGE.zip متضمناً المصدر والوثائق والاختبارات واللقطات والسجلات بلا أسرار
-- [ ] تسليم رابط Audit Staging والحزمة ثم إيقاف أي تطوير أو إصلاح حتى Change Request جديد
+- [x] تسليم رابط Audit Staging والحزمة ثم إيقاف أي تطوير أو إصلاح حتى Change Request جديد
