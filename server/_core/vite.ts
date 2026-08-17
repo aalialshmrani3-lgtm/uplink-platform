@@ -1,10 +1,28 @@
 import express, { type Express } from "express";
 import fs from "fs";
 import { type Server } from "http";
+import type { NextFunction, Request, Response } from "express";
 import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
+
+const legacyWorkerRetirementScript = `
+self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("activate", (event) => event.waitUntil((async () => {
+  await self.registration.unregister();
+  const clients = await self.clients.matchAll({ type: "window" });
+  await Promise.all(clients.map((client) => client.navigate(client.url)));
+})()));
+`;
+
+function serveLegacyWorkerRetirement(req: Request, res: Response, next: NextFunction) {
+  if (req.path !== "/sw.js" && req.path !== "/service-worker.js") return next();
+  res.setHeader("Content-Type", "application/javascript; charset=utf-8");
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Service-Worker-Allowed", "/");
+  res.send(legacyWorkerRetirementScript);
+}
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -20,6 +38,7 @@ export async function setupVite(app: Express, server: Server) {
     appType: "custom",
   });
 
+  app.use(serveLegacyWorkerRetirement);
   app.use(vite.middlewares);
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
@@ -57,6 +76,8 @@ export function serveStatic(app: Express) {
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
+
+  app.use(serveLegacyWorkerRetirement);
 
   // Aggressive caching for static assets
   app.use(
