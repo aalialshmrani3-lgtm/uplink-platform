@@ -815,3 +815,14 @@
 - [ ] إضافة إجراءات الحذف والإلغاء والتراجع وحماية البيانات بصلاحيات صريحة
 - [x] إجراء فحص أمني وE2E وnegative tests وتسليم Final Foundation Hardening قبل Phase 2
 - [x] تجميع حزمة `NAQLA_PHASE_1_FINAL_PACKAGE.zip` وتوثيق تقرير الاختبار وسجل التغييرات قبل طلب اعتماد Phase 2
+
+---
+
+## 🔒 NAQLA Phase 1 — Final Review Last Lock Patch
+
+- [x] منع وراثة وصول Evidence عالي السرية داخل tenant، بما يشمل org_viewer وadmin، من دون DisclosurePermission أو Evidence-level Grant صريح
+- [x] إضافة دورة تشغيلية لـClaimed TRL ضمن قرار الجاهزية مع منع مستوى TRL عندما لا ينطبق الإطار
+- [x] ربط Idempotency-Key ببصمة الطلب وإرجاع 409 عند إعادة استخدام المفتاح مع محتوى مختلف
+- [x] إخفاء حقول TRL من Domain وPassport UI عندما يكون Framework هو PRODUCT_COMMERCIAL أو تكون الجاهزية غير منطبقة
+- [x] توسيع اختبارات الوحدة وE2E للسرية داخل tenant وadmin وClaimed TRL وعدم انطباق TRL وتعارض بصمة idempotency
+- [x] إعداد EVIDENCE_AUTHORIZATION_MATRIX.md وتحديث التقارير وسجل Patch القفل وتجميع `NAQLA_PHASE_1_LOCKED_PACKAGE.zip`
