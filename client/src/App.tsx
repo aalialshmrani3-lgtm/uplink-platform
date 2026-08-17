@@ -152,6 +152,7 @@ const SaipAssessment = lazy(() => import("./pages/SaipAssessment")); // SAIP IP 
 const Naqla1Dashboard = lazy(() => import("./pages/Naqla1Dashboard")); // NAQLA 1 Dashboard
 const Naqla2Dashboard = lazy(() => import("./pages/Naqla2Dashboard")); // NAQLA 2 Dashboard
 const Naqla3DashboardNew = lazy(() => import("./pages/Naqla3DashboardNew")); // NAQLA 3 Dashboard New
+const AuditStaging = lazy(() => import("./pages/AuditStaging"));
 
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -321,6 +322,7 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/audit" component={AuditStaging} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={UserRegistration} />
         <Route path="/forgot-password" component={ForgotPassword} />
