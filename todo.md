@@ -846,3 +846,11 @@
 - [x] تنفيذ ترحيلات البيانات وعمليات الخادم وواجهة Phase 2 ضمن نطاق المطابقة والتحديات المعتمد
 - [x] إضافة اختبارات Domain وE2E للإنشاء والظهور والتفويض والعزل والسيناريوهات السلبية
 - [x] إعداد توثيق وحزمة تسليم Phase 2 للاعتماد قبل أي معاملات أو تكاملات لاحقة
+
+### توسعة Demand Exchange المقيدة
+
+- [x] توثيق قاعدة اكتشاف Phase 2: DiscoveryConsent فقط وteaser محدود ومنع أي Evidence أو هوية مخفية من التسرب
+- [x] تنفيذ مصدر API لاكتشاف InnovationRecords المصرح بها لسياق Organization مخول مع عزل tenant ومنع Personal/Viewer
+- [x] إضافة واجهة Demand Exchange لاختيار teaser وإنشاء مرشح Challenge من دون إدخال معرّف يدوي أو Overall Score
+- [x] توسيع اختبارات Domain وE2E للتحقق من private وanonymous teaser وtenant isolation ومنع Evidence
+- [x] توثيق وحزم توسعة Demand Exchange ضمن Phase 2 قبل أي AI أو Interest أو Transaction
