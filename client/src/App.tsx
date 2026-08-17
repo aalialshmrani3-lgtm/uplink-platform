@@ -77,6 +77,7 @@ const AIStrategicAdvisor = lazy(() => import("./pages/AIStrategicAdvisor"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const Naqla1 = lazy(() => import("./pages/Naqla1"));
 const SubmitIdea = lazy(() => import('@/pages/SubmitIdea'));
+const Naqla1Passport = lazy(() => import('@/pages/Naqla1Passport'));
 const MyIdeas = lazy(() => import('@/pages/MyIdeas'));
 const Naqla1BrowseIdeas = lazy(() => import('@/pages/Naqla1BrowseIdeas'));
 const Naqla1IdeaDetail = lazy(() => import('@/pages/Naqla1IdeaDetail'));
@@ -337,6 +338,8 @@ function Router() {
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/naqla1" component={Naqla1} />
         <Route path="/naqla1/dashboard" component={Naqla1Dashboard} /> {/* NAQLA 1 Dashboard */}
+        <Route path="/naqla1/passport/:id" component={Naqla1Passport} />
+        <Route path="/naqla1/passport" component={Naqla1Passport} />
         <Route path="/naqla1/submit" component={SubmitIdea} />
         <Route path="/naqla1/browse" component={Naqla1BrowseIdeas} />
         <Route path="/naqla1/ideas/:id" component={Naqla1IdeaDetail} />
@@ -344,6 +347,7 @@ function Router() {
         {/* UPLINK1 routes (aliases for NAQLA1) */}
         <Route path="/uplink1" component={Naqla1} />
         <Route path="/uplink1/submit" component={SubmitIdea} />
+        <Route path="/uplink1/passport/:id" component={Naqla1Passport} />
         <Route path="/uplink1/browse" component={Naqla1BrowseIdeas} />
         <Route path="/uplink1/ideas/:id" component={Naqla1IdeaDetail} />
         <Route path="/uplink1/ideas/:id/analysis" component={Naqla1IdeaAnalysis} />

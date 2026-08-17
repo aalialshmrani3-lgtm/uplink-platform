@@ -46,6 +46,7 @@ import {
   partnerProjects, InsertPartnerProject, PartnerProject,
   valueFootprints, InsertValueFootprint, ValueFootprint,
   marketplaceAssets,
+  innovationSubmissions, submissionEvidence, trlAssessments, innovationPassports,
   // matches, matchingRequests // Removed: not in schema
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -2374,4 +2375,100 @@ export async function updateSaipApplicationStatus(
     .set(updateData)
     .where(and(eq(saipAssessments.id, assessmentId), eq(saipAssessments.userId, userId)));
   return { success: true };
+}
+
+// ========================================
+// CR-01 — Submission, Evidence, TRL & Passport
+// ========================================
+
+export async function upsertInnovationSubmission(data: any) {
+  const database = await getDb();
+  if (!database) throw new Error('Database not available');
+  const [existing] = await database.select().from(innovationSubmissions)
+    .where(and(eq(innovationSubmissions.ideaId, data.ideaId), eq(innovationSubmissions.userId, data.userId)))
+    .limit(1);
+  if (existing) {
+    await database.update(innovationSubmissions).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(innovationSubmissions.id, existing.id));
+    return existing.id;
+  }
+  const [result] = await database.insert(innovationSubmissions).values(data);
+  return Number(result.insertId);
+}
+
+export async function getInnovationSubmission(ideaId: number, userId: number) {
+  const database = await getDb();
+  if (!database) return null;
+  const [submission] = await database.select().from(innovationSubmissions)
+    .where(and(eq(innovationSubmissions.ideaId, ideaId), eq(innovationSubmissions.userId, userId)))
+    .orderBy(desc(innovationSubmissions.updatedAt)).limit(1);
+  return submission || null;
+}
+
+export async function createSubmissionEvidence(data: any) {
+  const database = await getDb();
+  if (!database) throw new Error('Database not available');
+  const [result] = await database.insert(submissionEvidence).values(data);
+  return Number(result.insertId);
+}
+
+export async function getSubmissionEvidence(submissionId: number, userId: number) {
+  const database = await getDb();
+  if (!database) return [];
+  return database.select().from(submissionEvidence)
+    .where(and(eq(submissionEvidence.submissionId, submissionId), eq(submissionEvidence.userId, userId)))
+    .orderBy(desc(submissionEvidence.submittedAt));
+}
+
+export async function upsertTrlAssessment(data: any) {
+  const database = await getDb();
+  if (!database) throw new Error('Database not available');
+  const [existing] = await database.select().from(trlAssessments)
+    .where(and(eq(trlAssessments.ideaId, data.ideaId), eq(trlAssessments.userId, data.userId)))
+    .orderBy(desc(trlAssessments.updatedAt)).limit(1);
+  if (existing) {
+    await database.update(trlAssessments).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(trlAssessments.id, existing.id));
+    return existing.id;
+  }
+  const [result] = await database.insert(trlAssessments).values(data);
+  return Number(result.insertId);
+}
+
+export async function upsertInnovationPassport(data: any) {
+  const database = await getDb();
+  if (!database) throw new Error('Database not available');
+  const [existing] = await database.select().from(innovationPassports)
+    .where(and(eq(innovationPassports.ideaId, data.ideaId), eq(innovationPassports.userId, data.userId)))
+    .orderBy(desc(innovationPassports.updatedAt)).limit(1);
+  if (existing) {
+    await database.update(innovationPassports).set({ ...data, updatedAt: new Date().toISOString() }).where(eq(innovationPassports.id, existing.id));
+    return existing.id;
+  }
+  const [result] = await database.insert(innovationPassports).values(data);
+  return Number(result.insertId);
+}
+
+export async function getCr01Bundle(ideaId: number, userId: number) {
+  const [submission, idea, passport, assessment] = await Promise.all([
+    getInnovationSubmission(ideaId, userId),
+    getIdeaById(ideaId),
+    (async () => {
+      const database = await getDb();
+      if (!database) return null;
+      const [row] = await database.select().from(innovationPassports)
+        .where(and(eq(innovationPassports.ideaId, ideaId), eq(innovationPassports.userId, userId)))
+        .orderBy(desc(innovationPassports.updatedAt)).limit(1);
+      return row || null;
+    })(),
+    (async () => {
+      const database = await getDb();
+      if (!database) return null;
+      const [row] = await database.select().from(trlAssessments)
+        .where(and(eq(trlAssessments.ideaId, ideaId), eq(trlAssessments.userId, userId)))
+        .orderBy(desc(trlAssessments.updatedAt)).limit(1);
+      return row || null;
+    })(),
+  ]);
+  if (!idea || idea.userId !== userId) return null;
+  const evidence = submission ? await getSubmissionEvidence(submission.id, userId) : [];
+  return { idea, submission, evidence, passport, assessment };
 }

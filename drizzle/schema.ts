@@ -2018,3 +2018,110 @@ export type SponsorshipMatch = typeof sponsorshipMatches.$inferSelect;
 export type InsertSponsorshipMatch = typeof sponsorshipMatches.$inferInsert;
 export type ExpertProfile = typeof expertProfiles.$inferSelect;
 export type InsertExpertProfile = typeof expertProfiles.$inferInsert;
+
+// ============================================
+// CR-01 — Submission Types, Evidence Vault & Innovation Passport
+// ============================================
+
+export const innovationSubmissions = mysqlTable("innovation_submissions", {
+  id: int().autoincrement().primaryKey(),
+  ideaId: int().notNull(),
+  userId: int().notNull(),
+  submissionType: mysqlEnum(['early_idea', 'technical_innovation', 'research_output', 'commercial_solution', 'digital_ai_product', 'startup', 'ip_asset', 'challenge', 'organization', 'event', 'ready_asset']).notNull(),
+  trlApplicable: tinyint().notNull().default(0),
+  technicalPrinciple: text(),
+  prototypeStatus: varchar({ length: 100 }),
+  testEnvironment: text(),
+  performanceSummary: text(),
+  customerEvidence: text(),
+  revenueModel: text(),
+  tractionSummary: text(),
+  saipApplicationNumberDeclared: varchar({ length: 200 }),
+  saipDeclarationStatus: mysqlEnum(['not_provided', 'user_declared']).notNull().default('not_provided'),
+  suggestedRoute: mysqlEnum(['naqla1_development', 'naqla1_qualification', 'naqla2_candidate', 'naqla2_direct', 'naqla3_direct']).notNull().default('naqla1_qualification'),
+  formData: json(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [
+  index('innovation_submissions_idea_idx').on(table.ideaId),
+  index('innovation_submissions_user_idx').on(table.userId),
+]);
+
+export const submissionEvidence = mysqlTable("submission_evidence", {
+  id: int().autoincrement().primaryKey(),
+  submissionId: int().notNull(),
+  ideaId: int().notNull(),
+  userId: int().notNull(),
+  evidenceType: mysqlEnum(['research_reference', 'technical_description', 'architecture', 'proof_of_concept', 'prototype', 'lab_test_report', 'relevant_environment_test', 'pilot_data', 'operational_deployment', 'performance_data', 'patent_document', 'pitch_deck', 'customer_interview', 'commercial_document', 'other']).notNull(),
+  title: varchar({ length: 500 }).notNull(),
+  summary: text().notNull(),
+  sourceUrl: varchar({ length: 2000 }),
+  fileKey: varchar({ length: 1000 }),
+  supportedTrl: int(),
+  reviewStatus: mysqlEnum(['declared', 'needs_review', 'accepted_as_evidence', 'insufficient']).notNull().default('declared'),
+  evidenceStrength: mysqlEnum(['low', 'medium', 'high']).notNull().default('medium'),
+  submittedAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  reviewedAt: timestamp({ mode: 'string' }),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [
+  index('submission_evidence_submission_idx').on(table.submissionId),
+  index('submission_evidence_idea_idx').on(table.ideaId),
+  index('submission_evidence_user_idx').on(table.userId),
+]);
+
+export const trlAssessments = mysqlTable("trl_assessments", {
+  id: int().autoincrement().primaryKey(),
+  ideaId: int().notNull(),
+  userId: int().notNull(),
+  submissionId: int().notNull(),
+  claimedTrl: int(),
+  estimatedTrl: int(),
+  verifiedTrl: int(),
+  evidenceConfidence: decimal({ precision: 5, scale: 2 }),
+  verificationStatus: mysqlEnum(['not_requested', 'pending', 'verified', 'not_verified']).notNull().default('not_requested'),
+  estimationMethod: mysqlEnum(['rules', 'ai_evidence_summary', 'hybrid']).notNull().default('rules'),
+  evidenceSummary: text(),
+  missingEvidence: json(),
+  nextLevelEvidence: json(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [
+  index('trl_assessments_idea_idx').on(table.ideaId),
+  index('trl_assessments_submission_idx').on(table.submissionId),
+]);
+
+export const innovationPassports = mysqlTable("innovation_passports", {
+  id: int().autoincrement().primaryKey(),
+  ideaId: int().notNull(),
+  userId: int().notNull(),
+  submissionId: int().notNull(),
+  technologyReadinessApplicable: tinyint().notNull().default(0),
+  productMaturity: varchar({ length: 100 }),
+  innovationIndex: decimal({ precision: 5, scale: 2 }),
+  commercialReadiness: decimal({ precision: 5, scale: 2 }),
+  marketValidation: decimal({ precision: 5, scale: 2 }),
+  ipReadiness: decimal({ precision: 5, scale: 2 }),
+  regulatoryReadiness: decimal({ precision: 5, scale: 2 }),
+  teamReadiness: decimal({ precision: 5, scale: 2 }),
+  saudiStrategicFit: decimal({ precision: 5, scale: 2 }),
+  qualificationOutcome: mysqlEnum(['development_needed', 'commercial_potential', 'qualified_innovation', 'pending_evidence']).notNull().default('pending_evidence'),
+  suggestedRoute: mysqlEnum(['naqla1_development', 'naqla1_qualification', 'naqla2_candidate', 'naqla2_direct', 'naqla3_direct']).notNull().default('naqla1_qualification'),
+  nextBestActions: json(),
+  improvementPlan: json(),
+  isDemoData: tinyint().notNull().default(0),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [
+  index('innovation_passports_idea_idx').on(table.ideaId),
+  index('innovation_passports_submission_idx').on(table.submissionId),
+]);
+
+export type InnovationSubmission = typeof innovationSubmissions.$inferSelect;
+export type InsertInnovationSubmission = typeof innovationSubmissions.$inferInsert;
+export type SubmissionEvidence = typeof submissionEvidence.$inferSelect;
+export type InsertSubmissionEvidence = typeof submissionEvidence.$inferInsert;
+export type TrlAssessment = typeof trlAssessments.$inferSelect;
+export type InsertTrlAssessment = typeof trlAssessments.$inferInsert;
+export type InnovationPassport = typeof innovationPassports.$inferSelect;
+export type InsertInnovationPassport = typeof innovationPassports.$inferInsert;

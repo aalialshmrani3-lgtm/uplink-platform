@@ -1,0 +1,12 @@
+{
+  "route": "/naqla1/passport",
+  "mode": "read_only_unauthenticated",
+  "assertions": {
+    "passport_title": true,
+    "demo_entry": true,
+    "not_404": true,
+    "no_unauthorized_write": true
+  },
+  "passed": true,
+  "screenshot": "passport-entry.png"
+}

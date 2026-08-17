@@ -167,6 +167,23 @@ export default function Naqla1IdeaDetail() {
           </CardContent>
         </Card>
 
+        {user?.id === idea.userId && (
+          <Card className="mb-8 bg-gradient-to-r from-violet-500/10 via-fuchsia-500/10 to-slate-900 border-violet-500/30">
+            <CardContent className="py-6">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-white text-lg font-semibold mb-2">NAQLA Innovation Passport</h3>
+                  <p className="text-slate-400">صنّف نوع المدخل، أضف الأدلة، وراجع جاهزية التقنية أو المسار التجاري.</p>
+                </div>
+                <Button onClick={() => navigate(`/naqla1/passport/${ideaId}`)} className="bg-violet-600 hover:bg-violet-500 text-white">
+                  <Target className="w-4 h-4 ml-2" />
+                  فتح ملف الجاهزية
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* AI Analysis */}
         {analysis && (
           <div className="space-y-6">

@@ -12,6 +12,7 @@ import { userChoices, ideaJourneyEvents } from "../drizzle/schema";
 import { eq, asc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
+import { CR01_SUBMISSION_TYPES, CR01_TYPE_CONFIG, deriveQualificationOutcome, evaluateTrlEvidence } from "./naqla1-cr01";
 import crypto from "crypto";
 import * as hackathonsService from "./naqla2/hackathons";
 import * as eventsService from "./naqla2/events";
@@ -1141,6 +1142,164 @@ export const appRouter = router({
         const recentIdeas = allIdeas.slice(0, 5).map((i: any) => ({ id: i.id, title: i.title, status: i.status, category: i.category, submittedAt: i.submittedAt }));
         return { totalIdeas: totalIdeas + 847, analyzedIdeas: analyzedIdeas + 623, routedToNaqla2: routedToNaqla2 + 312, routedToNaqla3: routedToNaqla3 + 89, pendingIdeas: pendingIdeas + 124, innovationIdeas: innovationIdeas + 198, commercialIdeas: commercialIdeas + 287, weakIdeas: weakIdeas + 138, totalUsers: allUsers.length + 1245, innovatorCount: innovatorCount + 876, recentIdeas };
       }),
+  }),
+
+  // ============================================
+  // CR-01 — Submission Types, Evidence Vault & Innovation Passport
+  // ============================================
+  cr01: router({
+    getBundle: protectedProcedure
+      .input(z.object({ ideaId: z.number().int().positive() }))
+      .query(async ({ ctx, input }) => {
+        const bundle = await db.getCr01Bundle(input.ideaId, ctx.user.id);
+        if (!bundle) throw new TRPCError({ code: 'NOT_FOUND', message: 'لم يتم العثور على ملف التأهيل أو لا تملك صلاحية عرضه' });
+        return bundle;
+      }),
+
+    upsertSubmission: protectedProcedure
+      .input(z.object({
+        ideaId: z.number().int().positive(),
+        submissionType: z.enum(CR01_SUBMISSION_TYPES),
+        technicalPrinciple: z.string().max(5000).optional().nullable(),
+        prototypeStatus: z.string().max(100).optional().nullable(),
+        testEnvironment: z.string().max(5000).optional().nullable(),
+        performanceSummary: z.string().max(5000).optional().nullable(),
+        customerEvidence: z.string().max(5000).optional().nullable(),
+        revenueModel: z.string().max(2000).optional().nullable(),
+        tractionSummary: z.string().max(5000).optional().nullable(),
+        saipApplicationNumberDeclared: z.string().max(200).optional().nullable(),
+        formData: z.record(z.string(), z.unknown()).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const idea = await db.getIdeaById(input.ideaId);
+        if (!idea || idea.userId !== ctx.user.id) throw new TRPCError({ code: 'FORBIDDEN', message: 'لا تملك صلاحية تعديل هذا المشروع' });
+        const config = CR01_TYPE_CONFIG[input.submissionType];
+        const submissionId = await db.upsertInnovationSubmission({
+          ...input,
+          userId: ctx.user.id,
+          trlApplicable: config.trlApplicable ? 1 : 0,
+          saipDeclarationStatus: input.saipApplicationNumberDeclared ? 'user_declared' : 'not_provided',
+          suggestedRoute: config.route,
+        });
+        return { submissionId, trlApplicable: config.trlApplicable, suggestedRoute: config.route, saipStatus: input.saipApplicationNumberDeclared ? 'user_declared_not_verified' : 'not_provided' };
+      }),
+
+    uploadEvidenceFile: protectedProcedure
+      .input(z.object({
+        ideaId: z.number().int().positive(),
+        fileName: z.string().min(1).max(255),
+        mimeType: z.string().min(1).max(150),
+        dataBase64: z.string().min(1).max(6_000_000),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const submission = await db.getInnovationSubmission(input.ideaId, ctx.user.id);
+        if (!submission) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'أكمل تصنيف نوع المدخل قبل رفع الدليل' });
+        const allowed = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'image/png', 'image/jpeg'];
+        if (!allowed.includes(input.mimeType)) throw new TRPCError({ code: 'BAD_REQUEST', message: 'صيغة الدليل غير مدعومة' });
+        const fileBuffer = Buffer.from(input.dataBase64, 'base64');
+        if (fileBuffer.length > 4 * 1024 * 1024) throw new TRPCError({ code: 'PAYLOAD_TOO_LARGE', message: 'الحد الأقصى للدليل 4MB' });
+        const safeName = input.fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const fileKey = `cr01-evidence/${ctx.user.id}/${input.ideaId}/${nanoid(12)}-${safeName}`;
+        const uploaded = await storagePut(fileKey, fileBuffer, input.mimeType);
+        return { fileKey: uploaded.key, url: uploaded.url };
+      }),
+
+    addEvidence: protectedProcedure
+      .input(z.object({
+        ideaId: z.number().int().positive(),
+        evidenceType: z.enum(['research_reference', 'technical_description', 'architecture', 'proof_of_concept', 'prototype', 'lab_test_report', 'relevant_environment_test', 'pilot_data', 'operational_deployment', 'performance_data', 'patent_document', 'pitch_deck', 'customer_interview', 'commercial_document', 'other']),
+        title: z.string().min(3).max(500),
+        summary: z.string().min(20).max(10000),
+        sourceUrl: z.string().url().max(2000).optional().nullable(),
+        fileKey: z.string().max(1000).optional().nullable(),
+        supportedTrl: z.number().int().min(1).max(9).optional().nullable(),
+        evidenceStrength: z.enum(['low', 'medium', 'high']).default('medium'),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const submission = await db.getInnovationSubmission(input.ideaId, ctx.user.id);
+        if (!submission) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'أكمل تصنيف نوع المدخل قبل إضافة الأدلة' });
+        const evidenceId = await db.createSubmissionEvidence({ ...input, submissionId: submission.id, userId: ctx.user.id, reviewStatus: 'declared' });
+        return { evidenceId, reviewStatus: 'declared', message: 'تم حفظ الدليل كتصريح من صاحب المشروع؛ لم يتم توثيقه من جهة خارجية.' };
+      }),
+
+    refreshPassport: protectedProcedure
+      .input(z.object({ ideaId: z.number().int().positive(), claimedTrl: z.number().int().min(1).max(9).optional().nullable() }))
+      .mutation(async ({ ctx, input }) => {
+        const bundle = await db.getCr01Bundle(input.ideaId, ctx.user.id);
+        if (!bundle || !bundle.submission) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'احفظ تصنيف نوع المدخل أولاً' });
+        const config = CR01_TYPE_CONFIG[bundle.submission.submissionType as keyof typeof CR01_TYPE_CONFIG];
+        const analysis = bundle.idea.analysis as any;
+        const asNumber = (value: unknown) => Math.max(0, Math.min(100, Number(value ?? 0) || 0));
+        const innovationIndex = asNumber(analysis?.overallScore);
+        const commercialReadiness = Math.round((asNumber(analysis?.technicalFeasibilityScore) + asNumber(analysis?.commercialValueScore)) / 2);
+        const marketValidation = bundle.evidence.filter((e: any) => ['customer_interview', 'pilot_data', 'commercial_document'].includes(e.evidenceType)).length * 25;
+        const ipReadiness = bundle.submission.saipApplicationNumberDeclared ? 70 : bundle.evidence.some((e: any) => e.evidenceType === 'patent_document') ? 55 : 25;
+        const regulatoryReadiness = bundle.evidence.some((e: any) => e.evidenceType === 'operational_deployment') ? 60 : 30;
+        const teamReadiness = bundle.evidence.some((e: any) => e.evidenceType === 'pitch_deck') ? 60 : 45;
+        const saudiStrategicFit = /طاقة|energy|كفاءة|استدامة|sustain/i.test(`${bundle.idea.title} ${bundle.idea.description}`) ? 94 : 65;
+        const trl = config.trlApplicable ? evaluateTrlEvidence(bundle.evidence) : null;
+        const outcome = deriveQualificationOutcome(bundle.submission.submissionType as any, innovationIndex, commercialReadiness);
+        const nextBestActions = config.trlApplicable
+          ? trl?.nextLevelEvidence ?? []
+          : ['تحقق من العميل المستهدف، ووسع أدلة السوق، وحدد الشريك أو التحدي الملائم في المرحلة التالية.'];
+        const assessmentId = config.trlApplicable ? await db.upsertTrlAssessment({
+          ideaId: input.ideaId,
+          userId: ctx.user.id,
+          submissionId: bundle.submission.id,
+          claimedTrl: input.claimedTrl ?? null,
+          estimatedTrl: trl?.estimatedTrl ?? null,
+          verifiedTrl: null,
+          evidenceConfidence: String(trl?.evidenceConfidence ?? 0),
+          verificationStatus: 'not_requested',
+          estimationMethod: 'hybrid',
+          evidenceSummary: 'تقدير أولي يعتمد على نتائج تحليل الفكرة والأدلة المصرح بها من صاحب المشروع؛ لا يمثل توثيقاً خارجياً.',
+          missingEvidence: trl?.missingEvidence ?? [],
+          nextLevelEvidence: trl?.nextLevelEvidence ?? [],
+        }) : null;
+        const passportId = await db.upsertInnovationPassport({
+          ideaId: input.ideaId,
+          userId: ctx.user.id,
+          submissionId: bundle.submission.id,
+          technologyReadinessApplicable: config.trlApplicable ? 1 : 0,
+          productMaturity: config.trlApplicable ? `TRL تقديري ${trl?.estimatedTrl ?? 'غير متاح'}` : 'Technology Readiness غير منطبق',
+          innovationIndex: String(innovationIndex),
+          commercialReadiness: String(commercialReadiness),
+          marketValidation: String(Math.min(100, marketValidation)),
+          ipReadiness: String(ipReadiness),
+          regulatoryReadiness: String(regulatoryReadiness),
+          teamReadiness: String(teamReadiness),
+          saudiStrategicFit: String(saudiStrategicFit),
+          qualificationOutcome: outcome,
+          suggestedRoute: config.route,
+          nextBestActions,
+          improvementPlan: nextBestActions,
+          isDemoData: 0,
+        });
+        return { passportId, assessmentId, outcome, suggestedRoute: config.route, trl, disclaimer: 'النتيجة إرشادية ومبنية على بيانات المشروع والأدلة المصرح بها؛ ليست إثباتاً لحقوق ملكية فكرية أو ترخيصاً أو قبولاً من أي جهة.' };
+      }),
+
+    createEnergyDemo: protectedProcedure.mutation(async ({ ctx }) => {
+      const ideaId = await db.createIdea({
+        userId: ctx.user.id,
+        title: 'AI Energy Optimizer — بيانات تجريبية',
+        description: 'منصة تجريبية لتحسين كفاءة الطاقة عبر نماذج تنبؤية ومراقبة الأحمال.',
+        problem: 'ارتفاع الهدر وصعوبة اكتشاف أنماط الاستهلاك في المنشآت متعددة المواقع.',
+        solution: 'محرك تنبؤي يقترح إجراءات تشغيلية ويقارن خط الأساس بالأداء الفعلي.',
+        targetMarket: 'المنشآت التجارية والصناعية في المملكة العربية السعودية',
+        uniqueValue: 'دمج التنبؤ بالأحمال مع توصيات تشغيلية قابلة للقياس.',
+        category: 'energy', status: 'analyzed', routingStatus: 'pending',
+      });
+      const submissionId = await db.upsertInnovationSubmission({
+        ideaId, userId: ctx.user.id, submissionType: 'technical_innovation', trlApplicable: 1,
+        technicalPrinciple: 'نماذج تعلم آلي تتنبأ بالأحمال وتكشف الانحرافات.', prototypeStatus: 'نموذج أولي متكامل',
+        testEnvironment: 'اختبار تجريبي في بيئة محاكاة ذات صلة', performanceSummary: 'بيانات تجريبية — Demo Data',
+        saipDeclarationStatus: 'not_provided', suggestedRoute: 'naqla1_qualification', formData: { demo: true },
+      });
+      await db.createSubmissionEvidence({ submissionId, ideaId, userId: ctx.user.id, evidenceType: 'lab_test_report', title: 'تقرير اختبار نموذج أولي — بيانات تجريبية', summary: 'نتائج اختبار محاكاة تدعم TRL 4 فقط. بيانات تجريبية — Demo Data.', supportedTrl: 4, reviewStatus: 'declared', evidenceStrength: 'high' });
+      await db.upsertTrlAssessment({ ideaId, userId: ctx.user.id, submissionId, claimedTrl: 5, estimatedTrl: 4, verifiedTrl: null, evidenceConfidence: '88', verificationStatus: 'not_requested', estimationMethod: 'hybrid', evidenceSummary: 'بيانات تجريبية — Demo Data. الدليل المسجل يدعم TRL 4 ولا يثبت TRL 5.', missingEvidence: ['اختبار موثق في بيئة ذات صلة لدعم TRL 5.'], nextLevelEvidence: ['تقرير اختبار بيئة ذات صلة ومؤشرات أداء قابلة للمراجعة.'] });
+      await db.upsertInnovationPassport({ ideaId, userId: ctx.user.id, submissionId, technologyReadinessApplicable: 1, productMaturity: 'TRL تقديري 4', innovationIndex: '78', commercialReadiness: '61', marketValidation: '45', ipReadiness: '70', regulatoryReadiness: '45', teamReadiness: '58', saudiStrategicFit: '94', qualificationOutcome: 'qualified_innovation', suggestedRoute: 'naqla1_qualification', nextBestActions: ['رفع اختبار في بيئة ذات صلة', 'إضافة بروتوكول اختبار ومؤشرات أداء'], improvementPlan: ['الانتقال من TRL 4 إلى TRL 5 بأدلة اختبار في بيئة ذات صلة'], isDemoData: 1 });
+      return { ideaId, submissionId, label: 'بيانات تجريبية — Demo Data' };
+    }),
   }),
 
   // ============================================
