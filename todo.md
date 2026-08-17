@@ -796,3 +796,22 @@
 - [x] بناء واجهات سياق الدور وإنشاء السجل ورفع الدليل والجواز وOrganization/Startup onboarding
 - [x] إضافة بيانات Demo موسومة واختبارات عزل tenant والأذونات وTRL applicability
 - [x] توثيق وتسليم Phase 1 والتوقف قبل Phase 2
+
+---
+
+## 🛡️ NAQLA Phase 1 Final Foundation Hardening
+
+- [x] فصل authorize(ctx, action, resource) للقراءة والكتابة ومنع استخدام canRead في أي Write
+- [x] إضافة اختبار AccessGrant للقراءة فقط ومنع Evidence وReadiness وRecord وClaim/Review writes بـ403
+- [x] فصل كشف Evidence عن الوصول إلى InnovationRecord ومنع metadata وclaims السرية بلا إذن مستقل
+- [x] تقييد DataClassification بالقيم المعتمدة وإضافة DisclosurePermission صريح للأدلة الحساسة
+- [x] تطبيق RBAC/ABAC فعلياً على Person وMembership وRole وTenant وOwnership وClassification وGrants وAction
+- [x] إنفاذ assertContextPolicy من الخادم وتوليد navigation وCTA من capabilities لا من قائمة ثابتة
+- [x] إضافة EvidenceItem وEvidenceVersion وحفظ الإصدارات والـhash وعدم حذف النسخ السابقة
+- [x] ربط Claim وReview بدليل فعلي أو إظهار insufficient_evidence وEvidence-supported TRL غير محدد
+- [x] فصل Claimed وEvidence-supported وReviewed TRL وإضافة version لقواعد Readiness Applicability
+- [x] تقييد Framework وsubject type ومدخلات السجل والدليل بخدمات تحقق خادمية
+- [x] إضافة AuditEvent لجميع العمليات الحساسة وتجربة Client mutation مستقلة بمعرّف idempotency
+- [ ] إضافة إجراءات الحذف والإلغاء والتراجع وحماية البيانات بصلاحيات صريحة
+- [x] إجراء فحص أمني وE2E وnegative tests وتسليم Final Foundation Hardening قبل Phase 2
+- [x] تجميع حزمة `NAQLA_PHASE_1_FINAL_PACKAGE.zip` وتوثيق تقرير الاختبار وسجل التغييرات قبل طلب اعتماد Phase 2
