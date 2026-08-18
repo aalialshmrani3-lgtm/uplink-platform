@@ -910,6 +910,16 @@
 - [x] إضافة حالات المهل والتنبيهات والسحب والاستبعاد مع Audit Trail وNext Best Action بحسب الدور
 - [x] إجراء تحقق مرحلي وإنتاجي وإرفاق اللقطات ومسارات الواجهة ومصفوفة الأزرار في تسليم Phase 2.1
 
+### 🔒 Phase 2.1 Lock Patch — Required Before AI
+
+- [x] تعطيل أو توجيه مسارات publish/close القديمة إلى State Machine ومنع أي lifecycle bypass مع فصل Approver عن org_owner/admin
+- [x] استكمال Eligibility بأربع نتائج وقواعد النوع والجغرافيا والقطاع وTRL/Readiness والكيان السعودي والمستندات والأدلة والفئات المستبعدة
+- [x] تجميد Submission Snapshot الكامل وتوسيع Form Builder والتحقق الخادمي لجميع الأنواع وإصدارات التطبيق
+- [x] تفعيل ReviewPanel وReview Mode والـblind/anonymous review وCOI غير المحلول وInformation Request lifecycle الكامل
+- [x] استكمال Applicant/Organization وChallenge Manager Dashboards وApplication Detail والتنبيهات DB-backed
+- [x] إنشاء Suite Lock Patch مستقلة لاختبارات bypass والأهلية والـsnapshot والـblind review وCOI وطلبات المعلومات وعزل Evidence
+- [x] تحديث الوثائق وتجميع `NAQLA_PHASE_2_1_LOCKED_PACKAGE.zip` ثم التوقف قبل AI وNAQLA 3
+
 ---
 
 ## 🚨 P0 Regression — ظهور شاشة NAQLA 5.0 القديمة
