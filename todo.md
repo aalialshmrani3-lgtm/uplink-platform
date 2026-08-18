@@ -920,6 +920,13 @@
 - [x] إنشاء Suite Lock Patch مستقلة لاختبارات bypass والأهلية والـsnapshot والـblind review وCOI وطلبات المعلومات وعزل Evidence
 - [x] تحديث الوثائق وتجميع `NAQLA_PHASE_2_1_LOCKED_PACKAGE.zip` ثم التوقف قبل AI وNAQLA 3
 
+### مراجعة اعتماد Lock Patch اللاحقة
+
+- [x] مطابقة تطبيق Lock Patch الحالي مع ملاحظات الاعتماد وتوثيق أي فجوة فعلية فقط
+- [x] تفعيل أو إثبات استخدام ChallengeOwnerOrganization وReviewPanel ضمن عقد Domain لا كمخططات خاملة
+- [x] إنشاء Suite E2E مستقلة لLock Patch تثبت lifecycle والـApprover والأهلية واللقطات والـblind review والـCOI وطلبات المعلومات وعزل Evidence
+- [x] تحديث التقارير وإعادة تجميع `NAQLA_PHASE_2_1_LOCKED_PACKAGE.zip` ثم التوقف قبل AI وNAQLA 3
+
 ---
 
 ## 🚨 P0 Regression — ظهور شاشة NAQLA 5.0 القديمة
