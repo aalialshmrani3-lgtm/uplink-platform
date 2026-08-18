@@ -897,16 +897,18 @@
 
 ## 🧭 NAQLA Phase 2.1 — Challenge & Applicant Lifecycle
 
-- [ ] تثبيت وثيقة النطاق وفصل Demand وChallenge وMatch وInterest وApplication ومنع AI وNAQLA 3
-- [ ] تصميم مخطط البيانات وحالات Challenge وApplication وPermission Matrix لفريق التحدي والمراجعة
-- [ ] تنفيذ فريق التحدي والأدوار والانتقالات المدققة والمهل والتعليق والإلغاء والأرشفة
-- [ ] تنفيذ Eligibility Engine وApplication snapshots والإصدارات وإعادة التقديم ونماذج التقديم المتغيرة
-- [ ] تنفيذ كشف Evidence الصريح وطلبات المعلومات داخل Application من دون تجاوز أقفال Phase 1
-- [ ] تنفيذ Review Panel والتعيين وتعارض المصالح والـRubrics والدرجات والتوصيات العمياء
-- [ ] تنفيذ Shortlist وFinal Selection المؤسسيين ومسار المتابعة الموصى به من دون NAQLA 3
-- [ ] تطوير واجهات RTL للمتقدم ومدير التحدي والمراجع وتفاصيل Application مع الحالة والخطوة التالية
-- [ ] إضافة Unit وDomain وHTTP وE2E لرحلات A–G، والتحقق البصري والتقارير
-- [ ] توثيق المصفوفات والمخططات والقيود وتجميع NAQLA_PHASE_2_1_CHALLENGE_LIFECYCLE_PACKAGE.zip ثم إيقاف العمل قبل AI
+- [x] تثبيت وثيقة النطاق وفصل Demand وChallenge وMatch وInterest وApplication ومنع AI وNAQLA 3
+- [x] تصميم مخطط البيانات وحالات Challenge وApplication وPermission Matrix لفريق التحدي والمراجعة
+- [x] تنفيذ فريق التحدي والأدوار والانتقالات المدققة والمهل والتعليق والإلغاء والأرشفة
+- [x] تنفيذ Eligibility Engine وApplication snapshots والإصدارات وإعادة التقديم ونماذج التقديم المتغيرة
+- [x] تنفيذ كشف Evidence الصريح وطلبات المعلومات داخل Application من دون تجاوز أقفال Phase 1
+- [x] تنفيذ Review Panel والتعيين وتعارض المصالح والـRubrics والدرجات والتوصيات العمياء
+- [x] تنفيذ Shortlist وFinal Selection المؤسسيين ومسار المتابعة الموصى به من دون NAQLA 3
+- [x] تطوير واجهات RTL للمتقدم ومدير التحدي والمراجع وتفاصيل Application مع الحالة والخطوة التالية
+- [x] إضافة Unit وDomain وHTTP وE2E لرحلات A–G، والتحقق البصري والتقارير
+- [x] توثيق المصفوفات والمخططات والقيود وتجميع NAQLA_PHASE_2_1_CHALLENGE_LIFECYCLE_PACKAGE.zip ثم إيقاف العمل قبل AI
+- [x] إضافة حالات المهل والتنبيهات والسحب والاستبعاد مع Audit Trail وNext Best Action بحسب الدور
+- [x] إجراء تحقق مرحلي وإنتاجي وإرفاق اللقطات ومسارات الواجهة ومصفوفة الأزرار في تسليم Phase 2.1
 
 ---
 
