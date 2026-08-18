@@ -927,6 +927,16 @@
 - [x] إنشاء Suite E2E مستقلة لLock Patch تثبت lifecycle والـApprover والأهلية واللقطات والـblind review والـCOI وطلبات المعلومات وعزل Evidence
 - [x] تحديث التقارير وإعادة تجميع `NAQLA_PHASE_2_1_LOCKED_PACKAGE.zip` ثم التوقف قبل AI وNAQLA 3
 
+### 🔐 Phase 2.1 Final Lock Patch
+
+- [x] تمكين Startup/Organization Applicant كاملاً مع فصل Applicant Organization عن Challenge Owner Organization
+- [x] تشغيل Reviewer Application Detail والأدلة المفصح عنها للتطبيق فقط وعزل ReviewPanel/Blind Review
+- [x] استكمال Eligibility للجغرافيا والقطاع والتقنية والجاهزية والكيان السعودي وعدم احتساب Evidence غير المفصح عنها
+- [x] تصحيح Evidence Requests لطلب فئات وأوصاف أدلة غير مفصح عنها وربط الرد بإفصاح اختياري لاحق
+- [x] تشغيل حقول Form Builder المرجعية والقيم المنطقية وTRL والميزانية والجدول والفريق وإقرار IP في الواجهة
+- [x] إضافة Manager Funnel وفلاتر DB-backed وApplicant UX للطلبات والإفصاحات والتنبيهات
+- [x] إنشاء Final Lock Test Suite وتحديث الوثائق وتجميع `NAQLA_PHASE_2_1_FINAL_LOCKED_PACKAGE.zip` ثم التوقف قبل AI وNAQLA 3
+
 ---
 
 ## 🚨 P0 Regression — ظهور شاشة NAQLA 5.0 القديمة
