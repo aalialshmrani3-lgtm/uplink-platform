@@ -8,9 +8,10 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { lazy, Suspense } from "react";
 import { BootGate } from "./components/BootGate";
+import Home from "./pages/Home";
 
-// Lazy load Home page for better initial performance
-const Home = lazy(() => import("./pages/Home"));
+// Home is the boot route. Keep it in the entry bundle so an inherited lazy
+// chunk can never resurrect a retired loading shell before the landing page.
 const Login = lazy(() => import("./pages/Login"));
 const UserRegistration = lazy(() => import("./pages/UserRegistration"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));

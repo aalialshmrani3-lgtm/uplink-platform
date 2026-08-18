@@ -88,17 +88,12 @@ export function BootGate({ children }: { children: React.ReactNode }) {
     };
   }, [status]);
 
-  if (status === "ready") return <>{children}</>;
+  // A healthy client must never be hidden behind a cosmetic bootstrap screen.
+  // Keep the asynchronous guard for failure reporting, but render the route
+  // immediately while that guard completes.
+  if (status === "ready" || status === "booting") return <>{children}</>;
   if (status === "error" || status === "context_required") return <BootRecovery status={status} issue={issue} />;
-  return (
-    <main className="min-h-screen bg-[#030712] text-white flex items-center justify-center" data-boot-state="booting" aria-busy="true">
-      <div className="text-center">
-        <p className="text-sm font-semibold tracking-[0.18em] text-cyan-300">NAQLA</p>
-        <p className="mt-2 text-lg font-semibold">منظومة تشغيل الابتكار</p>
-        <p className="mt-3 text-sm text-slate-400">جارٍ تجهيز مساحة العمل…</p>
-      </div>
-    </main>
-  );
+  return null;
 }
 
 export { MAX_BOOT_TIME_MS };
