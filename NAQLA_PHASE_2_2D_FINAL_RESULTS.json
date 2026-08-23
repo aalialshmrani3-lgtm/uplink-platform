@@ -1,0 +1,54 @@
+{
+  "phase": "2.2D",
+  "finalState": "PHASE_2_2D_COMPLETE",
+  "implementationCheckpoint": "cf39db42",
+  "implementationCommit": "cf39db425a5868b93aed51137fdd6294ec2e470d",
+  "localBuildId": "mt6a018igwu5",
+  "publicBuildId": "mt6a4y3kq65m",
+  "publicBuiltAt": "2026-08-23T20:48:41.888Z",
+  "tests": { "files": 38, "tests": 136, "status": "PASS" },
+  "checks": {
+    "typecheck": "PASS",
+    "productionBuild": "PASS",
+    "realHttpE2E": "PASS",
+    "isolatedMariaDb": "PASS",
+    "syntheticOnly": true,
+    "cleanup": "PASS",
+    "secretScanMatches": 0,
+    "realDataScanFindings": 0,
+    "gitDiffCheck": "PASS",
+    "mobileBrowser": {
+      "status": "PASS",
+      "viewport": "375x812",
+      "reviewerOverflow": false,
+      "applicantOverflow": false
+    }
+  },
+  "controls": {
+    "externalProviderEnabled": false,
+    "providerCalls": 0,
+    "defaultDeny": "PASS",
+    "activeContext": "PASS",
+    "tenantIsolation": "PASS",
+    "evidenceReauthorization": "PASS",
+    "redaction": "PASS",
+    "provenanceAudit": "PASS",
+    "immutableApplicationVersions": "PASS",
+    "humanDecisionAndHardGates": "PRESERVED",
+    "phase22CRegression": "PASS"
+  },
+  "productionSmoke": {
+    "status": "PASS",
+    "readOnlyAnonymous": true,
+    "routes": [
+      "/",
+      "/naqla2/review-assistance",
+      "/naqla2/application-assistance",
+      "/naqla2/matching-hub",
+      "/naqla2/review-assistance?application=1"
+    ],
+    "httpStatus": 200,
+    "safeUnauthenticatedBoundary": "PASS",
+    "cacheControl": "no-cache, no-store, must-revalidate"
+  }
+}

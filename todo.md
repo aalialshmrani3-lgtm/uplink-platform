@@ -34,7 +34,7 @@
 - [x] إضافة اختبار accessibility وkeyboard مخصص لمسار Applicant Copilot
 - [x] إضافة اختبار mobile DOM يقيس عدم horizontal overflow ووصول CTA لكل مسار Copilot
 - [x] إضافة assertion mobile صريح لـscrollWidth/clientWidth وCTA المسماة لكل Workspace
-- [ ] تشغيل قبول كامل وبناء وحزمة Phase 2.2D ثم النشر وproduction smoke
+- [x] تشغيل قبول كامل وبناء وحزمة Phase 2.2D ثم النشر وproduction smoke
 
 - [x] قصر دفعة الإغلاق الحالية على بنود المنصة التشغيلية في هذا القسم واستبعاد Phase 2.2B وCanary/Azure/Holdout التاريخية
 - [x] تشغيل الاختبارات المباشرة لربط NAQLA2 والسياق والواجهة قبل تحديث دفتر العمل الذري

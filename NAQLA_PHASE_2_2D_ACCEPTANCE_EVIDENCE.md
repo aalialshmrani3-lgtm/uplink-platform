@@ -23,4 +23,8 @@ The schema extension is the narrow migration `drizzle/0029_naqla2_copilot_adviso
 
 ## Production smoke
 
-Pending publication freshness verification for the Phase 2.2D checkpoint. This section is completed only after the public build ID and reviewer/applicant routes reflect this release.
+Publication freshness is verified on `https://www.uplink5.xyz/` with public build `mt6a4y3kq65m`, built at `2026-08-23T20:48:41.888Z`. `version.json` returned `Cache-Control: no-cache, no-store, must-revalidate` and a matching `Last-Modified` timestamp.
+
+Anonymous read-only HTTP smoke returned `200` for `/`, `/naqla2/review-assistance`, `/naqla2/application-assistance`, `/naqla2/matching-hub`, and the reviewer deep link `?application=1`. The reviewer route was visually opened without a user session; the initial dark splash appeared and no reviewer/application content was visible before the protected boundary completed.
+
+After the splash completed, both reviewer and applicant routes displayed only the safe Arabic sign-in boundary: `سجّل الدخول للوصول إلى مساحة الطلب أو المراجعة المصرح بها فقط.` The new Reviewer and Applicant navigation entries are present within the existing NAQLA2 shell. No reviewer, applicant, application, evidence, score, or private review content was exposed in either anonymous capture.
