@@ -44,8 +44,8 @@
 - [x] إضافة اختبار تكاملي يثبت تشغيل MatchRun من طلب محفوظ ورفض غياب الملكية أو مصدر غير teaser-only
 - [x] إضافة حالة تكاملية صريحة تستبعد listing غير `teaser_only` من مرشحي MatchRun المحفوظة
 - [x] إزالة بيانات Router المطابقة الوهمية وردود النجاح الثابتة واستبدالها بسجل طلب مطابقة وتفويضات حقيقية
-- [ ] بناء سجلات Engagement وPilot مملوكة لـNAQLA2 من Interest مقبولة وبإجراءات tRPC fail-closed
-- [ ] بناء Application وImmutable ApplicationVersion مملوكتين لـNAQLA2 بترحيل يدوي ضيق وtRPC واختبارات ملكية
+- [x] بناء سجلات Engagement وPilot مملوكة لـNAQLA2 من Interest مقبولة وبإجراءات tRPC fail-closed
+- [x] بناء Application وImmutable ApplicationVersion مملوكتين لـNAQLA2 بترحيل يدوي ضيق وtRPC واختبارات ملكية
 - [ ] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
 - [ ] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
 - [x] إزالة الاعتماد المتبقي على دعوة محلية من `/naqla` أو عزلها بوضوح كعرض مستقل لا يحل محل الدعوة الخادمية

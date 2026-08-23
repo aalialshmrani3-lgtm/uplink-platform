@@ -7,8 +7,8 @@
   },
   "verification": {
     "typescript": "PASS",
-    "testFilesPassed": 24,
-    "testsPassed": 90,
+    "testFilesPassed": 25,
+    "testsPassed": 94,
     "productionBuild": "PASS",
     "diffCheck": "PASS",
     "modifiedDiffSecretPatternMatches": 0,
