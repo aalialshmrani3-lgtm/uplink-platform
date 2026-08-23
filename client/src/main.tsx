@@ -10,6 +10,7 @@ import { getLoginUrl } from "./const";
 import "./index.css";
 import { HelmetProvider } from 'react-helmet-async';
 import { clearLegacyClientShell } from "./lib/legacyClientCleanup";
+import { StartupBoot } from "./components/StartupBoot";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,7 +70,9 @@ ReactDOM.createRoot(rootElement).render(
   <HelmetProvider>
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <StartupBoot>
+          <App />
+        </StartupBoot>
       </QueryClientProvider>
     </trpc.Provider>
   </HelmetProvider>
