@@ -7,3 +7,7 @@ The `/` and `/naqla` routes were captured at a 390×844 viewport after a product
 ## Follow-up checks
 
 The final acceptance pass will repeat screenshots after the full test suite and validate the English LTR state as part of the browser smoke tests.
+
+## Desktop follow-up
+
+The current desktop captures of `/` and `/naqla` load successfully after the production build. The home route uses Arabic RTL hierarchy, exposes the three engines and a clear workspace call-to-action, and does not display unsupported partner, integration, or numerical claims. The workspace retains a visible Synthetic Demo label, explicit deterministic controls, a separated Commercial Asset/Commercial Transaction treatment, readable NAQLA1–3 progress, and no exposed identifiers or diagnostic text.

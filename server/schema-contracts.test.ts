@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getTableColumns } from "drizzle-orm";
-import { contracts, events, naqla2InterestRequests, naqla2MarketplaceListings, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions } from "../drizzle/schema";
+import { contracts, events, naqla2InterestRequests, naqla2MarketplaceListings, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
 
 describe("مخطط بيانات الفعاليات والعقود", () => {
   it("يطابق اسم عمود الحدث الافتراضي في قاعدة البيانات", () => {
@@ -31,5 +31,12 @@ describe("مخطط بيانات الفعاليات والعقود", () => {
     expect(getTableColumns(naqla3CommercialTransactions).assetId.name).toBe("assetId");
     expect(getTableColumns(naqla3CommercialTransactions).initiatorUserId.name).toBe("initiatorUserId");
     expect(getTableColumns(naqla3CommercialTransactions).counterpartyUserId.name).toBe("counterpartyUserId");
+  });
+
+  it("يثبت حدود المؤسسة والسياق النشط بمعرفات مستقلة", () => {
+    expect(getTableColumns(organizationMemberships).organizationId.name).toBe("organizationId");
+    expect(getTableColumns(organizationMemberships).userId.name).toBe("userId");
+    expect(getTableColumns(organizationInvitations).invitedEmail.name).toBe("invitedEmail");
+    expect(getTableColumns(userActiveContexts).organizationId.name).toBe("organizationId");
   });
 });
