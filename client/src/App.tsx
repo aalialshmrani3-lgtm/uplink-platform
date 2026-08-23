@@ -2,12 +2,14 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import ContractSignature from "@/pages/ContractSignature";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { lazy, Suspense } from "react";
 import { BootGate } from "./components/BootGate";
+import PlatformShell from "./components/PlatformShell";
+import { shouldUsePlatformShell } from "./lib/platformRoutes";
 import Home from "./pages/Home";
 
 // Home is the boot route. Keep it in the entry bundle so an inherited lazy
@@ -174,7 +176,9 @@ function PageLoader() {
 }
 
 function Router() {
-  return (
+  const [location] = useLocation();
+
+  const routes = (
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={Home} />
@@ -331,6 +335,8 @@ function Router() {
       </Switch>
     </Suspense>
   );
+
+  return shouldUsePlatformShell(location) ? <PlatformShell>{routes}</PlatformShell> : routes;
 }
 
 function App() {

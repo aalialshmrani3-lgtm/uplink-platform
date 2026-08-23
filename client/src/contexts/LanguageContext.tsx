@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { translations, Language, isRTL, languageNames } from '../i18n';
+import React from 'react';
 
 type TranslationType = typeof translations.ar;
 

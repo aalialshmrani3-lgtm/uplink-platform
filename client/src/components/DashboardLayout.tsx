@@ -22,8 +22,10 @@ import {
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
 import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
+import InternalSidebar from "./InternalSidebar";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 import NotificationBell from "./NotificationBell";
@@ -38,10 +40,27 @@ const DEFAULT_WIDTH = 280;
 const MIN_WIDTH = 200;
 const MAX_WIDTH = 480;
 
+/**
+ * Reference shell restored from the full interface. It deliberately does not
+ * impose the default layout's login gate: individual pages keep their existing
+ * authorization guards while every internal route receives the same sidebar
+ * and responsive content frame.
+ */
+export function ReferenceDashboardShell({ children }: { children: ReactNode }) {
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-background text-foreground">
+        <InternalSidebar className="hidden lg:block" />
+        <SidebarInset className="min-w-0 flex-1">{children}</SidebarInset>
+      </div>
+    </SidebarProvider>
+  );
+}
+
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY);
@@ -99,7 +118,7 @@ export default function DashboardLayout({
 }
 
 type DashboardLayoutContentProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   setSidebarWidth: (width: number) => void;
 };
 

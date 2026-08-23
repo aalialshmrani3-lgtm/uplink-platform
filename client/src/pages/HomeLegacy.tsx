@@ -12,7 +12,7 @@ import {
   MessageSquare, PenTool, Target, Layers, CheckCircle2,
   Menu, X, ArrowUp
 } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -335,6 +335,8 @@ export default function Home() {
           </div>
           
           <div className="hidden md:flex items-center gap-6">
+            <Link href="/dashboard" className="text-cyan-500 hover:text-cyan-400 transition-colors text-sm font-semibold">{isAr ? "لوحة التحكم" : "Dashboard"}</Link>
+            <Link href="/profile" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{isAr ? "الملف الشخصي" : "Profile"}</Link>
             <Link href="/why-naqla" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.whyNaqla}</Link>
             <Link href="/case-studies" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.caseStudies}</Link>
             <Link href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors text-sm">{t.nav.integrations}</Link>
