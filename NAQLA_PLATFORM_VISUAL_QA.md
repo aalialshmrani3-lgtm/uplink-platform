@@ -39,3 +39,7 @@ The 390×844 full-page capture after adding the server synthetic-record action r
 ## Server-context UI verification
 
 Desktop and 390×844 mobile captures after the server-context and CR01 bindings show the explicit no-context state, server-only invitation guidance, synthetic-record action, and the three-engine journey without horizontal overflow. The persona selector remains available only for the unsigned Synthetic Demo; it becomes unavailable when an active server context supplies the effective role.
+
+## NAQLA2 and NAQLA3 server-action verification
+
+The latest desktop and 390×844 mobile captures retain a single-column mobile layout and show the server-read cards for NAQLA2 teaser opportunities and NAQLA3 owned commercial records. In the unsigned state, both paths state the required sign-in and do not reveal customer records, prices, private evidence, contracts, or payment controls.
