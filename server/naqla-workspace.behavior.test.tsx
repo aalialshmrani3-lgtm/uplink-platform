@@ -145,4 +145,16 @@ describe("NAQLA workspace behavioral accessibility", () => {
     createContextMutation.onSuccess?.();
     expect(refetch).toHaveBeenCalled();
   });
+
+  it("يعطل persona المحلية عندما يشتق الدور من سياق خادمي فعّال", () => {
+    contextsResult = {
+      data: [{ id: 41, nameAr: "سياق خادمي", nameEn: "Server context", isActiveContext: true, role: "owner" }],
+      isLoading: false,
+      isError: false,
+      refetch,
+    };
+    render(<NaqlaJourneyWorkspace />);
+    expect(screen.getByRole("combobox", { name: "دور العرض الاصطناعي" })).toBeDisabled();
+    expect(screen.getByText(/الدور الفعّال مشتق من عضويتك الخادمية/)).toBeInTheDocument();
+  });
 });
