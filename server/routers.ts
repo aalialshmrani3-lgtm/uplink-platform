@@ -5059,9 +5059,8 @@ ${input.technicalDetails}` : ''}`;
           endDate: z.string().optional(),
           terms: z.string().optional(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use contract functions
-          return { success: true, id: 1 };
+        .mutation(async () => {
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Contract creation is not available until an explicitly approved legal workflow is implemented.' });
         }),
 
       sign: protectedProcedure
@@ -5069,9 +5068,8 @@ ${input.technicalDetails}` : ''}`;
           contractId: z.number(),
           signature: z.string(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use contract functions
-          return { success: true };
+        .mutation(async () => {
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Contract signing is unavailable; no signature or legal commitment was recorded.' });
         }),
 
       updateMilestone: protectedProcedure
@@ -5080,22 +5078,21 @@ ${input.technicalDetails}` : ''}`;
           milestoneIndex: z.number(),
           status: z.enum(['pending', 'completed', 'cancelled']),
         }))
-        .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use contract functions
-          return { success: true };
+        .mutation(async () => {
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Milestone updates are unavailable until an approved contract workflow exists.' });
         }),
 
       getMyContracts: protectedProcedure
-        .query(async ({ ctx }) => {
-          // TODO: Import and use contract functions
-          return [];
+        .query(async () => {
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Contract records are unavailable because no approved contract store is configured.' });
+          return [] as Array<Record<string, unknown>>;
         }),
 
       getContract: protectedProcedure
         .input(z.object({ contractId: z.number() }))
-        .query(async ({ ctx, input }) => {
-          // TODO: Import and use contract functions
-          return null;
+        .query(async () => {
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Contract records are unavailable because no approved contract store is configured.' });
+          return null as Record<string, unknown> | null;
         }),
 
       cancel: protectedProcedure
@@ -5103,9 +5100,8 @@ ${input.technicalDetails}` : ''}`;
           contractId: z.number(),
           reason: z.string().optional(),
         }))
-        .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use contract functions
-          return { success: true };
+        .mutation(async () => {
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Contract cancellation is unavailable because no contract was created by this platform.' });
         }),
     }),
 

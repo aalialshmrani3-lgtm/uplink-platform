@@ -111,4 +111,27 @@ describe("organizationContext", () => {
     expect(membershipValues).toHaveBeenCalledWith(expect.objectContaining({ organizationId: 73, userId: 41, role: "member", status: "active" }));
     expect(where).toHaveBeenCalledTimes(1);
   });
+
+  it("يكمل onboarding الخادمي: إنشاء منظمة ثم دعوة ثم قبول ثم تفعيل السياق", async () => {
+    const values = vi.fn()
+      .mockResolvedValueOnce({ insertId: 73 })
+      .mockResolvedValueOnce({ insertId: 1 })
+      .mockResolvedValueOnce({ insertId: 1 })
+      .mockReturnValueOnce({ $returningId: vi.fn().mockResolvedValue([{ id: 19 }]) })
+      .mockResolvedValueOnce({ insertId: 1 });
+    const select = vi.fn()
+      .mockReturnValueOnce(resolvedBuilder([{ role: "owner" }]))
+      .mockReturnValueOnce(resolvedBuilder([{ id: 19, organizationId: 73, invitedEmail: "member@example.com", role: "member", status: "pending" }]))
+      .mockReturnValueOnce(resolvedBuilder([{ id: 4 }]))
+      .mockReturnValueOnce(resolvedBuilder([{ id: 2 }]));
+    const where = vi.fn().mockResolvedValue({ affectedRows: 1 });
+    getDb.mockResolvedValue({ select, insert: vi.fn(() => ({ values })), update: vi.fn(() => ({ set: () => ({ where }) })) });
+
+    const owner = appRouter.createCaller(contextFor({ id: 41, email: "owner@example.com" }));
+    const invited = appRouter.createCaller(contextFor({ id: 52, email: "member@example.com" }));
+    await expect(owner.organizationContext.create({ nameAr: "منظمة رحلة", type: "supporting", scope: "local" })).resolves.toEqual({ organizationId: 73, activeContext: 73 });
+    await expect(owner.organizationContext.invite({ organizationId: 73, invitedEmail: "member@example.com", role: "member" })).resolves.toEqual({ invitationId: 19, status: "pending" });
+    await expect(invited.organizationContext.acceptInvitation({ invitationId: 19 })).resolves.toEqual({ organizationId: 73, role: "member" });
+    await expect(invited.organizationContext.setActive({ organizationId: 73 })).resolves.toEqual({ organizationId: 73 });
+  });
 });

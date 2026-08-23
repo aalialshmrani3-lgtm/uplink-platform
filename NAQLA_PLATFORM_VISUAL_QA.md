@@ -35,3 +35,7 @@ The latest comparison passed: both the preview route and `https://uplink5.xyz/na
 ## Latest mobile verification
 
 The 390×844 full-page capture after adding the server synthetic-record action retained a readable single-column layout. The context panel, engine progress, NAQLA1 controls, commercial separation cards, and full journey map remain within the viewport width with no horizontal overflow.
+
+## Server-context UI verification
+
+Desktop and 390×844 mobile captures after the server-context and CR01 bindings show the explicit no-context state, server-only invitation guidance, synthetic-record action, and the three-engine journey without horizontal overflow. The persona selector remains available only for the unsigned Synthetic Demo; it becomes unavailable when an active server context supplies the effective role.
