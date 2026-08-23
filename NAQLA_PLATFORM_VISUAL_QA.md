@@ -19,3 +19,9 @@ The latest 390×844 capture of `/naqla` remains a readable single-column RTL lay
 ## Public smoke observation
 
 The public `uplink5.xyz` root route returned the expected NAQLA landing page. Navigation to `/naqla` reached the operating-workspace route; the browser initially displayed its loading treatment while the route bundle resolved. The final publish checkpoint must include the latest invitation-context UI before recording the final public smoke result.
+
+## Public smoke follow-up
+
+After the latest checkpoint, the public `/naqla` route still rendered the older localized invitation wording (`دعوة عضوية اصطناعية`) rather than the new server-only invitation copy. The route itself is reachable and operational, but this content mismatch is recorded as a deployment/cache verification gap. It must not be reported as a successful final smoke verification until the current checkpoint is visibly served.
+
+Browser diagnostics found no registered service worker. The public browser received `NaqlaJourneyWorkspace-CqwXndjV.js`, while the local acceptance build produced a different current bundle filename. This indicates that the remaining smoke gap is serving-version propagation rather than a browser service-worker cache.
