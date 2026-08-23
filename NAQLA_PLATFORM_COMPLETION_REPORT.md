@@ -21,7 +21,8 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 | Verification | Result |
 |---|---|
 | TypeScript | `pnpm check` passed. |
-| Unit and integration regression | `pnpm test`: **26 test files, 98 tests passed**. |
+| Unit and integration regression | `pnpm test`: **28 test files, 101 tests passed**. |
+| Isolated NAQLA1 storage verification | PASS on a temporary MariaDB instance under `/tmp`, including record, authorized evidence, immutable version, deterministic assessment, Passport/TRL/Gaps/Next Best Action, revocation, and cleanup. |
 | Context authorization | Eight tRPC tests cover create, active-context denial/success, invitation denial/success, pending-invitation listing, and invitation acceptance. |
 | Production build | `pnpm build` passed in 16.73 seconds. |
 | Source diff quality | `git diff --check` passed. |

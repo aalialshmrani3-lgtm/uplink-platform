@@ -51,7 +51,7 @@
 - [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
 - [ ] ربط Challenge وOpportunity وDiscovery في NAQLA2 بعقود tRPC وقيود teaser-only واختبارات ملكية قبل إغلاق المسار
 - [x] إزالة fallback الفارغ من Discovery Challenges وإرجاع خطأ خادمي صريح بدلاً من إخفاء العطل
-- [ ] بناء إجراءات MatchRun حتمية للمطابقة المفسرة فوق طلبات المطابقة والـteaser العامة مع Factors مسجلة وبدون AI
+- [x] بناء إجراءات MatchRun حتمية للمطابقة المفسرة فوق طلبات المطابقة والـteaser العامة مع Factors مسجلة وبدون AI
 - [ ] إضافة/إثبات عقود tRPC واختبارات ملكية صريحة لمسارات Opportunity وDiscovery في NAQLA2
 - [ ] اختبار NAQLA2 end-to-end في `/naqla` ضمن ActiveContext خادمي قبل إغلاق المسار الأعلى
 - [x] ربط MatchRun بطلب مطابقة محفوظ ومملوك في `matching_requests` بدلاً من `queryText` الحر فقط
