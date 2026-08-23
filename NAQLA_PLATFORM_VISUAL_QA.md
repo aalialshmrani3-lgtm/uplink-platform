@@ -25,3 +25,9 @@ The public `uplink5.xyz` root route returned the expected NAQLA landing page. Na
 After the latest checkpoint, the public `/naqla` route still rendered the older localized invitation wording (`دعوة عضوية اصطناعية`) rather than the new server-only invitation copy. The route itself is reachable and operational, but this content mismatch is recorded as a deployment/cache verification gap. It must not be reported as a successful final smoke verification until the current checkpoint is visibly served.
 
 Browser diagnostics found no registered service worker. The public browser received `NaqlaJourneyWorkspace-CqwXndjV.js`, while the local acceptance build produced a different current bundle filename. This indicates that the remaining smoke gap is serving-version propagation rather than a browser service-worker cache.
+
+A second public smoke retry after a follow-up checkpoint produced the same older invitation copy. The public root and `/naqla` routes remain reachable, but the latest bundle propagation has not yet been independently verified; final smoke remains **not passed**.
+
+## Final public smoke result
+
+The latest comparison passed: both the preview route and `https://uplink5.xyz/naqla` now render the current server-only invitation wording and the updated server-role evidence guidance. The custom-domain bundle propagation gap cleared without enabling any external-AI provider. Public smoke is **passed** for `/` and `/naqla`.
