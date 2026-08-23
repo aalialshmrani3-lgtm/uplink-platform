@@ -78,6 +78,7 @@ const OrganizationsDashboard = lazy(() => import("./pages/OrganizationsDashboard
 const AIStrategicAdvisor = lazy(() => import("./pages/AIStrategicAdvisor"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const Naqla1 = lazy(() => import("./pages/Naqla1"));
+const NaqlaJourneyWorkspace = lazy(() => import("./pages/NaqlaJourneyWorkspace"));
 const SubmitIdea = lazy(() => import('@/pages/SubmitIdea'));
 const Naqla1Passport = lazy(() => import('@/pages/Naqla1Passport'));
 const MyIdeas = lazy(() => import('@/pages/MyIdeas'));
@@ -191,6 +192,7 @@ function Router() {
         <Route path="/challenges" component={Challenges} />
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/naqla1" component={Naqla1} />
+        <Route path="/naqla" component={NaqlaJourneyWorkspace} />
         <Route path="/naqla1/dashboard" component={Naqla1Dashboard} /> {/* NAQLA 1 Dashboard */}
         <Route path="/naqla1/passport/:id" component={Naqla1Passport} />
         <Route path="/naqla1/passport" component={Naqla1Passport} />

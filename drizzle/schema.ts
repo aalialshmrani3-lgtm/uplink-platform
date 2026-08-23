@@ -937,6 +937,34 @@ export const organizations = mysqlTable("organizations", {
 	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 });
 
+export const organizationMemberships = mysqlTable("organization_memberships", {
+  id: int().autoincrement().primaryKey(),
+  organizationId: int().notNull(),
+  userId: int().notNull(),
+  role: mysqlEnum(['owner', 'manager', 'member', 'reviewer']).notNull().default('member'),
+  status: mysqlEnum(['active', 'revoked']).notNull().default('active'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('organization_membership_org_idx').on(table.organizationId), index('organization_membership_user_idx').on(table.userId)]);
+
+export const organizationInvitations = mysqlTable("organization_invitations", {
+  id: int().autoincrement().primaryKey(),
+  organizationId: int().notNull(),
+  invitedEmail: varchar({ length: 320 }).notNull(),
+  role: mysqlEnum(['manager', 'member', 'reviewer']).notNull().default('member'),
+  invitedByUserId: int().notNull(),
+  status: mysqlEnum(['pending', 'accepted', 'revoked']).notNull().default('pending'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('organization_invitation_org_idx').on(table.organizationId), index('organization_invitation_email_idx').on(table.invitedEmail)]);
+
+export const userActiveContexts = mysqlTable("user_active_contexts", {
+  id: int().autoincrement().primaryKey(),
+  userId: int().notNull(),
+  organizationId: int().notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('user_active_context_user_idx').on(table.userId)]);
+
 export const permissions = mysqlTable("permissions", {
 	id: int().autoincrement().notNull(),
 	resource: varchar({ length: 100 }).notNull(),
@@ -2125,3 +2153,79 @@ export type TrlAssessment = typeof trlAssessments.$inferSelect;
 export type InsertTrlAssessment = typeof trlAssessments.$inferInsert;
 export type InnovationPassport = typeof innovationPassports.$inferSelect;
 export type InsertInnovationPassport = typeof innovationPassports.$inferInsert;
+
+// ============================================
+// NAQLA2 — Manual Review, Listings, and Interest
+// These entities are operational records; they do not infer legal/IP outcomes.
+// ============================================
+
+export const naqla2VettingReviews = mysqlTable("naqla2_vetting_reviews", {
+  id: int().autoincrement().primaryKey(),
+  ipRegistrationId: int().notNull(),
+  reviewerUserId: int().notNull(),
+  recommendation: mysqlEnum(['approve', 'reject', 'needs_revision']).notNull(),
+  comments: text().notNull(),
+  revisionSuggestions: text(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [index('naqla2_vetting_review_ip_idx').on(table.ipRegistrationId)]);
+
+export const naqla2MarketplaceListings = mysqlTable("naqla2_marketplace_listings", {
+  id: int().autoincrement().primaryKey(),
+  ipRegistrationId: int().notNull(),
+  ownerUserId: int().notNull(),
+  title: varchar({ length: 500 }).notNull(),
+  summary: text().notNull(),
+  disclosureScope: mysqlEnum(['teaser_only', 'authorized_disclosure']).notNull().default('teaser_only'),
+  status: mysqlEnum(['draft', 'published', 'paused', 'withdrawn']).notNull().default('draft'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla2_marketplace_listing_ip_idx').on(table.ipRegistrationId), index('naqla2_marketplace_listing_owner_idx').on(table.ownerUserId)]);
+
+export const naqla2InterestRequests = mysqlTable("naqla2_interest_requests", {
+  id: int().autoincrement().primaryKey(),
+  listingId: int().notNull(),
+  requesterUserId: int().notNull(),
+  ownerUserId: int().notNull(),
+  message: text().notNull(),
+  status: mysqlEnum(['submitted', 'accepted', 'declined', 'withdrawn']).notNull().default('submitted'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla2_interest_listing_idx').on(table.listingId), index('naqla2_interest_requester_idx').on(table.requesterUserId), index('naqla2_interest_owner_idx').on(table.ownerUserId)]);
+
+export type Naqla2VettingReview = typeof naqla2VettingReviews.$inferSelect;
+export type InsertNaqla2VettingReview = typeof naqla2VettingReviews.$inferInsert;
+export type Naqla2MarketplaceListing = typeof naqla2MarketplaceListings.$inferSelect;
+export type InsertNaqla2MarketplaceListing = typeof naqla2MarketplaceListings.$inferInsert;
+export type Naqla2InterestRequest = typeof naqla2InterestRequests.$inferSelect;
+export type InsertNaqla2InterestRequest = typeof naqla2InterestRequests.$inferInsert;
+
+// ============================================
+// NAQLA3 — Commercial asset and transaction are separate, human-governed records.
+// ============================================
+
+export const naqla3CommercialAssets = mysqlTable("naqla3_commercial_assets", {
+  id: int().autoincrement().primaryKey(),
+  ownerUserId: int().notNull(),
+  sourceListingId: int(),
+  title: varchar({ length: 500 }).notNull(),
+  scope: text().notNull(),
+  status: mysqlEnum(['prepared', 'due_diligence', 'contract_ready', 'archived']).notNull().default('prepared'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla3_asset_owner_idx').on(table.ownerUserId), index('naqla3_asset_listing_idx').on(table.sourceListingId)]);
+
+export const naqla3CommercialTransactions = mysqlTable("naqla3_commercial_transactions", {
+  id: int().autoincrement().primaryKey(),
+  assetId: int().notNull(),
+  initiatorUserId: int().notNull(),
+  counterpartyUserId: int().notNull(),
+  status: mysqlEnum(['initiated', 'human_review', 'contract_ready', 'executing', 'cancelled']).notNull().default('initiated'),
+  humanReviewNote: text(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla3_transaction_asset_idx').on(table.assetId), index('naqla3_transaction_initiator_idx').on(table.initiatorUserId), index('naqla3_transaction_counterparty_idx').on(table.counterpartyUserId)]);
+
+export type Naqla3CommercialAsset = typeof naqla3CommercialAssets.$inferSelect;
+export type InsertNaqla3CommercialAsset = typeof naqla3CommercialAssets.$inferInsert;
+export type Naqla3CommercialTransaction = typeof naqla3CommercialTransactions.$inferSelect;
+export type InsertNaqla3CommercialTransaction = typeof naqla3CommercialTransactions.$inferInsert;

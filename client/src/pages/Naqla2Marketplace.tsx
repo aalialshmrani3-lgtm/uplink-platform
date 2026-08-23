@@ -39,8 +39,7 @@ export default function Naqla2Marketplace() {
   const handleRequestPurchase = (listingId: number) => {
     requestPurchase.mutate({
       listingId,
-      offerPrice: 100000,
-      message: "I'm interested in this IP",
+      message: "I would like to request an authorized conversation about this listed teaser.",
     });
   };
 

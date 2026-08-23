@@ -59,10 +59,6 @@ export default function Naqla2VettingDashboard() {
     
     submitReview.mutate({
       ipRegistrationId: selectedIP,
-      score: reviewForm.score,
-      noveltyScore: reviewForm.noveltyScore,
-      feasibilityScore: reviewForm.feasibilityScore,
-      marketPotentialScore: reviewForm.marketPotentialScore,
       comments: reviewForm.comments,
       recommendation: reviewForm.recommendation,
       revisionSuggestions: reviewForm.revisionSuggestions,

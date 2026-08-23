@@ -1,82 +1,76 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from "vitest";
+import { INITIAL_JOURNEY_STATE, advanceJourney, applyJourneyControl, canAdvanceJourney, personaCanReviewEvidence } from "../shared/naqlaJourney";
 
-describe('NAQLA Journey - Complete Flow Tests', () => {
-  describe('Classification Logic', () => {
-    it('should classify score ≥70% as innovation', () => {
-      const score = 75;
-      const path = score >= 70 ? 'innovation' : score >= 60 ? 'commercial' : 'guidance';
-      expect(path).toBe('innovation');
-    });
+describe("NAQLA deterministic journey", () => {
+  it("enforces evidence authorization and immutable application versioning before dependent transitions", () => {
+    let state = INITIAL_JOURNEY_STATE;
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "save_record_version");
+    expect(canAdvanceJourney(state)).toBe(true);
+    state = advanceJourney(state);
+    expect(state.stage).toBe("evidence");
+    expect(canAdvanceJourney(state)).toBe(false);
 
-    it('should classify score 60-69% as commercial', () => {
-      const score = 65;
-      const path = score >= 70 ? 'innovation' : score >= 60 ? 'commercial' : 'guidance';
-      expect(path).toBe('commercial');
-    });
+    state = applyJourneyControl(state, "authorize_evidence");
+    state = advanceJourney(state);
+    expect(state.stage).toBe("evaluate");
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "evaluate_readiness");
+    state = advanceJourney(state);
+    expect(state.stage).toBe("improve");
+    state = applyJourneyControl(state, "address_gaps");
+    state = advanceJourney(state);
+    expect(state.stage).toBe("qualify");
+    state = applyJourneyControl(state, "qualify_record");
+    state = advanceJourney(state);
+    expect(state.stage).toBe("route");
 
-    it('should classify score <60% as guidance', () => {
-      const score = 55;
-      const path = score >= 70 ? 'innovation' : score >= 60 ? 'commercial' : 'guidance';
-      expect(path).toBe('guidance');
-    });
+    state = { ...state, stage: "match" };
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "generate_match_run");
+    state = advanceJourney(state);
+    expect(state.stage).toBe("apply");
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "create_application_version");
+    expect(canAdvanceJourney(state)).toBe(true);
   });
 
-  describe('User Choice Logic', () => {
-    it('should allow user to choose NAQLA 2 when score ≥60%', () => {
-      const score = 70;
-      const canChoose = score >= 60;
-      expect(canChoose).toBe(true);
-    });
-
-    it('should allow user to choose NAQLA 3 directly when score ≥60%', () => {
-      const score = 75;
-      const canChooseDirect = score >= 60;
-      expect(canChooseDirect).toBe(true);
-    });
-
-    it('should NOT allow choice when score <60%', () => {
-      const score = 55;
-      const canChoose = score >= 60;
-      expect(canChoose).toBe(false);
-    });
+  it("does not grant evidence review to investor or government personas by implication", () => {
+    expect(personaCanReviewEvidence("investor")).toBe(false);
+    expect(personaCanReviewEvidence("government")).toBe(false);
+    expect(personaCanReviewEvidence("reviewer")).toBe(true);
   });
 
-  describe('Strategic Partner Mapping', () => {
-    it('should suggest KAUST for innovation path (≥70%)', () => {
-      const score = 75;
-      const partner = score >= 70 ? 'KAUST' : score >= 60 ? 'Monsha\'at' : 'RDIA';
-      expect(partner).toBe('KAUST');
-    });
-
-    it('should suggest Monsha\'at for commercial path (60-69%)', () => {
-      const score = 65;
-      const partner = score >= 70 ? 'KAUST' : score >= 60 ? 'Monsha\'at' : 'RDIA';
-      expect(partner).toBe('Monsha\'at');
-    });
-
-    it('should suggest RDIA for guidance path (<60%)', () => {
-      const score = 55;
-      const partner = score >= 70 ? 'KAUST' : score >= 60 ? 'Monsha\'at' : 'RDIA';
-      expect(partner).toBe('RDIA');
-    });
+  it("revokes evidence authorization and leaves the dependent stage blocked", () => {
+    let state = { ...INITIAL_JOURNEY_STATE, stage: "evidence" as const };
+    state = applyJourneyControl(state, "authorize_evidence");
+    expect(canAdvanceJourney(state)).toBe(true);
+    state = applyJourneyControl(state, "revoke_evidence");
+    expect(canAdvanceJourney(state)).toBe(false);
+    expect(state.auditTrail.at(-1)).toBe("EVIDENCE_REVOKED");
   });
 
-  describe('Price Calculation Logic', () => {
-    it('should calculate higher price for higher scores', () => {
-      const score1 = 70;
-      const score2 = 90;
-      
-      const price1 = Math.round(score1 * 1000);
-      const price2 = Math.round(score2 * 1000);
-      
-      expect(price2).toBeGreaterThan(price1);
-    });
+  it("keeps commercial asset preparation separate from transaction tracking", () => {
+    let state = { ...INITIAL_JOURNEY_STATE, stage: "diligence" as const };
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "prepare_asset");
+    expect(canAdvanceJourney(state)).toBe(true);
+    state = advanceJourney(state);
+    expect(state.stage).toBe("contract");
+    expect(state.commercialTransactionStarted).toBe(false);
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "start_transaction");
+    expect(canAdvanceJourney(state)).toBe(true);
+  });
 
-    it('should have minimum price for low scores', () => {
-      const score = 60;
-      const price = Math.max(Math.round(score * 1000), 50000);
-      
-      expect(price).toBeGreaterThanOrEqual(50000);
-    });
+  it("requires accepted interest and active engagement before a pilot can advance", () => {
+    let state = { ...INITIAL_JOURNEY_STATE, stage: "pilot" as const, applicationVersion: 1 };
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "accept_interest");
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "establish_engagement");
+    expect(canAdvanceJourney(state)).toBe(false);
+    state = applyJourneyControl(state, "ready_for_pilot");
+    expect(canAdvanceJourney(state)).toBe(true);
   });
 });

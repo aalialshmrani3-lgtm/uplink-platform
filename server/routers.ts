@@ -8,8 +8,8 @@ import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
-import { userChoices, ideaJourneyEvents } from "../drizzle/schema";
-import { eq, asc } from "drizzle-orm";
+import { userChoices, ideaJourneyEvents, ipRegistrations, naqla2InterestRequests, naqla2MarketplaceListings, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
+import { and, asc, desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
 import { CR01_SUBMISSION_TYPES, CR01_TYPE_CONFIG, deriveQualificationOutcome, evaluateTrlEvidence } from "./naqla1-cr01";
@@ -219,6 +219,70 @@ export const appRouter = router({
       })).mutation(async ({ ctx, input }) => {
         // TODO: Implement settings update logic in db.ts
         return { success: true };
+      }),
+  }),
+
+  organizationContext: router({
+    create: protectedProcedure
+      .input(z.object({ nameAr: z.string().min(2).max(500), nameEn: z.string().max(500).optional(), type: z.enum(['government', 'academic', 'private', 'supporting']), scope: z.enum(['local', 'global']).default('local') }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const insertResult = await database.insert(organizations).values({ ...input, isActive: 1 });
+        const organizationId = Number((insertResult as any)[0]?.insertId ?? (insertResult as any).insertId);
+        if (!Number.isInteger(organizationId) || organizationId <= 0) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Organization creation did not return an identifier' });
+        await database.insert(organizationMemberships).values({ organizationId, userId: ctx.user.id, role: 'owner', status: 'active' });
+        await database.insert(userActiveContexts).values({ userId: ctx.user.id, organizationId });
+        return { organizationId, activeContext: organizationId };
+      }),
+
+    myContexts: protectedProcedure.query(async ({ ctx }) => {
+      const database = await getDb();
+      if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+      const memberships = await database.select().from(organizationMemberships).where(and(eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active')));
+      const active = await database.select().from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
+      const contexts = await Promise.all(memberships.map(async (membership) => {
+        const [organization] = await database.select({ id: organizations.id, nameAr: organizations.nameAr, nameEn: organizations.nameEn, type: organizations.type }).from(organizations).where(eq(organizations.id, membership.organizationId)).limit(1);
+        return organization ? { ...organization, role: membership.role, isActiveContext: active[0]?.organizationId === organization.id } : null;
+      }));
+      return contexts.filter(Boolean);
+    }),
+
+    setActive: protectedProcedure
+      .input(z.object({ organizationId: z.number().int().positive() }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [membership] = await database.select({ id: organizationMemberships.id }).from(organizationMemberships).where(and(eq(organizationMemberships.organizationId, input.organizationId), eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active'))).limit(1);
+        if (!membership) throw new TRPCError({ code: 'FORBIDDEN', message: 'An active organization membership is required' });
+        const [active] = await database.select({ id: userActiveContexts.id }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
+        if (active) await database.update(userActiveContexts).set({ organizationId: input.organizationId }).where(eq(userActiveContexts.id, active.id));
+        else await database.insert(userActiveContexts).values({ userId: ctx.user.id, organizationId: input.organizationId });
+        return { organizationId: input.organizationId };
+      }),
+
+    invite: protectedProcedure
+      .input(z.object({ organizationId: z.number().int().positive(), invitedEmail: z.string().email(), role: z.enum(['manager', 'member', 'reviewer']).default('member') }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [membership] = await database.select({ role: organizationMemberships.role }).from(organizationMemberships).where(and(eq(organizationMemberships.organizationId, input.organizationId), eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active'))).limit(1);
+        if (!membership || !['owner', 'manager'].includes(membership.role)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only an organization owner or manager may invite members' });
+        const [invitation] = await database.insert(organizationInvitations).values({ ...input, invitedByUserId: ctx.user.id, status: 'pending' }).$returningId();
+        return { invitationId: invitation.id, status: 'pending' };
+      }),
+
+    acceptInvitation: protectedProcedure
+      .input(z.object({ invitationId: z.number().int().positive() }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [invitation] = await database.select().from(organizationInvitations).where(and(eq(organizationInvitations.id, input.invitationId), eq(organizationInvitations.status, 'pending'))).limit(1);
+        const userEmail = ctx.user.email?.toLowerCase();
+        if (!invitation || !userEmail || invitation.invitedEmail.toLowerCase() !== userEmail) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the invited account may accept this invitation' });
+        await database.insert(organizationMemberships).values({ organizationId: invitation.organizationId, userId: ctx.user.id, role: invitation.role, status: 'active' });
+        await database.update(organizationInvitations).set({ status: 'accepted' }).where(eq(organizationInvitations.id, invitation.id));
+        return { organizationId: invitation.organizationId, role: invitation.role };
       }),
   }),
 
@@ -3667,7 +3731,8 @@ Provide response in JSON format:
         return db.getProjectById(input.projectId);
       }),
 
-    // Vetting System
+    // Manual review, marketplace listing, and interest workflow.
+    // These procedures intentionally make no legal/IP conclusion and disclose only a listing teaser.
     vetting: router({
       getPendingIPs: protectedProcedure
         .query(async ({ ctx }) => {
@@ -3683,44 +3748,31 @@ Provide response in JSON format:
       submitReview: protectedProcedure
         .input(z.object({
           ipRegistrationId: z.number(),
-          score: z.number().min(0).max(100),
-          noveltyScore: z.number().min(0).max(100),
-          feasibilityScore: z.number().min(0).max(100),
-          marketPotentialScore: z.number().min(0).max(100),
-          comments: z.string(),
+          comments: z.string().min(10).max(10000),
           recommendation: z.enum(['approve', 'reject', 'needs_revision']),
-          revisionSuggestions: z.string().optional(),
+          revisionSuggestions: z.string().max(10000).optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Create vettingReviews table in schema first
-          throw new TRPCError({ code: 'NOT_IMPLEMENTED', message: 'Vetting reviews feature not yet implemented' });
-          // const db = await getDb();
-          // if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          // const { vettingReviews } = await import('../drizzle/schema');
-          
-          // Determine expert type based on user role or assign default
-          // const expertType = 'technical'; // TODO: determine from user profile
-          // await db.insert(vettingReviews).values({...});
-          // Auto-trigger Diamond Decision Point (disabled)
-          
-          return { 
-            success: true, 
-            decisionMade: false, // decision !== null
-            // decision, // removed
-          };
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [ip] = await database.select({ id: ipRegistrations.id }).from(ipRegistrations).where(eq(ipRegistrations.id, input.ipRegistrationId)).limit(1);
+          if (!ip) throw new TRPCError({ code: 'NOT_FOUND', message: 'IP registration not found' });
+          const [review] = await database.insert(naqla2VettingReviews).values({
+            ipRegistrationId: input.ipRegistrationId,
+            reviewerUserId: ctx.user.id,
+            recommendation: input.recommendation,
+            comments: input.comments,
+            revisionSuggestions: input.revisionSuggestions,
+          }).$returningId();
+          return { reviewId: review.id, status: 'recorded', disclaimer: 'This is a human reviewer record, not an IP or legal determination.' };
         }),
 
       getReviews: protectedProcedure
         .input(z.object({ ipRegistrationId: z.number() }))
         .query(async ({ input }) => {
-          // TODO: Create vettingReviews table in schema first
-          throw new TRPCError({ code: 'NOT_IMPLEMENTED', message: 'Vetting reviews feature not yet implemented' });
-          // const db = await getDb();
-          // if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          // const { vettingReviews } = await import('../drizzle/schema');
-          // const { eq } = await import('drizzle-orm');
-          // return await db.select().from(vettingReviews)
-          //   .where(eq(vettingReviews.ipRegistrationId, input.ipRegistrationId));
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          return database.select().from(naqla2VettingReviews).where(eq(naqla2VettingReviews.ipRegistrationId, input.ipRegistrationId)).orderBy(desc(naqla2VettingReviews.createdAt));
         }),
     }),
 
@@ -3728,38 +3780,56 @@ Provide response in JSON format:
     marketplace: router({
       getApprovedIPs: publicProcedure
         .query(async () => {
-          // TODO: Create ipMarketplaceListings table in schema first
-          throw new TRPCError({ code: 'NOT_IMPLEMENTED', message: 'IP Marketplace feature not yet implemented' });
-          // const db = await getDb();
-          // if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          // const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
-          // const { eq } = await import('drizzle-orm');
-          // return await db.select({...}).from(ipMarketplaceListings)...
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          return database.select({ id: naqla2MarketplaceListings.id, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope, createdAt: naqla2MarketplaceListings.createdAt })
+            .from(naqla2MarketplaceListings).where(eq(naqla2MarketplaceListings.status, 'published')).orderBy(desc(naqla2MarketplaceListings.createdAt));
+        }),
+
+      createListing: protectedProcedure
+        .input(z.object({ ipRegistrationId: z.number().int().positive(), title: z.string().min(3).max(500), summary: z.string().min(20).max(10000), disclosureScope: z.enum(['teaser_only', 'authorized_disclosure']).default('teaser_only') }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [ip] = await database.select({ id: ipRegistrations.id }).from(ipRegistrations).where(and(eq(ipRegistrations.id, input.ipRegistrationId), eq(ipRegistrations.userId, ctx.user.id))).limit(1);
+          if (!ip) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the record owner may create a listing' });
+          const [listing] = await database.insert(naqla2MarketplaceListings).values({ ...input, ownerUserId: ctx.user.id, status: 'draft' }).$returningId();
+          return { listingId: listing.id, status: 'draft' };
+        }),
+
+      setListingStatus: protectedProcedure
+        .input(z.object({ listingId: z.number().int().positive(), status: z.enum(['published', 'paused', 'withdrawn']) }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const result = await database.update(naqla2MarketplaceListings).set({ status: input.status }).where(and(eq(naqla2MarketplaceListings.id, input.listingId), eq(naqla2MarketplaceListings.ownerUserId, ctx.user.id)));
+          if ((result as any).rowsAffected === 0) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the listing owner may change listing status' });
+          return { success: true, status: input.status };
         }),
 
       requestPurchase: protectedProcedure
         .input(z.object({
           listingId: z.number(),
-          offerPrice: z.number().optional(),
-          message: z.string(),
+          message: z.string().min(10).max(10000),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Create purchase request in database
-          // For now, just return success
-          return { success: true, message: 'Purchase request sent successfully' };
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [listing] = await database.select().from(naqla2MarketplaceListings).where(and(eq(naqla2MarketplaceListings.id, input.listingId), eq(naqla2MarketplaceListings.status, 'published'))).limit(1);
+          if (!listing) throw new TRPCError({ code: 'NOT_FOUND', message: 'Published listing not found' });
+          if (listing.ownerUserId === ctx.user.id) throw new TRPCError({ code: 'BAD_REQUEST', message: 'An owner cannot submit interest in their own listing' });
+          const [interest] = await database.insert(naqla2InterestRequests).values({ listingId: listing.id, requesterUserId: ctx.user.id, ownerUserId: listing.ownerUserId, message: input.message }).$returningId();
+          return { interestId: interest.id, status: 'submitted', disclaimer: 'An interest request does not create a contract, payment, or disclosure right.' };
         }),
 
       getListingById: publicProcedure
         .input(z.object({ id: z.number() }))
         .query(async ({ input }) => {
-          // TODO: Create ipMarketplaceListings table in schema first
-          throw new TRPCError({ code: 'NOT_IMPLEMENTED', message: 'IP Marketplace feature not yet implemented' });
-          // const db = await getDb();
-          // if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          // const { ipMarketplaceListings, ipRegistrations } = await import('../drizzle/schema');
-          // const { eq } = await import('drizzle-orm');
-          // const result = await db.select({...}).from(ipMarketplaceListings)...
-          // return result[0] || null;
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [listing] = await database.select({ id: naqla2MarketplaceListings.id, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope, createdAt: naqla2MarketplaceListings.createdAt })
+            .from(naqla2MarketplaceListings).where(and(eq(naqla2MarketplaceListings.id, input.id), eq(naqla2MarketplaceListings.status, 'published'))).limit(1);
+          return listing ?? null;
         }),
     }),
 
@@ -4893,6 +4963,61 @@ ${input.technicalDetails}` : ''}`;
         return db.getMarketplaceAssetById(input.assetId);
       }),
 
+    commercial: router({
+      createAsset: protectedProcedure
+        .input(z.object({ sourceListingId: z.number().int().positive().optional(), title: z.string().min(3).max(500), scope: z.string().min(20).max(10000) }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [asset] = await database.insert(naqla3CommercialAssets).values({ ...input, ownerUserId: ctx.user.id, status: 'prepared' }).$returningId();
+          return { assetId: asset.id, status: 'prepared', disclaimer: 'Commercial asset preparation does not establish IP rights, a contract, or a payment obligation.' };
+        }),
+
+      setAssetStatus: protectedProcedure
+        .input(z.object({ assetId: z.number().int().positive(), status: z.enum(['due_diligence', 'contract_ready', 'archived']) }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const result = await database.update(naqla3CommercialAssets).set({ status: input.status }).where(and(eq(naqla3CommercialAssets.id, input.assetId), eq(naqla3CommercialAssets.ownerUserId, ctx.user.id)));
+          if ((result as any).rowsAffected === 0) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the commercial asset owner may change its status' });
+          return { success: true, status: input.status };
+        }),
+
+      createTransaction: protectedProcedure
+        .input(z.object({ assetId: z.number().int().positive(), counterpartyUserId: z.number().int().positive() }))
+        .mutation(async ({ ctx, input }) => {
+          if (input.counterpartyUserId === ctx.user.id) throw new TRPCError({ code: 'BAD_REQUEST', message: 'A counterparty must be a different user' });
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [asset] = await database.select({ id: naqla3CommercialAssets.id, status: naqla3CommercialAssets.status }).from(naqla3CommercialAssets).where(and(eq(naqla3CommercialAssets.id, input.assetId), eq(naqla3CommercialAssets.ownerUserId, ctx.user.id))).limit(1);
+          if (!asset || asset.status !== 'contract_ready') throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'A contract-ready asset owned by the initiator is required' });
+          const [transaction] = await database.insert(naqla3CommercialTransactions).values({ assetId: input.assetId, initiatorUserId: ctx.user.id, counterpartyUserId: input.counterpartyUserId, status: 'initiated' }).$returningId();
+          return { transactionId: transaction.id, status: 'initiated', disclaimer: 'This record does not create a contract, payment, escrow, or automated legal obligation.' };
+        }),
+
+      setTransactionStatus: protectedProcedure
+        .input(z.object({ transactionId: z.number().int().positive(), status: z.enum(['human_review', 'contract_ready', 'executing', 'cancelled']), humanReviewNote: z.string().max(10000).optional() }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const result = await database.update(naqla3CommercialTransactions).set({ status: input.status, humanReviewNote: input.humanReviewNote }).where(and(eq(naqla3CommercialTransactions.id, input.transactionId), eq(naqla3CommercialTransactions.initiatorUserId, ctx.user.id)));
+          if ((result as any).rowsAffected === 0) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the transaction initiator may update this record' });
+          return { success: true, status: input.status, disclaimer: 'Status updates are records for human governance only.' };
+        }),
+
+      getMyAssets: protectedProcedure.query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        return database.select().from(naqla3CommercialAssets).where(eq(naqla3CommercialAssets.ownerUserId, ctx.user.id)).orderBy(desc(naqla3CommercialAssets.createdAt));
+      }),
+
+      getMyTransactions: protectedProcedure.query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        return database.select().from(naqla3CommercialTransactions).where(eq(naqla3CommercialTransactions.initiatorUserId, ctx.user.id)).orderBy(desc(naqla3CommercialTransactions.createdAt));
+      }),
+    }),
+
     // Contracts
     contracts: router({
       create: protectedProcedure
@@ -4981,11 +5106,12 @@ ${input.technicalDetails}` : ''}`;
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
+          const privateKey = process.env.BLOCKCHAIN_PRIVATE_KEY;
+          if (!privateKey) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Blockchain execution is not configured' });
           const { startMilestone } = await import('./naqla3-milestones');
-          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return startMilestone({
             ...input,
-            privateKey: testPrivateKey,
+            privateKey,
           });
         }),
 
@@ -4996,11 +5122,12 @@ ${input.technicalDetails}` : ''}`;
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
+          const privateKey = process.env.BLOCKCHAIN_PRIVATE_KEY;
+          if (!privateKey) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Blockchain execution is not configured' });
           const { completeMilestone } = await import('./naqla3-milestones');
-          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return completeMilestone({
             ...input,
-            privateKey: testPrivateKey,
+            privateKey,
           });
         }),
 
@@ -5011,11 +5138,12 @@ ${input.technicalDetails}` : ''}`;
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
+          const privateKey = process.env.BLOCKCHAIN_PRIVATE_KEY;
+          if (!privateKey) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Blockchain execution is not configured' });
           const { approveMilestone } = await import('./naqla3-milestones');
-          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return approveMilestone({
             ...input,
-            privateKey: testPrivateKey,
+            privateKey,
           });
         }),
 
@@ -5026,11 +5154,12 @@ ${input.technicalDetails}` : ''}`;
           milestoneIndex: z.number(),
         }))
         .mutation(async ({ ctx, input }) => {
+          const privateKey = process.env.BLOCKCHAIN_PRIVATE_KEY;
+          if (!privateKey) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Blockchain execution is not configured' });
           const { rejectMilestone } = await import('./naqla3-milestones');
-          const testPrivateKey = process.env.BLOCKCHAIN_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
           return rejectMilestone({
             ...input,
-            privateKey: testPrivateKey,
+            privateKey,
           });
         }),
     }),

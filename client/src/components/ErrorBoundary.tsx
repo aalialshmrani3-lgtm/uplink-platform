@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { AlertTriangle, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { Component, ReactNode } from "react";
+import { isStaleChunkError, STALE_CHUNK_RECOVERY_KEY } from "@shared/staleChunkRecovery";
 
 interface Props {
   children: ReactNode;
@@ -19,6 +20,17 @@ class ErrorBoundary extends Component<Props, State> {
 
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error) {
+    if (!isStaleChunkError(error)) return;
+    try {
+      if (sessionStorage.getItem(STALE_CHUNK_RECOVERY_KEY) === "1") return;
+      sessionStorage.setItem(STALE_CHUNK_RECOVERY_KEY, "1");
+      window.location.reload();
+    } catch {
+      // Keep the user-facing recovery view available when storage is unavailable.
+    }
   }
 
   render() {
@@ -48,7 +60,7 @@ class ErrorBoundary extends Component<Props, State> {
             )}
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <button onClick={() => window.location.reload()} className={cn("flex items-center gap-2 px-4 py-2 rounded-lg", "bg-primary text-primary-foreground", "hover:opacity-90 cursor-pointer")}>
+              <button onClick={() => window.location.reload()} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 cursor-pointer">
                 <RotateCcw size={16} /> إعادة المحاولة
               </button>
               <button onClick={selectContext} className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:bg-muted cursor-pointer">

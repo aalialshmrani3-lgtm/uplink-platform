@@ -1,5 +1,26 @@
 # UPLINK 5.0 - TODO
 
+## NAQLA — Final Platform Completion & Acceptance
+
+- [x] تدقيق فجوات المستودعين مقابل Definition of Done مع تثبيت أقفال Phase 2.2B والذكاء الخارجي المغلق
+- [x] إصلاح الاسترداد من ملفات lazy المنتهية في cache لمنع خطأ التحميل الديناميكي في الصفحة الرئيسية
+- [ ] إكمال NAQLA1 لمسار التأهيل الحتمي والأدلة والإصدارات وInnovation Passport وNext Best Action
+- [ ] إكمال NAQLA2 لمسار Challenge إلى Discovery/Match/Application/Interest/Engagement/Pilot
+- [ ] إكمال NAQLA3 بفصل CommercialAsset وCommercialTransaction وحالات وأذونات التسويق
+- [ ] إكمال الأشخاص والمنظمات والسياقات ودعوات العضوية والـonboarding والتبديل بين السياقات
+- [ ] إكمال الواجهة الثنائية RTL/LTR والمتجاوبة وحالات الوصول وتجربة الـDashboard والـNext Best Action
+- [x] إزالة الادعاءات الرقمية والتكاملات والشراكات غير الموثقة من الصفحة الرئيسية وإحلال مدخل تشغيل حتمي واضح
+- [ ] بناء Demo اصطناعية وتغطية اختبارات الحرجة وE2E والأمن والخصوصية
+- [ ] إنتاج تقرير القبول والحزم والتحقق من النشر الحالي ودخان الإنتاج
+
+## NAQLA — تنفيذ خادمي مطلوب قبل القبول
+
+- [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA1: Innovation Record وEvidence وVersions وPassport وTRL وNext Best Action
+- [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
+- [ ] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
+- [ ] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
+- [ ] إزالة المفتاح الافتراضي من مسار NAQLA3 وإغلاق عمليات blockchain غير المهيأة بدلاً من تنفيذها بقيمة مضمّنة
+
 ## NAQLA Phase 2.1 Final Closure — تحقق واجهة Manager Funnel
 - [x] إصلاح انتقال «طلبات المتقدمين» من التحدي ليعرض Manager Funnel بدلاً من نموذج المتقدم للمنظمة المالكة
 
