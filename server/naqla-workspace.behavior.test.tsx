@@ -6,11 +6,12 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 let contextsResult: { data: unknown[] | undefined; isLoading: boolean; isError: boolean; refetch: ReturnType<typeof vi.fn> };
+let activeLanguage: "ar" | "en" = "ar";
 const refetch = vi.fn();
 const mutation = { isPending: false, mutate: vi.fn() };
 
 vi.mock("@/contexts/LanguageContext", () => ({
-  useLanguage: () => ({ language: "ar", isRTL: true, setLanguage: vi.fn() }),
+  useLanguage: () => ({ language: activeLanguage, isRTL: activeLanguage === "ar", setLanguage: vi.fn() }),
 }));
 
 vi.mock("@/_core/hooks/useAuth", () => ({
@@ -52,6 +53,7 @@ import NaqlaJourneyWorkspace from "@/pages/NaqlaJourneyWorkspace";
 
 describe("NAQLA workspace behavioral accessibility", () => {
   beforeEach(() => {
+    activeLanguage = "ar";
     contextsResult = { data: [], isLoading: false, isError: false, refetch };
     mutation.mutate.mockReset();
   });
@@ -86,5 +88,13 @@ describe("NAQLA workspace behavioral accessibility", () => {
     render(<NaqlaJourneyWorkspace />);
     expect(screen.getByText("لا يوجد سياق خادمي")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "إنشاء سياق عرض خادمي" })).toBeEnabled();
+  });
+
+  it("يعرض الواجهة الإنجليزية باتجاه LTR عند اختيار الإنجليزية", () => {
+    activeLanguage = "en";
+    render(<NaqlaJourneyWorkspace />);
+    expect(screen.getByRole("main")).toHaveAttribute("dir", "ltr");
+    expect(screen.getByRole("combobox", { name: "Synthetic demo role" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Create server demo context" })).toBeEnabled();
   });
 });
