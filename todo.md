@@ -6,7 +6,7 @@
 - [x] إزالة أي حالة READY من نتائج القبول المرحلية حتى تكتمل البنود المفتوحة في دفتر العمل
 - [x] تدقيق فجوات المستودعين مقابل Definition of Done مع تثبيت أقفال Phase 2.2B والذكاء الخارجي المغلق
 - [x] إصلاح الاسترداد من ملفات lazy المنتهية في cache لمنع خطأ التحميل الديناميكي في الصفحة الرئيسية
-- [ ] إكمال NAQLA1 لمسار التأهيل الحتمي والأدلة والإصدارات وInnovation Passport وNext Best Action
+- [x] إكمال NAQLA1 لمسار التأهيل الحتمي والأدلة والإصدارات وInnovation Passport وNext Best Action
 - [ ] إكمال NAQLA2 لمسار Challenge إلى Discovery/Match/Application/Interest/Engagement/Pilot
 - [ ] إكمال NAQLA3 بفصل CommercialAsset وCommercialTransaction وحالات وأذونات التسويق
 - [ ] إكمال الأشخاص والمنظمات والسياقات ودعوات العضوية والـonboarding والتبديل بين السياقات
@@ -33,13 +33,27 @@
 - [x] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA1: Innovation Record وEvidence وVersions وPassport وTRL وNext Best Action
 - [x] بناء كيانات NAQLA1 الصريحة: InnovationRecord وEvidence وImmutableVersion وPassport وReadinessGap وDeterministicAssessment
 - [x] إضافة tRPC وتفويض owner-only لكتابة السجل والأدلة والنسخ وقراءة Passport وTRL/Gaps وNext Best Action
-- [ ] إضافة اختبار تكامل NAQLA1 كامل للملكية والإصدار غير القابل للتعديل والدليل والتقييم الحتمي والجواز
+- [x] إضافة اختبار تكامل NAQLA1 كامل للملكية والإصدار غير القابل للتعديل والدليل والتقييم الحتمي والجواز
 - [x] ربط لوحة NAQLA1 في `/naqla` بالكيانات والعقود الصريحة مع حالات loading/error/empty/success
-- [ ] إضافة اختبار تكاملي متسلسل لـNAQLA1: سجل ثم دليل ثم نسخة ثم تقييم ثم Passport مع TRL/Gaps/Next Best Action فعلية
-- [ ] إضافة اختبار revokeEvidence يثبت الحجب وتحديث الفجوات وNext Best Action بعد سحب التفويض
-- [ ] إنشاء اختبار NAQLA1 معزول للتخزين يمر بجميع العمليات ويثبت Passport وTRL/Gaps/Next Best Action بعد السحب دون لمس بيانات المشروع
+- [x] إضافة اختبار تكاملي متسلسل لـNAQLA1: سجل ثم دليل ثم نسخة ثم تقييم ثم Passport مع TRL/Gaps/Next Best Action فعلية
+- [x] إضافة اختبار revokeEvidence يثبت الحجب وتحديث الفجوات وNext Best Action بعد سحب التفويض
+- [x] إنشاء اختبار NAQLA1 معزول للتخزين يمر بجميع العمليات ويثبت Passport وTRL/Gaps/Next Best Action بعد السحب دون لمس بيانات المشروع
+- [x] فحص Docker وPodman وmysqld وmariadbd محلياً بشكل read-only قبل إنشاء أي بيئة اختبار مؤقتة
+- [x] فحص `apt-cache policy` لـMariaDB قبل التثبيت وإثبات عدم تشغيل service نظام أو استخدام قاعدة المشروع
+- [x] حذف بيانات ومحرك اختبار NAQLA1 المؤقت من `/tmp` بعد التحقق وتسجيل نتيجة التنظيف
+- [x] تشغيل اختبار MariaDB المعزول عبر loader TypeScript المعتمد بدلاً من Node الخام
+- [x] مواءمة أسماء أعمدة NAQLA1 الفيزيائية في migration مع Drizzle بعد فشل اختبار التخزين المعزول على `ownerUserId`
+- [x] مواءمة timestamp سحب الدليل مع صيغة DATETIME التي تقبلها MariaDB في اختبار التخزين المعزول
+- [x] تصحيح استخراج أثر تحديث MariaDB الحقيقي في `hasAffectedRow` بعد فشل revokeEvidence رغم وجود السجل المملوك
+- [x] مواءمة اختبار MariaDB مع رمز فجوة NAQLA1 الحتمي الفعلي بعد سحب الدليل
+- [x] إيقاف اختبار MariaDB العالق وفحص JSON قبل قبول أي نتيجة أو حذف البيئة المؤقتة
+- [x] ضمان إغلاق اتصال اختبار MariaDB في finally وإعادة الاختبار بمهلة 30 ثانية وexit code 0
 - [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
+- [ ] ربط Challenge وOpportunity وDiscovery في NAQLA2 بعقود tRPC وقيود teaser-only واختبارات ملكية قبل إغلاق المسار
+- [x] إزالة fallback الفارغ من Discovery Challenges وإرجاع خطأ خادمي صريح بدلاً من إخفاء العطل
 - [ ] بناء إجراءات MatchRun حتمية للمطابقة المفسرة فوق طلبات المطابقة والـteaser العامة مع Factors مسجلة وبدون AI
+- [ ] إضافة/إثبات عقود tRPC واختبارات ملكية صريحة لمسارات Opportunity وDiscovery في NAQLA2
+- [ ] اختبار NAQLA2 end-to-end في `/naqla` ضمن ActiveContext خادمي قبل إغلاق المسار الأعلى
 - [x] ربط MatchRun بطلب مطابقة محفوظ ومملوك في `matching_requests` بدلاً من `queryText` الحر فقط
 - [x] إضافة اختبار تكاملي يثبت تشغيل MatchRun من طلب محفوظ ورفض غياب الملكية أو مصدر غير teaser-only
 - [x] إضافة حالة تكاملية صريحة تستبعد listing غير `teaser_only` من مرشحي MatchRun المحفوظة

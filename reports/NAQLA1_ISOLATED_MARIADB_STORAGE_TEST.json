@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "database": "temporary-local-mariadb",
+  "recordId": 1,
+  "qualificationBeforeRevoke": "qualified",
+  "qualificationAfterRevoke": "not_ready",
+  "nextBestActionAfterRevoke": "add_authorized_evidence",
+  "persistedCounts": {
+    "recordsCount": 1,
+    "evidenceCount": 1,
+    "versionsCount": 1,
+    "assessmentsCount": 2,
+    "passportsCount": 1
+  },
+  "externalProviderCalls": 0
+}

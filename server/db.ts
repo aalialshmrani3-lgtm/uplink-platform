@@ -65,6 +65,13 @@ export async function getDb() {
   return _db;
 }
 
+/** Test-only cleanup hook for isolated local databases. Never call from request handlers. */
+export async function closeDbForTesting(): Promise<void> {
+  const database = _db as (ReturnType<typeof drizzle> & { $client?: { end?: () => Promise<void> } }) | null;
+  _db = null;
+  if (database?.$client?.end) await database.$client.end();
+}
+
 // ============================================
 // USER OPERATIONS
 // ============================================

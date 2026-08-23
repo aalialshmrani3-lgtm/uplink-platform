@@ -22,8 +22,12 @@ import { storagePut } from "./storage";
 // import { autoTriggerDecision } from "./services/diamondDecisionPoint"; // Removed - file deleted
 
 function hasAffectedRow(result: unknown): boolean {
-  const update = result as { affectedRows?: number; rowsAffected?: number } | undefined;
+  const update = (Array.isArray(result) ? result[0] : result) as { affectedRows?: number; rowsAffected?: number } | undefined;
   return (update?.affectedRows ?? update?.rowsAffected ?? 0) > 0;
+}
+
+function sqlDateTimeNow(): string {
+  return new Date().toISOString().slice(0, 19).replace('T', ' ');
 }
 
 export function createDeterministicTeaserMatch(queryText: string, title: string, summary: string) {
@@ -1793,17 +1797,12 @@ Respond in JSON format:
     // Get active challenges for idea submission
     getActiveChallenges: publicProcedure
       .query(async () => {
-        try {
-          const challenges = await db.getAllChallenges("open");
-          return challenges.map(c => ({
-            id: c.id,
-            title: c.title,
-            category: c.category,
-          }));
-        } catch (error) {
-          console.error('[ERROR] getActiveChallenges failed:', error);
-          return []; // Return empty array instead of throwing error
-        }
+        const challenges = await db.getAllChallenges("open");
+        return challenges.map(c => ({
+          id: c.id,
+          title: c.title,
+          category: c.category,
+        }));
       }),
 
     getById: publicProcedure
@@ -3742,7 +3741,7 @@ Provide response in JSON format:
       .mutation(async ({ ctx, input }) => {
         const database = await getDb();
         if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-        const result = await database.update(naqla1Evidence).set({ authorizationStatus: 'revoked', revokedAt: new Date().toISOString() }).where(and(eq(naqla1Evidence.id, input.evidenceId), eq(naqla1Evidence.ownerUserId, ctx.user.id), eq(naqla1Evidence.authorizationStatus, 'authorized')));
+        const result = await database.update(naqla1Evidence).set({ authorizationStatus: 'revoked', revokedAt: sqlDateTimeNow() }).where(and(eq(naqla1Evidence.id, input.evidenceId), eq(naqla1Evidence.ownerUserId, ctx.user.id), eq(naqla1Evidence.authorizationStatus, 'authorized')));
         if (!hasAffectedRow(result)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Evidence was not authorized for revocation by caller' });
         return { authorizationStatus: 'revoked' };
       }),

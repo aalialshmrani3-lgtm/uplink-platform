@@ -2178,68 +2178,68 @@ export const naqla2ReviewAssignments = mysqlTable("naqla2_review_assignments", {
 
 export const naqla1InnovationRecords = mysqlTable("naqla1_innovation_records", {
   id: int().autoincrement().primaryKey(),
-  ownerUserId: int().notNull(),
+  ownerUserId: int("owner_user_id").notNull(),
   title: varchar({ length: 500 }).notNull(),
-  problemStatement: text().notNull(),
-  desiredOutcome: text().notNull(),
+  problemStatement: text("problem_statement").notNull(),
+  desiredOutcome: text("desired_outcome").notNull(),
   status: mysqlEnum(['draft', 'evidence_pending', 'evaluated', 'qualified', 'routed']).notNull().default('draft'),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
-  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 }, (table) => [index('naqla1_record_owner_idx').on(table.ownerUserId)]);
 
 export const naqla1Evidence = mysqlTable("naqla1_evidence", {
   id: int().autoincrement().primaryKey(),
-  innovationRecordId: int().notNull(),
-  ownerUserId: int().notNull(),
+  innovationRecordId: int("innovation_record_id").notNull(),
+  ownerUserId: int("owner_user_id").notNull(),
   label: varchar({ length: 500 }).notNull(),
-  evidenceType: mysqlEnum(['synthetic_note', 'research_reference', 'technical_description', 'prototype_note', 'other']).notNull(),
-  contentSha256: varchar({ length: 64 }).notNull(),
-  authorizationStatus: mysqlEnum(['authorized', 'revoked']).notNull().default('authorized'),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
-  revokedAt: timestamp({ mode: 'string' }),
+  evidenceType: mysqlEnum("evidence_type", ['synthetic_note', 'research_reference', 'technical_description', 'prototype_note', 'other']).notNull(),
+  contentSha256: varchar("content_sha256", { length: 64 }).notNull(),
+  authorizationStatus: mysqlEnum("authorization_status", ['authorized', 'revoked']).notNull().default('authorized'),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  revokedAt: timestamp("revoked_at", { mode: 'string' }),
 }, (table) => [index('naqla1_evidence_record_idx').on(table.innovationRecordId), index('naqla1_evidence_owner_idx').on(table.ownerUserId)]);
 
 export const naqla1ImmutableVersions = mysqlTable("naqla1_immutable_versions", {
   id: int().autoincrement().primaryKey(),
-  innovationRecordId: int().notNull(),
-  ownerUserId: int().notNull(),
-  versionNumber: int().notNull(),
-  snapshotSha256: varchar({ length: 64 }).notNull(),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  innovationRecordId: int("innovation_record_id").notNull(),
+  ownerUserId: int("owner_user_id").notNull(),
+  versionNumber: int("version_number").notNull(),
+  snapshotSha256: varchar("snapshot_sha256", { length: 64 }).notNull(),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [uniqueIndex('naqla1_version_record_number_unique').on(table.innovationRecordId, table.versionNumber), index('naqla1_version_owner_idx').on(table.ownerUserId)]);
 
 export const naqla1ReadinessGaps = mysqlTable("naqla1_readiness_gaps", {
   id: int().autoincrement().primaryKey(),
-  innovationRecordId: int().notNull(),
-  ownerUserId: int().notNull(),
+  innovationRecordId: int("innovation_record_id").notNull(),
+  ownerUserId: int("owner_user_id").notNull(),
   code: mysqlEnum(['missing_authorized_evidence', 'missing_immutable_version', 'incomplete_problem_statement', 'incomplete_desired_outcome']).notNull(),
   status: mysqlEnum(['open', 'addressed']).notNull().default('open'),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
-  addressedAt: timestamp({ mode: 'string' }),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  addressedAt: timestamp("addressed_at", { mode: 'string' }),
 }, (table) => [index('naqla1_gap_record_idx').on(table.innovationRecordId), index('naqla1_gap_owner_idx').on(table.ownerUserId)]);
 
 export const naqla1DeterministicAssessments = mysqlTable("naqla1_deterministic_assessments", {
   id: int().autoincrement().primaryKey(),
-  innovationRecordId: int().notNull(),
-  ownerUserId: int().notNull(),
+  innovationRecordId: int("innovation_record_id").notNull(),
+  ownerUserId: int("owner_user_id").notNull(),
   method: varchar({ length: 100 }).notNull().default('naqla1_deterministic_v1'),
-  criteriaSatisfied: int().notNull(),
-  criteriaTotal: int().notNull(),
-  readinessLevel: int().notNull(),
-  qualificationStatus: mysqlEnum(['not_ready', 'qualified']).notNull(),
-  nextBestAction: mysqlEnum(['add_authorized_evidence', 'create_immutable_version', 'complete_record', 'route_to_naqla2']).notNull(),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  criteriaSatisfied: int("criteria_satisfied").notNull(),
+  criteriaTotal: int("criteria_total").notNull(),
+  readinessLevel: int("readiness_level").notNull(),
+  qualificationStatus: mysqlEnum("qualification_status", ['not_ready', 'qualified']).notNull(),
+  nextBestAction: mysqlEnum("next_best_action", ['add_authorized_evidence', 'create_immutable_version', 'complete_record', 'route_to_naqla2']).notNull(),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [index('naqla1_assessment_record_idx').on(table.innovationRecordId), index('naqla1_assessment_owner_idx').on(table.ownerUserId)]);
 
 export const naqla1Passports = mysqlTable("naqla1_passports", {
   id: int().autoincrement().primaryKey(),
-  innovationRecordId: int().notNull(),
-  ownerUserId: int().notNull(),
-  currentTrl: int().notNull(),
-  qualificationStatus: mysqlEnum(['not_ready', 'qualified']).notNull(),
-  nextBestAction: mysqlEnum(['add_authorized_evidence', 'create_immutable_version', 'complete_record', 'route_to_naqla2']).notNull(),
-  lastAssessmentId: int(),
-  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+  innovationRecordId: int("innovation_record_id").notNull(),
+  ownerUserId: int("owner_user_id").notNull(),
+  currentTrl: int("current_trl").notNull(),
+  qualificationStatus: mysqlEnum("qualification_status", ['not_ready', 'qualified']).notNull(),
+  nextBestAction: mysqlEnum("next_best_action", ['add_authorized_evidence', 'create_immutable_version', 'complete_record', 'route_to_naqla2']).notNull(),
+  lastAssessmentId: int("last_assessment_id"),
+  updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 }, (table) => [uniqueIndex('naqla1_passport_record_unique').on(table.innovationRecordId), index('naqla1_passport_owner_idx').on(table.ownerUserId)]);
 
 export const naqla2VettingReviews = mysqlTable("naqla2_vetting_reviews", {
