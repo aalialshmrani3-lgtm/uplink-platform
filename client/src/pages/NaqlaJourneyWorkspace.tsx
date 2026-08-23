@@ -230,6 +230,14 @@ export default function NaqlaJourneyWorkspace() {
     },
     onError: () => setNotice(copy("تعذر تحديث الأصل؛ لم يُغيّر أي سجل لا تملكه.", "The asset could not be updated; no record you do not own was changed.", isArabic)),
   });
+  const createCommercialTransaction = trpc.naqla3.commercial.createTransaction.useMutation({
+    onSuccess: () => {
+      void commercialTransactionsQuery.refetch();
+      setState((previous) => applyJourneyControl(previous, "start_transaction"));
+      setNotice(copy("بدأ تتبع معاملة خادمية من Engagement قائمة؛ لا يوجد عقد أو دفع أو تنفيذ قانوني تلقائي.", "Server transaction tracking started from an established engagement; no contract, payment, or automated legal execution was created.", isArabic));
+    },
+    onError: () => setNotice(copy("تعذر بدء المعاملة؛ يلزم أصل جاهز للعقد وEngagement قائمة تشارك فيها.", "Transaction tracking could not start; a contract-ready asset and an established engagement involving you are required.", isArabic)),
+  });
 
   const control = useMemo(() => {
     if (state.stage === "understand") return { id: "save_record_version" as const, label: copy("حفظ نسخة سجل الابتكار", "Save innovation record version", isArabic), icon: FileCheck2 };
@@ -259,6 +267,16 @@ export default function NaqlaJourneyWorkspace() {
 
   const act = () => {
     if (!control) return;
+    if (control.id === "start_transaction") {
+      const contractReadyAsset = commercialAssetsQuery.data?.find((asset) => asset.status === "contract_ready");
+      const establishedEngagement = engagementsQuery.data?.find((engagement) => engagement.status === "established");
+      if (!contractReadyAsset || !establishedEngagement) {
+        setNotice(copy("يلزم أصل جاهز للعقد وEngagement خادمية قائمة قبل بدء تتبع المعاملة.", "A contract-ready asset and established server engagement are required before transaction tracking can start.", isArabic));
+        return;
+      }
+      createCommercialTransaction.mutate({ assetId: contractReadyAsset.id, engagementId: establishedEngagement.id });
+      return;
+    }
     setState((previous) => applyJourneyControl(previous, control.id));
     setNotice(copy("تم تسجيل الإجراء في سيناريو العرض الاصطناعي فقط.", "The action is recorded in the synthetic demo scenario only.", isArabic));
   };

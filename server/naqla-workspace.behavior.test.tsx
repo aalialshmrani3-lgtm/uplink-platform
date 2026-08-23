@@ -75,6 +75,7 @@ vi.mock("@/lib/trpc", () => ({
         getMyTransactions: { useQuery: () => ({ data: [], isLoading: false, isError: false }) },
         createAsset: { useMutation: () => mutation },
         setAssetStatus: { useMutation: () => mutation },
+        createTransaction: { useMutation: () => mutation },
       },
     },
   },

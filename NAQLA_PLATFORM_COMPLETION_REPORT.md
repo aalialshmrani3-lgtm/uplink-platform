@@ -21,7 +21,7 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 | Verification | Result |
 |---|---|
 | TypeScript | `pnpm check` passed. |
-| Unit and integration regression | `pnpm test`: **25 test files, 94 tests passed**. |
+| Unit and integration regression | `pnpm test`: **26 test files, 98 tests passed**. |
 | Context authorization | Eight tRPC tests cover create, active-context denial/success, invitation denial/success, pending-invitation listing, and invitation acceptance. |
 | Production build | `pnpm build` passed in 16.73 seconds. |
 | Source diff quality | `git diff --check` passed. |
