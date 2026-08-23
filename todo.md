@@ -11,12 +11,17 @@
 - [x] استعادة شاشة افتتاح NAQLA الأصلية كطبقة boot مستقلة مع انتقال إلى المسار المطلوب من دون المساس بالواجهة أو backend
 - [x] تثبيت تعديل شاشة الافتتاح في checkpoint ونشره ثم smoke عام يثبت ظهورها وانتقال deep link بلا شاشة بيضاء
 - [x] تثبيت منفذ الإنتاج على `PORT` المطلوب في وضع production لمنع 503 البوابة مع الإبقاء على منفذ مرن للتطوير
-- [ ] تنفيذ Phase 2.2C للمطابقة الحتمية: versioning/immutability/factors/confidence/rank bands/idempotency والتفويض والواجهة والاختبارات
+- [x] تنفيذ Phase 2.2C للمطابقة الحتمية: versioning/immutability/factors/confidence/rank bands/idempotency والتفويض والواجهة والاختبارات
 - [ ] تثبيت ونشر Phase 2.2C ثم smoke عام يثبت build جديداً والجذر وSplash وMatching Hub ومسار نتيجة عميق
-- [ ] إضافة اختبار E2E مصادق عليه لرحلة NAQLA2: Challenge → Discovery → MatchRun → تفسير → Interest → Engagement/Pilot ضمن ActiveContext
-- [ ] إضافة اختبارات صريحة لـlistRuns pagination/filtering/sorting ولـidempotency/immutability/versioning والاستبعاد وstale/revoked
-- [ ] إنشاء fixture E2E معزول اصطناعي للمستخدم والمؤسسة والعضوية وActiveContext من دون أي جلسة أو seed إنتاجي
-- [ ] إنشاء harness HTTP/Express وDrizzle test-only مع auth fixture معزول لمسار Phase 2.2C
+- [x] إضافة اختبار E2E مصادق عليه لرحلة NAQLA2: Challenge → Discovery → MatchRun → تفسير → Interest → Engagement/Pilot ضمن ActiveContext
+- [x] إضافة اختبارات صريحة لـlistRuns pagination/filtering/sorting ولـidempotency/immutability/versioning والاستبعاد وstale/revoked
+- [x] إنشاء fixture E2E معزول اصطناعي للمستخدم والمؤسسة والعضوية وActiveContext من دون أي جلسة أو seed إنتاجي
+- [x] إنشاء harness HTTP/Express وDrizzle test-only مع auth fixture معزول لمسار Phase 2.2C
+- [x] إثبات رفض header المصادقة الاصطناعي خارج NODE_ENV=test وتشغيل E2E MariaDB محلي معزول وتنظيفه
+- [x] إضافة migration ضيقة لمواءمة جدول users مع Drizzle الحالي قبل E2E HTTP المعزول
+- [x] إضافة filters آمنة لعقد listRuns ضمن المستخدم وActiveContext فقط ثم تغطيتها عبر HTTP
+- [x] إضافة migration ضيقة لعقد matching_requests الموجود في Drizzle قبل رحلة MatchRun HTTP المعزولة
+- [x] إضافة اختبار rendered لـMatching Hub يثبت حالة عدم الدخول وعرض نتيجة تفسيرية synthetic
 
 - [x] قصر دفعة الإغلاق الحالية على بنود المنصة التشغيلية في هذا القسم واستبعاد Phase 2.2B وCanary/Azure/Holdout التاريخية
 - [x] تشغيل الاختبارات المباشرة لربط NAQLA2 والسياق والواجهة قبل تحديث دفتر العمل الذري

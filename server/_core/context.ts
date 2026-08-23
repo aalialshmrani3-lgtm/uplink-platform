@@ -1,7 +1,9 @@
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
-import type { users } from "../../drizzle/schema";
+import { users } from "../../drizzle/schema";
 type User = typeof users.$inferSelect;
 import { sdk } from "./sdk";
+import { getDb } from "../db";
+import { eq } from "drizzle-orm";
 
 export type TrpcContext = {
   req: CreateExpressContextOptions["req"];
@@ -14,8 +16,15 @@ export async function createContext(
 ): Promise<TrpcContext> {
   let user: User | null = null;
 
+  const syntheticUserId = process.env.NODE_ENV === "test" ? opts.req.header("x-naqla-test-user-id") : undefined;
+  if (syntheticUserId && /^\d+$/.test(syntheticUserId)) {
+    const db = await getDb();
+    const [syntheticUser] = db ? await db.select().from(users).where(eq(users.id, Number(syntheticUserId))).limit(1) : [];
+    user = syntheticUser ?? null;
+  }
+
   try {
-    user = await sdk.authenticateRequest(opts.req);
+    if (!user) user = await sdk.authenticateRequest(opts.req);
   } catch (error) {
     // Authentication is optional for public procedures.
     user = null;

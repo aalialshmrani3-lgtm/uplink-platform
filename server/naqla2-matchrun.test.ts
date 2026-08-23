@@ -41,6 +41,7 @@ describe("NAQLA2 deterministic MatchRun factors", () => {
     const auditInsert = { values: vi.fn(() => Promise.resolve()) };
     const select = vi.fn()
       .mockReturnValueOnce(resolvedBuilder([{ organizationId: 6 }]))
+      .mockReturnValueOnce(resolvedBuilder([{ id: 601 }]))
       .mockReturnValueOnce(resolvedBuilder([{ id: 50, title: "Energy need", description: "energy optimization" }]))
       .mockReturnValueOnce(resolvedBuilder([]))
       .mockReturnValueOnce(resolvedBuilder([
@@ -66,14 +67,14 @@ describe("NAQLA2 deterministic MatchRun factors", () => {
   });
 
   it("يرفض تشغيل MatchRun عند غياب ملكية طلب المطابقة", async () => {
-    const select = vi.fn().mockReturnValueOnce(resolvedBuilder([{ organizationId: 6 }])).mockReturnValueOnce(resolvedBuilder([]));
+    const select = vi.fn().mockReturnValueOnce(resolvedBuilder([{ organizationId: 6 }])).mockReturnValueOnce(resolvedBuilder([{ id: 601 }])).mockReturnValueOnce(resolvedBuilder([]));
     getDb.mockResolvedValue({ select });
     const caller = appRouter.createCaller(contextFor(1));
     await expect(caller.naqla2.deterministicMatching.createRun({ requestId: 77 })).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 
   it("يقسم قائمة MatchRun داخل ActiveContext المملوك مع حد آمن", async () => {
-    const select = vi.fn().mockReturnValueOnce(resolvedBuilder([{ organizationId: 6 }])).mockReturnValueOnce(resolvedBuilder([{ id: 31 }, { id: 30 }]));
+    const select = vi.fn().mockReturnValueOnce(resolvedBuilder([{ organizationId: 6 }])).mockReturnValueOnce(resolvedBuilder([{ id: 601 }])).mockReturnValueOnce(resolvedBuilder([{ id: 31 }, { id: 30 }]));
     getDb.mockResolvedValue({ select });
     const caller = appRouter.createCaller(contextFor(1));
     await expect(caller.naqla2.deterministicMatching.listRuns({ page: 1, limit: 1, sort: "newest" })).resolves.toMatchObject({ page: 1, limit: 1, hasNextPage: true, items: [{ id: 31 }] });
@@ -97,6 +98,7 @@ describe("NAQLA2 deterministic MatchRun factors", () => {
     getDb.mockResolvedValue({
       select: vi.fn()
         .mockReturnValueOnce(resolvedBuilder([{ organizationId: 6 }]))
+        .mockReturnValueOnce(resolvedBuilder([{ id: 601 }]))
         .mockReturnValueOnce(resolvedBuilder([{ id: 70, title: "Synthetic energy need", description: "energy optimisation" }]))
         .mockReturnValueOnce(resolvedBuilder([]))
         .mockReturnValueOnce(resolvedBuilder([{ id: 8, ownerUserId: 2, title: "Energy optimisation", summary: "Synthetic published teaser", disclosureScope: "teaser_only", status: "published" }])),
@@ -118,5 +120,14 @@ describe("NAQLA2 deterministic MatchRun factors", () => {
     const pilotInsert = { values: vi.fn(() => ({ $returningId: vi.fn().mockResolvedValue([{ id: 74 }]) })) };
     getDb.mockResolvedValue({ select: vi.fn(() => resolvedBuilder([{ id: 73, ownerUserId: 2, requesterUserId: 1, status: "established" }])), insert: vi.fn(() => pilotInsert) });
     await expect(owner.naqla2.engagements.createPilot({ engagementId: 73, scope: "Synthetic pilot scope remains subject to governed human review." })).resolves.toMatchObject({ pilotId: 74, status: "planned" });
+  });
+
+  it("يرفض MatchRun عندما تصبح عضوية ActiveContext ملغاة", async () => {
+    const select = vi.fn()
+      .mockReturnValueOnce(resolvedBuilder([{ organizationId: 6 }]))
+      .mockReturnValueOnce(resolvedBuilder([]));
+    getDb.mockResolvedValue({ select });
+    const caller = appRouter.createCaller(contextFor(1));
+    await expect(caller.naqla2.deterministicMatching.createRun({ requestId: 77 })).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 });

@@ -856,7 +856,7 @@ export const marketplaceAssets = mysqlTable("marketplace_assets", {
 });
 
 export const matchingRequests = mysqlTable("matching_requests", {
-	id: int().autoincrement().notNull(),
+	id: int().autoincrement().primaryKey(),
 	userId: int().notNull(),
 	userType: mysqlEnum(['innovator','investor','company','government']).notNull(),
 	title: varchar({ length: 500 }).notNull(),
@@ -2276,37 +2276,37 @@ export const naqla2InterestRequests = mysqlTable("naqla2_interest_requests", {
 }, (table) => [index('naqla2_interest_listing_idx').on(table.listingId), index('naqla2_interest_requester_idx').on(table.requesterUserId), index('naqla2_interest_owner_idx').on(table.ownerUserId)]);
 
 export const naqla2MatchRuns = mysqlTable("naqla2_match_runs", {
-  id: int().autoincrement().primaryKey(),
-  requesterUserId: int().notNull(),
-  matchingRequestId: int(),
-  activeContextId: int(),
-  queryText: varchar({ length: 500 }).notNull(),
-  status: mysqlEnum(['completed']).notNull().default('completed'),
-  candidateCount: int().notNull().default(0),
-  ruleVersion: varchar({ length: 64 }).notNull().default('naqla2-deterministic-v2'),
-  weightVersion: varchar({ length: 64 }).notNull().default('term-overlap-100-v1'),
-  inputFingerprint: varchar({ length: 128 }).notNull().default(''),
-  completedAt: timestamp({ mode: 'string' }),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	id: int().autoincrement().primaryKey(),
+	requesterUserId: int("requester_user_id").notNull(),
+	matchingRequestId: int("matching_request_id"),
+	activeContextId: int("active_context_id"),
+	queryText: varchar("query_text", { length: 500 }).notNull(),
+	status: mysqlEnum(['completed']).notNull().default('completed'),
+	candidateCount: int("candidate_count").notNull().default(0),
+	ruleVersion: varchar("rule_version", { length: 64 }).notNull().default('naqla2-deterministic-v2'),
+	weightVersion: varchar("weight_version", { length: 64 }).notNull().default('term-overlap-100-v1'),
+	inputFingerprint: varchar("input_fingerprint", { length: 128 }).notNull().default(''),
+	completedAt: timestamp("completed_at", { mode: 'string' }),
+	createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [index('naqla2_match_run_requester_idx').on(table.requesterUserId), index('naqla2_match_run_request_idx').on(table.matchingRequestId), index('naqla2_match_run_context_idx').on(table.activeContextId), uniqueIndex('naqla2_match_run_replay_uq').on(table.requesterUserId, table.matchingRequestId, table.ruleVersion, table.inputFingerprint)]);
 
 export const naqla2MatchCandidates = mysqlTable("naqla2_match_candidates", {
-  id: int().autoincrement().primaryKey(),
-  matchRunId: int().notNull(),
-  listingId: int().notNull(),
-  rankBand: mysqlEnum(['high', 'medium', 'low']).notNull(),
-  score: int().notNull(),
-  evidenceConfidence: mysqlEnum(['teaser_only', 'not_evaluated']).notNull().default('teaser_only'),
-  factors: json().notNull(),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	id: int().autoincrement().primaryKey(),
+	matchRunId: int("match_run_id").notNull(),
+	listingId: int("listing_id").notNull(),
+	rankBand: mysqlEnum("rank_band", ['high', 'medium', 'low']).notNull(),
+	score: int().notNull(),
+	evidenceConfidence: mysqlEnum("evidence_confidence", ['teaser_only', 'not_evaluated']).notNull().default('teaser_only'),
+	factors: json().notNull(),
+	createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [index('naqla2_match_candidate_run_idx').on(table.matchRunId), index('naqla2_match_candidate_listing_idx').on(table.listingId)]);
 
 export const naqla2MatchExclusions = mysqlTable("naqla2_match_exclusions", {
-  id: int().autoincrement().primaryKey(),
-  matchRunId: int().notNull(),
-  listingId: int().notNull(),
-  reasonCode: varchar({ length: 64 }).notNull(),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	id: int().autoincrement().primaryKey(),
+	matchRunId: int("match_run_id").notNull(),
+	listingId: int("listing_id").notNull(),
+	reasonCode: varchar("reason_code", { length: 64 }).notNull(),
+	createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [index('naqla2_match_exclusion_run_idx').on(table.matchRunId)]);
 
 export const naqla2Applications = mysqlTable("naqla2_applications", {
@@ -2329,24 +2329,24 @@ export const naqla2ApplicationVersions = mysqlTable("naqla2_application_versions
 }, (table) => [uniqueIndex('naqla2_application_version_unique').on(table.applicationId, table.versionNumber), index('naqla2_application_version_application_idx').on(table.applicationId)]);
 
 export const naqla2Engagements = mysqlTable("naqla2_engagements", {
-  id: int().autoincrement().primaryKey(),
-  interestRequestId: int().notNull(),
-  ownerUserId: int().notNull(),
-  requesterUserId: int().notNull(),
-  status: mysqlEnum(['established', 'closed']).notNull().default('established'),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
-  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+	id: int().autoincrement().primaryKey(),
+	interestRequestId: int("interest_request_id").notNull(),
+	ownerUserId: int("owner_user_id").notNull(),
+	requesterUserId: int("requester_user_id").notNull(),
+	status: mysqlEnum(['established', 'closed']).notNull().default('established'),
+	createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 }, (table) => [index('naqla2_engagement_interest_idx').on(table.interestRequestId), index('naqla2_engagement_owner_idx').on(table.ownerUserId), index('naqla2_engagement_requester_idx').on(table.requesterUserId)]);
 
 export const naqla2Pilots = mysqlTable("naqla2_pilots", {
-  id: int().autoincrement().primaryKey(),
-  engagementId: int().notNull(),
-  ownerUserId: int().notNull(),
-  requesterUserId: int().notNull(),
-  status: mysqlEnum(['planned', 'active', 'completed', 'closed']).notNull().default('planned'),
-  scope: text().notNull(),
-  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
-  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+	id: int().autoincrement().primaryKey(),
+	engagementId: int("engagement_id").notNull(),
+	ownerUserId: int("owner_user_id").notNull(),
+	requesterUserId: int("requester_user_id").notNull(),
+	status: mysqlEnum(['planned', 'active', 'completed', 'closed']).notNull().default('planned'),
+	scope: text().notNull(),
+	createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 }, (table) => [index('naqla2_pilot_engagement_idx').on(table.engagementId), index('naqla2_pilot_owner_idx').on(table.ownerUserId), index('naqla2_pilot_requester_idx').on(table.requesterUserId)]);
 
 export type Naqla2VettingReview = typeof naqla2VettingReviews.$inferSelect;

@@ -11,7 +11,7 @@ import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
 import { auditLogs, userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2ApplicationVersions, naqla2Applications, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchExclusions, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
-import { and, asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, gte, lte } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
 import { CR01_SUBMISSION_TYPES, CR01_TYPE_CONFIG, deriveQualificationOutcome, evaluateTrlEvidence } from "./naqla1-cr01";
@@ -3970,6 +3970,8 @@ Provide response in JSON format:
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const [activeContext] = await database.select({ organizationId: userActiveContexts.organizationId }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
           if (!activeContext) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An ActiveContext is required before a MatchRun can be created' });
+          const [activeMembership] = await database.select({ id: organizationMemberships.id }).from(organizationMemberships).where(and(eq(organizationMemberships.organizationId, activeContext.organizationId), eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active'))).limit(1);
+          if (!activeMembership) throw new TRPCError({ code: 'FORBIDDEN', message: 'An active organization membership is required for the ActiveContext' });
           const [request] = await database.select({ id: matchingRequests.id, title: matchingRequests.title, description: matchingRequests.description }).from(matchingRequests).where(and(eq(matchingRequests.id, input.requestId), eq(matchingRequests.userId, ctx.user.id))).limit(1);
           if (!request) throw new TRPCError({ code: 'FORBIDDEN', message: 'A matching request owned by the caller is required' });
           const queryText = `${request.title} ${request.description}`.slice(0, 500);
@@ -4001,16 +4003,29 @@ Provide response in JSON format:
         }),
 
       listRuns: protectedProcedure
-        .input(z.object({ page: z.number().int().min(1).default(1), limit: z.number().int().min(1).max(50).default(20), sort: z.enum(['newest', 'oldest']).default('newest') }).optional())
+        .input(z.object({
+          page: z.number().int().min(1).default(1),
+          limit: z.number().int().min(1).max(50).default(20),
+          sort: z.enum(['newest', 'oldest']).default('newest'),
+          requestId: z.number().int().positive().optional(),
+          createdAfter: z.string().datetime().optional(),
+          createdBefore: z.string().datetime().optional(),
+        }).optional())
         .query(async ({ ctx, input }) => {
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const [activeContext] = await database.select({ organizationId: userActiveContexts.organizationId }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
           if (!activeContext) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An ActiveContext is required before MatchRuns can be listed' });
+          const [activeMembership] = await database.select({ id: organizationMemberships.id }).from(organizationMemberships).where(and(eq(organizationMemberships.organizationId, activeContext.organizationId), eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active'))).limit(1);
+          if (!activeMembership) throw new TRPCError({ code: 'FORBIDDEN', message: 'An active organization membership is required for the ActiveContext' });
           const page = input?.page ?? 1;
           const limit = input?.limit ?? 20;
+          const filters = [eq(naqla2MatchRuns.requesterUserId, ctx.user.id), eq(naqla2MatchRuns.activeContextId, activeContext.organizationId)];
+          if (input?.requestId) filters.push(eq(naqla2MatchRuns.matchingRequestId, input.requestId));
+          if (input?.createdAfter) filters.push(gte(naqla2MatchRuns.createdAt, input.createdAfter));
+          if (input?.createdBefore) filters.push(lte(naqla2MatchRuns.createdAt, input.createdBefore));
           const rows = await database.select().from(naqla2MatchRuns)
-            .where(and(eq(naqla2MatchRuns.requesterUserId, ctx.user.id), eq(naqla2MatchRuns.activeContextId, activeContext.organizationId)))
+            .where(and(...filters))
             .orderBy(input?.sort === 'oldest' ? asc(naqla2MatchRuns.createdAt) : desc(naqla2MatchRuns.createdAt))
             .limit(limit + 1)
             .offset((page - 1) * limit);
@@ -4030,7 +4045,16 @@ Provide response in JSON format:
             .where(eq(naqla2MatchCandidates.matchRunId, run.id))
             .orderBy(desc(naqla2MatchCandidates.score));
           const exclusions = await database.select({ listingId: naqla2MatchExclusions.listingId, reasonCode: naqla2MatchExclusions.reasonCode }).from(naqla2MatchExclusions).where(eq(naqla2MatchExclusions.matchRunId, run.id));
-          return { run, candidates: candidates.map((candidate) => candidate.status === 'published' && candidate.disclosureScope === 'teaser_only' ? candidate : { ...candidate, title: null, summary: null, availability: 'stale_or_revoked' }), exclusions };
+          return {
+            run,
+            candidates: candidates.map((candidate) => {
+              const factors = typeof candidate.factors === 'string' ? JSON.parse(candidate.factors) : candidate.factors;
+              return candidate.status === 'published' && candidate.disclosureScope === 'teaser_only'
+                ? { ...candidate, factors }
+                : { ...candidate, factors, title: null, summary: null, availability: 'stale_or_revoked' };
+            }),
+            exclusions,
+          };
         }),
     }),
 

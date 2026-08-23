@@ -29,7 +29,12 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
   throw new Error(`No available port found starting from ${startPort}`);
 }
 
-async function startServer() {
+export type CreateAppOptions = {
+  /** Test harnesses can omit Vite/static mounting while keeping the real API composition. */
+  serveFrontend?: boolean;
+};
+
+export async function createApp({ serveFrontend = true }: CreateAppOptions = {}) {
   const app = express();
   const server = createServer(app);
   // Configure body parser with larger size limit for file uploads
@@ -47,12 +52,20 @@ async function startServer() {
       createContext,
     })
   );
-  // development mode uses Vite, production mode uses static files
-  if (process.env.NODE_ENV === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
+  // Development uses Vite and production uses static files. The API-only branch is
+  // intentionally opt-in for isolated NODE_ENV=test harnesses.
+  if (serveFrontend) {
+    if (process.env.NODE_ENV === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
   }
+  return { app, server };
+}
+
+async function startServer() {
+  const { server } = await createApp();
 
   const preferredPort = parseInt(process.env.PORT || "3000", 10);
   const isDevelopment = process.env.NODE_ENV === "development";
@@ -76,4 +89,8 @@ async function startServer() {
   });
 }
 
-startServer().catch(console.error);
+// Vitest can preserve a development NODE_ENV from the parent process, so honour
+// its explicit runtime marker as well as NODE_ENV when this module is imported.
+if (process.env.NODE_ENV !== "test" && !process.env.VITEST) {
+  startServer().catch(console.error);
+}
