@@ -73,6 +73,16 @@ export default function NaqlaJourneyWorkspace() {
   const personaLabel = personas.find((item) => item.value === persona);
   const activeMembership = { organization: "Synthetic demo organization", persona, status: "active" as const };
   const invitationManager = canManageInvitation(activeMembership);
+  const contextsQuery = trpc.organizationContext.myContexts.useQuery(undefined, { enabled: Boolean(user) });
+  const serverContexts = (contextsQuery.data ?? []).filter((context): context is NonNullable<typeof context> => Boolean(context));
+  const activeServerContext = serverContexts.find((context) => context.isActiveContext) ?? serverContexts[0];
+  const createDemoContext = trpc.organizationContext.create.useMutation({
+    onSuccess: () => {
+      void contextsQuery.refetch();
+      setNotice(copy("تم إنشاء سياق عرض اصطناعي خادمي وربطه بعضويتك.", "A server-side synthetic demo context was created and linked to your membership.", isArabic));
+    },
+    onError: () => setNotice(copy("تعذر إنشاء السياق الخادمي؛ استمر العرض المحلي دون بديل خفي.", "The server context could not be created; the local demo continues with no hidden fallback.", isArabic)),
+  });
   const createServerDemo = trpc.cr01.createEnergyDemo.useMutation({
     onSuccess: (result) => {
       setServerDemoId(result.ideaId);
@@ -139,7 +149,7 @@ export default function NaqlaJourneyWorkspace() {
           <aside className="space-y-5">
             <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-5">
               <div className="flex items-center justify-between gap-4">
-                <div><p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">{copy("السياق النشط", "Active context", isArabic)}</p><h2 className="mt-1 font-semibold">{copy("منظمة العرض الاصطناعي", "Synthetic demo organization", isArabic)}</h2></div>
+                <div><p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">{copy("السياق النشط", "Active context", isArabic)}</p><h2 className="mt-1 font-semibold">{activeServerContext ? (isArabic ? activeServerContext.nameAr : activeServerContext.nameEn || activeServerContext.nameAr) : copy("منظمة العرض الاصطناعي", "Synthetic demo organization", isArabic)}</h2></div>
                 <ShieldCheck className="h-6 w-6 text-emerald-300" aria-label={copy("سياق معزول", "Isolated context", isArabic)} />
               </div>
               <label className="mt-5 block text-sm font-medium text-slate-300" htmlFor="persona">{copy("الدور", "Persona", isArabic)}</label>
@@ -147,6 +157,7 @@ export default function NaqlaJourneyWorkspace() {
                 {personas.map((item) => <option key={item.value} value={item.value}>{isArabic ? item.ar : item.en}</option>)}
               </select>
               <p className="mt-3 text-xs leading-5 text-slate-400">{personaCanReviewEvidence(persona) ? copy("هذا الدور يمكنه مراجعة الدليل عند وجود تفويض مستقل ضمن السيناريو.", "This persona can review evidence only after independent authorization in this scenario.", isArabic) : copy("هذا الدور لا يحصل على حق الدليل تلقائياً.", "This persona receives no evidence right by implication.", isArabic)}</p>
+              {user && !activeServerContext && <button type="button" disabled={createDemoContext.isPending} onClick={() => createDemoContext.mutate({ nameAr: "سياق عرض اصطناعي", nameEn: "Synthetic demo context", type: "supporting", scope: "local" })} className="mt-3 w-full rounded-lg border border-violet-300/40 px-3 py-2 text-xs font-semibold text-violet-100 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-violet-300">{copy("إنشاء سياق عرض خادمي", "Create server demo context", isArabic)}</button>}
               <div className="mt-4 rounded-xl border border-white/10 bg-slate-950/60 p-3"><p className="text-xs font-semibold text-slate-300">{copy("دعوة عضوية اصطناعية", "Synthetic membership invitation", isArabic)}</p><p className="mt-1 text-xs leading-5 text-slate-400">{invitationManager ? copy(`الحالة: ${invitationStatus === "draft" ? "مسودة" : invitationStatus === "invited" ? "مرسلة" : invitationStatus === "accepted" ? "مقبولة" : "ملغاة"}.`, `Status: ${invitationStatus}.`, isArabic) : copy("لا يملك هذا الدور صلاحية إدارة الدعوات في السياق النشط.", "This persona cannot manage invitations in the active context.", isArabic)}</p>{invitationManager && invitationStatus === "draft" && <button type="button" onClick={() => setInvitationStatus((previous) => transitionInvitation(previous, "send"))} className="mt-3 rounded-lg border border-cyan-300/40 px-3 py-2 text-xs font-semibold text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-300">{copy("إرسال دعوة", "Send invitation", isArabic)}</button>}{invitationManager && invitationStatus === "invited" && <button type="button" onClick={() => setInvitationStatus((previous) => transitionInvitation(previous, "accept"))} className="mt-3 rounded-lg border border-emerald-300/40 px-3 py-2 text-xs font-semibold text-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-300">{copy("قبول الدعوة تجريبياً", "Accept invitation in demo", isArabic)}</button>}</div>
             </section>
 

@@ -19,7 +19,7 @@
 - [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
 - [ ] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
 - [ ] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
-- [ ] إزالة المفتاح الافتراضي من مسار NAQLA3 وإغلاق عمليات blockchain غير المهيأة بدلاً من تنفيذها بقيمة مضمّنة
+- [x] إزالة المفتاح الافتراضي من مسار NAQLA3 وإغلاق عمليات blockchain غير المهيأة بدلاً من تنفيذها بقيمة مضمّنة
 
 ## NAQLA Phase 2.1 Final Closure — تحقق واجهة Manager Funnel
 - [x] إصلاح انتقال «طلبات المتقدمين» من التحدي ليعرض Manager Funnel بدلاً من نموذج المتقدم للمنظمة المالكة

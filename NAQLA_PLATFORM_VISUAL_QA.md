@@ -11,3 +11,7 @@ The final acceptance pass will repeat screenshots after the full test suite and 
 ## Desktop follow-up
 
 The current desktop captures of `/` and `/naqla` load successfully after the production build. The home route uses Arabic RTL hierarchy, exposes the three engines and a clear workspace call-to-action, and does not display unsupported partner, integration, or numerical claims. The workspace retains a visible Synthetic Demo label, explicit deterministic controls, a separated Commercial Asset/Commercial Transaction treatment, readable NAQLA1–3 progress, and no exposed identifiers or diagnostic text.
+
+## Mobile follow-up
+
+The latest 390×844 capture of `/naqla` remains a readable single-column RTL layout. The synthetic-data label, active-context panel, progress indicators, deterministic control, and complete journey map remain visible without horizontal overflow or exposed technical identifiers.
