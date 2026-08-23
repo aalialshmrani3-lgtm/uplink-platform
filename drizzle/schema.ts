@@ -2314,6 +2314,8 @@ export const naqla2Applications = mysqlTable("naqla2_applications", {
   matchCandidateId: int().notNull(),
   applicantUserId: int().notNull(),
   ownerUserId: int().notNull(),
+  tenantId: int("tenant_id"),
+  reviewerTenantId: int("reviewer_tenant_id"),
   status: mysqlEnum(['draft', 'submitted', 'withdrawn', 'accepted', 'declined']).notNull().default('draft'),
   createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
   updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
@@ -2325,8 +2327,118 @@ export const naqla2ApplicationVersions = mysqlTable("naqla2_application_versions
   versionNumber: int().notNull(),
   payloadSha256: varchar({ length: 64 }).notNull(),
   snapshot: json().notNull(),
+  actorId: int("actor_id"),
+  submittedAt: timestamp("submitted_at", { mode: 'string' }),
+  requirementSnapshot: json("requirement_snapshot"),
+  evidenceReferences: json("evidence_references"),
+  provenance: json(),
   createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [uniqueIndex('naqla2_application_version_unique').on(table.applicationId, table.versionNumber), index('naqla2_application_version_application_idx').on(table.applicationId)]);
+
+export const naqla2CopilotRuns = mysqlTable("naqla2_copilot_runs", {
+  id: int().autoincrement().primaryKey(),
+  tenantId: int("tenant_id").notNull(),
+  activeContextId: int("active_context_id").notNull(),
+  actorId: int("actor_id").notNull(),
+  actorRole: mysqlEnum("actor_role", ['reviewer', 'applicant']).notNull(),
+  mode: mysqlEnum("mode", ['reviewer_assist', 'applicant_assist']).notNull(),
+  applicationId: int("application_id").notNull(),
+  applicationVersionId: int("application_version_id").notNull(),
+  policyVersion: varchar("policy_version", { length: 64 }).notNull(),
+  sourceSnapshotHash: varchar("source_snapshot_hash", { length: 64 }).notNull(),
+  schemaVersion: varchar("schema_version", { length: 64 }).notNull(),
+  providerMetadata: json("provider_metadata"),
+  promptVersion: varchar("prompt_version", { length: 64 }),
+  status: mysqlEnum("status", ['completed', 'stale', 'revoked_source', 'recompute_required', 'failed']).notNull().default('completed'),
+  idempotencyKey: varchar("idempotency_key", { length: 128 }).notNull(),
+  failureCode: varchar("failure_code", { length: 96 }),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  completedAt: timestamp("completed_at", { mode: 'string' }),
+  staleAt: timestamp("stale_at", { mode: 'string' }),
+}, (table) => [
+  uniqueIndex('naqla2_copilot_run_replay_uq').on(table.idempotencyKey),
+  index('naqla2_copilot_run_application_idx').on(table.applicationId),
+  index('naqla2_copilot_run_actor_idx').on(table.actorId),
+  index('naqla2_copilot_run_tenant_idx').on(table.tenantId),
+]);
+
+export const naqla2CopilotSuggestions = mysqlTable("naqla2_copilot_suggestions", {
+  id: int().autoincrement().primaryKey(),
+  copilotRunId: int("copilot_run_id").notNull(),
+  audience: mysqlEnum("audience", ['reviewer', 'applicant']).notNull(),
+  kind: mysqlEnum("kind", ['information_gap', 'evidence_gap', 'clarification_draft', 'improvement_draft', 'next_best_action', 'limitation']).notNull(),
+  status: mysqlEnum("status", ['generated', 'accepted_as_draft', 'dismissed']).notNull().default('generated'),
+  body: text().notNull(),
+  deterministicRuleRefs: json("deterministic_rule_refs").notNull(),
+  sourceRefs: json("source_refs").notNull(),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  actionedAt: timestamp("actioned_at", { mode: 'string' }),
+}, (table) => [index('naqla2_copilot_suggestion_run_idx').on(table.copilotRunId)]);
+
+export const naqla2ReviewerClarificationRequests = mysqlTable("naqla2_reviewer_clarification_requests", {
+  id: int().autoincrement().primaryKey(),
+  applicationId: int("application_id").notNull(),
+  applicationVersionId: int("application_version_id").notNull(),
+  reviewerUserId: int("reviewer_user_id").notNull(),
+  suggestionId: int("suggestion_id"),
+  question: text().notNull(),
+  status: mysqlEnum("status", ['draft', 'sent', 'answered', 'closed']).notNull().default('draft'),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+  sentByUserId: int("sent_by_user_id"),
+  sentAt: timestamp("sent_at", { mode: 'string' }),
+}, (table) => [index('naqla2_clarification_application_idx').on(table.applicationId), index('naqla2_clarification_reviewer_idx').on(table.reviewerUserId)]);
+
+export const naqla2ApplicantClarificationResponses = mysqlTable("naqla2_applicant_clarification_responses", {
+  id: int().autoincrement().primaryKey(),
+  clarificationRequestId: int("clarification_request_id").notNull(),
+  applicantUserId: int("applicant_user_id").notNull(),
+  responseText: text("response_text").notNull(),
+  status: mysqlEnum("status", ['draft', 'submitted']).notNull().default('draft'),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  submittedAt: timestamp("submitted_at", { mode: 'string' }),
+}, (table) => [index('naqla2_clarification_response_request_idx').on(table.clarificationRequestId), index('naqla2_clarification_response_applicant_idx').on(table.applicantUserId)]);
+
+export const naqla2ApplicantCopilotDrafts = mysqlTable("naqla2_applicant_copilot_drafts", {
+  id: int().autoincrement().primaryKey(),
+  applicationId: int("application_id").notNull(),
+  applicantUserId: int("applicant_user_id").notNull(),
+  baseApplicationVersionId: int("base_application_version_id").notNull(),
+  suggestionId: int("suggestion_id"),
+  content: text().notNull(),
+  status: mysqlEnum("status", ['draft', 'submitted']).notNull().default('draft'),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+  submittedAt: timestamp("submitted_at", { mode: 'string' }),
+}, (table) => [index('naqla2_copilot_draft_application_idx').on(table.applicationId), index('naqla2_copilot_draft_applicant_idx').on(table.applicantUserId)]);
+
+export const naqla2ApplicationReviewerAssignments = mysqlTable("naqla2_application_reviewer_assignments", {
+  id: int().autoincrement().primaryKey(),
+  applicationId: int("application_id").notNull(),
+  organizationId: int("organization_id").notNull(),
+  reviewerUserId: int("reviewer_user_id").notNull(),
+  assignedByUserId: int("assigned_by_user_id").notNull(),
+  status: mysqlEnum("status", ['active', 'revoked']).notNull().default('active'),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  revokedAt: timestamp("revoked_at", { mode: 'string' }),
+}, (table) => [
+  uniqueIndex('naqla2_application_reviewer_assignment_unique').on(table.applicationId, table.reviewerUserId),
+  index('naqla2_application_reviewer_org_idx').on(table.organizationId),
+  index('naqla2_application_reviewer_user_idx').on(table.reviewerUserId),
+]);
+
+export const naqla2ApplicationEvidenceReferences = mysqlTable("naqla2_application_evidence_references", {
+  id: int().autoincrement().primaryKey(),
+  applicationVersionId: int("application_version_id").notNull(),
+  evidenceId: int("evidence_id").notNull(),
+  applicantUserId: int("applicant_user_id").notNull(),
+  allowReviewer: int("allow_reviewer").notNull().default(0),
+  createdAt: timestamp("created_at", { mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [
+  uniqueIndex('naqla2_application_evidence_reference_unique').on(table.applicationVersionId, table.evidenceId),
+  index('naqla2_application_evidence_reference_version_idx').on(table.applicationVersionId),
+  index('naqla2_application_evidence_reference_evidence_idx').on(table.evidenceId),
+]);
 
 export const naqla2Engagements = mysqlTable("naqla2_engagements", {
 	id: int().autoincrement().primaryKey(),

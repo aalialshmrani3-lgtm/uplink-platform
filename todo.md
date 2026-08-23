@@ -22,6 +22,19 @@
 - [x] إضافة filters آمنة لعقد listRuns ضمن المستخدم وActiveContext فقط ثم تغطيتها عبر HTTP
 - [x] إضافة migration ضيقة لعقد matching_requests الموجود في Drizzle قبل رحلة MatchRun HTTP المعزولة
 - [x] إضافة اختبار rendered لـMatching Hub يثبت حالة عدم الدخول وعرض نتيجة تفسيرية synthetic
+- [x] تنفيذ Phase 2.2D Reviewer & Applicant Copilot كطبقة advisory حتمية بلا مزود خارجي أو قرار آلي
+- [x] إضافة migrations ضيقة لكائنات Copilot وprovenance والأسئلة والردود مع idempotency وstale/revocation
+- [x] تطبيق tRPC وredaction وActiveContext وtenant/evidence authorization وفصل Reviewer/Applicant
+- [x] بناء Reviewer Workspace وApplicant Assistance Workspace داخل المسارات الحالية مع RTL وmobile وaccessibility
+- [x] إضافة اختبارات الحتمية والصلاحيات والخصوصية والredaction والimmutability والواجهات rendered
+- [x] تنفيذ E2E HTTP حقيقي للرحلتين على MariaDB محلية معزولة ببيانات synthetic وتنظيف مضمون
+- [x] إضافة تحقق mobile فعلي لمساري Copilot يثبت عدم الانكسار أو حجب المحتوى
+- [x] إضافة اختبار accessibility وkeyboard محدد لواجهتي Copilot للعناوين والlabels والعناصر التفاعلية
+- [x] إضافة assertion mobile صريح لمساري Copilot لغياب overflow ووصول المحتوى والـCTA
+- [x] إضافة اختبار accessibility وkeyboard مخصص لمسار Applicant Copilot
+- [x] إضافة اختبار mobile DOM يقيس عدم horizontal overflow ووصول CTA لكل مسار Copilot
+- [x] إضافة assertion mobile صريح لـscrollWidth/clientWidth وCTA المسماة لكل Workspace
+- [ ] تشغيل قبول كامل وبناء وحزمة Phase 2.2D ثم النشر وproduction smoke
 
 - [x] قصر دفعة الإغلاق الحالية على بنود المنصة التشغيلية في هذا القسم واستبعاد Phase 2.2B وCanary/Azure/Holdout التاريخية
 - [x] تشغيل الاختبارات المباشرة لربط NAQLA2 والسياق والواجهة قبل تحديث دفتر العمل الذري

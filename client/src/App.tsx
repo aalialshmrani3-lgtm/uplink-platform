@@ -129,6 +129,8 @@ const MySubmissions = lazy(() => import("./pages/MySubmissions")); // My Submiss
 const ClassificationPaths = lazy(() => import("./pages/ClassificationPaths")); // Classification Paths
 const Naqla2Projects = lazy(() => import("./pages/Naqla2Projects")); // NAQLA 2 Projects
 const Naqla2MatchingHub = lazy(() => import("./pages/Naqla2MatchingHub")); // NAQLA 2 Matching Hub
+const Naqla2ReviewerCopilot = lazy(() => import("./pages/Naqla2ReviewerCopilot"));
+const Naqla2ApplicantCopilot = lazy(() => import("./pages/Naqla2ApplicantCopilot"));
 const Naqla2DealRoom = lazy(() => import("./pages/Naqla2DealRoom")); // NAQLA 2 Deal Room
 const Naqla2EventsNeedsBoard = lazy(() => import("./pages/Naqla2EventsNeedsBoard")); // NAQLA 2 Events & Needs Board
 const Naqla2InvestorProfile = lazy(() => import("./pages/Naqla2InvestorProfile")); // NAQLA 2 Investor Profile
@@ -252,6 +254,8 @@ function Router() {
         <Route path="/my-submissions" component={MySubmissions} /> {/* My Submissions */}
         <Route path="/naqla2/projects/:id" component={Naqla2Projects} /> {/* NAQLA 2 Project Detail */}
         <Route path="/naqla2/matching-hub" component={Naqla2MatchingHub} /> {/* NAQLA 2 Matching Hub */}
+        <Route path="/naqla2/review-assistance" component={Naqla2ReviewerCopilot} />
+        <Route path="/naqla2/application-assistance" component={Naqla2ApplicantCopilot} />
         <Route path="/naqla2/deal-room" component={Naqla2DealRoom} /> {/* NAQLA 2 Deal Room */}
         <Route path="/naqla2/events-needs-board" component={Naqla2EventsNeedsBoard} /> {/* NAQLA 2 Events & Needs Board */}
         <Route path="/naqla2/investor-profile" component={Naqla2InvestorProfile} /> {/* NAQLA 2 Investor Profile */}

@@ -10,7 +10,7 @@ import { invokeLLM as invokeExternalModelSdk } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
-import { auditLogs, userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2ApplicationVersions, naqla2Applications, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchExclusions, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
+import { auditLogs, userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2ApplicantClarificationResponses, naqla2ApplicantCopilotDrafts, naqla2ApplicationEvidenceReferences, naqla2ApplicationReviewerAssignments, naqla2ApplicationVersions, naqla2Applications, naqla2CopilotRuns, naqla2CopilotSuggestions, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchExclusions, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2ReviewerClarificationRequests, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
 import { and, asc, desc, eq, gte, lte } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
@@ -32,6 +32,8 @@ function sqlDateTimeNow(): string {
 
 export { createDeterministicTeaserMatch } from "./naqla2/matching-intelligence";
 import { MATCHING_RULE_VERSION, MATCHING_WEIGHT_VERSION, classifyListingEligibility, createDeterministicTeaserMatch, stableMatchFingerprint } from "./naqla2/matching-intelligence";
+import { analyzeCopilotGaps, COPILOT_POLICY_VERSION, COPILOT_SCHEMA_VERSION, createCopilotIdempotencyKey, createCopilotSourceSnapshotHash, redactCopilotText } from "./naqla2/copilot-deterministic";
+import { copilotRouter } from "./naqla2/copilot-router";
 
 export async function invokeExternalModel(...args: Parameters<typeof invokeExternalModelSdk>) {
   if (process.env.AI_EXTERNAL_PROVIDER_ENABLED !== "true") {
@@ -3784,6 +3786,7 @@ Provide response in JSON format:
   }),
 
   naqla2: router({
+    copilot: copilotRouter,
     // Get routed ideas from NAQLA 1
     getRoutedIdeas: protectedProcedure
       .input(z.object({
@@ -4064,6 +4067,10 @@ Provide response in JSON format:
         .mutation(async ({ ctx, input }) => {
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [activeContext] = await database.select({ organizationId: userActiveContexts.organizationId }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
+          if (!activeContext) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An ActiveContext is required before an application can be created' });
+          const [activeMembership] = await database.select({ id: organizationMemberships.id }).from(organizationMemberships).where(and(eq(organizationMemberships.organizationId, activeContext.organizationId), eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active'))).limit(1);
+          if (!activeMembership) throw new TRPCError({ code: 'FORBIDDEN', message: 'An active organization membership is required for the ActiveContext' });
           const [candidate] = await database.select({ candidateId: naqla2MatchCandidates.id, listingId: naqla2MarketplaceListings.id, ownerUserId: naqla2MarketplaceListings.ownerUserId })
             .from(naqla2MatchCandidates)
             .innerJoin(naqla2MatchRuns, eq(naqla2MatchCandidates.matchRunId, naqla2MatchRuns.id))
@@ -4071,7 +4078,7 @@ Provide response in JSON format:
             .where(and(eq(naqla2MatchCandidates.id, input.matchCandidateId), eq(naqla2MatchRuns.requesterUserId, ctx.user.id), eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only')))
             .limit(1);
           if (!candidate || candidate.ownerUserId === ctx.user.id) throw new TRPCError({ code: 'FORBIDDEN', message: 'An owned teaser-only match candidate is required' });
-          const [application] = await database.insert(naqla2Applications).values({ matchCandidateId: candidate.candidateId, applicantUserId: ctx.user.id, ownerUserId: candidate.ownerUserId, status: 'draft' }).$returningId();
+          const [application] = await database.insert(naqla2Applications).values({ matchCandidateId: candidate.candidateId, applicantUserId: ctx.user.id, ownerUserId: candidate.ownerUserId, tenantId: activeContext.organizationId, status: 'draft' }).$returningId();
           return { applicationId: application.id, status: 'draft', disclaimer: 'An application does not grant evidence access, acceptance, or an engagement.' };
         }),
 
@@ -4085,7 +4092,32 @@ Provide response in JSON format:
           const versions = await database.select({ id: naqla2ApplicationVersions.id }).from(naqla2ApplicationVersions).where(eq(naqla2ApplicationVersions.applicationId, application.id));
           const snapshot = { applicationId: application.id, applicantUserId: ctx.user.id, summary: input.summary };
           const payloadSha256 = createHash('sha256').update(JSON.stringify(snapshot)).digest('hex');
-          const [version] = await database.insert(naqla2ApplicationVersions).values({ applicationId: application.id, versionNumber: versions.length + 1, payloadSha256, snapshot }).$returningId();
+          const [version] = await database.insert(naqla2ApplicationVersions).values({ applicationId: application.id, versionNumber: versions.length + 1, payloadSha256, snapshot, actorId: ctx.user.id, submittedAt: sqlDateTimeNow(), requirementSnapshot: { required: ['summary', 'authorized_evidence'] }, evidenceReferences: [], provenance: { source: 'manual_application_version' } }).$returningId();
+          return { versionId: version.id, versionNumber: versions.length + 1, payloadSha256 };
+        }),
+
+      createVersionWithEvidence: protectedProcedure
+        .input(z.object({ applicationId: z.number().int().positive(), summary: z.string().min(10).max(5000), evidence: z.array(z.object({ evidenceId: z.number().int().positive(), shareWithReviewer: z.boolean() })).max(20).default([]) }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [activeContext] = await database.select({ organizationId: userActiveContexts.organizationId }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
+          if (!activeContext) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An ActiveContext is required before an application version can be created' });
+          const [membership] = await database.select({ id: organizationMemberships.id }).from(organizationMemberships).where(and(eq(organizationMemberships.organizationId, activeContext.organizationId), eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active'))).limit(1);
+          if (!membership) throw new TRPCError({ code: 'FORBIDDEN', message: 'An active organization membership is required for the ActiveContext' });
+          const [application] = await database.select().from(naqla2Applications).where(and(eq(naqla2Applications.id, input.applicationId), eq(naqla2Applications.applicantUserId, ctx.user.id), eq(naqla2Applications.tenantId, activeContext.organizationId), eq(naqla2Applications.status, 'draft'))).limit(1);
+          if (!application) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the applicant may version a draft application in the active tenant' });
+          const verifiedEvidence = await Promise.all(input.evidence.map(async (reference) => {
+            const [evidence] = await database.select({ id: naqla1Evidence.id, authorizationStatus: naqla1Evidence.authorizationStatus }).from(naqla1Evidence).where(and(eq(naqla1Evidence.id, reference.evidenceId), eq(naqla1Evidence.ownerUserId, ctx.user.id))).limit(1);
+            if (!evidence || evidence.authorizationStatus !== 'authorized') throw new TRPCError({ code: 'FORBIDDEN', message: 'Evidence must be owned by the applicant and currently authorized' });
+            return reference;
+          }));
+          const versions = await database.select({ id: naqla2ApplicationVersions.id }).from(naqla2ApplicationVersions).where(eq(naqla2ApplicationVersions.applicationId, application.id));
+          const snapshot = { applicationId: application.id, applicantUserId: ctx.user.id, summary: input.summary, evidenceIds: verifiedEvidence.map((reference) => reference.evidenceId) };
+          const payloadSha256 = createHash('sha256').update(JSON.stringify(snapshot)).digest('hex');
+          const [version] = await database.insert(naqla2ApplicationVersions).values({ applicationId: application.id, versionNumber: versions.length + 1, payloadSha256, snapshot, actorId: ctx.user.id, submittedAt: sqlDateTimeNow(), requirementSnapshot: { required: ['summary', 'authorized_evidence'] }, evidenceReferences: verifiedEvidence.map((reference) => ({ evidenceId: reference.evidenceId, shareWithReviewer: reference.shareWithReviewer })), provenance: { source: 'applicant_explicit_version' } }).$returningId();
+          if (verifiedEvidence.length) await database.insert(naqla2ApplicationEvidenceReferences).values(verifiedEvidence.map((reference) => ({ applicationVersionId: version.id, evidenceId: reference.evidenceId, applicantUserId: ctx.user.id, allowReviewer: reference.shareWithReviewer ? 1 : 0 })));
+          await database.insert(auditLogs).values({ userId: ctx.user.id, action: 'create', resource: 'naqla2_application_version', resourceId: String(version.id), details: { applicationId: application.id, versionNumber: versions.length + 1, evidenceCount: verifiedEvidence.length, tenantId: activeContext.organizationId }, status: 'success' });
           return { versionId: version.id, versionNumber: versions.length + 1, payloadSha256 };
         }),
 
@@ -4106,8 +4138,12 @@ Provide response in JSON format:
       getMyApplications: protectedProcedure.query(async ({ ctx }) => {
         const database = await getDb();
         if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [activeContext] = await database.select({ organizationId: userActiveContexts.organizationId }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
+        if (!activeContext) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An ActiveContext is required before applications can be listed' });
+        const [activeMembership] = await database.select({ id: organizationMemberships.id }).from(organizationMemberships).where(and(eq(organizationMemberships.organizationId, activeContext.organizationId), eq(organizationMemberships.userId, ctx.user.id), eq(organizationMemberships.status, 'active'))).limit(1);
+        if (!activeMembership) throw new TRPCError({ code: 'FORBIDDEN', message: 'An active organization membership is required for the ActiveContext' });
         const { or } = await import('drizzle-orm');
-        return database.select().from(naqla2Applications).where(or(eq(naqla2Applications.applicantUserId, ctx.user.id), eq(naqla2Applications.ownerUserId, ctx.user.id))).orderBy(desc(naqla2Applications.createdAt));
+        return database.select().from(naqla2Applications).where(and(eq(naqla2Applications.tenantId, activeContext.organizationId), or(eq(naqla2Applications.applicantUserId, ctx.user.id), eq(naqla2Applications.ownerUserId, ctx.user.id)))).orderBy(desc(naqla2Applications.createdAt));
       }),
     }),
 

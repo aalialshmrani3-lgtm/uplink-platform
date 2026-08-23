@@ -1,0 +1,7 @@
+Development visual verification:
+- Before restarting the preview, /naqla2/review-assistance reached the internal 404 fallback after BootGate.
+- After restart, both Copilot paths loaded the shell and initial spinner in the first captured viewport; a delayed browser verification is still required before acceptance.
+- Delayed browser verification of /naqla2/review-assistance completed: Splash transitions to the PlatformShell and the safe unauthenticated sign-in boundary renders; the earlier 404 was stale preview state before restart.
+- Delayed browser verification of /naqla2/application-assistance completed with the same Splash-to-PlatformShell transition and safe unauthenticated boundary.
+- Mobile full-page captures at 375×812 show both Reviewer and Applicant workspaces in Arabic RTL with the content stack, human-decision reminder, controls, and footer fully reachable without horizontal overflow.
+- Chromium headless production smoke at 375×812 measured `contentWidth=375`, `width=375`, and `overflow=false` for both Copilot paths; each route rendered `main` and its safe unauthenticated boundary.

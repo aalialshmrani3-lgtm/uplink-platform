@@ -26,14 +26,22 @@ describe("NAQLA2 applications and immutable versions", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("يرفض إنشاء Application من Candidate لا يملكه طالب المطابقة", async () => {
-    getDb.mockResolvedValue({ select: vi.fn(() => resolvedBuilder([])) });
+    const select = vi.fn()
+      .mockImplementationOnce(() => resolvedBuilder([{ organizationId: 31 }]))
+      .mockImplementationOnce(() => resolvedBuilder([{ id: 41 }]))
+      .mockImplementationOnce(() => resolvedBuilder([]));
+    getDb.mockResolvedValue({ select });
     await expect(appRouter.createCaller(contextFor(1)).naqla2.applications.create({ matchCandidateId: 9 })).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 
   it("ينشئ Application مملوكة من Candidate teaser-only صالح", async () => {
     const values = vi.fn(() => ({ $returningId: vi.fn().mockResolvedValue([{ id: 15 }]) }));
+    const select = vi.fn()
+      .mockImplementationOnce(() => resolvedBuilder([{ organizationId: 31 }]))
+      .mockImplementationOnce(() => resolvedBuilder([{ id: 41 }]))
+      .mockImplementationOnce(() => resolvedBuilder([{ candidateId: 9, listingId: 4, ownerUserId: 2 }]));
     getDb.mockResolvedValue({
-      select: vi.fn(() => resolvedBuilder([{ candidateId: 9, listingId: 4, ownerUserId: 2 }])),
+      select,
       insert: vi.fn(() => ({ values })),
     });
     await expect(appRouter.createCaller(contextFor(1)).naqla2.applications.create({ matchCandidateId: 9 })).resolves.toMatchObject({ applicationId: 15, status: "draft" });

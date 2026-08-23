@@ -57,6 +57,8 @@ const navigationGroups: Array<{ ar: string; en: string; items: NavigationItem[] 
       { href: "/naqla1/opportunities", ar: "الفرص", en: "Opportunities", icon: BriefcaseBusiness },
       { href: "/naqla2/matching-hub", ar: "المطابقة", en: "Matching", icon: Handshake },
       { href: "/naqla2/vetting", ar: "التقديم والـPilot", en: "Applications & pilots", icon: FileCheck2 },
+      { href: "/naqla2/review-assistance", ar: "مساعدة المراجع", en: "Reviewer assistance", icon: ShieldCheck },
+      { href: "/naqla2/application-assistance", ar: "مساعدة المتقدم", en: "Applicant assistance", icon: FileText },
     ],
   },
   {
