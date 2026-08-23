@@ -2387,13 +2387,14 @@ export const naqla3CommercialAssets = mysqlTable("naqla3_commercial_assets", {
 export const naqla3CommercialTransactions = mysqlTable("naqla3_commercial_transactions", {
   id: int().autoincrement().primaryKey(),
   assetId: int().notNull(),
+  engagementId: int(),
   initiatorUserId: int().notNull(),
   counterpartyUserId: int().notNull(),
   status: mysqlEnum(['initiated', 'human_review', 'contract_ready', 'executing', 'cancelled']).notNull().default('initiated'),
   humanReviewNote: text(),
   createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
   updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
-}, (table) => [index('naqla3_transaction_asset_idx').on(table.assetId), index('naqla3_transaction_initiator_idx').on(table.initiatorUserId), index('naqla3_transaction_counterparty_idx').on(table.counterpartyUserId)]);
+}, (table) => [index('naqla3_transaction_asset_idx').on(table.assetId), index('naqla3_transaction_engagement_idx').on(table.engagementId), index('naqla3_transaction_initiator_idx').on(table.initiatorUserId), index('naqla3_transaction_counterparty_idx').on(table.counterpartyUserId)]);
 
 export type Naqla3CommercialAsset = typeof naqla3CommercialAssets.$inferSelect;
 export type InsertNaqla3CommercialAsset = typeof naqla3CommercialAssets.$inferInsert;

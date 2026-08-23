@@ -5252,15 +5252,19 @@ ${input.technicalDetails}` : ''}`;
         }),
 
       createTransaction: protectedProcedure
-        .input(z.object({ assetId: z.number().int().positive(), counterpartyUserId: z.number().int().positive() }))
+        .input(z.object({ assetId: z.number().int().positive(), engagementId: z.number().int().positive() }))
         .mutation(async ({ ctx, input }) => {
-          if (input.counterpartyUserId === ctx.user.id) throw new TRPCError({ code: 'BAD_REQUEST', message: 'A counterparty must be a different user' });
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const [asset] = await database.select({ id: naqla3CommercialAssets.id, status: naqla3CommercialAssets.status }).from(naqla3CommercialAssets).where(and(eq(naqla3CommercialAssets.id, input.assetId), eq(naqla3CommercialAssets.ownerUserId, ctx.user.id))).limit(1);
           if (!asset || asset.status !== 'contract_ready') throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'A contract-ready asset owned by the initiator is required' });
-          const [transaction] = await database.insert(naqla3CommercialTransactions).values({ assetId: input.assetId, initiatorUserId: ctx.user.id, counterpartyUserId: input.counterpartyUserId, status: 'initiated' }).$returningId();
-          return { transactionId: transaction.id, status: 'initiated', disclaimer: 'This record does not create a contract, payment, escrow, or automated legal obligation.' };
+          const [engagement] = await database.select({ ownerUserId: naqla2Engagements.ownerUserId, requesterUserId: naqla2Engagements.requesterUserId, status: naqla2Engagements.status }).from(naqla2Engagements).where(eq(naqla2Engagements.id, input.engagementId)).limit(1);
+          if (!engagement || engagement.status !== 'established' || (engagement.ownerUserId !== ctx.user.id && engagement.requesterUserId !== ctx.user.id)) {
+            throw new TRPCError({ code: 'FORBIDDEN', message: 'An established engagement involving the initiator is required' });
+          }
+          const counterpartyUserId = engagement.ownerUserId === ctx.user.id ? engagement.requesterUserId : engagement.ownerUserId;
+          const [transaction] = await database.insert(naqla3CommercialTransactions).values({ assetId: input.assetId, engagementId: input.engagementId, initiatorUserId: ctx.user.id, counterpartyUserId, status: 'initiated' }).$returningId();
+          return { transactionId: transaction.id, engagementId: input.engagementId, status: 'initiated', disclaimer: 'This record is linked to an established engagement and does not create a contract, payment, escrow, or automated legal obligation.' };
         }),
 
       setTransactionStatus: protectedProcedure

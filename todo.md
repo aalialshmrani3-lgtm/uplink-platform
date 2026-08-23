@@ -46,6 +46,7 @@
 - [x] إزالة بيانات Router المطابقة الوهمية وردود النجاح الثابتة واستبدالها بسجل طلب مطابقة وتفويضات حقيقية
 - [x] بناء سجلات Engagement وPilot مملوكة لـNAQLA2 من Interest مقبولة وبإجراءات tRPC fail-closed
 - [x] بناء Application وImmutable ApplicationVersion مملوكتين لـNAQLA2 بترحيل يدوي ضيق وtRPC واختبارات ملكية
+- [x] إنشاء معاملة NAQLA3 من Engagement مملوكة ومصرح بها فقط، بلا عقد أو دفع أو طرف مقابل حر
 - [ ] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
 - [ ] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
 - [x] إزالة الاعتماد المتبقي على دعوة محلية من `/naqla` أو عزلها بوضوح كعرض مستقل لا يحل محل الدعوة الخادمية
