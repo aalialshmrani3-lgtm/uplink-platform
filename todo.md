@@ -2,19 +2,23 @@
 
 ## NAQLA — Final Platform Completion & Acceptance
 
+- [x] قصر دفعة الإغلاق الحالية على بنود المنصة التشغيلية في هذا القسم واستبعاد Phase 2.2B وCanary/Azure/Holdout التاريخية
+- [x] تشغيل الاختبارات المباشرة لربط NAQLA2 والسياق والواجهة قبل تحديث دفتر العمل الذري
+- [x] إغلاق البنود التنفيذية المتبقية في NAQLA دفعة واحدة قبل دورة القبول النهائية الوحيدة
 - [ ] تنفيذ فحوص القبول والحزم والنشر محلياً فقط مع `AI_EXTERNAL_PROVIDER_ENABLED=false` و`EXTERNAL_AI_DEFERRED`
 - [x] إزالة أي حالة READY من نتائج القبول المرحلية حتى تكتمل البنود المفتوحة في دفتر العمل
 - [x] تدقيق فجوات المستودعين مقابل Definition of Done مع تثبيت أقفال Phase 2.2B والذكاء الخارجي المغلق
 - [x] إصلاح الاسترداد من ملفات lazy المنتهية في cache لمنع خطأ التحميل الديناميكي في الصفحة الرئيسية
 - [x] إكمال NAQLA1 لمسار التأهيل الحتمي والأدلة والإصدارات وInnovation Passport وNext Best Action
-- [ ] إكمال NAQLA2 لمسار Challenge إلى Discovery/Match/Application/Interest/Engagement/Pilot
-- [ ] إكمال NAQLA3 بفصل CommercialAsset وCommercialTransaction وحالات وأذونات التسويق
-- [ ] إكمال الأشخاص والمنظمات والسياقات ودعوات العضوية والـonboarding والتبديل بين السياقات
-- [ ] إكمال الواجهة الثنائية RTL/LTR والمتجاوبة وحالات الوصول وتجربة الـDashboard والـNext Best Action
+- [x] إكمال NAQLA2 لمسار Challenge إلى Discovery/Match/Application/Interest/Engagement/Pilot
+- [x] إكمال NAQLA3 بفصل CommercialAsset وCommercialTransaction وحالات وأذونات التسويق
+- [x] إكمال الأشخاص والمنظمات والسياقات ودعوات العضوية والـonboarding والتبديل بين السياقات
+- [x] إكمال الواجهة الثنائية RTL/LTR والمتجاوبة وحالات الوصول وتجربة الـDashboard والـNext Best Action
 - [x] إزالة الادعاءات الرقمية والتكاملات والشراكات غير الموثقة من الصفحة الرئيسية وإحلال مدخل تشغيل حتمي واضح
-- [ ] بناء Demo اصطناعية وتغطية اختبارات الحرجة وE2E والأمن والخصوصية
+- [x] بناء Demo اصطناعية وتغطية اختبارات الحرجة وE2E والأمن والخصوصية
 - [ ] إنتاج تقرير القبول والحزم والتحقق من النشر الحالي ودخان الإنتاج
 - [ ] منع cache لصفحات HTML وSPA fallback في النشر حتى يحمّل `uplink5.xyz` bundle checkpoint الحالية
+- [ ] إضافة اختبار آلي لترويسات HTML وSPA no-store مع بقاء الأصول المتجزئة immutable
 - [x] تشديد default-deny لمسارات مراجعة NAQLA2 كي لا تعرض سجلات أو مراجعات خارج ملكية أو تفويض صريح
 - [x] حصر القراءة العامة لفرص NAQLA2 في `teaser_only` وحجب نطاق `authorized_disclosure` دون تفويض مستقل
 - [x] إصلاح اختبار حد الإفصاح العام ليقبل guards teaser-only الإضافية في MatchRun من دون إضعاف السياسة
@@ -48,12 +52,12 @@
 - [x] مواءمة اختبار MariaDB مع رمز فجوة NAQLA1 الحتمي الفعلي بعد سحب الدليل
 - [x] إيقاف اختبار MariaDB العالق وفحص JSON قبل قبول أي نتيجة أو حذف البيئة المؤقتة
 - [x] ضمان إغلاق اتصال اختبار MariaDB في finally وإعادة الاختبار بمهلة 30 ثانية وexit code 0
-- [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
-- [ ] ربط Challenge وOpportunity وDiscovery في NAQLA2 بعقود tRPC وقيود teaser-only واختبارات ملكية قبل إغلاق المسار
+- [x] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
+- [x] ربط Challenge وOpportunity وDiscovery في NAQLA2 بعقود tRPC وقيود teaser-only واختبارات ملكية قبل إغلاق المسار
 - [x] إزالة fallback الفارغ من Discovery Challenges وإرجاع خطأ خادمي صريح بدلاً من إخفاء العطل
 - [x] بناء إجراءات MatchRun حتمية للمطابقة المفسرة فوق طلبات المطابقة والـteaser العامة مع Factors مسجلة وبدون AI
-- [ ] إضافة/إثبات عقود tRPC واختبارات ملكية صريحة لمسارات Opportunity وDiscovery في NAQLA2
-- [ ] اختبار NAQLA2 end-to-end في `/naqla` ضمن ActiveContext خادمي قبل إغلاق المسار الأعلى
+- [x] إضافة/إثبات عقود tRPC واختبارات ملكية صريحة لمسارات Opportunity وDiscovery في NAQLA2
+- [x] اختبار NAQLA2 end-to-end في `/naqla` ضمن ActiveContext خادمي قبل إغلاق المسار الأعلى
 - [x] ربط MatchRun بطلب مطابقة محفوظ ومملوك في `matching_requests` بدلاً من `queryText` الحر فقط
 - [x] إضافة اختبار تكاملي يثبت تشغيل MatchRun من طلب محفوظ ورفض غياب الملكية أو مصدر غير teaser-only
 - [x] إضافة حالة تكاملية صريحة تستبعد listing غير `teaser_only` من مرشحي MatchRun المحفوظة
@@ -61,12 +65,12 @@
 - [x] بناء سجلات Engagement وPilot مملوكة لـNAQLA2 من Interest مقبولة وبإجراءات tRPC fail-closed
 - [x] بناء Application وImmutable ApplicationVersion مملوكتين لـNAQLA2 بترحيل يدوي ضيق وtRPC واختبارات ملكية
 - [x] إنشاء معاملة NAQLA3 من Engagement مملوكة ومصرح بها فقط، بلا عقد أو دفع أو طرف مقابل حر
-- [ ] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
-- [ ] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
+- [x] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
+- [x] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
 - [x] إزالة الاعتماد المتبقي على دعوة محلية من `/naqla` أو عزلها بوضوح كعرض مستقل لا يحل محل الدعوة الخادمية
 - [x] إضافة اختبارات خادمية وتكاملية لمسارات create وmyContexts وsetActive وinvite وacceptInvitation مع حالات الرفض
-- [ ] إكمال onboarding خادمي: إنشاء مؤسسة وإرسال دعوة وقبولها من الحساب المدعو وتبديل ActiveContext في الواجهة
-- [ ] ربط قرارات السياق والصلاحيات المتبقية في `/naqla` بعضوية وسياق خادميين بدلاً من persona محلية
+- [x] إكمال onboarding خادمي: إنشاء مؤسسة وإرسال دعوة وقبولها من الحساب المدعو وتبديل ActiveContext في الواجهة
+- [x] ربط قرارات السياق والصلاحيات المتبقية في `/naqla` بعضوية وسياق خادميين بدلاً من persona محلية
 - [x] إضافة اختبار سلوكي يثبت تعطيل persona المحلية عند توفر سياق خادمي فعّال
 - [x] إضافة اختبار تكاملي لرحلة onboarding الخادمية الكاملة وظهور السياق النشط بعد القبول
 - [x] إضافة اختبار سلوكي لواجهة onboarding يثبت استدعاء create context من الحساب المسجل وإعادة جلب السياقات

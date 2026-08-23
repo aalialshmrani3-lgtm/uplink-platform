@@ -7,11 +7,13 @@
   },
   "verification": {
     "typescript": "PASS",
-    "testFilesPassed": 28,
-    "testsPassed": 101,
+    "testFilesPassed": 29,
+    "testsPassed": 102,
     "productionBuild": "PASS",
     "diffCheck": "PASS",
     "modifiedDiffSecretPatternMatches": 0,
+    "htmlSpaNoStore": "PASS",
+    "providerDispatches": 0,
     "desktopRtlVisualQa": "PASS",
     "mobileRtlVisualQa": "PASS"
   },
@@ -30,6 +32,6 @@
     "syntheticDemoOnly": true,
     "blockchainFailClosedWhenUnconfigured": true
   },
-  "status": "IN_PROGRESS_NOT_READY",
+  "status": "READY_WITH_EXTERNAL_AI_DEFERRED",
   "phase22b": "EXTERNAL_AI_NOT_PROMOTED_DEFERRED"
 }

@@ -21,12 +21,13 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 | Verification | Result |
 |---|---|
 | TypeScript | `pnpm check` passed. |
-| Unit and integration regression | `pnpm test`: **28 test files, 101 tests passed**. |
+| Unit and integration regression | `pnpm test`: **29 test files, 102 tests passed**. |
 | Isolated NAQLA1 storage verification | PASS on a temporary MariaDB instance under `/tmp`, including record, authorized evidence, immutable version, deterministic assessment, Passport/TRL/Gaps/Next Best Action, revocation, and cleanup. |
 | Context authorization | Eight tRPC tests cover create, active-context denial/success, invitation denial/success, pending-invitation listing, and invitation acceptance. |
-| Production build | `pnpm build` passed in 16.73 seconds. |
+| Production build | `pnpm build` passed in 19.78 seconds. |
 | Source diff quality | `git diff --check` passed. |
 | Modified-source secret scan | `modified_diff_secret_pattern_matches=0`. |
+| HTML and SPA cache policy | PASS. Documents and SPA fallback use `no-cache, no-store, must-revalidate`; versioned JS/CSS/image assets retain immutable cache policy. |
 | Responsive visual QA | `/` and `/naqla` captured successfully on desktop RTL and `/naqla` on 390×844 RTL with no horizontal overflow. |
 | External AI | Deferred. No provider request was part of the acceptance run. |
 
@@ -36,7 +37,7 @@ The platform enforces default-deny behavior for evidence exposure in the determi
 
 ## Acceptance status
 
-> **`IN_PROGRESS_NOT_READY`** applies while the remaining NAQLA1 storage-isolation, NAQLA2 lifecycle, onboarding, and final acceptance items in `todo.md` remain open. This is not an approval to enable a provider, infer on customer data, or start Phase 2.2C.
+> **`READY_WITH_EXTERNAL_AI_DEFERRED`** applies to the deterministic, locally verified operating platform. It is not an approval to enable a provider, infer on customer data, or start Phase 2.2C. A single post-publish smoke check remains part of this acceptance cycle.
 
 The separate Phase 2.2B conclusion remains immutable: `EXTERNAL_AI_NOT_PROMOTED` / `DEFERRED`.
 

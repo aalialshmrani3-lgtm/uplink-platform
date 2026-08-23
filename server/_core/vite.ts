@@ -16,6 +16,14 @@ self.addEventListener("activate", (event) => event.waitUntil((async () => {
 })()));
 `;
 
+export const DOCUMENT_CACHE_CONTROL = "no-cache, no-store, must-revalidate";
+
+export function applyDocumentNoStore(res: Pick<Response, "setHeader">) {
+  res.setHeader("Cache-Control", DOCUMENT_CACHE_CONTROL);
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+}
+
 function serveLegacyWorkerRetirement(req: Request, res: Response, next: NextFunction) {
   if (req.path !== "/sw.js" && req.path !== "/service-worker.js") return next();
   res.setHeader("Content-Type", "application/javascript; charset=utf-8");
@@ -72,6 +80,7 @@ export async function setupVite(app: Express, server: Server) {
         `src="/src/main.tsx?v=${nanoid()}"`
       );
       const page = await vite.transformIndexHtml(url, template);
+      applyDocumentNoStore(res);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
@@ -101,11 +110,9 @@ export function serveStatic(app: Express) {
       etag: true,
       lastModified: true,
       setHeaders: (res, filePath) => {
-        // Never cache version.json
-        if (filePath.endsWith("version.json")) {
-          res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-          res.setHeader("Pragma", "no-cache");
-          res.setHeader("Expires", "0");
+        // Never cache the HTML shell or version metadata.
+        if (filePath.endsWith(".html") || filePath.endsWith("version.json")) {
+          applyDocumentNoStore(res);
           return;
         }
         // Cache JS/CSS/images aggressively (they have content hashes)
@@ -120,9 +127,7 @@ export function serveStatic(app: Express) {
   // fall through to index.html if the file doesn't exist
   // Always send no-cache for index.html so browsers always fetch the latest version
   app.use("*", (_req, res) => {
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Expires", "0");
+    applyDocumentNoStore(res);
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
