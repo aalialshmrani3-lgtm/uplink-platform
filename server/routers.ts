@@ -10,7 +10,7 @@ import { invokeLLM as invokeExternalModelSdk } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
-import { userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2ApplicationVersions, naqla2Applications, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
+import { auditLogs, userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2ApplicationVersions, naqla2Applications, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchExclusions, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
@@ -30,22 +30,8 @@ function sqlDateTimeNow(): string {
   return new Date().toISOString().slice(0, 19).replace('T', ' ');
 }
 
-export function createDeterministicTeaserMatch(queryText: string, title: string, summary: string) {
-  const queryTerms = Array.from(new Set(queryText.toLocaleLowerCase().split(/[^a-zA-Z0-9\u0600-\u06FF]+/).filter((term) => term.length >= 3)));
-  const teaserTerms = new Set(`${title} ${summary}`.toLocaleLowerCase().split(/[^a-zA-Z0-9\u0600-\u06FF]+/).filter((term) => term.length >= 3));
-  const matchedTerms = queryTerms.filter((term) => teaserTerms.has(term));
-  const score = queryTerms.length === 0 ? 0 : Math.round((matchedTerms.length / queryTerms.length) * 100);
-  const rankBand: 'high' | 'medium' | 'low' = score >= 67 ? 'high' : score >= 34 ? 'medium' : 'low';
-  return {
-    score,
-    rankBand,
-    factors: [
-      { factorId: 'query_term_overlap', method: 'deterministic_exact_term_overlap', matchedTerms, queryTermCount: queryTerms.length, score },
-      { factorId: 'disclosure_boundary', value: 'teaser_only', status: 'allowed' },
-      { factorId: 'evidence_confidence', value: 'not_evaluated_from_teaser', status: 'limited' },
-    ],
-  };
-}
+export { createDeterministicTeaserMatch } from "./naqla2/matching-intelligence";
+import { MATCHING_RULE_VERSION, MATCHING_WEIGHT_VERSION, classifyListingEligibility, createDeterministicTeaserMatch, stableMatchFingerprint } from "./naqla2/matching-intelligence";
 
 export async function invokeExternalModel(...args: Parameters<typeof invokeExternalModelSdk>) {
   if (process.env.AI_EXTERNAL_PROVIDER_ENABLED !== "true") {
@@ -3978,25 +3964,33 @@ Provide response in JSON format:
 
     deterministicMatching: router({
       createRun: protectedProcedure
-        .input(z.object({ requestId: z.number().int().positive() }))
+        .input(z.object({ requestId: z.number().int().positive(), idempotencyKey: z.string().min(8).max(96).optional() }))
         .mutation(async ({ ctx, input }) => {
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [activeContext] = await database.select({ organizationId: userActiveContexts.organizationId }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
+          if (!activeContext) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An ActiveContext is required before a MatchRun can be created' });
           const [request] = await database.select({ id: matchingRequests.id, title: matchingRequests.title, description: matchingRequests.description }).from(matchingRequests).where(and(eq(matchingRequests.id, input.requestId), eq(matchingRequests.userId, ctx.user.id))).limit(1);
           if (!request) throw new TRPCError({ code: 'FORBIDDEN', message: 'A matching request owned by the caller is required' });
           const queryText = `${request.title} ${request.description}`.slice(0, 500);
-          const listings = await database.select({ id: naqla2MarketplaceListings.id, ownerUserId: naqla2MarketplaceListings.ownerUserId, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope })
-            .from(naqla2MarketplaceListings)
-            .where(and(eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only')));
-          const eligibleListings = listings.filter((listing) => listing.ownerUserId !== ctx.user.id && listing.disclosureScope === 'teaser_only');
-          const [run] = await database.insert(naqla2MatchRuns).values({ requesterUserId: ctx.user.id, matchingRequestId: request.id, queryText, status: 'completed', candidateCount: eligibleListings.length }).$returningId();
+          const inputFingerprint = input.idempotencyKey ?? stableMatchFingerprint({ requestId: request.id, queryText, activeContextId: activeContext.organizationId });
+          const [replayed] = await database.select({ id: naqla2MatchRuns.id, candidateCount: naqla2MatchRuns.candidateCount }).from(naqla2MatchRuns).where(and(eq(naqla2MatchRuns.requesterUserId, ctx.user.id), eq(naqla2MatchRuns.matchingRequestId, request.id), eq(naqla2MatchRuns.ruleVersion, MATCHING_RULE_VERSION), eq(naqla2MatchRuns.inputFingerprint, inputFingerprint))).limit(1);
+          if (replayed) return { runId: replayed.id, candidateCount: replayed.candidateCount, reused: true, method: 'deterministic_teaser_term_overlap', ruleVersion: MATCHING_RULE_VERSION, disclaimer: 'An immutable MatchRun was reused; no recommendation, disclosure right, engagement, or deal was created.' };
+          const listings = await database.select({ id: naqla2MarketplaceListings.id, ownerUserId: naqla2MarketplaceListings.ownerUserId, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope, status: naqla2MarketplaceListings.status })
+            .from(naqla2MarketplaceListings);
+          const classified = listings.map((listing) => ({ listing, eligibility: classifyListingEligibility({ ownerUserId: listing.ownerUserId, requesterUserId: ctx.user.id, status: listing.status, disclosureScope: listing.disclosureScope }) }));
+          const eligibleListings = classified.filter((item) => item.eligibility.eligible).map((item) => item.listing);
+          const exclusions = classified.flatMap((item) => item.eligibility.eligible ? [] : [{ listingId: item.listing.id, reasonCode: item.eligibility.reasonCode }]);
+          const [run] = await database.insert(naqla2MatchRuns).values({ requesterUserId: ctx.user.id, matchingRequestId: request.id, activeContextId: activeContext.organizationId, queryText, status: 'completed', candidateCount: eligibleListings.length, ruleVersion: MATCHING_RULE_VERSION, weightVersion: MATCHING_WEIGHT_VERSION, inputFingerprint, completedAt: sqlDateTimeNow() }).$returningId();
           if (eligibleListings.length > 0) {
             await database.insert(naqla2MatchCandidates).values(eligibleListings.map((listing) => {
               const deterministic = createDeterministicTeaserMatch(queryText, listing.title, listing.summary);
-              return { matchRunId: run.id, listingId: listing.id, score: deterministic.score, rankBand: deterministic.rankBand, evidenceConfidence: 'teaser_only' as const, factors: deterministic.factors };
+              return { matchRunId: run.id, listingId: listing.id, score: deterministic.score, rankBand: deterministic.rankBand, evidenceConfidence: deterministic.evidenceConfidence, factors: [...deterministic.factors, { factorId: 'result_explanation', value: deterministic.explanation, ruleVersion: MATCHING_RULE_VERSION }] };
             }));
           }
-          return { runId: run.id, candidateCount: eligibleListings.length, method: 'deterministic_teaser_term_overlap', disclaimer: 'Candidates are based only on published teaser text. Evidence confidence is not inferred and no disclosure right is granted.' };
+          if (exclusions.length > 0) await database.insert(naqla2MatchExclusions).values(exclusions.map((exclusion) => ({ matchRunId: run.id, listingId: exclusion.listingId, reasonCode: exclusion.reasonCode })));
+          await database.insert(auditLogs).values({ userId: ctx.user.id, action: 'create', resource: 'naqla2_match_run', resourceId: String(run.id), details: { activeContextId: activeContext.organizationId, matchingRequestId: request.id, ruleVersion: MATCHING_RULE_VERSION, weightVersion: MATCHING_WEIGHT_VERSION, candidateCount: eligibleListings.length, exclusionCount: exclusions.length }, status: 'success' });
+          return { runId: run.id, candidateCount: eligibleListings.length, exclusionCount: exclusions.length, reused: false, method: 'deterministic_teaser_term_overlap', ruleVersion: MATCHING_RULE_VERSION, weightVersion: MATCHING_WEIGHT_VERSION, disclaimer: 'Candidates use only published teaser text. Evidence confidence is not inferred, exclusions are recorded, and no disclosure right, engagement, or deal is created.' };
         }),
 
       getMyRuns: protectedProcedure
@@ -4006,6 +4000,23 @@ Provide response in JSON format:
           return database.select().from(naqla2MatchRuns).where(eq(naqla2MatchRuns.requesterUserId, ctx.user.id)).orderBy(desc(naqla2MatchRuns.createdAt));
         }),
 
+      listRuns: protectedProcedure
+        .input(z.object({ page: z.number().int().min(1).default(1), limit: z.number().int().min(1).max(50).default(20), sort: z.enum(['newest', 'oldest']).default('newest') }).optional())
+        .query(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [activeContext] = await database.select({ organizationId: userActiveContexts.organizationId }).from(userActiveContexts).where(eq(userActiveContexts.userId, ctx.user.id)).limit(1);
+          if (!activeContext) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An ActiveContext is required before MatchRuns can be listed' });
+          const page = input?.page ?? 1;
+          const limit = input?.limit ?? 20;
+          const rows = await database.select().from(naqla2MatchRuns)
+            .where(and(eq(naqla2MatchRuns.requesterUserId, ctx.user.id), eq(naqla2MatchRuns.activeContextId, activeContext.organizationId)))
+            .orderBy(input?.sort === 'oldest' ? asc(naqla2MatchRuns.createdAt) : desc(naqla2MatchRuns.createdAt))
+            .limit(limit + 1)
+            .offset((page - 1) * limit);
+          return { items: rows.slice(0, limit), page, limit, hasNextPage: rows.length > limit };
+        }),
+
       getRun: protectedProcedure
         .input(z.object({ runId: z.number().int().positive() }))
         .query(async ({ ctx, input }) => {
@@ -4013,12 +4024,13 @@ Provide response in JSON format:
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const [run] = await database.select().from(naqla2MatchRuns).where(and(eq(naqla2MatchRuns.id, input.runId), eq(naqla2MatchRuns.requesterUserId, ctx.user.id))).limit(1);
           if (!run) throw new TRPCError({ code: 'NOT_FOUND', message: 'Match run not found or not owned by caller' });
-          const candidates = await database.select({ id: naqla2MatchCandidates.id, listingId: naqla2MatchCandidates.listingId, score: naqla2MatchCandidates.score, rankBand: naqla2MatchCandidates.rankBand, evidenceConfidence: naqla2MatchCandidates.evidenceConfidence, factors: naqla2MatchCandidates.factors, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary })
+          const candidates = await database.select({ id: naqla2MatchCandidates.id, listingId: naqla2MatchCandidates.listingId, score: naqla2MatchCandidates.score, rankBand: naqla2MatchCandidates.rankBand, evidenceConfidence: naqla2MatchCandidates.evidenceConfidence, factors: naqla2MatchCandidates.factors, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, status: naqla2MarketplaceListings.status, disclosureScope: naqla2MarketplaceListings.disclosureScope })
             .from(naqla2MatchCandidates)
             .innerJoin(naqla2MarketplaceListings, eq(naqla2MatchCandidates.listingId, naqla2MarketplaceListings.id))
-            .where(and(eq(naqla2MatchCandidates.matchRunId, run.id), eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only')))
+            .where(eq(naqla2MatchCandidates.matchRunId, run.id))
             .orderBy(desc(naqla2MatchCandidates.score));
-          return { run, candidates };
+          const exclusions = await database.select({ listingId: naqla2MatchExclusions.listingId, reasonCode: naqla2MatchExclusions.reasonCode }).from(naqla2MatchExclusions).where(eq(naqla2MatchExclusions.matchRunId, run.id));
+          return { run, candidates: candidates.map((candidate) => candidate.status === 'published' && candidate.disclosureScope === 'teaser_only' ? candidate : { ...candidate, title: null, summary: null, availability: 'stale_or_revoked' }), exclusions };
         }),
     }),
 

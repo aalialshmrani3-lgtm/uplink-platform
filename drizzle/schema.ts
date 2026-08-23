@@ -2279,11 +2279,16 @@ export const naqla2MatchRuns = mysqlTable("naqla2_match_runs", {
   id: int().autoincrement().primaryKey(),
   requesterUserId: int().notNull(),
   matchingRequestId: int(),
+  activeContextId: int(),
   queryText: varchar({ length: 500 }).notNull(),
   status: mysqlEnum(['completed']).notNull().default('completed'),
   candidateCount: int().notNull().default(0),
+  ruleVersion: varchar({ length: 64 }).notNull().default('naqla2-deterministic-v2'),
+  weightVersion: varchar({ length: 64 }).notNull().default('term-overlap-100-v1'),
+  inputFingerprint: varchar({ length: 128 }).notNull().default(''),
+  completedAt: timestamp({ mode: 'string' }),
   createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
-}, (table) => [index('naqla2_match_run_requester_idx').on(table.requesterUserId), index('naqla2_match_run_request_idx').on(table.matchingRequestId)]);
+}, (table) => [index('naqla2_match_run_requester_idx').on(table.requesterUserId), index('naqla2_match_run_request_idx').on(table.matchingRequestId), index('naqla2_match_run_context_idx').on(table.activeContextId), uniqueIndex('naqla2_match_run_replay_uq').on(table.requesterUserId, table.matchingRequestId, table.ruleVersion, table.inputFingerprint)]);
 
 export const naqla2MatchCandidates = mysqlTable("naqla2_match_candidates", {
   id: int().autoincrement().primaryKey(),
@@ -2295,6 +2300,14 @@ export const naqla2MatchCandidates = mysqlTable("naqla2_match_candidates", {
   factors: json().notNull(),
   createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [index('naqla2_match_candidate_run_idx').on(table.matchRunId), index('naqla2_match_candidate_listing_idx').on(table.listingId)]);
+
+export const naqla2MatchExclusions = mysqlTable("naqla2_match_exclusions", {
+  id: int().autoincrement().primaryKey(),
+  matchRunId: int().notNull(),
+  listingId: int().notNull(),
+  reasonCode: varchar({ length: 64 }).notNull(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [index('naqla2_match_exclusion_run_idx').on(table.matchRunId)]);
 
 export const naqla2Applications = mysqlTable("naqla2_applications", {
   id: int().autoincrement().primaryKey(),
