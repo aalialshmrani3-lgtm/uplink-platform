@@ -9,6 +9,7 @@ let contextsResult: { data: unknown[] | undefined; isLoading: boolean; isError: 
 let activeLanguage: "ar" | "en" = "ar";
 const refetch = vi.fn();
 const mutation = { isPending: false, mutate: vi.fn() };
+const createContextMutation: { isPending: boolean; mutate: ReturnType<typeof vi.fn>; onSuccess?: () => void } = { isPending: false, mutate: vi.fn() };
 
 vi.mock("@/contexts/LanguageContext", () => ({
   useLanguage: () => ({ language: activeLanguage, isRTL: activeLanguage === "ar", setLanguage: vi.fn() }),
@@ -23,7 +24,7 @@ vi.mock("@/lib/trpc", () => ({
     organizationContext: {
       myContexts: { useQuery: () => contextsResult },
       myPendingInvitations: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
-      create: { useMutation: () => mutation },
+      create: { useMutation: (options: { onSuccess?: () => void }) => { createContextMutation.onSuccess = options.onSuccess; return createContextMutation; } },
       setActive: { useMutation: () => mutation },
       invite: { useMutation: () => mutation },
       acceptInvitation: { useMutation: () => mutation },
@@ -86,6 +87,9 @@ describe("NAQLA workspace behavioral accessibility", () => {
     activeLanguage = "ar";
     contextsResult = { data: [], isLoading: false, isError: false, refetch };
     mutation.mutate.mockReset();
+    createContextMutation.mutate.mockReset();
+    createContextMutation.onSuccess = undefined;
+    refetch.mockReset();
   });
 
   afterEach(cleanup);
@@ -126,5 +130,19 @@ describe("NAQLA workspace behavioral accessibility", () => {
     expect(screen.getByRole("main")).toHaveAttribute("dir", "ltr");
     expect(screen.getByRole("combobox", { name: "Synthetic demo role" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Create server demo context" })).toBeEnabled();
+  });
+
+  it("يبدأ onboarding الخادمي من الحساب المسجل ويعيد جلب السياقات بعد النجاح", async () => {
+    const user = userEvent.setup();
+    render(<NaqlaJourneyWorkspace />);
+    await user.click(screen.getByRole("button", { name: "إنشاء سياق عرض خادمي" }));
+    expect(createContextMutation.mutate).toHaveBeenCalledWith({
+      nameAr: "سياق عرض اصطناعي",
+      nameEn: "Synthetic demo context",
+      type: "supporting",
+      scope: "local",
+    });
+    createContextMutation.onSuccess?.();
+    expect(refetch).toHaveBeenCalled();
   });
 });
