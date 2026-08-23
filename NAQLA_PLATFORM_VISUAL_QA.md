@@ -15,3 +15,7 @@ The current desktop captures of `/` and `/naqla` load successfully after the pro
 ## Mobile follow-up
 
 The latest 390×844 capture of `/naqla` remains a readable single-column RTL layout. The synthetic-data label, active-context panel, progress indicators, deterministic control, and complete journey map remain visible without horizontal overflow or exposed technical identifiers.
+
+## Public smoke observation
+
+The public `uplink5.xyz` root route returned the expected NAQLA landing page. Navigation to `/naqla` reached the operating-workspace route; the browser initially displayed its loading treatment while the route bundle resolved. The final publish checkpoint must include the latest invitation-context UI before recording the final public smoke result.
