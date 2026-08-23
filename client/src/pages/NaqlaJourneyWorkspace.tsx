@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ArrowRight, BadgeCheck, Building2, CheckCircle2, ChevronLeft, CircleAlert, FileCheck2, Landmark, LockKeyhole, Rocket, ShieldCheck, Sparkles, UsersRound } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -201,7 +201,7 @@ export default function NaqlaJourneyWorkspace() {
               </div>
               {user && serverContexts.length > 1 && <label className="mt-4 block text-xs font-medium text-slate-300" htmlFor="server-context">{copy("تبديل السياق الخادمي", "Switch server context", isArabic)}<select id="server-context" value={activeServerContext?.id ?? ""} disabled={setActiveServerContext.isPending} onChange={(event) => setActiveServerContext.mutate({ organizationId: Number(event.target.value) })} className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">{serverContexts.map((context) => <option key={context.id} value={context.id}>{isArabic ? context.nameAr : context.nameEn || context.nameAr}</option>)}</select></label>}
               <label className="mt-5 block text-sm font-medium text-slate-300" htmlFor="persona">{copy("الدور", "Persona", isArabic)}</label>
-              <select id="persona" value={persona} disabled={Boolean(activeServerContext)} onChange={(event) => setPersona(event.target.value as NaqlaPersona)} className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 px-3 py-2.5 text-sm text-white disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-cyan-300">
+              <select id="persona" aria-label={copy("دور العرض الاصطناعي", "Synthetic demo role", isArabic)} value={persona} disabled={Boolean(activeServerContext)} onChange={(event) => setPersona(event.target.value as NaqlaPersona)} className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 px-3 py-2.5 text-sm text-white disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-cyan-300">
                 {personas.map((item) => <option key={item.value} value={item.value}>{isArabic ? item.ar : item.en}</option>)}
               </select>
               <p className="mt-3 text-xs leading-5 text-slate-400">{activeServerContext ? copy(`الدور الفعّال مشتق من عضويتك الخادمية: ${activeServerContext.role}. لا يمكن للعرض المحلي تغييره.`, `The active role is derived from your server membership: ${activeServerContext.role}. Local demo selection cannot change it.`, isArabic) : personaCanReviewEvidence(effectivePersona) ? copy("دور العرض يمكنه مراجعة الدليل عند وجود تفويض مستقل.", "The demo role may review evidence only after independent authorization.", isArabic) : copy("هذا الدور لا يحصل على حق الدليل تلقائياً.", "This role receives no evidence right by implication.", isArabic)}</p>

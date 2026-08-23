@@ -4,7 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { invokeLLM } from "./_core/llm";
+import { invokeLLM as invokeExternalModelSdk } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
@@ -22,6 +22,13 @@ import { storagePut } from "./storage";
 function hasAffectedRow(result: unknown): boolean {
   const update = result as { affectedRows?: number; rowsAffected?: number } | undefined;
   return (update?.affectedRows ?? update?.rowsAffected ?? 0) > 0;
+}
+
+export async function invokeExternalModel(...args: Parameters<typeof invokeExternalModelSdk>) {
+  if (process.env.AI_EXTERNAL_PROVIDER_ENABLED !== "true") {
+    throw new TRPCError({ code: "PRECONDITION_FAILED", message: "EXTERNAL_AI_DEFERRED" });
+  }
+  return invokeExternalModelSdk(...args);
 }
 
 export const appRouter = router({
@@ -1433,7 +1440,7 @@ Respond in JSON format:
   "riskAssessment": "Key risks identified"
 }`;
 
-        const response = await invokeLLM({
+        const response = await invokeExternalModel({
           messages: [
             { role: "system", content: "You are an expert innovation evaluator. Always respond with valid JSON." },
             { role: "user", content: prompt }
@@ -2299,7 +2306,7 @@ Provide response in JSON format:
   "recommendations": ["<recommendation1>", "<recommendation2>"]
 }`;
 
-        const response = await invokeLLM({
+        const response = await invokeExternalModel({
           messages: [
             { role: "system", content: "You are an innovation expert. Analyze ideas and provide structured feedback in Arabic." },
             { role: "user", content: prompt }
@@ -3567,7 +3574,7 @@ Provide response in JSON format:
     analyzeSentiment: publicProcedure
       .input(z.object({ text: z.string().min(1) }))
       .mutation(async ({ input }) => {
-        const response = await invokeLLM({
+        const response = await invokeExternalModel({
           messages: [
             {
               role: "system",
@@ -3606,7 +3613,7 @@ Provide response in JSON format:
         budget: z.number()
       }))
       .mutation(async ({ input }) => {
-        const response = await invokeLLM({
+        const response = await invokeExternalModel({
           messages: [
             {
               role: "system",
@@ -3646,7 +3653,7 @@ Provide response in JSON format:
         sector: z.string()
       }))
       .mutation(async ({ input }) => {
-        const response = await invokeLLM({
+        const response = await invokeExternalModel({
           messages: [
             {
               role: "system",
@@ -4446,7 +4453,6 @@ Provide response in JSON format:
         language: z.enum(['ar', 'en']).default('ar'),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { invokeLLM } = await import('./_core/llm');
         const contractTypeLabels: Record<string, { ar: string; en: string }> = {
           collaboration: { ar: 'عقد تعاون وشراكة', en: 'Collaboration & Partnership Agreement' },
           nda: { ar: 'اتفاقية عدم الإفصاح (NDA)', en: 'Non-Disclosure Agreement (NDA)' },
@@ -4501,7 +4507,7 @@ The draft must include:
 8. Signatures and date
 
 Write the contract in full formal and legal format.`;
-        const response = await invokeLLM({
+        const response = await invokeExternalModel({
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt },
@@ -4801,8 +4807,6 @@ Write the contract in full formal and legal format.`;
         })
       )
       .mutation(async ({ input, ctx }) => {
-        const { invokeLLM } = await import('./_core/llm');
-
         const systemPrompt = `أنت خبير متخصص في الملكية الفكرية وبراءات الاختراع لدى الهيئة السعودية للملكية الفكرية (SAIP).
 مهمتك تقييم الابتكارات وفقاً لمعايير SAIP الثلاثة لبراءة الاختراع:
 
@@ -4837,7 +4841,7 @@ ${input.existingSolutions}` : ''}
 ${input.technicalDetails ? `التفاصيل التقنية:
 ${input.technicalDetails}` : ''}`;
 
-        const response = await invokeLLM({
+        const response = await invokeExternalModel({
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt },

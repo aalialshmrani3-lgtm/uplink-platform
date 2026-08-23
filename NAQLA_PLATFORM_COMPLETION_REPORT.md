@@ -21,7 +21,7 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 | Verification | Result |
 |---|---|
 | TypeScript | `pnpm check` passed. |
-| Unit and integration regression | `pnpm test`: **15 test files, 66 tests passed**. |
+| Unit and integration regression | `pnpm test`: **18 test files, 71 tests passed**. |
 | Context authorization | Eight tRPC tests cover create, active-context denial/success, invitation denial/success, pending-invitation listing, and invitation acceptance. |
 | Production build | `pnpm build` passed in 16.73 seconds. |
 | Source diff quality | `git diff --check` passed. |
@@ -31,7 +31,7 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 
 ## Security and privacy controls
 
-The platform enforces default-deny behavior for evidence exposure in the deterministic operating model. NAQLA2 review submission now requires an active reviewer assignment created by the record owner; an unassigned account cannot view the review work queue or submit a review. Public NAQLA2 listing reads are constrained to `teaser_only`; records marked for authorized disclosure are not exposed through public endpoints. Organization context transitions require active membership, invitation issuance requires an owner or manager role, and acceptance requires the invited account email. A deterministic synthetic end-to-end journey test covers the gates from an immutable record version and evidence authorization through match/application/pilot to a separated commercial asset and transaction tracker. Update APIs now check the affected row count across MySQL/SQLite result shapes so missing ownership fails closed. The legacy embedded blockchain private-key fallback was removed; unconfigured blockchain work now fails closed. The new synthetic demo code does not seed real NAQLA/customer records.
+The platform enforces default-deny behavior for evidence exposure in the deterministic operating model. NAQLA2 review submission now requires an active reviewer assignment created by the record owner; an unassigned account cannot view the review work queue or submit a review. Public NAQLA2 listing reads are constrained to `teaser_only`; records marked for authorized disclosure are not exposed through public endpoints. Organization context transitions require active membership, invitation issuance requires an owner or manager role, and acceptance requires the invited account email. A deterministic synthetic end-to-end journey test covers the gates from an immutable record version and evidence authorization through match/application/pilot to a separated commercial asset and transaction tracker. The workspace now has a jsdom behavioral accessibility test covering keyboard navigation to named controls and its loading, error, and empty context states. Update APIs now check the affected row count across MySQL/SQLite result shapes so missing ownership fails closed. Every existing router-level model invocation is now forced through an `EXTERNAL_AI_DEFERRED` gate while `AI_EXTERNAL_PROVIDER_ENABLED=false`; the guard is covered by a local no-dispatch test. The legacy embedded blockchain private-key fallback was removed; unconfigured blockchain work now fails closed. The new synthetic demo code does not seed real NAQLA/customer records.
 
 ## Acceptance status
 

@@ -7,8 +7,8 @@
   },
   "verification": {
     "typescript": "PASS",
-    "testFilesPassed": 15,
-    "testsPassed": 66,
+    "testFilesPassed": 18,
+    "testsPassed": 71,
     "productionBuild": "PASS",
     "diffCheck": "PASS",
     "modifiedDiffSecretPatternMatches": 0,
@@ -25,6 +25,8 @@
     "syntheticEndToEndJourneyGateCoverage": true,
     "teaserOnlyPublicDisclosure": true,
     "ownerScopedUpdateEffects": true,
+    "externalAiDeferredGate": true,
+    "behavioralAccessibility": true,
     "syntheticDemoOnly": true,
     "blockchainFailClosedWhenUnconfigured": true
   },
