@@ -2159,6 +2159,18 @@ export type InsertInnovationPassport = typeof innovationPassports.$inferInsert;
 // These entities are operational records; they do not infer legal/IP outcomes.
 // ============================================
 
+export const naqla2ReviewAssignments = mysqlTable("naqla2_review_assignments", {
+  id: int().autoincrement().primaryKey(),
+  ipRegistrationId: int().notNull(),
+  reviewerUserId: int().notNull(),
+  assignedByUserId: int().notNull(),
+  status: mysqlEnum(['active', 'revoked']).notNull().default('active'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [
+  index('naqla2_review_assignment_ip_idx').on(table.ipRegistrationId),
+  index('naqla2_review_assignment_reviewer_idx').on(table.reviewerUserId),
+]);
+
 export const naqla2VettingReviews = mysqlTable("naqla2_vetting_reviews", {
   id: int().autoincrement().primaryKey(),
   ipRegistrationId: int().notNull(),
@@ -2194,6 +2206,8 @@ export const naqla2InterestRequests = mysqlTable("naqla2_interest_requests", {
 
 export type Naqla2VettingReview = typeof naqla2VettingReviews.$inferSelect;
 export type InsertNaqla2VettingReview = typeof naqla2VettingReviews.$inferInsert;
+export type Naqla2ReviewAssignment = typeof naqla2ReviewAssignments.$inferSelect;
+export type InsertNaqla2ReviewAssignment = typeof naqla2ReviewAssignments.$inferInsert;
 export type Naqla2MarketplaceListing = typeof naqla2MarketplaceListings.$inferSelect;
 export type InsertNaqla2MarketplaceListing = typeof naqla2MarketplaceListings.$inferInsert;
 export type Naqla2InterestRequest = typeof naqla2InterestRequests.$inferSelect;

@@ -7,8 +7,8 @@
   },
   "verification": {
     "typescript": "PASS",
-    "testFilesPassed": 10,
-    "testsPassed": 53,
+    "testFilesPassed": 11,
+    "testsPassed": 55,
     "productionBuild": "PASS",
     "diffCheck": "PASS",
     "modifiedDiffSecretPatternMatches": 0,
@@ -21,6 +21,7 @@
     "naqla3CommercialAssetTransactionSeparation": true,
     "organizationContextApi": true,
     "serverSideInvitationLifecycle": true,
+    "explicitNaqla2ReviewerAssignment": true,
     "syntheticDemoOnly": true,
     "blockchainFailClosedWhenUnconfigured": true
   },

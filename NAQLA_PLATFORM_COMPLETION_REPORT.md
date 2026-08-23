@@ -11,7 +11,7 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 | Area | Delivered local capability | Boundary retained |
 |---|---|---|
 | NAQLA1 | Deterministic journey controls for record versioning, evidence authorization, readiness/gap controls, qualification, Passport/TRL display, and Next Best Action. | No external AI inference or autonomous decisioning. |
-| NAQLA2 | Server-side manual vetting, teaser-only listing, interest request data contracts, and deterministic match/pilot journey controls. | No price, automated ranking, or undisclosed evidence release. |
+| NAQLA2 | Server-side manual vetting with explicit reviewer assignments, teaser-only listing, interest request data contracts, and deterministic match/pilot journey controls. | No price, automated ranking, or undisclosed evidence release. |
 | NAQLA3 | Separate Commercial Asset and Commercial Transaction records, with no automatic legal, payment, or smart-contract execution. | Blockchain actions are fail-closed when unconfigured. |
 | Organization context | Server-side organization creation, active memberships, pending invitations, acceptance, and active-context switching. | Every switch and invitation is role/active-membership checked; no admin bypass. |
 | User experience | Arabic RTL baseline, English toggle, desktop/mobile verification, loading/error/empty context messaging, keyboard-focusable controls, and stale-lazy-chunk recovery. | The Synthetic Demo is visibly labelled and cannot be represented as real customer data. |
@@ -21,7 +21,7 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 | Verification | Result |
 |---|---|
 | TypeScript | `pnpm check` passed. |
-| Unit and integration regression | `pnpm test`: **10 test files, 53 tests passed**. |
+| Unit and integration regression | `pnpm test`: **11 test files, 55 tests passed**. |
 | Context authorization | Eight tRPC tests cover create, active-context denial/success, invitation denial/success, pending-invitation listing, and invitation acceptance. |
 | Production build | `pnpm build` passed in 16.73 seconds. |
 | Source diff quality | `git diff --check` passed. |
@@ -31,7 +31,7 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 
 ## Security and privacy controls
 
-The platform enforces default-deny behavior for evidence exposure in the deterministic operating model. Organization context transitions require active membership, invitation issuance requires an owner or manager role, and acceptance requires the invited account email. The legacy embedded blockchain private-key fallback was removed; unconfigured blockchain work now fails closed. The new synthetic demo code does not seed real NAQLA/customer records.
+The platform enforces default-deny behavior for evidence exposure in the deterministic operating model. NAQLA2 review submission now requires an active reviewer assignment created by the record owner; an unassigned account cannot view the review work queue or submit a review. Organization context transitions require active membership, invitation issuance requires an owner or manager role, and acceptance requires the invited account email. The legacy embedded blockchain private-key fallback was removed; unconfigured blockchain work now fails closed. The new synthetic demo code does not seed real NAQLA/customer records.
 
 ## Acceptance status
 

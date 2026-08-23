@@ -8,7 +8,7 @@ import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
-import { userChoices, ideaJourneyEvents, ipRegistrations, naqla2InterestRequests, naqla2MarketplaceListings, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
+import { userChoices, ideaJourneyEvents, ipRegistrations, naqla2InterestRequests, naqla2MarketplaceListings, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
@@ -3746,11 +3746,22 @@ Provide response in JSON format:
         .query(async ({ ctx }) => {
           const db = await getDb();
           if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          const { ipRegistrations } = await import('../drizzle/schema');
-          const { eq } = await import('drizzle-orm');
-          
-          return await db.select().from(ipRegistrations)
-            .where(eq(ipRegistrations.status, 'submitted'));
+          return await db.select({ id: ipRegistrations.id, title: ipRegistrations.title, description: ipRegistrations.description, status: ipRegistrations.status })
+            .from(naqla2ReviewAssignments)
+            .innerJoin(ipRegistrations, eq(naqla2ReviewAssignments.ipRegistrationId, ipRegistrations.id))
+            .where(and(eq(naqla2ReviewAssignments.reviewerUserId, ctx.user.id), eq(naqla2ReviewAssignments.status, 'active'), eq(ipRegistrations.status, 'submitted')));
+        }),
+
+      assignReviewer: protectedProcedure
+        .input(z.object({ ipRegistrationId: z.number().int().positive(), reviewerUserId: z.number().int().positive() }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          if (input.reviewerUserId === ctx.user.id) throw new TRPCError({ code: 'BAD_REQUEST', message: 'A record owner cannot assign themselves as reviewer' });
+          const [ip] = await database.select({ id: ipRegistrations.id }).from(ipRegistrations).where(and(eq(ipRegistrations.id, input.ipRegistrationId), eq(ipRegistrations.userId, ctx.user.id))).limit(1);
+          if (!ip) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the record owner may assign a reviewer' });
+          const [assignment] = await database.insert(naqla2ReviewAssignments).values({ ipRegistrationId: input.ipRegistrationId, reviewerUserId: input.reviewerUserId, assignedByUserId: ctx.user.id, status: 'active' }).$returningId();
+          return { assignmentId: assignment.id, status: 'active' };
         }),
 
       submitReview: protectedProcedure
@@ -3763,8 +3774,8 @@ Provide response in JSON format:
         .mutation(async ({ ctx, input }) => {
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          const [ip] = await database.select({ id: ipRegistrations.id }).from(ipRegistrations).where(eq(ipRegistrations.id, input.ipRegistrationId)).limit(1);
-          if (!ip) throw new TRPCError({ code: 'NOT_FOUND', message: 'IP registration not found' });
+          const [assignment] = await database.select({ id: naqla2ReviewAssignments.id }).from(naqla2ReviewAssignments).where(and(eq(naqla2ReviewAssignments.ipRegistrationId, input.ipRegistrationId), eq(naqla2ReviewAssignments.reviewerUserId, ctx.user.id), eq(naqla2ReviewAssignments.status, 'active'))).limit(1);
+          if (!assignment) throw new TRPCError({ code: 'FORBIDDEN', message: 'An active reviewer assignment is required' });
           const [review] = await database.insert(naqla2VettingReviews).values({
             ipRegistrationId: input.ipRegistrationId,
             reviewerUserId: ctx.user.id,
@@ -3777,10 +3788,13 @@ Provide response in JSON format:
 
       getReviews: protectedProcedure
         .input(z.object({ ipRegistrationId: z.number() }))
-        .query(async ({ input }) => {
+        .query(async ({ ctx, input }) => {
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
-          return database.select().from(naqla2VettingReviews).where(eq(naqla2VettingReviews.ipRegistrationId, input.ipRegistrationId)).orderBy(desc(naqla2VettingReviews.createdAt));
+          const [ip] = await database.select({ userId: ipRegistrations.userId }).from(ipRegistrations).where(eq(ipRegistrations.id, input.ipRegistrationId)).limit(1);
+          if (!ip) throw new TRPCError({ code: 'NOT_FOUND', message: 'IP registration not found' });
+          if (ip.userId === ctx.user.id) return database.select().from(naqla2VettingReviews).where(eq(naqla2VettingReviews.ipRegistrationId, input.ipRegistrationId)).orderBy(desc(naqla2VettingReviews.createdAt));
+          return database.select().from(naqla2VettingReviews).where(and(eq(naqla2VettingReviews.ipRegistrationId, input.ipRegistrationId), eq(naqla2VettingReviews.reviewerUserId, ctx.user.id))).orderBy(desc(naqla2VettingReviews.createdAt));
         }),
     }),
 
