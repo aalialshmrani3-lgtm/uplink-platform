@@ -7,8 +7,8 @@
   },
   "verification": {
     "typescript": "PASS",
-    "testFilesPassed": 18,
-    "testsPassed": 71,
+    "testFilesPassed": 24,
+    "testsPassed": 90,
     "productionBuild": "PASS",
     "diffCheck": "PASS",
     "modifiedDiffSecretPatternMatches": 0,
@@ -30,6 +30,6 @@
     "syntheticDemoOnly": true,
     "blockchainFailClosedWhenUnconfigured": true
   },
-  "status": "READY_WITH_EXTERNAL_AI_DEFERRED",
+  "status": "IN_PROGRESS_NOT_READY",
   "phase22b": "EXTERNAL_AI_NOT_PROMOTED_DEFERRED"
 }

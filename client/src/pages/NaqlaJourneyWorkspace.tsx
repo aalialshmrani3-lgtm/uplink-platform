@@ -69,6 +69,7 @@ export default function NaqlaJourneyWorkspace() {
   const [matchQuery, setMatchQuery] = useState("");
   const [serverDemoId, setServerDemoId] = useState<number | null>(null);
   const [naqla1RecordId, setNaqla1RecordId] = useState<number | null>(null);
+  const [applicationId, setApplicationId] = useState<number | null>(null);
   const [notice, setNotice] = useState(copy("ابدأ بتوثيق السجل الاصطناعي.", "Start by documenting the synthetic record.", isArabic));
   const current = labels[state.stage];
   const progress = Math.round((state.completed.length / JOURNEY_STAGES.length) * 100);
@@ -80,7 +81,10 @@ export default function NaqlaJourneyWorkspace() {
   const naqla1PassportQuery = trpc.naqla1Qualification.getPassport.useQuery({ recordId: naqla1RecordId ?? 1 }, { enabled: Boolean(user && naqla1RecordId) });
   const publishedTeasersQuery = trpc.naqla2.marketplace.getApprovedIPs.useQuery();
   const matchRunsQuery = trpc.naqla2.deterministicMatching.getMyRuns.useQuery(undefined, { enabled: Boolean(user) });
+  const latestMatchRunId = matchRunsQuery.data?.[0]?.id;
+  const latestMatchRunQuery = trpc.naqla2.deterministicMatching.getRun.useQuery({ runId: latestMatchRunId ?? 1 }, { enabled: Boolean(user && latestMatchRunId) });
   const matchingRequestsQuery = trpc.naqla2.matching.getMyMatches.useQuery(undefined, { enabled: Boolean(user) });
+  const applicationsQuery = trpc.naqla2.applications.getMyApplications.useQuery(undefined, { enabled: Boolean(user) });
   const interestRequestsQuery = trpc.naqla2.engagements.getMyInterestRequests.useQuery(undefined, { enabled: Boolean(user) });
   const engagementsQuery = trpc.naqla2.engagements.getMyEngagements.useQuery(undefined, { enabled: Boolean(user) });
   const commercialAssetsQuery = trpc.naqla3.commercial.getMyAssets.useQuery(undefined, { enabled: Boolean(user) });
@@ -175,6 +179,25 @@ export default function NaqlaJourneyWorkspace() {
     },
     onError: () => setNotice(copy("تعذر حفظ طلب المطابقة؛ لم يُشغّل MatchRun من نص حر.", "The matching request could not be saved; no MatchRun was run from free text.", isArabic)),
   });
+  const createApplication = trpc.naqla2.applications.create.useMutation({
+    onSuccess: (result) => {
+      setApplicationId(result.applicationId);
+      void applicationsQuery.refetch();
+      setNotice(copy("أُنشئ تقديم خادمي من مرشح Teaser مصرح به؛ لا يمنح ذلك دليلاً أو قبولاً.", "A server application was created from an authorized teaser candidate; it grants neither evidence nor acceptance.", isArabic));
+    },
+    onError: () => setNotice(copy("تعذر إنشاء التقديم؛ يلزم مرشح MatchRun مملوك ومصرح.", "The application could not be created; an owned, authorized MatchRun candidate is required.", isArabic)),
+  });
+  const createApplicationVersion = trpc.naqla2.applications.createImmutableVersion.useMutation({
+    onSuccess: () => setNotice(copy("حُفظت نسخة تقديم ثابتة ببصمة خادمية.", "An immutable application version was saved with a server-side hash.", isArabic)),
+    onError: () => setNotice(copy("تعذر حفظ نسخة التقديم؛ لا يُعدل أي إصدار قائم.", "The application version could not be saved; no existing version was changed.", isArabic)),
+  });
+  const submitApplication = trpc.naqla2.applications.submit.useMutation({
+    onSuccess: () => {
+      void applicationsQuery.refetch();
+      setNotice(copy("أُرسل التقديم بعد وجود نسخة ثابتة؛ لا يمثل قبولاً أو حق إفصاح.", "The application was submitted after an immutable version existed; it is not acceptance or a disclosure right.", isArabic));
+    },
+    onError: () => setNotice(copy("تعذر إرسال التقديم؛ يلزم إصدار ثابت وتفويض المقدم.", "The application could not be submitted; an immutable version and applicant authorization are required.", isArabic)),
+  });
   const setInterestStatus = trpc.naqla2.engagements.setInterestStatus.useMutation({
     onSuccess: () => {
       void interestRequestsQuery.refetch();
@@ -260,6 +283,13 @@ export default function NaqlaJourneyWorkspace() {
           </div>
         </div>
       </header>
+
+      {user && <section className="mx-auto max-w-7xl px-4 pt-5 sm:px-8" aria-label={copy("التقديمات الخادمية", "Server applications", isArabic)}>
+        <div className="rounded-2xl border border-violet-300/20 bg-violet-300/5 p-4">
+          <h2 className="font-semibold text-violet-100">{copy("Application ثم نسخة ثابتة ثم إرسال", "Application, immutable version, then submit", isArabic)}</h2>
+          {latestMatchRunQuery.isLoading || applicationsQuery.isLoading ? <p className="mt-2 text-xs text-slate-400">{copy("يجري تحميل مرشحي MatchRun والتقديمات…", "Loading MatchRun candidates and applications…", isArabic)}</p> : latestMatchRunQuery.isError || applicationsQuery.isError ? <p className="mt-2 text-xs text-rose-200">{copy("تعذر تحميل التقديمات؛ لم يُنشأ مسار بديل.", "Applications could not load; no fallback path was created.", isArabic)}</p> : <div className="mt-3 flex flex-wrap gap-2">{latestMatchRunQuery.data?.candidates.slice(0, 3).map((candidate) => <button key={candidate.id} type="button" disabled={createApplication.isPending} onClick={() => createApplication.mutate({ matchCandidateId: candidate.id })} className="rounded border border-violet-300/40 px-2 py-1 text-xs font-semibold text-violet-100 disabled:opacity-50">{copy(`إنشاء Application من مرشح #${candidate.id}`, `Create application from candidate #${candidate.id}`, isArabic)}</button>)}{applicationId && <><button type="button" disabled={createApplicationVersion.isPending} onClick={() => createApplicationVersion.mutate({ applicationId, summary: copy("نسخة تقديم اصطناعية للمراجعة البشرية ضمن تفويض المقدم فقط.", "Synthetic application version for human review within applicant authorization only.", isArabic) })} className="rounded border border-violet-300/40 px-2 py-1 text-xs font-semibold text-violet-100 disabled:opacity-50">{copy("حفظ نسخة تقديم", "Save application version", isArabic)}</button><button type="button" disabled={submitApplication.isPending} onClick={() => submitApplication.mutate({ applicationId })} className="rounded border border-violet-300/40 px-2 py-1 text-xs font-semibold text-violet-100 disabled:opacity-50">{copy("إرسال التقديم", "Submit application", isArabic)}</button></>}{!latestMatchRunQuery.data?.candidates.length && <p className="text-xs text-slate-400">{copy("لا يوجد مرشح MatchRun مصرح لإنشاء تقديم.", "No authorized MatchRun candidate is available for an application.", isArabic)}</p>}</div>}
+        </div>
+      </section>}
 
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-8">
         <div className="grid gap-5 xl:grid-cols-[1.1fr_1.9fr]">

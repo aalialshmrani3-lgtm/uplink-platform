@@ -10,7 +10,7 @@ import { invokeLLM as invokeExternalModelSdk } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
-import { userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
+import { userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2ApplicationVersions, naqla2Applications, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
@@ -75,8 +75,12 @@ export const appRouter = router({
         linkedIn: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        // TODO: Implement registration logic
-        return { success: true, message: "Registration successful" };
+        void ctx;
+        void input;
+        throw new TRPCError({
+          code: "PRECONDITION_FAILED",
+          message: "SELF_SERVICE_REGISTRATION_NOT_AVAILABLE",
+        });
       }),
     
     // MFA (Multi-Factor Authentication)
@@ -519,9 +523,6 @@ export const appRouter = router({
             category: input.category,
           });
 
-          // Debug: Log analysis result
-          console.log('[DEBUG] Analysis Result:', JSON.stringify(analysisResult, null, 2));
-
           // Save analysis result to database
           // Helper function to safely stringify or return null
           const safeStringify = (value: any) => {
@@ -548,10 +549,6 @@ export const appRouter = router({
                 return acc;
               }, {})
             : criterionScores;
-          
-          console.log('[DEBUG] About to create idea analysis');
-          console.log('[DEBUG] ideaId:', ideaId);
-          console.log('[DEBUG] overallScore:', analysisResult.overallScore);
           
           const analysisId = await db.createIdeaAnalysis({
             ideaId,
@@ -654,12 +651,6 @@ export const appRouter = router({
             console.error('[ERROR] Failed to save idea classification:', err);
           }
 
-          // Return simplified analysis to avoid serialization issues
-          console.log('[DEBUG] Analysis completed successfully');
-          console.log('[DEBUG] ideaId:', ideaId);
-          console.log('[DEBUG] analysisId:', analysisId);
-          console.log('[DEBUG] overallScore:', analysisResult.overallScore);
-          
           // Return simplified version matching AIAnalysisResults interface
           const criterionScoresArray = Array.isArray(analysisResult.criterionScores)
             ? analysisResult.criterionScores
@@ -712,7 +703,6 @@ export const appRouter = router({
             assetId
           };
           
-          console.log('[DEBUG] About to return response:', JSON.stringify(responseData).substring(0, 200));
           return responseData;
         } catch (error) {
           // Log detailed error
@@ -778,10 +768,6 @@ export const appRouter = router({
             return String(value);
           };
 
-          console.log('[DEBUG] About to create idea analysis');
-          console.log('[DEBUG] ideaId:', input.ideaId);
-          console.log('[DEBUG] overallScore:', analysisResult.overallScore);
-          
           const analysisId = await db.createIdeaAnalysis({
             ideaId: input.ideaId,
             overallScore: safeToString(analysisResult.overallScore),
@@ -4019,6 +4005,59 @@ Provide response in JSON format:
             .orderBy(desc(naqla2MatchCandidates.score));
           return { run, candidates };
         }),
+    }),
+
+    applications: router({
+      create: protectedProcedure
+        .input(z.object({ matchCandidateId: z.number().int().positive() }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [candidate] = await database.select({ candidateId: naqla2MatchCandidates.id, listingId: naqla2MarketplaceListings.id, ownerUserId: naqla2MarketplaceListings.ownerUserId })
+            .from(naqla2MatchCandidates)
+            .innerJoin(naqla2MatchRuns, eq(naqla2MatchCandidates.matchRunId, naqla2MatchRuns.id))
+            .innerJoin(naqla2MarketplaceListings, eq(naqla2MatchCandidates.listingId, naqla2MarketplaceListings.id))
+            .where(and(eq(naqla2MatchCandidates.id, input.matchCandidateId), eq(naqla2MatchRuns.requesterUserId, ctx.user.id), eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only')))
+            .limit(1);
+          if (!candidate || candidate.ownerUserId === ctx.user.id) throw new TRPCError({ code: 'FORBIDDEN', message: 'An owned teaser-only match candidate is required' });
+          const [application] = await database.insert(naqla2Applications).values({ matchCandidateId: candidate.candidateId, applicantUserId: ctx.user.id, ownerUserId: candidate.ownerUserId, status: 'draft' }).$returningId();
+          return { applicationId: application.id, status: 'draft', disclaimer: 'An application does not grant evidence access, acceptance, or an engagement.' };
+        }),
+
+      createImmutableVersion: protectedProcedure
+        .input(z.object({ applicationId: z.number().int().positive(), summary: z.string().min(10).max(5000) }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [application] = await database.select().from(naqla2Applications).where(and(eq(naqla2Applications.id, input.applicationId), eq(naqla2Applications.applicantUserId, ctx.user.id))).limit(1);
+          if (!application || application.status !== 'draft') throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the applicant may version a draft application' });
+          const versions = await database.select({ id: naqla2ApplicationVersions.id }).from(naqla2ApplicationVersions).where(eq(naqla2ApplicationVersions.applicationId, application.id));
+          const snapshot = { applicationId: application.id, applicantUserId: ctx.user.id, summary: input.summary };
+          const payloadSha256 = createHash('sha256').update(JSON.stringify(snapshot)).digest('hex');
+          const [version] = await database.insert(naqla2ApplicationVersions).values({ applicationId: application.id, versionNumber: versions.length + 1, payloadSha256, snapshot }).$returningId();
+          return { versionId: version.id, versionNumber: versions.length + 1, payloadSha256 };
+        }),
+
+      submit: protectedProcedure
+        .input(z.object({ applicationId: z.number().int().positive() }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [application] = await database.select().from(naqla2Applications).where(and(eq(naqla2Applications.id, input.applicationId), eq(naqla2Applications.applicantUserId, ctx.user.id), eq(naqla2Applications.status, 'draft'))).limit(1);
+          if (!application) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the applicant may submit a draft application' });
+          const versions = await database.select({ id: naqla2ApplicationVersions.id }).from(naqla2ApplicationVersions).where(eq(naqla2ApplicationVersions.applicationId, application.id)).limit(1);
+          if (versions.length === 0) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An immutable application version is required before submission' });
+          const result = await database.update(naqla2Applications).set({ status: 'submitted' }).where(and(eq(naqla2Applications.id, application.id), eq(naqla2Applications.applicantUserId, ctx.user.id), eq(naqla2Applications.status, 'draft')));
+          if (!hasAffectedRow(result)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Application submission was not authorized' });
+          return { applicationId: application.id, status: 'submitted' };
+        }),
+
+      getMyApplications: protectedProcedure.query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const { or } = await import('drizzle-orm');
+        return database.select().from(naqla2Applications).where(or(eq(naqla2Applications.applicantUserId, ctx.user.id), eq(naqla2Applications.ownerUserId, ctx.user.id))).orderBy(desc(naqla2Applications.createdAt));
+      }),
     }),
 
     engagements: router({

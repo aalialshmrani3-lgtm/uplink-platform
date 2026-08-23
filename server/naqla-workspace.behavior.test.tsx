@@ -47,11 +47,18 @@ vi.mock("@/lib/trpc", () => ({
       },
       deterministicMatching: {
         getMyRuns: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
+        getRun: { useQuery: () => ({ data: null, isLoading: false, isError: false, refetch }) },
         createRun: { useMutation: () => mutation },
       },
       matching: {
         getMyMatches: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
         request: { useMutation: () => mutation },
+      },
+      applications: {
+        getMyApplications: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
+        create: { useMutation: () => mutation },
+        createImmutableVersion: { useMutation: () => mutation },
+        submit: { useMutation: () => mutation },
       },
       engagements: {
         getMyInterestRequests: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },

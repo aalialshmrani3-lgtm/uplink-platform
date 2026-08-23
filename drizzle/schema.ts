@@ -2296,6 +2296,25 @@ export const naqla2MatchCandidates = mysqlTable("naqla2_match_candidates", {
   createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
 }, (table) => [index('naqla2_match_candidate_run_idx').on(table.matchRunId), index('naqla2_match_candidate_listing_idx').on(table.listingId)]);
 
+export const naqla2Applications = mysqlTable("naqla2_applications", {
+  id: int().autoincrement().primaryKey(),
+  matchCandidateId: int().notNull(),
+  applicantUserId: int().notNull(),
+  ownerUserId: int().notNull(),
+  status: mysqlEnum(['draft', 'submitted', 'withdrawn', 'accepted', 'declined']).notNull().default('draft'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla2_application_candidate_idx').on(table.matchCandidateId), index('naqla2_application_applicant_idx').on(table.applicantUserId), index('naqla2_application_owner_idx').on(table.ownerUserId)]);
+
+export const naqla2ApplicationVersions = mysqlTable("naqla2_application_versions", {
+  id: int().autoincrement().primaryKey(),
+  applicationId: int().notNull(),
+  versionNumber: int().notNull(),
+  payloadSha256: varchar({ length: 64 }).notNull(),
+  snapshot: json().notNull(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [uniqueIndex('naqla2_application_version_unique').on(table.applicationId, table.versionNumber), index('naqla2_application_version_application_idx').on(table.applicationId)]);
+
 export const naqla2Engagements = mysqlTable("naqla2_engagements", {
   id: int().autoincrement().primaryKey(),
   interestRequestId: int().notNull(),
@@ -2341,6 +2360,10 @@ export type Naqla2MatchRun = typeof naqla2MatchRuns.$inferSelect;
 export type InsertNaqla2MatchRun = typeof naqla2MatchRuns.$inferInsert;
 export type Naqla2MatchCandidate = typeof naqla2MatchCandidates.$inferSelect;
 export type InsertNaqla2MatchCandidate = typeof naqla2MatchCandidates.$inferInsert;
+export type Naqla2Application = typeof naqla2Applications.$inferSelect;
+export type InsertNaqla2Application = typeof naqla2Applications.$inferInsert;
+export type Naqla2ApplicationVersion = typeof naqla2ApplicationVersions.$inferSelect;
+export type InsertNaqla2ApplicationVersion = typeof naqla2ApplicationVersions.$inferInsert;
 export type Naqla2Engagement = typeof naqla2Engagements.$inferSelect;
 export type InsertNaqla2Engagement = typeof naqla2Engagements.$inferInsert;
 export type Naqla2Pilot = typeof naqla2Pilots.$inferSelect;

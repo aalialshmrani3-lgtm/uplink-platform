@@ -21,7 +21,7 @@ The primary `/naqla` route presents an Arabic-first, responsive operating worksp
 | Verification | Result |
 |---|---|
 | TypeScript | `pnpm check` passed. |
-| Unit and integration regression | `pnpm test`: **18 test files, 71 tests passed**. |
+| Unit and integration regression | `pnpm test`: **24 test files, 90 tests passed**. |
 | Context authorization | Eight tRPC tests cover create, active-context denial/success, invitation denial/success, pending-invitation listing, and invitation acceptance. |
 | Production build | `pnpm build` passed in 16.73 seconds. |
 | Source diff quality | `git diff --check` passed. |
@@ -35,7 +35,7 @@ The platform enforces default-deny behavior for evidence exposure in the determi
 
 ## Acceptance status
 
-> **`READY_WITH_EXTERNAL_AI_DEFERRED`** applies to the deterministic, locally verified platform scope documented above. It is not an approval to enable a provider, infer on customer data, or start Phase 2.2C.
+> **`IN_PROGRESS_NOT_READY`** applies while the remaining NAQLA1 storage-isolation, NAQLA2 lifecycle, onboarding, and final acceptance items in `todo.md` remain open. This is not an approval to enable a provider, infer on customer data, or start Phase 2.2C.
 
 The separate Phase 2.2B conclusion remains immutable: `EXTERNAL_AI_NOT_PROMOTED` / `DEFERRED`.
 
