@@ -1,0 +1,8 @@
+# NAQLA UI Regression Findings
+
+- **Baseline retained:** `fc632bb3` is the recovery checkpoint created before the UI-only repair.
+- **Last good multi-route UI:** `2280245` retained the full route set before the later NAQLA operating-workspace change.
+- **Root cause:** commit `46886f1` replaced the large landing-page surface with a short landing page and set all three engine-card links to `/naqla`. It did not delete `App.tsx` route definitions or the NAQLA page components, but it obscured direct access to the distinct NAQLA1, NAQLA2, and NAQLA3 interfaces.
+- **Selective repair:** the landing page now keeps its current controlled design while exposing direct links to `/dashboard`, `/naqla1`, `/naqla2`, `/naqla3`, `/profile`, and the synthetic operating workspace at `/naqla`.
+- **Auth observation:** direct `/dashboard` navigates to the existing sign-in flow for an anonymous browser session; this is an authentication guard, not a redirect to `/`.
+- **Route verification follow-up:** direct NAQLA1, NAQLA2, NAQLA3 dashboard pages render on desktop and mobile. The mobile capture still exposed a stale BootGate timeout on `/naqla3`, which requires a fresh server verification after the synchronous guard repair. The `/admin/dashboard` capture revealed a separate UI defect: a Radix `Select.Item` has an empty string value and must be corrected without changing authorization behavior.

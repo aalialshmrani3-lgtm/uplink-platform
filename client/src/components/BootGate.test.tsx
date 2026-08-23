@@ -6,5 +6,7 @@ describe("BootGate healthy-path rendering", () => {
 
     expect(source).toContain('if (status === "ready" || status === "booting") return <>{children}</>;');
     expect(source).not.toContain('data-boot-state="booting"');
+    expect(source).not.toContain('BOOT_TIMEOUT');
+    expect(source).toContain('return "ready";');
   });
 });

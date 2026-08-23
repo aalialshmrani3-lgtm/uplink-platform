@@ -1,5 +1,5 @@
 import { AlertTriangle, RefreshCw, SlidersHorizontal } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 export type BootStatus = "booting" | "ready" | "error" | "context_required";
 
@@ -15,11 +15,10 @@ function errorId(prefix: string) {
 }
 
 function initialBootStatus(): BootStatus {
-  if (!import.meta.env.DEV) return "booting";
-  const forced = new URLSearchParams(window.location.search).get("boot");
+  const forced = import.meta.env.DEV ? new URLSearchParams(window.location.search).get("boot") : null;
   if (forced === "context_required") return "context_required";
   if (forced === "error") return "error";
-  return "booting";
+  return "ready";
 }
 
 function BootRecovery({ status, issue }: { status: Exclude<BootStatus, "booting" | "ready">; issue: BootIssue }) {
@@ -56,41 +55,11 @@ function BootRecovery({ status, issue }: { status: Exclude<BootStatus, "booting"
 }
 
 export function BootGate({ children }: { children: React.ReactNode }) {
-  const [status, setStatus] = useState<BootStatus>(initialBootStatus);
-  const [issue, setIssue] = useState<BootIssue>(() => ({ id: errorId("BOOT"), reason: "تعذر إكمال التهيئة الأولية للمنصة." }));
-  const completed = useRef(false);
+  const [status] = useState<BootStatus>(initialBootStatus);
+  const [issue] = useState<BootIssue>(() => ({ id: errorId("BOOT"), reason: "تعذر إكمال التهيئة الأولية للمنصة." }));
 
-  useEffect(() => {
-    if (status !== "booting") return;
-
-    const timeout = window.setTimeout(() => {
-      if (completed.current) return;
-      setIssue({ id: errorId("BOOT_TIMEOUT"), reason: "انتهت مهلة تجهيز التطبيق قبل اكتمال التهيئة. يمكنك إعادة المحاولة أو اختيار السياق من جديد." });
-      setStatus("error");
-    }, MAX_BOOT_TIME_MS);
-
-    const frame = window.requestAnimationFrame(() => {
-      try {
-        if (!document.getElementById("root")) throw new Error("ROOT_NOT_FOUND");
-        completed.current = true;
-        window.clearTimeout(timeout);
-        setStatus("ready");
-      } catch (error) {
-        const message = error instanceof Error ? error.message : "BOOTSTRAP_FAILED";
-        setIssue({ id: errorId("BOOT_INIT"), reason: `فشلت تهيئة الواجهة (${message}).` });
-        setStatus("error");
-      }
-    });
-
-    return () => {
-      window.clearTimeout(timeout);
-      window.cancelAnimationFrame(frame);
-    };
-  }, [status]);
-
-  // A healthy client must never be hidden behind a cosmetic bootstrap screen.
-  // Keep the asynchronous guard for failure reporting, but render the route
-  // immediately while that guard completes.
+  // Routing is synchronous in this SPA. A cosmetic timeout must never replace
+  // a valid lazy-loaded route; explicit development recovery states remain.
   if (status === "ready" || status === "booting") return <>{children}</>;
   if (status === "error" || status === "context_required") return <BootRecovery status={status} issue={issue} />;
   return null;

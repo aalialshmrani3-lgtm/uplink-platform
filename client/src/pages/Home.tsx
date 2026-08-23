@@ -1,3 +1,4 @@
+import React from "react";
 import { ArrowLeft, ArrowRight, BadgeCheck, Building2, ChevronLeft, ChevronRight, Compass, FileCheck2, Landmark, LockKeyhole, Rocket, ShieldCheck, Sparkles, UsersRound } from "lucide-react";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,9 +10,9 @@ function text(ar: string, en: string, arabic: boolean) {
 }
 
 const engines = [
-  { id: "NAQLA1", route: "/naqla", icon: FileCheck2, ar: "التأهيل", en: "Qualify", arDescription: "سجل الابتكار، إصداراته، الأدلة المصرح بها، والجواز وخطوة العمل التالية.", enDescription: "Innovation record, versioning, authorized evidence, passport, and next best action.", color: "from-emerald-300 to-cyan-300", tint: "border-emerald-300/30 bg-emerald-300/5" },
-  { id: "NAQLA2", route: "/naqla", icon: UsersRound, ar: "الاتصال", en: "Connect", arDescription: "فرص وتحديات، teaser مصرح به، مطابقة حتمية، تقديم ثابت وPilot.", enDescription: "Opportunities and challenges, authorized teaser, deterministic match, immutable application, and pilot.", color: "from-cyan-300 to-blue-400", tint: "border-cyan-300/30 bg-cyan-300/5" },
-  { id: "NAQLA3", route: "/naqla", icon: Landmark, ar: "التسويق", en: "Commercialize", arDescription: "أصل تجاري منفصل عن المعاملة، تحقق بشري ومسار تنفيذ دون استنتاج قانوني آلي.", enDescription: "Commercial asset separate from a transaction, human diligence, and execution without automated legal conclusions.", color: "from-violet-300 to-fuchsia-300", tint: "border-violet-300/30 bg-violet-300/5" },
+  { id: "NAQLA1", route: "/naqla1", icon: FileCheck2, ar: "التأهيل", en: "Qualify", arDescription: "سجل الابتكار، إصداراته، الأدلة المصرح بها، والجواز وخطوة العمل التالية.", enDescription: "Innovation record, versioning, authorized evidence, passport, and next best action.", color: "from-emerald-300 to-cyan-300", tint: "border-emerald-300/30 bg-emerald-300/5" },
+  { id: "NAQLA2", route: "/naqla2", icon: UsersRound, ar: "الاتصال", en: "Connect", arDescription: "فرص وتحديات، teaser مصرح به، مطابقة حتمية، تقديم ثابت وPilot.", enDescription: "Opportunities and challenges, authorized teaser, deterministic match, immutable application, and pilot.", color: "from-cyan-300 to-blue-400", tint: "border-cyan-300/30 bg-cyan-300/5" },
+  { id: "NAQLA3", route: "/naqla3", icon: Landmark, ar: "التسويق", en: "Commercialize", arDescription: "أصل تجاري منفصل عن المعاملة، تحقق بشري ومسار تنفيذ دون استنتاج قانوني آلي.", enDescription: "Commercial asset separate from a transaction, human diligence, and execution without automated legal conclusions.", color: "from-violet-300 to-fuchsia-300", tint: "border-violet-300/30 bg-violet-300/5" },
 ];
 
 export default function Home() {
@@ -22,12 +23,19 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#020617] text-slate-100" dir={isRTL ? "rtl" : "ltr"}>
       <header className="border-b border-white/10 bg-slate-950/90 px-4 py-4 backdrop-blur sm:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3" aria-label="NAQLA home">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 to-blue-600 text-slate-950"><Sparkles className="h-5 w-5" /></span>
             <span><span className="block text-xs font-semibold tracking-[0.18em] text-cyan-300">NAQLA</span><span className="block text-sm font-semibold text-white">{text("منظومة تشغيل الابتكار", "Innovation operating system", isArabic)}</span></span>
           </Link>
-          <div className="flex items-center gap-2">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label={text("التنقل التشغيلي", "Operational navigation", isArabic)}>
+            <Link href="/dashboard" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">{text("لوحة التحكم", "Dashboard", isArabic)}</Link>
+            <Link href="/naqla1" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">NAQLA1</Link>
+            <Link href="/naqla2" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">NAQLA2</Link>
+            <Link href="/naqla3" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">NAQLA3</Link>
+            <Link href="/profile" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">{text("الملف", "Profile", isArabic)}</Link>
+          </nav>
+          <div className="flex shrink-0 items-center gap-2">
             <LanguageSwitcher />
             <a href={getLoginUrl()} className="hidden rounded-xl border border-white/15 px-4 py-2 text-sm font-semibold text-white sm:inline-flex focus:outline-none focus:ring-2 focus:ring-cyan-300">{text("تسجيل الدخول", "Sign in", isArabic)}</a>
           </div>

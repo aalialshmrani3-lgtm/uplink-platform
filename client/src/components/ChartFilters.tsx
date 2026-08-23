@@ -5,6 +5,8 @@ import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Filter, X, Save, Share2 } from 'lucide-react';
 
+const ALL_FILTER_VALUE = "__all__";
+
 export interface ChartFilterState {
   startDate: string;
   endDate: string;
@@ -98,12 +100,12 @@ export function ChartFilters({ onFilterChange, onSaveView, onShareView }: ChartF
 
         <div>
           <label className="text-sm text-muted-foreground mb-1 block">Department</label>
-          <Select value={filters.department} onValueChange={(v) => handleFilterChange('department', v)}>
+          <Select value={filters.department || ALL_FILTER_VALUE} onValueChange={(v) => handleFilterChange('department', v === ALL_FILTER_VALUE ? '' : v)}>
             <SelectTrigger>
               <SelectValue placeholder="All Departments" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value={ALL_FILTER_VALUE}>All</SelectItem>
               <SelectItem value="engineering">Engineering</SelectItem>
               <SelectItem value="marketing">Marketing</SelectItem>
               <SelectItem value="sales">Sales</SelectItem>
@@ -114,12 +116,12 @@ export function ChartFilters({ onFilterChange, onSaveView, onShareView }: ChartF
 
         <div>
           <label className="text-sm text-muted-foreground mb-1 block">Project</label>
-          <Select value={filters.project} onValueChange={(v) => handleFilterChange('project', v)}>
+          <Select value={filters.project || ALL_FILTER_VALUE} onValueChange={(v) => handleFilterChange('project', v === ALL_FILTER_VALUE ? '' : v)}>
             <SelectTrigger>
               <SelectValue placeholder="All Projects" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value={ALL_FILTER_VALUE}>All</SelectItem>
               <SelectItem value="project1">Project Alpha</SelectItem>
               <SelectItem value="project2">Project Beta</SelectItem>
               <SelectItem value="project3">Project Gamma</SelectItem>
@@ -129,12 +131,12 @@ export function ChartFilters({ onFilterChange, onSaveView, onShareView }: ChartF
 
         <div>
           <label className="text-sm text-muted-foreground mb-1 block">Status</label>
-          <Select value={filters.status} onValueChange={(v) => handleFilterChange('status', v)}>
+          <Select value={filters.status || ALL_FILTER_VALUE} onValueChange={(v) => handleFilterChange('status', v === ALL_FILTER_VALUE ? '' : v)}>
             <SelectTrigger>
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value={ALL_FILTER_VALUE}>All</SelectItem>
               <SelectItem value="active">Active</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>

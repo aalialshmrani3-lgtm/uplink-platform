@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Badge } from '../components/ui/badge';
 import { FileText, Download, Filter, Search } from 'lucide-react';
 
+const ALL_STATUS_VALUE = "__all__";
+
 export default function AuditLogs() {
   const [filters, setFilters] = useState({
     resource: '',
@@ -108,12 +110,12 @@ export default function AuditLogs() {
             value={filters.action}
             onChange={(e) => setFilters({ ...filters, action: e.target.value })}
           />
-          <Select value={filters.status} onValueChange={(v: any) => setFilters({ ...filters, status: v })}>
+          <Select value={filters.status || ALL_STATUS_VALUE} onValueChange={(v) => setFilters({ ...filters, status: v === ALL_STATUS_VALUE ? '' : v as 'success' | 'failure' })}>
             <SelectTrigger>
               <SelectValue placeholder="Status..." />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value={ALL_STATUS_VALUE}>All</SelectItem>
               <SelectItem value="success">Success</SelectItem>
               <SelectItem value="failure">Failure</SelectItem>
             </SelectContent>
