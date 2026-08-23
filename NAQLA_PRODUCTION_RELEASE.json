@@ -1,0 +1,8 @@
+{
+  "release": "NAQLA_FINAL_PLATFORM_ACCEPTANCE",
+  "acceptanceCommit": "b79bc2b9d4de799d9a28fadcf297661d8626a78f",
+  "externalAiStatus": "EXTERNAL_AI_DEFERRED",
+  "requiredGate": "AI_EXTERNAL_PROVIDER_ENABLED=false",
+  "providerDispatches": 0,
+  "purpose": "Trigger a definitive deployment of the accepted NAQLA platform artifacts without changing application behavior."
+}
