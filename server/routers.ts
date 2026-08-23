@@ -19,6 +19,11 @@ import * as eventsService from "./naqla2/events";
 import { storagePut } from "./storage";
 // import { autoTriggerDecision } from "./services/diamondDecisionPoint"; // Removed - file deleted
 
+function hasAffectedRow(result: unknown): boolean {
+  const update = result as { affectedRows?: number; rowsAffected?: number } | undefined;
+  return (update?.affectedRows ?? update?.rowsAffected ?? 0) > 0;
+}
+
 export const appRouter = router({
   system: systemRouter,
   
@@ -3805,7 +3810,7 @@ Provide response in JSON format:
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           return database.select({ id: naqla2MarketplaceListings.id, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope, createdAt: naqla2MarketplaceListings.createdAt })
-            .from(naqla2MarketplaceListings).where(eq(naqla2MarketplaceListings.status, 'published')).orderBy(desc(naqla2MarketplaceListings.createdAt));
+            .from(naqla2MarketplaceListings).where(and(eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only'))).orderBy(desc(naqla2MarketplaceListings.createdAt));
         }),
 
       createListing: protectedProcedure
@@ -3825,7 +3830,7 @@ Provide response in JSON format:
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const result = await database.update(naqla2MarketplaceListings).set({ status: input.status }).where(and(eq(naqla2MarketplaceListings.id, input.listingId), eq(naqla2MarketplaceListings.ownerUserId, ctx.user.id)));
-          if ((result as any).rowsAffected === 0) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the listing owner may change listing status' });
+          if (!hasAffectedRow(result)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the listing owner may change listing status' });
           return { success: true, status: input.status };
         }),
 
@@ -3850,7 +3855,7 @@ Provide response in JSON format:
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const [listing] = await database.select({ id: naqla2MarketplaceListings.id, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope, createdAt: naqla2MarketplaceListings.createdAt })
-            .from(naqla2MarketplaceListings).where(and(eq(naqla2MarketplaceListings.id, input.id), eq(naqla2MarketplaceListings.status, 'published'))).limit(1);
+            .from(naqla2MarketplaceListings).where(and(eq(naqla2MarketplaceListings.id, input.id), eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only'))).limit(1);
           return listing ?? null;
         }),
     }),
@@ -5001,7 +5006,7 @@ ${input.technicalDetails}` : ''}`;
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const result = await database.update(naqla3CommercialAssets).set({ status: input.status }).where(and(eq(naqla3CommercialAssets.id, input.assetId), eq(naqla3CommercialAssets.ownerUserId, ctx.user.id)));
-          if ((result as any).rowsAffected === 0) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the commercial asset owner may change its status' });
+          if (!hasAffectedRow(result)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the commercial asset owner may change its status' });
           return { success: true, status: input.status };
         }),
 
@@ -5023,7 +5028,7 @@ ${input.technicalDetails}` : ''}`;
           const database = await getDb();
           if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
           const result = await database.update(naqla3CommercialTransactions).set({ status: input.status, humanReviewNote: input.humanReviewNote }).where(and(eq(naqla3CommercialTransactions.id, input.transactionId), eq(naqla3CommercialTransactions.initiatorUserId, ctx.user.id)));
-          if ((result as any).rowsAffected === 0) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the transaction initiator may update this record' });
+          if (!hasAffectedRow(result)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the transaction initiator may update this record' });
           return { success: true, status: input.status, disclaimer: 'Status updates are records for human governance only.' };
         }),
 
