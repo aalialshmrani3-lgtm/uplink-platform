@@ -12,7 +12,7 @@
 - [x] تثبيت تعديل شاشة الافتتاح في checkpoint ونشره ثم smoke عام يثبت ظهورها وانتقال deep link بلا شاشة بيضاء
 - [x] تثبيت منفذ الإنتاج على `PORT` المطلوب في وضع production لمنع 503 البوابة مع الإبقاء على منفذ مرن للتطوير
 - [x] تنفيذ Phase 2.2C للمطابقة الحتمية: versioning/immutability/factors/confidence/rank bands/idempotency والتفويض والواجهة والاختبارات
-- [ ] تثبيت ونشر Phase 2.2C ثم smoke عام يثبت build جديداً والجذر وSplash وMatching Hub ومسار نتيجة عميق
+- [x] تثبيت ونشر Phase 2.2C ثم smoke عام يثبت build جديداً والجذر وSplash وMatching Hub ومسار نتيجة عميق
 - [x] إضافة اختبار E2E مصادق عليه لرحلة NAQLA2: Challenge → Discovery → MatchRun → تفسير → Interest → Engagement/Pilot ضمن ActiveContext
 - [x] إضافة اختبارات صريحة لـlistRuns pagination/filtering/sorting ولـidempotency/immutability/versioning والاستبعاد وstale/revoked
 - [x] إنشاء fixture E2E معزول اصطناعي للمستخدم والمؤسسة والعضوية وActiveContext من دون أي جلسة أو seed إنتاجي

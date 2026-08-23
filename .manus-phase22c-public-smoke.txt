@@ -1,0 +1,9 @@
+Public smoke findings — 2026-08-23
+
+- https://uplink5.xyz/ opened after checkpoint c001b8ff.
+- Initial capture showed the restored dark NAQLA StartupSplash with centered mark and loading treatment.
+- A subsequent view showed the full landing interface after the transition, with its multi-page navigation present.
+- No human session was used.
+- https://uplink5.xyz/naqla2/matching-hub completed its shell load and displayed the safe Arabic sign-in state: only owned matching requests and results are accessible after sign-in.
+- The deep link /naqla2/matching-hub?run=1 also retained that safe state and did not disclose result data before authentication.
+- The final production fingerprint was buildId mt67myojla6l, builtAt 2026-08-23T19:38:43.603Z; root and Matching Hub returned HTTP 200 with no-cache/no-store HTML headers.
