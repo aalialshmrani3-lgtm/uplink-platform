@@ -1,5 +1,213 @@
 # UPLINK 5.0 - TODO
 
+## NAQLA Phase 2.1 Final Closure — تحقق واجهة Manager Funnel
+- [x] إصلاح انتقال «طلبات المتقدمين» من التحدي ليعرض Manager Funnel بدلاً من نموذج المتقدم للمنظمة المالكة
+
+## NAQLA Phase 2.1 — Final Acceptance Patch
+- [x] توحيد تصنيف Applicant في Eligibility بين Individual وStartup وOrganization
+- [x] إضافة Product/Commercial Readiness حتمية ومؤرشفة إلى Snapshot وبوابة Eligibility
+- [x] إكمال مراجع Form Builder الآمنة لـInnovationRecord وEvidence مع تحقق خادمي
+- [x] تمييز سلوك ReviewPanel بين visible وblinded_to_reviewers وanonymous_initial_review
+- [x] إضافة اختبارات قبول مركزة وتحديث وثائق الاعتماد ثم تجميع Final Approved Candidate واحد
+- [x] تثبيت Acceptance Patch في مستودع NAQLA المستقل عبر commit موثق
+- [x] تجميع حزمة Final Approved Candidate محدثة واستخراج SHA-256 والتحقق من سلامتها
+- [x] تسليم التقرير النهائي المرتبط بنتائج Domain وFinal Closure وFinal Acceptance ثم التوقف
+
+## NAQLA Phase 2.1 — Two P0 Acceptance Fixes
+- [x] إتاحة Application Setup آمن للمتقدم الخارجي فقط للتحديات المفتوحة والمتاحة وفق سياسة الرؤية
+- [x] منع Application Setup عن التحديات الخاصة أو غير المفتوحة لغير فريق التحدي
+- [x] تحويل Eligibility إلى استخدام Applicant Snapshot المجمد دون قراءة StartupProfile حي بعد الإرسال
+- [x] إضافة HTTP/E2E مركزة للمسار العابر للمستأجر وانحدار اللقطة التاريخية
+- [x] تحديث الوثائق المتأثرة وتجميع `NAQLA_PHASE_2_1_LOCKED_FINAL.zip` ثم التوقف
+
+## NAQLA Phase 2.2 — Intelligence Blueprint Only
+- [x] تثبيت baseline غير القابل للتعديل لـPhase 2.1 وحدود صلاحيات الذكاء الاصطناعي
+- [x] تصميم مسار Challenge Understanding وTaxonomy وMatching القابل للتفسير فوق Hard Gates وEligibility
+- [x] تصميم Evidence Confidence والضوابط البشرية وحواجز الهلوسة والتدقيق
+- [x] تحديد عقود API/Domain والواجهات وخطة الاختبار ومجموعة التقييم دون تنفيذ
+- [x] تسليم Blueprint Phase 2.2 فقط ثم التوقف للمراجعة المعمارية
+
+## NAQLA Phase 2.2 — Architecture Lock v1.1 Only
+- [x] فصل Match computation وEvidence Confidence وAI explanation كعقود مستقلة
+- [x] تثبيت مصادر المرشحين بحسب مرحلة Discovery أو ApplicationVersion المرسلة
+- [x] تحديد Data Classification Allowlist وRevocation/Re-index semantics
+- [x] تحديد Provider/Model Adapter وAiAnalysisRun وTaxonomy Governance دون تنفيذ
+- [x] تعريف بوابات Benchmark والمراحل المقفلة ثم تسليم PDF ومواصفة machine-readable فقط
+
+## NAQLA Phase 2.2A — Intelligence Foundation Only
+- [x] تثبيت عقود MatchRun وMatchCandidate وMatchFactor وEvidenceConfidenceResult وأنماط discovery/submitted_comparison
+- [x] بناء Projection Engine خادمي immutable مع سياسة التصنيف والإبطال والـTaxonomy والتدقيق
+- [x] بناء AiAnalysisRun محلي وواجهات Provider/Embedding وحافز Mock فقط بلا شبكة أو مزود إنتاجي
+- [x] إضافة أسطح Stage تشخيصية محدودة لقراءة الحالة والسياسة والتدقيق مع وسم تجريبي صريح
+- [x] إضافة Suites منفصلة للأمان والإبطال وفشل mock والتقييم وتشغيل انحدار Phase 2.1
+- [x] تحديث الوثائق وتجميع `NAQLA_PHASE_2_2A_INTELLIGENCE_FOUNDATION_CANDIDATE.zip` ثم التوقف
+- [x] إصلاح توافق Seed Taxonomy بعد إضافة حقول حوكمة 2.2A وإعادة تشغيل انحدار Phase 2.1
+- [x] إصلاح استيراد واجهة Vitest في Suite Intelligence Foundation وإعادة تشغيلها
+- [x] تجهيز Stage معزول قابل لإعادة الفحص والتقاط أدلة سياسة Intelligence والإبطال والتدقيق
+- [x] إصلاح إظهار رابط Stage التشخيصي المصرح به بوسم `intelligence-stage=1` للمدير فقط
+
+## NAQLA Phase 2.2A — Foundation Security Lock Patch Only
+- [x] إصلاح canonical projection hashing العودي مع اختبارات ترتيب المفاتيح والمحتوى المتداخل
+- [x] إنفاذ مصفوفة التصنيف قبل projection وembedding/vector وmodel context وlogs
+- [x] منع downgrade للتصنيف في SubmittedApplicationProjection عبر processing manifest فعال
+- [x] ربط الإبطال التلقائي بأحداث Discovery/Evidence/Application/Record/Challenge/Taxonomy
+- [x] إعادة التفويض عند العرض وتحصين MatchRun stale من تسريب source/candidate metadata
+- [x] إصدار مصدر حتمي للإسقاطات وإدارة retry/circuit breaker محلية لحافز Mock
+- [x] إضافة Suites Security Lock مستقلة وتقارير الإبطال والهاش والـretry ثم تجميع Locked Candidate واحد
+- [x] استعادة توافق Suite Foundation مع allow-by-policy المحلي وإصدارات source ذات البصمة وقاعدة breaker المتكررة
+- [x] حجب Candidate/source metadata في MatchRun stale عند فشل إعادة التفويض
+- [x] تصحيح اختبار التصنيف restricted ليتوافق مع قيد حالة vector في المخطط
+- [x] ربط أو توثيق عدم وجود أحداث Taxonomy/Record تشغيلية إضافية تتطلب invalidation وإثباته باختبار
+- [x] إضافة اختبار يثبت أن Taxonomy suggestion pending لا يغير Projection أو Match
+- [x] توثيق أحداث Record المؤثرة المغطاة والإثبات النهائي قبل الحزمة المقفلة
+- [x] تثبيت Security Lock وتجميع Locked Candidate واحد مع SHA-256 بعد إكمال hooks المتبقية
+
+## NAQLA Phase 2.2A — Final Source-State Invalidation Patch Only
+- [x] بناء حدث مركزي `applicationVersionCreated` لإبطال إسقاطات الإصدارات السابقة ونتائجها التابعة
+- [x] ربط جميع مسارات ApplicationVersion والإفصاحات وInformation Request بالحدث المركزي
+- [x] إبطال إسقاطات Application عند تغير Evidence مفصح عنه أو تصنيفه أو إصداره مع عزل التطبيقات غير ذات الصلة
+- [x] تحصين Application projection re-authorization أمام انجراف النسخة والإفصاح وEvidence state
+- [x] إضافة اختبارات Domain وHTTP/E2E مستقلة للسيناريوهات A–D وتحديث تقارير القفل
+- [x] تثبيت وتجميع `NAQLA_PHASE_2_2A_FINAL_LOCKED.zip` مع SHA-256 ثم التوقف
+- [x] إعادة تجميع الحزمة المقفلة بعد اختبار Disclosure drift وتقرير 47/47 ثم استخراج SHA-256 نهائي
+
+## NAQLA Phase 2.2A — Final Invalidation-Scope Fix Only
+- [x] فصل إبطال Discovery projection عن Submitted Application projection عند تغيّر Discovery Consent أو visibility
+- [x] قصر تغيّر EvidenceVersion أو classification أو revocation على Applications التي تفصح عن Evidence نفسها
+- [x] ضمان ألا يؤثر Evidence غير المفصح عنه على Submitted Application projection
+- [x] إضافة اختبارات Unit وHTTP/E2E للحالات A–D: Evidence scope وundisclosed evidence وDiscovery isolation وDisclosure revocation
+- [x] تحديث التقرير النهائي ووسم التقارير السابقة كمرحلية ثم تجميع `NAQLA_PHASE_2_2A_GOLDEN_LOCK.zip` والتوقف
+- [x] إضافة HTTP/E2E مستقلة تغطي A/B على نفس السجل وEvidence غير المفصح وDiscovery isolation وDisclosure revocation بدقة
+- [x] إعادة تجميع Golden Lock بعد Suite A–D HTTP/E2E واستخراج SHA-256 نهائي جديد
+- [x] إضافة HTTP/E2E صريحة لعزل Discovery projection عن Submitted Application projection للسجل نفسه
+- [x] إضافة HTTP/E2E صريحة لسحب Disclosure من A فقط مع بقاء B فعالاً
+- [x] إعادة تجميع Golden Lock بعد اكتمال Suite A–D HTTP/E2E واستخراج SHA-256 نهائي
+- [ ] تصحيح ترتيب Scenario Discovery في Suite A–D لتُبنى Projection قبل تغيير consent إلى private
+- [x] إصلاح تهيئة Approver في Suite Source-State Invalidation المستقلة وإعادة تشغيلها
+- [x] تصحيح تمثيل vector غير المادي للتصنيف المقيد ليتوافق مع قيد المخطط
+- [x] توحيد مسار سحب Disclosure مع الحدث المركزي أو توثيق استثنائه تقنياً
+- [x] إضافة Domain/Unit صريحة لمصفوفة Source-State A–D بجانب HTTP/E2E
+- [x] استعادة lifecycle Approver الحقيقي في Suite Source-State بدلاً من فتح Challenge مباشرة في قاعدة البيانات
+- [x] إضافة اختبارات Domain/Unit منفصلة للحالات A–D: نسخة Application وإفصاح ودليل وإعادة تفويض
+- [x] توثيق مصفوفة A–D وربط كل حالة باختبار Unit وHTTP/E2E قبل الحزمة المقفلة
+- [x] إضافة اختبار Unit صريح يفشل إعادة التفويض عند انجراف disclosure أو ApplicationVersion للحالة D
+- [x] إضافة اختبار Unit فعلي يثبت redaction عند تغيير أو سحب Disclosure بعد بناء Application projection
+
+## NAQLA Phase 2.2B — Provider & Data Activation Decision Pack Only
+- [x] تثبيت Golden Baseline `49de7fd` وقيود عدم التنفيذ أو الاتصال الخارجي
+- [x] جمع حقائق موثقة وحديثة عن OpenAI وAzure OpenAI وAnthropic وGoogle Gemini/Vertex AI وAWS Bedrock وخيارات enterprise ذات الصلة
+- [x] تقييم الإقامة الإقليمية ومعالجة البيانات والاحتفاظ وعدم التدريب والـsubprocessors لكل خيار
+- [x] تصميم سياسة Data-to-AI وتصنيف Challenge Draft وModel Allowlist وعقد ChallengeUnderstandingResult
+- [x] تصميم حدود Prompt Injection وخطة benchmark العربية أولاً ونموذج الكلفة/الحصص وبوابة التفعيل
+- [x] تسليم PDF ومصفوفة JSON تفرق بين الحقائق الموثقة والمقترحات والقرارات المعلقة ثم التوقف
+- [ ] استكمال مصفوفة موثقة لكل مزود للاحتفاظ وعدم التدريب ومراقبة الإساءة والمعالجة/التخزين الإقليمي والـsubprocessors أو وسم الغياب صراحةً
+- [ ] تحديث PDF وJSON بتمييز verified per-provider مقابل unresolved ثم إعادة تدقيق Decision Pack
+- [x] استكمال مصفوفة موثقة لكل مزود للاحتفاظ وعدم التدريب ومراقبة الإساءة والمعالجة/التخزين الإقليمي والـsubprocessors أو وسم الغياب صراحةً
+- [x] تحديث PDF وJSON بتمييز verified per-provider مقابل unresolved ثم إعادة تدقيق Decision Pack
+
+## NAQLA Phase 2.2B — Challenge Understanding Stage Only
+- [ ] تثبيت Azure Foundry/UAE North/Standard Regional/GPT-5.6 Sol وقيود Stage وعدم fallback كقرارات تشغيلية قابلة للتدقيق
+- [ ] بناء Azure adapter خلف ModelProviderAdapter مع activation verification وkill switch وقيود token/cost/timeout/retry
+- [ ] بناء processing manifest مع sanitization وdefault-deny للـRestricted وما فوق وEvidence وApplicant/Decision data
+- [ ] بناء ChallengeUnderstandingResult المقيد وsource spans وguardrails لمنع claims/state changes غير المسموح بها
+- [ ] إضافة واجهة مدير Stage لتحليل مسودة التحدي فقط من دون write-back أو نشر أو تعديل Eligibility
+- [ ] إعداد benchmark عربي أولي وسجل prompt/config/model وتقرير cost/audit
+- [ ] إضافة P0 security وHTTP/E2E والانحدار الكامل وتجميع Candidate واحد ثم التوقف
+
+## NAQLA Phase 2.2B — Local Mock Delivery Constraint
+- [ ] إبقاء Azure Provider Activation بحالة `BLOCKED_NOT_CONFIGURED` حتى إعداد أسرار المالك والتحقق الموثق
+- [ ] منع أسرار Azure وendpoint وdeployment وAPI version من المصدر والتدقيق والحزمة واللقطات والـfixtures
+- [ ] استخدام Mock حتمي فقط في جميع تدفقات Challenge Understanding والـbenchmark واختبارات 2.2B الحالية
+
+## NAQLA Phase 2.2B — Review of New Approval Direction
+- [ ] تحليل تعليمات الاعتماد الجديدة وتحديد النطاق المصرح به وحالة Azure المطلوبة
+- [ ] تنفيذ أي متطلبات معتمدة والتحقق منها من دون تجاوز شرط التفعيل الخارجي
+- [ ] تحديث تقرير المرشح أو التسليم وفق قرار المراجعة ثم التوقف
+
+## NAQLA Phase 2.2B — Integration Security Lock Patch Only
+- [ ] بناء ChallengeAnalysisInputSnapshot خادمي ومنع تصنيف أو قيمة AI معتمدة من المتصفح
+- [ ] تمرير Challenge Understanding عبر AiAnalysisRun وprojection/hash وmanifest immutable وqueue/Mock/persistence
+- [ ] إضافة Validator مستقل للـschema والـsource spans والـgrounding والـguardrails
+- [ ] تنفيذ server allowlist وPII/Evidence sanitization وkill switch وحدود token/cost/retry
+- [ ] إزالة self-certification من الواجهة وعرض processing manifest خادمي آمن
+- [ ] توسيع benchmark وP0 HTTP/E2E والتقارير وتجميع Local Locked Candidate نظيف واحد
+
+## NAQLA Phase 2.2B — Local Final Security Patch Only
+- [ ] إضافة ChallengeAnalysisInputSnapshot خادمي immutable ومؤرشف بتصنيف مصدر موثوق وdefault-deny عند غيابه
+- [ ] تمرير Challenge Understanding حصراً عبر ModelProviderAdapter وAiAnalysisRun وmanifest ثابت كامل
+- [ ] تنفيذ sanitization بنيوي وPII/Evidence/path/disclosure policy من دون خفض التصنيف
+- [ ] إنفاذ kill switch وtoken/cost/timeout/retry policy فعلياً وبمقدّر token حتمي مستقل عن عدد الحروف
+- [x] ربط idempotency بـsourceVersion/sourceHash ومنع إعادة استخدام المفتاح مع مصدر متغير
+- [ ] توسيع strict validator وSuite P0 HTTP/E2E كاملة قبل أي Golden Candidate نهائي
+
+## NAQLA Phase 2.2B — Final Local Execution-Boundary Lock Only
+- [ ] تمرير approved sanitized context فقط إلى provider adapter وإثبات غياب القيم المرفوضة عبر spy adapter
+- [ ] تسجيل providerId وmodelVersion الفعليين من adapter المنفذ داخل AiAnalysisRun
+- [ ] اعتماد immutable server Processing Manifest كمرجع Validator الوحيد ومنع provider من تعريف authorization
+- [ ] استكمال Arabic/mixed injection وحواجز output وsuggestion source-derived versus suggestion
+- [ ] إنفاذ token/cost/timeout/retry policy حتمياً مع usage مسجل واختبارات fail-closed
+- [ ] إضافة عملية manager-only مدققة لإدارة تصنيف حقول Challenge وإبطال التحليلات السابقة
+- [ ] بناء Suite P0 HTTP/E2E الكاملة وتقارير provenance/isolation/limits/governance ثم Golden Lock واحد
+- [ ] تحديث Fixtures E2E لتعيين تصنيف خادمي صريح قبل اختبار المسار المسموح وdefault-deny
+- [ ] إصلاح فشل E2E للمصدر الخادمي بعد ربط Validator وAiAnalysisRun دون تخفيف الحواجز
+- [ ] إضافة ترحيل مقيد يدعم `challenge_understanding` في intelligence projections دون تغيير أنواع 2.2A القائمة
+- [ ] تصحيح إدراج AiAnalysisRun لمصدر Challenge Understanding ليتطابق مع أعمدة المخطط كاملة
+- [ ] استيراد Validator Challenge Understanding صراحةً داخل طبقة Intelligence قبل معالجته للنتيجة
+- [ ] تشخيص وإصلاح فشل HTTP field-policy manager path في Suite Runtime Policy E2E
+
+## NAQLA Phase 2.2B — Final Validator & Resilience Acceptance Patch Only
+- [ ] تطبيق حواجز recursively على كل نص مولد وenums صارمة ورفض خصائص schema غير المعتمدة
+- [ ] تنفيذ timeout/retry wrapper مستقل مع Mock timeout/unavailable وعدّاد محاولات دقيق
+- [ ] جعل cost estimator إعدادياً وقابلاً لتجاوز سقف الكلفة في اختبار Mock قبل dispatch
+- [ ] إضافة Mock oversized output وحد output-token بعد provider وعدم حفظ مخرج محجوب
+- [ ] توسيع Source-span والتحقق من zero-call ومصفوفة P0 HTTP/E2E الكاملة
+- [ ] تصحيح التقرير وتغليف snapshot نظيف بلا `.git` مع manifest commit/SHA ثم تسليم Final Lock واحد
+- [ ] تصحيح assertion timeout في Runtime Policy E2E ليتحقق من حقل الحالة الخادمي الفعلي
+- [ ] تقديم حد output token على validator للنواتج المتضخمة كي يُسجل policy denial الصحيح بلا حفظ output
+- [ ] تصحيح assertion oversized output في Runtime Policy E2E لقراءة رمز الحجب الخادمي الفعلي
+
+## NAQLA Phase 2.2B — Azure Pre-Activation & Provider Verification Harness Only
+- [ ] بناء عقد async provider قابل للإلغاء مع timeout خادمي حقيقي واختبار fake provider محلي
+- [ ] فرض additionalProperties=false فعلياً داخل كل كائن متداخل في ChallengeUnderstandingResult
+- [ ] تثبيت آلة حالة Azure Activation محجوبة وverifier بلا أسرار أو نداء خارجي
+- [ ] إعداد Synthetic Canary عام لا يحتوي بيانات NAQLA ومواصفة activation audit بلا أسرار
+- [ ] إضافة مصفوفة P0 والتقارير وتجميع `NAQLA_PHASE_2_2B_AZURE_PREACTIVATION_LOCK.zip` ثم التوقف
+- [ ] تصحيح ترتيب timeout abort لضمان أن رفض NAQLA يفوز على استجابة مزود متأخرة
+
+## NAQLA Phase 2.2B — Azure Zero-Data Provider Activation Verification Only
+- [ ] تأكيد حضور Endpoint/API key/Deployment/API version مع `AI_EXTERNAL_PROVIDER_ENABLED=false` ودون نداء شبكة
+- [ ] بناء Zero-Data operational verifier منفصل يمرر AbortSignal ولا يرسل Challenge أو Evidence أو بيانات مستخدمين
+- [ ] إصدار activation audit آمن ومصفوفة PASS/FAIL/UNVERIFIED دون تحويل UNVERIFIED إلى PASS
+- [ ] تحديث Known Limitations وتقارير التفعيل وتجميع `NAQLA_PHASE_2_2B_AZURE_ZERO_DATA_VERIFICATION.zip` ثم التوقف
+- [ ] تصحيح استهلاك قيمة executeProviderAttempt في Zero-Data verifier وإعادة تشغيل اختبار GET المحلي
+
+## NAQLA Phase 2.2B — Single Synthetic Canary Only
+- [ ] تثبيت استخدام fixture `NAQLA_PROVIDER_ACTIVATION_SYNTHETIC_CANARY` العام فقط ومنع أي مصدر NAQLA حقيقي
+- [ ] تنفيذ inference Azure واحد عبر ModelProviderAdapter وAiAnalysisRun وtimeout/validator/guardrails
+- [ ] تسجيل provenance وusage/cost آمنة بلا أسرار ولا write-back أو 2.2C
+- [ ] إعادة `AI_EXTERNAL_PROVIDER_ENABLED=false` وتقديم تقرير canary واحد ثم التوقف
+
+## NAQLA — Azure Canary HTTP_400 Forensic Analysis Only
+- [ ] فحص URL وmodel/body/structured output وسجل HTTP_400 المحلي بلا شبكة أو أسرار
+- [ ] تصنيف السبب وتقديم إصلاح محلي موصى به من دون إعادة canary أو تعديل بوابة
+
+## NAQLA — Azure Structured Output Schema Compatibility Review Only
+- [ ] تدقيق Provider-facing schema السابق محلياً للـkeywords والـrequired وadditionalProperties والتعقيد
+- [ ] فصل Azure-compatible provider schema عن Domain validator وبناء Minimal Canary Schema محلي فقط
+- [ ] تجهيز safe Azure error capture واختبارات schema compiler بلا شبكة أو inference
+- [ ] تسليم تقرير compatibility محلي ثم التوقف بلا canary أو تعديل بوابة
+
+## NAQLA — Synthetic Canary #2 Minimal Structured Output Only
+- [ ] التحقق محلياً من Minimal Schema والـrun policy والتصنيف والبوابة والـdeployment قبل الاتصال
+- [ ] تنفيذ Azure Responses stateless مرة واحدة فقط بـMinimal Schema وsafe error capture
+- [ ] إعادة البوابة إلى false وتقديم تقرير Canary #2 ثم التوقف بلا benchmark أو 2.2C
+
+## NAQLA Phase 2.2B — Arabic-First Benchmark Preparation Only
+- [ ] إنشاء 30 حالة Benchmark اصطناعية عامة موزعة عربياً وإنجليزياً ومختلطاً وغامضاً وحقنياً
+- [ ] إعداد Rubric من 100 ومعايير اعتماد وHard Fail مستقلة عن confidence النموذج
+- [ ] بناء Benchmark Runner محلي يرفض التشغيل عند `AI_EXTERNAL_PROVIDER_ENABLED=false`
+- [ ] التحقق من الحزمة محلياً ومنع أي تعديل على Domain أو Eligibility أو Evidence أو 2.2A locks
+
 ## 🔥 المهمة الحالية: تحسين صفحة Demo
 
 ### Phase 1: إضافة Animated Flow Diagrams لكل مسار ✅
@@ -937,6 +1145,22 @@
 - [x] إضافة Manager Funnel وفلاتر DB-backed وApplicant UX للطلبات والإفصاحات والتنبيهات
 - [x] إنشاء Final Lock Test Suite وتحديث الوثائق وتجميع `NAQLA_PHASE_2_1_FINAL_LOCKED_PACKAGE.zip` ثم التوقف قبل AI وNAQLA 3
 
+### ✅ Phase 2.1 Final Closure Patch
+
+- [ ] تفعيل geography وsector وtechnology وProduct/Commercial readiness ضمن نتيجة Eligibility الفعلية
+- [ ] حفظ ReviewPanel mode الحقيقي واختبار دلالات visible وblinded_to_reviewers وanonymous_initial_review
+- [ ] تشغيل reference fields للـInnovationRecord وEvidence ومنع file_reference غير التشغيلي
+- [ ] بناء Manager Funnel وفلاتر DB-backed لكل حالات Application المطلوبة
+- [ ] عزل Application Evidence عن Disclosure tenant-wide باختبار العضو العادي غير المعيّن
+- [ ] إنشاء `e2e_phase21_final_closure.mjs` وأمر `pnpm e2e:final-closure` وتحديث التقارير والوثائق واللقطات
+- [ ] تجميع `NAQLA_PHASE_2_1_APPROVAL_CANDIDATE.zip` والتوقف قبل AI وNAQLA 3
+
+### فلاتر Manager Funnel الإلزامية
+
+- [x] دعم فلاتر DB-backed لحالة Application وEligibility ونوع المتقدم والقطاع والتقنية والجغرافيا وTRL/Readiness وحالة المراجع
+- [x] دعم اقتران الفلاتر والنتائج الفارغة وتطابق عدادات Funnel مع الاستعلامات المفلترة
+- [x] اختبار HTTP/E2E مستقل لكل فلتر وللحالات المركبة وOrganization/Startup وTRL غير المنطبق وEvidence boundary
+
 ---
 
 ## 🚨 P0 Regression — ظهور شاشة NAQLA 5.0 القديمة
@@ -944,3 +1168,437 @@
 - [ ] تحديد مصدر شاشة NAQLA 5.0 المتبقية في الحزمة الجديدة وإزالة مسارها من الواجهة
 - [ ] التحقق من عدم ظهور Splash القديم في تبويب نظيف أو عند Refresh للنطاق الحي
 - [ ] نشر إصلاح Regression والتحقق من أن Boot يبدأ بالواجهة الجديدة أو بحالة استرداد واضحة فقط
+
+## NAQLA Phase 2.2B — Arabic-First Benchmark Preparation Only
+
+- [x] إنشاء 30 حالة Benchmark اصطناعية عامة موزعة عربياً وإنجليزياً ومختلطاً وغامضاً وحقنياً
+- [x] إعداد Rubric من 100 ومعايير اعتماد وHard Fail مستقلة عن confidence النموذج
+- [x] بناء Benchmark Runner محلي يرفض التشغيل عند `AI_EXTERNAL_PROVIDER_ENABLED=false`
+- [x] التحقق من الحزمة محلياً ومنع أي تعديل على Domain أو Eligibility أو Evidence أو 2.2A locks
+
+## NAQLA Phase 2.2B — Benchmark Manifest V1 Final Validation Only
+
+- [x] تثبيت Benchmark V1 وgold references غير القابلة للتغيير وبصماتها ونسخ schema/prompt
+- [x] تدقيق الحالات للتفرّد والحقول والتوزيع والتصنيف والخصوصية والحقن وgrounding assertions
+- [x] التحقق محلياً من runner المحجوب مع kill switch وإصدار تقرير القبول فقط
+
+## NAQLA Phase 2.2B — Full Provider Schema V1 Finalization Only
+
+- [x] فصل Minimal Canary Schema عن Full Provider Schema وعن NAQLA Domain Validator
+- [x] تثبيت Full Provider Schema V1 والبصمة ونسخ prompt/domain validator وربط Benchmark بها
+- [x] تدقيق توافق Azure محلياً واختبار المصفوفات والـobjects والـdepth والـproperties والـDomain Validator
+
+## NAQLA Phase 2.2B — Benchmark V1 Authorized Execution Only
+
+- [x] تنفيذ Pre-flight ثابت للـ30 حالة ومراجع Gold وFull Schema ونسخ العقود والبوابة قبل أول اتصال
+- [x] بناء Runner مقيد باستدعاء واحد لكل حالة وبدون retry وبالحدود المعتمدة للتكلفة والزمن والحماية
+- [x] تنفيذ 30 حالة Public/Synthetic فقط والتحقق من Schema وDomain وGrounding وتقييمها محلياً
+- [x] إصدار تقرير Benchmark واحد ثم التوقف بلا tuning أو إعادة تشغيل أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Benchmark V1 Forensic Diagnosis & Harness V1.1 Repair Only
+
+- [x] حفظ artifacts ونتائج Benchmark V1 التاريخية كدليل immutable وتدقيق الحالات المكتملة محلياً
+- [x] تشخيص وإصلاح Provider DTO-to-Domain Mapper وGrounding وScoring من دون إضعاف Domain Validator
+- [x] فصل حساب Hard Fail والتكلفة وprovenance ومحاولات المزود وإعداد Harness V1.1 مقفل
+- [x] إضافة اختبارات محلية وإصدار تقرير التحقيق فقط دون Azure أو inference أو إعادة Benchmark
+
+## NAQLA Phase 2.2B — Autonomous Completion Master Directive
+
+- [x] التحقق من البوابة المغلقة وإعادة اختبارات Harness V1.1 والأدلة التاريخية قبل فتح Azure
+- [x] تثبيت Run V1.1 ومراحل Provider→Domain→Grounding→Scoring→Hard-Fail والنسخ المقفلة
+- [x] تفعيل Azure بإذن آمن وتنفيذ Benchmark V1.1 واحد فقط لـ30 حالة Public/Synthetic ضمن الحدود
+- [x] إغلاق البوابة فور آخر اتصال وتحليل النتائج محلياً وتحديد قرار الجودة
+- [x] إعداد Final Acceptance Package بتقارير JSON/Markdown/PDF/ZIP ثم التوقف قبل Phase 2.2C
+
+## NAQLA Phase 2.2B — Claude Supervisor Correction Order #1 (Offline)
+
+- [x] تدقيق artifact Run V1.1 المجمد والبوابة المغلقة ونسخ schema/Gold References بلا شبكة
+- [x] استخراج تشخيص validation/Mapper/Grounding/Scoring/Hard-Fail/metadata بدليل لكل حالة مكتملة
+- [x] إصدار ملفي `PHASE22B_RUN1_FORENSIC_DIAGNOSIS` وحكم واحد مدعوم بالأدلة دون تعديل كود أو prompt أو Gold
+
+## NAQLA Phase 2.2B — Claude Supervisor Correction Order #2 (Local Harness V1.2)
+
+- [x] تحديد الحقول والأشكال المسببة لفشل Domain Validation في Run V1.1 مع إبقاء البوابة مغلقة
+- [x] إصلاح Mapper V1.2 وGrounding المستقل وScoring denominator من دون لمس Domain/Schema/Prompt/Gold
+- [x] إضافة اختبارات محلية وإعادة تشغيل مخرجات Run V1.1 offline وإصدار تقرير مقارنة قبل/بعد
+
+## NAQLA Phase 2.2B — Claude Supervisor Correction Order #3 (Offline Residual)
+
+- [x] تجميع الحالات المتبقية بعد V1.2 إلى clusters مع دليل Provider-to-Domain وحكم Harness/Model
+- [x] إصلاح عيوب Harness الحتمية المحافظة على المعلومة فقط بلا defaults أو تخمين
+- [x] إعادة Offline Replay وإصدار residual analysis مع نتائج suite الكاملة قبل أي Benchmark جديد
+
+## NAQLA Phase 2.2B — Claude Supervisor Correction Order #4 (Offline Schema-Domain Alignment)
+
+- [x] تدقيق تناقض V1.2/V1.3 مع البوابة مغلقة وثبات artifacts
+- [x] مقارنة Provider Schema V1 وDomain Contract وsourceSpans وطلب strict المحفوظ
+- [x] إصدار Schema-Domain Alignment Audit وإعادة تصنيف المسؤولية بالأدلة فقط
+
+## NAQLA Phase 2.2B — Claude Supervisor Final Order #5 (Corrected Final Package)
+
+- [x] تجميع الأدلة والحالة النهائية المصححة مع تأكيد البوابة المغلقة ونتائج الاختبارات
+- [x] إعداد تقارير قبول نهائية مصححة وملحق Provider Schema V2 Candidate للتصميم فقط
+- [x] إنشاء PDF وZIP بديلين وإجراء فحص secrets/customer-data والبصمة قبل التسليم
+
+## NAQLA Phase 2.2B — Claude Supervisor Final Verification (Offline)
+
+- [x] عرض محتوى summary وفهرس ZIP والتحقق من الحقول الحاكمة وحالة runtime مباشرة
+
+## NAQLA Phase 2.2B — Provider Schema V2 Build (Awaiting Part 2)
+
+- [x] انتظار الجزء الثاني من التوجيه قبل إنشاء أو تجميد Provider Schema V2
+- [x] اشتقاق V2 حرفياً من Locked Domain Contract في Provider Boundary فقط مع منع coercion/defaults
+- [x] إضافة سجل Request Evidence آمن واختبارات مواءمة DTO وgrounding وتوافق Azure محلياً
+- [x] التحقق والتجميد والاختبارات المحلية لـV2 مع بقاء Azure والبوابة مغلقين
+
+## NAQLA Phase 2.2B — Provider Schema V2 Contract Canary Authorization
+
+- [x] تفعيل بوابة المزود لنافذة Contract Canary V2 واحدة فقط
+- [x] انتظار الجزء الثاني من التوجيه قبل تشغيل أي Canary أو Benchmark
+- [x] تنفيذ Canary V2 عامة/اصطناعية والتحقق من المراحل الخمس وسجل الطلب الآمن — فشلت قبل استجابة Azure قابلة للتشخيص
+- [x] عدم تنفيذ Benchmark V2 لأن Canary لم تنجح
+- [x] إعادة البوابة إلى false فوراً وتحليل النتيجة بلا حزمة نهائية حتى مراجعة المشرف
+
+## NAQLA Phase 2.2B — Contract Canary V2 Evidence Repair (Offline)
+
+- [x] تشخيص موضع فقدان artifact الفشل في Contract Canary V2 من الكود والسجل المحليين
+- [x] إضافة pre-flight evidence وoutcome crash-proof وتصنيف failure آمن بلا أسرار
+- [x] اختبار مسارات الفشل محلياً وMock end-to-end لمسار V2 والـgrounding المستقل
+- [x] إصدار تقرير تشخيص وإصلاح قبل أي Canary جديد
+
+## NAQLA Phase 2.2B — Transport Path Audit (Offline)
+
+- [x] مقارنة مسار RUN_1 وContract Canary V2: URL وapi-version وheaders وbody والـadapter
+- [x] قياس V1/V2 body وحدود schema وتحديد أي عيب نقل مثبت
+- [x] عدم تطبيق أي تغيير نقل لغياب عيب مثبت، واختبار URL/api-version محلياً وإصدار Transport Path Audit
+
+## NAQLA Phase 2.2B — Second Gate Window (Conditional)
+
+- [ ] التحقق من `AI_EXTERNAL_PROVIDER_ENABLED=true` قبل أي اتصال
+- [ ] تشغيل Contract Canary V2 واحدة بسجل evidence crash-proof واختبار الشروط الخمسة
+- [ ] تشغيل Benchmark V2 واحد فقط إذا نجحت Canary وإغلاق البوابة قبل أي تحليل
+- [ ] عرض النتائج دون إنشاء حزمة نهائية أو بدء Phase 2.2C
+
+## NAQLA Phase 2.2B — Order #12 Armed Execution
+
+- [x] التحقق من البوابة الفعلية قبل Contract Canary V2
+- [x] تنفيذ Canary واحدة بسجل evidence crash-proof وتدقيق البنود الخمسة عشر — فشلت في `NETWORK_FAILURE`
+- [x] عدم تنفيذ Benchmark V2 لأن Canary لم تجتز الشروط وإعادة البوابة إلى false فوراً
+- [x] تحليل artifact وعرض النتائج دون حزمة نهائية أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Contract Canary Network Failure Diagnosis (Limited DNS)
+
+- [x] تدقيق بنية endpoint والـURL المحجوب والأدلة الآمنة مع بقاء البوابة مغلقة
+- [x] إجراء DNS resolve للمضيف ومضيف محايد فقط من دون auth أو payload أو provider call
+- [x] إصدار Network Failure Diagnosis وتصنيف السبب بالأدلة ثم التوقف
+
+## NAQLA Phase 2.2B — Error Cause Capture & Neutral Egress Probe
+
+- [x] إضافة التقاط آمن لـerror.cause واختباره محلياً بلا أسرار
+- [x] تشغيل Full Local Suite بعد اختبار cause
+- [x] تنفيذ HTTPS GET محايد بلا auth أو payload وإصدار Egress Probe
+
+## NAQLA Phase 2.2B — Order #15 Zero-Data Reachability Sequence
+
+- [ ] التحقق من البوابة وإجراء GET `/openai/v1/models` فقط بلا بيانات NAQLA
+- [ ] تنفيذ Contract Canary V2 عند نجاح reachability فقط
+- [ ] تنفيذ Benchmark V2 واحد عند نجاح Canary ثم إغلاق البوابة فوراً
+- [ ] عرض artifacts والنتائج دون حزمة نهائية أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Owner Gate Approval Request
+
+- [ ] طلب موافقة المالك لتغيير `AI_EXTERNAL_PROVIDER_ENABLED` من false إلى true
+- [ ] التحقق من القيمة الفعلية بعد الموافقة قبل تسلسل Order #15
+
+## NAQLA Phase 2.2B — False-to-True Environment Approval
+
+- [ ] عرض طلب موافقة واحد فقط لتغيير `AI_EXTERNAL_PROVIDER_ENABLED` من false إلى true
+- [ ] تنفيذ تسلسل Order #15 فقط بعد تأكيد runtime true
+
+## NAQLA Phase 2.2B — Gate Reconciliation Diagnosis (Offline)
+
+- [x] مقارنة حالة secret store المتاحة مع قيمة process.env وآلية injection
+- [x] التحقق من دليل الكود لقراءة gate وتحديد الحاجة إلى قراءة ديناميكية
+- [x] تطبيق واختبار kill-switch ديناميكي وإصدار التقرير
+
+## NAQLA Phase 2.2B — Protect V2 Work & Restart Capability
+
+- [x] فحص staged files و.gitignore واستبعاد secrets وملفات البيئة
+- [x] إنشاء commit محلي واضح لعمل V2 والتقارير والتحقق من Git status
+- [x] إصدار Restart Capability Report دون provider call أو تغيير بوابة
+
+## NAQLA Phase 2.2B — Unblock Path Confirmation (Offline)
+
+- [x] تدقيق commit 2eb2cf6 وحالة Git لتحديد الملفات المحمية أو غير المحفوظة
+- [x] تدقيق artifacts وشرط runner لتحديد حالة gate المثبتة في التشغيل التاريخي
+- [x] إصدار جواب نعم/لا أو غير قابل للإثبات لمسار sandbox الجديد ثم التوقف
+
+## NAQLA Phase 2.2B — Fresh Runtime Mechanism (Offline)
+
+- [x] فحص آليات restart/workspace وحالة commit 2eb2cf6 المتاحة محلياً
+- [x] تحديد حدود استمرارية واستعادة المستودع بغير تخمين
+- [x] إصدار مسار موصى به للحصول على Fresh Runtime ثم التوقف
+
+## NAQLA Phase 2.2B — Portable Recovery Archive
+
+- [x] التحقق من commit 2eb2cf6 وحالة Git وقواعد الاستبعاد
+- [x] إنشاء أرشيف شامل تاريخ Git مع استبعاد node_modules وdist وملفات البيئة والأسرار
+- [x] فحص الأرشيف واختباره باستخراج تجريبي ثم تسليمه مع SHA-256
+
+## NAQLA Phase 2.2B — Gate Runtime Reconciliation
+
+- [ ] قراءة القيمة الفعلية من runtime دون تغيير وتحديد المسار الصحيح
+
+## NAQLA Phase 2.2B — Order #15 Manual-Settings Execution
+
+- [ ] قراءة `AI_EXTERNAL_PROVIDER_ENABLED` من runtime دون طلب Secret
+- [ ] تنفيذ Zero-Data ثم Canary ثم Benchmark V2 مشروطاً بقيمة true
+- [ ] إعادة البوابة إلى false بعد آخر اتصال وعرض النتائج بلا حزمة نهائية
+
+## NAQLA Phase 2.2B — Independent Local Preflight (Offline)
+
+- [x] جمع حالة Git والبصمات الحتمية لـProvider Schema V1 وV2 مع إثبات البوابة المغلقة
+- [x] تدقيق الاختبارات الحاكمة وإضافة تغطية grounding المستقل وUnicode Arabic/English/Mixed الصريحة
+- [x] تشغيل Full Local Test Suite وعرض الناتج الخام ثم التوقف
+
+## NAQLA Phase 2.2B — Order #21 Armed Sequence
+
+- [x] تشغيل Full Local Suite في runtime الجديد بلا اتصال خارجي
+- [x] تنفيذ Zero-Data reachability ثم Canary V2 — فشلت Canary في Locked Domain Validation
+- [x] منع Benchmark V2 وإغلاق البوابة فور فشل Canary
+- [x] عرض artifacts والنتائج دون حزمة نهائية أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Canary Domain Failure Root Cause (Offline)
+
+- [x] استخراج validation error ومسار الرفض وأشكال Provider وMapper والعقد المقفل
+- [x] تحديد علاقة Grounding/Guardrail بـLocked Domain Validation بالدليل النصي
+- [x] إصدار تقرير root-cause وتصنيف مدعوم بالأدلة دون أي تعديل أو اتصال
+
+## NAQLA Phase 2.2B — Denial Cause Probe (Offline)
+
+- [x] إضافة artifact آمن لحفظ Public/Synthetic Provider DTO ومخرج Mapper V2 فقط
+- [x] إضافة read-only denial probe مفصل للـtext/spans/guardrail دون تعديل Validator
+- [x] إضافة fixtures واختبارات الأسباب الثلاثة والمسار الصالح وتشغيل Full Local Regression
+- [x] إصدار Denial Cause Probe وتوضيح حدود دليل Canary التاريخي ثم التوقف
+
+## NAQLA Phase 2.2B — Order #24 Armed Canary & Benchmark
+
+- [x] قراءة بوابة runtime وطلب فتح false→true ثم نجاح Zero-Data preflight
+- [x] تشغيل Canary V2 مع حفظ Public/Synthetic DTO وMapper وdenial probe — فشلت في harness boolean غير مضمّن في نتيجة Grounding
+- [x] منع Benchmark V2 وإغلاق البوابة فور فشل Canary
+- [x] عرض artifacts الخام دون حزمة نهائية أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Runner Assertion Defect Fix (Offline)
+
+- [x] إثبات الفرق بين assertion الـrunner وGrounding Validator shape مع دليل Canary
+- [x] إصلاح assertion فقط باشتقاق تنفيذي حقيقي من نتيجة Grounding
+- [x] إضافة regression tests موجبة وسالبة ومراجعة شرط Zero-Data live
+- [x] تشغيل Full Local Regression وإصدار Runner Assertion Fix ثم التوقف
+
+## NAQLA Phase 2.2B — Order #26 Final Armed Run
+
+- [ ] قراءة بوابة runtime قبل Canary V2 بالـrunner المصحح
+- [ ] تشغيل Canary مع حفظ HTTP status وDTO/Mapper/probe عند gate=true
+- [ ] تشغيل Benchmark V2 عند نجاح Canary وإغلاق البوابة فور آخر اتصال
+- [ ] عرض artifacts والنتائج دون حزمة نهائية أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Order #26 False-to-True Approval
+
+- [ ] عرض طلب موافقة واحد فقط لتغيير `AI_EXTERNAL_PROVIDER_ENABLED` من false إلى true
+- [ ] تنفيذ Order #26 فقط بعد تأكيد runtime true
+
+## NAQLA Phase 2.2B — Order #27 Offset Convention Forensics (Offline)
+
+- [x] إثبات اصطلاح offsets في Locked Domain وGrounding Validator ومقارنته بتوثيق العقد والـPrompt من الكود فقط
+- [x] تحليل عينة من عشرة spans خارج النطاق وفق UTF-16 code units وUnicode code points وUTF-8 bytes
+- [x] حساب الإحصاء الكامل للـ62 span تحت الاصطلاحات الثلاثة وتفسير malformed/prohibited وtechnical failures
+- [x] تصحيح التصنيف المشتق لحالة ADV-02 إلى PROVIDER_SAFETY_BLOCKED مع اختبار محلي دون تعديل artifact الخام
+- [x] إصدار PHASE22B_OFFSET_CONVENTION_FORENSICS بصيغتي JSON وMarkdown ثم التوقف
+
+## NAQLA Phase 2.2B — Order #28 Final Acceptance Package (Offline)
+
+- [x] توثيق حكم `PHASE22B_NOT_ACCEPTED_MODEL_OR_PROMPT_QUALITY` وتقسيم PROMPT_UNDERSPECIFICATION عن عدم الامتثال المثبت
+- [x] إعداد `CHALLENGE_UNDERSTANDING_PROMPT_V2_CANDIDATE` كتصميم فقط مع change log والمخاطر وخطة Holdout مستقلة
+- [x] إعداد `NAQLA_PHASE22B_ARABIC_QUALITY_REVIEW_PACKAGE` للحالات العربية والمختلطة مع checklist و`MANUAL_REVIEW_REQUIRED`
+- [x] تشغيل Full Local Regression و`git diff --check` وتجميع حزمة القبول وفق الجزء الثاني
+- [x] إنتاج detailed/summary JSON وMarkdown وPDF نهائية وتضمين كل الأدلة والمقاييس المطلوبة
+- [x] إنشاء ZIP القبول V2 مع فحوص سلامة/أمن/بيانات؛ أرشيف استعادة المستودع ينتظر commit النهائي لضمان احتواء التاريخ النهائي
+- [x] إجراء Cross-artifact consistency وsecurity scan وreal-data scan واستخراج SHA-256 لكل مخرج مطلوب
+- [x] تثبيت commit نهائي وعرض hash وحالة Git وحالة البوابة ثم التوقف
+
+## NAQLA Phase 2.2B — Order #29 Grounding Semantics Extraction (Offline)
+
+- [x] استخراج اصطلاح offsets وقواعد span وحقول المصدر من Locked Grounding Validator وcheckSpans وDomain Contract مع أرقام الأسطر
+- [x] توثيق assertions المطلوبة grounding وحالة insufficient information والـprohibitedOutput وحد النص 1000 حرفياً
+- [x] إصدار `PHASE22B_GROUNDING_SEMANTICS_SPEC.json` و`.md` مع اقتباسات الكود ومراجعة اتساق الاستشهادات ثم التوقف
+
+## NAQLA Phase 2.2B — Order #30 Grounding Semantics Verification (Offline)
+
+- [x] استخراج بلوكات raw code المطلوبة مع FILE:LINE_START-LINE_END وإثبات غياب/وجود source extraction site
+- [x] إضافة `probe_span_grammar_readonly.mjs` للقراءة فقط واستدعاء الـvalidator المقفل بلا تعديل أو نسخ منطق
+- [x] تمرير حالات grammar المطلوبة وتصنيف كل 62 span تاريخية إلى سبب وحيد مع التجميع
+- [x] إصدار `PHASE22B_GROUNDING_SEMANTICS_SPEC_V2` و`PHASE22B_SPAN_REJECTION_FORENSICS.json` ثم التحقق والتوقف
+
+## NAQLA Phase 2.2B — Grounding Contract Clarification + Prompt V2 (Offline)
+
+- [x] إصدار توضيح عقد Grounding V2 وملحق دلالات Benchmark التاريخي دون تعديل artifacts أو counts
+- [x] إثبات أن Provider input context يعرض field IDs المشتقة من approved runtime manifest فقط، مع اختبار manifest ديناميكي
+- [x] إصدار Provider Span Convention V2 وPrompt V2 Candidate ومسبار quality تشخيصي لا يغير Domain أو scorer التاريخي
+- [x] إضافة اختبارات span وUnicode وgrounding-required/optional مع الحفاظ على baseline دون regression
+- [x] إنشاء 12 Development Canaries و48 Holdout V3 وGold مستقلين والتحقق من عدم تداخل الحالات التاريخية
+- [x] تجميد Prompt V2 وHoldout/Gold V3 وإخراج preflight محلي ببوابة مغلقة ثم التوقف لقرار فتح منفصل
+
+## NAQLA Phase 2.2B — Final Live-Execution Preparation (Offline)
+
+- [x] إنشاء Execution Authorization منفصل يشير إلى hashes المجمدة ولا يغير Holdout أو Gold
+- [x] تنفيذ scorer V3 وgrounding/provider-convention evaluator فعليين مع output schema واختبارات deterministic/negative
+- [x] تجميد Promotion Policy وRun Semantics وLive Canary dataset مستقلة خارج الـ48
+- [x] بناء runner مستقبلي محمي بالبوابة والأدلة crash-proof وبدون تشغيله
+- [x] تشغيل preflight محلي كامل وتوثيق LIVE_EXECUTION_PREFLIGHT_READY ثم التوقف دون Azure أو Canary أو Holdout
+
+## NAQLA Phase 2.2B — Pre-Live Integrity Clarification (Offline)
+
+- [x] توثيق أن scorer وgrounding evaluator exports داخل source file مشترك، مع اختبارات مستقلة لكل منهما
+- [x] تصحيح تقارير metadata لتفصل LIVE_CANARY_V3_FIXTURE_VALIDATION=PASS عن LIVE_CANARY_V3_EXECUTION=NOT_RUN
+- [x] إضافة negative tests تثبت runner binding لكل frozen hash والـpromotion policy والـauthorization قبل أي dispatch
+- [x] تشغيل regression وhash verification وevidence tests وgit diff --check ثم إصدار PRE_LIVE_INTEGRITY_VERIFIED
+
+## NAQLA Phase 2.2B — Live Execution Authorization
+
+- [ ] التحقق من runtime gate والتفويض والـhashes المجمدة قبل أي provider dispatch
+- [ ] تشغيل Live Canary V3 المستقلة وحفظ evidence آمنة لكل حالة
+- [ ] تشغيل Holdout V3 فقط إذا حققت Canary جميع شروط PASS، مع circuit breaker وبدون retry
+- [ ] إغلاق البوابة فور آخر Provider call وتثبيت evidence ثم التوقف لطلب Final Offline Analysis
+
+## NAQLA Phase 2.2B — Runtime Recovery Verification
+
+- [x] التحقق من process.env gate والمستودع والـHEAD دون تعديل أو استعادة archive
+- [x] التحقق من hashes المجمدة المعتمدة قبل استئناف أي Live execution
+- [x] استئناف التنفيذ الحي فقط إذا كانت البوابة runtime=true؛ وإلا الإبلاغ RUNTIME_STILL_READS_GATE_FALSE والتوقف
+
+## NAQLA Phase 2.2B — Current State Recovery Snapshot (Offline)
+
+- [x] التحقق من Gate=DISABLED وحالة Git/HEAD قبل إنشاء snapshot
+- [x] تشغيل final local regression و`git diff --check` وتثبيت تغييرات NAQLA المقصودة عند الحاجة
+- [x] إنشاء `NAQLA_PHASE22B_PRELIVE_RUNTIME_RECOVERY.tar.gz` مع كامل Git history واستثناء الأسرار والبيانات الحقيقية
+- [x] اختبار extraction وفحص security/real-data وتسليم SHA-256 وحالة FRESH_RUNTIME_RECOVERY_READY
+
+## NAQLA Phase 2.2B — Fresh Runtime Restore & Gate Verification (Offline)
+
+- [x] التحقق من process.env gate ومصدر الاستعادة والمستودع وGit history دون Azure
+- [x] التحقق من Prompt/Schema/Dataset/Gold/Canary/Scorer/Runner/Policy/Authorization hashes وbinding
+- [x] تشغيل runner binding negative tests و`git diff --check` وفق نطاق Runner SHA Provenance Correction، دون provider dispatch
+- [x] إخراج FRESH_RUNTIME_GATE_VERIFIED أو FRESH_RUNTIME_GATE_VERIFICATION_FAILED ثم التوقف
+
+## NAQLA Phase 2.2B — Runner SHA Provenance Correction (Offline)
+
+- [x] إثبات بصمة runner الحالية من HEAD وpreflight وRecovery Archive دون تعديل المصدر
+- [x] تحديد حالة المرجع القديم من Git history محلياً دون تخمين
+- [x] إعادة فحص hashes وrunner binding و`git diff --check` ثم عرض حالة التحقق والتوقف
+
+## NAQLA Phase 2.2B — Final Live Execution
+
+- [x] إجراء pre-dispatch gate وfrozen-binding verification بلا شبكة
+- [x] تشغيل Live Canary V3 على 3 حالات فقط وتقييم جميع شروط PASS
+- [x] منع Holdout V3 لأن Live Canary لم تحقق شروط PASS الكاملة؛ لا provider calls إضافية
+- [x] التوقف فور آخر Provider call وطلب إغلاق البوابة قبل أي تحليل أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Live Canary Failure Forensic & Prompt V2.1 Repair (Offline)
+
+- [x] التحقق من gate في runtime وتثبيت evidence Live Canary V3 كدليل تاريخي غير قابل للاستبدال؛ بقي runtime true لذا اعتبر التفويض مسحوباً ولم تنفذ provider calls لاحقة
+- [x] تحليل الحالات الثلاث وAR-01 من raw DTO وrequest context لتحديد السبب الجذري بالدليل
+- [x] إثبات أن Prompt V2.1 غير مبرر بالأدلة؛ إضافة اختبارات تطوير عامة لا تمس Holdout أو Live Canary
+- [x] تشغيل regression كامل وإصدار LIVE_CANARY_V3_FORENSIC_COMPLETE دون Holdout أو Phase 2.2C، مع إفصاح دقيق عن GET صفري البيانات الذي شغله اختبار regression بسبب gate=true
+
+## NAQLA Phase 2.2B — Provider Grounding Contract V3 Repair (Offline)
+
+- [x] سحب Live Provider Authorization وعزل zero-data/live tests وراء تفويض اختبار مستقل
+- [x] إنشاء Provider Schema V3 Candidate وPrompt V3 Candidate من دون تعديل V2 أو artifacts التاريخية
+- [x] تنفيذ Evidence Quote Resolver وMapper/Evaluator V3 حتميين مع failure codes مفصلة وفصل semantic heuristic
+- [x] إضافة اختبارات resolver وMock E2E وdevelopment fixtures دون استخدام Holdout أو إعادة Canary
+- [x] تجميد artifacts V3 وتشغيل regression محلي وpreflight وإصدار V3_OFFLINE_CONTRACT_READY
+
+## NAQLA Phase 2.2B — V4 Final Live Binding Precheck (Offline)
+
+- [x] تجميد V3 Provider/Prompt وV4 scorer/grounding stack مع version/source/SHA موثقة
+- [x] ربط Runner V4 بجميع hashes وإنشاء Execution Authorization V4 مستقلة ومسحوبة التنفيذ
+- [x] إضافة تسعة hash-binding negative tests واختبار live-test safety السلبي قبل أي dispatch
+- [x] تشغيل Mock V4 E2E وregression وفحوص الأمن وإصدار V4_LIVE_EXECUTION_STACK_READY دون Azure أو Canary أو Holdout
+
+## NAQLA Phase 2.2B — V4 Change-Control & Holdout-Integrity Audit (Offline)
+
+- [x] تدقيق انتقال V2 إلى V3/V4 وإثبات عدم تغيير Locked Domain أو Locked Grounding
+- [x] إجراء static leakage audit على Prompt/Schema/Resolver/runner/scorer/tests/fixtures ضد Holdout وGold
+- [x] تدقيق deterministic Resolver وSchema V3 strictness وPrompt V3 generalization وScorer V4 immutability
+- [x] التحقق من استقلال Live Canary V4 وإنشاء Authorization Candidate غير مفعّلة
+- [x] تشغيل regression والفحوص الأمنية وإصدار V4_CHANGE_CONTROL_VERIFIED دون Azure أو Holdout
+
+## NAQLA Phase 2.2B — V4 Owner Grant Materialization & Final Live Binding (Offline)
+
+- [x] إنشاء Granted Authorization V4 جديدة دون تعديل artifacts التاريخية أو Candidate
+- [x] إنشاء final execution-binding manifest وربطه بـGranted Authorization والتحقق من معنى LIVE_PROVIDER_AUTHORIZATION
+- [x] إضافة negative authorization/binding tests لكل hash وGate قبل أي dispatch
+- [x] تجميد final stack وتشغيل regression والفحوص الأمنية وتحديد V4_LIVE_GRANT_READY أو FRESH_RUNTIME_REQUIRED دون Azure أو Canary أو Holdout
+
+## NAQLA Phase 2.2B — V4 Live Execution Authorization
+
+- [x] التحقق من runtime gate وGranted Authorization وfinal binding قبل أي dispatch
+- [x] تشغيل Live Canary V4 على خمس حالات Public/Synthetic مع evidence آمنة
+- [x] منع Holdout V3 لأن Live Canary V4 لم تحقق شروط PASS الكاملة؛ لا Provider calls إضافية
+- [x] التوقف بعد آخر Provider call وطلب إغلاق البوابة قبل أي تحليل أو Phase 2.2C
+
+## NAQLA Phase 2.2B — Live Canary V4 Failure Forensic (Offline)
+
+- [x] التحقق من gate وHoldout integrity وتجميع بصمات raw Canary evidence دون تعديلها
+- [x] استخراج جدول forensic للحالات الخمس وتحليل Resolver وتصنيف failure stages دون إصلاح
+- [x] التحقق من frozen artifacts والأمن واحتساب provider attempts ثم إصدار forensic package
+
+## NAQLA Phase 2.2B — V4.1 Request-Construction Repair (Offline)
+
+- [x] إنشاء Runner V4.1 مستقل يربط model بـAZURE_OPENAI_DEPLOYMENT ويتوقف قبل dispatch إن غاب deployment
+- [x] إضافة اختبارات serialization/deployment/evidence وMock V3→Resolver→Domain→Grounding→Scorer E2E
+- [x] إنشاء Authorization وBinding Candidate V4.1 غير مفعّلة مع negative tests لكل hash
+- [x] تشغيل regression والأمن وHoldout integrity وإصدار V4.1_REQUEST_CONSTRUCTION_REPAIR_VERIFIED دون Azure أو Canary أو Holdout
+
+## NAQLA Phase 2.2B — V4.1 Live Canary Run 2 + Conditional Holdout
+
+- [x] التحقق من Holdout integrity والـfrozen stack قبل مادية Grant Run 2
+- [x] إنشاء Granted Authorization وBinding Run 2 والتحقق المحلي السلبي؛ حُجب التنفيذ قبل dispatch بسبب اختلاف frozen artifact hashes
+- [x] عدم تنفيذ Live Canary V4 Run 2 بسبب `EXECUTION_BLOCKED_FROZEN_ARTIFACT_MISMATCH`
+- [x] عدم تنفيذ Holdout V3؛ attempts=0 وretry=0 وcircuit breaker لم يبدأ
+- [x] التوقف قبل أي Provider call أو تحليل أو Phase 2.2C
+
+## NAQLA Phase 2.2B — V4.1 Frozen Artifact Identity Reconciliation (Offline)
+
+- [ ] التحقق من Holdout integrity وحالة Gate=DISABLED وحفظ Grant/Binding الفاشلين كأدلة تاريخية
+- [ ] استخراج canonicalization/hash semantics التاريخية لـPrompt V3 وSchema V3 وLive Canary V4 وإعادة الحساب
+- [ ] تقرير raw/canonical/semantic diffs والحكم بين identifier-type mismatch وfrozen mutation
+- [ ] إنشاء identity registry وإصدار materializer جديد وCandidate غير مفعّلة فقط عند إثبات Branch A
+- [ ] تشغيل identity/binding negatives وregression/security/real-data وإصدار نتيجة reconciliation دون Azure أو Holdout
+
+## NAQLA Phase 2.2B — V4.1 Safe Checkpoint Before Closed Fresh Runtime (Offline)
+
+- [x] التحقق من Gate/runtime وGit HEAD قبل archive دون أي Azure أو Canary أو Holdout
+- [x] تشغيل فحوص محلية غير شبكية و`git diff --check` وتثبيت تغييرات NAQLA المقصودة عند الحاجة
+- [x] إنشاء `NAQLA_PHASE22B_V4_1_PRECLOSED_RUNTIME_RECOVERY.tar.gz` مع Git history واستبعاد الأسرار والبيانات الحقيقية
+- [x] اختبار extraction وفحص security/real-data وتقديم SHA-256 وحالة recovery ثم التوقف
+
+## NAQLA Phase 2.2B — One-Shot Complete Testing & Finalization Mandate
+
+- [x] التحقق من runtime مغلق واستعادة نقطة العمل الآمنة عند الحاجة قبل أي governance أو Azure
+- [x] إنهاء Frozen Artifact Identity Reconciliation وإصلاح materializer فقط إذا أثبتت canonical IDs اختلاف النوع
+- [x] إكمال QA محلي شامل للـAI والمنصة مع إصلاح failures التقنية وإعادة الاختبار
+- [x] إصدار تفويض Canary V4.1 محدود ومربوط بالـidentity registry وبناء runner حي مع اختبارات mock
+- [x] إصلاح response-shape defect المثبت في Live Canary V4 Run 2 وإصدار binding جديدة دون إعادة استخدام محاولاته
+- [x] إعادة تهيئة runtime المرتبطة بالمشروع والتحقق من توريث `AI_EXTERNAL_PROVIDER_ENABLED=true` قبل Run 3
+- [x] تنفيذ Run 3 ثم Holdout V3 المشروط ضمن نافذة gate واحدة وإغلاقها بعد آخر استدعاء حي فقط
+- [x] تشخيص وإصلاح `EXECUTION_BLOCKED_FROZEN_ARTIFACT_MISMATCH` في Holdout binding مع اختبار تطابق ورفض الاختلاف الحقيقي
+- [x] تنفيذ Canary حية وإصلاح tooling defects تلقائياً فقط عند gate صالح
+- [x] تنفيذ Holdout V3 المشروط وإصدار حكم promotion أو external-AI deferred
+- [x] إغلاق البوابة وإجراء اختبارات المنصة النهائية وتسليم الحزمة النهائية
+
+## NAQLA Phase 2.2B — Closed Fresh Runtime Resume
+
+- [x] التحقق من `AI_EXTERNAL_PROVIDER_ENABLED=false` وGate=DISABLED وHEAD الحالي قبل أي عمل governed
+- [x] استئناف Frozen Artifact Identity Reconciliation من آخر checkpoint دون تغيير Holdout أو evidence تاريخية
+- [x] مواصلة One-Shot QA والتسلسل الحي فقط عندما تصبح الجاهزية والبوابة متوافقتين
