@@ -24,8 +24,21 @@
 
 ## NAQLA — تنفيذ خادمي مطلوب قبل القبول
 
-- [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA1: Innovation Record وEvidence وVersions وPassport وTRL وNext Best Action
+- [x] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA1: Innovation Record وEvidence وVersions وPassport وTRL وNext Best Action
+- [x] بناء كيانات NAQLA1 الصريحة: InnovationRecord وEvidence وImmutableVersion وPassport وReadinessGap وDeterministicAssessment
+- [x] إضافة tRPC وتفويض owner-only لكتابة السجل والأدلة والنسخ وقراءة Passport وTRL/Gaps وNext Best Action
+- [ ] إضافة اختبار تكامل NAQLA1 كامل للملكية والإصدار غير القابل للتعديل والدليل والتقييم الحتمي والجواز
+- [x] ربط لوحة NAQLA1 في `/naqla` بالكيانات والعقود الصريحة مع حالات loading/error/empty/success
+- [ ] إضافة اختبار تكاملي متسلسل لـNAQLA1: سجل ثم دليل ثم نسخة ثم تقييم ثم Passport مع TRL/Gaps/Next Best Action فعلية
+- [ ] إضافة اختبار revokeEvidence يثبت الحجب وتحديث الفجوات وNext Best Action بعد سحب التفويض
+- [ ] إنشاء اختبار NAQLA1 معزول للتخزين يمر بجميع العمليات ويثبت Passport وTRL/Gaps/Next Best Action بعد السحب دون لمس بيانات المشروع
 - [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
+- [ ] بناء إجراءات MatchRun حتمية للمطابقة المفسرة فوق طلبات المطابقة والـteaser العامة مع Factors مسجلة وبدون AI
+- [x] ربط MatchRun بطلب مطابقة محفوظ ومملوك في `matching_requests` بدلاً من `queryText` الحر فقط
+- [x] إضافة اختبار تكاملي يثبت تشغيل MatchRun من طلب محفوظ ورفض غياب الملكية أو مصدر غير teaser-only
+- [x] إضافة حالة تكاملية صريحة تستبعد listing غير `teaser_only` من مرشحي MatchRun المحفوظة
+- [x] إزالة بيانات Router المطابقة الوهمية وردود النجاح الثابتة واستبدالها بسجل طلب مطابقة وتفويضات حقيقية
+- [ ] بناء سجلات Engagement وPilot مملوكة لـNAQLA2 من Interest مقبولة وبإجراءات tRPC fail-closed
 - [ ] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
 - [ ] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
 - [x] إزالة الاعتماد المتبقي على دعوة محلية من `/naqla` أو عزلها بوضوح كعرض مستقل لا يحل محل الدعوة الخادمية
@@ -38,9 +51,12 @@
 - [x] ربط مسار NAQLA2 في `/naqla` بقراءة/إجراء listing وinterest خادميين أو إظهاره محجوباً بوضوح عند غياب التفويض
 - [x] ربط حالة NAQLA3 في `/naqla` بقراءة الأصل والمعاملة الخادميين أو إظهار الحجب الصريح
 - [ ] منع إعلان READY أو إنشاء حزمة نهائية جديدة قبل نجاح هذه البنود واختبارات الرحلة الكاملة
+- [ ] تأجيل إعادة النشر إلى ما بعد اكتمال الربط والـonboarding والاختبارات، ثم تنفيذ محاولة نشر واحدة يتبعها smoke
+- [x] استخدام migrations يدوية ضيقة فقط ومنع أي rename أو توليد Drizzle واسع غير مرتبط بكيانات NAQLA الجارية
 - [x] إضافة اختبار وصول ثابت لمساحة `/naqla` يتحقق من التسميات والتنقل بالتركيز وحالات التعطيل
 - [x] إضافة اختبار واجهة سلوكي لمساحة `/naqla` يتحقق من أسماء الوصول والتنقل بلوحة المفاتيح وحالات loading/error/empty
 - [x] إضافة اختبار سلوكي لمساحة `/naqla` يتحقق من اتجاه LTR والنصوص الإنجليزية عند تبديل اللغة
+- [x] إزالة التسميات الإنجليزية غير المقصودة من وضع RTL في لوحة الجواز والأصل والمعاملة التجارية
 - [x] إزالة المفتاح الافتراضي من مسار NAQLA3 وإغلاق عمليات blockchain غير المهيأة بدلاً من تنفيذها بقيمة مضمّنة
 
 ## NAQLA Phase 2.1 Final Closure — تحقق واجهة Manager Funnel

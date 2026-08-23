@@ -27,7 +27,7 @@ export default function Naqla2Matching() {
 
   const requestMutation = trpc.naqla2.matching.request.useMutation({
     onSuccess: (data) => {
-      toast.success(isAr ? `تم العثور على ${data.matchesFound} مطابقة` : `Found ${data.matchesFound} matches`);
+      toast.success(isAr ? `تم حفظ طلب المطابقة رقم ${data.requestId}` : `Matching request ${data.requestId} was saved`);
       setShowRequestForm(false);
     },
     onError: (error) => {

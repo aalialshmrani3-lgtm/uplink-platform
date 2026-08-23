@@ -32,10 +32,33 @@ vi.mock("@/lib/trpc", () => ({
       getBundle: { useQuery: () => ({ data: undefined, isLoading: false, isError: false }) },
       createEnergyDemo: { useMutation: () => mutation },
     },
+    naqla1Qualification: {
+      getMyRecords: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
+      getPassport: { useQuery: () => ({ data: null, isLoading: false, isError: false, refetch }) },
+      createRecord: { useMutation: () => mutation },
+      addEvidence: { useMutation: () => mutation },
+      createImmutableVersion: { useMutation: () => mutation },
+      assess: { useMutation: () => mutation },
+    },
     naqla2: {
       marketplace: {
         getApprovedIPs: { useQuery: () => ({ data: [{ id: 1, title: "Synthetic teaser", summary: "A synthetic teaser that discloses no private evidence." }], isLoading: false, isError: false }) },
         requestPurchase: { useMutation: () => mutation },
+      },
+      deterministicMatching: {
+        getMyRuns: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
+        createRun: { useMutation: () => mutation },
+      },
+      matching: {
+        getMyMatches: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
+        request: { useMutation: () => mutation },
+      },
+      engagements: {
+        getMyInterestRequests: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
+        getMyEngagements: { useQuery: () => ({ data: [], isLoading: false, isError: false, refetch }) },
+        setInterestStatus: { useMutation: () => mutation },
+        establish: { useMutation: () => mutation },
+        createPilot: { useMutation: () => mutation },
       },
     },
     naqla3: {

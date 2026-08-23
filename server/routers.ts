@@ -4,11 +4,13 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { createHash } from "node:crypto";
+import { evaluateNaqla1Qualification } from "../shared/naqla1Qualification";
 import { invokeLLM as invokeExternalModelSdk } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
 import { getDb } from "./db";
-import { userChoices, ideaJourneyEvents, ipRegistrations, naqla2InterestRequests, naqla2MarketplaceListings, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
+import { userChoices, ideaJourneyEvents, ipRegistrations, matchingRequests, naqla1DeterministicAssessments, naqla1Evidence, naqla1ImmutableVersions, naqla1InnovationRecords, naqla1Passports, naqla1ReadinessGaps, naqla2Engagements, naqla2InterestRequests, naqla2MarketplaceListings, naqla2MatchCandidates, naqla2MatchRuns, naqla2Pilots, naqla2ReviewAssignments, naqla2VettingReviews, naqla3CommercialAssets, naqla3CommercialTransactions, organizations, organizationInvitations, organizationMemberships, userActiveContexts } from "../drizzle/schema";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { analyzeIdea, validateIdeaInput, getClassificationLevel, determineSaipRecommendation, generateDevelopmentPlan, checkNaqla2Transition } from "./naqla1-ai-analyzer";
@@ -22,6 +24,23 @@ import { storagePut } from "./storage";
 function hasAffectedRow(result: unknown): boolean {
   const update = result as { affectedRows?: number; rowsAffected?: number } | undefined;
   return (update?.affectedRows ?? update?.rowsAffected ?? 0) > 0;
+}
+
+export function createDeterministicTeaserMatch(queryText: string, title: string, summary: string) {
+  const queryTerms = Array.from(new Set(queryText.toLocaleLowerCase().split(/[^a-zA-Z0-9\u0600-\u06FF]+/).filter((term) => term.length >= 3)));
+  const teaserTerms = new Set(`${title} ${summary}`.toLocaleLowerCase().split(/[^a-zA-Z0-9\u0600-\u06FF]+/).filter((term) => term.length >= 3));
+  const matchedTerms = queryTerms.filter((term) => teaserTerms.has(term));
+  const score = queryTerms.length === 0 ? 0 : Math.round((matchedTerms.length / queryTerms.length) * 100);
+  const rankBand: 'high' | 'medium' | 'low' = score >= 67 ? 'high' : score >= 34 ? 'medium' : 'low';
+  return {
+    score,
+    rankBand,
+    factors: [
+      { factorId: 'query_term_overlap', method: 'deterministic_exact_term_overlap', matchedTerms, queryTermCount: queryTerms.length, score },
+      { factorId: 'disclosure_boundary', value: 'teaser_only', status: 'allowed' },
+      { factorId: 'evidence_confidence', value: 'not_evaluated_from_teaser', status: 'limited' },
+    ],
+  };
 }
 
 export async function invokeExternalModel(...args: Parameters<typeof invokeExternalModelSdk>) {
@@ -3704,6 +3723,95 @@ Provide response in JSON format:
   // ============================================
   // NAQLA2 - IP VETTING & MARKETPLACE
   // ============================================
+  naqla1Qualification: router({
+    createRecord: protectedProcedure
+      .input(z.object({ title: z.string().min(3).max(500), problemStatement: z.string().min(12).max(20000), desiredOutcome: z.string().min(12).max(20000) }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [record] = await database.insert(naqla1InnovationRecords).values({ ownerUserId: ctx.user.id, ...input, status: 'draft' }).$returningId();
+        return { recordId: record.id, status: 'draft' };
+      }),
+
+    getMyRecords: protectedProcedure
+      .query(async ({ ctx }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        return database.select().from(naqla1InnovationRecords).where(eq(naqla1InnovationRecords.ownerUserId, ctx.user.id)).orderBy(desc(naqla1InnovationRecords.updatedAt));
+      }),
+
+    addEvidence: protectedProcedure
+      .input(z.object({ recordId: z.number().int().positive(), label: z.string().min(3).max(500), evidenceType: z.enum(['synthetic_note', 'research_reference', 'technical_description', 'prototype_note', 'other']), contentSha256: z.string().regex(/^[a-f0-9]{64}$/i) }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [record] = await database.select({ id: naqla1InnovationRecords.id }).from(naqla1InnovationRecords).where(and(eq(naqla1InnovationRecords.id, input.recordId), eq(naqla1InnovationRecords.ownerUserId, ctx.user.id))).limit(1);
+        if (!record) throw new TRPCError({ code: 'NOT_FOUND', message: 'Innovation record not found or not owned by caller' });
+        const [evidence] = await database.insert(naqla1Evidence).values({ innovationRecordId: record.id, ownerUserId: ctx.user.id, label: input.label, evidenceType: input.evidenceType, contentSha256: input.contentSha256, authorizationStatus: 'authorized' }).$returningId();
+        return { evidenceId: evidence.id, authorizationStatus: 'authorized' };
+      }),
+
+    revokeEvidence: protectedProcedure
+      .input(z.object({ evidenceId: z.number().int().positive() }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const result = await database.update(naqla1Evidence).set({ authorizationStatus: 'revoked', revokedAt: new Date().toISOString() }).where(and(eq(naqla1Evidence.id, input.evidenceId), eq(naqla1Evidence.ownerUserId, ctx.user.id), eq(naqla1Evidence.authorizationStatus, 'authorized')));
+        if (!hasAffectedRow(result)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Evidence was not authorized for revocation by caller' });
+        return { authorizationStatus: 'revoked' };
+      }),
+
+    createImmutableVersion: protectedProcedure
+      .input(z.object({ recordId: z.number().int().positive() }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [record] = await database.select().from(naqla1InnovationRecords).where(and(eq(naqla1InnovationRecords.id, input.recordId), eq(naqla1InnovationRecords.ownerUserId, ctx.user.id))).limit(1);
+        if (!record) throw new TRPCError({ code: 'NOT_FOUND', message: 'Innovation record not found or not owned by caller' });
+        const versions = await database.select({ id: naqla1ImmutableVersions.id }).from(naqla1ImmutableVersions).where(and(eq(naqla1ImmutableVersions.innovationRecordId, record.id), eq(naqla1ImmutableVersions.ownerUserId, ctx.user.id)));
+        const versionNumber = versions.length + 1;
+        const snapshotSha256 = createHash('sha256').update(JSON.stringify({ recordId: record.id, title: record.title, problemStatement: record.problemStatement, desiredOutcome: record.desiredOutcome, versionNumber })).digest('hex');
+        const [version] = await database.insert(naqla1ImmutableVersions).values({ innovationRecordId: record.id, ownerUserId: ctx.user.id, versionNumber, snapshotSha256 }).$returningId();
+        return { versionId: version.id, versionNumber, snapshotSha256 };
+      }),
+
+    assess: protectedProcedure
+      .input(z.object({ recordId: z.number().int().positive() }))
+      .mutation(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [record] = await database.select().from(naqla1InnovationRecords).where(and(eq(naqla1InnovationRecords.id, input.recordId), eq(naqla1InnovationRecords.ownerUserId, ctx.user.id))).limit(1);
+        if (!record) throw new TRPCError({ code: 'NOT_FOUND', message: 'Innovation record not found or not owned by caller' });
+        const [evidence, versions] = await Promise.all([
+          database.select({ id: naqla1Evidence.id }).from(naqla1Evidence).where(and(eq(naqla1Evidence.innovationRecordId, record.id), eq(naqla1Evidence.ownerUserId, ctx.user.id), eq(naqla1Evidence.authorizationStatus, 'authorized'))),
+          database.select({ id: naqla1ImmutableVersions.id }).from(naqla1ImmutableVersions).where(and(eq(naqla1ImmutableVersions.innovationRecordId, record.id), eq(naqla1ImmutableVersions.ownerUserId, ctx.user.id))),
+        ]);
+        const result = evaluateNaqla1Qualification({ title: record.title, problemStatement: record.problemStatement, desiredOutcome: record.desiredOutcome, authorizedEvidenceCount: evidence.length, immutableVersionCount: versions.length });
+        await database.delete(naqla1ReadinessGaps).where(and(eq(naqla1ReadinessGaps.innovationRecordId, record.id), eq(naqla1ReadinessGaps.ownerUserId, ctx.user.id), eq(naqla1ReadinessGaps.status, 'open')));
+        if (result.gaps.length > 0) await database.insert(naqla1ReadinessGaps).values(result.gaps.map((code) => ({ innovationRecordId: record.id, ownerUserId: ctx.user.id, code, status: 'open' as const })));
+        const [assessment] = await database.insert(naqla1DeterministicAssessments).values({ innovationRecordId: record.id, ownerUserId: ctx.user.id, method: 'naqla1_deterministic_v1', ...result }).$returningId();
+        await database.insert(naqla1Passports).values({ innovationRecordId: record.id, ownerUserId: ctx.user.id, currentTrl: result.readinessLevel, qualificationStatus: result.qualificationStatus, nextBestAction: result.nextBestAction, lastAssessmentId: assessment.id }).onDuplicateKeyUpdate({ set: { currentTrl: result.readinessLevel, qualificationStatus: result.qualificationStatus, nextBestAction: result.nextBestAction, lastAssessmentId: assessment.id } });
+        await database.update(naqla1InnovationRecords).set({ status: result.qualificationStatus === 'qualified' ? 'qualified' : 'evaluated' }).where(eq(naqla1InnovationRecords.id, record.id));
+        return { assessmentId: assessment.id, ...result };
+      }),
+
+    getPassport: protectedProcedure
+      .input(z.object({ recordId: z.number().int().positive() }))
+      .query(async ({ ctx, input }) => {
+        const database = await getDb();
+        if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+        const [record] = await database.select().from(naqla1InnovationRecords).where(and(eq(naqla1InnovationRecords.id, input.recordId), eq(naqla1InnovationRecords.ownerUserId, ctx.user.id))).limit(1);
+        if (!record) throw new TRPCError({ code: 'NOT_FOUND', message: 'Innovation record not found or not owned by caller' });
+        const [passportRows, gaps, versions, evidence] = await Promise.all([
+          database.select().from(naqla1Passports).where(and(eq(naqla1Passports.innovationRecordId, record.id), eq(naqla1Passports.ownerUserId, ctx.user.id))).limit(1),
+          database.select().from(naqla1ReadinessGaps).where(and(eq(naqla1ReadinessGaps.innovationRecordId, record.id), eq(naqla1ReadinessGaps.ownerUserId, ctx.user.id), eq(naqla1ReadinessGaps.status, 'open'))),
+          database.select().from(naqla1ImmutableVersions).where(and(eq(naqla1ImmutableVersions.innovationRecordId, record.id), eq(naqla1ImmutableVersions.ownerUserId, ctx.user.id))).orderBy(desc(naqla1ImmutableVersions.versionNumber)),
+          database.select({ id: naqla1Evidence.id, label: naqla1Evidence.label, evidenceType: naqla1Evidence.evidenceType, authorizationStatus: naqla1Evidence.authorizationStatus, createdAt: naqla1Evidence.createdAt }).from(naqla1Evidence).where(and(eq(naqla1Evidence.innovationRecordId, record.id), eq(naqla1Evidence.ownerUserId, ctx.user.id))),
+        ]);
+        return { record, passport: passportRows[0] ?? null, gaps, versions, evidence };
+      }),
+  }),
+
   naqla2: router({
     // Get routed ideas from NAQLA 1
     getRoutedIdeas: protectedProcedure
@@ -3864,6 +3972,107 @@ Provide response in JSON format:
           const [listing] = await database.select({ id: naqla2MarketplaceListings.id, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope, createdAt: naqla2MarketplaceListings.createdAt })
             .from(naqla2MarketplaceListings).where(and(eq(naqla2MarketplaceListings.id, input.id), eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only'))).limit(1);
           return listing ?? null;
+        }),
+    }),
+
+    deterministicMatching: router({
+      createRun: protectedProcedure
+        .input(z.object({ requestId: z.number().int().positive() }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [request] = await database.select({ id: matchingRequests.id, title: matchingRequests.title, description: matchingRequests.description }).from(matchingRequests).where(and(eq(matchingRequests.id, input.requestId), eq(matchingRequests.userId, ctx.user.id))).limit(1);
+          if (!request) throw new TRPCError({ code: 'FORBIDDEN', message: 'A matching request owned by the caller is required' });
+          const queryText = `${request.title} ${request.description}`.slice(0, 500);
+          const listings = await database.select({ id: naqla2MarketplaceListings.id, ownerUserId: naqla2MarketplaceListings.ownerUserId, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope })
+            .from(naqla2MarketplaceListings)
+            .where(and(eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only')));
+          const eligibleListings = listings.filter((listing) => listing.ownerUserId !== ctx.user.id && listing.disclosureScope === 'teaser_only');
+          const [run] = await database.insert(naqla2MatchRuns).values({ requesterUserId: ctx.user.id, matchingRequestId: request.id, queryText, status: 'completed', candidateCount: eligibleListings.length }).$returningId();
+          if (eligibleListings.length > 0) {
+            await database.insert(naqla2MatchCandidates).values(eligibleListings.map((listing) => {
+              const deterministic = createDeterministicTeaserMatch(queryText, listing.title, listing.summary);
+              return { matchRunId: run.id, listingId: listing.id, score: deterministic.score, rankBand: deterministic.rankBand, evidenceConfidence: 'teaser_only' as const, factors: deterministic.factors };
+            }));
+          }
+          return { runId: run.id, candidateCount: eligibleListings.length, method: 'deterministic_teaser_term_overlap', disclaimer: 'Candidates are based only on published teaser text. Evidence confidence is not inferred and no disclosure right is granted.' };
+        }),
+
+      getMyRuns: protectedProcedure
+        .query(async ({ ctx }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          return database.select().from(naqla2MatchRuns).where(eq(naqla2MatchRuns.requesterUserId, ctx.user.id)).orderBy(desc(naqla2MatchRuns.createdAt));
+        }),
+
+      getRun: protectedProcedure
+        .input(z.object({ runId: z.number().int().positive() }))
+        .query(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [run] = await database.select().from(naqla2MatchRuns).where(and(eq(naqla2MatchRuns.id, input.runId), eq(naqla2MatchRuns.requesterUserId, ctx.user.id))).limit(1);
+          if (!run) throw new TRPCError({ code: 'NOT_FOUND', message: 'Match run not found or not owned by caller' });
+          const candidates = await database.select({ id: naqla2MatchCandidates.id, listingId: naqla2MatchCandidates.listingId, score: naqla2MatchCandidates.score, rankBand: naqla2MatchCandidates.rankBand, evidenceConfidence: naqla2MatchCandidates.evidenceConfidence, factors: naqla2MatchCandidates.factors, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary })
+            .from(naqla2MatchCandidates)
+            .innerJoin(naqla2MarketplaceListings, eq(naqla2MatchCandidates.listingId, naqla2MarketplaceListings.id))
+            .where(and(eq(naqla2MatchCandidates.matchRunId, run.id), eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only')))
+            .orderBy(desc(naqla2MatchCandidates.score));
+          return { run, candidates };
+        }),
+    }),
+
+    engagements: router({
+      getMyInterestRequests: protectedProcedure
+        .query(async ({ ctx }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const { or } = await import('drizzle-orm');
+          return database.select().from(naqla2InterestRequests).where(or(eq(naqla2InterestRequests.ownerUserId, ctx.user.id), eq(naqla2InterestRequests.requesterUserId, ctx.user.id))).orderBy(desc(naqla2InterestRequests.createdAt));
+        }),
+
+      getMyEngagements: protectedProcedure
+        .query(async ({ ctx }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const { or } = await import('drizzle-orm');
+          return database.select().from(naqla2Engagements).where(or(eq(naqla2Engagements.ownerUserId, ctx.user.id), eq(naqla2Engagements.requesterUserId, ctx.user.id))).orderBy(desc(naqla2Engagements.createdAt));
+        }),
+
+      setInterestStatus: protectedProcedure
+        .input(z.object({ interestRequestId: z.number().int().positive(), status: z.enum(['accepted', 'declined', 'withdrawn']) }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [interest] = await database.select({ ownerUserId: naqla2InterestRequests.ownerUserId, requesterUserId: naqla2InterestRequests.requesterUserId, status: naqla2InterestRequests.status }).from(naqla2InterestRequests).where(eq(naqla2InterestRequests.id, input.interestRequestId)).limit(1);
+          if (!interest) throw new TRPCError({ code: 'NOT_FOUND', message: 'Interest request not found' });
+          const isOwner = interest.ownerUserId === ctx.user.id;
+          const isRequesterWithdrawal = input.status === 'withdrawn' && interest.requesterUserId === ctx.user.id;
+          if (!isOwner && !isRequesterWithdrawal) throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the listing owner may decide interest; only the requester may withdraw it' });
+          const result = await database.update(naqla2InterestRequests).set({ status: input.status }).where(eq(naqla2InterestRequests.id, input.interestRequestId));
+          if (!hasAffectedRow(result)) throw new TRPCError({ code: 'FORBIDDEN', message: 'Interest request was not updated' });
+          return { status: input.status };
+        }),
+
+      establish: protectedProcedure
+        .input(z.object({ interestRequestId: z.number().int().positive() }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [interest] = await database.select().from(naqla2InterestRequests).where(and(eq(naqla2InterestRequests.id, input.interestRequestId), eq(naqla2InterestRequests.ownerUserId, ctx.user.id), eq(naqla2InterestRequests.status, 'accepted'))).limit(1);
+          if (!interest) throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'An accepted interest request owned by caller is required' });
+          const [engagement] = await database.insert(naqla2Engagements).values({ interestRequestId: interest.id, ownerUserId: interest.ownerUserId, requesterUserId: interest.requesterUserId, status: 'established' }).$returningId();
+          return { engagementId: engagement.id, status: 'established', disclaimer: 'Engagement records a governed relationship only. It creates no contract, payment, or disclosure right.' };
+        }),
+
+      createPilot: protectedProcedure
+        .input(z.object({ engagementId: z.number().int().positive(), scope: z.string().min(20).max(10000) }))
+        .mutation(async ({ ctx, input }) => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const [engagement] = await database.select().from(naqla2Engagements).where(eq(naqla2Engagements.id, input.engagementId)).limit(1);
+          if (!engagement || engagement.status !== 'established' || (engagement.ownerUserId !== ctx.user.id && engagement.requesterUserId !== ctx.user.id)) throw new TRPCError({ code: 'FORBIDDEN', message: 'An established engagement participant is required' });
+          const [pilot] = await database.insert(naqla2Pilots).values({ engagementId: engagement.id, ownerUserId: engagement.ownerUserId, requesterUserId: engagement.requesterUserId, scope: input.scope, status: 'planned' }).$returningId();
+          return { pilotId: pilot.id, status: 'planned', disclaimer: 'Pilot planning creates no contract, payment, legal conclusion, or external disclosure.' };
         }),
     }),
 
@@ -4095,52 +4304,42 @@ Provide response in JSON format:
           preferences: z.string().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use matching functions with ValidMatch middleware
-          return { success: true, matchesFound: 0, matches: [] };
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          const lookingFor: 'investor' | 'innovation' | 'business_partner' | 'mentor' = input.seekingType === 'partner' ? 'business_partner' : input.seekingType === 'innovator' ? 'innovation' : input.seekingType;
+          const createdRequests = await database.insert(matchingRequests).values({
+            userId: ctx.user.id,
+            userType: 'innovator',
+            title: `Match request: ${input.seekingType}`,
+            description: input.requirements,
+            lookingFor,
+            industry: input.industry ? [input.industry] : [],
+            stage: input.stage ? [input.stage] : [],
+            location: input.location ? [input.location] : [],
+            preferredAttributes: input.preferences ? [input.preferences] : [],
+            status: 'active',
+          }).$returningId() as Array<{ id: number }>;
+          const requestId = createdRequests[0]?.id;
+          if (!requestId) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Matching request was not persisted' });
+          return { requestId, status: 'active', disclaimer: 'A matching request records a need. It creates no match, disclosure right, engagement, or transaction.' };
         }),
 
       getMyMatches: protectedProcedure
         .query(async ({ ctx }) => {
-          // TODO: Import and use matching functions
-          return [];
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          return database.select().from(matchingRequests).where(eq(matchingRequests.userId, ctx.user.id)).orderBy(desc(matchingRequests.createdAt));
         }),
       
       getMatches: publicProcedure
         .query(async () => {
-          // Return mock matching data for now
-          return [
-            {
-              id: 1,
-              investorName: 'صندوق الاستثمارات العامة',
-              industry: 'التقنية والابتكار',
-              score: 92,
-              fundingRange: '5-50 مليون ريال',
-              focus: 'الذكاء الاصطناعي والتقنيات الناشئة',
-            },
-            {
-              id: 2,
-              investorName: 'شركة STC Ventures',
-              industry: 'الاتصالات والتقنية',
-              score: 88,
-              fundingRange: '1-10 مليون ريال',
-              focus: 'التطبيقات الذكية وإنترنت الأشياء',
-            },
-            {
-              id: 3,
-              investorName: 'صندوق الابتكار الصحي',
-              industry: 'الرعاية الصحية',
-              score: 85,
-              fundingRange: '2-15 مليون ريال',
-              focus: 'التقنيات الصحية والذكاء الاصطناعي الطبي',
-            },
-          ];
+          return [] as const;
         }),
 
       accept: protectedProcedure
         .input(z.object({ matchId: z.number() }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use matching functions
-          return { success: true };
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'MATCH_ACCEPTANCE_REQUIRES_A_GOVERNED_ENGAGEMENT_RECORD' });
         }),
 
       reject: protectedProcedure
@@ -4149,8 +4348,7 @@ Provide response in JSON format:
           reason: z.string().optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          // TODO: Import and use matching functions
-          return { success: true };
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'MATCH_REJECTION_REQUIRES_A_GOVERNED_ENGAGEMENT_RECORD' });
         }),
     }),
 

@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, int, varchar, mysqlEnum, json, text, timestamp, decimal, index, foreignKey, tinyint } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, int, varchar, mysqlEnum, json, text, timestamp, decimal, index, uniqueIndex, foreignKey, tinyint } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const adminLogs = mysqlTable("admin_logs", {
@@ -2171,6 +2171,77 @@ export const naqla2ReviewAssignments = mysqlTable("naqla2_review_assignments", {
   index('naqla2_review_assignment_reviewer_idx').on(table.reviewerUserId),
 ]);
 
+// ============================================
+// NAQLA1 — Owner-governed qualification records. Evidence stores metadata and
+// authorization status; raw evidence content is intentionally not inferred.
+// ============================================
+
+export const naqla1InnovationRecords = mysqlTable("naqla1_innovation_records", {
+  id: int().autoincrement().primaryKey(),
+  ownerUserId: int().notNull(),
+  title: varchar({ length: 500 }).notNull(),
+  problemStatement: text().notNull(),
+  desiredOutcome: text().notNull(),
+  status: mysqlEnum(['draft', 'evidence_pending', 'evaluated', 'qualified', 'routed']).notNull().default('draft'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla1_record_owner_idx').on(table.ownerUserId)]);
+
+export const naqla1Evidence = mysqlTable("naqla1_evidence", {
+  id: int().autoincrement().primaryKey(),
+  innovationRecordId: int().notNull(),
+  ownerUserId: int().notNull(),
+  label: varchar({ length: 500 }).notNull(),
+  evidenceType: mysqlEnum(['synthetic_note', 'research_reference', 'technical_description', 'prototype_note', 'other']).notNull(),
+  contentSha256: varchar({ length: 64 }).notNull(),
+  authorizationStatus: mysqlEnum(['authorized', 'revoked']).notNull().default('authorized'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  revokedAt: timestamp({ mode: 'string' }),
+}, (table) => [index('naqla1_evidence_record_idx').on(table.innovationRecordId), index('naqla1_evidence_owner_idx').on(table.ownerUserId)]);
+
+export const naqla1ImmutableVersions = mysqlTable("naqla1_immutable_versions", {
+  id: int().autoincrement().primaryKey(),
+  innovationRecordId: int().notNull(),
+  ownerUserId: int().notNull(),
+  versionNumber: int().notNull(),
+  snapshotSha256: varchar({ length: 64 }).notNull(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [uniqueIndex('naqla1_version_record_number_unique').on(table.innovationRecordId, table.versionNumber), index('naqla1_version_owner_idx').on(table.ownerUserId)]);
+
+export const naqla1ReadinessGaps = mysqlTable("naqla1_readiness_gaps", {
+  id: int().autoincrement().primaryKey(),
+  innovationRecordId: int().notNull(),
+  ownerUserId: int().notNull(),
+  code: mysqlEnum(['missing_authorized_evidence', 'missing_immutable_version', 'incomplete_problem_statement', 'incomplete_desired_outcome']).notNull(),
+  status: mysqlEnum(['open', 'addressed']).notNull().default('open'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  addressedAt: timestamp({ mode: 'string' }),
+}, (table) => [index('naqla1_gap_record_idx').on(table.innovationRecordId), index('naqla1_gap_owner_idx').on(table.ownerUserId)]);
+
+export const naqla1DeterministicAssessments = mysqlTable("naqla1_deterministic_assessments", {
+  id: int().autoincrement().primaryKey(),
+  innovationRecordId: int().notNull(),
+  ownerUserId: int().notNull(),
+  method: varchar({ length: 100 }).notNull().default('naqla1_deterministic_v1'),
+  criteriaSatisfied: int().notNull(),
+  criteriaTotal: int().notNull(),
+  readinessLevel: int().notNull(),
+  qualificationStatus: mysqlEnum(['not_ready', 'qualified']).notNull(),
+  nextBestAction: mysqlEnum(['add_authorized_evidence', 'create_immutable_version', 'complete_record', 'route_to_naqla2']).notNull(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [index('naqla1_assessment_record_idx').on(table.innovationRecordId), index('naqla1_assessment_owner_idx').on(table.ownerUserId)]);
+
+export const naqla1Passports = mysqlTable("naqla1_passports", {
+  id: int().autoincrement().primaryKey(),
+  innovationRecordId: int().notNull(),
+  ownerUserId: int().notNull(),
+  currentTrl: int().notNull(),
+  qualificationStatus: mysqlEnum(['not_ready', 'qualified']).notNull(),
+  nextBestAction: mysqlEnum(['add_authorized_evidence', 'create_immutable_version', 'complete_record', 'route_to_naqla2']).notNull(),
+  lastAssessmentId: int(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [uniqueIndex('naqla1_passport_record_unique').on(table.innovationRecordId), index('naqla1_passport_owner_idx').on(table.ownerUserId)]);
+
 export const naqla2VettingReviews = mysqlTable("naqla2_vetting_reviews", {
   id: int().autoincrement().primaryKey(),
   ipRegistrationId: int().notNull(),
@@ -2204,14 +2275,76 @@ export const naqla2InterestRequests = mysqlTable("naqla2_interest_requests", {
   updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 }, (table) => [index('naqla2_interest_listing_idx').on(table.listingId), index('naqla2_interest_requester_idx').on(table.requesterUserId), index('naqla2_interest_owner_idx').on(table.ownerUserId)]);
 
+export const naqla2MatchRuns = mysqlTable("naqla2_match_runs", {
+  id: int().autoincrement().primaryKey(),
+  requesterUserId: int().notNull(),
+  matchingRequestId: int(),
+  queryText: varchar({ length: 500 }).notNull(),
+  status: mysqlEnum(['completed']).notNull().default('completed'),
+  candidateCount: int().notNull().default(0),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [index('naqla2_match_run_requester_idx').on(table.requesterUserId), index('naqla2_match_run_request_idx').on(table.matchingRequestId)]);
+
+export const naqla2MatchCandidates = mysqlTable("naqla2_match_candidates", {
+  id: int().autoincrement().primaryKey(),
+  matchRunId: int().notNull(),
+  listingId: int().notNull(),
+  rankBand: mysqlEnum(['high', 'medium', 'low']).notNull(),
+  score: int().notNull(),
+  evidenceConfidence: mysqlEnum(['teaser_only', 'not_evaluated']).notNull().default('teaser_only'),
+  factors: json().notNull(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+}, (table) => [index('naqla2_match_candidate_run_idx').on(table.matchRunId), index('naqla2_match_candidate_listing_idx').on(table.listingId)]);
+
+export const naqla2Engagements = mysqlTable("naqla2_engagements", {
+  id: int().autoincrement().primaryKey(),
+  interestRequestId: int().notNull(),
+  ownerUserId: int().notNull(),
+  requesterUserId: int().notNull(),
+  status: mysqlEnum(['established', 'closed']).notNull().default('established'),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla2_engagement_interest_idx').on(table.interestRequestId), index('naqla2_engagement_owner_idx').on(table.ownerUserId), index('naqla2_engagement_requester_idx').on(table.requesterUserId)]);
+
+export const naqla2Pilots = mysqlTable("naqla2_pilots", {
+  id: int().autoincrement().primaryKey(),
+  engagementId: int().notNull(),
+  ownerUserId: int().notNull(),
+  requesterUserId: int().notNull(),
+  status: mysqlEnum(['planned', 'active', 'completed', 'closed']).notNull().default('planned'),
+  scope: text().notNull(),
+  createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+}, (table) => [index('naqla2_pilot_engagement_idx').on(table.engagementId), index('naqla2_pilot_owner_idx').on(table.ownerUserId), index('naqla2_pilot_requester_idx').on(table.requesterUserId)]);
+
 export type Naqla2VettingReview = typeof naqla2VettingReviews.$inferSelect;
 export type InsertNaqla2VettingReview = typeof naqla2VettingReviews.$inferInsert;
 export type Naqla2ReviewAssignment = typeof naqla2ReviewAssignments.$inferSelect;
 export type InsertNaqla2ReviewAssignment = typeof naqla2ReviewAssignments.$inferInsert;
+export type Naqla1InnovationRecord = typeof naqla1InnovationRecords.$inferSelect;
+export type InsertNaqla1InnovationRecord = typeof naqla1InnovationRecords.$inferInsert;
+export type Naqla1Evidence = typeof naqla1Evidence.$inferSelect;
+export type InsertNaqla1Evidence = typeof naqla1Evidence.$inferInsert;
+export type Naqla1ImmutableVersion = typeof naqla1ImmutableVersions.$inferSelect;
+export type InsertNaqla1ImmutableVersion = typeof naqla1ImmutableVersions.$inferInsert;
+export type Naqla1ReadinessGap = typeof naqla1ReadinessGaps.$inferSelect;
+export type InsertNaqla1ReadinessGap = typeof naqla1ReadinessGaps.$inferInsert;
+export type Naqla1DeterministicAssessment = typeof naqla1DeterministicAssessments.$inferSelect;
+export type InsertNaqla1DeterministicAssessment = typeof naqla1DeterministicAssessments.$inferInsert;
+export type Naqla1Passport = typeof naqla1Passports.$inferSelect;
+export type InsertNaqla1Passport = typeof naqla1Passports.$inferInsert;
 export type Naqla2MarketplaceListing = typeof naqla2MarketplaceListings.$inferSelect;
 export type InsertNaqla2MarketplaceListing = typeof naqla2MarketplaceListings.$inferInsert;
 export type Naqla2InterestRequest = typeof naqla2InterestRequests.$inferSelect;
 export type InsertNaqla2InterestRequest = typeof naqla2InterestRequests.$inferInsert;
+export type Naqla2MatchRun = typeof naqla2MatchRuns.$inferSelect;
+export type InsertNaqla2MatchRun = typeof naqla2MatchRuns.$inferInsert;
+export type Naqla2MatchCandidate = typeof naqla2MatchCandidates.$inferSelect;
+export type InsertNaqla2MatchCandidate = typeof naqla2MatchCandidates.$inferInsert;
+export type Naqla2Engagement = typeof naqla2Engagements.$inferSelect;
+export type InsertNaqla2Engagement = typeof naqla2Engagements.$inferInsert;
+export type Naqla2Pilot = typeof naqla2Pilots.$inferSelect;
+export type InsertNaqla2Pilot = typeof naqla2Pilots.$inferInsert;
 
 // ============================================
 // NAQLA3 — Commercial asset and transaction are separate, human-governed records.
