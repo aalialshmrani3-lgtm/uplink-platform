@@ -3957,6 +3957,22 @@ Provide response in JSON format:
           const [listing] = await database.select({ id: naqla2MarketplaceListings.id, title: naqla2MarketplaceListings.title, summary: naqla2MarketplaceListings.summary, disclosureScope: naqla2MarketplaceListings.disclosureScope, createdAt: naqla2MarketplaceListings.createdAt })
             .from(naqla2MarketplaceListings).where(and(eq(naqla2MarketplaceListings.id, input.id), eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only'))).limit(1);
           return listing ?? null;
+      }),
+    }),
+
+    discovery: router({
+      getOpportunityTeasers: publicProcedure
+        .query(async () => {
+          const database = await getDb();
+          if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+          return database.select({
+            id: naqla2MarketplaceListings.id,
+            title: naqla2MarketplaceListings.title,
+            summary: naqla2MarketplaceListings.summary,
+            createdAt: naqla2MarketplaceListings.createdAt,
+          }).from(naqla2MarketplaceListings)
+            .where(and(eq(naqla2MarketplaceListings.status, 'published'), eq(naqla2MarketplaceListings.disclosureScope, 'teaser_only')))
+            .orderBy(desc(naqla2MarketplaceListings.createdAt));
         }),
     }),
 
