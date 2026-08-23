@@ -31,3 +31,7 @@ A second public smoke retry after a follow-up checkpoint produced the same older
 ## Final public smoke result
 
 The latest comparison passed: both the preview route and `https://uplink5.xyz/naqla` now render the current server-only invitation wording and the updated server-role evidence guidance. The custom-domain bundle propagation gap cleared without enabling any external-AI provider. Public smoke is **passed** for `/` and `/naqla`.
+
+## Latest mobile verification
+
+The 390×844 full-page capture after adding the server synthetic-record action retained a readable single-column layout. The context panel, engine progress, NAQLA1 controls, commercial separation cards, and full journey map remain within the viewport width with no horizontal overflow.
