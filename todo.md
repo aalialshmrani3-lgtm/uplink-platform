@@ -2,6 +2,7 @@
 
 ## NAQLA — Final Platform Completion & Acceptance
 
+- [ ] تنفيذ فحوص القبول والحزم والنشر محلياً فقط مع `AI_EXTERNAL_PROVIDER_ENABLED=false` و`EXTERNAL_AI_DEFERRED`
 - [x] تدقيق فجوات المستودعين مقابل Definition of Done مع تثبيت أقفال Phase 2.2B والذكاء الخارجي المغلق
 - [x] إصلاح الاسترداد من ملفات lazy المنتهية في cache لمنع خطأ التحميل الديناميكي في الصفحة الرئيسية
 - [ ] إكمال NAQLA1 لمسار التأهيل الحتمي والأدلة والإصدارات وInnovation Passport وNext Best Action
@@ -19,6 +20,12 @@
 - [ ] بناء طبقة بيانات وإجراءات tRPC حقيقية لـNAQLA2: Challenge وOpportunity وDiscovery وMatchRun وCandidate وFactors وApplicationVersion وInterest وEngagement وPilot
 - [ ] ربط واجهة `/naqla` بقراءة وكتابة خادمية فعلية مع حالات loading وerror وempty وsuccess
 - [ ] استبدال نموذج الدعوات والسياق المحلي بكيانات organization وmembership وinvitation وActiveContext مستقلة ومختبرة
+- [x] إزالة الاعتماد المتبقي على دعوة محلية من `/naqla` أو عزلها بوضوح كعرض مستقل لا يحل محل الدعوة الخادمية
+- [x] إضافة اختبارات خادمية وتكاملية لمسارات create وmyContexts وsetActive وinvite وacceptInvitation مع حالات الرفض
+- [ ] إكمال onboarding خادمي: إنشاء مؤسسة وإرسال دعوة وقبولها من الحساب المدعو وتبديل ActiveContext في الواجهة
+- [ ] ربط قرارات السياق والصلاحيات المتبقية في `/naqla` بعضوية وسياق خادميين بدلاً من persona محلية
+- [ ] إضافة اختبار تكاملي لرحلة onboarding الخادمية الكاملة وظهور السياق النشط بعد القبول
+- [ ] إضافة حالات loading/error/empty واضحة إلى لوحة السياق والدعوات في `/naqla`
 - [x] إزالة المفتاح الافتراضي من مسار NAQLA3 وإغلاق عمليات blockchain غير المهيأة بدلاً من تنفيذها بقيمة مضمّنة
 
 ## NAQLA Phase 2.1 Final Closure — تحقق واجهة Manager Funnel

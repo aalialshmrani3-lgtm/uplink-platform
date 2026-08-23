@@ -1,0 +1,29 @@
+{
+  "acceptanceMode": "LOCAL_ONLY",
+  "externalAi": {
+    "status": "EXTERNAL_AI_DEFERRED",
+    "requiredGate": "AI_EXTERNAL_PROVIDER_ENABLED=false",
+    "providerCalls": 0
+  },
+  "verification": {
+    "typescript": "PASS",
+    "testFilesPassed": 10,
+    "testsPassed": 53,
+    "productionBuild": "PASS",
+    "diffCheck": "PASS",
+    "modifiedDiffSecretPatternMatches": 0,
+    "desktopRtlVisualQa": "PASS",
+    "mobileRtlVisualQa": "PASS"
+  },
+  "delivered": {
+    "naqla1DeterministicJourney": true,
+    "naqla2ManualVettingAndInterestContracts": true,
+    "naqla3CommercialAssetTransactionSeparation": true,
+    "organizationContextApi": true,
+    "serverSideInvitationLifecycle": true,
+    "syntheticDemoOnly": true,
+    "blockchainFailClosedWhenUnconfigured": true
+  },
+  "status": "READY_WITH_EXTERNAL_AI_DEFERRED",
+  "phase22b": "EXTERNAL_AI_NOT_PROMOTED_DEFERRED"
+}

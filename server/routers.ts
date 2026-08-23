@@ -272,6 +272,14 @@ export const appRouter = router({
         return { invitationId: invitation.id, status: 'pending' };
       }),
 
+    myPendingInvitations: protectedProcedure.query(async ({ ctx }) => {
+      const database = await getDb();
+      if (!database) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database not available' });
+      const userEmail = ctx.user.email?.toLowerCase();
+      if (!userEmail) return [];
+      return database.select({ id: organizationInvitations.id, organizationId: organizationInvitations.organizationId, role: organizationInvitations.role, invitedEmail: organizationInvitations.invitedEmail, createdAt: organizationInvitations.createdAt }).from(organizationInvitations).where(and(eq(organizationInvitations.invitedEmail, userEmail), eq(organizationInvitations.status, 'pending')));
+    }),
+
     acceptInvitation: protectedProcedure
       .input(z.object({ invitationId: z.number().int().positive() }))
       .mutation(async ({ ctx, input }) => {

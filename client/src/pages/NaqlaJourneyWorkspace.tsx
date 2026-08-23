@@ -4,7 +4,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { INITIAL_JOURNEY_STATE, JOURNEY_STAGES, JourneyStage, NaqlaPersona, advanceJourney, applyJourneyControl, canAdvanceJourney, personaCanReviewEvidence } from "@shared/naqlaJourney";
-import { canManageInvitation, InvitationStatus, transitionInvitation } from "@shared/naqlaAccess";
 
 const labels: Record<JourneyStage, { ar: string; en: string; engine: "NAQLA1" | "NAQLA2" | "NAQLA3" }> = {
   understand: { ar: "فهم السجل", en: "Understand record", engine: "NAQLA1" },
@@ -65,23 +64,45 @@ export default function NaqlaJourneyWorkspace() {
   const isArabic = language === "ar";
   const [persona, setPersona] = useState<NaqlaPersona>("innovator");
   const [state, setState] = useState(INITIAL_JOURNEY_STATE);
-  const [invitationStatus, setInvitationStatus] = useState<InvitationStatus>("draft");
+  const [invitedEmail, setInvitedEmail] = useState("");
   const [serverDemoId, setServerDemoId] = useState<number | null>(null);
   const [notice, setNotice] = useState(copy("ابدأ بتوثيق السجل الاصطناعي.", "Start by documenting the synthetic record.", isArabic));
   const current = labels[state.stage];
   const progress = Math.round((state.completed.length / JOURNEY_STAGES.length) * 100);
   const personaLabel = personas.find((item) => item.value === persona);
-  const activeMembership = { organization: "Synthetic demo organization", persona, status: "active" as const };
-  const invitationManager = canManageInvitation(activeMembership);
   const contextsQuery = trpc.organizationContext.myContexts.useQuery(undefined, { enabled: Boolean(user) });
+  const pendingInvitationsQuery = trpc.organizationContext.myPendingInvitations.useQuery(undefined, { enabled: Boolean(user) });
   const serverContexts = (contextsQuery.data ?? []).filter((context): context is NonNullable<typeof context> => Boolean(context));
   const activeServerContext = serverContexts.find((context) => context.isActiveContext) ?? serverContexts[0];
+  const serverInvitationManager = activeServerContext ? ['owner', 'manager'].includes(activeServerContext.role) : false;
+  const effectivePersona: NaqlaPersona = activeServerContext ? (activeServerContext.role === 'reviewer' ? 'reviewer' : activeServerContext.role === 'manager' || activeServerContext.role === 'owner' ? 'program_manager' : 'innovator') : persona;
   const createDemoContext = trpc.organizationContext.create.useMutation({
     onSuccess: () => {
       void contextsQuery.refetch();
       setNotice(copy("تم إنشاء سياق عرض اصطناعي خادمي وربطه بعضويتك.", "A server-side synthetic demo context was created and linked to your membership.", isArabic));
     },
     onError: () => setNotice(copy("تعذر إنشاء السياق الخادمي؛ استمر العرض المحلي دون بديل خفي.", "The server context could not be created; the local demo continues with no hidden fallback.", isArabic)),
+  });
+  const setActiveServerContext = trpc.organizationContext.setActive.useMutation({
+    onSuccess: () => {
+      void contextsQuery.refetch();
+      setNotice(copy("تم تبديل السياق النشط بعد تحقق العضوية.", "The active context was switched after membership verification.", isArabic));
+    },
+    onError: () => setNotice(copy("تعذر تبديل السياق؛ لا يُقبل أي سياق دون عضوية نشطة.", "The context could not be switched; no context is accepted without active membership.", isArabic)),
+  });
+  const inviteServerMember = trpc.organizationContext.invite.useMutation({
+    onSuccess: () => {
+      setInvitedEmail("");
+      setNotice(copy("سُجلت الدعوة الخادمية بحالة معلقة؛ لا تمنح وصولاً قبل قبول الحساب المدعو.", "The server invitation is pending and grants no access until the invited account accepts it.", isArabic));
+    },
+    onError: () => setNotice(copy("تعذر تسجيل الدعوة؛ لم تُنشأ صلاحية وصول بديلة.", "The invitation could not be recorded; no substitute access permission was created.", isArabic)),
+  });
+  const acceptServerInvitation = trpc.organizationContext.acceptInvitation.useMutation({
+    onSuccess: () => {
+      void Promise.all([contextsQuery.refetch(), pendingInvitationsQuery.refetch()]);
+      setNotice(copy("قُبلت الدعوة وأُنشئت العضوية الخادمية؛ يمكنك الآن تبديل السياق وفق العضوية النشطة.", "The invitation was accepted and a server membership was created; you can now switch context according to active membership.", isArabic));
+    },
+    onError: () => setNotice(copy("تعذر قبول الدعوة؛ لم تُنشأ أي عضوية بديلة.", "The invitation could not be accepted; no substitute membership was created.", isArabic)),
   });
   const createServerDemo = trpc.cr01.createEnergyDemo.useMutation({
     onSuccess: (result) => {
@@ -149,16 +170,18 @@ export default function NaqlaJourneyWorkspace() {
           <aside className="space-y-5">
             <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-5">
               <div className="flex items-center justify-between gap-4">
-                <div><p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">{copy("السياق النشط", "Active context", isArabic)}</p><h2 className="mt-1 font-semibold">{activeServerContext ? (isArabic ? activeServerContext.nameAr : activeServerContext.nameEn || activeServerContext.nameAr) : copy("منظمة العرض الاصطناعي", "Synthetic demo organization", isArabic)}</h2></div>
+                <div><p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">{copy("السياق النشط", "Active context", isArabic)}</p><h2 className="mt-1 font-semibold">{contextsQuery.isLoading ? copy("جار تحميل السياق…", "Loading context…", isArabic) : contextsQuery.isError ? copy("تعذر تحميل السياق", "Context could not be loaded", isArabic) : activeServerContext ? (isArabic ? activeServerContext.nameAr : activeServerContext.nameEn || activeServerContext.nameAr) : user ? copy("لا يوجد سياق خادمي", "No server context", isArabic) : copy("منظمة العرض الاصطناعي", "Synthetic demo organization", isArabic)}</h2></div>
                 <ShieldCheck className="h-6 w-6 text-emerald-300" aria-label={copy("سياق معزول", "Isolated context", isArabic)} />
               </div>
+              {user && serverContexts.length > 1 && <label className="mt-4 block text-xs font-medium text-slate-300" htmlFor="server-context">{copy("تبديل السياق الخادمي", "Switch server context", isArabic)}<select id="server-context" value={activeServerContext?.id ?? ""} disabled={setActiveServerContext.isPending} onChange={(event) => setActiveServerContext.mutate({ organizationId: Number(event.target.value) })} className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">{serverContexts.map((context) => <option key={context.id} value={context.id}>{isArabic ? context.nameAr : context.nameEn || context.nameAr}</option>)}</select></label>}
               <label className="mt-5 block text-sm font-medium text-slate-300" htmlFor="persona">{copy("الدور", "Persona", isArabic)}</label>
               <select id="persona" value={persona} onChange={(event) => setPersona(event.target.value as NaqlaPersona)} className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-300">
                 {personas.map((item) => <option key={item.value} value={item.value}>{isArabic ? item.ar : item.en}</option>)}
               </select>
-              <p className="mt-3 text-xs leading-5 text-slate-400">{personaCanReviewEvidence(persona) ? copy("هذا الدور يمكنه مراجعة الدليل عند وجود تفويض مستقل ضمن السيناريو.", "This persona can review evidence only after independent authorization in this scenario.", isArabic) : copy("هذا الدور لا يحصل على حق الدليل تلقائياً.", "This persona receives no evidence right by implication.", isArabic)}</p>
+              <p className="mt-3 text-xs leading-5 text-slate-400">{personaCanReviewEvidence(effectivePersona) ? copy("الدور الخادمي أو دور العرض يمكنه مراجعة الدليل عند وجود تفويض مستقل.", "The server role or demo role may review evidence only after independent authorization.", isArabic) : copy("هذا الدور لا يحصل على حق الدليل تلقائياً.", "This role receives no evidence right by implication.", isArabic)}</p>
               {user && !activeServerContext && <button type="button" disabled={createDemoContext.isPending} onClick={() => createDemoContext.mutate({ nameAr: "سياق عرض اصطناعي", nameEn: "Synthetic demo context", type: "supporting", scope: "local" })} className="mt-3 w-full rounded-lg border border-violet-300/40 px-3 py-2 text-xs font-semibold text-violet-100 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-violet-300">{copy("إنشاء سياق عرض خادمي", "Create server demo context", isArabic)}</button>}
-              <div className="mt-4 rounded-xl border border-white/10 bg-slate-950/60 p-3"><p className="text-xs font-semibold text-slate-300">{copy("دعوة عضوية اصطناعية", "Synthetic membership invitation", isArabic)}</p><p className="mt-1 text-xs leading-5 text-slate-400">{invitationManager ? copy(`الحالة: ${invitationStatus === "draft" ? "مسودة" : invitationStatus === "invited" ? "مرسلة" : invitationStatus === "accepted" ? "مقبولة" : "ملغاة"}.`, `Status: ${invitationStatus}.`, isArabic) : copy("لا يملك هذا الدور صلاحية إدارة الدعوات في السياق النشط.", "This persona cannot manage invitations in the active context.", isArabic)}</p>{invitationManager && invitationStatus === "draft" && <button type="button" onClick={() => setInvitationStatus((previous) => transitionInvitation(previous, "send"))} className="mt-3 rounded-lg border border-cyan-300/40 px-3 py-2 text-xs font-semibold text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-300">{copy("إرسال دعوة", "Send invitation", isArabic)}</button>}{invitationManager && invitationStatus === "invited" && <button type="button" onClick={() => setInvitationStatus((previous) => transitionInvitation(previous, "accept"))} className="mt-3 rounded-lg border border-emerald-300/40 px-3 py-2 text-xs font-semibold text-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-300">{copy("قبول الدعوة تجريبياً", "Accept invitation in demo", isArabic)}</button>}</div>
+              <div className="mt-4 rounded-xl border border-white/10 bg-slate-950/60 p-3"><p className="text-xs font-semibold text-slate-300">{copy("دعوة عضوية خادمية", "Server membership invitation", isArabic)}</p>{activeServerContext ? <>{serverInvitationManager ? <><label className="mt-3 block text-xs text-slate-400" htmlFor="invite-email">{copy("البريد الإلكتروني للحساب المدعو", "Invited account email", isArabic)}</label><input id="invite-email" type="email" value={invitedEmail} onChange={(event) => setInvitedEmail(event.target.value)} placeholder="name@example.com" className="mt-2 w-full rounded-lg border border-white/15 bg-slate-950 px-3 py-2 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-300" /><button type="button" disabled={!invitedEmail || inviteServerMember.isPending} onClick={() => inviteServerMember.mutate({ organizationId: activeServerContext.id, invitedEmail, role: 'member' })} className="mt-3 rounded-lg border border-cyan-300/40 px-3 py-2 text-xs font-semibold text-cyan-100 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-cyan-300">{copy("تسجيل دعوة معلقة", "Record pending invitation", isArabic)}</button></> : <p className="mt-1 text-xs leading-5 text-slate-400">{copy("دعوات الأعضاء مقصورة على المالك أو المدير في السياق الخادمي.", "Member invitations are limited to an owner or manager in the server context.", isArabic)}</p>}</> : <p className="mt-1 text-xs leading-5 text-slate-400">{copy("سجّل الدخول وأنشئ أو اختر سياقاً خادمياً قبل إرسال دعوة. لا توجد دعوة محلية بديلة.", "Sign in and create or select a server context before inviting a member. No local invitation fallback exists.", isArabic)}</p>}</div>
+              {user && (pendingInvitationsQuery.data?.length ?? 0) > 0 && <div className="mt-3 rounded-xl border border-emerald-300/25 bg-emerald-300/5 p-3"><p className="text-xs font-semibold text-emerald-100">{copy("دعواتك المعلقة", "Your pending invitations", isArabic)}</p>{pendingInvitationsQuery.data?.map((invitation) => <div key={invitation.id} className="mt-2 flex items-center justify-between gap-2 text-xs text-slate-300"><span>{copy("سياق مؤسسة بانتظار القبول", "Organization context awaiting acceptance", isArabic)}</span><button type="button" disabled={acceptServerInvitation.isPending} onClick={() => acceptServerInvitation.mutate({ invitationId: invitation.id })} className="rounded-lg border border-emerald-300/40 px-2 py-1 font-semibold text-emerald-100 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-emerald-300">{copy("قبول", "Accept", isArabic)}</button></div>)}</div>}
             </section>
 
             <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-5">
