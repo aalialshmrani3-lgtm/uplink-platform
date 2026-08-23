@@ -16,4 +16,10 @@ describe("HTML and SPA cache policy", () => {
     expect(headers.get("Expires")).toBe("0");
     expect(DOCUMENT_CACHE_CONTROL).toContain("no-store");
   });
+
+  it("resolves production static files next to the bundled server output", async () => {
+    const source = await import("node:fs/promises").then((fs) => fs.readFile(new URL("./_core/vite.ts", import.meta.url), "utf8"));
+
+    expect(source).toContain('const distPath = path.resolve(import.meta.dirname, "public");');
+  });
 });
