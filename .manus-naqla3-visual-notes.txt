@@ -1,0 +1,5 @@
+# NAQLA3 visual verification notes
+
+- A 375×812 capture was requested for `/naqla3` and `/naqla3/transactions/1`.
+- The initial capture retained the existing startup/loading spinner rather than a settled workspace, so it is not acceptance evidence for interactive commercialization.
+- Final verification must wait for the startup transition and confirm an anonymous safe boundary or authorized workspace with no horizontal overflow.

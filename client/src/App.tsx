@@ -102,6 +102,7 @@ const Naqla2 = lazy(() => import("./pages/Naqla2"));
 const RoutedIdeas = lazy(() => import("./pages/RoutedIdeas"));
 const NationalChallenges = lazy(() => import("./pages/NationalChallenges"));
 const Naqla3 = lazy(() => import("./pages/Naqla3"));
+const CommercializeWorkspace = lazy(() => import("./components/CommercializeWorkspace"));
 const Naqla2ChallengeDetails = lazy(() => import("./pages/Naqla2ChallengeDetails"));
 const Naqla3Marketplace = lazy(() => import("./pages/Naqla3Marketplace"));
 const Naqla3SellAsset = lazy(() => import("./pages/Naqla3SellAsset"));
@@ -259,7 +260,8 @@ function Router() {
         <Route path="/naqla2/deal-room" component={Naqla2DealRoom} /> {/* NAQLA 2 Deal Room */}
         <Route path="/naqla2/events-needs-board" component={Naqla2EventsNeedsBoard} /> {/* NAQLA 2 Events & Needs Board */}
         <Route path="/naqla2/investor-profile" component={Naqla2InvestorProfile} /> {/* NAQLA 2 Investor Profile */}
-        <Route path="/naqla3" component={Naqla3} />
+        <Route path="/naqla3/transactions/:id" component={CommercializeWorkspace} />
+        <Route path="/naqla3" component={CommercializeWorkspace} />
         <Route path="/naqla3/assets/:id" component={Naqla3Assets} /> {/* NAQLA 3 Asset Detail - NEW */}
         <Route path="/naqla3/marketplace" component={Naqla3Marketplace} /> {/* Marketplace */}
         <Route path="/naqla3/sell" component={Naqla3SellAsset} /> {/* Sell Asset */}

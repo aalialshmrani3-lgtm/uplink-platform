@@ -14,6 +14,6 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["server/**/*.test.ts", "server/**/*.test.tsx", "server/**/*.spec.ts", "client/src/components/MatchingIntelligenceHub.test.tsx", "client/src/components/ApplicationCopilotWorkspace.test.tsx"],
+    include: ["server/**/*.test.ts", "server/**/*.test.tsx", "server/**/*.spec.ts", "client/src/components/MatchingIntelligenceHub.test.tsx", "client/src/components/ApplicationCopilotWorkspace.test.tsx", "client/src/components/CommercializeWorkspace.test.tsx"],
   },
 });

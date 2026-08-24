@@ -34,6 +34,7 @@ export { createDeterministicTeaserMatch } from "./naqla2/matching-intelligence";
 import { MATCHING_RULE_VERSION, MATCHING_WEIGHT_VERSION, classifyListingEligibility, createDeterministicTeaserMatch, stableMatchFingerprint } from "./naqla2/matching-intelligence";
 import { analyzeCopilotGaps, COPILOT_POLICY_VERSION, COPILOT_SCHEMA_VERSION, createCopilotIdempotencyKey, createCopilotSourceSnapshotHash, redactCopilotText } from "./naqla2/copilot-deterministic";
 import { copilotRouter } from "./naqla2/copilot-router";
+import { commercializeRouter } from "./naqla3/commercialize-router";
 
 export async function invokeExternalModel(...args: Parameters<typeof invokeExternalModelSdk>) {
   if (process.env.AI_EXTERNAL_PROVIDER_ENABLED !== "true") {
@@ -5311,6 +5312,7 @@ ${input.technicalDetails}` : ''}`;
   // NAQLA3 - Smart Contracts & Escrow
   // ============================================
   naqla3: router({
+    commercialize: commercializeRouter,
     // Get asset by ID
     getAssetById: protectedProcedure
       .input(z.object({ assetId: z.number() }))

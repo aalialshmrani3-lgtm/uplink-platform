@@ -3,6 +3,7 @@
 ## NAQLA — Final Platform Completion & Acceptance
 
 - [x] استعادة واجهة NAQLA متعددة الصفحات ومساراتها المتضررة فقط بعد تحديد آخر commit سليم، مع الحفاظ على backend والأمن والاختبارات الحديثة
+<<<<<<< Updated upstream
 - [x] استعادة shell المرجعي الكامل والقائمة الجانبية والصفحات الداخلية من نسخة UPLINK السليمة مع الحفاظ على الطبقات الحديثة
 - [x] مقارنة واسترجاع طبقة الواجهة والتنقل من `uplink-platform(2).zip` و`uplink-platform(3).zip` دون استبدال package أو server أو drizzle
 - [x] إثبات أن shell/layout والقائمة المرجعية تغلف Dashboard والمنظمات والإدارة والإعدادات ومسارات NAQLA1/2/3 الداخلية فعلياً
@@ -35,6 +36,20 @@
 - [x] إضافة اختبار mobile DOM يقيس عدم horizontal overflow ووصول CTA لكل مسار Copilot
 - [x] إضافة assertion mobile صريح لـscrollWidth/clientWidth وCTA المسماة لكل Workspace
 - [x] تشغيل قبول كامل وبناء وحزمة Phase 2.2D ثم النشر وproduction smoke
+
+## NAQLA3 — COMMERCIALIZE end-to-end
+
+- [x] تدقيق خط الأساس المقفل وكيانات NAQLA3 الحالية وحصر الفجوات دون فتح Phase 2.2 أو تغيير عقودها
+- [x] استكمال CommercialAssetVersion بإصدارات لاحقة وسجل تاريخي قابل للقراءة فوق الإنشاء الأولي المثبت
+- [x] تصميم وتنفيذ CommercialTransaction منفصل مع نسخة أصل مثبتة وorigin/stage/status وحالة انتقال خادمية حتمية
+- [x] استكمال Commercial Readiness checklist بإصدارات لاحقة وسجل تاريخي فوق حالة الإنشاء الأولية وDue Diligence المنفذة
+- [x] تنفيذ Transaction Data Room وDocument metadata وDisclosure Record مع default-deny وshare/revocation/audit مستقلة عن عضوية المعاملة
+- [x] استكمال إعادة تفويض evidenceIds في إنشاء الأصل قبل snapshot مع رفض ملكية/سحب صريحين، مع بقاء participant/ActiveContext/tenant lifecycle المنفذ
+- [ ] استكمال واجهات Prepare → Due Diligence → Contract → Execute → Scale لإجراءات المعاملة وDD وData Room والشروط والتنفيذ وقرار التوسع
+- [ ] إضافة اختبارات صريحة للإصدارات وإعادة تفويض evidence وعمليات واجهات مراحل NAQLA3 المتبقية
+- [x] تنفيذ HTTP E2E حقيقي بقاعدة MariaDB محلية معزولة وfixtures synthetic وتنظيف مضمون لمسار Commercialize
+- [ ] تشغيل قبول NAQLA3 الشامل والبناء وفحوص الأسرار/البيانات/الخصوصية ثم حزمة وتقرير وبصمة SHA-256
+- [ ] نشر NAQLA3 وإجراء production smoke عام read-only ثم إغلاق قبول المرحلة
 
 - [x] قصر دفعة الإغلاق الحالية على بنود المنصة التشغيلية في هذا القسم واستبعاد Phase 2.2B وCanary/Azure/Holdout التاريخية
 - [x] تشغيل الاختبارات المباشرة لربط NAQLA2 والسياق والواجهة قبل تحديث دفتر العمل الذري
