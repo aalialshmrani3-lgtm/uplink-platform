@@ -8,6 +8,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { lazy, Suspense } from "react";
 import { BootGate } from "./components/BootGate";
 import PlatformShell from "./components/PlatformShell";
+import { NaqlaEngineEntry } from "./components/NaqlaEngineEntry";
 import { shouldUsePlatformShell } from "./lib/platformRoutes";
 import Home from "./pages/Home";
 
@@ -78,8 +79,6 @@ const OrganizationsManagement = lazy(() => import("./pages/admin/OrganizationsMa
 const OrganizationsDashboard = lazy(() => import("./pages/OrganizationsDashboard"));
 const AIStrategicAdvisor = lazy(() => import("./pages/AIStrategicAdvisor"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
-const Naqla1 = lazy(() => import("./pages/Naqla1"));
-const NaqlaJourneyWorkspace = lazy(() => import("./pages/NaqlaJourneyWorkspace"));
 const SubmitIdea = lazy(() => import('@/pages/SubmitIdea'));
 const Naqla1Passport = lazy(() => import('@/pages/Naqla1Passport'));
 const MyIdeas = lazy(() => import('@/pages/MyIdeas'));
@@ -97,7 +96,6 @@ const AddEvent = lazy(() => import('@/pages/AddEvent'));
 const BrowseAllEvents = lazy(() => import('@/pages/BrowseAllEvents'));
 const EventsDashboard = lazy(() => import('@/pages/EventsDashboard'));
 const Naqla2EventDetail = lazy(() => import('@/pages/Naqla2EventDetail'));
-const Naqla2 = lazy(() => import("./pages/Naqla2"));
 const RoutedIdeas = lazy(() => import("./pages/RoutedIdeas"));
 const NationalChallenges = lazy(() => import("./pages/NationalChallenges"));
 const Naqla3 = lazy(() => import("./pages/Naqla3"));
@@ -188,8 +186,8 @@ function Router() {
         <Route path="/projects/:id" component={ProjectDetail} />
         <Route path="/challenges" component={Challenges} />
         <Route path="/marketplace" component={Marketplace} />
-        <Route path="/naqla1" component={Naqla1} />
-        <Route path="/naqla" component={NaqlaJourneyWorkspace} />
+        <Route path="/naqla1" component={() => <NaqlaEngineEntry engine="qualify" />} />
+        <Route path="/naqla" component={() => <NaqlaEngineEntry engine="platform" />} />
         <Route path="/naqla1/dashboard" component={Naqla1Dashboard} /> {/* NAQLA 1 Dashboard */}
         <Route path="/naqla1/passport/:id" component={Naqla1Passport} />
         <Route path="/naqla1/passport" component={Naqla1Passport} />
@@ -198,7 +196,7 @@ function Router() {
         <Route path="/naqla1/ideas/:id" component={Naqla1IdeaDetail} />
         <Route path="/naqla1/ideas/:id/analysis" component={Naqla1IdeaAnalysis} />
         {/* UPLINK1 routes (aliases for NAQLA1) */}
-        <Route path="/uplink1" component={Naqla1} />
+        <Route path="/uplink1" component={() => <NaqlaEngineEntry engine="qualify" />} />
         <Route path="/uplink1/submit" component={SubmitIdea} />
         <Route path="/uplink1/passport/:id" component={Naqla1Passport} />
         <Route path="/uplink1/browse" component={Naqla1BrowseIdeas} />
@@ -213,7 +211,7 @@ function Router() {
         <Route path="/strategic-partners" component={StrategicPartners} />
         <Route path="/value-footprints" component={ValueFootprints} />
         <Route path="/trl-assessment" component={TRLAssessment} />
-        <Route path="/naqla2" component={Naqla2} />
+        <Route path="/naqla2" component={() => <NaqlaEngineEntry engine="connect" />} />
         <Route path="/naqla2/dashboard" component={Naqla2Dashboard} /> {/* NAQLA 2 Dashboard */}
           <Route path="/naqla2/routed-ideas" component={RoutedIdeas} />
           <Route path="/naqla2/national-challenges" component={NationalChallenges} />

@@ -2,7 +2,7 @@
 
 | المجموعة | التنفيذ | النتيجة |
 |---|---|---|
-| Unit وRendered UI | `pnpm test` | `43` ملفات، `160` اختبارًا: PASS |
+| Unit وRendered UI | `pnpm test` | `44` ملفات، `162` اختبارًا: PASS |
 | TypeScript | `pnpm check` | PASS |
 | NAQLA2 | `run_phase22c_http_harness.mjs` | PASS؛ مطابقة ومشاركة وتفاعل وPilot وعزل وتنظيف |
 | Reviewer/Applicant | `run_phase22d_http_harness.mjs` | PASS؛ advisory محلي وفصل وredaction وimmutability وrevocation |
