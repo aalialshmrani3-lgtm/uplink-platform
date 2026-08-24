@@ -45,11 +45,14 @@
 - [x] استكمال Commercial Readiness checklist بإصدارات لاحقة وسجل تاريخي فوق حالة الإنشاء الأولية وDue Diligence المنفذة
 - [x] تنفيذ Transaction Data Room وDocument metadata وDisclosure Record مع default-deny وshare/revocation/audit مستقلة عن عضوية المعاملة
 - [x] استكمال إعادة تفويض evidenceIds في إنشاء الأصل قبل snapshot مع رفض ملكية/سحب صريحين، مع بقاء participant/ActiveContext/tenant lifecycle المنفذ
-- [ ] استكمال واجهات Prepare → Due Diligence → Contract → Execute → Scale لإجراءات المعاملة وDD وData Room والشروط والتنفيذ وقرار التوسع
-- [ ] إضافة اختبارات صريحة للإصدارات وإعادة تفويض evidence وعمليات واجهات مراحل NAQLA3 المتبقية
+- [x] استكمال واجهات Prepare → Due Diligence → Contract → Execute → Scale لإجراءات المعاملة وDD وData Room والشروط والتنفيذ وقرار التوسع
+- [x] إضافة اختبارات صريحة للإصدارات وإعادة تفويض evidence وعمليات واجهات مراحل NAQLA3 المتبقية
 - [x] تنفيذ HTTP E2E حقيقي بقاعدة MariaDB محلية معزولة وfixtures synthetic وتنظيف مضمون لمسار Commercialize
-- [ ] تشغيل قبول NAQLA3 الشامل والبناء وفحوص الأسرار/البيانات/الخصوصية ثم حزمة وتقرير وبصمة SHA-256
+- [x] تشغيل قبول NAQLA3 الشامل والبناء وفحوص الأسرار/البيانات/الخصوصية ثم حزمة وتقرير وبصمة SHA-256
 - [ ] نشر NAQLA3 وإجراء production smoke عام read-only ثم إغلاق قبول المرحلة
+
+- [x] تثبيت commercialAssetVersionId في إنشاء المعاملة مع تحقق خادمي وإثبات E2E
+- [x] استكمال مراجعة DD وSoD لاعتماد الشروط وسجل معالم/مخرجات/تغييرات/مخاطر التنفيذ وإغلاق التوسع
 
 - [x] قصر دفعة الإغلاق الحالية على بنود المنصة التشغيلية في هذا القسم واستبعاد Phase 2.2B وCanary/Azure/Holdout التاريخية
 - [x] تشغيل الاختبارات المباشرة لربط NAQLA2 والسياق والواجهة قبل تحديث دفتر العمل الذري

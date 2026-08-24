@@ -1,0 +1,38 @@
+{
+  "phase": "NAQLA3_COMMERCIALIZE",
+  "localAcceptance": "PASS_PENDING_PUBLIC_SMOKE",
+  "externalAi": {
+    "AI_EXTERNAL_PROVIDER_ENABLED": false,
+    "providerCallsInIsolatedE2E": 0
+  },
+  "verification": {
+    "testFiles": 39,
+    "tests": 155,
+    "typecheck": "PASS",
+    "build": "PASS",
+    "buildId": "mt6tdpj7axtj",
+    "diffCheck": "PASS",
+    "secretPatternMatches": 0,
+    "nonSyntheticEmailMatches": 0
+  },
+  "isolatedHttpE2E": {
+    "database": "random localhost MariaDB synthetic fixture",
+    "cleanup": "PASS",
+    "commercialJourney": "PASS",
+    "tenantIsolation": "PASS",
+    "dataRoomRevocation": "PASS",
+    "idempotency": "PASS",
+    "auditCount": 27
+  },
+  "governance": {
+    "assetVersionPinnedAtTransactionCreation": true,
+    "dueDiligenceReviewSeparation": true,
+    "termApprovalSeparation": true,
+    "agreementExecutionSeparation": true,
+    "executionDeliverableChangeRiskSeparation": true,
+    "scaleApprovalSeparation": true,
+    "dataRoomReauthorizationAtDownload": true,
+    "counterpartyOrganizationMembershipVerified": true
+  },
+  "publicSmoke": "PENDING_CHECKPOINT_DEPLOYMENT"
+}

@@ -4,5 +4,11 @@
 - The initial capture retained the existing startup/loading spinner rather than a settled workspace, so it is not acceptance evidence for interactive commercialization.
 - Final verification must wait for the startup transition and confirm an anonymous safe boundary or authorized workspace with no horizontal overflow.
 - A subsequent settled 375×812 capture rendered the Arabic RTL Commercialize Workspace, the governed human-decision copy, and the authorized commercial-asset form without horizontal clipping in the viewport.
-Transaction workspace JSX is a single long return line; HumanStageActions must be inserted after the main stage Card before the Data Room aside.
-CommercializeWorkspace formatting check: requires controlled JSX refactor before final action-panel wiring.
+- Transaction workspace JSX is a single long return line; HumanStageActions must be inserted after the main stage Card before the Data Room aside.
+- CommercializeWorkspace formatting check: requires controlled JSX refactor before final action-panel wiring.
+- A later 375×812 capture for `/naqla3`, `/naqla3/assets/77`, and `/naqla3/transactions/77` again captured startup/loading states before settlement; it is retained only as a boot-path observation and is not final visual acceptance evidence.
+- Desktop captures at 1280×720 for `/naqla3`, `/naqla3/assets/77`, and `/naqla3/transactions/77` on 2026-08-24 likewise captured the shared shell while startup was active; they are not evidence of settled NAQLA3 panels.
+- Any final visual acceptance must use a settled session and demonstrate either the safe anonymous boundary or an authorized workspace without horizontal overflow or sensitive disclosure.
+- A settled desktop browser session at `/naqla3` on 2026-08-24 completed the startup transition and displayed the anonymous safe boundary. The rendered shell exposed navigation only; the commercial panel asked the visitor to sign in and did not reveal commercial assets, transactions, Data Room documents, or storage keys.
+- The anonymous deep link `/naqla3/assets/77` also resolved to the same sign-in boundary after startup; it did not reveal asset details or historical versions.
+- The anonymous deep link `/naqla3/transactions/77` likewise resolved to the same sign-in boundary after startup; it did not reveal transaction stage, participants, Due Diligence, Data Room, contract, execution, or scale records.

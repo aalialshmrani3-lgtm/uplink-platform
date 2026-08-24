@@ -261,8 +261,8 @@ function Router() {
         <Route path="/naqla2/events-needs-board" component={Naqla2EventsNeedsBoard} /> {/* NAQLA 2 Events & Needs Board */}
         <Route path="/naqla2/investor-profile" component={Naqla2InvestorProfile} /> {/* NAQLA 2 Investor Profile */}
         <Route path="/naqla3/transactions/:id" component={CommercializeWorkspace} />
+        <Route path="/naqla3/assets/:id" component={CommercializeWorkspace} />
         <Route path="/naqla3" component={CommercializeWorkspace} />
-        <Route path="/naqla3/assets/:id" component={Naqla3Assets} /> {/* NAQLA 3 Asset Detail - NEW */}
         <Route path="/naqla3/marketplace" component={Naqla3Marketplace} /> {/* Marketplace */}
         <Route path="/naqla3/sell" component={Naqla3SellAsset} /> {/* Sell Asset */}
         <Route path="/naqla3/payment/success" component={Naqla3PaymentSuccess} /> {/* Payment Success */}
