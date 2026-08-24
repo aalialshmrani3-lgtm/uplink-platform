@@ -5,6 +5,8 @@
 
 ## قرار الإصدار
 
+> **FINAL_STATE=NAQLA_PLATFORM_RELEASE_READY**
+
 تُغلق هذه الدورة باعتبارها Release Candidate لمنصة NAQLA الحالية. تعتمد الرحلة التشغيلية على **QUALIFY → CONNECT → COMMERCIALIZE**، مع فصل سجل الابتكار عن الأصل التجاري والمعاملة، وعدم اتخاذ أي قرار قانوني أو مالي أو تنظيمي أو تعاقدي تلقائيًا.
 
 | بوابة القبول | الدليل | النتيجة |
@@ -18,6 +20,7 @@
 | المسارات الموروثة | عناوين NAQLA3 القديمة للـpayment/escrow/contracts تحيل إلى مساحة الحوكمة ولا تقدم القدرة غير المدمجة | PASS |
 | البناء | `pnpm build`، build ID `mt75mxed3vdr` | PASS |
 | lint | لا يوجد script lint في المشروع | NOT_CONFIGURED |
+| baseline الأداء | قياس production read-only موثق؛ لا HTTP errors ولا ادعاء SLA | OBSERVED |
 
 كما اجتاز جرد console الآلي `37` ملفًا مصنفًا دون ملف غير مصنف، وفحص الأسرار والبيانات غير التركيبية وعلامات تعارض Git و`git diff --check`. والـproduction smoke المجهول read-only يعيد HTTP 200 وسياسة `no-cache, no-store, must-revalidate` للمسارات المطلوبة؛ التفصيل في `NAQLA_RELEASE_PRODUCTION_SMOKE_REPORT.md`.
 
@@ -25,5 +28,6 @@
 
 لا يقدّم هذا الإصدار تكامل blockchain أو escrow أو دفع أو توقيع إلكتروني أو تحقق حكومي/SAIP/MISA/RDIA. اتفاقات NAQLA3 تسجل مراجعات بشرية ومرجع تنفيذ خارجي فقط. لا تعتمد الرحلات الحرجة على الذكاء الخارجي.
 
-**Functional release checkpoint/commit:** يُختم في checkpoint النشر التالي بعد تضمين هذه الأدلة.
+**Published Release Candidate checkpoint:** `45718044` (`NAQLA_PLATFORM_RELEASE_CANDIDATE_EVIDENCE_BASE`).  
+**Verified release source commit:** `45718044350ee6cc6eb22e2428720e12a3e904a0`.  
 **Evidence-only publication:** لا يغير منطق المنصة؛ يربط تقرير smoke والحزم والبصمات بمحتوى التسليم.

@@ -10,3 +10,4 @@
 | Harness Cross-engine ومشغله | رحلة HTTP محلية معزولة وقابلة للتكرار |
 | تطبيق ومكوّنات واختبارات متأثرة | أثر التنظيف وتحسين حدود المسارات |
 | تقارير البناء وproduction smoke وCross-engine E2E | أدلة build `mt75mxed3vdr` وحواجز الإنتاج المجهولة ونتائج رحلة MariaDB المعزولة |
+| baseline الأداء | قياسات production read-only موثقة بلا ادعاء SLA أو حمل authenticated |

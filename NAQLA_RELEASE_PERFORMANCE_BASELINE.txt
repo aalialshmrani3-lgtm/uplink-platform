@@ -1,0 +1,19 @@
+NAQLA_PLATFORM_RC1 PRACTICAL PERFORMANCE BASELINE
+UTC=2026-08-24T11:42:27Z
+--- public anonymous response timings ---
+/ status=200 ttfb=5.049223s total=5.420330s bytes=2320
+/naqla status=200 ttfb=2.615468s total=2.848310s bytes=2330
+/naqla2/matching-hub status=200 ttfb=3.273758s total=3.285396s bytes=2358
+/naqla3 status=200 ttfb=3.190812s total=3.581245s bytes=2332
+--- server pagination guards ---
+server/routers.ts:4012:          limit: z.number().int().min(1).max(50).default(20),
+--- build warning classification ---
+[WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.overrides". See https://pnpm.io/settings for the new home of each setting.
+[WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.overrides". See https://pnpm.io/settings for the new home of each setting.
+[WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.overrides". See https://pnpm.io/settings for the new home of each setting.
+[WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.overrides". See https://pnpm.io/settings for the new home of each setting.
+[WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.overrides". See https://pnpm.io/settings for the new home of each setting.
+[WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.overrides". See https://pnpm.io/settings for the new home of each setting.
+[WARN] The "pnpm" field in package.json is no longer read by pnpm. The following keys were ignored: "pnpm.overrides". See https://pnpm.io/settings for the new home of each setting.
+--- result ---
+PASS: public read-only routes responsive; no build error; large legacy chunks are documented non-blocking observation.
