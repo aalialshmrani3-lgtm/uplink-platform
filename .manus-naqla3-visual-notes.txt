@@ -3,3 +3,6 @@
 - A 375×812 capture was requested for `/naqla3` and `/naqla3/transactions/1`.
 - The initial capture retained the existing startup/loading spinner rather than a settled workspace, so it is not acceptance evidence for interactive commercialization.
 - Final verification must wait for the startup transition and confirm an anonymous safe boundary or authorized workspace with no horizontal overflow.
+- A subsequent settled 375×812 capture rendered the Arabic RTL Commercialize Workspace, the governed human-decision copy, and the authorized commercial-asset form without horizontal clipping in the viewport.
+Transaction workspace JSX is a single long return line; HumanStageActions must be inserted after the main stage Card before the Data Room aside.
+CommercializeWorkspace formatting check: requires controlled JSX refactor before final action-panel wiring.
