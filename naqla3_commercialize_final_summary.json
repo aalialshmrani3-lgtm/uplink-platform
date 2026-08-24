@@ -1,6 +1,6 @@
 {
   "phase": "NAQLA3_COMMERCIALIZE",
-  "localAcceptance": "PASS_PENDING_PUBLIC_SMOKE",
+  "localAcceptance": "PASS",
   "externalAi": {
     "AI_EXTERNAL_PROVIDER_ENABLED": false,
     "providerCallsInIsolatedE2E": 0
@@ -34,5 +34,20 @@
     "dataRoomReauthorizationAtDownload": true,
     "counterpartyOrganizationMembershipVerified": true
   },
-  "publicSmoke": "PENDING_CHECKPOINT_DEPLOYMENT"
+  "publicSmoke": {
+    "status": "PASS",
+    "checkpointVersion": "4e0e3d6a",
+    "publicBaseUrl": "https://uplink5.xyz",
+    "paths": {
+      "/": 200,
+      "/naqla2/matching-hub": 200,
+      "/naqla2/review-assistance": 200,
+      "/naqla2/application-assistance": 200,
+      "/naqla3": 200,
+      "/naqla3/assets/77": 200,
+      "/naqla3/transactions/77": 200
+    },
+    "htmlCacheControl": "no-cache, no-store, must-revalidate",
+    "anonymousBoundary": "PASS"
+  }
 }
