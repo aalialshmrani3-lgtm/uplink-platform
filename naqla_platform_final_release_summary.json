@@ -2,7 +2,7 @@
   "releaseIdentifier": "NAQLA_PLATFORM_RC1",
   "finalState": "PENDING_RELEASE_CHECKPOINT_AND_PUBLIC_SMOKE",
   "externalAi": { "activation": "DEFERRED", "gate": false, "callsDuringReleaseFinalization": 0, "criticalJourneysDependOnExternalAi": false },
-  "verification": { "testFiles": 43, "tests": 160, "typecheck": "PASS", "lint": "NOT_CONFIGURED", "build": "PASS", "buildId": "mt74fyalti3k", "diffCheck": "PASS", "conflictMarkers": 0, "secretPatternMatches": 0, "nonSyntheticEmailMatches": 0, "consoleInventory": { "status": "PASS", "classifiedFiles": 37 } },
+  "verification": { "testFiles": 43, "tests": 160, "typecheck": "PASS", "lint": "NOT_CONFIGURED", "build": "PASS", "buildId": "mt74na5cifgx", "diffCheck": "PASS", "conflictMarkers": 0, "secretPatternMatches": 0, "nonSyntheticEmailMatches": 0, "consoleInventory": { "status": "PASS", "classifiedFiles": 37 } },
   "isolatedHttp": { "phase22c": "PASS", "phase22d": "PASS", "naqla3": "PASS", "crossEngine": "PASS", "cleanDatabaseBootstrap": "PASS", "cleanup": "PASS", "syntheticOnly": true },
   "releaseCheckpoint": "PENDING_NAQLA_PLATFORM_RELEASE_CANDIDATE",
   "releaseCommit": "PENDING_NAQLA_PLATFORM_RELEASE_CANDIDATE",

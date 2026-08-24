@@ -40,10 +40,7 @@ describe("NAQLA landing operational routes", () => {
     expect(hrefs).toContain("/naqla1");
     expect(hrefs).toContain("/naqla2");
     expect(hrefs).toContain("/naqla3");
-    expect(hrefs).toContain("/dashboard");
-    expect(hrefs).toContain("/profile");
-    expect(hrefs).toContain("/unified-dashboard");
-    expect(hrefs).toContain("/innovation-pipeline");
+    expect(hrefs).toContain("/naqla");
   });
 
   it("لا يستبدل المسار السليم بخطأ مهلة إقلاع", async () => {
@@ -72,8 +69,13 @@ describe("NAQLA landing operational routes", () => {
       readFile(path.resolve(process.cwd(), "client/src/components/DashboardLayout.tsx"), "utf8"),
     ]);
 
-    expect(home).toContain("<InnovationHubsSection />");
-    expect(home).toContain('href="/unified-dashboard"');
+    expect(home).toContain("Deterministic operation with independent evidence authorization");
+    expect(home).toContain('href="/naqla1"');
+    expect(home).toContain('href="/naqla2"');
+    expect(home).toContain('href="/naqla3"');
+    expect(home).not.toContain("Escrow");
+    expect(home).not.toContain("SAIP & WIPO");
+    expect(home).not.toContain("60M+");
     expect(app).toContain("<PlatformShell>{routes}</PlatformShell>");
     expect(platformShell).toContain("<ReferenceDashboardShell>");
     expect(dashboardLayout).toContain("export function ReferenceDashboardShell");

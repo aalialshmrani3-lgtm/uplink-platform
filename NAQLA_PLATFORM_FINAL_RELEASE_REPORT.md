@@ -15,7 +15,7 @@
 | الأمان والخصوصية | عزل مستأجر وسياق نشط ورفض غير مصادق وIDOR وrevocation وفصل DD/SoD وData Room | PASS |
 | الواجهة | RTL وLTR، سطح المكتب، 375×812 و768×1024 للحالات العامة المتاحة | PASS |
 | المسارات الموروثة | عناوين NAQLA3 القديمة للـpayment/escrow/contracts تحيل إلى مساحة الحوكمة ولا تقدم القدرة غير المدمجة | PASS |
-| البناء | `pnpm build`، build ID `mt74fyalti3k` | PASS |
+| البناء | `pnpm build`، build ID `mt74na5cifgx` | PASS |
 | lint | لا يوجد script lint في المشروع | NOT_CONFIGURED |
 
 كما اجتاز جرد console الآلي `37` ملفًا مصنفًا دون ملف غير مصنف، وفحص الأسرار والبيانات غير التركيبية وعلامات تعارض Git و`git diff --check`.
