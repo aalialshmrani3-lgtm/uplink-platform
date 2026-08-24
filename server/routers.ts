@@ -2441,19 +2441,19 @@ Provide response in JSON format:
 
         pythonProcess.stdout.on("data", (data) => {
           output += data.toString();
-          console.log(`[A/B Testing] ${data.toString()}`);
+          console.log("[A/B Testing] Process output received");
         });
 
         pythonProcess.stderr.on("data", (data) => {
           errorOutput += data.toString();
-          console.error(`[A/B Testing Error] ${data.toString()}`);
+          console.error("[A/B Testing] Process error output received");
         });
 
         pythonProcess.on("close", (code) => {
           if (code === 0) {
             resolve({ success: true, output });
           } else {
-            reject(new Error(`A/B Testing failed with code ${code}: ${errorOutput}`));
+            reject(new Error(`A/B Testing failed with code ${code}`));
           }
         });
       });
@@ -2479,19 +2479,19 @@ Provide response in JSON format:
 
         pythonProcess.stdout.on("data", (data) => {
           output += data.toString();
-          console.log(`[Retrain] ${data.toString()}`);
+          console.log("[Retrain] Process output received");
         });
 
         pythonProcess.stderr.on("data", (data) => {
           errorOutput += data.toString();
-          console.error(`[Retrain Error] ${data.toString()}`);
+          console.error("[Retrain] Process error output received");
         });
 
         pythonProcess.on("close", (code) => {
           if (code === 0) {
             resolve({ success: true, output });
           } else {
-            reject(new Error(`Retraining failed with code ${code}: ${errorOutput}`));
+            reject(new Error(`Retraining failed with code ${code}`));
           }
         });
       });

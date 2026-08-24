@@ -93,4 +93,14 @@ describe("NAQLA landing operational routes", () => {
       expect(shouldUsePlatformShell(pathName)).toBe(false);
     });
   });
+
+  it("يوجه عناوين NAQLA3 الموروثة إلى مساحة الحوكمة ولا يعرض دفعًا أو escrow أو توقيعًا إلكترونيًا", async () => {
+    const app = await readFile(path.resolve(process.cwd(), "client/src/App.tsx"), "utf8");
+    ["/naqla3/marketplace", "/naqla3/sell", "/naqla3/payment/success", "/naqla3/contracts", "/naqla3/escrow"].forEach((legacyPath) => {
+      expect(app).toContain(`<Route path="${legacyPath}" component={CommercializeWorkspace} />`);
+    });
+    expect(app).not.toContain('import("./pages/Naqla3Escrow")');
+    expect(app).not.toContain('import("./pages/Naqla3BlockchainContracts")');
+    expect(app).not.toContain('<Route path="/contracts/:id/sign"');
+  });
 });

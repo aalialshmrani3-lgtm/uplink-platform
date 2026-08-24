@@ -1,7 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import ContractSignature from "@/pages/ContractSignature";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -104,20 +103,11 @@ const NationalChallenges = lazy(() => import("./pages/NationalChallenges"));
 const Naqla3 = lazy(() => import("./pages/Naqla3"));
 const CommercializeWorkspace = lazy(() => import("./components/CommercializeWorkspace"));
 const Naqla2ChallengeDetails = lazy(() => import("./pages/Naqla2ChallengeDetails"));
-const Naqla3Marketplace = lazy(() => import("./pages/Naqla3Marketplace"));
-const Naqla3SellAsset = lazy(() => import("./pages/Naqla3SellAsset"));
-const Naqla3AssetDetails = lazy(() => import("./pages/Naqla3AssetDetails"));
-const Naqla3PaymentSuccess = lazy(() => import("./pages/Naqla3PaymentSuccess"));
 const UserProfile = lazy(() => import("./pages/UserProfile")); // Added for Flowchart Match
 const UserSettings = lazy(() => import("./pages/UserSettings")); // Added for Flowchart Match
 const Naqla2Hackathons = lazy(() => import("./pages/Naqla2Hackathons")); // Added for Flowchart Match
 const Naqla2Events = lazy(() => import("./pages/Naqla2Events")); // Added for Flowchart Match
 const Naqla2Matching = lazy(() => import("./pages/Naqla2Matching")); // Added for Flowchart Match
-const Naqla3Contracts = lazy(() => import('./pages/Naqla3Contracts'));
-const Naqla3ContractDetail = lazy(() => import('./pages/Naqla3ContractDetail')); // Contract Detail with Milestones
-const Naqla3BlockchainContracts = lazy(() => import('./pages/Naqla3BlockchainContracts')); // Added for Flowchart Match
-const Naqla3Escrow = lazy(() => import("./pages/Naqla3Escrow")); // Added for Flowchart Match
-const Naqla3Dashboard = lazy(() => import('./pages/Naqla3Dashboard')); // NAQLA 3 Dashboard - Patents, Sales & Acquisitions
 const GlobalSearch = lazy(() => import("./pages/GlobalSearch")); // Added for Flowchart Match
 const Naqla2SubmitChallenge = lazy(() => import("./pages/Naqla2SubmitChallenge")); // Submit Challenge
 const Naqla2HostEvent = lazy(() => import("./pages/Naqla2HostEvent")); // Host Event Dashboard
@@ -218,7 +208,6 @@ function Router() {
         <Route path="/naqla1/result" component={IdeaResult} />
         <Route path="/naqla1/ideas/:ideaId/result" component={IdeaResult} />
         <Route path="/journey/:id" component={IdeaJourney} />
-        <Route path="/contracts/:id/sign" component={ContractSignature} />
         <Route path="/my-ideas" component={MyIdeas} />
         <Route path="/classification-paths" component={ClassificationPaths} />
         <Route path="/strategic-partners" component={StrategicPartners} />
@@ -263,14 +252,15 @@ function Router() {
         <Route path="/naqla3/transactions/:id" component={CommercializeWorkspace} />
         <Route path="/naqla3/assets/:id" component={CommercializeWorkspace} />
         <Route path="/naqla3" component={CommercializeWorkspace} />
-        <Route path="/naqla3/marketplace" component={Naqla3Marketplace} /> {/* Marketplace */}
-        <Route path="/naqla3/sell" component={Naqla3SellAsset} /> {/* Sell Asset */}
-        <Route path="/naqla3/payment/success" component={Naqla3PaymentSuccess} /> {/* Payment Success */}
-        <Route path="/naqla3/contracts" component={Naqla3Contracts} /> {/* Added for Flowchart Match */}
-        <Route path="/naqla3/contracts/:id" component={Naqla3ContractDetail} /> {/* Contract Detail with Milestones */}
-        <Route path="/naqla3/escrow" component={Naqla3Escrow} /> {/* Added for Flowchart Match */}
-        <Route path="/naqla3/dashboard" component={Naqla3Dashboard} /> {/* NAQLA 3 Dashboard - Patents, Sales & Acquisitions */}
-        <Route path="/naqla3/dashboard-new" component={Naqla3DashboardNew} /> {/* NAQLA 3 Dashboard New */}
+        {/* Legacy NAQLA3 addresses resolve to the governed workspace; no payment, escrow, blockchain, or e-signature capability is presented. */}
+        <Route path="/naqla3/marketplace" component={CommercializeWorkspace} />
+        <Route path="/naqla3/sell" component={CommercializeWorkspace} />
+        <Route path="/naqla3/payment/success" component={CommercializeWorkspace} />
+        <Route path="/naqla3/contracts" component={CommercializeWorkspace} />
+        <Route path="/naqla3/contracts/:id" component={CommercializeWorkspace} />
+        <Route path="/naqla3/escrow" component={CommercializeWorkspace} />
+        <Route path="/naqla3/dashboard" component={CommercializeWorkspace} />
+        <Route path="/naqla3/dashboard-new" component={CommercializeWorkspace} />
         {/* /admin route already exists at /admin/dashboard */}
         <Route path="/search" component={GlobalSearch} /> {/* Added for Flowchart Match */}
         <Route path="/academy" component={Academy} />

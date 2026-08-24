@@ -991,18 +991,15 @@ export async function updateIdea(id: number, data: any) {
 // NAQLA1: IDEA ANALYSIS OPERATIONS
 // ============================================
 export async function createIdeaAnalysis(data: any) {
-  console.log('[DEBUG] createIdeaAnalysis called with data keys:', Object.keys(data));
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
   try {
-    console.log('[DEBUG] About to insert into ideaAnalysis table');
     // Use Drizzle ORM - it handles defaults and nullable fields automatically
     const result = await db.insert(ideaAnalysis).values(data);
-    console.log('[DEBUG] Insert successful, insertId:', result[0].insertId);
     return result[0].insertId;
   } catch (error) {
-    console.error('[ERROR] createIdeaAnalysis failed:', error);
+    console.error('[Database] createIdeaAnalysis failed');
     throw error;
   }
 }

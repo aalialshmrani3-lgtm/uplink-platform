@@ -44,7 +44,7 @@ export function initWebSocketServer(server: any) {
       const client = clients.get(ws);
       if (client) {
         if (!client.isAlive) {
-          console.log(`💔 Terminating dead connection for user ${client.userId || 'unknown'}`);
+          console.log("[WebSocket] Terminating an inactive connection");
           clients.delete(ws);
           return ws.terminate();
         }
@@ -67,7 +67,7 @@ export function initWebSocketServer(server: any) {
     };
     clients.set(ws, client);
 
-    console.log(`✅ New WebSocket connection: User ${userId || 'anonymous'} (Total: ${clients.size})`);
+    console.log(`[WebSocket] Connection opened; active=${clients.size}`);
 
     // Send welcome message
     ws.send(JSON.stringify({
@@ -88,26 +88,25 @@ export function initWebSocketServer(server: any) {
     ws.on('message', (data: Buffer) => {
       try {
         const message = JSON.parse(data.toString());
-        console.log('📨 Received message:', message);
 
         // Handle different message types
         if (message.type === 'ping') {
           ws.send(JSON.stringify({ type: 'pong', timestamp: Date.now() }));
         }
       } catch (error) {
-        console.error('❌ Error parsing message:', error);
+        console.error("[WebSocket] Ignored an invalid client message");
       }
     });
 
     // Handle connection close
     ws.on('close', () => {
       clients.delete(ws);
-      console.log(`👋 WebSocket disconnected: User ${userId || 'anonymous'} (Total: ${clients.size})`);
+      console.log(`[WebSocket] Connection closed; active=${clients.size}`);
     });
 
     // Handle errors
     ws.on('error', (error) => {
-      console.error('❌ WebSocket error:', error);
+      console.error("[WebSocket] Connection error");
       clients.delete(ws);
     });
   });
@@ -135,7 +134,7 @@ export function sendNotificationToUser(userId: number, notification: Notificatio
     }
   });
 
-  console.log(`📤 Sent notification to user ${userId}: ${sent} connection(s)`);
+  console.log(`[WebSocket] Notification delivered to ${sent} connection(s)`);
   return sent > 0;
 }
 

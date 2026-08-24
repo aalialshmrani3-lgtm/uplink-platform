@@ -28,8 +28,8 @@ export async function triggerWebhooks(event: string, payload: any) {
     
     await Promise.allSettled(promises);
     
-  } catch (error) {
-    console.error('[Webhooks] Error triggering webhooks:', error);
+  } catch {
+    console.error("[Webhooks] Unable to schedule webhook delivery");
   }
 }
 
@@ -91,7 +91,7 @@ async function triggerSingleWebhook(
     
   } catch (error: any) {
     const responseTime = Date.now() - startTime;
-    const errorMessage = error.response?.data?.message || error.message || 'Unknown error';
+    const errorMessage = 'delivery_failed';
     
     // Log failure
     await logWebhookCall({
@@ -105,7 +105,7 @@ async function triggerSingleWebhook(
       retryCount,
     });
     
-    console.error(`[Webhooks] Failed to trigger webhook ${webhook.id}:`, errorMessage);
+    console.error(`[Webhooks] Delivery failed for webhook ${webhook.id}; status=${error.response?.status ?? "unknown"}`);
     
     // Retry logic (max 3 retries with exponential backoff)
     if (retryCount < 3) {
