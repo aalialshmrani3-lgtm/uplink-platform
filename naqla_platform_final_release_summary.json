@@ -1,10 +1,10 @@
 {
   "releaseIdentifier": "NAQLA_PLATFORM_RC1",
-  "finalState": "PENDING_RELEASE_CHECKPOINT_AND_PUBLIC_SMOKE",
+  "finalState": "PENDING_FINAL_RELEASE_CHECKPOINT",
   "externalAi": { "activation": "DEFERRED", "gate": false, "callsDuringReleaseFinalization": 0, "criticalJourneysDependOnExternalAi": false },
-  "verification": { "testFiles": 44, "tests": 162, "typecheck": "PASS", "lint": "NOT_CONFIGURED", "build": "PASS", "buildId": "mt7512007v7m", "diffCheck": "PASS", "conflictMarkers": 0, "secretPatternMatches": 0, "nonSyntheticEmailMatches": 0, "consoleInventory": { "status": "PASS", "classifiedFiles": 37 } },
-  "isolatedHttp": { "phase22c": "PASS", "phase22d": "PASS", "naqla3": "PASS", "crossEngine": "PASS", "cleanDatabaseBootstrap": "PASS", "cleanup": "PASS", "syntheticOnly": true },
-  "releaseCheckpoint": "PENDING_NAQLA_PLATFORM_RELEASE_CANDIDATE",
-  "releaseCommit": "PENDING_NAQLA_PLATFORM_RELEASE_CANDIDATE",
-  "publicSmoke": "PENDING_RELEASE_CHECKPOINT_DEPLOYMENT"
+  "verification": { "testFiles": 44, "tests": 162, "typecheck": "PASS", "lint": "NOT_CONFIGURED", "build": "PASS", "buildId": "mt75mxed3vdr", "diffCheck": "PASS", "conflictMarkers": 0, "secretPatternMatches": 0, "nonSyntheticEmailMatches": 0, "consoleInventory": { "status": "PASS", "classifiedFiles": 37 } },
+  "isolatedHttp": { "phase22c": "PASS", "phase22d": "PASS", "naqla3": "PASS", "crossEngine": "PASS", "personaContexts": 10, "adminImplicitEvidenceAccess": "DENY", "cleanDatabaseBootstrap": "PASS", "cleanup": "PASS", "syntheticOnly": true },
+  "releaseCheckpoint": "PENDING_FINAL_RELEASE_CHECKPOINT",
+  "releaseCommit": "PENDING_FINAL_RELEASE_CHECKPOINT",
+  "publicSmoke": "PASS_PRE_FINAL_CHECKPOINT_RESMOKE_REQUIRED"
 }

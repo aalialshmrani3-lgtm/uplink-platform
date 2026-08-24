@@ -1,0 +1,69 @@
+NAQLA_PLATFORM_RC1 PRE-PACKAGE SECURITY SCAN
+UTC=2026-08-24T11:33:53Z
+--- tracked forbidden paths ---
+--- credential-shaped literals ---
+--- direct authorization bearer literals ---
+[35mclient/src/pages/APIManagement.tsx[m[36m:[m[32m156[m[36m:[m[1;31mAuthorization: Bearer naqla_your_api_key[m
+[35mclient/src/pages/APIManagement.tsx[m[36m:[m[32m194[m[36m:[m[1;31mAuthorization: Bearer naqla_your_api_key[m
+[35mclient/src/pages/APIManagement.tsx[m[36m:[m[32m254[m[36m:[m[1;31mAuthorization: Bearer naqla_your_api_key[m`}
+[35mserver/public_api.ts[m[36m:[m[32m24[m[36m:[m      message: 'API key required. Use: [1;31mAuthorization: Bearer naqla_your_key[m',
+--- non-fixture email domains ---
+[1;31mahmed@example.com[m
+[1;31mai-support@uplink.sa[m
+[1;31mconference@monshaat.gov.sa[m
+[1;31mcontract@example.com[m
+[1;31memail@example.com[m
+[1;31mexample@company.com[m
+[1;31mexample@domain.com[m
+[1;31mexample@email.com[m
+[1;31mhealth.hackathon@moh.gov.sa[m
+[1;31mhello@naqla.sa[m
+[1;31mi@izs.me[m
+[1;31minfo@kaust.edu.sa[m
+[1;31minfo@mcit.gov.sa[m
+[1;31minfo@monshaat.gov.sa[m
+[1;31minfo@naqla.sa[m
+[1;31minfo@rdia.sa[m
+[1;31minfo@saip.gov.sa[m
+[1;31minfo@sdaia.gov.sa[m
+[1;31minnovation@gov.sa[m
+[1;31minvitee@example.com[m
+[1;31mkhalid@example.com[m
+[1;31mlegal@naqla.sa[m
+[1;31mlisting@example.com[m
+[1;31mmember@example.com[m
+[1;31mmohammed@example.com[m
+[1;31mname@example.com[m
+[1;31mnaqla-temp-storage-foreign@example.invalid[m
+[1;31mnaqla-temp-storage@example.invalid[m
+[1;31mnaqla2c-foreign@example.invalid[m
+[1;31mnaqla2c-owner@example.invalid[m
+[1;31mnaqla2c-requester@example.invalid[m
+[1;31mnaqla2d-foreign@example.invalid[m
+[1;31mnaqla2d-owner@example.invalid[m
+[1;31mnaqla2d-requester@example.invalid[m
+[1;31mnaqla2d-reviewer@example.invalid[m
+[1;31mnoura@example.com[m
+[1;31mother@example.com[m
+[1;31mowner@example.com[m
+[1;31mp3-counterparty@example.invalid[m
+[1;31mp3-foreign@example.invalid[m
+[1;31mp3-owner@example.invalid[m
+[1;31mprivacy@naqla.sa[m
+[1;31mrc-counterparty@example.invalid[m
+[1;31mrc-foreign@example.invalid[m
+[1;31mrc-innovator@example.invalid[m
+[1;31msales@techinnov.sa[m
+[1;31msample@example.com[m
+[1;31msara@example.com[m
+[1;31msupport@uplink.sa[m
+[1;31msynthetic.user@example.test[m
+[1;31msynthetic@example.invalid[m
+[1;31mtech@example.com[m
+[1;31mtest@uplink.sa[m
+[1;31mtester@example.com[m
+[1;31muser@uplink.sa[m
+[1;31mworkshops@innovation-academy.sa[m
+--- conflict markers ---
+--- result ---
+PASS_IF_ALL_SECTIONS_ABOVE_EMPTY

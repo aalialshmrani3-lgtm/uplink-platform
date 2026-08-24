@@ -13,6 +13,18 @@ if (process.env.AI_EXTERNAL_PROVIDER_ENABLED !== "false") throw new Error("EXTER
 type Envelope = { result?: { data?: { json?: unknown } }; error?: { json?: { data?: { code?: string }; message?: string } } };
 const ok = <T>(body: Envelope): T => { assert.ok(body.result?.data, body.error?.json?.message ?? "Expected tRPC success"); return body.result.data.json as T; };
 const ids = { innovator: 761001, counterparty: 761002, foreign: 761003, innovatorOrg: 861001, counterpartyOrg: 861002, foreignOrg: 861003, challenge: 961001, ip: 971001, listing: 981001 };
+const personas = [
+  { key: "innovator", id: 762001, membershipRole: "owner", userRole: "user" },
+  { key: "researcher", id: 762002, membershipRole: "member", userRole: "user" },
+  { key: "startup", id: 762003, membershipRole: "manager", userRole: "user" },
+  { key: "university", id: 762004, membershipRole: "manager", userRole: "user" },
+  { key: "company", id: 762005, membershipRole: "member", userRole: "user" },
+  { key: "investor", id: 762006, membershipRole: "member", userRole: "user" },
+  { key: "government", id: 762007, membershipRole: "member", userRole: "user" },
+  { key: "reviewer", id: 762008, membershipRole: "reviewer", userRole: "user" },
+  { key: "program_manager", id: 762009, membershipRole: "manager", userRole: "user" },
+  { key: "admin", id: 762010, membershipRole: "member", userRole: "admin" },
+] as const;
 let connection: mysql.Connection | undefined;
 let server: import("node:http").Server | undefined;
 
@@ -33,6 +45,10 @@ try {
     [ids.innovatorOrg, ids.innovator, "owner", "active", at, at], [ids.counterpartyOrg, ids.counterparty, "member", "active", at, at], [ids.foreignOrg, ids.foreign, "member", "active", at, at],
   ]]);
   await connection.query("INSERT INTO user_active_contexts (userId,organizationId,updatedAt) VALUES ?", [[[ids.innovator, ids.innovatorOrg, at], [ids.counterparty, ids.counterpartyOrg, at], [ids.foreign, ids.foreignOrg, at]]]);
+  await connection.query("INSERT INTO users (id,openId,name,email,role,createdAt,updatedAt,lastSignedIn) VALUES ?", [personas.map((persona) => [persona.id, `rc-persona-${persona.key}`, `Synthetic ${persona.key}`, `rc-persona-${persona.key}@example.invalid`, persona.userRole, at, at, at])]);
+  await connection.query("INSERT INTO organizations (id,nameAr,nameEn,type,scope,createdAt,updatedAt) VALUES ?", [personas.map((persona, index) => [862001 + index, `منظمة ${persona.key} تركيبية`, `Synthetic ${persona.key} Organization`, "private", "local", at, at])]);
+  await connection.query("INSERT INTO organization_memberships (organizationId,userId,role,status,createdAt,updatedAt) VALUES ?", [personas.map((persona, index) => [862001 + index, persona.id, persona.membershipRole, "active", at, at])]);
+  await connection.query("INSERT INTO user_active_contexts (userId,organizationId,updatedAt) VALUES ?", [personas.map((persona, index) => [persona.id, 862001 + index, at])]);
   await connection.query("INSERT INTO challenges (id,organizerId,title,description,type,status,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?)", [ids.challenge, ids.counterparty, "Synthetic integration challenge", "Synthetic-only challenge for a governed cross-engine release journey.", "challenge", "open", at, at]);
 
   const { createApp } = await import("../server/_core/index.ts");
@@ -55,6 +71,15 @@ try {
   assert.equal(ignoredProductionHeader.status, 200);
   const innovatorAuth = await trpc("query", "auth.me", null, ids.innovator);
   assert.equal(ok<{ id: number }>(innovatorAuth.body).id, ids.innovator);
+  for (const [index, persona] of personas.entries()) {
+    const personaAuth = ok<{ id: number }>((await trpc("query", "auth.me", null, persona.id)).body);
+    assert.equal(personaAuth.id, persona.id);
+    const contexts = ok<Array<{ id: number; isActiveContext: boolean }>>((await trpc("query", "organizationContext.myContexts", null, persona.id)).body);
+    assert.deepEqual(contexts.map((context) => context.id), [862001 + index]);
+    assert.equal(contexts[0]?.isActiveContext, true);
+  }
+  const crossContextAttempt = await trpc("mutation", "organizationContext.setActive", { organizationId: 862001 }, ids.foreign);
+  assert.equal(crossContextAttempt.response.status, 403);
   const unauthenticated = await trpc("mutation", "naqla1Qualification.createRecord", { title: "Unauthorized", problemStatement: "Synthetic unauthorized creation must fail without persistence.", desiredOutcome: "Synthetic unauthorized outcome." });
   assert.equal(unauthenticated.response.status, 401);
 
@@ -66,6 +91,8 @@ try {
   assert.equal(qualification.qualificationStatus, "qualified");
   const foreignPassport = await trpc("query", "naqla1Qualification.getPassport", { recordId: record.recordId }, ids.foreign);
   assert.equal(foreignPassport.response.status, 404);
+  const adminPassport = await trpc("query", "naqla1Qualification.getPassport", { recordId: record.recordId }, personas.find((persona) => persona.key === "admin")!.id);
+  assert.equal(adminPassport.response.status, 404);
 
   await connection.query("INSERT INTO ip_registrations (id,userId,type,title,description,status,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?)", [ids.ip, ids.innovator, "patent", "Synthetic qualified energy asset", "Synthetic listing source corresponding to the qualified innovation journey.", "approved", at, at]);
   await connection.query("INSERT INTO naqla2_marketplace_listings (id,ipRegistrationId,ownerUserId,title,summary,disclosureScope,status,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?,?)", [ids.listing, ids.ip, ids.innovator, "Synthetic energy optimisation listing", "Synthetic teaser for the authorized matching and pilot handoff.", "teaser_only", "published", at, at]);
@@ -112,7 +139,7 @@ try {
   assert.equal(ok<{ origin: string }>((await trpc("mutation", "naqla3.commercialize.createFollowOnTransaction", { decisionId: decision.decisionId, idempotencyKey: "final-rc-follow-on-0001" }, ids.innovator)).body).origin, "scale_follow_on");
   const [audits] = await connection.query<mysql.RowDataPacket[]>("SELECT COUNT(*) AS count FROM naqla3_commercial_action_logs WHERE transactionId = ?", [transaction.transactionId]);
   assert.ok(Number(audits[0]?.count) >= 7);
-  console.log(JSON.stringify({ result: "PASS", synthetic: true, transport: "express-trpc-http", journey: "innovation_record→authorized_evidence→immutable_version→assessment→match_run→interest→engagement→pilot→commercial_asset→transaction→due_diligence→contract→execute→milestone→deliverable→scale→follow_on", crossEngine: "PASS", tenantIsolation: "PASS", activeContext: "PASS", idempotency: "PASS", immutability: "PASS", auditCount: Number(audits[0]?.count), externalProviderCalls: 0 }));
+  console.log(JSON.stringify({ result: "PASS", synthetic: true, transport: "express-trpc-http", journey: "innovation_record→authorized_evidence→immutable_version→assessment→match_run→interest→engagement→pilot→commercial_asset→transaction→due_diligence→contract→execute→milestone→deliverable→scale→follow_on", crossEngine: "PASS", personas: `${personas.length}_active_contexts_and_admin_boundary_PASS`, tenantIsolation: "PASS", activeContext: "PASS", idempotency: "PASS", immutability: "PASS", auditCount: Number(audits[0]?.count), externalProviderCalls: 0 }));
 } finally {
   await new Promise<void>(resolve => server?.close(() => resolve()) ?? resolve());
   const { closeDbForTesting } = await import("../server/db.ts");
